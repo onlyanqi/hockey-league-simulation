@@ -16,8 +16,6 @@ build:
     - dalfcs_gitlab_docker_ci
   script:
     - mvn compile
-  only:
-    - master
 
 test:
   stage: test
@@ -26,8 +24,6 @@ test:
     - dalfcs_gitlab_docker_ci
   script:
     - mvn test
-  only:
-    - master
 
 deploy_test:
   stage: deploy_test
