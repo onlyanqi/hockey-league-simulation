@@ -1,8 +1,7 @@
 stages:
   - build
   - test
-  - deploy_test
-  - deploy_prod
+  - deploy
 
 cache:
   paths:
@@ -29,8 +28,8 @@ test:
   only:
     - master
 
-deploy_test:
-  stage: deploy_test
+deploy:
+  stage: deploy
   image: maven
   tags:
     - ugrad
@@ -42,17 +41,3 @@ deploy_test:
     - ls -lrt
     - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip *
     - scp -r -o StrictHostKeyChecking=no -i ${DEPLOY_SSH_KEY} ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
-
-deploy_prod:
-  stage: deploy_prod
-  image: maven
-  tags:
-    - ugrad
-  artifacts:
-    paths:
-      - target
-  script:
-    - chmod og-rwx ${DEPLOY_SSH_KEY_PROD}
-    - ls -lrt
-    - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip *
-    - scp -r -o StrictHostKeyChecking=no -i ${DEPLOY_SSH_KEY_PROD} ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER_PROD}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
