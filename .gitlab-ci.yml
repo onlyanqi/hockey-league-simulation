@@ -2,6 +2,7 @@ image: maven:latest
 
 stages:
   - build
+  - test
 
 cache:
   paths:
@@ -15,3 +16,8 @@ build:
   image: maven
   script:
     - mvn compile
+
+test:
+  stage: test
+  script:
+    - mvn test
