@@ -12,6 +12,6 @@ build:
   stage: build
   tags:
     - grad
-  image: maven:alpine
+  image: maven:latest
   script:
     - mvn compile
