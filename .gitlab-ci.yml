@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy
 
 cache:
   paths:
@@ -22,3 +23,12 @@ test:
     - dalfcs_gitlab_docker_ci
   script:
     - mvn test
+
+deploy:
+  stage: deploy
+  image: maven
+  tags:
+    - dalfcs_gitlab_docker_ci
+  script:
+    - mvn package
+    - ls -lrt
