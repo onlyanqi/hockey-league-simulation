@@ -30,7 +30,7 @@ deploy_test:
   stage: deploy_test
   image: maven
   tags:
-    - ugrad
+    - grad
   artifacts:
     paths:
       - target
