@@ -34,6 +34,8 @@ deploy_test:
   image: maven
   tags:
     - ugrad
+  only:
+    - development
   artifacts:
     paths:
       - target
@@ -48,6 +50,8 @@ deploy_prod:
   image: maven
   tags:
     - ugrad
+  only:
+    - master
   artifacts:
     paths:
       - target
