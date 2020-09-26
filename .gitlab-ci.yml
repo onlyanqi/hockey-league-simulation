@@ -47,6 +47,8 @@ deploy_release:
   image: maven
   tags:
     - ugrad
+  only:
+    - release
   artifacts:
     paths:
       - target
