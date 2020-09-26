@@ -17,6 +17,7 @@ build:
     - dalfcs_gitlab_docker_ci
   script:
     - mvn compile
+    - ls -lrt
 
 test:
   stage: test
