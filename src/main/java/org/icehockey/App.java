@@ -1,4 +1,4 @@
-package org.example;
+package org.icehockey;
 
 /**
  * Hello world!
