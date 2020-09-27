@@ -31,7 +31,7 @@ deploy_test:
   stage: deploy_test
   image: maven
   tags:
-    - dalfcs_gitlab_docker_ci
+    - dalfcs_docker_kvm
   artifacts:
     paths:
       - target
