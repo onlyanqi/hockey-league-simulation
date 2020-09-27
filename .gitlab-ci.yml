@@ -32,6 +32,8 @@ deploy_test:
   image: maven
   tags:
     - ugrad
+  only:
+    - develop
   artifacts:
     paths:
       - target
