@@ -10,20 +10,6 @@ import java.util.Properties;
 
 public class DBConnection implements IDBConnection {
 
-    private Properties prop;
-
-    public Properties getProp() {
-        return prop;
-    }
-
-    public void setProp(Properties prop) {
-        this.prop = prop;
-    }
-
-    public DBConnection(){
-        setProp(new Properties());
-    }
-
     public String formDBURL(Properties prop){
         String dbURL = "";
 

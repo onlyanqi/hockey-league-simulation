@@ -1,11 +1,12 @@
-package model;
+package dao.connect;
 
 import common.Constants;
 import org.junit.Test;
 
+import java.util.Properties;
+
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import java.util.Properties;
 
 public class DBConnectionTest {
 
