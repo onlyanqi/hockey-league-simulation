@@ -60,9 +60,9 @@ public class Player extends ParentObj{
         boolean isValid = false;
 
         if(isNotNull(getRole()) && isNotEmpty(getRole())){
-            if(Constants.playerRoles.contains(getRole())){
-                isValid = true;
-            }
+             if(Constants.playerRoles.contains(getRole())){
+                 isValid = true;
+             }
         }
 
         return isValid;

@@ -78,10 +78,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-      </resource>
-    </resources>
   </build>
 </project>
