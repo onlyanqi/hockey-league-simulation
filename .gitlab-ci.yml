@@ -25,6 +25,7 @@ test:
   tags:
     - ugrad
   script:
+    - mvn compile
     - mvn test
   artifacts:
     when: always
