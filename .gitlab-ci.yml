@@ -38,11 +38,16 @@ deploy_test:
   tags:
     - ugrad
   only:
-    - develop
+    - projectsetup
   artifacts:
     paths:
       - target
   script:
+    - echo "db.url="${DB_URL} >> .properties
+    - echo "db.User"=${DB_USER_TEST} >> .properties
+    - echo "db.Password"=${DB_PASSWORD_TEST} >> .properties
+    - echo "db.Name"=${DB_NAME_TEST} >> .properties
+    - echo "db.Port=3306" >> .properties
     - mvn package
     - chmod og-rwx ${DEPLOY_SSH_KEY}
     - ls -lrt
