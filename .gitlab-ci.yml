@@ -43,7 +43,7 @@ deploy_test:
     paths:
       - target
   script:
-    - mvn compile
+    - mvn package
     - chmod og-rwx ${DEPLOY_SSH_KEY}
     - ls -lrt
     - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip *
