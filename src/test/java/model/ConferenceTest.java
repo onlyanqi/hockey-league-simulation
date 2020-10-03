@@ -2,21 +2,18 @@ package model;
 
 import data.IConferenceFactory;
 import data.IDivisionFactory;
-import data.ITeamFactory;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
+import org.junit.BeforeClass;
+import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class ConferenceTest {
 
     private static IConferenceFactory factory;
 
-    @BeforeAll
-    static void setFactoryObj(){
+    @BeforeClass
+    public static void setFactoryObj(){
         factory = new ConferenceMock();
     }
 

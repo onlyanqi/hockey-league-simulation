@@ -3,8 +3,6 @@ package model;
 import common.Constants;
 import data.IPlayerFactory;
 
-import java.util.Date;
-
 public class Player extends ParentObj{
 
     public Player(){}

@@ -2,19 +2,18 @@ package model;
 
 import data.ITeamFactory;
 import data.IDivisionFactory;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.Test;
+import org.junit.BeforeClass;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class DivisionTest {
 
     private static IDivisionFactory factory;
 
-    @BeforeAll
-    static void setFactoryObj(){
+    @BeforeClass
+    public static void setFactoryObj(){
         factory = new DivisionMock();
     }
 
