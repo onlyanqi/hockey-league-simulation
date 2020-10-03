@@ -14,7 +14,7 @@ build:
   stage: build
   image: maven
   tags:
-    - dalfcs_gitlab_docker_ci
+    - ugrad
   script:
     - mvn compile
     - ls -lrt
@@ -23,7 +23,7 @@ test:
   stage: test
   image: maven
   tags:
-    - dalfcs_gitlab_docker_ci
+    - ugrad
   script:
     - mvn test
   artifacts:
