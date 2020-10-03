@@ -3,8 +3,6 @@ package model;
 import common.Constants;
 import data.IPlayerFactory;
 
-import java.util.Date;
-
 public class Player extends ParentObj{
 
     public Player(){}
@@ -62,9 +60,9 @@ public class Player extends ParentObj{
         boolean isValid = false;
 
         if(isNotNull(getRole()) && isNotEmpty(getRole())){
-//            if(Constants.playerRoles.contains(getRole())){
-//                isValid = true;
-//            }
+             if(Constants.playerRoles.contains(getRole())){
+                 isValid = true;
+             }
         }
 
         return isValid;

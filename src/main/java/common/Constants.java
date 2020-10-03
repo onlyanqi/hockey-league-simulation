@@ -1,6 +1,7 @@
 package common;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Constants {
@@ -13,6 +14,6 @@ public class Constants {
     public static final String dbPort = "db.Port";
     public static final String semiColon = ":";
     public static final String forwardSlash = "/";
-    //public static final List<String> playerRoles = new ArrayList<>(List.of("goalie", "forward", "defense"));
+    public static final List<String> playerRoles = new ArrayList<>(Arrays.asList("goalie", "forward", "defense"));
 
 }
