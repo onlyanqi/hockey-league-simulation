@@ -57,6 +57,8 @@
           <configuration>
             <archive>
               <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
                 <mainClass>org.icehockey.App</mainClass>
               </manifest>
             </archive>
