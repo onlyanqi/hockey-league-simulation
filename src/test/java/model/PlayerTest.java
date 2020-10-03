@@ -2,18 +2,18 @@ package model;
 
 import data.IParentObjFactory;
 import data.IPlayerFactory;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.Test;
+import org.junit.BeforeClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 
 public class PlayerTest {
 
     private static IPlayerFactory factory;
 
-    @BeforeAll
-    static void setFactoryObj(){
+    @BeforeClass
+    public static void setFactoryObj(){
         factory = new PlayerMock();
     }
 

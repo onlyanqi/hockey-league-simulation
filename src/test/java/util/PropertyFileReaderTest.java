@@ -1,22 +1,21 @@
 package util;
 
 import common.Constants;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 public class PropertyFileReaderTest {
 
-    @Test
+    @Test(expected = Test.None.class)
     public void loadPropertyFileNoExceptionTest(){
         PropertyFileReader read = new PropertyFileReader();
-        assertDoesNotThrow(()-> read.loadPropertyFile(Constants.dbFile));
+        read.loadPropertyFile(Constants.dbFile);
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void loadPropertyFileNotNullTest(){
         PropertyFileReader read = new PropertyFileReader();
-        assertDoesNotThrow(()-> read.loadPropertyFile(Constants.dbFile));
+        read.loadPropertyFile(Constants.dbFile);
         assertNotNull(read.loadPropertyFile(Constants.dbFile));
     }
 
