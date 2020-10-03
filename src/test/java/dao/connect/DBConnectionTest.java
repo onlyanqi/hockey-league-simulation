@@ -1,10 +1,10 @@
 package dao.connect;
 
 import common.Constants;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import java.util.Properties;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class DBConnectionTest {
 

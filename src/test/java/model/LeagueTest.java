@@ -3,20 +3,20 @@ package model;
 import data.IConferenceFactory;
 import data.IDivisionFactory;
 import data.ILeagueFactory;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class LeagueTest {
 
     private static ILeagueFactory factory;
 
-    @BeforeAll
-    static void setFactoryObj(){
+    @BeforeClass
+    public static void setFactoryObj(){
         factory = new LeagueMock();
     }
 
