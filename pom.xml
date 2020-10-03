@@ -20,6 +20,12 @@
 
   <dependencies>
     <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.mxnet</groupId>
       <artifactId>mxnet-full_2.11-osx-x86_64-cpu</artifactId>
       <version>1.4.0</version>
@@ -30,11 +36,6 @@
       <version>8.0.21</version>
     </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>5.7.0</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
@@ -57,8 +58,6 @@
           <configuration>
             <archive>
               <manifest>
-                <addClasspath>true</addClasspath>
-                <classpathPrefix>lib/</classpathPrefix>
                 <mainClass>org.icehockey.App</mainClass>
               </manifest>
             </archive>
@@ -80,10 +79,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-      </resource>
-    </resources>
   </build>
 </project>
