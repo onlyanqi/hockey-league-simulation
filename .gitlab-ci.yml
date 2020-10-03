@@ -30,7 +30,7 @@ test:
     when: always
     reports:
       junit:
-        -target/junit-jupiter-reports/Test-*.xml
+        -target/surefire-reports/Test-*.xml
 
 deploy_test:
   stage: deploy_test
