@@ -44,6 +44,7 @@ deploy_test:
       - target
   script:
     - mvn package
+    - touch .properties
     - echo "db.url="${DB_URL} >> .properties
     - echo "db.User"=${DB_USER_TEST} >> .properties
     - echo "db.Password"=${DB_PASSWORD_TEST} >> .properties
