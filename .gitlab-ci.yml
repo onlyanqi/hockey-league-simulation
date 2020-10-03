@@ -38,11 +38,12 @@ deploy_test:
   tags:
     - ugrad
   only:
-    - develop
+    - projectsetup
   artifacts:
     paths:
       - target
   script:
+    - mvn compile
     - chmod og-rwx ${DEPLOY_SSH_KEY}
     - ls -lrt
     - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip *
@@ -59,6 +60,7 @@ deploy_release:
     paths:
       - target
   script:
+    - mvn compile
     - chmod og-rwx ${DEPLOY_SSH_KEY_RELEASE}
     - ls -lrt
     - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip *
@@ -75,6 +77,7 @@ deploy_prod:
     paths:
       - target
   script:
+    - mvn compile
     - chmod og-rwx ${DEPLOY_SSH_KEY_PROD}
     - ls -lrt
     - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip *
