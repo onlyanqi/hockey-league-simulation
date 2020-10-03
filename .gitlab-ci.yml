@@ -25,7 +25,6 @@ test:
   tags:
     - ugrad
   script:
-    - mvn compile
     - mvn test
 
 deploy_test:
