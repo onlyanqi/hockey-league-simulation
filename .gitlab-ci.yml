@@ -27,11 +27,6 @@ test:
   script:
     - mvn compile
     - mvn test
-  artifacts:
-    when: always
-    reports:
-      junit:
-        -target/surefire-reports/Test-*.xml
 
 deploy_test:
   stage: deploy_test
