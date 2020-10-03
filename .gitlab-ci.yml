@@ -33,7 +33,7 @@ deploy_test:
   tags:
     - ugrad
   only:
-    - project_setup
+    - develop
   artifacts:
     paths:
       - target
