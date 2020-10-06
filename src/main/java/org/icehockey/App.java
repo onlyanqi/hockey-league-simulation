@@ -12,8 +12,6 @@ public class App
     {
 
 
-        System.out.println("Arguments are: "+ args.length);
-
         String filePath = "";
 
         if(args.length ==1 ){
@@ -25,8 +23,6 @@ public class App
 
         HockeyContext context = new HockeyContext();
         context.startAction(filePath);
-
-
 
 
     }

@@ -3,6 +3,7 @@ package model;
 import state.CreateTeamState;
 import state.IHockeyState;
 import state.ImportState;
+import state.LoadTeamState;
 
 public class HockeyContext {
 
@@ -15,13 +16,13 @@ public class HockeyContext {
     public void startAction(String filePath){
 
 
-        if(filePath.length()>0){
+        if(filePath.length() > 0){
             hockeyState = new ImportState(this,filePath);
             hockeyState.entry();
             hockeyState.process();
             hockeyState = new CreateTeamState(this);
         }else{
-            hockeyState = new ImportState(this);
+            hockeyState = new LoadTeamState(this);
             hockeyState.entry();
             hockeyState.process();
             hockeyState = hockeyState.exit();

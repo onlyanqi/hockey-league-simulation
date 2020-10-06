@@ -2,6 +2,7 @@ package state;
 
 import model.HockeyContext;
 import model.League;
+import model.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -36,7 +37,7 @@ public class ImportState implements IHockeyState {
     public void entry() {
         //Parse JSON
         System.out.println("Import State -> Entry  ");
-        if(filePath.length() > 0){
+        if(filePath!=null){
             jsonFromInput = readJSON(filePath);
         }
 
@@ -52,9 +53,9 @@ public class ImportState implements IHockeyState {
     @Override
     public IHockeyState exit() {
         //Persist to DB and move to next state
-        System.out.println("Import State -> Exit ");
-        LoadTeamState loadTeamState = new LoadTeamState(hockeyContext);
-        return loadTeamState;
+        //System.out.println("Import State -> Exit ");
+        //LoadTeamState loadTeamState = new LoadTeamState(hockeyContext);
+        return null;
     }
 
     private JSONObject readJSON(String filePath){
@@ -62,13 +63,10 @@ public class ImportState implements IHockeyState {
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(filePath))
         {
-            //Read JSON file
+
             JSONObject leagueJSON = (JSONObject)jsonParser.parse(reader);
 
             return leagueJSON;
-
-            //Iterate over employee array
-            //employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -103,6 +101,9 @@ public class ImportState implements IHockeyState {
                         String playerName = (String) playerJsonObject.get("playerName");
                         String position = (String) playerJsonObject.get("position");
                         boolean captain = (Boolean) playerJsonObject.get("captain");
+
+
+                        Player p = new Player();
 
                     }
                 }
