@@ -12,15 +12,18 @@ public class HockeyContext {
 
 
 
-    public void startAction(boolean filePathProvided){
-        hockeyState = new ImportState(this);
+    public void startAction(String filePath){
 
-        hockeyState.entry();
-        hockeyState.process();
 
-        if(filePathProvided){
+        if(filePath.length()>0){
+            hockeyState = new ImportState(this,filePath);
+            hockeyState.entry();
+            hockeyState.process();
             hockeyState = new CreateTeamState(this);
         }else{
+            hockeyState = new ImportState(this);
+            hockeyState.entry();
+            hockeyState.process();
             hockeyState = hockeyState.exit();
         }
 

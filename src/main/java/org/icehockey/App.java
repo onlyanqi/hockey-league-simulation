@@ -14,17 +14,17 @@ public class App
 
         System.out.println("Arguments are: "+ args.length);
 
-        boolean filePathProvided = false;
+        String filePath = "";
 
         if(args.length ==1 ){
-            filePathProvided = true;
+            filePath = args[0];
         }else if(args.length > 1){
             System.out.println("Please provide only one argument");
-            filePathProvided = false;
+            return;
         }
 
         HockeyContext context = new HockeyContext();
-        context.startAction(filePathProvided);
+        context.startAction(filePath);
 
 
 

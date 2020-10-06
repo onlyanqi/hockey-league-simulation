@@ -2,6 +2,8 @@ package state;
 
 import model.HockeyContext;
 
+import java.util.Scanner;
+
 public class CreateTeamState implements IHockeyState {
 
     private HockeyContext hockeyContext;
@@ -14,7 +16,24 @@ public class CreateTeamState implements IHockeyState {
     @Override
     public void entry() {
         //Prompt Team Data
-        System.out.println("CreateTeam State -> Entry ");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Please enter conference name the team belongs to");
+        String conferenceName  = scanner.nextLine();
+
+        System.out.println("Please enter division name the team belongs to");
+        String divisionName  = scanner.nextLine();
+
+        System.out.println("Please enter team name");
+        String teamName  = scanner.nextLine();
+
+        System.out.println("Please enter name of general manager");
+        String generalManagerName  = scanner.nextLine();
+
+        System.out.println("Please enter name of head coach ");
+        String headCoachName  = scanner.nextLine();
+
+
     }
 
     @Override
