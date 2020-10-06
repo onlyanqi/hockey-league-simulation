@@ -1,5 +1,6 @@
 package model;
 
+import state.CreateTeamState;
 import state.IHockeyState;
 import state.ImportState;
 
@@ -11,8 +12,20 @@ public class HockeyContext {
 
 
 
-    public void startAction(){
+    public void startAction(boolean filePathProvided){
         hockeyState = new ImportState(this);
+
+        hockeyState.entry();
+        hockeyState.process();
+
+        if(filePathProvided){
+            hockeyState = new CreateTeamState(this);
+        }else{
+            hockeyState = hockeyState.exit();
+        }
+
+
+
         do{
             hockeyState.entry();
             hockeyState.process();
@@ -20,14 +33,6 @@ public class HockeyContext {
         }while(hockeyState!=null);
     }
 
-    public void setHockeyState(IHockeyState hockeyState) {
-        if(hockeyState != null){
-            this.hockeyState = hockeyState;
-        }else {
-            // fill the following later.  rn used for Unit Test Case to Pass
-            this.hockeyState = null;
-        }
-    }
 
     public IHockeyState getHockeyState() {
         return hockeyState;
