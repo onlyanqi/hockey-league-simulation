@@ -20,6 +20,7 @@ public class DBConnection implements IDBConnection {
             dbURL = dbURL.concat("jdbc:mysql://").concat(dbHost).concat(Constants.semiColon)
                     .concat(dbPort).concat(Constants.forwardSlash).concat(dbName)
                     .concat(Constants.timezone);
+            System.out.println(dbURL);
         }
 
         return dbURL;
