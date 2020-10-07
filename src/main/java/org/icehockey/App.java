@@ -2,6 +2,8 @@ package org.icehockey;
 
 import model.HockeyContext;
 
+import java.util.Scanner;
+
 /**
  * Hello world!
  *
@@ -13,13 +15,10 @@ public class App
 
 
         String filePath = "";
+        Scanner scanner = new Scanner(System.in);
 
-        if(args.length ==1 ){
-            filePath = args[0];
-        }else if(args.length > 1){
-            System.out.println("Please provide only one argument");
-            return;
-        }
+        System.out.println("Please provide location of JSON file");
+        filePath  = scanner.nextLine();
 
         HockeyContext context = new HockeyContext();
         context.startAction(filePath);
