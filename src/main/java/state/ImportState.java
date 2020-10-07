@@ -1,8 +1,6 @@
 package state;
 
-import model.HockeyContext;
-import model.League;
-import model.Player;
+import model.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -26,28 +24,26 @@ public class ImportState implements IHockeyState {
     public ImportState(HockeyContext hockeyContext,String filePath){
         this.filePath = filePath;
         this.hockeyContext = hockeyContext;
+        league = hockeyContext.getLeague();
     }
 
-    public ImportState(HockeyContext hockeyContext){
-        this.hockeyContext = hockeyContext;
-    }
+
 
 
     @Override
     public void entry() {
         //Parse JSON
-        System.out.println("Import State -> Entry  ");
+
         if(filePath!=null){
             jsonFromInput = readJSON(filePath);
         }
-
     }
 
     @Override
     public void process() {
         //Instantiate and configure LOM
-        System.out.println("Import State -> Process ");
         parseJSONAndInstantiateLeague(jsonFromInput);
+        hockeyContext.setLeague(league);
     }
 
     @Override
@@ -81,41 +77,82 @@ public class ImportState implements IHockeyState {
     private void parseJSONAndInstantiateLeague(JSONObject leagueJSON){
         String leagueName = (String) leagueJSON.get("leagueName");
         JSONArray conferences = (JSONArray) leagueJSON.get("conferences");
-        for(Object conference : conferences){
-            JSONObject conferenceJSONObject = (JSONObject) conference;
+        ArrayList<Conference> conferenceList = new ArrayList<Conference>();
+        for(Object conferenceObjectFromJSONArray : conferences){
+            JSONObject conferenceJSONObject = (JSONObject) conferenceObjectFromJSONArray;
             String conferenceName = (String) conferenceJSONObject.get("conferenceName");
+
+            Conference conference = new Conference();
+            conference.setName(conferenceName);
+
             JSONArray divisions = (JSONArray) conferenceJSONObject.get("divisions");
-            for(Object division : divisions){
-                JSONObject divisionJSONObject = (JSONObject) division;
+
+            ArrayList<Division> divisionList = new ArrayList<Division>();
+            for(Object divisionObjectFromJSONArray : divisions){
+                JSONObject divisionJSONObject = (JSONObject) divisionObjectFromJSONArray;
                 String divisionName = (String) divisionJSONObject.get("divisionName");
+
+                Division division = new Division();
+                division.setName(divisionName);
+
                 JSONArray teams = (JSONArray) divisionJSONObject.get("teams");
-                for(Object team : teams){
-                    JSONObject teamJSONObject = (JSONObject) team;
+
+
+                ArrayList<Team> teamList = new ArrayList<Team>();
+                for(Object teamObjectFromJSONArray : teams){
+                    JSONObject teamJSONObject = (JSONObject) teamObjectFromJSONArray;
                     String teamName = (String) teamJSONObject.get("teamName");
                     String generalManager = (String) teamJSONObject.get("generalManager");
                     String headCoach = (String) teamJSONObject.get("headCoach");
-                    JSONArray players = (JSONArray) teamJSONObject.get("players");
-                    for(Object player : players) {
+                    Team team = new Team();
+                    team.setName(teamName);
+                    team.setGeneralManager(generalManager);
+                    team.setHeadCoach(headCoach);
 
-                        JSONObject playerJsonObject = (JSONObject) player;
+                    JSONArray players = (JSONArray) teamJSONObject.get("players");
+
+                    ArrayList<Player> playerList = new ArrayList<Player>();
+                    for(Object playerObjectFromJSONArray : players) {
+                        JSONObject playerJsonObject = (JSONObject) playerObjectFromJSONArray;
                         String playerName = (String) playerJsonObject.get("playerName");
                         String position = (String) playerJsonObject.get("position");
                         boolean captain = (Boolean) playerJsonObject.get("captain");
-
-
-                        Player p = new Player();
-
+                        Player player = new Player();
+                        player.setName(playerName);
+                        player.setPosition(position);
+                        player.setCaptain(captain);
+                        playerList.add(player);
                     }
-                }
-            }
 
+                    team.setPlayerList(playerList);
+                    teamList.add(team);
+
+                }
+
+                division.setTeamList(teamList);
+                divisionList.add(division);
+            }
+            conference.setDivisionList(divisionList);
+            conferenceList.add(conference);
         }
+
         JSONArray freeAgents = (JSONArray) leagueJSON.get("freeAgents");
-        for(Object freeAgent : freeAgents) {
-            JSONObject freeAgentJsonObject = (JSONObject) freeAgent;
+
+
+        ArrayList<FreeAgent> freeAgentList = new ArrayList<FreeAgent>();
+        for(Object freeAgentObjectFromJSONArray : freeAgents) {
+            JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
             String playerName = (String) freeAgentJsonObject.get("playerName");
             String position = (String) freeAgentJsonObject.get("position");
             boolean captain = (Boolean) freeAgentJsonObject.get("captain");
+
+            FreeAgent freeAgent = new FreeAgent();
+            freeAgent.setName(playerName);
+            freeAgentList.add(freeAgent);
         }
+
+        league.setName(leagueName);
+        league.setConferenceList(conferenceList);
+
     }
 }

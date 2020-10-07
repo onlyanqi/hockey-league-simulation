@@ -1,11 +1,13 @@
 package util;
 
-import java.io.*;
+import common.Constants;
+
+import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertyFileReader implements IPropertyFileReader{
 
-    /*public Properties loadPropertyFile(String fileName) {
+    public Properties loadPropertyFile(String fileName) {
         Properties prop = null;
 
         try {
@@ -18,34 +20,6 @@ public class PropertyFileReader implements IPropertyFileReader{
         }
 
         return prop;
-    }*/
-
-    @Override
-    public Properties loadPropertyFile(String fileName) throws Exception {
-        Properties prop = null;
-        String path = "./.properties";
-        FileInputStream file = null;
-        try {
-            file = new FileInputStream(path);
-            prop = new Properties();
-            prop.load(file);
-        } catch (FileNotFoundException e){
-            throw new IllegalArgumentException("File Not Found Exception in ProperfileReader for "+fileName,e);
-        } catch (IOException e){
-            throw new IllegalArgumentException("IOException in ProperfileReader for "+fileName,e);
-        } catch (Exception e){
-            throw new IllegalArgumentException("Exception in ProperfileReader for "+fileName,e);
-        }
-        finally {
-            if(file != null) {
-                try {
-                    file.close();
-                } catch (IOException e){
-                    throw new IllegalArgumentException("IOException in ProperfileReader for "+fileName);
-                }
-            }
-        }
-
-        return prop;
     }
+
 }
