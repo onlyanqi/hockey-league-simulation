@@ -39,15 +39,46 @@ public class UserDao implements IUserFactory {
             ResultSet rs = callDB.executeLoad();
             if (rs != null) {
                 while (rs.next()) {
-                    user.setId(rs.getInt(2));
-                    user.setPassword(rs.getString(3));
+                    user.setId(rs.getInt(1));
+                    user.setPassword(rs.getString(2));
                 }
             }
         }catch (Exception e){
+            e.printStackTrace();
             throw e;
+
         } finally {
             callDB.closeConnection();
         }
+
+
+    }
+
+    @Override
+    public User loadUserByName(String userName) throws Exception {
+        ICallDB callDB = null;
+        User user = null;
+        try {
+            callDB = new CallDB(Constants.loadUserByName);
+            callDB.setInputParameterString(1, userName);
+            callDB.setOutputParameterInt(2);
+            callDB.setOutputParameterString(3);
+            ResultSet rs = callDB.executeLoad();
+            if (rs != null) {
+                while (rs.next()) {
+                    user = new User();
+                    user.setId(rs.getInt(1));
+                    user.setPassword(rs.getString(2));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+
+        } finally {
+            callDB.closeConnection();
+        }
+        return user;
     }
 
 }

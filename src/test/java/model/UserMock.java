@@ -44,4 +44,9 @@ public class UserMock implements IUserFactory {
         return user.getId();
     }
 
+    @Override
+    public User loadUserByName(String userName) throws Exception {
+        return null;
+    }
+
 }

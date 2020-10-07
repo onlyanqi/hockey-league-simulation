@@ -1,8 +1,6 @@
 package util;
 
-import common.Constants;
-
-import java.io.InputStream;
+import java.io.FileInputStream;
 import java.util.Properties;
 
 public class PropertyFileReader implements IPropertyFileReader{
@@ -11,11 +9,11 @@ public class PropertyFileReader implements IPropertyFileReader{
         Properties prop = null;
 
         try {
-            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            InputStream inputStream = classloader.getResourceAsStream(fileName);
+            FileInputStream inputStream = new FileInputStream(fileName);
             prop = new Properties();
             prop.load(inputStream);
         } catch (Exception e){
+            e.printStackTrace();
             throw new IllegalArgumentException("File Not Found Exception in ProperfileReader for "+fileName);
         }
 

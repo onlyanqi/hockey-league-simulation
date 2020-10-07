@@ -1,14 +1,8 @@
 package org.icehockey;
 
-import dao.connect.DBConnection;
 import model.HockeyContext;
-
 import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
 public class App
 {
     public static void main( String[] args ) throws Exception {
@@ -22,8 +16,6 @@ public class App
 
         HockeyContext context = new HockeyContext();
         context.startAction(filePath);
-
-
 
     }
 }
