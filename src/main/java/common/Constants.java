@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Constants {
 
-    public static final String dbFile = "../.properties";
+    public static final String dbFile = ".properties";
     public static final String dbUserName = "db.User";
     public static final String dbPassword = "db.Password";
     public static final String dbHost = "db.url";
