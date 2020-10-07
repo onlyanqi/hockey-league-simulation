@@ -16,8 +16,9 @@ public class PlayerMock implements IPlayerFactory {
                 player.setEndDate(new Date(2050, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
-                player.setRole("goalie");
+                player.setPosition("goalie");
                 player.setTeamId(1);
+                player.setCaptain(true);
                 break;
 
             case 2:
@@ -27,8 +28,9 @@ public class PlayerMock implements IPlayerFactory {
                 player.setEndDate(new Date(2050, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
-                player.setRole("goalie");
+                player.setPosition("goalie");
                 player.setTeamId(1);
+                player.setCaptain(false);
                 break;
 
             case 3:
@@ -38,19 +40,21 @@ public class PlayerMock implements IPlayerFactory {
                 player.setEndDate(new Date(2000, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
-                player.setRole("goalie");
+                player.setPosition("goalie");
                 player.setTeamId(1);
+                player.setCaptain(true);
                 break;
 
             case 4:
-                //invalid role
-                player.setName("Invalid Role");
+                //invalid position
+                player.setName("Invalid Position");
                 player.setStartDate(new Date(2010, 0, 0));
                 player.setEndDate(new Date(2000, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
-                player.setRole("referee");
+                player.setPosition("referee");
                 player.setTeamId(1);
+                player.setCaptain(false);
                 break;
 
             case 5:
@@ -60,8 +64,9 @@ public class PlayerMock implements IPlayerFactory {
                 player.setEndDate(new Date(2040, 0, 0));
                 player.setAge(17);
                 player.setHometown("Montreal");
-                player.setRole("forward");
+                player.setPosition("forward");
                 player.setTeamId(1);
+                player.setCaptain(true);
                 break;
         }
 
