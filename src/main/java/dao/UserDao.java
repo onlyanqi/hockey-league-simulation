@@ -39,8 +39,8 @@ public class UserDao implements IUserFactory {
             ResultSet rs = callDB.executeLoad();
             if (rs != null) {
                 while (rs.next()) {
-                    user.setId(rs.getInt(2));
-                    user.setPassword(rs.getString(3));
+                    user.setId(rs.getInt(1));
+                    user.setPassword(rs.getString(2));
                 }
             }
         }catch (Exception e){

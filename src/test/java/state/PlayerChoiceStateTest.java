@@ -14,8 +14,8 @@ public class PlayerChoiceStateTest {
 
     @BeforeClass
     public static void setState(){
-        hockeyContext = new HockeyContext();
-        hockeyState = new PlayerChoiceState(hockeyContext,"How many seasons do you want to simulate","createOrLoadTeam");
+//        hockeyContext = new HockeyContext();
+//        hockeyState = new PlayerChoiceState(hockeyContext,"How many seasons do you want to simulate","createOrLoadTeam");
     }
 
     @Test

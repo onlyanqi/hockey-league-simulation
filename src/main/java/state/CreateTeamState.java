@@ -1,6 +1,6 @@
 package state;
 
-import dao.LeagueDao;
+import dao.*;
 import model.*;
 import org.icehockey.GetInput;
 
@@ -86,10 +86,61 @@ public class CreateTeamState implements IHockeyState {
     @Override
     public IHockeyState exit() {
         //Persist to DB and transition to next state
-        league.setCreatedBy(3);
+        league.setCreatedBy(hockeyContext.getUser().getId());
         LeagueDao leagueDao = new LeagueDao();
+        ConferenceDao conferenceDao = new ConferenceDao();
+        DivisionDao divisionDao = new DivisionDao();
+        TeamDao teamDao = new TeamDao();
+        FreeAgentDao freeAgentDao = new FreeAgentDao();
+        PlayerDao playerDao = new PlayerDao();
+        SeasonDao seasonDao = new SeasonDao();
+
+        Season season = new Season();
+        season.setName("2020");
+
         try {
-            leagueDao.addLeague(hockeyContext.getLeague());
+            int leagueId = leagueDao.addLeague(league);
+            int seasonId = seasonDao.addSeason(season);
+
+            FreeAgent freeAgent = league.getFreeAgent();
+            freeAgent.setSeasonId(seasonId);
+            freeAgent.setLeagueId(leagueId);
+            int freeAgentId = freeAgentDao.addFreeAgent(freeAgent);
+            for(Player player: freeAgent.getPlayerList()){
+                player.setFreeAgentId(freeAgentId);
+                player.setSeasonId(seasonId);
+                playerDao.addPlayer(player);
+
+            }
+
+            for(Conference conference: league.getConferenceList()){
+                conference.setLeagueId(leagueId);
+                int conferenceId = conferenceDao.addConference(conference);
+
+                for(Division division: conference.getDivisionList()){
+                    division.setConferenceId(conferenceId);
+                    int divisionId = divisionDao.addDivision(division);
+
+                    for(Team team: division.getTeamList()){
+                        team.setDivisionId(divisionId);
+                        int teamId = teamDao.addTeam(team);
+
+
+
+                        for(Player player: team.getPlayerList()){
+                            player.setTeamId(teamId);
+                            player.setSeasonId(seasonId);
+                            playerDao.addPlayer(player);
+                        }
+                    }
+                }
+
+            }
+
+
+
+
+
         } catch (Exception e) {
             System.out.println("Unable to save the league! Please try again");
             System.exit(1);
