@@ -4,6 +4,7 @@ import model.Team;
 
 public interface ITeamFactory {
 
-    void loadTeam(long id, Team team);
+    int addTeam(Team team) throws Exception;
+    void loadTeamByName(int id, Team team) throws Exception;
 
 }

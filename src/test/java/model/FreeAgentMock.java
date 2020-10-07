@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FreeAgentMock implements IFreeAgentFactory {
 
-    private List formPlayerList(){
+    private List formPlayerList() throws Exception {
         List<Player> playerList = new ArrayList<>();
 
         IPlayerFactory playerFactory = new PlayerMock();
@@ -23,7 +23,12 @@ public class FreeAgentMock implements IFreeAgentFactory {
     }
 
     @Override
-    public void loadFreeAgent(long id, FreeAgent freeAgent){
+    public int addFreeAgent(FreeAgent freeAgent) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public void loadFreeAgentByLeagueId(int id, FreeAgent freeAgent) throws Exception {
 
         switch (new Long(id).intValue()){
             case 1:

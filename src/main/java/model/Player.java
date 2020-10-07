@@ -7,13 +7,13 @@ public class Player extends ParentObj{
 
     public Player(){}
 
-    public Player(long id){
+    public Player(int id){
         setId(id);
     }
 
-    public Player(long id, IPlayerFactory factory){
+    public Player(int id, IPlayerFactory factory) throws Exception {
         setId(id);
-        factory.loadPlayer(id, this);
+        factory.loadPlayerByName(id, this);
     }
 
     private int age;
@@ -22,9 +22,13 @@ public class Player extends ParentObj{
 
     private String position;
 
-    private long teamId;
+    private int teamId;
+
+    private int freeAgentId;
 
     private boolean isCaptain;
+
+    private int seasonId;
 
     public int getAge() {
         return age;
@@ -50,12 +54,28 @@ public class Player extends ParentObj{
         this.position = position;
     }
 
-    public long getTeamId() {
+    public int getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(long teamId) {
+    public void setTeamId(int teamId) {
         this.teamId = teamId;
+    }
+
+    public int getSeasonId() {
+        return seasonId;
+    }
+
+    public void setSeasonId(int seasonId) {
+        this.seasonId = seasonId;
+    }
+
+    public int getFreeAgentId() {
+        return freeAgentId;
+    }
+
+    public void setFreeAgentId(int freeAgentId) {
+        this.freeAgentId = freeAgentId;
     }
 
     public boolean isCaptain() {

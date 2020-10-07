@@ -4,6 +4,7 @@ import model.ParentObj;
 
 public interface IParentObjFactory {
 
-    void loadParentObj(long id, ParentObj parentObj);
+    int addParentObj(ParentObj parentObj) throws Exception;
+    void loadParentObj(int id, ParentObj parentObj) throws Exception;;
 
 }

@@ -1,7 +1,6 @@
 package model;
 
 import data.IConferenceFactory;
-import data.IDivisionFactory;
 import data.ILeagueFactory;
 
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public class LeagueMock implements ILeagueFactory {
 
-    private List formConferenceList(){
+    private List formConferenceList() throws Exception {
         List<Conference> conferenceList = new ArrayList<>();
 
         IConferenceFactory conferenceFactory = new ConferenceMock();
@@ -24,12 +23,12 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     @Override
-    public long addLeague(League league) throws Exception {
+    public int addLeague(League league) throws Exception {
         return 0;
     }
 
     @Override
-    public void loadLeagueByName(long id, League league){
+    public void loadLeagueByName(int id, League league) throws Exception {
 
         switch (new Long(id).intValue()){
             case 1:
