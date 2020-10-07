@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNull;
 
 public class PropertyFileReaderTest {
 
-    @Test
+    /*@Test
     public void loadPropertyFileNoExceptionTest() throws Exception{
         PropertyFileReader read = new PropertyFileReader();
         read.loadPropertyFile(Constants.dbFile);
@@ -24,6 +24,6 @@ public class PropertyFileReaderTest {
             assertNull(e);
         }
 
-    }
+    }*/
 
 }
