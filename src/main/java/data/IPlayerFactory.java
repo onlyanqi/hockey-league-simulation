@@ -4,6 +4,7 @@ import model.Player;
 
 public interface IPlayerFactory {
 
-    void loadPlayer(long id, Player player);
+    int addPlayer(Player player) throws Exception;
+    void loadPlayerByName(int id, Player player) throws Exception;
 
 }

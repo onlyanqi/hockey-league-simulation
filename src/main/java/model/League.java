@@ -7,11 +7,11 @@ public class League extends ParentObj{
 
     public League(){}
 
-    public League(long id){
+    public League(int id){
         setId(id);
     }
 
-    public League(long id, ILeagueFactory factory) throws Exception{
+    public League(int id, ILeagueFactory factory) throws Exception{
         setId(id);
         factory.loadLeagueByName(id, this);
     }

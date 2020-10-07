@@ -30,7 +30,7 @@ public class ConferenceTest {
     }
 
     @Test
-    public void conferenceFactoryTest(){
+    public void conferenceFactoryTest() throws Exception {
         Conference conference = new Conference(1, factory);
         assertEquals(conference.getId(), 1);
         assertEquals(conference.getName(), "Conference1");
@@ -40,7 +40,7 @@ public class ConferenceTest {
     }
 
     @Test
-    public void getLeagueIdTest(){
+    public void getLeagueIdTest() throws Exception {
         Conference conference = new Conference(1, factory);
         assertTrue(conference.getLeagueId() == (1));
     }
@@ -48,13 +48,13 @@ public class ConferenceTest {
     @Test
     public void setLeagueIdTest(){
         Conference conference = new Conference();
-        long leagueId = 1;
-        conference.setLeagueId(leagueId);
+        int leagueId = 1;
+        conference.setLeagueId( leagueId);
         assertTrue(conference.getLeagueId() == leagueId);
     }
 
     @Test
-    public void getDivisionListTest(){
+    public void getDivisionListTest() throws Exception {
         Conference conference = new Conference(1, factory);
         List<Division> divisionList = conference.getDivisionList();
         assertNotNull(divisionList);
@@ -66,7 +66,7 @@ public class ConferenceTest {
     }
 
     @Test
-    public void setDivisionListTest(){
+    public void setDivisionListTest() throws Exception {
         IDivisionFactory divisionFactory = new DivisionMock();
         List<Division> divisionList = new ArrayList<>();
         Division division = new Division(1, divisionFactory);

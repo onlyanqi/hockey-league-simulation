@@ -8,24 +8,24 @@ public class Conference extends ParentObj{
 
     public Conference(){ }
 
-    public Conference(long id){
+    public Conference(int id){
         setId(id);
     }
 
-    public Conference(long id, IConferenceFactory factory){
+    public Conference(int id, IConferenceFactory factory) throws Exception {
         setId(id);
-        factory.loadConference(id, this);
+        factory.loadConferenceByName(id, this);
     }
 
-    private long leagueId;
+    private int leagueId;
 
     private List<Division> divisionList;
 
-    public long getLeagueId() {
+    public int getLeagueId() {
         return leagueId;
     }
 
-    public void setLeagueId(long leagueId) {
+    public void setLeagueId(int leagueId) {
         this.leagueId = leagueId;
     }
 

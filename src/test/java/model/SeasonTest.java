@@ -29,7 +29,7 @@ public class SeasonTest {
     }
 
     @Test
-    public void seasonFactoryTest(){
+    public void seasonFactoryTest() throws Exception {
         Season season = new Season(1, factory);
         assertEquals(season.getId(), 1);
         assertEquals(season.getName(), "Season1");

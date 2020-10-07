@@ -33,7 +33,7 @@ public class TeamTest {
     }
 
     @Test
-    public void teamFactoryTest(){
+    public void teamFactoryTest() throws Exception {
         Team team = new Team(1, factory);
         assertEquals(team.getId(), 1);
         assertEquals(team.getName(), "Team1");
@@ -43,7 +43,7 @@ public class TeamTest {
     }
 
     @Test
-    public void getHomeTownTest(){
+    public void getHomeTownTest() throws Exception {
         Team team = new Team(1, factory);
         assertTrue(team.getHometown().equals("Halifax1"));
     }
@@ -57,7 +57,7 @@ public class TeamTest {
     }
 
     @Test
-    public void getMascotTest(){
+    public void getMascotTest() throws Exception {
         Team team = new Team(1, factory);
         assertTrue(team.getMascot().equals("Tiger1"));
     }
@@ -71,7 +71,7 @@ public class TeamTest {
     }
 
     @Test
-    public void getGeneralManagerTest(){
+    public void getGeneralManagerTest() throws Exception {
         Team team = new Team(1, factory);
         assertTrue(team.getGeneralManager().equals("Manager1"));
     }
@@ -85,7 +85,7 @@ public class TeamTest {
     }
 
     @Test
-    public void getHeadCoachTest(){
+    public void getHeadCoachTest() throws Exception {
         Team team = new Team(1, factory);
         assertTrue(team.getHeadCoach().equals("Coach1"));
     }
@@ -99,7 +99,7 @@ public class TeamTest {
     }
 
     @Test
-    public void getDivisionIdTest(){
+    public void getDivisionIdTest() throws Exception {
         Team team = new Team(1, factory);
         assertTrue(team.getDivisionId() == (1));
     }
@@ -107,13 +107,13 @@ public class TeamTest {
     @Test
     public void setDivisionIdTest(){
         Team team = new Team();
-        long divisionId = 1;
+        int divisionId = 1;
         team.setDivisionId(divisionId);
         assertTrue(team.getDivisionId() == divisionId);
     }
 
     @Test
-    public void getPlayerListTest(){
+    public void getPlayerListTest() throws Exception {
         Team team = new Team(1, factory);
         List<Player> playerList = team.getPlayerList();
         assertNotNull(playerList);
@@ -124,7 +124,7 @@ public class TeamTest {
     }
 
     @Test
-    public void setPlayerListTest(){
+    public void setPlayerListTest() throws Exception {
         IPlayerFactory playerFactory = new PlayerMock();
         List<Player> playerList = new ArrayList<>();
         Player player = new Player(1, playerFactory);

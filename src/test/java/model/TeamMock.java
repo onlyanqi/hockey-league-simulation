@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TeamMock implements ITeamFactory {
 
-    private List formPlayerList(){
+    private List formPlayerList() throws Exception {
         List<Player> playerList = new ArrayList<>();
 
         IPlayerFactory playerFactory = new PlayerMock();
@@ -23,7 +23,12 @@ public class TeamMock implements ITeamFactory {
     }
 
     @Override
-    public void loadTeam(long id, Team team){
+    public int addTeam(Team team) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public void loadTeamByName(int id, Team team) throws Exception {
 
         switch (new Long(id).intValue()){
             case 1:
