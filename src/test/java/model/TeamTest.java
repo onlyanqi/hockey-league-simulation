@@ -45,7 +45,7 @@ public class TeamTest {
     @Test
     public void getHomeTownTest(){
         Team team = new Team(1, factory);
-        assertTrue(team.getHometown().equals("Halifax"));
+        assertTrue(team.getHometown().equals("Halifax1"));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class TeamTest {
     @Test
     public void getMascotTest(){
         Team team = new Team(1, factory);
-        assertTrue(team.getMascot().equals("Tiger"));
+        assertTrue(team.getMascot().equals("Tiger1"));
     }
 
     @Test
@@ -68,6 +68,34 @@ public class TeamTest {
         String mascot = "Tiger";
         team.setMascot(mascot);
         assertTrue(team.getMascot().equals(mascot));
+    }
+
+    @Test
+    public void getGeneralManagerTest(){
+        Team team = new Team(1, factory);
+        assertTrue(team.getGeneralManager().equals("Manager1"));
+    }
+
+    @Test
+    public void setGeneralManagerTest(){
+        Team team = new Team();
+        String generalManager = "Tiger";
+        team.setGeneralManager(generalManager);
+        assertTrue(team.getGeneralManager().equals(generalManager));
+    }
+
+    @Test
+    public void getHeadCoachTest(){
+        Team team = new Team(1, factory);
+        assertTrue(team.getHeadCoach().equals("Coach1"));
+    }
+
+    @Test
+    public void setHeadCoachTest(){
+        Team team = new Team();
+        String headCoach = "Tiger";
+        team.setHeadCoach(headCoach);
+        assertTrue(team.getHeadCoach().equals(headCoach));
     }
 
     @Test
@@ -112,6 +140,8 @@ public class TeamTest {
         assertTrue(team.getPlayerList().get(0).getName().equals("Player1"));
         assertTrue(team.getPlayerList().get(1).getName().equals("Player5"));
     }
+
+
 
 
 }

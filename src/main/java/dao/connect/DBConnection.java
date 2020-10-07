@@ -4,8 +4,7 @@ import common.Constants;
 import util.IPropertyFileReader;
 import util.PropertyFileReader;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 import java.util.Properties;
 
 public class DBConnection implements IDBConnection {
@@ -19,7 +18,8 @@ public class DBConnection implements IDBConnection {
             String dbPort = prop.getProperty(Constants.dbPort);
 
             dbURL = dbURL.concat("jdbc:mysql://").concat(dbHost).concat(Constants.semiColon)
-                    .concat(dbPort).concat(Constants.forwardSlash).concat(dbName);
+                    .concat(dbPort).concat(Constants.forwardSlash).concat(dbName)
+                    .concat(Constants.timezone);
         }
 
         return dbURL;
@@ -37,6 +37,7 @@ public class DBConnection implements IDBConnection {
                     prop.getProperty(Constants.dbUserName),prop.getProperty(Constants.dbPassword));
 
             return con;
+
         } catch (Exception ex) {
             throw ex;
         }
@@ -50,7 +51,7 @@ public class DBConnection implements IDBConnection {
 
             Connection connection = con.getConnection();
             Statement stmt=connection.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from directors;");
+            ResultSet rs=stmt.executeQuery("select * from Conference;");
             while(rs.next())
                 System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
 

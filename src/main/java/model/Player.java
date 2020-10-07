@@ -20,9 +20,11 @@ public class Player extends ParentObj{
 
     private String hometown;
 
-    private String role;
+    private String position;
 
     private long teamId;
+
+    private boolean isCaptain;
 
     public int getAge() {
         return age;
@@ -40,12 +42,12 @@ public class Player extends ParentObj{
         this.hometown = hometown;
     }
 
-    public String getRole() {
-        return role;
+    public String getPosition() {
+        return position;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public long getTeamId() {
@@ -56,11 +58,19 @@ public class Player extends ParentObj{
         this.teamId = teamId;
     }
 
-    public boolean validRole(){
+    public boolean isCaptain() {
+        return isCaptain;
+    }
+
+    public void setCaptain(boolean captain) {
+        isCaptain = captain;
+    }
+
+    public boolean validPosition(){
         boolean isValid = false;
 
-        if(isNotNull(getRole()) && isNotEmpty(getRole())){
-             if(Constants.playerRoles.contains(getRole())){
+        if(isNotNull(getPosition()) && isNotEmpty(getPosition())){
+             if(Constants.playerPositions.contains(getPosition())){
                  isValid = true;
              }
         }

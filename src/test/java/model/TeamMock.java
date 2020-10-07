@@ -32,8 +32,10 @@ public class TeamMock implements ITeamFactory {
                 team.setStartDate(new Date(2000, 0, 0));
                 team.setEndDate(new Date(2050, 0, 0));
                 team.setDivisionId(1);
-                team.setHometown("Halifax");
-                team.setMascot("Tiger");
+                team.setHometown("Halifax1");
+                team.setMascot("Tiger1");
+                team.setGeneralManager("Manager1");
+                team.setHeadCoach("Coach1");
                 team.setPlayerList(formPlayerList());
                 break;
 
@@ -43,8 +45,10 @@ public class TeamMock implements ITeamFactory {
                 team.setStartDate(new Date(2000, 0, 0));
                 team.setEndDate(new Date(2050, 0, 0));
                 team.setDivisionId(1);
-                team.setHometown("Halifax");
-                team.setMascot("Tiger");
+                team.setHometown("Halifax2");
+                team.setMascot("Tiger2");
+                team.setGeneralManager("Manager2");
+                team.setHeadCoach("Coach2");
                 team.setPlayerList(formPlayerList());
                 break;
 
@@ -54,19 +58,23 @@ public class TeamMock implements ITeamFactory {
                 team.setStartDate(new Date(2010, 0, 0));
                 team.setEndDate(new Date(2000, 0, 0));
                 team.setDivisionId(1);
-                team.setHometown("Halifax");
-                team.setMascot("Tiger");
+                team.setHometown("Halifax3");
+                team.setMascot("Tiger3");
+                team.setGeneralManager("Manager3");
+                team.setHeadCoach("Coach3");
                 team.setPlayerList(formPlayerList());
                 break;
 
             case 4:
-                //invalid role
-                team.setName("Invalid Role");
+                //invalid position
+                team.setName("Invalid Postion");
                 team.setStartDate(new Date(2010, 0, 0));
                 team.setEndDate(new Date(2000, 0, 0));
                 team.setDivisionId(1);
-                team.setHometown("Halifax");
-                team.setMascot("Tiger");
+                team.setHometown("Halifax4");
+                team.setMascot("Tiger4");
+                team.setGeneralManager("Manager4");
+                team.setHeadCoach("Coach4");
                 team.setPlayerList(formPlayerList());
                 break;
         }
