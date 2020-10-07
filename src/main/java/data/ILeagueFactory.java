@@ -4,6 +4,7 @@ import model.League;
 
 public interface ILeagueFactory {
 
-    void loadLeague(long id, League league);
+    long addLeague(League league) throws Exception;
+    void loadLeagueByName(long id, League league) throws Exception;
 
 }

@@ -12,9 +12,9 @@ public class User extends ParentObj{
         setId(id);
     }
 
-    public User(long id, IUserFactory factory){
+    public User(long id, IUserFactory factory) throws Exception {
         setId(id);
-        factory.loadUser(id, this);
+        factory.loadUserByName(id, this);
     }
 
     private String password;
