@@ -49,7 +49,6 @@ public class HockeyContext {
     }
 
 
-
     public IHockeyState getHockeyState() {
         return hockeyState;
     }

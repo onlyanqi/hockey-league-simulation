@@ -20,7 +20,6 @@ public class ImportStateTest {
 
     @Test
     public void entryTest() {
-
         assertTrue(true);
     }
 

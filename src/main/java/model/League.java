@@ -22,6 +22,8 @@ public class League extends ParentObj{
 
     private List<Conference> conferenceList;
 
+    private FreeAgent freeAgent;
+
     public String getCountry() {
         return country;
     }
@@ -44,5 +46,13 @@ public class League extends ParentObj{
 
     public void setCreatedBy(int createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public FreeAgent getFreeAgent() {
+        return freeAgent;
+    }
+
+    public void setFreeAgent(FreeAgent freeAgent) {
+        this.freeAgent = freeAgent;
     }
 }

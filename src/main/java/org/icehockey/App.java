@@ -13,17 +13,12 @@ public class App
 {
     public static void main( String[] args ) throws Exception {
 
-
         String filePath = "";
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please provide location of JSON file. If not please press ENTER");
-        filePath  = scanner.nextLine();
+        filePath  = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
 
         HockeyContext context = new HockeyContext();
         context.startAction(filePath);
-
-
 
     }
 }
