@@ -2,6 +2,8 @@ package state;
 
 import model.HockeyContext;
 
+import java.util.Scanner;
+
 public class LoadTeamState implements IHockeyState {
 
     private String input;
@@ -16,7 +18,12 @@ public class LoadTeamState implements IHockeyState {
     @Override
     public void entry() {
         //prompt team name
-        System.out.println("LoadTeam State -> Entry ");
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Please enter team name");
+        String teamName = scanner.nextLine();
+
     }
 
     @Override

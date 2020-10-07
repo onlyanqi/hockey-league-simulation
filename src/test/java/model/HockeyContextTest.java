@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
 
 public class HockeyContextTest {
 
-
     @Test
     public void startActionTest() {
         HockeyContext hockeyContext = new HockeyContext();

@@ -17,11 +17,12 @@ public class App
         String filePath = "";
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please provide location of JSON file");
+        System.out.println("Please provide location of JSON file. If not please press ENTER");
         filePath  = scanner.nextLine();
 
         HockeyContext context = new HockeyContext();
         context.startAction(filePath);
+
 
 
     }
