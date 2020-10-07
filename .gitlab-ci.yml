@@ -47,7 +47,7 @@ deploy_test:
   tags:
     - ugrad
   only:
-    - simulation_state_machine
+    - develop
   artifacts:
     paths:
       - target
