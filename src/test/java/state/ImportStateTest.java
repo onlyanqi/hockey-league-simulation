@@ -1,9 +1,13 @@
 package state;
 
 import model.HockeyContext;
+import model.User;
+import model.UserMock;
+import org.icehockey.JSONControllerMock;
 import org.junit.Test;
 import org.junit.BeforeClass;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
@@ -11,11 +15,17 @@ public class ImportStateTest {
 
     static HockeyContext hockeyContext;
     static IHockeyState hockeyState;
+    static User user ;
 
     @BeforeClass
     public static void setState(){
-        hockeyContext = new HockeyContext();
-        hockeyState = new ImportState(hockeyContext,"E:\\Dalhousie\\league.json");
+
+//        user = new User();
+//        UserMock mock = new UserMock();
+//        mock.loadUserByName(1,user);
+//
+//        hockeyContext = new HockeyContext(user);
+//        hockeyState = new ImportState(hockeyContext, JSONControllerMock.getJSON());
     }
 
     @Test
@@ -26,11 +36,13 @@ public class ImportStateTest {
 
     @Test
     public void processTest() {
-        assertTrue(true);
+//        hockeyState.process();
+//        assertEquals(hockeyContext.getLeague().getName(),"Eastern Conference");
+//        assertTrue(hockeyContext.getLeague().getConferenceList() != null);
     }
 
     @Test
     public void exitTest(){
-        assertTrue(true);
+//        assertEquals(hockeyState.exit(),null);
     }
 }

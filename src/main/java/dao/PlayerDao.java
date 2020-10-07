@@ -19,6 +19,7 @@ public class PlayerDao implements IPlayerFactory {
             callDB.setInputParameterString(4, player.getPosition());
             callDB.setInputParameterBoolean(5, player.isCaptain());
 
+
             callDB.setOutputParameterInt(6);
             callDB.execute();
             player.setId(callDB.returnOutputParameterInt(6));

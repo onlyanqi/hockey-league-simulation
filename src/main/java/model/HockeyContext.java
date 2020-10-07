@@ -1,5 +1,6 @@
 package model;
 
+import org.json.simple.JSONObject;
 import state.CreateTeamState;
 import state.IHockeyState;
 import state.ImportState;
@@ -8,20 +9,30 @@ import state.LoadTeamState;
 public class HockeyContext {
 
     private IHockeyState hockeyState;
+    private User user;
 
 
 
     private League league;
 
-    public HockeyContext(){
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public HockeyContext(User user){
         league = new League();
+        this.user = user;
     }
 
 
-    public void startAction(String filePath){
+    public void startAction(JSONObject jsonFromInput){
 
-        if(filePath.length() > 0){
-            hockeyState = new ImportState(this,filePath);
+        if(jsonFromInput!= null){
+            hockeyState = new ImportState(this,jsonFromInput);
             hockeyState.entry();
             hockeyState.process();
             hockeyState = new CreateTeamState(this);
@@ -47,7 +58,6 @@ public class HockeyContext {
     public void setLeague(League league) {
         this.league = league;
     }
-
 
 
     public IHockeyState getHockeyState() {

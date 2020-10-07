@@ -1,6 +1,8 @@
 package state;
 
+import dao.*;
 import model.*;
+import org.icehockey.GetInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,53 +26,33 @@ public class CreateTeamState implements IHockeyState {
 
     @Override
     public void entry() {
-        //Prompt Team Data
-        Scanner scanner = new Scanner(System.in);
 
-        //Get conference name, division name and team name
-
-        System.out.println("Please enter conference name the team belongs to");
-        conferenceName  = scanner.nextLine();
+        conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
 
         List<Conference> conferenceList =  league.getConferenceList();
 
         for(Conference conference: conferenceList ){
             while(!(conference.getName().equals(conferenceName))){
-                System.out.println("Please enter conference name from the existing ones");
-                conferenceName  = scanner.nextLine();
+                conferenceName  = GetInput.getUserInput("Please enter conference name from the existing ones");
             }
         }
-
-
-        System.out.println("Please enter division name the team belongs to");
-        divisionName  = scanner.nextLine();
+        divisionName  = GetInput.getUserInput("Please enter division name the team belongs to");
 
         for(Conference conference : conferenceList){
             for(Division division : conference.getDivisionList()){
                 while(!(division.getName().equals(divisionName))){
-                    System.out.println("Please enter division name from the existing ones");
-                    divisionName  = scanner.nextLine();
+                    divisionName  = GetInput.getUserInput("Please enter division name from the existing ones");
                 }
             }
-
         }
-
-        System.out.println("Please enter team name");
-        teamName  = scanner.nextLine();
+        teamName  = GetInput.getUserInput("Please enter team name");
 
         if(teamName.isEmpty()){
             System.out.println("Please enter the team name!");
         }
+        generalManagerName  = GetInput.getUserInput("Please enter name of general manager");
 
-        System.out.println("Please enter name of general manager");
-        generalManagerName  = scanner.nextLine();
-
-        System.out.println("Please enter name of head coach ");
-        headCoachName  = scanner.nextLine();
-
-
-
-
+        headCoachName  = GetInput.getUserInput("Please enter name of head coach ");
     }
 
     @Override
@@ -104,8 +86,68 @@ public class CreateTeamState implements IHockeyState {
     @Override
     public IHockeyState exit() {
         //Persist to DB and transition to next state
-        PlayerChoiceState playerChoiceState = new PlayerChoiceState(hockeyContext,"How many seasons do you want to simulate","createOrLoadTeam");
+        league.setCreatedBy(hockeyContext.getUser().getId());
+        LeagueDao leagueDao = new LeagueDao();
+        ConferenceDao conferenceDao = new ConferenceDao();
+        DivisionDao divisionDao = new DivisionDao();
+        TeamDao teamDao = new TeamDao();
+        FreeAgentDao freeAgentDao = new FreeAgentDao();
+        PlayerDao playerDao = new PlayerDao();
+        SeasonDao seasonDao = new SeasonDao();
 
+        Season season = new Season();
+        season.setName("2020");
+
+        try {
+            int leagueId = leagueDao.addLeague(league);
+            int seasonId = seasonDao.addSeason(season);
+
+            FreeAgent freeAgent = league.getFreeAgent();
+            freeAgent.setSeasonId(seasonId);
+            freeAgent.setLeagueId(leagueId);
+            int freeAgentId = freeAgentDao.addFreeAgent(freeAgent);
+            for(Player player: freeAgent.getPlayerList()){
+                player.setFreeAgentId(freeAgentId);
+                player.setSeasonId(seasonId);
+                playerDao.addPlayer(player);
+
+            }
+
+            for(Conference conference: league.getConferenceList()){
+                conference.setLeagueId(leagueId);
+                int conferenceId = conferenceDao.addConference(conference);
+
+                for(Division division: conference.getDivisionList()){
+                    division.setConferenceId(conferenceId);
+                    int divisionId = divisionDao.addDivision(division);
+
+                    for(Team team: division.getTeamList()){
+                        team.setDivisionId(divisionId);
+                        int teamId = teamDao.addTeam(team);
+
+
+
+                        for(Player player: team.getPlayerList()){
+                            player.setTeamId(teamId);
+                            player.setSeasonId(seasonId);
+                            playerDao.addPlayer(player);
+                        }
+                    }
+                }
+
+            }
+
+
+
+
+
+        } catch (Exception e) {
+            System.out.println("Unable to save the league! Please try again");
+            System.exit(1);
+            e.printStackTrace();
+        }
+
+        PlayerChoiceState playerChoiceState = new PlayerChoiceState(hockeyContext,"How many seasons do you want to simulate","createOrLoadTeam");
         return playerChoiceState;
     }
 }
