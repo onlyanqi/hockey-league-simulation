@@ -17,11 +17,10 @@ public class DBConnection implements IDBConnection {
             String dbName = prop.getProperty(Constants.dbName);
             String dbPort = prop.getProperty(Constants.dbPort);
 
-//            dbURL = dbURL.concat("jdbc:mysql://").concat(dbHost).concat(Constants.semiColon)
-//                    .concat(dbPort).concat(Constants.forwardSlash).concat(dbName)
-//                    .concat(Constants.timezone);
-
-            dbURL = "jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_7_DEVINT";
+            dbURL = dbURL.concat("jdbc:mysql://").concat(dbHost).concat(Constants.semiColon)
+                    .concat(dbPort).concat(Constants.forwardSlash).concat(dbName)
+                    .concat(Constants.timezone);
+            System.out.println(dbURL);
         }
 
         return dbURL;
@@ -33,14 +32,10 @@ public class DBConnection implements IDBConnection {
 
         try {
 
-            Class.forName("com.mysql.jdbc.Driver");
-
             IPropertyFileReader read = new PropertyFileReader();
             Properties prop = read.loadPropertyFile(Constants.dbFile);
-//            con = DriverManager.getConnection("jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_7_DEVINT",
-//                    "CSCI5308_7_DEVINT_USER","kzXm42YBRy");
-
-            con = DriverManager.getConnection("jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_7_DEVINT?" + "user=CSCI5308_7_DEVINT_USER&password=kzXm42YBRy");
+            con = DriverManager.getConnection(formDBURL(prop),
+                    prop.getProperty(Constants.dbUserName),prop.getProperty(Constants.dbPassword));
 
             return con;
 

@@ -18,4 +18,12 @@ public class Constants {
     public static final String timezone="?" +
             "useUnicode=true&useJDBCCompliantTimezoneShift=true" +
             "&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    public static final String CALL = "call";
+    public static final String space = " ";
+
+    public static final String loadLeagueByName = "LoadLeagueByName(?,?,?,?)";
+    public static final String loadUserByName = "LoadUserByName(?,?,?)";
+    public static final String addLeague = "AddLeague(?,?,?)";
+    public static final String addUser = "AddUser(?,?,?)";
+
 }
