@@ -1,0 +1,111 @@
+stages:
+  - build
+  - test
+  - deploy_test
+  - deploy_prod
+  - deploy_release
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+build:
+  stage: build
+  image: maven
+  tags:
+    - ugrad
+  script:
+    - touch .properties
+    - echo "db.url="${DB_URL} >> .properties
+    - echo "db.User"=${DB_USER_DEV} >> .properties
+    - echo "db.Password"=${DB_PASSWORD_DEV} >> .properties
+    - echo "db.Name"=${DB_NAME_DEV} >> .properties
+    - echo "db.Port=3306" >> .properties
+    - chmod og-rwx ${DEPLOY_SSH_KEY}
+
+    - mvn compile
+    - ls -lrt
+
+test:
+  stage: test
+  image: maven
+  tags:
+    - ugrad
+  script:
+    - touch .properties
+    - echo "db.url="${DB_URL} >> .properties
+    - echo "db.User"=${DB_USER_DEV} >> .properties
+    - echo "db.Password"=${DB_PASSWORD_DEV} >> .properties
+    - echo "db.Name"=${DB_NAME_DEV} >> .properties
+    - echo "db.Port=3306" >> .properties
+    - mvn test
+
+deploy_test:
+  stage: deploy_test
+  image: maven
+  tags:
+    - ugrad
+  only:
+    - develop
+  artifacts:
+    paths:
+      - target
+  script:
+    - mvn package
+    - touch .properties
+    - echo "db.url="${DB_URL} >> .properties
+    - echo "db.User"=${DB_USER_TEST} >> .properties
+    - echo "db.Password"=${DB_PASSWORD_TEST} >> .properties
+    - echo "db.Name"=${DB_NAME_TEST} >> .properties
+    - echo "db.Port=3306" >> .properties
+    - chmod og-rwx ${DEPLOY_SSH_KEY}
+    - ls -lrt
+    - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip * .properties
+    - scp -r -o StrictHostKeyChecking=no -i ${DEPLOY_SSH_KEY} ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
+
+deploy_release:
+  stage: deploy_release
+  image: maven
+  tags:
+    - ugrad
+  only:
+    - release
+  artifacts:
+    paths:
+      - target
+  script:
+    - mvn package
+    - touch .properties
+    - echo "db.url="${DB_URL} >> .properties
+    - echo "db.User"=${DB_USER_PROD} >> .properties
+    - echo "db.Password"=${DB_PASSWORD_PROD} >> .properties
+    - echo "db.Name"=${DB_NAME_PROD} >> .properties
+    - echo "db.Port=3306" >> .properties
+    - chmod og-rwx ${DEPLOY_SSH_KEY_RELEASE}
+    - ls -lrt
+    - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip * .properties
+    - scp -r -o StrictHostKeyChecking=no -i ${DEPLOY_SSH_KEY_RELEASE} ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER_RELEASE}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
+
+deploy_prod:
+  stage: deploy_prod
+  image: maven
+  tags:
+    - ugrad
+  only:
+    - master
+  artifacts:
+    paths:
+      - target
+  script:
+    - mvn package
+    - touch .properties
+    - echo "db.url="${DB_URL} >> .properties
+    - echo "db.User"=${DB_USER_PROD} >> .properties
+    - echo "db.Password"=${DB_PASSWORD_PROD} >> .properties
+    - echo "db.Name"=${DB_NAME_PROD} >> .properties
+    - echo "db.Port=3306" >> .properties
+    - chmod og-rwx ${DEPLOY_SSH_KEY_PROD}
+    - ls -lrt
+    - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip * .properties
+    - scp -r -o StrictHostKeyChecking=no -i ${DEPLOY_SSH_KEY_PROD} ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER_PROD}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
