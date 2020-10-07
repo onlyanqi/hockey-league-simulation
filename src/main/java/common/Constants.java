@@ -14,7 +14,7 @@ public class Constants {
     public static final String dbPort = "db.Port";
     public static final String semiColon = ":";
     public static final String forwardSlash = "/";
-    public static final List<String> playerRoles = new ArrayList<>(Arrays.asList("goalie", "forward", "defense"));
+    public static final List<String> playerPositions = new ArrayList<>(Arrays.asList("goalie", "forward", "defense"));
     public static final String timezone="?" +
             "useUnicode=true&useJDBCCompliantTimezoneShift=true" +
             "&useLegacyDatetimeCode=false&serverTimezone=UTC";

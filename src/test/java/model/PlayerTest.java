@@ -1,6 +1,5 @@
 package model;
 
-import data.IParentObjFactory;
 import data.IPlayerFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
@@ -68,17 +67,17 @@ public class PlayerTest {
     }
 
     @Test
-    public void getRoleTest(){
+    public void getPositionTest(){
         Player player = new Player(1, factory);
-        assertTrue(player.getRole().equals("goalie"));
+        assertTrue(player.getPosition().equals("goalie"));
     }
 
     @Test
-    public void setRoleTest(){
+    public void setPositionTest(){
         Player player = new Player();
-        String role = "goalie";
-        player.setRole(role);
-        assertTrue(player.getRole().equals(role));
+        String postion = "goalie";
+        player.setPosition(postion);
+        assertTrue(player.getPosition().equals(postion));
     }
 
     @Test
@@ -96,10 +95,24 @@ public class PlayerTest {
     }
 
     @Test
-    public void validRoleTest(){
+    public void isCaptainTest(){
+        Player player = new Player(1, factory);
+        assertTrue(player.isCaptain());
+    }
+
+    @Test
+    public void setCaptainTest(){
         Player player = new Player();
-        player.setRole("goalie");
-        assertTrue(player.validRole());
+        boolean isCaptain = true;
+        player.setCaptain(isCaptain);
+        assertTrue(player.isCaptain());
+    }
+
+    @Test
+    public void validPositionTest(){
+        Player player = new Player();
+        player.setPosition("goalie");
+        assertTrue(player.validPosition());
     }
 
 

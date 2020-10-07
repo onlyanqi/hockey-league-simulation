@@ -23,6 +23,10 @@ public class Team extends ParentObj{
 
     private long divisionId;
 
+    private String generalManager;
+
+    private String headCoach;
+
     private List<Player> playerList;
 
     public List<Player> getPlayerList() {
@@ -55,5 +59,21 @@ public class Team extends ParentObj{
 
     public void setDivisionId(long divisionId) {
         this.divisionId = divisionId;
+    }
+
+    public String getGeneralManager() {
+        return generalManager;
+    }
+
+    public void setGeneralManager(String generalManager) {
+        this.generalManager = generalManager;
+    }
+
+    public String getHeadCoach() {
+        return headCoach;
+    }
+
+    public void setHeadCoach(String headCoach) {
+        this.headCoach = headCoach;
     }
 }
