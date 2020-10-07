@@ -23,7 +23,7 @@ public class PropertyFileReader implements IPropertyFileReader{
     @Override
     public Properties loadPropertyFile(String fileName) throws Exception {
         Properties prop = null;
-        String path = "./.properties";
+        String path = "../.properties";
         FileInputStream file = null;
         try {
             file = new FileInputStream(path);

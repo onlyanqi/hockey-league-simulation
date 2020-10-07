@@ -2,6 +2,8 @@ package state;
 
 import model.HockeyContext;
 
+import java.util.Scanner;
+
 public class PlayerChoiceState implements IHockeyState{
 
     private String input;
@@ -17,13 +19,14 @@ public class PlayerChoiceState implements IHockeyState{
 
     @Override
     public void entry() {
-        System.out.println("PlayerChoice State -> entry ");
+
     }
 
     @Override
     public void process() {
-        System.out.println("PlayerChoice State -> Process ");
-        userInput = "1";
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(input);
+        userInput = scanner.nextLine();
 
     }
 
@@ -45,8 +48,8 @@ public class PlayerChoiceState implements IHockeyState{
             }
             case "createOrLoadTeam":
             {
-                return null;
-
+                InternalState internalState = new InternalState(hockeyContext);
+                return internalState;
             }
             default:
             {

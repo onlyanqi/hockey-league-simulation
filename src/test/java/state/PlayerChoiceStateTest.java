@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import static org.junit.Assert.assertTrue;
 
 
-public class ImportStateTest {
+public class PlayerChoiceStateTest {
 
     static HockeyContext hockeyContext;
     static IHockeyState hockeyState;
@@ -15,7 +15,7 @@ public class ImportStateTest {
     @BeforeClass
     public static void setState(){
         hockeyContext = new HockeyContext();
-        hockeyState = new ImportState(hockeyContext,"E:\\Dalhousie\\league.json");
+        hockeyState = new PlayerChoiceState(hockeyContext,"How many seasons do you want to simulate","createOrLoadTeam");
     }
 
     @Test

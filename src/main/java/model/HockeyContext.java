@@ -9,12 +9,16 @@ public class HockeyContext {
 
     private IHockeyState hockeyState;
 
+
+
     private League league;
 
+    public HockeyContext(){
+        league = new League();
+    }
 
 
     public void startAction(String filePath){
-
 
         if(filePath.length() > 0){
             hockeyState = new ImportState(this,filePath);
@@ -28,14 +32,22 @@ public class HockeyContext {
             hockeyState = hockeyState.exit();
         }
 
-
-
         do{
             hockeyState.entry();
             hockeyState.process();
             hockeyState = hockeyState.exit();
         }while(hockeyState!=null);
+
     }
+
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
+    }
+
 
 
     public IHockeyState getHockeyState() {

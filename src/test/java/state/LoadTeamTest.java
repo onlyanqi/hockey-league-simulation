@@ -15,7 +15,7 @@ public class LoadTeamTest {
     @BeforeClass
     public static void setState(){
         hockeyContext = new HockeyContext();
-        hockeyState = new ImportState(hockeyContext);
+        hockeyState = new LoadTeamState(hockeyContext);
     }
 
     @Test
