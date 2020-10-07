@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ConferenceMock implements IConferenceFactory {
 
-    private List formDivisionList(){
+    private List formDivisionList() throws Exception {
         List<Division> divisionList = new ArrayList<>();
 
         IDivisionFactory divisionFactory = new DivisionMock();
@@ -22,7 +22,7 @@ public class ConferenceMock implements IConferenceFactory {
     }
 
     @Override
-    public void loadConference(long id, Conference conference){
+    public void loadConferenceByName(int id, Conference conference) throws Exception {
 
         switch (new Long(id).intValue()){
             case 1:
@@ -53,6 +53,11 @@ public class ConferenceMock implements IConferenceFactory {
                 break;
         }
 
+    }
+
+    @Override
+    public int addConference(Conference conference) throws Exception {
+        return 0;
     }
 
 }

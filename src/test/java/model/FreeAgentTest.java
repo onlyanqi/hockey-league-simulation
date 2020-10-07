@@ -31,7 +31,7 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void freeAgentFactoryTest(){
+    public void freeAgentFactoryTest() throws Exception {
         FreeAgent freeAgent = new FreeAgent(1, factory);
         freeAgent = new FreeAgent(1, factory);
         List<Player> playerList = freeAgent.getPlayerList();
@@ -41,7 +41,7 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void getPlayerListTest(){
+    public void getPlayerListTest() throws Exception {
         FreeAgent freeAgent = new FreeAgent(1, factory);
         List<Player> playerList = freeAgent.getPlayerList();
         assertNotNull(playerList);
@@ -52,7 +52,7 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void setPlayerListTest(){
+    public void setPlayerListTest() throws Exception {
         IPlayerFactory playerFactory = new PlayerMock();
         List<Player> playerList = new ArrayList<>();
         Player player = new Player(1, playerFactory);

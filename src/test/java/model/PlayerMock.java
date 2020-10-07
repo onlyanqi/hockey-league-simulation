@@ -6,7 +6,7 @@ import java.util.Date;
 public class PlayerMock implements IPlayerFactory {
 
     @Override
-    public void loadPlayer(long id, Player player){
+    public void loadPlayerByName(int id, Player player){
 
         switch (new Long(id).intValue()){
             case 1:
@@ -70,6 +70,11 @@ public class PlayerMock implements IPlayerFactory {
                 break;
         }
 
+    }
+
+    @Override
+    public int addPlayer(Player player) throws Exception {
+        return 0;
     }
 
 }

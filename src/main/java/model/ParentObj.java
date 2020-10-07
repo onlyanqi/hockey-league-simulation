@@ -8,16 +8,16 @@ public class ParentObj {
 
     public ParentObj() { }
 
-    public ParentObj(long id){
+    public ParentObj(int id){
         this.id = id;
     }
 
-    public ParentObj(long id, IParentObjFactory parentObjFactory){
+    public ParentObj(int id, IParentObjFactory parentObjFactory) throws Exception {
         this.id = id;
         parentObjFactory.loadParentObj(id, this);
     }
 
-    private long id;
+    private int id;
 
     private String name;
 
@@ -25,11 +25,11 @@ public class ParentObj {
 
     private Date endDate;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

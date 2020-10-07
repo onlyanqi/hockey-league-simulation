@@ -29,7 +29,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void playerFactoryTest(){
+    public void playerFactoryTest() throws Exception {
         Player player = new Player(1, factory);
         assertEquals(player.getId(), 1);
         assertEquals(player.getName(), "Player1");
@@ -39,7 +39,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void getAgeTest(){
+    public void getAgeTest() throws Exception {
         Player player = new Player(1, factory);
         assertEquals(player.getAge(), 15);
     }
@@ -53,7 +53,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void getHomeTownTest(){
+    public void getHomeTownTest() throws Exception {
         Player player = new Player(1, factory);
         assertTrue(player.getHometown().equals("Halifax"));
     }
@@ -67,7 +67,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void getPositionTest(){
+    public void getPositionTest() throws Exception {
         Player player = new Player(1, factory);
         assertTrue(player.getPosition().equals("goalie"));
     }
@@ -81,7 +81,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void getTeamIdTest(){
+    public void getTeamIdTest() throws Exception {
         Player player = new Player(1, factory);
         assertTrue(player.getTeamId() == (1));
     }
@@ -89,13 +89,13 @@ public class PlayerTest {
     @Test
     public void setTeamIdTest(){
         Player player = new Player();
-        long teamId = 1;
+        int teamId = 1;
         player.setTeamId(teamId);
         assertTrue(player.getTeamId() == teamId);
     }
 
     @Test
-    public void isCaptainTest(){
+    public void isCaptainTest() throws Exception {
         Player player = new Player(1, factory);
         assertTrue(player.isCaptain());
     }
@@ -104,7 +104,7 @@ public class PlayerTest {
     public void setCaptainTest(){
         Player player = new Player();
         boolean isCaptain = true;
-        player.setCaptain(isCaptain);
+        player.setCaptain(true);
         assertTrue(player.isCaptain());
     }
 

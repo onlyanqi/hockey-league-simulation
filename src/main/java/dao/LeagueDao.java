@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class LeagueDao implements ILeagueFactory {
 
     @Override
-    public long addLeague(League league) throws Exception{
+    public int addLeague(League league) throws Exception{
         ICallDB callDB = null;
         try{
             callDB = new CallDB(Constants.addLeague);
@@ -29,16 +29,20 @@ public class LeagueDao implements ILeagueFactory {
     }
 
     @Override
-    public void loadLeagueByName(long id, League league) throws Exception{
+    public void loadLeagueByName(int id, League league) throws Exception{
         ICallDB callDB = null;
         try {
             callDB = new CallDB(Constants.loadLeagueByName);
             callDB.setInputParameterString(1, league.getName());
+            callDB.setOutputParameterInt(2);
+            callDB.setOutputParameterString(3);
+            callDB.setOutputParameterInt(4);
             ResultSet rs = callDB.executeLoad();
             if (rs != null) {
                 while (rs.next()) {
-                    league.setId(rs.getInt(1));
-                    league.setCreatedBy(rs.getInt(3));
+                    league.setId(rs.getInt(2));
+                    league.setName(rs.getString(3));
+                    league.setCreatedBy(rs.getInt(4));
                 }
             }
         }catch (Exception e){

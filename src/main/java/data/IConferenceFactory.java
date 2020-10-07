@@ -4,6 +4,7 @@ import model.Conference;
 
 public interface IConferenceFactory {
 
-    void loadConference(long id, Conference conference);
+    int addConference(Conference conference) throws Exception;
+    void loadConferenceByName(int id, Conference conference) throws Exception;
 
 }

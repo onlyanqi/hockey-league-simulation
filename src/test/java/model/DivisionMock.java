@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DivisionMock implements IDivisionFactory {
 
-    private List formTeamList(){
+    private List formTeamList() throws Exception {
         List<Team> teamList = new ArrayList<>();
 
         ITeamFactory teamFactory = new TeamMock();
@@ -22,7 +22,7 @@ public class DivisionMock implements IDivisionFactory {
     }
 
     @Override
-    public void loadDivision(long id, Division division){
+    public void loadDivisionByName(int id, Division division) throws Exception {
 
         switch (new Long(id).intValue()){
             case 1:
@@ -53,6 +53,11 @@ public class DivisionMock implements IDivisionFactory {
                 break;
         }
 
+    }
+
+    @Override
+    public int addDivision(Division division) throws Exception {
+        return 0;
     }
 
 }

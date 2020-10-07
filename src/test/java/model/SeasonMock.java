@@ -1,12 +1,16 @@
 package model;
 
 import data.ISeasonFactory;
-import data.IUserFactory;
 
 public class SeasonMock implements ISeasonFactory {
 
     @Override
-    public void loadSeason(long id, Season season){
+    public int addSeason(Season season) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public void loadSeasonByName(int id, Season season){
 
         switch (new Long(id).intValue()){
             case 1:

@@ -1,9 +1,7 @@
 package dao;
 
 import common.Constants;
-import data.ILeagueFactory;
 import data.IUserFactory;
-import model.League;
 import model.User;
 
 import java.sql.ResultSet;
@@ -31,15 +29,17 @@ public class UserDao implements IUserFactory {
     }
 
     @Override
-    public void loadUserByName(long id, User user) throws Exception{
+    public void loadUserByName(int id, User user) throws Exception{
         ICallDB callDB = null;
         try {
             callDB = new CallDB(Constants.loadUserByName);
             callDB.setInputParameterString(1, user.getName());
+            callDB.setOutputParameterInt(2);
+            callDB.setOutputParameterString(3);
             ResultSet rs = callDB.executeLoad();
             if (rs != null) {
                 while (rs.next()) {
-                    user.setId(rs.getInt(1));
+                    user.setId(rs.getInt(2));
                     user.setPassword(rs.getString(3));
                 }
             }

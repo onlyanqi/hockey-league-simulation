@@ -4,6 +4,7 @@ import model.Season;
 
 public interface ISeasonFactory {
 
-    void loadSeason(long id, Season season);
+    int addSeason(Season season) throws Exception;
+    void loadSeasonByName(int id, Season season) throws Exception;
 
 }

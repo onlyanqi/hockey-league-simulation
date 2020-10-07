@@ -1,18 +1,16 @@
 package model;
 
-import common.Constants;
-import data.IPlayerFactory;
 import data.IUserFactory;
 
 public class User extends ParentObj{
 
     public User(){}
 
-    public User(long id){
+    public User(int id){
         setId(id);
     }
 
-    public User(long id, IUserFactory factory) throws Exception {
+    public User(int id, IUserFactory factory) throws Exception {
         setId(id);
         factory.loadUserByName(id, this);
     }

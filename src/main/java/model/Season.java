@@ -6,13 +6,13 @@ public class Season extends ParentObj{
 
     public Season(){}
 
-    public Season(long id){
+    public Season(int id){
         setId(id);
     }
 
-    public Season(long id, ISeasonFactory factory){
+    public Season(int id, ISeasonFactory factory) throws Exception {
         setId(id);
-        factory.loadSeason(id, this);
+        factory.loadSeasonByName(id, this);
     }
 
 }
