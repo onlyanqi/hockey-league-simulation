@@ -33,7 +33,7 @@ public class UserTest {
     }
 
     @Test
-    public void userFactoryTest(){
+    public void userFactoryTest() throws Exception{
         User user = new User(1, factory);
         assertEquals(user.getId(), 1);
         assertEquals(user.getName(), "User1");
@@ -43,7 +43,7 @@ public class UserTest {
     }
 
     @Test
-    public void getPasswordTest(){
+    public void getPasswordTest() throws Exception{
         User user = new User(1, factory);
         assertTrue(user.getPassword().equals("Password1"));
     }

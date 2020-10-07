@@ -33,7 +33,7 @@ public class LeagueTest {
     }
 
     @Test
-    public void leagueFactoryTest(){
+    public void leagueFactoryTest() throws Exception{
         League league = new League(1, factory);
         assertEquals(league.getId(), 1);
         assertEquals(league.getName(), "League1");
@@ -43,7 +43,7 @@ public class LeagueTest {
     }
 
     @Test
-    public void getCountryTest(){
+    public void getCountryTest() throws Exception{
         League league = new League(1, factory);
         assertTrue(league.getCountry().equals("Canada"));
     }
@@ -57,7 +57,21 @@ public class LeagueTest {
     }
 
     @Test
-    public void getConferenceListTest(){
+    public void getCreatedByTest() throws Exception{
+        League league = new League(1, factory);
+        assertTrue(league.getCreatedBy() == 1);
+    }
+
+    @Test
+    public void setCreatedByTest(){
+        League league = new League();
+        int createdBy = 1;
+        league.setCreatedBy(createdBy);
+        assertTrue(league.getCreatedBy() == (createdBy));
+    }
+
+    @Test
+    public void getConferenceListTest() throws Exception{
         League league = new League(1, factory);
         List<Conference> conferenceList = league.getConferenceList();
         assertNotNull(conferenceList);

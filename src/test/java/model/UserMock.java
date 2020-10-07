@@ -8,7 +8,7 @@ import java.util.Date;
 public class UserMock implements IUserFactory {
 
     @Override
-    public void loadUser(long id, User user){
+    public void loadUserByName(long id, User user){
 
         switch (new Long(id).intValue()){
             case 1:
@@ -33,6 +33,11 @@ public class UserMock implements IUserFactory {
                 break;
         }
 
+    }
+
+    @Override
+    public long addUser(User user) throws Exception {
+        return 0;
     }
 
 }

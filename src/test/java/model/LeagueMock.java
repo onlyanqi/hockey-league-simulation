@@ -24,7 +24,12 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     @Override
-    public void loadLeague(long id, League league){
+    public long addLeague(League league) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public void loadLeagueByName(long id, League league){
 
         switch (new Long(id).intValue()){
             case 1:
@@ -33,6 +38,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setStartDate(new Date(2000, 0, 0));
                 league.setEndDate(new Date(2050, 0, 0));
                 league.setCountry("Canada");
+                league.setCreatedBy(1);
                 league.setConferenceList(formConferenceList());
                 break;
 
@@ -41,7 +47,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setName(null);
                 league.setStartDate(new Date(2000, 0, 0));
                 league.setEndDate(new Date(2050, 0, 0));
-                league.setCountry("Canada");
+                league.setCreatedBy(2);
                 league.setConferenceList(formConferenceList());
                 break;
 
@@ -50,7 +56,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setName("Invalid Date");
                 league.setStartDate(new Date(2010, 0, 0));
                 league.setEndDate(new Date(2000, 0, 0));
-                league.setCountry("Canada");
+                league.setCreatedBy(3);
                 league.setConferenceList(formConferenceList());
                 break;
         }
