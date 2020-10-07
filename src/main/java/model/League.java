@@ -11,12 +11,14 @@ public class League extends ParentObj{
         setId(id);
     }
 
-    public League(long id, ILeagueFactory factory){
+    public League(long id, ILeagueFactory factory) throws Exception{
         setId(id);
-        factory.loadLeague(id, this);
+        factory.loadLeagueByName(id, this);
     }
 
     private String country;
+
+    private int createdBy;
 
     private List<Conference> conferenceList;
 
@@ -34,5 +36,13 @@ public class League extends ParentObj{
 
     public void setConferenceList(List<Conference> conferenceList) {
         this.conferenceList = conferenceList;
+    }
+
+    public int getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(int createdBy) {
+        this.createdBy = createdBy;
     }
 }
