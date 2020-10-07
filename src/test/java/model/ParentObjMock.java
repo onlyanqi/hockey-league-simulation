@@ -7,7 +7,10 @@ public class ParentObjMock implements IParentObjFactory {
 
     @Override
     public int addParentObj(ParentObj parentObj) throws Exception {
-        return 0;
+        parentObj = new ParentObj();
+        parentObj.setId(1);
+        parentObj.setName("Parent1");
+        return parentObj.getId();
     }
 
     @Override

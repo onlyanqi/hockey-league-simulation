@@ -3,6 +3,7 @@ package model;
 import data.IConferenceFactory;
 import data.IDivisionFactory;
 import data.ILeagueFactory;
+import data.IPlayerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -100,5 +101,35 @@ public class LeagueTest {
         assertNull(league.getConferenceList().get(1).getName());
     }
 
+    @Test
+    public void getFreeAgentTest() throws Exception {
+        League league = new League(1, factory);
+        assertEquals(league.getFreeAgent().getId(), 1);
+        List<Player> playerList = league.getFreeAgent().getPlayerList();
+        assertTrue(playerList.get(0).getName().equals("Player1"));
+    }
+
+    @Test
+    public void setFreeAgentTest() throws Exception{
+        FreeAgent freeAgent = new FreeAgent();
+        League league = new League();
+        IPlayerFactory playerFactory = new PlayerMock();
+        List<Player> playerList = new ArrayList<>();
+
+        Player player = new Player(1, playerFactory);
+        playerList.add(player);
+
+        player = new Player(2, playerFactory);
+        playerList.add(player);
+
+        freeAgent.setId(1);
+        freeAgent.setPlayerList(playerList);
+
+        league.setFreeAgent(freeAgent);
+
+        assertTrue(league.getFreeAgent().getId() == 1);
+        assertTrue(league.getFreeAgent().getPlayerList().get(0).getId() == 1);
+
+    }
 
 }

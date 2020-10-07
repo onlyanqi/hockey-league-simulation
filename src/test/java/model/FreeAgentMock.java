@@ -24,7 +24,10 @@ public class FreeAgentMock implements IFreeAgentFactory {
 
     @Override
     public int addFreeAgent(FreeAgent freeAgent) throws Exception {
-        return 0;
+        freeAgent = new FreeAgent();
+        freeAgent.setId(1);
+        freeAgent.setName("FreeAgent1");
+        return freeAgent.getId();
     }
 
     @Override

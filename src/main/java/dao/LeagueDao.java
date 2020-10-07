@@ -52,20 +52,4 @@ public class LeagueDao implements ILeagueFactory {
         }
     }
 
-    /*public static void main(String[] args){
-
-        LeagueDao leagueDao = new LeagueDao();
-
-        try {
-            for (int i = 2; i < 10; i++) {
-                League league = new League();
-                league.setName("Name" + i);
-                league.setCreatedBy(i);
-                league.setId(leagueDao.addLeague(league));
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }*/
-
 }

@@ -57,7 +57,10 @@ public class ConferenceMock implements IConferenceFactory {
 
     @Override
     public int addConference(Conference conference) throws Exception {
-        return 0;
+        conference = new Conference();
+        conference.setId(1);
+        conference.setName("Conference1");
+        return conference.getId();
     }
 
 }

@@ -50,20 +50,4 @@ public class UserDao implements IUserFactory {
         }
     }
 
-    /*public static void main(String[] args){
-
-        UserDao userDao = new UserDao();
-
-        try {
-            for (int i = 0; i < 10; i++) {
-                User user = new User();
-                user.setName("Name" + i);
-                user.setPassword("Password"+i);
-                userDao.addUser(user);
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }*/
-
 }

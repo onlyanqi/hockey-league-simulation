@@ -1,7 +1,9 @@
 package model;
 
 import data.IConferenceFactory;
+import data.IDivisionFactory;
 import data.ILeagueFactory;
+import data.IPlayerFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,9 +24,30 @@ public class LeagueMock implements ILeagueFactory {
         return conferenceList;
     }
 
+    private FreeAgent formFreeAgent() throws Exception {
+        FreeAgent freeAgent = new FreeAgent();
+
+        freeAgent.setId(1);
+        List<Player> playerList = new ArrayList<>();
+
+        IPlayerFactory playerFactory = new PlayerMock();
+        Player player = new Player(1, playerFactory);
+        playerList.add(player);
+
+        player = new Player(5, playerFactory);
+        playerList.add(player);
+
+        freeAgent.setPlayerList(playerList);
+
+        return freeAgent;
+    }
+
     @Override
     public int addLeague(League league) throws Exception {
-        return 0;
+        league = new League();
+        league.setId(1);
+        league.setName("League1");
+        return league.getId();
     }
 
     @Override
@@ -39,6 +62,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setCountry("Canada");
                 league.setCreatedBy(1);
                 league.setConferenceList(formConferenceList());
+                league.setFreeAgent(formFreeAgent());
                 break;
 
             case 2:
@@ -48,6 +72,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setEndDate(new Date(2050, 0, 0));
                 league.setCreatedBy(2);
                 league.setConferenceList(formConferenceList());
+                league.setFreeAgent(formFreeAgent());
                 break;
 
             case 3:
@@ -57,6 +82,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setEndDate(new Date(2000, 0, 0));
                 league.setCreatedBy(3);
                 league.setConferenceList(formConferenceList());
+                league.setFreeAgent(formFreeAgent());
                 break;
         }
 

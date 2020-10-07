@@ -1,6 +1,9 @@
 package model;
 
+import data.IPlayerFactory;
 import data.IUserFactory;
+
+import java.util.Date;
 
 public class UserMock implements IUserFactory {
 
@@ -34,7 +37,11 @@ public class UserMock implements IUserFactory {
 
     @Override
     public long addUser(User user) throws Exception {
-        return 0;
+        user = new User();
+        user.setId(1);
+        user.setName("User1");
+        user.setPassword("Password1");
+        return user.getId();
     }
 
 }

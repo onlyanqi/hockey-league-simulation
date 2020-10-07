@@ -6,7 +6,10 @@ public class SeasonMock implements ISeasonFactory {
 
     @Override
     public int addSeason(Season season) throws Exception {
-        return 0;
+        season = new Season();
+        season.setId(1);
+        season.setName("Season1");
+        return season.getId();
     }
 
     @Override

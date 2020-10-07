@@ -24,7 +24,10 @@ public class TeamMock implements ITeamFactory {
 
     @Override
     public int addTeam(Team team) throws Exception {
-        return 0;
+        team = new Team();
+        team.setId(1);
+        team.setName("Season1");
+        return team.getId();
     }
 
     @Override

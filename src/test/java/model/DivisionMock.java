@@ -57,7 +57,10 @@ public class DivisionMock implements IDivisionFactory {
 
     @Override
     public int addDivision(Division division) throws Exception {
-        return 0;
+        division = new Division();
+        division.setId(1);
+        division.setName("Division1");
+        return division.getId();
     }
 
 }

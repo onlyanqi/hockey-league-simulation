@@ -74,7 +74,10 @@ public class PlayerMock implements IPlayerFactory {
 
     @Override
     public int addPlayer(Player player) throws Exception {
-        return 0;
+        player = new Player();
+        player.setId(1);
+        player.setName("Player1");
+        return player.getId();
     }
 
 }
