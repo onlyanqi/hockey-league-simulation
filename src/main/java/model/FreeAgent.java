@@ -8,13 +8,32 @@ public class FreeAgent extends ParentObj{
 
     public FreeAgent(){}
 
-    public FreeAgent(long id){
+    public FreeAgent(int id){
         setId(id);
     }
 
-    public FreeAgent(long id, IFreeAgentFactory factory){
+    public FreeAgent(int id, IFreeAgentFactory factory) throws Exception {
         setId(id);
-        factory.loadFreeAgent(id, this);
+        factory.loadFreeAgentByLeagueId(id, this);
+    }
+    private int seasonId;
+
+    public int getSeasonId() {
+        return seasonId;
+    }
+
+    public void setSeasonId(int seasonId) {
+        this.seasonId = seasonId;
+    }
+
+    private int leagueId;
+
+    public int getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
     }
 
     private List<Player> playerList;

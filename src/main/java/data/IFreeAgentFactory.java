@@ -4,6 +4,7 @@ import model.FreeAgent;
 
 public interface IFreeAgentFactory {
 
-    void loadFreeAgent(long id, FreeAgent freeAgent);
+    int addFreeAgent(FreeAgent freeAgent) throws Exception;
+    void loadFreeAgentByLeagueId(int id, FreeAgent freeAgent) throws Exception;
 
 }

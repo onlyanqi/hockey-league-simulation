@@ -1,14 +1,11 @@
 package model;
 
-import data.IPlayerFactory;
 import data.IUserFactory;
-
-import java.util.Date;
 
 public class UserMock implements IUserFactory {
 
     @Override
-    public void loadUserByName(long id, User user){
+    public void loadUserByName(int id, User user){
 
         switch (new Long(id).intValue()){
             case 1:

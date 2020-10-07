@@ -30,7 +30,7 @@ public class DivisionTest {
     }
 
     @Test
-    public void divisionFactoryTest(){
+    public void divisionFactoryTest() throws Exception {
         Division division = new Division(1, factory);
         assertEquals(division.getId(), 1);
         assertEquals(division.getName(), "Division1");
@@ -40,7 +40,7 @@ public class DivisionTest {
     }
 
     @Test
-    public void getConferenceIdTest(){
+    public void getConferenceIdTest() throws Exception {
         Division division = new Division(1, factory);
         assertTrue(division.getConferenceId() == (1));
     }
@@ -48,13 +48,13 @@ public class DivisionTest {
     @Test
     public void setConferenceIdTest(){
         Division division = new Division();
-        long conferenceId = 1;
+        int conferenceId = 1;
         division.setConferenceId(conferenceId);
         assertTrue(division.getConferenceId() == conferenceId);
     }
 
     @Test
-    public void getTeamListTest(){
+    public void getTeamListTest() throws Exception {
         Division division = new Division(1, factory);
         List<Team> teamList = division.getTeamList();
         assertNotNull(teamList);
@@ -65,7 +65,7 @@ public class DivisionTest {
     }
 
     @Test
-    public void setPlayerListTest(){
+    public void setPlayerListTest() throws Exception {
         ITeamFactory teamFactory = new TeamMock();
         List<Team> teamList = new ArrayList<>();
         Team team = new Team(1, teamFactory);

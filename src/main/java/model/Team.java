@@ -8,20 +8,20 @@ public class Team extends ParentObj{
 
     public Team(){}
 
-    public Team(long id){
+    public Team(int id){
         setId(id);
     }
 
-    public Team(long id, ITeamFactory factory){
+    public Team(int id, ITeamFactory factory) throws Exception {
         setId(id);
-        factory.loadTeam(id, this);
+        factory.loadTeamByName(id, this);
     }
 
     private String hometown;
 
     private String mascot;
 
-    private long divisionId;
+    private int divisionId;
 
     private String generalManager;
 
@@ -53,11 +53,11 @@ public class Team extends ParentObj{
         this.mascot = mascot;
     }
 
-    public long getDivisionId() {
+    public int getDivisionId() {
         return divisionId;
     }
 
-    public void setDivisionId(long divisionId) {
+    public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
     }
 

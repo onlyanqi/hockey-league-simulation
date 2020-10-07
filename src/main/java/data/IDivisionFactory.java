@@ -1,9 +1,11 @@
 package data;
 
+import model.Conference;
 import model.Division;
 
 public interface IDivisionFactory {
 
-    void loadDivision(long id, Division division);
+    int addDivision(Division division) throws Exception;
+    void loadDivisionByName(int id, Division division) throws Exception;
 
 }

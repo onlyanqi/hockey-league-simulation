@@ -8,16 +8,16 @@ public class Division extends ParentObj{
 
     public Division(){}
 
-    public Division(long id){
+    public Division(int id){
         setId(id);
     }
 
-    public Division(long id, IDivisionFactory factory){
+    public Division(int id, IDivisionFactory factory) throws Exception {
         setId(id);
-        factory.loadDivision(id, this);
+        factory.loadDivisionByName(id, this);
     }
 
-    private long conferenceId;
+    private int conferenceId;
 
     private List<Team> teamList;
 
@@ -29,11 +29,11 @@ public class Division extends ParentObj{
         this.teamList = teamList;
     }
 
-    public long getConferenceId() {
+    public int getConferenceId() {
         return conferenceId;
     }
 
-    public void setConferenceId(long conferenceId) {
+    public void setConferenceId(int conferenceId) {
         this.conferenceId = conferenceId;
     }
 }

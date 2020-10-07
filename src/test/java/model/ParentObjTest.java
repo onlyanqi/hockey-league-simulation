@@ -30,7 +30,7 @@ public class ParentObjTest {
     }
 
     @Test
-    public void parentObjFactoryTest(){
+    public void parentObjFactoryTest() throws Exception {
         ParentObj parentObj = new ParentObj(1, factory);
         assertEquals(parentObj.getId(), 1);
         assertEquals(parentObj.getName(), "Parent");
@@ -48,13 +48,13 @@ public class ParentObjTest {
     @Test
     public void setIdTest(){
         ParentObj parentObj = new ParentObj();
-        long id = 1;
+        int id = 1;
         parentObj.setId(id);
         assertEquals(parentObj.getId(), id);
     }
 
     @Test
-    public void getNameTest(){
+    public void getNameTest() throws Exception {
         ParentObj parentObj = new ParentObj(1, factory);
         assertTrue(parentObj.getName().equals("Parent"));
     }
@@ -68,7 +68,7 @@ public class ParentObjTest {
     }
 
     @Test
-    public void getStartDateTest(){
+    public void getStartDateTest() throws Exception {
         ParentObj parentObj = new ParentObj(1, factory);
         assertTrue(parentObj.getStartDate().equals(new Date(2000, 00, 00)));
     }
@@ -82,7 +82,7 @@ public class ParentObjTest {
     }
 
     @Test
-    public void getEndDateTest(){
+    public void getEndDateTest() throws Exception {
         ParentObj parentObj = new ParentObj(1, factory);
         assertTrue(parentObj.getEndDate().equals(new Date(2050, 0, 0)));
     }
@@ -120,7 +120,7 @@ public class ParentObjTest {
     }
 
     @Test
-    public void validEndDateTest(){
+    public void validEndDateTest() throws Exception {
         ParentObj parentObj = new ParentObj(1, factory);
         int value = parentObj.getEndDate().compareTo(parentObj.getStartDate());
         assertTrue(value >= 0);

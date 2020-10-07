@@ -83,7 +83,7 @@ public class LeagueTest {
     }
 
     @Test
-    public void setConferenceListTest(){
+    public void setConferenceListTest() throws Exception {
         IConferenceFactory conferenceFactory = new ConferenceMock();
         List<Conference> conferenceList = new ArrayList<>();
         Conference conference = new Conference(1, conferenceFactory);
