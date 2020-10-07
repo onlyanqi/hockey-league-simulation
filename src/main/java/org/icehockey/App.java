@@ -1,5 +1,6 @@
 package org.icehockey;
 
+import dao.connect.DBConnection;
 import model.HockeyContext;
 
 import java.util.Scanner;
@@ -10,18 +11,21 @@ import java.util.Scanner;
  */
 public class App
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) throws Exception {
 
 
-        String filePath = "";
-        Scanner scanner = new Scanner(System.in);
+//        String filePath = "";
+//        Scanner scanner = new Scanner(System.in);
+//
+//        System.out.println("Please provide location of JSON file. If not please press ENTER");
+//        filePath  = scanner.nextLine();
+//
+//        HockeyContext context = new HockeyContext();
+//        context.startAction(filePath);
 
-        System.out.println("Please provide location of JSON file. If not please press ENTER");
-        filePath  = scanner.nextLine();
+        DBConnection conn = new DBConnection();
+        conn.getConnection();
 
-        HockeyContext context = new HockeyContext();
-        context.startAction(filePath);
 
 
 
