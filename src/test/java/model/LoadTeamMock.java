@@ -9,7 +9,7 @@ import java.util.List;
 
 public class LoadTeamMock implements ILoadTeamFactory {
 
-    private List formPlayerList() throws Exception {
+    public List formPlayerList() throws Exception {
         List<Player> playerList = new ArrayList<>();
 
         ILoadPlayerFactory playerFactory = new LoadPlayerMock();
@@ -94,6 +94,12 @@ public class LoadTeamMock implements ILoadTeamFactory {
         team.setHeadCoach("Coach1");
         team.setPlayerList(formPlayerList());
         return team;
+    }
+
+    @Override
+    public List<Team> loadTeamListByDivisionId(int divisionId) throws Exception {
+        LoadDivisionMock loadDivisionMock = new LoadDivisionMock();
+        return loadDivisionMock.formTeamList();
     }
 
 }

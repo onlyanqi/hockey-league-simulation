@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LoadLeagueMock implements ILoadLeagueFactory {
 
-    private List formConferenceList() throws Exception {
+    public List formConferenceList() throws Exception {
         List<Conference> conferenceList = new ArrayList<>();
 
         ILoadConferenceFactory conferenceFactory = new LoadConferenceMock();
@@ -90,6 +90,25 @@ public class LoadLeagueMock implements ILoadLeagueFactory {
         league.setConferenceList(formConferenceList());
         league.setFreeAgent(formFreeAgent());
         return league;
+    }
+
+    public List formLeagueList() throws Exception {
+        List<League> leagueList = new ArrayList<>();
+
+        League league = new League(1);
+        league.setName("League1");
+        leagueList.add(league);
+
+        league = new League(2);
+        league.setName("League2");
+        leagueList.add(league);
+
+        return leagueList;
+    }
+
+    @Override
+    public List<League> loadLeagueListByUserId(int userId) throws Exception {
+        return formLeagueList();
     }
 
 }

@@ -5,6 +5,8 @@ import data.ILoadLeagueFactory;
 import model.FreeAgent;
 import model.League;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -59,6 +61,31 @@ public class LoadLeagueDao implements ILoadLeagueFactory {
             callDB.closeConnection();
         }
         return league;
+    }
+
+    @Override
+    public List<League> loadLeagueListByUserId(int userId) throws Exception {
+        List<League> leagueList = null;
+        ICallDB callDB = null;
+        try{
+            callDB = new CallDB(Constants.loadLeagueListByUserId);
+            callDB.setInputParameterInt(1, userId);
+            ResultSet rs = callDB.executeLoad();
+            if (rs != null) {
+                leagueList = new ArrayList<>();
+                while (rs.next()) {
+                    League league = new League();
+                    league.setId(rs.getInt(1));
+                    league.setName(rs.getString(2));
+                    league.setCreatedBy(rs.getInt(3));
+                    leagueList.add(league);
+                }
+            }
+        } catch (Exception e){
+            throw e;
+        }
+
+        return leagueList;
     }
 
 }

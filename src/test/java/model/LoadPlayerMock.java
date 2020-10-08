@@ -2,6 +2,7 @@ package model;
 
 import data.ILoadPlayerFactory;
 import java.util.Date;
+import java.util.List;
 
 public class LoadPlayerMock implements ILoadPlayerFactory {
 
@@ -70,6 +71,18 @@ public class LoadPlayerMock implements ILoadPlayerFactory {
                 break;
         }
 
+    }
+
+    @Override
+    public List<Player> loadPlayerListByFreeAgentId(int teamId) throws Exception {
+        LoadTeamMock loadTeamMock = new LoadTeamMock();
+        return loadTeamMock.formPlayerList();
+    }
+
+    @Override
+    public List<Player> loadPlayerListByTeamId(int teamId) throws Exception {
+        LoadFreeAgentMock loadFreeAgentMock = new LoadFreeAgentMock();
+        return loadFreeAgentMock.formPlayerList();
     }
 
 }

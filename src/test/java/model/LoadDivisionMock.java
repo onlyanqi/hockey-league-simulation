@@ -8,7 +8,7 @@ import java.util.List;
 
 public class LoadDivisionMock implements ILoadDivisionFactory {
 
-    private List formTeamList() throws Exception {
+    public List formTeamList() throws Exception {
         List<Team> teamList = new ArrayList<>();
 
         ILoadTeamFactory teamFactory = new LoadTeamMock();
@@ -64,6 +64,12 @@ public class LoadDivisionMock implements ILoadDivisionFactory {
         division.setConferenceId(1);
         division.setTeamList(formTeamList());
         return division;
+    }
+
+    @Override
+    public List<Division> loadDivisionListByConferenceId(int conferenceId) throws Exception {
+        LoadConferenceMock loadConferenceMock = new LoadConferenceMock();
+        return loadConferenceMock.formDivisionList();
     }
 
 }

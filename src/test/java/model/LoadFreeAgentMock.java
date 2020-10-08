@@ -9,7 +9,7 @@ import java.util.List;
 
 public class LoadFreeAgentMock implements ILoadFreeAgentFactory {
 
-    private List formPlayerList() throws Exception {
+    public List formPlayerList() throws Exception {
         List<Player> playerList = new ArrayList<>();
 
         ILoadPlayerFactory playerFactory = new LoadPlayerMock();
