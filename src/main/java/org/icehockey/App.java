@@ -29,13 +29,18 @@ public class App
 
             filePath = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
 
-            if (filePath != null) {
+
+            //JSONController.validateJSON(filePath);
+            if (filePath != null && util.isNotEmpty(filePath) ) {
                 jsonFromInput = JSONController.readJSON(filePath);
             }
 
             HockeyContext context = new HockeyContext(user);
             context.startAction(jsonFromInput);
+
         }
+
+
     }
 
 

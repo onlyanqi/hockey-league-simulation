@@ -16,9 +16,11 @@ public class AddTeamDao implements IAddTeamFactory {
             callDB = new CallDB(Constants.addTeam);
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
-            callDB.setOutputParameterInt(3);
+            callDB.setInputParameterString(3, team.getHeadCoach());
+            callDB.setInputParameterString(4, team.getGeneralManager());
+            callDB.setOutputParameterInt(5);
             callDB.execute();
-            team.setId(callDB.returnOutputParameterInt(3));
+            team.setId(callDB.returnOutputParameterInt(5));
 
         } catch (SQLException sqlException){
             throw sqlException;

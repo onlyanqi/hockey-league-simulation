@@ -28,16 +28,16 @@ public class Constants {
     public static final String loadSeasonByName = "LoadSeasonByName(?,?,?)";
     public static final String loadTeamByName = "LoadTeamByName(?,?,?,?)";
     public static final String loadFreeAgentByLeagueId = "LoadFreeAgentByName(?,?,?,?)";
-    public static final String loadPlayerByName = "LoadPlayerByName(?,?,?,?,?)";
+    public static final String loadPlayerByName = "LoadPlayerByName(?,?,?,?,?,?,?)";
 
     public static final String addUser = "AddUser(?,?,?)";
     public static final String addLeague = "AddLeague(?,?,?)";
     public static final String addConference = "AddConference(?,?,?)";
     public static final String addDivision = "AddDivision(?,?,?)";
     public static final String addSeason = "AddSeason(?,?)";
-    public static final String addTeam = "AddTeam(?,?,?)";
+    public static final String addTeam = "AddTeam(?,?,?,?,?)";
     public static final String addFreeAgent = "AddFreeAgent(?,?,?)";
-    public static final String addPlayer = "AddPlayer(?,?,?,?,?,?)";
+    public static final String addPlayer = "AddPlayer(?,?,?,?,?,?,?)";
 
     public static final String loadLeagueListByUserId = "LoadLeagueListByUserId(?)";
     public static final String loadConferenceListByLeagueId = "LoadConferenceListByLeagueId(?)";

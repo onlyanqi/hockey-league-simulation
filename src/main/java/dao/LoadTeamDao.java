@@ -21,15 +21,12 @@ public class LoadTeamDao implements ILoadTeamFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
-                    team = new Team();
-                    team.setId(rs.getInt(2));
-                    team.setName(rs.getString(3));
-                    team.setDivisionId(rs.getInt(4));
-                }
-            }
+            callDB.executeLoad();
+            team = new Team();
+            team.setId(callDB.returnOutputParameterInt(2));
+            team.setName(callDB.returnOutputParameterString(3));
+            team.setDivisionId(callDB.returnOutputParameterInt(4));
+
         }catch (Exception e){
             throw e;
         } finally {
@@ -47,15 +44,12 @@ public class LoadTeamDao implements ILoadTeamFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
-                    team = new Team();
-                    team.setId(rs.getInt(2));
-                    team.setName(rs.getString(3));
-                    team.setDivisionId(rs.getInt(4));
-                }
-            }
+            callDB.executeLoad();
+            team = new Team();
+            team.setId(callDB.returnOutputParameterInt(2));
+            team.setName(callDB.returnOutputParameterString(3));
+            team.setDivisionId(callDB.returnOutputParameterInt(4));
+
         }catch (Exception e){
             throw e;
         } finally {

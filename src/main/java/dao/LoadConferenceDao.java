@@ -21,15 +21,13 @@ public class LoadConferenceDao implements ILoadConferenceFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
+            callDB.executeLoad();
+
+
                     conference = new Conference();
-                    conference.setId(rs.getInt(2));
-                    conference.setName(rs.getString(3));
-                    conference.setLeagueId(rs.getInt(4));
-                }
-            }
+                    conference.setId(callDB.returnOutputParameterInt(2));
+                    conference.setName(callDB.returnOutputParameterString(3));
+                    conference.setLeagueId(callDB.returnOutputParameterInt(4));
         }catch (Exception e){
             throw e;
         } finally {
@@ -46,15 +44,11 @@ public class LoadConferenceDao implements ILoadConferenceFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
-                    conference = new Conference();
-                    conference.setId(rs.getInt(2));
-                    conference.setName(rs.getString(3));
-                    conference.setLeagueId(rs.getInt(4));
-                }
-            }
+            callDB.executeLoad();
+            conference = new Conference();
+            conference.setId(callDB.returnOutputParameterInt(2));
+            conference.setName(callDB.returnOutputParameterString(3));
+            conference.setLeagueId(callDB.returnOutputParameterInt(4));
         }catch (Exception e){
             throw e;
         } finally {
