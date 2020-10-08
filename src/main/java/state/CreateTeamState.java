@@ -5,9 +5,12 @@ import data.*;
 import model.*;
 import org.icehockey.GetInput;
 
+import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static common.Constants.loadLeagueByName;
 
 public class CreateTeamState implements IHockeyState {
 
@@ -18,6 +21,7 @@ public class CreateTeamState implements IHockeyState {
     private String teamName;
     private String generalManagerName;
     private String headCoachName;
+    private String seasonName;
 
 
     public CreateTeamState(HockeyContext hockeyContext){
@@ -26,11 +30,24 @@ public class CreateTeamState implements IHockeyState {
     }
 
     @Override
-    public void entry() {
+    public void entry() throws Exception {
+
+
+        if(isLeaguePresent(league.getName())){
+            System.out.println("League already exists. Please enter a new one");
+            System.exit(1);
+        }
+
+        seasonName  = GetInput.getUserInput("Please enter season name");
+
+        while((seasonName.isEmpty() || seasonName ==null )){
+            seasonName = GetInput.getUserInput("Please enter season name!");
+        }
+
 
         conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
-
         List<Conference> conferenceList =  league.getConferenceList();
+
 
         for(Conference conference: conferenceList ){
             while(!(conference.getName().equals(conferenceName))){
@@ -38,6 +55,7 @@ public class CreateTeamState implements IHockeyState {
             }
         }
         divisionName  = GetInput.getUserInput("Please enter division name the team belongs to");
+
 
         for(Conference conference : conferenceList){
             for(Division division : conference.getDivisionList()){
@@ -76,6 +94,23 @@ public class CreateTeamState implements IHockeyState {
         else return false;
 
     }
+
+    private boolean isLeaguePresent(String leagueName){
+
+        ILoadLeagueFactory iLoadLeagueFactory = new LoadLeagueDao();
+
+        League league = null;
+        try {
+            league = iLoadLeagueFactory.loadLeagueByName(league.getName());
+        }catch (Exception e) {
+            System.out.println("Unable to load league, please try again.");
+            System.exit(1);
+            e.printStackTrace();
+        }
+        if(league!=null) return true;
+        else return false;
+    }
+
 
     @Override
     public void process() {
@@ -117,7 +152,7 @@ public class CreateTeamState implements IHockeyState {
             IAddSeasonFactory seasonDao = new AddSeasonDao();
 
             Season season = new Season();
-            season.setName("2020");
+            season.setName(seasonName);
 
             try {
                 int leagueId = leagueDao.addLeague(league);
