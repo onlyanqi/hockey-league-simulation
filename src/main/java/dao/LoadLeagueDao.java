@@ -2,6 +2,7 @@ package dao;
 
 import common.Constants;
 import data.ILoadLeagueFactory;
+import model.FreeAgent;
 import model.League;
 
 import java.sql.ResultSet;
@@ -18,15 +19,16 @@ public class LoadLeagueDao implements ILoadLeagueFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
-                    league = new League();
-                    league.setId(rs.getInt(2));
-                    league.setName(rs.getString(3));
-                    league.setCreatedBy(rs.getInt(4));
-                }
-            }
+
+            callDB.executeLoad();
+
+
+            league = new League();
+            league.setId(callDB.returnOutputParameterInt(2));
+            league.setName(callDB.returnOutputParameterString(3));
+            league.setCreatedBy(callDB.returnOutputParameterInt(4));
+
+
         }catch (Exception e){
             throw e;
         } finally {
@@ -44,15 +46,13 @@ public class LoadLeagueDao implements ILoadLeagueFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
-                    league = new League();
-                    league.setId(rs.getInt(2));
-                    league.setName(rs.getString(3));
-                    league.setCreatedBy(rs.getInt(4));
-                }
-            }
+            callDB.executeLoad();
+
+            league = new League();
+            league.setId(callDB.returnOutputParameterInt(2));
+            league.setName(callDB.returnOutputParameterString(3));
+            league.setCreatedBy(callDB.returnOutputParameterInt(4));
+
         }catch (Exception e){
             throw e;
         } finally {

@@ -18,8 +18,6 @@ public class InternalState implements IHockeyState {
 
     @Override
     public void process() {
-
-
     }
 
     @Override

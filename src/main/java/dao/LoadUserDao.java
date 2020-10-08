@@ -17,14 +17,13 @@ public class LoadUserDao implements ILoadUserFactory {
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
-                    user = new User();
-                    user.setId(rs.getInt(1));
-                    user.setPassword(rs.getString(2));
-                }
-            }
+            callDB.executeLoad();
+
+
+            user = new User();
+            user.setId(callDB.returnOutputParameterInt(2));
+            user.setPassword(callDB.returnOutputParameterString(3));
+
         }catch (Exception e){
             e.printStackTrace();
             throw e;
@@ -45,14 +44,11 @@ public class LoadUserDao implements ILoadUserFactory {
             callDB.setInputParameterString(1, userName);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
-                    user = new User();
-                    user.setId(rs.getInt(1));
-                    user.setPassword(rs.getString(2));
-                }
-            }
+            callDB.executeLoad();
+
+            user = new User();
+            user.setId(callDB.returnOutputParameterInt(2));
+            user.setPassword(callDB.returnOutputParameterString(3));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
