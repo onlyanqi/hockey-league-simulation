@@ -39,4 +39,11 @@ public class Constants {
     public static final String addFreeAgent = "AddFreeAgent(?,?,?)";
     public static final String addPlayer = "AddPlayer(?,?,?,?,?,?)";
 
+    public static final String loadLeagueListByUserId = "LoadLeagueListByUserId(?)";
+    public static final String loadConferenceListByLeagueId = "LoadConferenceListByLeagueId(?)";
+    public static final String loadDivisionListByConferenceId = "LoadDivisionListByConferenceId(?)";
+    public static final String loadTeamListByDivisionId = "LoadTeamListByDivisionId(?)";
+    public static final String loadPlayerListByTeamId = "LoadPlayerListByTeamId(?)";
+    public static final String loadPlayerListByFreeAgentId = "LoadPlayerListByFreeAgentId(?)";
+
 }

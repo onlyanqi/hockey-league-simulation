@@ -2,9 +2,13 @@ package dao;
 
 import common.Constants;
 import data.ILoadFreeAgentFactory;
+import model.Division;
 import model.FreeAgent;
+import model.Player;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoadFreeAgentDao implements ILoadFreeAgentFactory {
 
@@ -32,4 +36,5 @@ public class LoadFreeAgentDao implements ILoadFreeAgentFactory {
             callDB.closeConnection();
         }
     }
+
 }

@@ -2,10 +2,13 @@ package dao;
 
 import common.Constants;
 import data.ILoadDivisionFactory;
+import model.Conference;
 import model.Division;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoadDivisionDao implements ILoadDivisionFactory {
 
@@ -59,5 +62,30 @@ public class LoadDivisionDao implements ILoadDivisionFactory {
             callDB.closeConnection();
         }
         return division;
+    }
+
+    @Override
+    public List<Division> loadDivisionListByConferenceId(int conferenceId) throws Exception {
+        List<Division> divisionList = null;
+        ICallDB callDB = null;
+        try{
+            callDB = new CallDB(Constants.loadDivisionListByConferenceId);
+            callDB.setInputParameterInt(1, conferenceId);
+            ResultSet rs = callDB.executeLoad();
+            if (rs != null) {
+                divisionList = new ArrayList<>();
+                while (rs.next()) {
+                    Division division = new Division();
+                    division.setId(rs.getInt(1));
+                    division.setName(rs.getString(2));
+                    division.setConferenceId(conferenceId);
+                    divisionList.add(division);
+                }
+            }
+        } catch (Exception e){
+            throw e;
+        }
+
+        return divisionList;
     }
 }

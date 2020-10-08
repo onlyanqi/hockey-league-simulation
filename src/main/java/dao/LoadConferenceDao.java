@@ -3,8 +3,10 @@ package dao;
 import common.Constants;
 import data.ILoadConferenceFactory;
 import model.Conference;
+import model.League;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoadConferenceDao implements ILoadConferenceFactory {
@@ -61,17 +63,27 @@ public class LoadConferenceDao implements ILoadConferenceFactory {
         return conference;
     }
 
+    @Override
     public List<Conference> loadConferenceListByLeagueId(int leagueId) throws Exception {
         List<Conference> conferenceList = null;
+        ICallDB callDB = null;
         try{
-
-
+            callDB = new CallDB(Constants.loadConferenceListByLeagueId);
+            callDB.setInputParameterInt(1, leagueId);
+            ResultSet rs = callDB.executeLoad();
+            if (rs != null) {
+                conferenceList = new ArrayList<>();
+                while (rs.next()) {
+                    Conference conference = new Conference();
+                    conference.setId(rs.getInt(1));
+                    conference.setName(rs.getString(2));
+                    conference.setLeagueId(leagueId);
+                    conferenceList.add(conference);
+                }
+            }
         } catch (Exception e){
             throw e;
-        } finally {
-            callDB.closeConnection();
         }
-
 
         return conferenceList;
     }
