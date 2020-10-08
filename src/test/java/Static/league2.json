@@ -1,0 +1,86 @@
+{
+  "leagueName":"National Hockey League",
+  "conferences":[
+    {
+      "conferenceName":"Eastern Conference",
+      "divisions":[
+        {
+          "divisionName":"Metropolitan",
+          "teams":[
+            {
+              "teamName":"Carolina Hurricanes",
+              "generalManager":"General Manager 1",
+              "headCoach":"Head Coach 1",
+              "players":[
+                {
+                  "playerName":"Player One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Player Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Player Three",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conferenceName":"Wastern Conference",
+      "divisions":[
+        {
+          "divisionName":"Central",
+          "teams":[
+            {
+              "teamName":"Winnipeg Jets",
+              "generalManager":"General Manager 2",
+              "headCoach":"Head Coach 2",
+              "players":[
+                {
+                  "playerName":"Player three",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Player Four",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Player Five",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "freeAgents":[
+    {
+      "playerName":"Agent One",
+      "position":"forward",
+      "captain":false
+    },
+    {
+      "playerName":"Agent Two",
+      "position":"defense",
+      "captain":false
+    },
+    {
+      "playerName":"Agent Three",
+      "position":"goalie",
+      "captain":false
+    }
+  ]
+}

@@ -48,12 +48,33 @@ public class CreateTeamState implements IHockeyState {
         }
         teamName  = GetInput.getUserInput("Please enter team name");
 
-        if(teamName.isEmpty()){
-            System.out.println("Please enter the team name!");
+        while((teamName.isEmpty() || teamName ==null || isTeamPresent(teamName))){
+            teamName = GetInput.getUserInput("Please enter valid team name! Make sure there is no existing team with provided name");
         }
         generalManagerName  = GetInput.getUserInput("Please enter name of general manager");
-
+        while(generalManagerName.isEmpty() || generalManagerName ==null){
+            generalManagerName=  GetInput.getUserInput("Please enter GeneralManager name!");
+        }
         headCoachName  = GetInput.getUserInput("Please enter name of head coach ");
+        while(headCoachName.isEmpty() || headCoachName ==null){
+            headCoachName = GetInput.getUserInput("Please enter  HeadCoach Name !");
+        }
+
+    }
+
+    private boolean isTeamPresent(String teamName)  {
+        ILoadTeamFactory factory = new LoadTeamDao();
+        Team team = null;
+        try {
+            team = factory.loadTeamByName(teamName);
+        }catch (Exception e) {
+            System.out.println("Unable to load team, please try again.");
+            System.exit(1);
+            e.printStackTrace();
+        }
+        if(team!=null) return true;
+        else return false;
+
     }
 
     @Override
@@ -72,15 +93,12 @@ public class CreateTeamState implements IHockeyState {
                         team.setGeneralManager(generalManagerName);
 
                         division.getTeamList().add(team);
-
                     }
                 }
                 conference.setDivisionList(divisionList);
             }
         }
-
         league.setConferenceList(conferenceList);
-
         hockeyContext.setLeague(league);
     }
 
@@ -89,7 +107,7 @@ public class CreateTeamState implements IHockeyState {
         PlayerChoiceState playerChoiceState = null;
         if (league != null) {
             //Persist to DB and transition to next state
-            league.setCreatedBy(hockeyContext.getUser().getId());
+            league.setCreatedBy(3);
             IAddLeagueFactory leagueDao = new AddLeagueDao();
             IAddConferenceFactory conferenceDao = new AddConferenceDao();
             IAddDivisionFactory divisionDao = new AddDivisionDao();
@@ -108,8 +126,9 @@ public class CreateTeamState implements IHockeyState {
                 if(leagueId != 0 && seasonId != 0){
                     if(league.getFreeAgent() != null) {
                         int freeAgentId = addFreeAgent(leagueId, seasonId);
-                        addPlayerList(freeAgentId, seasonId, league.getFreeAgent().getPlayerList());
+                        addPlayerList(0,freeAgentId, seasonId, league.getFreeAgent().getPlayerList());
                     }
+
                     if(league.getConferenceList() != null && !league.getConferenceList().isEmpty()){
                         for (Conference conference : league.getConferenceList()) {
                             conference.setLeagueId(leagueId);
@@ -122,7 +141,7 @@ public class CreateTeamState implements IHockeyState {
                                 for (Team team : division.getTeamList()) {
                                     team.setDivisionId(divisionId);
                                     int teamId = teamDao.addTeam(team);
-                                    addPlayerList(teamId, seasonId, team.getPlayerList());
+                                    addPlayerList(teamId,0, seasonId, team.getPlayerList());
                                 }
                             }
 
@@ -149,15 +168,15 @@ public class CreateTeamState implements IHockeyState {
         return freeAgentDao.addFreeAgent(freeAgent);
     }
 
-    private void addPlayerList(int parentId, int seasonId, List<Player> playerList) throws Exception {
+    private void addPlayerList(int teamId, int freeAgentId, int seasonId, List<Player> playerList) throws Exception {
         if(playerList != null && !playerList.isEmpty()) {
             IAddPlayerFactory playerDao = new AddPlayerDao();
             for (Player player : playerList) {
-                player.setFreeAgentId(parentId);
+                player.setFreeAgentId(teamId);
+                player.setFreeAgentId(freeAgentId);
                 player.setSeasonId(seasonId);
                 playerDao.addPlayer(player);
             }
         }
     }
-
 }

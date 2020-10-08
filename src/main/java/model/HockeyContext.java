@@ -11,7 +11,9 @@ public class HockeyContext {
     private IHockeyState hockeyState;
     private User user;
 
-
+    public void setHockeyState(IHockeyState hockeyState) {
+        this.hockeyState = hockeyState;
+    }
 
     private League league;
 
@@ -29,7 +31,7 @@ public class HockeyContext {
     }
 
 
-    public void startAction(JSONObject jsonFromInput){
+    public void startAction(JSONObject jsonFromInput) throws Exception {
 
         if(jsonFromInput!= null){
             hockeyState = new ImportState(this,jsonFromInput);

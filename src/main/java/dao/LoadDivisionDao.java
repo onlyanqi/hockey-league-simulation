@@ -18,15 +18,14 @@ public class LoadDivisionDao implements ILoadDivisionFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
+            callDB.executeLoad();
+
+
                     division = new Division();
-                    division.setId(rs.getInt(2));
-                    division.setName(rs.getString(3));
-                    division.setConferenceId(rs.getInt(4));
-                }
-            }
+                    division.setId(callDB.returnOutputParameterInt(2));
+                    division.setName(callDB.returnOutputParameterString(3));
+                    division.setConferenceId(callDB.returnOutputParameterInt(4));
+
         }catch (Exception e){
             throw e;
         } finally {
@@ -44,15 +43,13 @@ public class LoadDivisionDao implements ILoadDivisionFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
-                    division = new Division();
-                    division.setId(rs.getInt(2));
-                    division.setName(rs.getString(3));
-                    division.setConferenceId(rs.getInt(4));
-                }
-            }
+            callDB.executeLoad();
+
+
+            division = new Division();
+            division.setId(callDB.returnOutputParameterInt(2));
+            division.setName(callDB.returnOutputParameterString(3));
+            division.setConferenceId(callDB.returnOutputParameterInt(4));
         }catch (Exception e){
             throw e;
         } finally {

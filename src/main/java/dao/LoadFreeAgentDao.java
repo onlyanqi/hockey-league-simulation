@@ -2,6 +2,7 @@ package dao;
 
 import common.Constants;
 import data.ILoadFreeAgentFactory;
+import model.Division;
 import model.FreeAgent;
 
 import java.sql.ResultSet;
@@ -17,15 +18,13 @@ public class LoadFreeAgentDao implements ILoadFreeAgentFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterInt(3);
             callDB.setOutputParameterInt(4);
-            ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
-                while (rs.next()) {
-                    freeAgent = new FreeAgent();
-                    freeAgent.setId(rs.getInt(2));
-                    freeAgent.setLeagueId(rs.getInt(3));
-                    freeAgent.setSeasonId(rs.getInt(4));
-                }
-            }
+            callDB.executeLoad();
+
+            freeAgent = new FreeAgent();
+            freeAgent.setId(callDB.returnOutputParameterInt(2));
+            freeAgent.setLeagueId(callDB.returnOutputParameterInt(3));
+            freeAgent.setSeasonId(callDB.returnOutputParameterInt(4));
+
         }catch (Exception e){
             throw e;
         } finally {

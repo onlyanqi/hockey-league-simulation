@@ -67,10 +67,15 @@ public class CallDB implements ICallDB{
         stmt.registerOutParameter(index, Types.BOOLEAN);
     }
 
-//    @Override
-//    public String returnOutputParameterString(int index) throws Exception {
-//        return stmt.getString(index);
-//    }
+    @Override
+    public String returnOutputParameterString(int index) throws Exception {
+        return stmt.getString(index);
+    }
+
+    @Override
+    public Boolean returnOutputParameterBoolean(int index) throws Exception {
+        return stmt.getBoolean(index);
+    }
 
     @Override
     public void closeConnection() throws Exception{

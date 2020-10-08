@@ -47,8 +47,6 @@ public class ImportState implements IHockeyState {
         return null;
     }
 
-
-
     private void parseJSONAndInstantiateLeague(JSONObject leagueJSON){
         String leagueName = (String) leagueJSON.get("leagueName");
         JSONArray conferences = (JSONArray) leagueJSON.get("conferences");
@@ -64,7 +62,6 @@ public class ImportState implements IHockeyState {
         league.setName(leagueName);
         league.setConferenceList(conferenceList);
         league.setFreeAgent(freeAgent);
-
     }
 
     private ArrayList<Team> loadTeamJSON(JSONArray teams){
@@ -171,10 +168,9 @@ public class ImportState implements IHockeyState {
             if(player.validPosition() && player.validName()){
                 freeAgentList.add(player);
             }else{
-                //Exception Handling
+                System.out.println("Free Agent Position is not valid. Please Correct it. Exiting the app!");
+                System.exit(1);
             }
-
-
 
         }
         return freeAgentList;
