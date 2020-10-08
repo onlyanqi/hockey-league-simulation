@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Constants {
 
-    public static final String dbFile = "./.properties";
+    public static final String dbFile = "../.properties";
     public static final String dbUserName = "db.User";
     public static final String dbPassword = "db.Password";
     public static final String dbHost = "db.url";
@@ -23,7 +23,7 @@ public class Constants {
 
     public static final String loadUserByName = "LoadUserByName(?,?,?)";
     public static final String loadLeagueByName = "LoadLeagueByName(?,?,?,?)";
-    public static final String loadConferenceByName = "LoadConferenceByName(?,?,?,?)";
+    public static final String loadConference = "LoadConferenceByName(?,?,?,?)";
     public static final String loadDivisionByName = "LoadDivisionByName(?,?,?,?)";
     public static final String loadSeasonByName = "LoadSeasonByName(?,?,?)";
     public static final String loadTeamByName = "LoadTeamByName(?,?,?,?)";
@@ -38,7 +38,5 @@ public class Constants {
     public static final String addTeam = "AddTeam(?,?,?)";
     public static final String addFreeAgent = "AddFreeAgent(?,?,?)";
     public static final String addPlayer = "AddPlayer(?,?,?,?,?,?)";
-
-
 
 }

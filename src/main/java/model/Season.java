@@ -1,6 +1,6 @@
 package model;
 
-import data.ISeasonFactory;
+import data.ILoadSeasonFactory;
 
 public class Season extends ParentObj{
 
@@ -10,9 +10,9 @@ public class Season extends ParentObj{
         setId(id);
     }
 
-    public Season(int id, ISeasonFactory factory) throws Exception {
+    public Season(int id, ILoadSeasonFactory factory) throws Exception {
         setId(id);
-        factory.loadSeasonByName(id, this);
+        factory.loadSeasonById(id, this);
     }
 
 }

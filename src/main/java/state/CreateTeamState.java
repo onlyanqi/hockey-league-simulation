@@ -1,6 +1,7 @@
 package state;
 
-import dao.LeagueDao;
+import dao.*;
+import data.*;
 import model.*;
 import org.icehockey.GetInput;
 
@@ -85,18 +86,78 @@ public class CreateTeamState implements IHockeyState {
 
     @Override
     public IHockeyState exit() {
-        //Persist to DB and transition to next state
-        league.setCreatedBy(3);
-        LeagueDao leagueDao = new LeagueDao();
-        try {
-            leagueDao.addLeague(hockeyContext.getLeague());
-        } catch (Exception e) {
-            System.out.println("Unable to save the league! Please try again");
-            System.exit(1);
-            e.printStackTrace();
-        }
+        PlayerChoiceState playerChoiceState = null;
+        if (league != null) {
+            //Persist to DB and transition to next state
+            league.setCreatedBy(hockeyContext.getUser().getId());
+            IAddLeagueFactory leagueDao = new AddLeagueDao();
+            IAddConferenceFactory conferenceDao = new AddConferenceDao();
+            IAddDivisionFactory divisionDao = new AddDivisionDao();
+            IAddTeamFactory teamDao = new AddTeamDao();
 
-        PlayerChoiceState playerChoiceState = new PlayerChoiceState(hockeyContext,"How many seasons do you want to simulate","createOrLoadTeam");
+
+            IAddSeasonFactory seasonDao = new AddSeasonDao();
+
+            Season season = new Season();
+            season.setName("2020");
+
+            try {
+                int leagueId = leagueDao.addLeague(league);
+                int seasonId = seasonDao.addSeason(season);
+
+                if(leagueId != 0 && seasonId != 0){
+                    if(league.getFreeAgent() != null) {
+                        int freeAgentId = addFreeAgent(leagueId, seasonId);
+                        addPlayerList(freeAgentId, seasonId, league.getFreeAgent().getPlayerList());
+                    }
+                    if(league.getConferenceList() != null && !league.getConferenceList().isEmpty()){
+                        for (Conference conference : league.getConferenceList()) {
+                            conference.setLeagueId(leagueId);
+                            int conferenceId = conferenceDao.addConference(conference);
+
+                            for (Division division : conference.getDivisionList()) {
+                                division.setConferenceId(conferenceId);
+                                int divisionId = divisionDao.addDivision(division);
+
+                                for (Team team : division.getTeamList()) {
+                                    team.setDivisionId(divisionId);
+                                    int teamId = teamDao.addTeam(team);
+                                    addPlayerList(teamId, seasonId, team.getPlayerList());
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+                System.out.println("Unable to save the league! Please try again");
+                System.exit(1);
+                e.printStackTrace();
+            }
+            playerChoiceState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
+
+        }
         return playerChoiceState;
     }
+
+    private int addFreeAgent(int leagueId, int seasonId) throws Exception {
+        IAddFreeAgentFactory freeAgentDao = new AddFreeAgentDao();
+        FreeAgent freeAgent = league.getFreeAgent();
+        freeAgent.setSeasonId(seasonId);
+        freeAgent.setLeagueId(leagueId);
+        return freeAgentDao.addFreeAgent(freeAgent);
+    }
+
+    private void addPlayerList(int parentId, int seasonId, List<Player> playerList) throws Exception {
+        if(playerList != null && !playerList.isEmpty()) {
+            IAddPlayerFactory playerDao = new AddPlayerDao();
+            for (Player player : playerList) {
+                player.setFreeAgentId(parentId);
+                player.setSeasonId(seasonId);
+                playerDao.addPlayer(player);
+            }
+        }
+    }
+
 }

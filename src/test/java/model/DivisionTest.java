@@ -1,7 +1,7 @@
 package model;
 
-import data.ITeamFactory;
-import data.IDivisionFactory;
+import data.ILoadTeamFactory;
+import data.ILoadDivisionFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
 import java.util.ArrayList;
@@ -10,11 +10,11 @@ import static org.junit.Assert.*;
 
 public class DivisionTest {
 
-    private static IDivisionFactory factory;
+    private static ILoadDivisionFactory factory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new DivisionMock();
+        factory = new LoadDivisionMock();
     }
 
     @Test
@@ -66,7 +66,7 @@ public class DivisionTest {
 
     @Test
     public void setPlayerListTest() throws Exception {
-        ITeamFactory teamFactory = new TeamMock();
+        ILoadTeamFactory teamFactory = new LoadTeamMock();
         List<Team> teamList = new ArrayList<>();
         Team team = new Team(1, teamFactory);
         teamList.add(team);

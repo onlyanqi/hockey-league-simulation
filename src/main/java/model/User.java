@@ -1,6 +1,6 @@
 package model;
 
-import data.IUserFactory;
+import data.ILoadUserFactory;
 
 public class User extends ParentObj{
 
@@ -10,9 +10,9 @@ public class User extends ParentObj{
         setId(id);
     }
 
-    public User(int id, IUserFactory factory) throws Exception {
+    public User(int id, ILoadUserFactory factory) throws Exception {
         setId(id);
-        factory.loadUserByName(id, this);
+        factory.loadUserById(id, this);
     }
 
     private String password;

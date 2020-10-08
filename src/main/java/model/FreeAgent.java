@@ -1,6 +1,6 @@
 package model;
 
-import data.IFreeAgentFactory;
+import data.ILoadFreeAgentFactory;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ public class FreeAgent extends ParentObj{
         setId(id);
     }
 
-    public FreeAgent(int id, IFreeAgentFactory factory) throws Exception {
-        setId(id);
-        factory.loadFreeAgentByLeagueId(id, this);
+    public FreeAgent(int leagueId, ILoadFreeAgentFactory factory) throws Exception {
+        setLeagueId(leagueId);
+        factory.loadFreeAgentByLeagueId(leagueId, this);
     }
     private int seasonId;
 

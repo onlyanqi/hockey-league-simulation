@@ -21,59 +21,33 @@ public class ImportState implements IHockeyState {
     private League league;
 
 
-    public ImportState(HockeyContext hockeyContext,String filePath){
-        this.filePath = filePath;
+
+    public ImportState(HockeyContext hockeyContext,JSONObject jsonFromInput){
+        this.jsonFromInput = jsonFromInput;
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getLeague();
     }
 
 
 
-
     @Override
     public void entry() {
+        //empty for now
 
-        if(filePath!=null){
-            jsonFromInput = readJSON(filePath);
-        }
     }
 
     @Override
     public void process() {
-
         parseJSONAndInstantiateLeague(jsonFromInput);
         hockeyContext.setLeague(league);
     }
 
     @Override
     public IHockeyState exit() {
-
-
         return null;
     }
 
-    private JSONObject readJSON(String filePath){
 
-        JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(filePath))
-        {
-
-            JSONObject leagueJSON = (JSONObject)jsonParser.parse(reader);
-
-            return leagueJSON;
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            System.out.println("Imported JSON is not valid");
-            e.printStackTrace();
-            System.exit(1);
-
-        }
-        return null;
-    }
 
     private void parseJSONAndInstantiateLeague(JSONObject leagueJSON){
         String leagueName = (String) leagueJSON.get("leagueName");

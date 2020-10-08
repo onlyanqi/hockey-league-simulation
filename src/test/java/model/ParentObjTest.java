@@ -1,6 +1,6 @@
 package model;
 
-import data.IParentObjFactory;
+import data.ILoadParentObjFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
 import java.util.Date;
@@ -10,11 +10,11 @@ import static org.junit.Assert.assertNull;
 
 public class ParentObjTest {
 
-    private static IParentObjFactory factory;
+    private static ILoadParentObjFactory factory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new ParentObjMock();
+        factory = new LoadParentObjMock();
     }
 
     @Test

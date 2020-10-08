@@ -1,7 +1,6 @@
 package model;
 
-import data.ISeasonFactory;
-import data.IUserFactory;
+import data.ILoadSeasonFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -9,11 +8,11 @@ import static org.junit.Assert.*;
 
 public class SeasonTest {
 
-    private static ISeasonFactory factory;
+    private static ILoadSeasonFactory factory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new SeasonMock();
+        factory = new LoadSeasonMock();
     }
 
     @Test

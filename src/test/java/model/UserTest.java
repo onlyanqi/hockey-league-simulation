@@ -1,23 +1,18 @@
 package model;
 
-import data.IPlayerFactory;
-import data.ITeamFactory;
-import data.IUserFactory;
+import data.ILoadUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class UserTest {
 
-    private static IUserFactory factory;
+    private static ILoadUserFactory factory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new UserMock();
+        factory = new LoadUserMock();
     }
 
     @Test

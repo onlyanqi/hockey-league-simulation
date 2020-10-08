@@ -1,6 +1,6 @@
 package model;
 
-import data.IPlayerFactory;
+import data.ILoadPlayerFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
 import static org.junit.Assert.assertEquals;
@@ -9,11 +9,11 @@ import static org.junit.Assert.assertNull;
 
 public class PlayerTest {
 
-    private static IPlayerFactory factory;
+    private static ILoadPlayerFactory factory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new PlayerMock();
+        factory = new LoadPlayerMock();
     }
 
     @Test

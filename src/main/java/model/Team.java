@@ -1,6 +1,6 @@
 package model;
 
-import data.ITeamFactory;
+import data.ILoadTeamFactory;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ public class Team extends ParentObj{
         setId(id);
     }
 
-    public Team(int id, ITeamFactory factory) throws Exception {
+    public Team(int id, ILoadTeamFactory factory) throws Exception {
         setId(id);
-        factory.loadTeamByName(id, this);
+        factory.loadTeamById(id, this);
     }
 
     private String hometown;

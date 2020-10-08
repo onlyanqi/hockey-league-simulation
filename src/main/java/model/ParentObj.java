@@ -1,6 +1,6 @@
 package model;
 
-import data.IParentObjFactory;
+import data.ILoadParentObjFactory;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ public class ParentObj {
         this.id = id;
     }
 
-    public ParentObj(int id, IParentObjFactory parentObjFactory) throws Exception {
+    public ParentObj(int id, ILoadParentObjFactory parentObjFactory) throws Exception {
         this.id = id;
         parentObjFactory.loadParentObj(id, this);
     }

@@ -1,7 +1,7 @@
 package model;
 
-import data.IConferenceFactory;
-import data.IDivisionFactory;
+import data.ILoadConferenceFactory;
+import data.ILoadDivisionFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -10,11 +10,11 @@ import static org.junit.Assert.*;
 
 public class ConferenceTest {
 
-    private static IConferenceFactory factory;
+    private static ILoadConferenceFactory factory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new ConferenceMock();
+        factory = new LoadConferenceMock();
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ConferenceTest {
 
     @Test
     public void setDivisionListTest() throws Exception {
-        IDivisionFactory divisionFactory = new DivisionMock();
+        ILoadDivisionFactory divisionFactory = new LoadDivisionMock();
         List<Division> divisionList = new ArrayList<>();
         Division division = new Division(1, divisionFactory);
         divisionList.add(division);
