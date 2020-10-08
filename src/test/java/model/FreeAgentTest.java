@@ -1,7 +1,7 @@
 package model;
 
-import data.IFreeAgentFactory;
-import data.IPlayerFactory;
+import data.ILoadFreeAgentFactory;
+import data.ILoadPlayerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import static org.junit.Assert.*;
 
 public class FreeAgentTest {
 
-    private static IFreeAgentFactory factory;
+    private static ILoadFreeAgentFactory factory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new FreeAgentMock();
+        factory = new LoadFreeAgentMock();
     }
 
     @Test
@@ -53,7 +53,7 @@ public class FreeAgentTest {
 
     @Test
     public void setPlayerListTest() throws Exception {
-        IPlayerFactory playerFactory = new PlayerMock();
+        ILoadPlayerFactory playerFactory = new LoadPlayerMock();
         List<Player> playerList = new ArrayList<>();
         Player player = new Player(1, playerFactory);
         playerList.add(player);

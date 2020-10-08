@@ -1,20 +1,17 @@
 package model;
 
 
-import data.ILeagueFactory;
+import data.ILoadLeagueFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import java.util.ArrayList;
-import java.util.List;
-import static org.junit.Assert.*;
 
 public class HockeyContextTest {
 
-    private static ILeagueFactory factory;
+    private static ILoadLeagueFactory factory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new LeagueMock();
+        factory = new LoadLeagueMock();
     }
 
     @Test

@@ -1,6 +1,6 @@
 package model;
 
-import data.IDivisionFactory;
+import data.ILoadDivisionFactory;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ public class Division extends ParentObj{
         setId(id);
     }
 
-    public Division(int id, IDivisionFactory factory) throws Exception {
+    public Division(int id, ILoadDivisionFactory factory) throws Exception {
         setId(id);
-        factory.loadDivisionByName(id, this);
+        factory.loadDivisionById(id, this);
     }
 
     private int conferenceId;

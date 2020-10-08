@@ -1,9 +1,8 @@
 package model;
 
-import data.IConferenceFactory;
-import data.IDivisionFactory;
-import data.ILeagueFactory;
-import data.IPlayerFactory;
+import data.ILoadConferenceFactory;
+import data.ILoadLeagueFactory;
+import data.ILoadPlayerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,11 +13,11 @@ import static org.junit.Assert.*;
 
 public class LeagueTest {
 
-    private static ILeagueFactory factory;
+    private static ILoadLeagueFactory factory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new LeagueMock();
+        factory = new LoadLeagueMock();
     }
 
     @Test
@@ -85,7 +84,7 @@ public class LeagueTest {
 
     @Test
     public void setConferenceListTest() throws Exception {
-        IConferenceFactory conferenceFactory = new ConferenceMock();
+        ILoadConferenceFactory conferenceFactory = new LoadConferenceMock();
         List<Conference> conferenceList = new ArrayList<>();
         Conference conference = new Conference(1, conferenceFactory);
         conferenceList.add(conference);
@@ -113,7 +112,7 @@ public class LeagueTest {
     public void setFreeAgentTest() throws Exception{
         FreeAgent freeAgent = new FreeAgent();
         League league = new League();
-        IPlayerFactory playerFactory = new PlayerMock();
+        ILoadPlayerFactory playerFactory = new LoadPlayerMock();
         List<Player> playerList = new ArrayList<>();
 
         Player player = new Player(1, playerFactory);

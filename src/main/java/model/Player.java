@@ -1,7 +1,7 @@
 package model;
 
 import common.Constants;
-import data.IPlayerFactory;
+import data.ILoadPlayerFactory;
 
 public class Player extends ParentObj{
 
@@ -11,9 +11,9 @@ public class Player extends ParentObj{
         setId(id);
     }
 
-    public Player(int id, IPlayerFactory factory) throws Exception {
+    public Player(int id, ILoadPlayerFactory factory) throws Exception {
         setId(id);
-        factory.loadPlayerByName(id, this);
+        factory.loadPlayerById(id, this);
     }
 
     private int age;

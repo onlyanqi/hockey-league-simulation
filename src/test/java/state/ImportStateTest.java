@@ -2,7 +2,6 @@ package state;
 
 import model.HockeyContext;
 import model.User;
-import model.UserMock;
 import org.icehockey.JSONControllerMock;
 import org.junit.Test;
 import org.junit.BeforeClass;

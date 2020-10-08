@@ -1,18 +1,11 @@
 package org.icehockey;
 
-import dao.UserDao;
-import dao.connect.DBConnection;
-import data.IUserFactory;
+import dao.LoadUserDao;
+import data.ILoadUserFactory;
 import model.HockeyContext;
 import model.User;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Scanner;
+import util.CommonUtil;
 
 /**
  * Hello world!
@@ -22,29 +15,30 @@ public class App
 {
     public static void main( String[] args ) throws Exception {
 
-//        String filePath = "";
-//        JSONObject jsonFromInput = null;
-//
-//        User user = new User();
-//        String userName = GetInput.getUserInput("Please enter username:");
-//        String password = GetInput.getUserInput("Please enter password:");
-//        user.setName(userName);
-//        user.setPassword(password);
-//
-//        IUserFactory factory = new UserDao();
-//
-//        factory.loadUserByName(0,user);
-//
-//        filePath  = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
-//
-//        if(filePath!=null){
-//            jsonFromInput = JSONController.readJSON(filePath);
-//        }
-//
-//        HockeyContext context = new HockeyContext(user);
-//        context.startAction(jsonFromInput);
+        String filePath = "";
+        JSONObject jsonFromInput = null;
 
+
+        String userName = GetInput.getUserInput("Please enter username:");
+
+        CommonUtil util = new CommonUtil();
+
+        if(userName != null && util.isNotEmpty(userName)) {
+            ILoadUserFactory factory = new LoadUserDao();
+            User user = factory.loadUserByName(userName);
+
+            filePath = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
+
+            if (filePath != null) {
+                jsonFromInput = JSONController.readJSON(filePath);
+            }
+
+            HockeyContext context = new HockeyContext(user);
+            context.startAction(jsonFromInput);
+        }
     }
+
+
 
 
 }

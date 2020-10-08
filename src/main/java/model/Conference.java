@@ -1,6 +1,6 @@
 package model;
 
-import data.IConferenceFactory;
+import data.ILoadConferenceFactory;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class Conference extends ParentObj{
         setId(id);
     }
 
-    public Conference(int id, IConferenceFactory factory) throws Exception {
+    public Conference(int id, ILoadConferenceFactory factory) throws Exception {
         setId(id);
         factory.loadConferenceByName(id, this);
     }

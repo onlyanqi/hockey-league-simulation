@@ -1,6 +1,6 @@
 package model;
 
-import data.ILeagueFactory;
+import data.ILoadLeagueFactory;
 import java.util.List;
 
 public class League extends ParentObj{
@@ -11,9 +11,9 @@ public class League extends ParentObj{
         setId(id);
     }
 
-    public League(int id, ILeagueFactory factory) throws Exception{
+    public League(int id, ILoadLeagueFactory factory) throws Exception{
         setId(id);
-        factory.loadLeagueByName(id, this);
+        factory.loadLeagueById(id, this);
     }
 
     private String country;
