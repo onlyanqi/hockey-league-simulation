@@ -36,7 +36,7 @@ public class ImportStateTest {
     }
 
     @Test
-    public void processTest() {
+    public void processTest() throws Exception {
         hockeyState.process();
         assertEquals(hockeyContext.getLeague().getName(),"Dalhousie Hockey League");
         assertTrue(hockeyContext.getLeague().getConferenceList() != null);
