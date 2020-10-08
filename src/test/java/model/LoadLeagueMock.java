@@ -80,13 +80,13 @@ public class LoadLeagueMock implements ILoadLeagueFactory {
     }
 
     @Override
-    public League loadLeagueByName(String leagueName) throws Exception {
+    public League loadLeagueByName(String leagueName, int userId) throws Exception {
         League league = new League();
         league.setName("League1");
         league.setStartDate(new Date(2000, 0, 0));
         league.setEndDate(new Date(2050, 0, 0));
         league.setCountry("Canada");
-        league.setCreatedBy(1);
+        league.setCreatedBy(userId);
         league.setConferenceList(formConferenceList());
         league.setFreeAgent(formFreeAgent());
         return league;

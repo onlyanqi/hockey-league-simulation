@@ -101,7 +101,8 @@ public class CreateTeamState implements IHockeyState {
 
         League league = null;
         try {
-            league = iLoadLeagueFactory.loadLeagueByName(league.getName());
+            int userId = hockeyContext.getUser().getId();
+            league = iLoadLeagueFactory.loadLeagueByName(league.getName(), userId);
         }catch (Exception e) {
             System.out.println("Unable to load league, please try again.");
             System.exit(1);

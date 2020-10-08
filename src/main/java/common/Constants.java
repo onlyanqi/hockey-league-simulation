@@ -23,6 +23,7 @@ public class Constants {
 
     public static final String loadUserByName = "LoadUserByName(?,?,?)";
     public static final String loadLeagueByName = "LoadLeagueByName(?,?,?,?)";
+    public static final String loadLeagueByNameUserId = "loadLeagueByNameUserId(?,?)";
     public static final String loadConference = "LoadConferenceByName(?,?,?,?)";
     public static final String loadDivisionByName = "LoadDivisionByName(?,?,?,?)";
     public static final String loadSeasonByName = "LoadSeasonByName(?,?,?)";
