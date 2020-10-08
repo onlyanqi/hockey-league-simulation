@@ -54,7 +54,6 @@ public class ImportState implements IHockeyState {
 
         ArrayList<Conference> conferenceList = loadConferenceJSON(conferences);
 
-
         FreeAgent freeAgent = new FreeAgent();
         ArrayList<Player> freeAgentList = loadFreeAgentJSON(freeAgents);
         freeAgent.setPlayerList(freeAgentList);

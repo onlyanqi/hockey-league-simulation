@@ -10,12 +10,12 @@ public class HockeyContext {
 
     private IHockeyState hockeyState;
     private User user;
+    private League league;
 
     public void setHockeyState(IHockeyState hockeyState) {
         this.hockeyState = hockeyState;
     }
 
-    private League league;
 
     public User getUser() {
         return user;
@@ -29,7 +29,6 @@ public class HockeyContext {
         league = new League();
         this.user = user;
     }
-
 
     public void startAction(JSONObject jsonFromInput) throws Exception {
 

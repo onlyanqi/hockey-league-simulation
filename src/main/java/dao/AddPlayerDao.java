@@ -15,16 +15,16 @@ public class AddPlayerDao implements IAddPlayerFactory {
         try{
             callDB = new CallDB(Constants.addPlayer);
             callDB.setInputParameterInt(1, player.getTeamId());
-            callDB.setInputParameterInt(2, player.getSeasonId());
-            callDB.setInputParameterString(3, player.getName());
-            callDB.setInputParameterString(4, player.getPosition());
-            callDB.setInputParameterBoolean(5, player.isCaptain());
-            callDB.setInputParameterInt(6, player.getFreeAgentId());
+            callDB.setInputParameterInt(2, player.getFreeAgentId());
+            callDB.setInputParameterInt(3, player.getSeasonId());
+            callDB.setInputParameterString(4, player.getName());
+            callDB.setInputParameterString(5, player.getPosition());
+            callDB.setInputParameterBoolean(6, player.isCaptain());
 
 
             callDB.setOutputParameterInt(7);
             callDB.execute();
-            player.setId(callDB.returnOutputParameterInt(6));
+            player.setId(callDB.returnOutputParameterInt(7));
 
         } catch (SQLException sqlException){
             throw sqlException;

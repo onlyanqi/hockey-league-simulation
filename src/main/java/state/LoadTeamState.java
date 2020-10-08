@@ -28,7 +28,7 @@ public class LoadTeamState implements IHockeyState {
 
         teamName  = GetInput.getUserInput("Please enter team name");
 
-        while((teamName.isEmpty() || teamName ==null || isTeamNotPresent(teamName))){
+        while((teamName.isEmpty() || teamName ==null )){
             teamName = GetInput.getUserInput("Please enter valid and existing team name");
         }
 
@@ -39,7 +39,6 @@ public class LoadTeamState implements IHockeyState {
     public void process() throws Exception {
         //Load Team Data from DB
         System.out.println("LoadTeam State -> Process ");
-
 
         //Load League from userid
         ILoadLeagueFactory iLoadLeagueFactory = new LoadLeagueDao();
@@ -99,18 +98,5 @@ public class LoadTeamState implements IHockeyState {
         return playerChoiceState;
     }
 
-    private boolean isTeamNotPresent(String teamName)  {
-        ILoadTeamFactory factory = new LoadTeamDao();
-        Team team = null;
-        try {
-            team = factory.loadTeamByName(teamName);
-        }catch (Exception e) {
-            System.out.println("Unable to load team, please try again.");
-            System.exit(1);
-            e.printStackTrace();
-        }
-        if(team!=null) return false;
-        else return true;
 
-    }
 }
