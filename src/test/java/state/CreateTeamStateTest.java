@@ -3,11 +3,8 @@ package state;
 import data.ILoadLeagueFactory;
 import data.ILoadTeamFactory;
 import model.*;
-import org.icehockey.JSONControllerMock;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class CreateTeamStateTest {
 

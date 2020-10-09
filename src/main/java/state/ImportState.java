@@ -7,7 +7,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +62,7 @@ public class ImportState implements IHockeyState {
             System.exit(1);
         }
         if(validateArray(freeAgents) ){
-            System.out.println("Please make sure atleast one freeAgent is provided ");
+            System.out.println("Please make sure atleast one Player in Free Agent is provided ");
             System.exit(1);
         }
 

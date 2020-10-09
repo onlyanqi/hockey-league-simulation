@@ -3,7 +3,7 @@ package org.icehockey;
 import data.IAddUserFactory;
 import data.ILoadUserFactory;
 import factory.UserConcrete;
-import model.HockeyContext;
+import state.HockeyContext;
 import model.User;
 import org.json.simple.JSONObject;
 import util.CommonUtil;

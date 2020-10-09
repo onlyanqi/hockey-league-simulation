@@ -1,5 +1,6 @@
-package model;
+package state;
 
+import model.User;
 import org.json.simple.JSONObject;
 import state.CreateTeamState;
 import state.IHockeyState;
