@@ -1,8 +1,6 @@
 package model;
 
-import data.ILoadConferenceFactory;
-import data.ILoadLeagueFactory;
-import data.ILoadPlayerFactory;
+import data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,11 +11,13 @@ import static org.junit.Assert.*;
 
 public class LeagueTest {
 
-    private static ILoadLeagueFactory factory;
+    private static ILoadLeagueFactory loadLeagueFactory;
+    private static IAddLeagueFactory addLeagueFactory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new LoadLeagueMock();
+        addLeagueFactory = new AddLeagueMock();
+        loadLeagueFactory = new LoadLeagueMock();
     }
 
     @Test
@@ -34,17 +34,17 @@ public class LeagueTest {
 
     @Test
     public void leagueFactoryTest() throws Exception{
-        League league = new League(1, factory);
+        League league = new League(1, loadLeagueFactory);
         assertEquals(league.getId(), 1);
         assertEquals(league.getName(), "League1");
 
-        league = new League(2, factory);
+        league = new League(2, loadLeagueFactory);
         assertNull(league.getName());
     }
 
     @Test
     public void getCountryTest() throws Exception{
-        League league = new League(1, factory);
+        League league = new League(1, loadLeagueFactory);
         assertTrue(league.getCountry().equals("Canada"));
     }
 
@@ -58,7 +58,7 @@ public class LeagueTest {
 
     @Test
     public void getCreatedByTest() throws Exception{
-        League league = new League(1, factory);
+        League league = new League(1, loadLeagueFactory);
         assertTrue(league.getCreatedBy() == 1);
     }
 
@@ -72,7 +72,7 @@ public class LeagueTest {
 
     @Test
     public void getConferenceListTest() throws Exception{
-        League league = new League(1, factory);
+        League league = new League(1, loadLeagueFactory);
         List<Conference> conferenceList = league.getConferenceList();
         assertNotNull(conferenceList);
 
@@ -102,7 +102,7 @@ public class LeagueTest {
 
     @Test
     public void getFreeAgentTest() throws Exception {
-        League league = new League(1, factory);
+        League league = new League(1, loadLeagueFactory);
         assertEquals(league.getFreeAgent().getId(), 1);
         List<Player> playerList = league.getFreeAgent().getPlayerList();
         assertTrue(playerList.get(0).getName().equals("Player1"));
@@ -129,6 +129,36 @@ public class LeagueTest {
         assertTrue(league.getFreeAgent().getId() == 1);
         assertTrue(league.getFreeAgent().getPlayerList().get(0).getId() == 1);
 
+    }
+
+    @Test
+    public void addLeagueTest() throws Exception {
+        League league = new League();
+        league.setId(1);
+        league.setName("League1");
+        league.addLeague(addLeagueFactory);
+        assertTrue(1 == league.getId());
+        assertTrue("League1".equals(league.getName()));
+    }
+
+    @Test
+    public void loadConferenceListByLeagueId() throws Exception {
+        ILoadConferenceFactory conferenceFactory = new LoadConferenceMock();
+        League league = new League();
+        league.loadConferenceListByLeagueId(conferenceFactory);
+
+        assertTrue(league.getConferenceList().get(0).getId() == (1));
+        assertTrue(league.getConferenceList().get(1).getId() == (2));
+        assertTrue(league.getConferenceList().get(0).getName().equals("Conference1"));
+        assertNull(league.getConferenceList().get(1).getName());
+    }
+
+    @Test
+    public void loadFreeAgentByLeagueId() throws Exception {
+        League league = new League(1);
+        ILoadFreeAgentFactory loadFreeAgentFactory = new LoadFreeAgentMock();
+        league.loadFreeAgentByLeagueId(loadFreeAgentFactory);
+        assertTrue(league.getFreeAgent().getLeagueId() == league.getId());
     }
 
 }

@@ -1,5 +1,7 @@
 package model;
 
+import dao.AddPlayerDao;
+import data.IAddPlayerFactory;
 import data.ILoadPlayerFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
@@ -9,11 +11,13 @@ import static org.junit.Assert.assertNull;
 
 public class PlayerTest {
 
-    private static ILoadPlayerFactory factory;
+    private static ILoadPlayerFactory loadPlayerFactory;
+    private static IAddPlayerFactory addPlayerFactory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new LoadPlayerMock();
+        loadPlayerFactory = new LoadPlayerMock();
+        addPlayerFactory = new AddPlayerMock();
     }
 
     @Test
@@ -30,17 +34,17 @@ public class PlayerTest {
 
     @Test
     public void playerFactoryTest() throws Exception {
-        Player player = new Player(1, factory);
+        Player player = new Player(1, loadPlayerFactory);
         assertEquals(player.getId(), 1);
         assertEquals(player.getName(), "Player1");
 
-        player = new Player(2, factory);
+        player = new Player(2, loadPlayerFactory);
         assertNull(player.getName());
     }
 
     @Test
     public void getAgeTest() throws Exception {
-        Player player = new Player(1, factory);
+        Player player = new Player(1, loadPlayerFactory);
         assertEquals(player.getAge(), 15);
     }
 
@@ -54,7 +58,7 @@ public class PlayerTest {
 
     @Test
     public void getHomeTownTest() throws Exception {
-        Player player = new Player(1, factory);
+        Player player = new Player(1, loadPlayerFactory);
         assertTrue(player.getHometown().equals("Halifax"));
     }
 
@@ -68,7 +72,7 @@ public class PlayerTest {
 
     @Test
     public void getPositionTest() throws Exception {
-        Player player = new Player(1, factory);
+        Player player = new Player(1, loadPlayerFactory);
         assertTrue(player.getPosition().equals("goalie"));
     }
 
@@ -82,7 +86,7 @@ public class PlayerTest {
 
     @Test
     public void getTeamIdTest() throws Exception {
-        Player player = new Player(1, factory);
+        Player player = new Player(1, loadPlayerFactory);
         assertTrue(player.getTeamId() == (1));
     }
 
@@ -96,7 +100,7 @@ public class PlayerTest {
 
     @Test
     public void isCaptainTest() throws Exception {
-        Player player = new Player(1, factory);
+        Player player = new Player(1, loadPlayerFactory);
         assertTrue(player.isCaptain());
     }
 
@@ -115,5 +119,42 @@ public class PlayerTest {
         assertTrue(player.validPosition());
     }
 
+    @Test
+    public void addPlayerTest() throws Exception {
+        Player player = new Player();
+        player.setId(1);
+        player.setName("Player1");
+        player.addPlayer(addPlayerFactory);
+        assertTrue(1 == player.getId());
+        assertTrue("Player1".equals(player.getName()));
+    }
+
+    @Test
+    public void getFreeAgentIdTest() throws Exception {
+        Player player = new Player(1, loadPlayerFactory);
+        assertTrue(player.getFreeAgentId() == (1));
+    }
+
+    @Test
+    public void setFreeAgentIdTest(){
+        Player player = new Player();
+        int freeAgentId = 1;
+        player.setFreeAgentId(freeAgentId);
+        assertTrue(player.getFreeAgentId() == freeAgentId);
+    }
+
+    @Test
+    public void getSeasonIdTest() throws Exception {
+        Player player = new Player(1, loadPlayerFactory);
+        assertTrue(player.getSeasonId() == (1));
+    }
+
+    @Test
+    public void setSeasonIdTest(){
+        Player player = new Player();
+        int seasonId = 1;
+        player.setSeasonId(seasonId);
+        assertTrue(player.getSeasonId() == seasonId);
+    }
 
 }

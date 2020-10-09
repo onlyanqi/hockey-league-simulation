@@ -1,6 +1,8 @@
 package model;
 
 import common.Constants;
+import data.IAddFreeAgentFactory;
+import data.IAddPlayerFactory;
 import data.ILoadPlayerFactory;
 
 public class Player extends ParentObj{
@@ -96,6 +98,10 @@ public class Player extends ParentObj{
         }
 
         return isValid;
+    }
+
+    public void addPlayer(IAddPlayerFactory addPlayerFactory) throws Exception {
+        addPlayerFactory.addPlayer(this);
     }
 
 }

@@ -19,6 +19,8 @@ public class LoadPlayerMock implements ILoadPlayerFactory {
                 player.setHometown("Halifax");
                 player.setPosition("goalie");
                 player.setTeamId(1);
+                player.setFreeAgentId(1);
+                player.setSeasonId(1);
                 player.setCaptain(true);
                 break;
 
@@ -31,6 +33,8 @@ public class LoadPlayerMock implements ILoadPlayerFactory {
                 player.setHometown("Halifax");
                 player.setPosition("goalie");
                 player.setTeamId(1);
+                player.setFreeAgentId(1);
+                player.setSeasonId(1);
                 player.setCaptain(false);
                 break;
 
@@ -43,6 +47,8 @@ public class LoadPlayerMock implements ILoadPlayerFactory {
                 player.setHometown("Halifax");
                 player.setPosition("goalie");
                 player.setTeamId(1);
+                player.setFreeAgentId(1);
+                player.setSeasonId(1);
                 player.setCaptain(true);
                 break;
 
@@ -55,6 +61,8 @@ public class LoadPlayerMock implements ILoadPlayerFactory {
                 player.setHometown("Halifax");
                 player.setPosition("referee");
                 player.setTeamId(1);
+                player.setFreeAgentId(1);
+                player.setSeasonId(1);
                 player.setCaptain(false);
                 break;
 
@@ -67,6 +75,8 @@ public class LoadPlayerMock implements ILoadPlayerFactory {
                 player.setHometown("Montreal");
                 player.setPosition("forward");
                 player.setTeamId(1);
+                player.setFreeAgentId(1);
+                player.setSeasonId(1);
                 player.setCaptain(true);
                 break;
         }

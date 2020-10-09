@@ -39,9 +39,8 @@ public class LoadLeagueDao implements ILoadLeagueFactory {
     }
 
     @Override
-    public League loadLeagueByName(String leagueName, int userId) throws Exception {
+    public void loadLeagueByName(String leagueName, int userId, League league) throws Exception {
         ICallDB callDB = null;
-        League league = null;
         try {
             callDB = new CallDB(Constants.loadLeagueByNameUserId);
             callDB.setInputParameterString(1, leagueName);
@@ -60,7 +59,6 @@ public class LoadLeagueDao implements ILoadLeagueFactory {
         } finally {
             callDB.closeConnection();
         }
-        return league;
     }
 
     @Override

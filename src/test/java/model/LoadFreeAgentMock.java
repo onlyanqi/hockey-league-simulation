@@ -23,12 +23,14 @@ public class LoadFreeAgentMock implements ILoadFreeAgentFactory {
     }
 
     @Override
-    public void loadFreeAgentByLeagueId(int leagueId, FreeAgent freeAgent) throws Exception {
+    public void loadFreeAgentById(int id, FreeAgent freeAgent) throws Exception {
 
-        switch (new Long(leagueId).intValue()){
+        switch (new Long(id).intValue()){
             case 1:
                 //all correct data
                 freeAgent.setName("freeAgent1");
+                freeAgent.setSeasonId(1);
+                freeAgent.setLeagueId(1);
                 freeAgent.setStartDate(new Date(2000, 0, 0));
                 freeAgent.setEndDate(new Date(2050, 0, 0));
                 freeAgent.setPlayerList(formPlayerList());
@@ -37,6 +39,8 @@ public class LoadFreeAgentMock implements ILoadFreeAgentFactory {
             case 2:
                 //name null
                 freeAgent.setName(null);
+                freeAgent.setSeasonId(1);
+                freeAgent.setLeagueId(1);
                 freeAgent.setStartDate(new Date(2000, 0, 0));
                 freeAgent.setEndDate(new Date(2050, 0, 0));
                 freeAgent.setPlayerList(formPlayerList());
@@ -45,6 +49,8 @@ public class LoadFreeAgentMock implements ILoadFreeAgentFactory {
             case 3:
                 //end date less than start date
                 freeAgent.setName("Invalid Date");
+                freeAgent.setSeasonId(1);
+                freeAgent.setLeagueId(1);
                 freeAgent.setStartDate(new Date(2010, 0, 0));
                 freeAgent.setEndDate(new Date(2000, 0, 0));
                 freeAgent.setPlayerList(formPlayerList());
@@ -53,12 +59,24 @@ public class LoadFreeAgentMock implements ILoadFreeAgentFactory {
             case 4:
                 //invalid position
                 freeAgent.setName("Invalid Postion");
+                freeAgent.setSeasonId(1);
+                freeAgent.setLeagueId(1);
                 freeAgent.setStartDate(new Date(2010, 0, 0));
                 freeAgent.setEndDate(new Date(2000, 0, 0));
                 freeAgent.setPlayerList(formPlayerList());
                 break;
         }
+    }
 
+    @Override
+    public FreeAgent loadFreeAgentByLeagueId(int id) throws Exception {
+        FreeAgent freeAgent = new FreeAgent();
+        freeAgent.setLeagueId(id);
+        freeAgent.setName("FreeAgent1");
+        freeAgent.setStartDate(new Date(2010, 0, 0));
+        freeAgent.setEndDate(new Date(2000, 0, 0));
+        freeAgent.setPlayerList(formPlayerList());
+        return freeAgent;
     }
 
 }

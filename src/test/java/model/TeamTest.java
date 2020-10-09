@@ -1,5 +1,6 @@
 package model;
 
+import data.IAddTeamFactory;
 import data.ILoadPlayerFactory;
 import data.ILoadTeamFactory;
 import org.junit.Test;
@@ -13,11 +14,13 @@ import static org.junit.Assert.assertNull;
 
 public class TeamTest {
 
-    private static ILoadTeamFactory factory;
+    private static ILoadTeamFactory loadTeamFactory;
+    private static IAddTeamFactory addTeamFactory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new LoadTeamMock();
+        loadTeamFactory = new LoadTeamMock();
+        addTeamFactory = new AddTeamMock();
     }
 
     @Test
@@ -34,17 +37,17 @@ public class TeamTest {
 
     @Test
     public void teamFactoryTest() throws Exception {
-        Team team = new Team(1, factory);
+        Team team = new Team(1, loadTeamFactory);
         assertEquals(team.getId(), 1);
         assertEquals(team.getName(), "Team1");
 
-        team = new Team(2, factory);
+        team = new Team(2, loadTeamFactory);
         assertNull(team.getName());
     }
 
     @Test
     public void getHomeTownTest() throws Exception {
-        Team team = new Team(1, factory);
+        Team team = new Team(1, loadTeamFactory);
         assertTrue(team.getHometown().equals("Halifax1"));
     }
 
@@ -58,7 +61,7 @@ public class TeamTest {
 
     @Test
     public void getMascotTest() throws Exception {
-        Team team = new Team(1, factory);
+        Team team = new Team(1, loadTeamFactory);
         assertTrue(team.getMascot().equals("Tiger1"));
     }
 
@@ -72,7 +75,7 @@ public class TeamTest {
 
     @Test
     public void getGeneralManagerTest() throws Exception {
-        Team team = new Team(1, factory);
+        Team team = new Team(1, loadTeamFactory);
         assertTrue(team.getGeneralManager().equals("Manager1"));
     }
 
@@ -86,7 +89,7 @@ public class TeamTest {
 
     @Test
     public void getHeadCoachTest() throws Exception {
-        Team team = new Team(1, factory);
+        Team team = new Team(1, loadTeamFactory);
         assertTrue(team.getHeadCoach().equals("Coach1"));
     }
 
@@ -100,7 +103,7 @@ public class TeamTest {
 
     @Test
     public void getDivisionIdTest() throws Exception {
-        Team team = new Team(1, factory);
+        Team team = new Team(1, loadTeamFactory);
         assertTrue(team.getDivisionId() == (1));
     }
 
@@ -114,7 +117,7 @@ public class TeamTest {
 
     @Test
     public void getPlayerListTest() throws Exception {
-        Team team = new Team(1, factory);
+        Team team = new Team(1, loadTeamFactory);
         List<Player> playerList = team.getPlayerList();
         assertNotNull(playerList);
         assertTrue(playerList.get(0).getId() == (1));
@@ -141,7 +144,26 @@ public class TeamTest {
         assertTrue(team.getPlayerList().get(1).getName().equals("Player5"));
     }
 
+    @Test
+    public void addTeamTest() throws Exception {
+        Team team = new Team();
+        team.setId(1);
+        team.setName("Team1");
+        team.addTeam(addTeamFactory);
+        assertTrue(1 == team.getId());
+        assertTrue("Team1".equals(team.getName()));
+    }
 
+    @Test
+    public void loadPlayerListByTeamIdTest() throws Exception {
+        Team team = new Team(1);
+        ILoadPlayerFactory playerFactory = new LoadPlayerMock();
+        team.loadPlayerListByTeamId(playerFactory);
 
+        assertTrue(team.getPlayerList().get(0).getId() == (1));
+        assertTrue(team.getPlayerList().get(1).getId() == (5));
+        assertTrue(team.getPlayerList().get(0).getName().equals("Player1"));
+        assertTrue(team.getPlayerList().get(1).getName().equals("Player5"));
+    }
 
 }

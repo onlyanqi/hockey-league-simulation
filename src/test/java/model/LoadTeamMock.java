@@ -81,9 +81,10 @@ public class LoadTeamMock implements ILoadTeamFactory {
 
     }
 
+
     @Override
-    public Team loadTeamByName(String teamName) throws Exception {
-        Team team = new Team();
+    public void loadTeamByName(String teamName, Team team) throws Exception {
+        team = new Team();
         team.setName("Team1");
         team.setStartDate(new Date(2000, 0, 0));
         team.setEndDate(new Date(2050, 0, 0));
@@ -93,7 +94,6 @@ public class LoadTeamMock implements ILoadTeamFactory {
         team.setGeneralManager("Manager1");
         team.setHeadCoach("Coach1");
         team.setPlayerList(formPlayerList());
-        return team;
     }
 
     @Override

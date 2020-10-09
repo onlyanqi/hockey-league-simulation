@@ -1,5 +1,8 @@
 package model;
 
+import data.IAddPlayerFactory;
+import data.IAddUserFactory;
+import data.ILoadLeagueFactory;
 import data.ILoadUserFactory;
 
 import java.util.List;
@@ -15,6 +18,10 @@ public class User extends ParentObj{
     public User(int id, ILoadUserFactory factory) throws Exception {
         setId(id);
         factory.loadUserById(id, this);
+    }
+
+    public User(String name, ILoadUserFactory factory) throws Exception {
+        factory.loadUserByName(name, this);
     }
 
     private String password;
@@ -37,4 +44,21 @@ public class User extends ParentObj{
         this.password = password;
     }
 
+    public void addUser(IAddUserFactory addUserFactory) throws Exception {
+        addUserFactory.addUser(this);
+    }
+
+    private League league;
+
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
+    }
+
+    public void loadLeagueByUserId(ILoadLeagueFactory loadLeagueFactory) throws Exception {
+        this.leagueList = loadLeagueFactory.loadLeagueListByUserId(getId());
+    }
 }

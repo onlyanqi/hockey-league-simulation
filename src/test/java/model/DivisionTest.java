@@ -1,5 +1,7 @@
 package model;
 
+import dao.AddDivisionDao;
+import data.IAddDivisionFactory;
 import data.ILoadTeamFactory;
 import data.ILoadDivisionFactory;
 import org.junit.Test;
@@ -10,11 +12,13 @@ import static org.junit.Assert.*;
 
 public class DivisionTest {
 
-    private static ILoadDivisionFactory factory;
+    private static ILoadDivisionFactory loadDivisionFactory;
+    private static IAddDivisionFactory addDivisionFactory;
 
     @BeforeClass
     public static void setFactoryObj(){
-        factory = new LoadDivisionMock();
+        addDivisionFactory = new AddDivisionMock();
+        loadDivisionFactory = new LoadDivisionMock();
     }
 
     @Test
@@ -31,17 +35,17 @@ public class DivisionTest {
 
     @Test
     public void divisionFactoryTest() throws Exception {
-        Division division = new Division(1, factory);
+        Division division = new Division(1, loadDivisionFactory);
         assertEquals(division.getId(), 1);
         assertEquals(division.getName(), "Division1");
 
-        division = new Division(2, factory);
+        division = new Division(2, loadDivisionFactory);
         assertNull(division.getName());
     }
 
     @Test
     public void getConferenceIdTest() throws Exception {
-        Division division = new Division(1, factory);
+        Division division = new Division(1, loadDivisionFactory);
         assertTrue(division.getConferenceId() == (1));
     }
 
@@ -55,7 +59,7 @@ public class DivisionTest {
 
     @Test
     public void getTeamListTest() throws Exception {
-        Division division = new Division(1, factory);
+        Division division = new Division(1, loadDivisionFactory);
         List<Team> teamList = division.getTeamList();
         assertNotNull(teamList);
         assertTrue(teamList.get(0).getId() == (1));
@@ -82,5 +86,26 @@ public class DivisionTest {
         assertNull(division.getTeamList().get(1).getName());
     }
 
+    @Test
+    public void addDivisionTest() throws Exception {
+        Division division = new Division();
+        division.setId(1);
+        division.setName("Division1");
+        division.addDivision(addDivisionFactory);
+        assertTrue(1 == division.getId());
+        assertTrue("Division1".equals(division.getName()));
+    }
+
+    @Test
+    public void loadTeamListByDivisionIdTest() throws Exception {
+        Division division = new Division(1);
+        ILoadTeamFactory loadTeamFactory = new LoadTeamMock();
+        division.loadTeamListByDivisionId(loadTeamFactory);
+
+        assertTrue(division.getTeamList().get(0).getId() == (1));
+        assertTrue(division.getTeamList().get(1).getId() == (2));
+        assertTrue(division.getTeamList().get(0).getName().equals("Team1"));
+        assertNull(division.getTeamList().get(1).getName());
+    }
 
 }

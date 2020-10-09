@@ -1,6 +1,9 @@
 package model;
 
+import data.IAddDivisionFactory;
+import data.IAddFreeAgentFactory;
 import data.ILoadFreeAgentFactory;
+import data.ILoadPlayerFactory;
 
 import java.util.List;
 
@@ -12,10 +15,10 @@ public class FreeAgent extends ParentObj{
         setId(id);
     }
 
-    public FreeAgent(int leagueId, ILoadFreeAgentFactory factory) throws Exception {
-        setLeagueId(leagueId);
-        factory.loadFreeAgentByLeagueId(leagueId, this);
+    public FreeAgent(int id, ILoadFreeAgentFactory loadFreeAgentFactory) throws Exception {
+        loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
+
     private int seasonId;
 
     public int getSeasonId() {
@@ -46,4 +49,11 @@ public class FreeAgent extends ParentObj{
         this.playerList = playerList;
     }
 
+    public void addFreeAgent(IAddFreeAgentFactory addFreeAgentFactory) throws Exception {
+        addFreeAgentFactory.addFreeAgent(this);
+    }
+
+    public void loadPlayerListByFreeAgentId(ILoadPlayerFactory loadPlayerFactory) throws Exception {
+        this.playerList = loadPlayerFactory.loadPlayerListByFreeAgentId(getId());
+    }
 }

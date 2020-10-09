@@ -35,9 +35,8 @@ public class LoadTeamDao implements ILoadTeamFactory {
     }
 
     @Override
-    public Team loadTeamByName(String teamName) throws Exception {
+    public void loadTeamByName(String teamName, Team team) throws Exception {
         ICallDB callDB = null;
-        Team team = null;
         try {
             callDB = new CallDB(Constants.loadTeamByName);
             callDB.setInputParameterString(1, teamName);
@@ -55,7 +54,6 @@ public class LoadTeamDao implements ILoadTeamFactory {
         } finally {
             callDB.closeConnection();
         }
-        return team;
     }
 
     @Override
@@ -82,4 +80,5 @@ public class LoadTeamDao implements ILoadTeamFactory {
 
         return teamList;
     }
+
 }

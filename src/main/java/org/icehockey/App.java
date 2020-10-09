@@ -4,10 +4,13 @@ import dao.AddUserDao;
 import dao.LoadUserDao;
 import data.IAddUserFactory;
 import data.ILoadUserFactory;
+import factory.UserConcrete;
 import model.HockeyContext;
 import model.User;
 import org.json.simple.JSONObject;
 import util.CommonUtil;
+
+import java.io.FileNotFoundException;
 
 import static common.Constants.addUser;
 
@@ -17,39 +20,52 @@ import static common.Constants.addUser;
  */
 public class App
 {
-    public static void main( String[] args ) throws Exception {
+    public static void main( String[] args ) {
 
         String filePath = "";
         JSONObject jsonFromInput = null;
 
 
-        String userName = GetInput.getUserInput("Please enter username");
+        //String userName = GetInput.getUserInput("Please enter username");
+        String userName = "name";
 
         CommonUtil util = new CommonUtil();
 
-        if(userName != null && util.isNotEmpty(userName)) {
-            ILoadUserFactory factory = new LoadUserDao();
-            User user = factory.loadUserByName(userName);
-            user.setName(userName);
-            if(user.getId()==0){
-                String password = GetInput.getUserInput("Please enter password to register yourself");
-                user.setPassword(password);
-                addUser(user);
-            }
+        try {
+            if (userName != null && util.isNotEmpty(userName)) {
+                UserConcrete userConcrete = new UserConcrete();
+                ILoadUserFactory factory = userConcrete.newLoadUserFactory();
+                User user = userConcrete.newUserByName(userName, factory);
 
-            filePath = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
+                user.setName(userName);
+                if (user.getId() == 0) {
+                    //String password = GetInput.getUserInput("Please enter password to register yourself");
+                    String password = "as";
+                    user.setPassword(password);
+                    addUser(user);
+                }
 
-            if (filePath != null && filePath.length()!=0 ) {
-                jsonFromInput = JSONController.readJSON(filePath);
+                //filePath = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
+                filePath = "C:\\Users\\prath\\MPK\\studies\\Term 3\\CSCI5308-Adv SDC\\Project\\Prof.json";
+
+                if (filePath != null && filePath.length() != 0) {
+                    jsonFromInput = JSONController.readJSON(filePath);
+                }
+                HockeyContext context = new HockeyContext(user);
+                context.startAction(jsonFromInput);
             }
-            HockeyContext context = new HockeyContext(user);
-            context.startAction(jsonFromInput);
+        }catch (FileNotFoundException e){
+            System.out.println("File Not found. "+e);
+        }
+        catch (Exception e){
+            System.out.println("System faced unexpected exception. Please contact team. "+e);
         }
     }
 
     private static void addUser(User user) throws Exception {
-        IAddUserFactory iAddUserFactory = new AddUserDao();
-        iAddUserFactory.addUser(user);
+        UserConcrete userConcrete = new UserConcrete();
+        IAddUserFactory addUserFactory = userConcrete.newAddUserFactory();
+        user.addUser(addUserFactory);
     }
 
 

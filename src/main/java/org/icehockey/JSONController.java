@@ -23,14 +23,13 @@ public class JSONController {
             JSONObject leagueJSON = (JSONObject)jsonParser.parse(reader);
             return leagueJSON;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("File not found. "+e);
             System.exit(1);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("File read failed. "+e);
             System.exit(1);
         } catch (ParseException e) {
             System.out.println("Imported JSON is not valid");
-            e.printStackTrace();
             System.exit(1);
 
         }
@@ -41,8 +40,6 @@ public class JSONController {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
     }
     public static void validateJSON(String filePath) throws Exception {
-
-
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V201909);
