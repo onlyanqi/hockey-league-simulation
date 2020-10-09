@@ -35,15 +35,17 @@ public class ImportStateTest {
 
     @Test
     public void processTest() throws Exception {
-//        HockeyContext hockeyContext = new HockeyContext();
-//        hockeyContext.setUser(user);
-//
-//        JSONObject leagueObject = JSONControllerMock.getJSON(1);
-//
-//        state = new ImportState(hockeyContext,leagueObject);
-//
-//        state.process();
-//
+        HockeyContext hockeyContext = new HockeyContext();
+        hockeyContext.setUser(user);
+
+        JSONObject leagueObject = JSONControllerMock.getJSON(1);
+
+        state = new ImportState(hockeyContext,leagueObject);
+
+
+
+        //state.process();
+
 //        assertEquals(hockeyContext.getUser().getLeague() , null);
 //        assertEquals(hockeyContext.getUser().getLeague().getName() , "Dalhousie Hockey League");
 
