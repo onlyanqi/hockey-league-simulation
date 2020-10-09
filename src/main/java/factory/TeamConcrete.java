@@ -1,14 +1,14 @@
 package factory;
 
-import dao.AddPlayerDao;
+
 import dao.AddTeamDao;
-import dao.LoadPlayerDao;
+
 import dao.LoadTeamDao;
-import data.IAddPlayerFactory;
+
 import data.IAddTeamFactory;
-import data.ILoadPlayerFactory;
+
 import data.ILoadTeamFactory;
-import model.Player;
+
 import model.Team;
 
 public class TeamConcrete {

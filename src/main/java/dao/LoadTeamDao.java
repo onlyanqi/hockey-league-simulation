@@ -2,11 +2,11 @@ package dao;
 
 import common.Constants;
 import data.ILoadTeamFactory;
-import model.Player;
+
 import model.Team;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class LoadTeamDao implements ILoadTeamFactory {
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
             callDB.executeLoad();
-            team = new Team();
+
             team.setId(callDB.returnOutputParameterInt(2));
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));
@@ -44,7 +44,7 @@ public class LoadTeamDao implements ILoadTeamFactory {
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
             callDB.executeLoad();
-            team = new Team();
+
             team.setId(callDB.returnOutputParameterInt(2));
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));

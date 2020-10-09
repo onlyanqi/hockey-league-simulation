@@ -24,7 +24,7 @@ public class LoadDivisionDao implements ILoadDivisionFactory {
             callDB.executeLoad();
 
 
-                    division = new Division();
+
                     division.setId(callDB.returnOutputParameterInt(2));
                     division.setName(callDB.returnOutputParameterString(3));
                     division.setConferenceId(callDB.returnOutputParameterInt(4));

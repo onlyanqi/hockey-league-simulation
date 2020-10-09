@@ -29,7 +29,7 @@ public class JSONController {
             System.out.println("File read failed. "+e);
             System.exit(1);
         } catch (ParseException e) {
-            System.out.println("Imported JSON is not valid");
+            System.out.println("Imported file is not valid. Please make sure it is JSON format or if all fields are either boolean,string,array,object");
             System.exit(1);
 
         }
@@ -58,7 +58,6 @@ public class JSONController {
             } else {
                 for(ValidationMessage a : validationResult){
                     System.out.println(a.getMessage());
-
                 }
             }
         }

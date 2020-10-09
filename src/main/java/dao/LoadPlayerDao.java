@@ -24,7 +24,7 @@ public class LoadPlayerDao implements ILoadPlayerFactory {
             callDB.setOutputParameterBoolean(5);
             callDB.executeLoad();
 
-            player = new Player();
+
             player.setId(callDB.returnOutputParameterInt(2));
             player.setName(callDB.returnOutputParameterString(3));
             player.setPosition(callDB.returnOutputParameterString(4));
