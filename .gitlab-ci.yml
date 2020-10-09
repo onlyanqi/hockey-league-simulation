@@ -93,7 +93,6 @@ deploy_prod:
   tags:
     - ugrad
   only:
-    - release
     - master
   artifacts:
     paths:
