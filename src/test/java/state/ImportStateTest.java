@@ -1,14 +1,12 @@
 package state;
 
 import data.ILoadLeagueFactory;
-import model.HockeyContext;
 import model.LoadLeagueMock;
 import model.User;
 import org.icehockey.JSONControllerMock;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.junit.BeforeClass;
-import scala.reflect.internal.Trees;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -28,8 +26,6 @@ public class ImportStateTest {
         user.setName("user1");
         user.setId(1);
 
-
-
     }
 
 
@@ -38,16 +34,19 @@ public class ImportStateTest {
         HockeyContext hockeyContext = new HockeyContext();
         hockeyContext.setUser(user);
 
-        JSONObject leagueObject = JSONControllerMock.getJSON(1);
+        assertEquals(hockeyContext.getUser().getId(),user.getId());
+        assertEquals(hockeyContext.getUser().getName(),user.getName());
 
+
+
+        JSONObject leagueObject = JSONControllerMock.getJSON(1);
         state = new ImportState(hockeyContext,leagueObject);
 
+        state.process();
+        System.out.println(hockeyContext.getUser().getLeague().getName());
 
-
-        //state.process();
-
-//        assertEquals(hockeyContext.getUser().getLeague() , null);
-//        assertEquals(hockeyContext.getUser().getLeague().getName() , "Dalhousie Hockey League");
+        assertTrue(hockeyContext.getUser().getLeague()!=null);
+        assertEquals(hockeyContext.getUser().getLeague().getName() , "Dalhousie Hockey League");
 
     }
 

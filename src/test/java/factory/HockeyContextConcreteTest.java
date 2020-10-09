@@ -1,6 +1,6 @@
 package factory;
 
-import model.HockeyContext;
+import state.HockeyContext;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 

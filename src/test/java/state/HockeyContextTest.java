@@ -1,9 +1,9 @@
-package model;
+package state;
 
 
 import data.ILoadLeagueFactory;
-import org.icehockey.JSONController;
-import org.icehockey.JSONControllerMock;
+import model.LoadLeagueMock;
+import model.User;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

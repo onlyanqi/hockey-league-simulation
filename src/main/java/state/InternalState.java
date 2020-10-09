@@ -1,7 +1,5 @@
 package state;
 
-import model.HockeyContext;
-
 public class InternalState implements IHockeyState {
 
     private HockeyContext hockeyContext;

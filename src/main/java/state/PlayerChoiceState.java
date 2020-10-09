@@ -1,7 +1,5 @@
 package state;
 
-import model.HockeyContext;
-
 import java.util.Scanner;
 
 public class PlayerChoiceState implements IHockeyState{
@@ -27,12 +25,10 @@ public class PlayerChoiceState implements IHockeyState{
         Scanner scanner = new Scanner(System.in);
         System.out.println(input);
         userInput = scanner.nextLine();
-
     }
 
     @Override
     public IHockeyState exit() {
-
         switch (stateName)
         {
             case "importState":
@@ -56,8 +52,6 @@ public class PlayerChoiceState implements IHockeyState{
 
             }
         }
-
-
         return null;
     }
 }

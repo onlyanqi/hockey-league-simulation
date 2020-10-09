@@ -51,7 +51,7 @@ public class CreateTeamState implements IHockeyState {
             conferenceNameList.add(conference.getName());
         }
         while(!conferenceNameList.contains(conferenceName)){
-            conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
+            conferenceName  = GetInput.getUserInput("Please enter conference name from the existing ones");
         }
 
         Conference conference = null;
@@ -102,7 +102,7 @@ public class CreateTeamState implements IHockeyState {
         while(generalManagerName.isEmpty() || generalManagerName ==null){
             generalManagerName=  GetInput.getUserInput("Please enter GeneralManager name!");
         }
-        headCoachName  = GetInput.getUserInput("Please enter name of head coach ");
+        headCoachName  = GetInput.getUserInput("Please enter name of head coach");
 
         while(headCoachName.isEmpty() || headCoachName ==null){
             headCoachName = GetInput.getUserInput("Please enter HeadCoach Name !");
@@ -147,7 +147,6 @@ public class CreateTeamState implements IHockeyState {
 
     @Override
     public void process() {
-        //Instantiate Model Objects
 
         league.setCreatedBy(hockeyContext.getUser().getId());
 

@@ -25,18 +25,18 @@ public class JSONControllerMock{
 
         JSONObject freeAgentplayer1 = new JSONObject();
         freeAgentplayer1.put("playerName","Agent One");
-        freeAgentplayer1.put("playerName","forward");
-        freeAgentplayer1.put("playerName","false");
+        freeAgentplayer1.put("position","forward");
+        freeAgentplayer1.put("captain",false);
 
         JSONObject freeAgentPlayer2 = new JSONObject();
         freeAgentPlayer2.put("playerName","Agent Two");
-        freeAgentPlayer2.put("playerName","forward");
-        freeAgentPlayer2.put("playerName","false");
+        freeAgentPlayer2.put("position","defense");
+        freeAgentPlayer2.put("captain",false);
 
         JSONObject freeAgentPlayer3 = new JSONObject();
         freeAgentPlayer3.put("playerName","Agent Three");
-        freeAgentPlayer3.put("playerName","forward");
-        freeAgentPlayer3.put("playerName","false");
+        freeAgentPlayer3.put("position","goalie");
+        freeAgentPlayer3.put("captain",false);
 
         freeAgents.add(freeAgentplayer1);
         freeAgents.add(freeAgentPlayer2);
@@ -44,18 +44,18 @@ public class JSONControllerMock{
 
         JSONObject player1 = new JSONObject();
         player1.put("playerName","Agent One");
-        player1.put("playerName","forward");
-        player1.put("playerName","false");
+        player1.put("position","forward");
+        player1.put("captain",false);
 
         JSONObject player2 = new JSONObject();
-        freeAgentPlayer2.put("playerName","Agent Two");
-        freeAgentPlayer2.put("playerName","forward");
-        freeAgentPlayer2.put("playerName","false");
+        player2.put("playerName","Agent Two");
+        player2.put("position","defense");
+        player2.put("captain",false);
 
         JSONObject player3 = new JSONObject();
-        freeAgentPlayer3.put("playerName","Agent Three");
-        freeAgentPlayer3.put("playerName","forward");
-        freeAgentPlayer3.put("playerName","false");
+        player3.put("playerName","Agent Three");
+        player3.put("position","goalie");
+        player3.put("captain",true);
 
         players.add(player1);
         players.add(player2);
@@ -78,6 +78,8 @@ public class JSONControllerMock{
         JSONObject conference = new JSONObject();
         conference.put("conferenceName","Eastern Conference");
         conference.put("divisions",divisions);
+
+        conferences.add(conference);
 
         league.put("leagueName","Dalhousie Hockey League");
         league.put("conferences",conferences);
