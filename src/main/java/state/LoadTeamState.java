@@ -42,8 +42,6 @@ public class LoadTeamState implements IHockeyState {
         LeagueConcrete leagueConcrete = new LeagueConcrete();
         ILoadLeagueFactory iLoadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
 
-
-
         hockeyContext.getUser().loadLeagueByUserId(iLoadLeagueFactory);
 
         if(hockeyContext.getUser().getLeagueList().size()==0){
@@ -51,6 +49,8 @@ public class LoadTeamState implements IHockeyState {
             System.exit(1);
         }
         league = hockeyContext.getUser().getLeagueList().get(0);
+
+        Division div = null;
 
         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
         ILoadConferenceFactory iLoadConferenceFactory = conferenceConcrete.newLoadConferenceFactory();
@@ -65,12 +65,18 @@ public class LoadTeamState implements IHockeyState {
                 TeamConcrete teamConcrete = new TeamConcrete();
                 ILoadTeamFactory iLoadTeamFactory = teamConcrete.newLoadTeamFactory();
                 division.loadTeamListByDivisionId(iLoadTeamFactory);
+
                 List<Team> teamArrayList = division.getTeamList();
                 for(Team team: teamArrayList){
+
+                    if(teamName != null && team.getName() != null && team.getName().equals(teamName)){
+                        div = division;
+                    }
+
                     PlayerConcrete playerConcrete = new PlayerConcrete();
                     ILoadPlayerFactory iLoadPlayerFactory = playerConcrete.newLoadPlayerFactory();
                     team.loadPlayerListByTeamId(iLoadPlayerFactory);
-                    List<Player> playerList = team.getPlayerList();
+                    team.getPlayerList();
                 }
             }
         }
@@ -84,6 +90,25 @@ public class LoadTeamState implements IHockeyState {
         PlayerConcrete playerConcrete = new PlayerConcrete();
         ILoadPlayerFactory iLoadPlayerFactory = playerConcrete.newLoadPlayerFactory();
         freeAgent.loadPlayerListByFreeAgentId(iLoadPlayerFactory);
+
+        Conference conf = null;
+        if(league.getConferenceList() != null && !league.getConferenceList().isEmpty()) {
+            for (Conference conference : league.getConferenceList()) {
+                if(conference.getDivisionList() != null && !conference.getDivisionList().isEmpty()) {
+                    for (Division division : conference.getDivisionList()) {
+                        if(division.getName() != null && div.getName() != null &&
+                                division.getName().equals(div.getName())){
+                            conf = conference;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println("The team belongs to \""+league.getName()+"\" league.");
+        System.out.println("The team belongs to \""+conf.getName()+"\" conference.");
+        System.out.println("The team belongs to \""+div.getName()+"\" division.");
 
     }
 
