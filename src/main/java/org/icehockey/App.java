@@ -18,7 +18,6 @@ public class App
         String filePath = "";
         JSONObject jsonFromInput = null;
 
-
         String userName = GetInput.getUserInput("Please enter username");
 
         CommonUtil util = new CommonUtil();
@@ -48,13 +47,14 @@ public class App
                 }
                 HockeyContext context = new HockeyContext(user);
                 context.startAction(jsonFromInput);
+
             }
-        }catch (FileNotFoundException e){
-            System.out.println("File Not found. "+e);
+        } catch (FileNotFoundException e) {
+            System.out.println("File Not found. " + e);
+        } catch (Exception e) {
+            System.out.println("System faced unexpected exception. Please contact team. " + e);
         }
-        catch (Exception e){
-            System.out.println("System faced unexpected exception. Please contact team. "+e);
-        }
+
 
     }
 
