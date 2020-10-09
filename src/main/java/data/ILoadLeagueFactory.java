@@ -6,6 +6,6 @@ import java.util.List;
 public interface ILoadLeagueFactory {
 
     void loadLeagueById(int id, League league) throws Exception;
-    League loadLeagueByName(String leagueName, int userId) throws Exception;
+    void loadLeagueByName(String leagueName, int userId, League league) throws Exception;
     List<League> loadLeagueListByUserId(int userId) throws Exception;
 }

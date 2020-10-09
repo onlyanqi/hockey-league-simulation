@@ -80,8 +80,7 @@ public class LoadLeagueMock implements ILoadLeagueFactory {
     }
 
     @Override
-    public League loadLeagueByName(String leagueName, int userId) throws Exception {
-        League league = new League();
+    public void loadLeagueByName(String leagueName, int userId, League league) throws Exception {
         league.setName("League1");
         league.setStartDate(new Date(2000, 0, 0));
         league.setEndDate(new Date(2050, 0, 0));
@@ -89,7 +88,6 @@ public class LoadLeagueMock implements ILoadLeagueFactory {
         league.setCreatedBy(userId);
         league.setConferenceList(formConferenceList());
         league.setFreeAgent(formFreeAgent());
-        return league;
     }
 
     public List formLeagueList() throws Exception {

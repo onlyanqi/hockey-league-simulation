@@ -22,12 +22,10 @@ public class LoadConferenceDao implements ILoadConferenceFactory {
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
             callDB.executeLoad();
-
-
-                    conference = new Conference();
-                    conference.setId(callDB.returnOutputParameterInt(2));
-                    conference.setName(callDB.returnOutputParameterString(3));
-                    conference.setLeagueId(callDB.returnOutputParameterInt(4));
+            conference = new Conference();
+            conference.setId(callDB.returnOutputParameterInt(2));
+            conference.setName(callDB.returnOutputParameterString(3));
+            conference.setLeagueId(callDB.returnOutputParameterInt(4));
         }catch (Exception e){
             throw e;
         } finally {

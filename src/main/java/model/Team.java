@@ -1,5 +1,8 @@
 package model;
 
+import data.IAddPlayerFactory;
+import data.IAddTeamFactory;
+import data.ILoadPlayerFactory;
 import data.ILoadTeamFactory;
 
 import java.util.List;
@@ -15,6 +18,10 @@ public class Team extends ParentObj{
     public Team(int id, ILoadTeamFactory factory) throws Exception {
         setId(id);
         factory.loadTeamById(id, this);
+    }
+
+    public Team(String name, ILoadTeamFactory factory) throws Exception {
+        factory.loadTeamByName(name, this);
     }
 
     private String hometown;
@@ -75,5 +82,13 @@ public class Team extends ParentObj{
 
     public void setHeadCoach(String headCoach) {
         this.headCoach = headCoach;
+    }
+
+    public void addTeam(IAddTeamFactory addTeamFactory) throws Exception {
+        addTeamFactory.addTeam(this);
+    }
+
+    public void loadPlayerListByTeamId(ILoadPlayerFactory loadPlayerFactory) throws Exception {
+        this.playerList = loadPlayerFactory.loadPlayerListByTeamId(getId());
     }
 }

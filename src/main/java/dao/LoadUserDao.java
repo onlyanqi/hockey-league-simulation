@@ -36,16 +36,14 @@ public class LoadUserDao implements ILoadUserFactory {
     }
 
     @Override
-    public User loadUserByName(String userName) throws Exception {
+    public void loadUserByName(String userName, User user) throws Exception {
         ICallDB callDB = null;
-        User user = null;
         try {
             callDB = new CallDB(Constants.loadUserByName);
             callDB.setInputParameterString(1, userName);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.executeLoad();
-
             user = new User();
             user.setId(callDB.returnOutputParameterInt(2));
             user.setPassword(callDB.returnOutputParameterString(3));
@@ -56,7 +54,6 @@ public class LoadUserDao implements ILoadUserFactory {
         } finally {
             callDB.closeConnection();
         }
-        return user;
     }
 
 }

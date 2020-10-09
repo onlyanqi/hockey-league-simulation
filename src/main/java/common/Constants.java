@@ -27,7 +27,7 @@ public class Constants {
     public static final String loadConference = "LoadConferenceByName(?,?,?,?)";
     public static final String loadDivisionByName = "LoadDivisionByName(?,?,?,?)";
     public static final String loadSeasonByName = "LoadSeasonByName(?,?,?)";
-    public static final String loadTeamByName = "LoadTeamByName(?,?,?,?)";
+    public static final String loadTeamByName = "LoadTeamByName(?,?,?,?,?,?)";
     public static final String loadFreeAgentByLeagueId = "LoadFreeAgentByName(?,?,?,?)";
     public static final String loadPlayerByName = "LoadPlayerByName(?,?,?,?,?,?,?)";
 

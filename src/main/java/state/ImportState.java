@@ -1,5 +1,7 @@
 package state;
 
+import dao.LoadLeagueDao;
+import factory.*;
 import model.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImportState implements IHockeyState {
 
@@ -25,21 +28,22 @@ public class ImportState implements IHockeyState {
     public ImportState(HockeyContext hockeyContext,JSONObject jsonFromInput){
         this.jsonFromInput = jsonFromInput;
         this.hockeyContext = hockeyContext;
-        league = hockeyContext.getLeague();
+        league = hockeyContext.getUser().getLeague();
+        if(league == null){
+            LeagueConcrete leagueConcrete = new LeagueConcrete();
+            league = leagueConcrete.newLeague();
+        }
     }
-
-
 
     @Override
     public void entry() {
         //empty for now
-
     }
 
     @Override
     public void process() {
         parseJSONAndInstantiateLeague(jsonFromInput);
-        hockeyContext.setLeague(league);
+        hockeyContext.getUser().setLeague(league);
     }
 
     @Override
@@ -52,10 +56,11 @@ public class ImportState implements IHockeyState {
         JSONArray conferences = (JSONArray) leagueJSON.get("conferences");
         JSONArray freeAgents = (JSONArray) leagueJSON.get("freeAgents");
 
-        ArrayList<Conference> conferenceList = loadConferenceJSON(conferences);
+        List<Conference> conferenceList = loadConferenceJSON(conferences);
 
-        FreeAgent freeAgent = new FreeAgent();
-        ArrayList<Player> freeAgentList = loadFreeAgentJSON(freeAgents);
+        FreeAgentConcrete freeAgentConcrete = new FreeAgentConcrete();
+        FreeAgent freeAgent = freeAgentConcrete.newFreeAgent();
+        List<Player> freeAgentList = loadFreeAgentJSON(freeAgents);
         freeAgent.setPlayerList(freeAgentList);
 
         league.setName(leagueName);
@@ -63,21 +68,22 @@ public class ImportState implements IHockeyState {
         league.setFreeAgent(freeAgent);
     }
 
-    private ArrayList<Team> loadTeamJSON(JSONArray teams){
-        ArrayList<Team> teamList = new ArrayList<Team>();
+    private List<Team> loadTeamJSON(JSONArray teams){
+        List<Team> teamList = new ArrayList<Team>();
         for(Object teamObjectFromJSONArray : teams){
             JSONObject teamJSONObject = (JSONObject) teamObjectFromJSONArray;
             String teamName = (String) teamJSONObject.get("teamName");
             String generalManager = (String) teamJSONObject.get("generalManager");
             String headCoach = (String) teamJSONObject.get("headCoach");
-            Team team = new Team();
+            TeamConcrete teamConcrete = new TeamConcrete();
+            Team team = teamConcrete.newTeam();
             team.setName(teamName);
             team.setGeneralManager(generalManager);
             team.setHeadCoach(headCoach);
 
             JSONArray players = (JSONArray) teamJSONObject.get("players");
 
-            ArrayList<Player> playerList = loadPlayerJSON(players);
+            List<Player> playerList = loadPlayerJSON(players);
 
             team.setPlayerList(playerList);
             teamList.add(team);
@@ -86,9 +92,9 @@ public class ImportState implements IHockeyState {
         return teamList;
 
     }
-    private ArrayList<Player> loadPlayerJSON(JSONArray players){
+    private List<Player> loadPlayerJSON(JSONArray players){
 
-        ArrayList<Player> playerList = new ArrayList<Player>();
+        List<Player> playerList = new ArrayList<Player>();
 
         for(Object playerObjectFromJSONArray : players) {
             JSONObject playerJsonObject = (JSONObject) playerObjectFromJSONArray;
@@ -96,24 +102,21 @@ public class ImportState implements IHockeyState {
             String position = (String) playerJsonObject.get("position");
             boolean captain = (Boolean) playerJsonObject.get("captain");
 
-
-            Player player = new Player();
+            PlayerConcrete playerConcrete = new PlayerConcrete();
+            Player player = playerConcrete.newPlayer();
             player.setName(playerName);
             player.setPosition(position);
             player.setCaptain(captain);
 
             if(player.validPosition() && player.validName()){
                 playerList.add(player);
-            }else{
-                //Exception Handling
             }
-
 
         }
         return playerList;
 
     }
-    private ArrayList<Division> loadDivisionJSON(JSONArray divisions){
+    private List<Division> loadDivisionJSON(JSONArray divisions){
         ArrayList<Division> divisionList = new ArrayList<Division>();
         for(Object divisionObjectFromJSONArray : divisions){
             JSONObject divisionJSONObject = (JSONObject) divisionObjectFromJSONArray;
@@ -124,42 +127,44 @@ public class ImportState implements IHockeyState {
 
             JSONArray teams = (JSONArray) divisionJSONObject.get("teams");
 
-
-            ArrayList<Team> teamList = loadTeamJSON(teams);
+            List<Team> teamList = loadTeamJSON(teams);
 
             division.setTeamList(teamList);
             divisionList.add(division);
         }
         return divisionList;
     }
-    private ArrayList<Conference> loadConferenceJSON(JSONArray conferences){
-        ArrayList<Conference> conferenceList = new ArrayList<Conference>();
+    private List<Conference> loadConferenceJSON(JSONArray conferences){
+        List<Conference> conferenceList = new ArrayList<Conference>();
         for(Object conferenceObjectFromJSONArray : conferences){
             JSONObject conferenceJSONObject = (JSONObject) conferenceObjectFromJSONArray;
             String conferenceName = (String) conferenceJSONObject.get("conferenceName");
 
-            Conference conference = new Conference();
+            ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
+            Conference conference = conferenceConcrete.newConference();
+
             conference.setName(conferenceName);
 
             JSONArray divisions = (JSONArray) conferenceJSONObject.get("divisions");
 
-            ArrayList<Division> divisionList = loadDivisionJSON(divisions);
+            List<Division> divisionList = loadDivisionJSON(divisions);
 
             conference.setDivisionList(divisionList);
             conferenceList.add(conference);
         }
         return conferenceList;
     }
-    private ArrayList<Player> loadFreeAgentJSON(JSONArray freeAgents){
+    private List<Player> loadFreeAgentJSON(JSONArray freeAgents){
 
-        ArrayList<Player> freeAgentList =  new ArrayList<>();
+        List<Player> freeAgentList =  new ArrayList<>();
         for(Object freeAgentObjectFromJSONArray : freeAgents) {
             JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
             String playerName = (String) freeAgentJsonObject.get("playerName");
             String position = (String) freeAgentJsonObject.get("position");
             boolean captain = (Boolean) freeAgentJsonObject.get("captain");
 
-            Player player = new Player();
+            PlayerConcrete playerConcrete = new PlayerConcrete();
+            Player player = playerConcrete.newPlayer();
             player.setName(playerName);
             player.setPosition(position);
             player.setCaptain(captain);

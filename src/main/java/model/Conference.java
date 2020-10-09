@@ -1,6 +1,8 @@
 package model;
 
+import data.IAddConferenceFactory;
 import data.ILoadConferenceFactory;
+import data.ILoadDivisionFactory;
 
 import java.util.List;
 
@@ -36,4 +38,13 @@ public class Conference extends ParentObj{
     public void setDivisionList(List<Division> divisionList) {
         this.divisionList = divisionList;
     }
+
+    public void addConference(IAddConferenceFactory addConferenceFactory) throws Exception {
+        addConferenceFactory.addConference(this);
+    }
+
+    public void loadDivisionListByConferenceId(ILoadDivisionFactory loadDivisionFactory) throws Exception {
+        this.divisionList = loadDivisionFactory.loadDivisionListByConferenceId(getId());
+    }
+
 }

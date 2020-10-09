@@ -1,5 +1,6 @@
 package data;
 
+import model.Player;
 import model.Team;
 
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.List;
 public interface ILoadTeamFactory {
 
     void loadTeamById(int id, Team team) throws Exception;
-    Team loadTeamByName(String teamName) throws Exception;
-
+    void loadTeamByName(String teamName, Team team) throws Exception;
     List<Team> loadTeamListByDivisionId(int divisionId) throws Exception;
 }

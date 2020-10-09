@@ -21,7 +21,6 @@ public class AddPlayerDao implements IAddPlayerFactory {
             callDB.setInputParameterString(5, player.getPosition());
             callDB.setInputParameterBoolean(6, player.isCaptain());
 
-
             callDB.setOutputParameterInt(7);
             callDB.execute();
             player.setId(callDB.returnOutputParameterInt(7));
