@@ -15,7 +15,7 @@ public class JSONControllerMock{
 
     private static JSONObject createJSON(){
         JSONObject league = new JSONObject();
-        league.put("leagueName","Dalhouise Hockey League");
+        league.put("leagueName","Dalhousie Hockey League");
 
         JSONArray freeAgents = new JSONArray();
         JSONArray players = new JSONArray();
