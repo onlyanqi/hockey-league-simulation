@@ -1,10 +1,14 @@
 package state;
 
+import data.ILoadLeagueFactory;
 import model.HockeyContext;
+import model.LoadLeagueMock;
 import model.User;
 import org.icehockey.JSONControllerMock;
+import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.junit.BeforeClass;
+import scala.reflect.internal.Trees;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,42 +16,37 @@ import static org.junit.Assert.assertTrue;
 
 public class ImportStateTest {
 
-    static HockeyContext hockeyContext;
-    static IHockeyState hockeyState;
-    static IHockeyState hockeyState2;
+    private static ILoadLeagueFactory factory;
     static User user ;
+    IHockeyState state ;
 
     @BeforeClass
-    public static void setState(){
+    public static void setAll(){
 
-        //user = new User();
-       // user.setId(2);
-        //hockeyContext = new HockeyContext(user);
-        //hockeyState = new ImportState(hockeyContext, JSONControllerMock.getJSON(1));
+        factory = new LoadLeagueMock();
+        user = new User();
+        user.setName("user1");
+        user.setId(1);
 
-        //hockeyState2 = new ImportState(hockeyContext, JSONControllerMock.getJSON(2));
+
 
     }
 
-    @Test
-    public void entryTest() {
-
-        //assertTrue(true);
-    }
 
     @Test
     public void processTest() throws Exception {
-//        hockeyState.process();
-//        assertEquals(hockeyContext.getLeague().getName(),"Dalhousie Hockey League");
-//        assertTrue(hockeyContext.getLeague().getConferenceList() != null);
+//        HockeyContext hockeyContext = new HockeyContext();
+//        hockeyContext.setUser(user);
 //
-//        hockeyState2.process();
-//        assertEquals(hockeyContext.getLeague().getName(),"National Hockey League");
-//        assertTrue(hockeyContext.getLeague().getConferenceList() != null);
+//        JSONObject leagueObject = JSONControllerMock.getJSON(1);
 //
+//        state = new ImportState(hockeyContext,leagueObject);
 //
-//        assertEquals(hockeyContext.getLeague().getConferenceList().get(0).getName() , "Eastern Conference");
+//        state.process();
 //
+//        assertEquals(hockeyContext.getUser().getLeague() , null);
+//        assertEquals(hockeyContext.getUser().getLeague().getName() , "Dalhousie Hockey League");
+
     }
 
     @Test

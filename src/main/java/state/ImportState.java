@@ -47,10 +47,10 @@ public class ImportState implements IHockeyState {
     }
 
     private void parseJSONAndInstantiateLeague(JSONObject leagueJSON){
+
         String leagueName = (String) leagueJSON.get("leagueName");
         JSONArray conferences = (JSONArray) leagueJSON.get("conferences");
         JSONArray freeAgents = (JSONArray) leagueJSON.get("freeAgents");
-
 
 
         if(validateString(leagueName) ){
