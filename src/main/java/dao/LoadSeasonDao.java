@@ -19,7 +19,7 @@ public class LoadSeasonDao implements ILoadSeasonFactory {
             callDB.setOutputParameterString(3);
             callDB.executeLoad();
 
-            season = new Season();
+
             season.setId(callDB.returnOutputParameterInt(2));
             season.setName(callDB.returnOutputParameterString(3));
 

@@ -33,7 +33,7 @@ public class CreateTeamState implements IHockeyState {
         }
 
         seasonName  = GetInput.getUserInput("Please enter season name");
-        //seasonName = "2025";
+
 
         while((seasonName ==null || seasonName.isEmpty() )){
             seasonName = GetInput.getUserInput("Please enter season name!");
@@ -98,7 +98,6 @@ public class CreateTeamState implements IHockeyState {
         LeagueConcrete leagueConcrete = new LeagueConcrete();
         ILoadLeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
         League league = null;
-
         try {
             int userId = hockeyContext.getUser().getId();
             league = leagueConcrete.newLeagueNameUserId(leagueName, userId, loadLeagueFactory);
@@ -141,6 +140,9 @@ public class CreateTeamState implements IHockeyState {
 
     @Override
     public IHockeyState exit() {
+
+        System.out.println("Please wait while we are saving your league information...");
+
         PlayerChoiceState playerChoiceState = null;
         if (league != null) {
             //Persist to DB and transition to next state
@@ -222,7 +224,7 @@ public class CreateTeamState implements IHockeyState {
             PlayerConcrete playerConcrete = new PlayerConcrete();
             IAddPlayerFactory addPlayerDao = playerConcrete.newAddPlayerFactory();
             for (Player player : playerList) {
-                player.setFreeAgentId(teamId);
+                player.setTeamId(teamId);
                 player.setFreeAgentId(freeAgentId);
                 player.setSeasonId(seasonId);
                 addPlayerDao.addPlayer(player);

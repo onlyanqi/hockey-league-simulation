@@ -1,18 +1,13 @@
 package state;
 
-import dao.LoadLeagueDao;
 import factory.*;
 import model.*;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +51,23 @@ public class ImportState implements IHockeyState {
         JSONArray conferences = (JSONArray) leagueJSON.get("conferences");
         JSONArray freeAgents = (JSONArray) leagueJSON.get("freeAgents");
 
+
+
+        if(validateString(leagueName) ){
+            System.out.println("Please make sure league name is valid ");
+            System.exit(1);
+        }
+
+        if(validateArray(conferences) ){
+            System.out.println("Please make sure atleast one conference is provided ");
+            System.exit(1);
+        }
+        if(validateArray(freeAgents) ){
+            System.out.println("Please make sure atleast one freeAgent is provided ");
+            System.exit(1);
+        }
+
+
         List<Conference> conferenceList = loadConferenceJSON(conferences);
 
         FreeAgentConcrete freeAgentConcrete = new FreeAgentConcrete();
@@ -68,13 +80,35 @@ public class ImportState implements IHockeyState {
         league.setFreeAgent(freeAgent);
     }
 
+
+
     private List<Team> loadTeamJSON(JSONArray teams){
-        List<Team> teamList = new ArrayList<Team>();
+        ArrayList<Team> teamList = new ArrayList<Team>();
         for(Object teamObjectFromJSONArray : teams){
             JSONObject teamJSONObject = (JSONObject) teamObjectFromJSONArray;
             String teamName = (String) teamJSONObject.get("teamName");
             String generalManager = (String) teamJSONObject.get("generalManager");
             String headCoach = (String) teamJSONObject.get("headCoach");
+
+            if(validateString(teamName) ){
+                System.out.println("Please make sure team name is valid ");
+                System.exit(1);
+            }
+
+            if(validateString(generalManager) ){
+                System.out.println("Please make sure General Manager name is valid ");
+                System.exit(1);
+            }
+            if(validateString(headCoach) ){
+                System.out.println("Please make sure Head Coach name is valid ");
+                System.exit(1);
+            }
+            if(isTeamExists(teamList,teamName)){
+                System.out.println("Please make sure there are no duplicates in conference name");
+                System.exit(1);
+            }
+
+
             TeamConcrete teamConcrete = new TeamConcrete();
             Team team = teamConcrete.newTeam();
             team.setName(teamName);
@@ -82,6 +116,11 @@ public class ImportState implements IHockeyState {
             team.setHeadCoach(headCoach);
 
             JSONArray players = (JSONArray) teamJSONObject.get("players");
+
+            if(validateArray(players) ){
+                System.out.println("Please make sure atleast one player is provided. ");
+                System.exit(1);
+            }
 
             List<Player> playerList = loadPlayerJSON(players);
 
@@ -94,24 +133,63 @@ public class ImportState implements IHockeyState {
     }
     private List<Player> loadPlayerJSON(JSONArray players){
 
-        List<Player> playerList = new ArrayList<Player>();
+        ArrayList<Player> playerList = new ArrayList<Player>();
 
-        for(Object playerObjectFromJSONArray : players) {
-            JSONObject playerJsonObject = (JSONObject) playerObjectFromJSONArray;
-            String playerName = (String) playerJsonObject.get("playerName");
-            String position = (String) playerJsonObject.get("position");
-            boolean captain = (Boolean) playerJsonObject.get("captain");
+        ArrayList<Boolean> captainList = new ArrayList<>();
 
-            PlayerConcrete playerConcrete = new PlayerConcrete();
-            Player player = playerConcrete.newPlayer();
-            player.setName(playerName);
-            player.setPosition(position);
-            player.setCaptain(captain);
+        try {
 
-            if(player.validPosition() && player.validName()){
-                playerList.add(player);
+            for (Object playerObjectFromJSONArray : players) {
+                JSONObject playerJsonObject = (JSONObject) playerObjectFromJSONArray;
+                String playerName = (String) playerJsonObject.get("playerName");
+                String position = (String) playerJsonObject.get("position");
+                boolean captain = (Boolean) playerJsonObject.get("captain");
+
+
+                if (validateString(playerName)) {
+                    System.out.println("Please make sure player name is valid ");
+                    System.exit(1);
+                }
+
+                if (validateString(position)) {
+                    System.out.println("Please make sure position of the player is valid");
+                    System.exit(1);
+                }
+
+                if (validateBoolean(captain)) {
+                    System.out.println("Please make sure captain is valid ");
+                    System.exit(1);
+                }
+
+                if (validCaptain(playerList, captain)) {
+                    System.out.println("Please make sure only one captain is provided ");
+                    System.exit(1);
+                }
+
+                if (isPlayerExists(playerList, playerName)) {
+                    System.out.println("Please make sure there are no duplicates in conference name");
+                    System.exit(1);
+                }
+
+                captainList.add(captain);
+
+                PlayerConcrete playerConcrete = new PlayerConcrete();
+                Player player = playerConcrete.newPlayer();
+                player.setName(playerName);
+                player.setPosition(position);
+                player.setCaptain(captain);
+
+                if (player.validPosition() && player.validName()) {
+                    playerList.add(player);
+                } else {
+                    System.out.println("Please make sure either of goalie, forward or defense are provided in the position. Nothing else!");
+                    System.exit(1);
+                }
+
             }
-
+        }catch(ClassCastException e){
+            System.out.println("Please make sure only boolean is provided for captain field.Exiting the app!");
+            System.exit(1);
         }
         return playerList;
 
@@ -122,10 +200,24 @@ public class ImportState implements IHockeyState {
             JSONObject divisionJSONObject = (JSONObject) divisionObjectFromJSONArray;
             String divisionName = (String) divisionJSONObject.get("divisionName");
 
+            if(validateString(divisionName) ){
+                System.out.println("Please make sure divisionName is valid");
+                System.exit(1);
+            }
+
+            if(isDivisionExists(divisionList,divisionName)){
+                System.out.println("Please make sure only one division is provided");
+                System.exit(1);
+            }
+
             Division division = new Division();
             division.setName(divisionName);
 
             JSONArray teams = (JSONArray) divisionJSONObject.get("teams");
+            if(validateArray(teams) ){
+                System.out.println("Please make sure atleast one team is provided");
+                System.exit(1);
+            }
 
             List<Team> teamList = loadTeamJSON(teams);
 
@@ -135,10 +227,21 @@ public class ImportState implements IHockeyState {
         return divisionList;
     }
     private List<Conference> loadConferenceJSON(JSONArray conferences){
-        List<Conference> conferenceList = new ArrayList<Conference>();
+        ArrayList<Conference> conferenceList = new ArrayList<Conference>();
         for(Object conferenceObjectFromJSONArray : conferences){
             JSONObject conferenceJSONObject = (JSONObject) conferenceObjectFromJSONArray;
             String conferenceName = (String) conferenceJSONObject.get("conferenceName");
+
+            if(validateString(conferenceName) ){
+                System.out.println("Please make sure conferenceName is valid ");
+                System.exit(1);
+            }
+
+            if(isConferenceExists(conferenceList,conferenceName)){
+                System.out.println("Please make sure there are no duplicates in conference name");
+                System.exit(1);
+            }
+
 
             ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
             Conference conference = conferenceConcrete.newConference();
@@ -146,6 +249,11 @@ public class ImportState implements IHockeyState {
             conference.setName(conferenceName);
 
             JSONArray divisions = (JSONArray) conferenceJSONObject.get("divisions");
+
+            if(validateArray(divisions) ){
+                System.out.println("Please make sure atleast one division is provided ");
+                System.exit(1);
+            }
 
             List<Division> divisionList = loadDivisionJSON(divisions);
 
@@ -156,28 +264,135 @@ public class ImportState implements IHockeyState {
     }
     private List<Player> loadFreeAgentJSON(JSONArray freeAgents){
 
-        List<Player> freeAgentList =  new ArrayList<>();
-        for(Object freeAgentObjectFromJSONArray : freeAgents) {
-            JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
-            String playerName = (String) freeAgentJsonObject.get("playerName");
-            String position = (String) freeAgentJsonObject.get("position");
-            boolean captain = (Boolean) freeAgentJsonObject.get("captain");
+        ArrayList<Player> freeAgentList =  new ArrayList<>();
 
-            PlayerConcrete playerConcrete = new PlayerConcrete();
-            Player player = playerConcrete.newPlayer();
-            player.setName(playerName);
-            player.setPosition(position);
-            player.setCaptain(captain);
+        try {
 
-            if(player.validPosition() && player.validName()){
-                freeAgentList.add(player);
-            }else{
-                System.out.println("Free Agent Position is not valid. Please Correct it. Exiting the app!");
-                System.exit(1);
+
+            for (Object freeAgentObjectFromJSONArray : freeAgents) {
+                JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
+                String playerName = (String) freeAgentJsonObject.get("playerName");
+                String position = (String) freeAgentJsonObject.get("position");
+                boolean captain = (Boolean) freeAgentJsonObject.get("captain");
+
+                if (validateString(playerName)) {
+                    System.out.println("Please make sure player name is valid in Free Agent");
+                    System.exit(1);
+                }
+
+                if (validateString(position)) {
+                    System.out.println("Please make sure position of the player is valid in Free Agent");
+                    System.exit(1);
+                }
+
+                if (validateBoolean(captain)) {
+                    System.out.println("Please make sure captain is valid in Free Agent ");
+                    System.exit(1);
+                }
+
+                if (captain) {
+                    System.out.println("Free Agents cannot be captains. Please correct them. ");
+                    System.exit(1);
+                }
+
+                if (isPlayerExists(freeAgentList, playerName)) {
+                    System.out.println("Please make sure only  Player is unique in freeagent");
+                    System.exit(1);
+                }
+
+
+                PlayerConcrete playerConcrete = new PlayerConcrete();
+                Player player = playerConcrete.newPlayer();
+                player.setName(playerName);
+                player.setPosition(position);
+                player.setCaptain(captain);
+
+                if (player.validPosition() && player.validName()) {
+                    freeAgentList.add(player);
+                } else {
+                    System.out.println("Free Agent Position is not valid. Please Correct it. Exiting the app!");
+                    System.exit(1);
+                }
+
             }
-
+        }catch(ClassCastException e){
+            System.out.println("Please make sure only boolean is provided for captain field.Exiting the app!");
+            System.exit(1);
         }
         return freeAgentList;
+    }
+
+    private boolean validateString(String name) {
+        if (name != null && name.length() != 0) {
+            return  false;
+        } else {
+            return true;
+        }
+    }
+    private boolean validateArray(JSONArray array){
+        if (array != null && array.size() != 0) {
+            return  false;
+        } else {
+            return true;
+        }
+    }
+    private boolean validateBoolean(Boolean bool){
+        return bool == null;
+    }
+
+    private boolean validCaptain(List<Player> playerList,Boolean captain){
+        boolean flag = false;
+        for(Player vPlayer : playerList){
+            if(captain && vPlayer.isCaptain()){
+                flag =  true;
+            }
+        }
+        return flag;
+    }
+
+    private boolean isDivisionExists(ArrayList<Division> list,String name){
+
+
+        boolean flag = false;
+        for(ParentObj obj : list){
+            if(obj.getName().equals(name)){
+                flag =  true;
+            }
+        }
+        return flag;
+    }
+    private boolean isConferenceExists(ArrayList<Conference> list,String name){
+
+
+        boolean flag = false;
+        for(ParentObj obj : list){
+            if(obj.getName().equals(name)){
+                flag =  true;
+            }
+        }
+        return flag;
+    }
+    private boolean isTeamExists(ArrayList<Team> list,String name){
+
+
+        boolean flag = false;
+        for(ParentObj obj : list){
+            if(obj.getName().equals(name)){
+                flag =  true;
+            }
+        }
+        return flag;
+    }
+    private boolean isPlayerExists(ArrayList<Player> list,String name){
+
+
+        boolean flag = false;
+        for(ParentObj obj : list){
+            if(obj.getName().equals(name)){
+                flag =  true;
+            }
+        }
+        return flag;
     }
 }
 

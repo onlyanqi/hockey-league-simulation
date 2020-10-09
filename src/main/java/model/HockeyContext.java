@@ -15,7 +15,6 @@ public class HockeyContext {
         this.hockeyState = hockeyState;
     }
 
-    //private League league;
 
     public User getUser() {
         return user;
@@ -28,7 +27,6 @@ public class HockeyContext {
     public HockeyContext(){}
 
     public HockeyContext(User user){
-        //league = new League();
         this.user = user;
     }
 
@@ -55,13 +53,6 @@ public class HockeyContext {
 
     }
 
-    /*public League getLeague() {
-        return league;
-    }
-
-    public void setLeague(League league) {
-        this.league = league;
-    }*/
 
 
     public IHockeyState getHockeyState() {

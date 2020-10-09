@@ -1,16 +1,12 @@
 package state;
 
-import dao.*;
 import data.*;
 import factory.*;
 import model.*;
 import org.icehockey.GetInput;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-import static common.Constants.loadFreeAgentByLeagueId;
 
 public class LoadTeamState implements IHockeyState {
 
@@ -39,16 +35,21 @@ public class LoadTeamState implements IHockeyState {
 
     @Override
     public void process() throws Exception {
-        //Load Team Data from DB
-        System.out.println("LoadTeam State -> Process ");
 
+        System.out.println("We are loading the league data. Please wait..");
 
         //Load League from userid
         LeagueConcrete leagueConcrete = new LeagueConcrete();
         ILoadLeagueFactory iLoadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
 
-        iLoadLeagueFactory.loadLeagueListByUserId(hockeyContext.getUser().getId()).get(0);
+
+
         hockeyContext.getUser().loadLeagueByUserId(iLoadLeagueFactory);
+
+        if(hockeyContext.getUser().getLeagueList().size()==0){
+            System.out.println("You do not have any league, Please create it.");
+            System.exit(1);
+        }
         league = hockeyContext.getUser().getLeagueList().get(0);
 
         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
@@ -69,8 +70,7 @@ public class LoadTeamState implements IHockeyState {
                     PlayerConcrete playerConcrete = new PlayerConcrete();
                     ILoadPlayerFactory iLoadPlayerFactory = playerConcrete.newLoadPlayerFactory();
                     team.loadPlayerListByTeamId(iLoadPlayerFactory);
-                    team.getPlayerList();
-                    teamArrayList.add(team);
+                    List<Player> playerList = team.getPlayerList();
                 }
             }
         }
@@ -91,8 +91,6 @@ public class LoadTeamState implements IHockeyState {
     public IHockeyState exit() {
         //Instantiate Model Objects and transition state
 
-
-        System.out.println("LoadTeam State -> Exit ");
         PlayerChoiceState playerChoiceState = new PlayerChoiceState(hockeyContext,"How many seasons do you want to simulate","createOrLoadTeam");
         return playerChoiceState;
     }
@@ -108,7 +106,7 @@ public class LoadTeamState implements IHockeyState {
             System.exit(1);
             e.printStackTrace();
         }
-        if(team!=null) return false;
+        if(team!=null && team.getId() >0) return false;
         else return true;
 
     }

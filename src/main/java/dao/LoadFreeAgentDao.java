@@ -23,7 +23,7 @@ public class LoadFreeAgentDao implements ILoadFreeAgentFactory {
             callDB.setOutputParameterInt(4);
             callDB.executeLoad();
 
-            freeAgent = new FreeAgent();
+
             freeAgent.setId(callDB.returnOutputParameterInt(2));
             freeAgent.setLeagueId(callDB.returnOutputParameterInt(3));
             freeAgent.setSeasonId(callDB.returnOutputParameterInt(4));

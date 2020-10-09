@@ -20,7 +20,6 @@ public class LoadUserDao implements ILoadUserFactory {
             callDB.executeLoad();
 
 
-            user = new User();
             user.setId(callDB.returnOutputParameterInt(2));
             user.setPassword(callDB.returnOutputParameterString(3));
 
@@ -44,7 +43,6 @@ public class LoadUserDao implements ILoadUserFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.executeLoad();
-            user = new User();
             user.setId(callDB.returnOutputParameterInt(2));
             user.setPassword(callDB.returnOutputParameterString(3));
         } catch (Exception e) {

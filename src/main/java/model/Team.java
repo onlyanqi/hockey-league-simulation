@@ -1,6 +1,6 @@
 package model;
 
-import data.IAddPlayerFactory;
+
 import data.IAddTeamFactory;
 import data.ILoadPlayerFactory;
 import data.ILoadTeamFactory;

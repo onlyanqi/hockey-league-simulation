@@ -24,8 +24,6 @@ public class LoadLeagueDao implements ILoadLeagueFactory {
 
             callDB.executeLoad();
 
-
-            league = new League();
             league.setId(callDB.returnOutputParameterInt(2));
             league.setName(callDB.returnOutputParameterString(3));
             league.setCreatedBy(callDB.returnOutputParameterInt(4));
@@ -49,7 +47,6 @@ public class LoadLeagueDao implements ILoadLeagueFactory {
             ResultSet rs = callDB.executeLoad();
             if(rs != null) {
                 while(rs.next()) {
-                    league = new League();
                     league.setId(rs.getInt(1));
                     league.setName(rs.getString(2));
                     league.setCreatedBy(rs.getInt(3));

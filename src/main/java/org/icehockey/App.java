@@ -26,8 +26,7 @@ public class App
         JSONObject jsonFromInput = null;
 
 
-        //String userName = GetInput.getUserInput("Please enter username");
-        String userName = "name";
+        String userName = GetInput.getUserInput("Please enter username");
 
         CommonUtil util = new CommonUtil();
 
@@ -39,14 +38,12 @@ public class App
 
                 user.setName(userName);
                 if (user.getId() == 0) {
-                    //String password = GetInput.getUserInput("Please enter password to register yourself");
-                    String password = "as";
+                    String password = GetInput.getUserInput("Please enter password to register yourself");
                     user.setPassword(password);
                     addUser(user);
                 }
 
-                //filePath = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
-                filePath = "C:\\Users\\prath\\MPK\\studies\\Term 3\\CSCI5308-Adv SDC\\Project\\Prof.json";
+                filePath = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
 
                 if (filePath != null && filePath.length() != 0) {
                     jsonFromInput = JSONController.readJSON(filePath);
@@ -60,6 +57,7 @@ public class App
         catch (Exception e){
             System.out.println("System faced unexpected exception. Please contact team. "+e);
         }
+
     }
 
     private static void addUser(User user) throws Exception {
