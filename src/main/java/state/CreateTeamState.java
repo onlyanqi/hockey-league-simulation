@@ -21,7 +21,7 @@ public class CreateTeamState implements IHockeyState {
 
     public CreateTeamState(HockeyContext hockeyContext){
         this.hockeyContext = hockeyContext;
-        this.league = hockeyContext.getUser().getLeague();
+        this.league = hockeyContext.getLeague();
     }
 
     @Override
@@ -32,15 +32,15 @@ public class CreateTeamState implements IHockeyState {
             System.exit(1);
         }
 
-        //seasonName  = GetInput.getUserInput("Please enter season name");
-        seasonName = "2025";
+        seasonName  = GetInput.getUserInput("Please enter season name");
+        //seasonName = "2025";
 
         while((seasonName ==null || seasonName.isEmpty() )){
             seasonName = GetInput.getUserInput("Please enter season name!");
         }
 
-        //conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
-        conferenceName = "Eastern Conference";
+        conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
+        //conferenceName = "Eastern Conference";
         List<Conference> conferenceList =  league.getConferenceList();
 
         for(Conference conference: conferenceList ){
@@ -48,8 +48,8 @@ public class CreateTeamState implements IHockeyState {
                 conferenceName  = GetInput.getUserInput("Please enter conference name from the existing ones");
             }
         }
-        //divisionName  = GetInput.getUserInput("Please enter division name the team belongs to");
-        divisionName = "Atlantic";
+        divisionName  = GetInput.getUserInput("Please enter division name the team belongs to");
+        //divisionName = "Atlantic";
 
         for(Conference conference : conferenceList){
             for(Division division : conference.getDivisionList()){
@@ -58,18 +58,18 @@ public class CreateTeamState implements IHockeyState {
                 }
             }
         }
-        //teamName  = GetInput.getUserInput("Please enter team name");
-        teamName = "as";
+        teamName  = GetInput.getUserInput("Please enter team name");
+        //teamName = "as";
         while((teamName.isEmpty() || teamName ==null || isTeamPresent(teamName))){
             teamName = GetInput.getUserInput("Please enter valid team name! Make sure there is no existing team with provided name");
         }
-        //generalManagerName  = GetInput.getUserInput("Please enter name of general manager");
-        generalManagerName = "Gm";
+        generalManagerName  = GetInput.getUserInput("Please enter name of general manager");
+        //generalManagerName = "Gm";
         while(generalManagerName.isEmpty() || generalManagerName ==null){
             generalManagerName=  GetInput.getUserInput("Please enter GeneralManager name!");
         }
-        //headCoachName  = GetInput.getUserInput("Please enter name of head coach ");
-        headCoachName = "jk";
+        headCoachName  = GetInput.getUserInput("Please enter name of head coach ");
+        //headCoachName = "jk";
         while(headCoachName.isEmpty() || headCoachName ==null){
             headCoachName = GetInput.getUserInput("Please enter HeadCoach Name !");
         }
@@ -115,6 +115,9 @@ public class CreateTeamState implements IHockeyState {
     @Override
     public void process() {
         //Instantiate Model Objects
+
+        league.setCreatedBy(hockeyContext.getUser().getId());
+
         List<Conference> conferenceList = league.getConferenceList();
         for(Conference conference : conferenceList ){
             if(conference.getName().equals(conferenceName)){
@@ -158,7 +161,7 @@ public class CreateTeamState implements IHockeyState {
 
                 if(leagueId != 0 && seasonId != 0){
                     if(league.getFreeAgent() != null) {
-                       int freeAgentId = addFreeAgent(leagueId, seasonId);
+                        int freeAgentId = addFreeAgent(leagueId, seasonId);
                         addPlayerList(0,freeAgentId, seasonId, league.getFreeAgent().getPlayerList());
                     }
 

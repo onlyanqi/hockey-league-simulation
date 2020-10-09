@@ -32,6 +32,7 @@ public class LoadLeagueDao implements ILoadLeagueFactory {
 
 
         }catch (Exception e){
+            e.printStackTrace();
             throw e;
         } finally {
             callDB.closeConnection();
