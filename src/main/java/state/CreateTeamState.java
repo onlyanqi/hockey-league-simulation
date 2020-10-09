@@ -21,7 +21,7 @@ public class CreateTeamState implements IHockeyState {
 
     public CreateTeamState(HockeyContext hockeyContext){
         this.hockeyContext = hockeyContext;
-        this.league = hockeyContext.getLeague();
+        this.league = hockeyContext.getUser().getLeague();
     }
 
     @Override
