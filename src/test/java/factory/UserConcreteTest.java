@@ -4,6 +4,7 @@ import dao.AddUserDao;
 import dao.LoadUserDao;
 import data.IAddUserFactory;
 import data.ILoadUserFactory;
+import model.LoadUserMock;
 import model.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class UserConcreteTest {
     @Test
     public void newUserByNameTest() throws Exception {
         String name = "name";
-        ILoadUserFactory loadUserFactory = userConcrete.newLoadUserFactory();
+        ILoadUserFactory loadUserFactory = new LoadUserMock();
         User user = userConcrete.newUserByName(name, loadUserFactory);
         assertTrue(user instanceof User);
     }

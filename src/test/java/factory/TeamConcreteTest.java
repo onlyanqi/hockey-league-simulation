@@ -4,6 +4,7 @@ import dao.AddTeamDao;
 import dao.LoadTeamDao;
 import data.IAddTeamFactory;
 import data.ILoadTeamFactory;
+import model.LoadTeamMock;
 import model.Team;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class TeamConcreteTest {
     @Test
     public void newTeamByNameTest() throws Exception {
         String name = "Name";
-        ILoadTeamFactory loadTeamFactory = teamConcrete.newLoadTeamFactory();
+        ILoadTeamFactory loadTeamFactory = new LoadTeamMock();
         Team team = teamConcrete.newTeamByName(name, loadTeamFactory);
         assertTrue(team instanceof Team);
     }

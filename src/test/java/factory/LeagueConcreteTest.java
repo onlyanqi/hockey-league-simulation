@@ -5,6 +5,7 @@ import dao.LoadLeagueDao;
 import data.IAddLeagueFactory;
 import data.ILoadLeagueFactory;
 import model.League;
+import model.LoadLeagueMock;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -32,7 +33,7 @@ public class LeagueConcreteTest {
     public void newLeagueNameUserIdTest() throws Exception {
         String leagueName = "Name";
         int userId = 1;
-        ILoadLeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
+        ILoadLeagueFactory loadLeagueFactory = new LoadLeagueMock();
         League league = leagueConcrete.newLeagueNameUserId(leagueName, userId, loadLeagueFactory);
         assertTrue(league instanceof League);
     }
