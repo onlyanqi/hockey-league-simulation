@@ -14,7 +14,7 @@ public class InternalState implements IHockeyState {
 
     @Override
     public void entry() {
-        System.out.println("Simulation Season");
+        System.out.println("Simulating Season");
     }
 
     @Override

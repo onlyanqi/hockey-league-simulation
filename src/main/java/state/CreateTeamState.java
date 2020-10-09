@@ -5,6 +5,7 @@ import factory.*;
 import model.*;
 import org.icehockey.GetInput;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateTeamState implements IHockeyState {
@@ -40,36 +41,69 @@ public class CreateTeamState implements IHockeyState {
         }
 
         conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
-        //conferenceName = "Eastern Conference";
+
         List<Conference> conferenceList =  league.getConferenceList();
 
-        for(Conference conference: conferenceList ){
-            while(!(conference.getName().equals(conferenceName))){
-                conferenceName  = GetInput.getUserInput("Please enter conference name from the existing ones");
-            }
-        }
-        divisionName  = GetInput.getUserInput("Please enter division name the team belongs to");
-        //divisionName = "Atlantic";
 
+
+        List<String> conferenceNameList = new ArrayList<>();
         for(Conference conference : conferenceList){
-            for(Division division : conference.getDivisionList()){
-                while(!(division.getName().equals(divisionName))){
-                    divisionName  = GetInput.getUserInput("Please enter division name from the existing ones");
-                }
+            conferenceNameList.add(conference.getName());
+        }
+        while(!conferenceNameList.contains(conferenceName)){
+            conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
+        }
+
+        Conference conference = null;
+
+        for(Conference confer : conferenceList){
+            if(confer.getName().equals(conferenceName)){
+                conference = confer;
+                break;
             }
         }
+
+        List<String> divisionNameList = new ArrayList<>();
+        for(Division division:conference.getDivisionList()){
+            divisionNameList.add(division.getName());
+        }
+
+        divisionName  = GetInput.getUserInput("Please enter division name the team belongs to");
+
+        while(!divisionNameList.contains(divisionName)){
+            divisionName  = GetInput.getUserInput("Please enter division name from the existing ones");
+        }
+
+        Division division = null;
+        for(Division division1 : conference.getDivisionList()){
+            if(division1.getName().equals(divisionName)){
+                division = division1;
+                break;
+            }
+        }
+
+        List<String> teamNameList = new ArrayList<>();
+        for(Team team: division.getTeamList()){
+            teamNameList.add(team.getName());
+        }
+
         teamName  = GetInput.getUserInput("Please enter team name");
-        //teamName = "as";
+
+        while(teamNameList.contains(teamName)){
+            teamName  = GetInput.getUserInput("Provided team name  already exists. Please enter a new one!");
+        }
+
+
         while((teamName.isEmpty() || teamName ==null || isTeamPresent(teamName))){
             teamName = GetInput.getUserInput("Please enter valid team name! Make sure there is no existing team with provided name");
         }
         generalManagerName  = GetInput.getUserInput("Please enter name of general manager");
-        //generalManagerName = "Gm";
+
         while(generalManagerName.isEmpty() || generalManagerName ==null){
             generalManagerName=  GetInput.getUserInput("Please enter GeneralManager name!");
         }
         headCoachName  = GetInput.getUserInput("Please enter name of head coach ");
-        //headCoachName = "jk";
+
         while(headCoachName.isEmpty() || headCoachName ==null){
             headCoachName = GetInput.getUserInput("Please enter HeadCoach Name !");
         }
