@@ -1,7 +1,5 @@
 package org.icehockey;
 
-import dao.AddUserDao;
-import dao.LoadUserDao;
 import data.IAddUserFactory;
 import data.ILoadUserFactory;
 import factory.UserConcrete;
@@ -12,12 +10,7 @@ import util.CommonUtil;
 
 import java.io.FileNotFoundException;
 
-import static common.Constants.addUser;
 
-/**
- * Hello world!
- *
- */
 public class App
 {
     public static void main( String[] args ) {
@@ -45,6 +38,11 @@ public class App
                 filePath = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
 
                 if (filePath != null && filePath.length() != 0) {
+
+                    if(JSONController.invalidJSON(filePath)){
+                        System.out.println("Invalid JSON file Provided.Exiting the app!");
+                        System.exit(1);
+                    }
                     jsonFromInput = JSONController.readJSON(filePath);
                 }
                 HockeyContext context = new HockeyContext(user);
