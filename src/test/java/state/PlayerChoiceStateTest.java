@@ -2,6 +2,9 @@ package state;
 
 import org.junit.Test;
 import org.junit.BeforeClass;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyState;
+import simulation.state.PlayerChoiceState;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

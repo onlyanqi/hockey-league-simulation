@@ -1,10 +1,13 @@
 package model;
 
-import data.IAddTeamFactory;
-import data.ILoadPlayerFactory;
-import data.ILoadTeamFactory;
+import simulation.data.IAddTeamFactory;
+import simulation.data.ILoadPlayerFactory;
+import simulation.data.ILoadTeamFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
+import simulation.model.Player;
+import simulation.model.Team;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;

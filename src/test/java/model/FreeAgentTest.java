@@ -1,8 +1,13 @@
 package model;
 
-import data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.data.IAddFreeAgentFactory;
+import simulation.data.ILoadFreeAgentFactory;
+import simulation.data.ILoadPlayerFactory;
+import simulation.model.FreeAgent;
+import simulation.model.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 

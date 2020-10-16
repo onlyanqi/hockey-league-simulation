@@ -1,11 +1,12 @@
 package state;
 
 
-import data.ILoadLeagueFactory;
+import simulation.data.ILoadLeagueFactory;
 import model.LoadLeagueMock;
-import model.User;
+import simulation.model.User;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.state.HockeyContext;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

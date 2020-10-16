@@ -2,9 +2,8 @@ package factory;
 
 import dao.AddLeagueDao;
 import dao.LoadLeagueDao;
-import data.IAddLeagueFactory;
-import data.ILoadLeagueFactory;
-import model.League;
+import simulation.data.ILoadLeagueFactory;
+import simulation.model.League;
 import model.LoadLeagueMock;
 import org.junit.Before;
 import org.junit.Test;

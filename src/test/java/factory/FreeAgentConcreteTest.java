@@ -2,9 +2,7 @@ package factory;
 
 import dao.AddFreeAgentDao;
 import dao.LoadFreeAgentDao;
-import data.IAddFreeAgentFactory;
-import data.ILoadFreeAgentFactory;
-import model.FreeAgent;
+import simulation.model.FreeAgent;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;

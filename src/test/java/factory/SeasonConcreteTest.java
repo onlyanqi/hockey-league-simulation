@@ -2,9 +2,7 @@ package factory;
 
 import dao.AddSeasonDao;
 import dao.LoadSeasonDao;
-import data.IAddSeasonFactory;
-import data.ILoadSeasonFactory;
-import model.Season;
+import simulation.model.Season;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;

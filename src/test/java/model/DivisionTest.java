@@ -1,11 +1,13 @@
 package model;
 
-import dao.AddDivisionDao;
-import data.IAddDivisionFactory;
-import data.ILoadTeamFactory;
-import data.ILoadDivisionFactory;
+import simulation.data.IAddDivisionFactory;
+import simulation.data.ILoadTeamFactory;
+import simulation.data.ILoadDivisionFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
+import simulation.model.Division;
+import simulation.model.Team;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;

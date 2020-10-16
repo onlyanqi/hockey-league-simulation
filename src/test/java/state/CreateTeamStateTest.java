@@ -1,10 +1,14 @@
 package state;
 
-import data.ILoadLeagueFactory;
-import data.ILoadTeamFactory;
-import model.*;
+import simulation.data.ILoadLeagueFactory;
+import simulation.data.ILoadTeamFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyState;
+import simulation.model.League;
+import simulation.model.Team;
+import simulation.model.User;
 
 public class CreateTeamStateTest {
 

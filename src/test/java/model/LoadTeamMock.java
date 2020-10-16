@@ -1,7 +1,9 @@
 package model;
 
-import data.ILoadPlayerFactory;
-import data.ILoadTeamFactory;
+import simulation.data.ILoadPlayerFactory;
+import simulation.data.ILoadTeamFactory;
+import simulation.model.Player;
+import simulation.model.Team;
 
 import java.util.ArrayList;
 import java.util.Date;

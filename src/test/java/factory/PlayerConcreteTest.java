@@ -2,7 +2,7 @@ package factory;
 
 import dao.AddPlayerDao;
 import dao.LoadPlayerDao;
-import model.Player;
+import simulation.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;

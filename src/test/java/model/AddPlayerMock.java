@@ -1,10 +1,7 @@
 package model;
 
-import data.IAddPlayerFactory;
-import data.ILoadPlayerFactory;
-
-import java.util.Date;
-import java.util.List;
+import simulation.data.IAddPlayerFactory;
+import simulation.model.Player;
 
 public class AddPlayerMock implements IAddPlayerFactory {
 

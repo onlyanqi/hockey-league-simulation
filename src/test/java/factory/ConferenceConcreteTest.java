@@ -2,7 +2,7 @@ package factory;
 
 import dao.AddConferenceDao;
 import dao.LoadConferenceDao;
-import model.Conference;
+import simulation.model.Conference;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;

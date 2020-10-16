@@ -1,10 +1,13 @@
 package model;
 
-import data.IAddConferenceFactory;
-import data.ILoadConferenceFactory;
-import data.ILoadDivisionFactory;
+import simulation.data.IAddConferenceFactory;
+import simulation.data.ILoadConferenceFactory;
+import simulation.data.ILoadDivisionFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.model.Conference;
+import simulation.model.Division;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;

@@ -1,12 +1,15 @@
 package state;
 
-import data.ILoadLeagueFactory;
+import simulation.data.ILoadLeagueFactory;
 import model.LoadLeagueMock;
-import model.User;
+import simulation.model.User;
 import org.icehockey.JSONControllerMock;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.junit.BeforeClass;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyState;
+import simulation.state.ImportState;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

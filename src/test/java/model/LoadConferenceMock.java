@@ -1,7 +1,10 @@
 package model;
 
-import data.ILoadDivisionFactory;
-import data.ILoadConferenceFactory;
+import simulation.data.ILoadDivisionFactory;
+import simulation.data.ILoadConferenceFactory;
+import simulation.model.Conference;
+import simulation.model.Division;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

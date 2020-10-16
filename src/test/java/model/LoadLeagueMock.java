@@ -1,8 +1,12 @@
 package model;
 
-import data.ILoadConferenceFactory;
-import data.ILoadLeagueFactory;
-import data.ILoadPlayerFactory;
+import simulation.data.ILoadConferenceFactory;
+import simulation.data.ILoadLeagueFactory;
+import simulation.data.ILoadPlayerFactory;
+import simulation.model.Conference;
+import simulation.model.FreeAgent;
+import simulation.model.League;
+import simulation.model.Player;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,11 +1,11 @@
 package model;
 
-import data.IAddConferenceFactory;
-import data.ILoadConferenceFactory;
-import data.ILoadDivisionFactory;
+import simulation.data.IAddConferenceFactory;
+import simulation.data.ILoadDivisionFactory;
+import simulation.model.Conference;
+import simulation.model.Division;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AddConferenceMock implements IAddConferenceFactory {

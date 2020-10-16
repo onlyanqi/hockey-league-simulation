@@ -1,7 +1,7 @@
 package model;
 
-import data.IAddUserFactory;
-import data.ILoadUserFactory;
+import simulation.data.IAddUserFactory;
+import simulation.model.User;
 
 public class AddUserMock implements IAddUserFactory {
 

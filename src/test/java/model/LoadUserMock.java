@@ -1,8 +1,9 @@
 package model;
 
-import data.ILoadConferenceFactory;
-import data.ILoadLeagueFactory;
-import data.ILoadUserFactory;
+import simulation.data.ILoadLeagueFactory;
+import simulation.data.ILoadUserFactory;
+import simulation.model.League;
+import simulation.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

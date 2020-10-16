@@ -2,7 +2,7 @@ package factory;
 
 import dao.AddDivisionDao;
 import dao.LoadDivisionDao;
-import model.Division;
+import simulation.model.Division;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;

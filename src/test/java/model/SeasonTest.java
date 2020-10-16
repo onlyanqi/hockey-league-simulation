@@ -1,10 +1,10 @@
 package model;
 
-import dao.AddSeasonDao;
-import data.IAddSeasonFactory;
-import data.ILoadSeasonFactory;
+import simulation.data.IAddSeasonFactory;
+import simulation.data.ILoadSeasonFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.model.Season;
 
 import static org.junit.Assert.*;
 

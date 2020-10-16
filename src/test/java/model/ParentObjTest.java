@@ -1,8 +1,10 @@
 package model;
 
-import data.ILoadParentObjFactory;
+import simulation.data.ILoadParentObjFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
+import simulation.model.ParentObj;
+
 import java.util.Date;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

@@ -1,11 +1,11 @@
 package model;
 
-import data.IAddDivisionFactory;
-import data.ILoadDivisionFactory;
-import data.ILoadTeamFactory;
+import simulation.data.IAddDivisionFactory;
+import simulation.data.ILoadTeamFactory;
+import simulation.model.Division;
+import simulation.model.Team;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AddDivisionMock implements IAddDivisionFactory {

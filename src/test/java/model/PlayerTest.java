@@ -1,10 +1,11 @@
 package model;
 
-import dao.AddPlayerDao;
-import data.IAddPlayerFactory;
-import data.ILoadPlayerFactory;
+import simulation.data.IAddPlayerFactory;
+import simulation.data.ILoadPlayerFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
+import simulation.model.Player;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;

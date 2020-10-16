@@ -2,10 +2,9 @@ package factory;
 
 import dao.AddUserDao;
 import dao.LoadUserDao;
-import data.IAddUserFactory;
-import data.ILoadUserFactory;
+import simulation.data.ILoadUserFactory;
 import model.LoadUserMock;
-import model.User;
+import simulation.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;

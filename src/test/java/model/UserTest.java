@@ -1,10 +1,12 @@
 package model;
 
-import data.IAddUserFactory;
-import data.ILoadLeagueFactory;
-import data.ILoadUserFactory;
+import simulation.data.IAddUserFactory;
+import simulation.data.ILoadLeagueFactory;
+import simulation.data.ILoadUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.model.League;
+import simulation.model.User;
 
 import static org.junit.Assert.*;
 

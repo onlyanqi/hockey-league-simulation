@@ -1,9 +1,15 @@
 package model;
 
-import data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
+import simulation.model.Conference;
+import simulation.model.FreeAgent;
+import simulation.model.League;
+import simulation.model.Player;
+import simulation.data.IAddLeagueFactory;
+import simulation.data.ILoadLeagueFactory;
+import simulation.data.ILoadFreeAgentFactory;
+import simulation.data.ILoadConferenceFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +90,7 @@ public class LeagueTest {
 
     @Test
     public void setConferenceListTest() throws Exception {
-        ILoadConferenceFactory conferenceFactory = new LoadConferenceMock();
+        simulation.data.ILoadConferenceFactory conferenceFactory = new LoadConferenceMock();
         List<Conference> conferenceList = new ArrayList<>();
         Conference conference = new Conference(1, conferenceFactory);
         conferenceList.add(conference);
@@ -112,7 +118,7 @@ public class LeagueTest {
     public void setFreeAgentTest() throws Exception{
         FreeAgent freeAgent = new FreeAgent();
         League league = new League();
-        ILoadPlayerFactory playerFactory = new LoadPlayerMock();
+        simulation.data.ILoadPlayerFactory playerFactory = new LoadPlayerMock();
         List<Player> playerList = new ArrayList<>();
 
         Player player = new Player(1, playerFactory);

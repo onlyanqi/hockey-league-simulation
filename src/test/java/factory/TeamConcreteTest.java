@@ -2,10 +2,9 @@ package factory;
 
 import dao.AddTeamDao;
 import dao.LoadTeamDao;
-import data.IAddTeamFactory;
-import data.ILoadTeamFactory;
+import simulation.data.ILoadTeamFactory;
 import model.LoadTeamMock;
-import model.Team;
+import simulation.model.Team;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;

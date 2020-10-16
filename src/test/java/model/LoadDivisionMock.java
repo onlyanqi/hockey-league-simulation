@@ -1,7 +1,10 @@
 package model;
 
-import data.ILoadTeamFactory;
-import data.ILoadDivisionFactory;
+import simulation.data.ILoadTeamFactory;
+import simulation.data.ILoadDivisionFactory;
+import simulation.model.Division;
+import simulation.model.Team;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

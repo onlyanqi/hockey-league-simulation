@@ -1,7 +1,7 @@
 package model;
 
-import data.IAddSeasonFactory;
-import data.ILoadSeasonFactory;
+import simulation.data.IAddSeasonFactory;
+import simulation.model.Season;
 
 public class AddSeasonMock implements IAddSeasonFactory {
 

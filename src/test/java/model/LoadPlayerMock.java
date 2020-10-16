@@ -1,6 +1,8 @@
 package model;
 
-import data.ILoadPlayerFactory;
+import simulation.data.ILoadPlayerFactory;
+import simulation.model.Player;
+
 import java.util.Date;
 import java.util.List;
 

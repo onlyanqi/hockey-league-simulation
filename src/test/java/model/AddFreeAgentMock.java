@@ -1,11 +1,11 @@
 package model;
 
-import data.IAddFreeAgentFactory;
-import data.ILoadFreeAgentFactory;
-import data.ILoadPlayerFactory;
+import simulation.data.IAddFreeAgentFactory;
+import simulation.data.ILoadPlayerFactory;
+import simulation.model.FreeAgent;
+import simulation.model.Player;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AddFreeAgentMock implements IAddFreeAgentFactory {

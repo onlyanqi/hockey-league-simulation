@@ -1,6 +1,8 @@
 package model;
 
-import data.ILoadParentObjFactory;
+import simulation.data.ILoadParentObjFactory;
+import simulation.model.ParentObj;
+
 import java.util.Date;
 
 public class LoadParentObjMock implements ILoadParentObjFactory {
