@@ -1,3 +1,4 @@
+/*
 package simulation.data;
 
 import simulation.model.FreeAgent;
@@ -8,3 +9,4 @@ public interface ILoadFreeAgentFactory {
     FreeAgent loadFreeAgentByLeagueId(int id) throws Exception;
 
 }
+*/

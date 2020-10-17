@@ -1,3 +1,4 @@
+/*
 package simulation.data;
 
 import simulation.model.User;
@@ -8,3 +9,4 @@ public interface ILoadUserFactory {
     void loadUserByName(String userName, User user) throws Exception;
 
 }
+*/

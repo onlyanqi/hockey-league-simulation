@@ -1,8 +1,7 @@
 package simulation.model;
 
-import simulation.data.IAddDivisionFactory;
-import simulation.data.ILoadDivisionFactory;
-import simulation.data.ILoadTeamFactory;
+import db.data.IDivisionFactory;
+import db.data.ITeamFactory;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class Division extends ParentObj{
         setId(id);
     }
 
-    public Division(int id, ILoadDivisionFactory factory) throws Exception {
+    public Division(int id, IDivisionFactory factory) throws Exception {
         setId(id);
         factory.loadDivisionById(id, this);
     }
@@ -39,11 +38,11 @@ public class Division extends ParentObj{
         this.conferenceId = conferenceId;
     }
 
-    public void addDivision(IAddDivisionFactory addDivisionFactory) throws Exception {
+    public void addDivision(IDivisionFactory addDivisionFactory) throws Exception {
         addDivisionFactory.addDivision(this);
     }
 
-    public void loadTeamListByDivisionId(ILoadTeamFactory teamFactory) throws Exception {
+    public void loadTeamListByDivisionId(ITeamFactory teamFactory) throws Exception {
         this.teamList = teamFactory.loadTeamListByDivisionId(getId());
     }
 }

@@ -1,4 +1,4 @@
-package dao.connect;
+package db.connect;
 
 import common.Constants;
 import util.IPropertyFileReader;

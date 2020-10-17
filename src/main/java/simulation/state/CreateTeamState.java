@@ -1,13 +1,7 @@
 package simulation.state;
 
-import factory.*;
-import factory.ConferenceConcrete;
-import factory.DivisionConcrete;
-import factory.FreeAgentConcrete;
-import factory.LeagueConcrete;
-import factory.PlayerConcrete;
-import factory.SeasonConcrete;
-import factory.TeamConcrete;
+import db.data.*;
+import simulation.factory.*;
 import userIO.GetInput;
 import simulation.model.*;
 import java.util.ArrayList;
@@ -118,7 +112,7 @@ public class CreateTeamState implements IHockeyState {
     private boolean isTeamPresent(String teamName)  {
         boolean isTeamPresent = false;
         TeamConcrete teamConcrete = new TeamConcrete();
-        simulation.data.ILoadTeamFactory factory = teamConcrete.newLoadTeamFactory();
+        ITeamFactory factory = teamConcrete.newLoadTeamFactory();
         Team team = null;
         try {
             team = teamConcrete.newTeamByName(teamName, factory);
@@ -135,7 +129,7 @@ public class CreateTeamState implements IHockeyState {
 
     private boolean isLeaguePresent(String leagueName){
         LeagueConcrete leagueConcrete = new LeagueConcrete();
-        simulation.data.ILoadLeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
+        ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
         League league = null;
         try {
             int userId = hockeyContext.getUser().getId();
@@ -190,12 +184,12 @@ public class CreateTeamState implements IHockeyState {
 
             try {
                 LeagueConcrete leagueConcrete = new LeagueConcrete();
-                simulation.data.IAddLeagueFactory addLeagueFactory = leagueConcrete.newAddLeagueFactory();
+                ILeagueFactory addLeagueFactory = leagueConcrete.newAddLeagueFactory();
                 league.addLeague(addLeagueFactory);
                 int leagueId = league.getId();
 
                 SeasonConcrete seasonConcrete = new SeasonConcrete();
-                simulation.data.IAddSeasonFactory addSeasonDao = seasonConcrete.newAddSeasonFactory();
+                ISeasonFactory addSeasonDao = seasonConcrete.newAddSeasonFactory();
                 season.addSeason(addSeasonDao);
                 int seasonId = season.getId();
 
@@ -207,7 +201,7 @@ public class CreateTeamState implements IHockeyState {
 
                     if(league.getConferenceList() != null && !league.getConferenceList().isEmpty()){
                         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
-                        simulation.data.IAddConferenceFactory addConferenceDao = conferenceConcrete.newAddConferenceFactory();
+                        IConferenceFactory addConferenceDao = conferenceConcrete.newAddConferenceFactory();
                         for (Conference conference : league.getConferenceList()) {
                             conference.setLeagueId(leagueId);
                             conference.addConference(addConferenceDao);
@@ -215,7 +209,7 @@ public class CreateTeamState implements IHockeyState {
 
                             for (Division division : conference.getDivisionList()) {
                                 DivisionConcrete divisionConcrete = new DivisionConcrete();
-                                simulation.data.IAddDivisionFactory addDivisionDao = divisionConcrete.newAddDivisionFactory();
+                                IDivisionFactory addDivisionDao = divisionConcrete.newAddDivisionFactory();
 
                                 division.setConferenceId(conferenceId);
                                 division.addDivision(addDivisionDao);
@@ -223,7 +217,7 @@ public class CreateTeamState implements IHockeyState {
 
                                 for (Team team : division.getTeamList()) {
                                     TeamConcrete teamConcrete = new TeamConcrete();
-                                    simulation.data.IAddTeamFactory addTeamDao = teamConcrete.newAddTeamFactory();
+                                    ITeamFactory addTeamDao = teamConcrete.newAddTeamFactory();
 
                                     team.setDivisionId(divisionId);
                                     team.addTeam(addTeamDao);
@@ -249,7 +243,7 @@ public class CreateTeamState implements IHockeyState {
 
     private int addFreeAgent(int leagueId, int seasonId) throws Exception {
         FreeAgentConcrete freeAgentConcrete = new FreeAgentConcrete();
-        simulation.data.IAddFreeAgentFactory freeAgentDao = freeAgentConcrete.newAddFreeAgentFactory();
+        IFreeAgentFactory freeAgentDao = freeAgentConcrete.newAddFreeAgentFactory();
         FreeAgent freeAgent = league.getFreeAgent();
         freeAgent.setSeasonId(seasonId);
         freeAgent.setLeagueId(leagueId);
@@ -260,7 +254,7 @@ public class CreateTeamState implements IHockeyState {
     private void addPlayerList(int teamId, int freeAgentId, int seasonId, List<Player> playerList) throws Exception {
         if(playerList != null && !playerList.isEmpty()) {
             PlayerConcrete playerConcrete = new PlayerConcrete();
-            simulation.data.IAddPlayerFactory addPlayerDao = playerConcrete.newAddPlayerFactory();
+            IPlayerFactory addPlayerDao = playerConcrete.newAddPlayerFactory();
             for (Player player : playerList) {
                 player.setTeamId(teamId);
                 player.setFreeAgentId(freeAgentId);

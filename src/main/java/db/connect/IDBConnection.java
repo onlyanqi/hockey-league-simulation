@@ -1,4 +1,4 @@
-package dao.connect;
+package db.connect;
 
 import java.sql.Connection;
 import java.util.Properties;

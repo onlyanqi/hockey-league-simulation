@@ -1,9 +1,7 @@
-package factory;
+package simulation.factory;
 
-import dao.AddLeagueDao;
-import dao.LoadLeagueDao;
-import simulation.data.IAddLeagueFactory;
-import simulation.data.ILoadLeagueFactory;
+import db.dao.LeagueDao;
+import db.data.ILeagueFactory;
 import simulation.model.League;
 
 public class LeagueConcrete {
@@ -12,16 +10,16 @@ public class LeagueConcrete {
         return new League();
     }
 
-    public ILoadLeagueFactory newLoadLeagueFactory(){
-        return new LoadLeagueDao();
+    public ILeagueFactory newLoadLeagueFactory(){
+        return new LeagueDao();
     }
 
-    public League newLeagueNameUserId(String leagueName, int userId, ILoadLeagueFactory loadLeagueFactory) throws Exception {
-        return new League(leagueName, userId, loadLeagueFactory);
+    public League newLeagueNameUserId(String leagueName, int userId, ILeagueFactory leagueFactory) throws Exception {
+        return new League(leagueName, userId, leagueFactory);
     }
 
-    public IAddLeagueFactory newAddLeagueFactory(){
-        return new AddLeagueDao();
+    public ILeagueFactory newAddLeagueFactory(){
+        return new LeagueDao();
     }
 
 }

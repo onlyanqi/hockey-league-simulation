@@ -1,3 +1,4 @@
+/*
 package dao;
 
 import common.Constants;
@@ -55,3 +56,4 @@ public class LoadFreeAgentDao implements ILoadFreeAgentFactory {
     }
 
 }
+*/

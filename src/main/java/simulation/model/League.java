@@ -1,9 +1,8 @@
 package simulation.model;
 
-import simulation.data.IAddLeagueFactory;
-import simulation.data.ILoadConferenceFactory;
-import simulation.data.ILoadFreeAgentFactory;
-import simulation.data.ILoadLeagueFactory;
+import db.data.IConferenceFactory;
+import db.data.IFreeAgentFactory;
+import db.data.ILeagueFactory;
 
 import java.util.List;
 
@@ -15,12 +14,12 @@ public class League extends ParentObj{
         setId(id);
     }
 
-    public League(int id, ILoadLeagueFactory factory) throws Exception{
+    public League(int id, ILeagueFactory factory) throws Exception{
         setId(id);
         factory.loadLeagueById(id, this);
     }
 
-    public League(String leagueName, int userId, ILoadLeagueFactory loadLeagueFactory) throws Exception {
+    public League(String leagueName, int userId, ILeagueFactory loadLeagueFactory) throws Exception {
         loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
     }
 
@@ -64,15 +63,15 @@ public class League extends ParentObj{
         this.freeAgent = freeAgent;
     }
 
-    public void addLeague(IAddLeagueFactory addLeagueFactory) throws Exception {
+    public void addLeague(ILeagueFactory addLeagueFactory) throws Exception {
         addLeagueFactory.addLeague(this);
     }
 
-    public void loadConferenceListByLeagueId(ILoadConferenceFactory loadConferenceFactory) throws Exception {
+    public void loadConferenceListByLeagueId(IConferenceFactory loadConferenceFactory) throws Exception {
         this.conferenceList = loadConferenceFactory.loadConferenceListByLeagueId(getId());
     }
 
-    public void loadFreeAgentByLeagueId(ILoadFreeAgentFactory loadFreeAgentFactory) throws Exception {
+    public void loadFreeAgentByLeagueId(IFreeAgentFactory loadFreeAgentFactory) throws Exception {
         this.freeAgent = loadFreeAgentFactory.loadFreeAgentByLeagueId(getId());
     }
 }

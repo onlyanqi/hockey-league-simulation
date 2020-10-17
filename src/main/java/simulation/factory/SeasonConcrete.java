@@ -1,9 +1,7 @@
-package factory;
+package simulation.factory;
 
-import dao.AddSeasonDao;
-import dao.LoadSeasonDao;
-import simulation.data.IAddSeasonFactory;
-import simulation.data.ILoadSeasonFactory;
+import db.dao.SeasonDao;
+import db.data.ISeasonFactory;
 import simulation.model.Season;
 
 public class SeasonConcrete {
@@ -12,12 +10,12 @@ public class SeasonConcrete {
         return new Season();
     }
 
-    public ILoadSeasonFactory newLoadSeasonFactory(){
-        return new LoadSeasonDao();
+    public ISeasonFactory newLoadSeasonFactory(){
+        return new SeasonDao();
     }
 
-    public IAddSeasonFactory newAddSeasonFactory(){
-        return new AddSeasonDao();
+    public ISeasonFactory newAddSeasonFactory(){
+        return new SeasonDao();
     }
 
 }

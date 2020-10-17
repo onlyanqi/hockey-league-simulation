@@ -1,7 +1,6 @@
 package simulation.model;
 
-import simulation.data.IAddSeasonFactory;
-import simulation.data.ILoadSeasonFactory;
+import db.data.ISeasonFactory;
 
 public class Season extends ParentObj{
 
@@ -11,12 +10,12 @@ public class Season extends ParentObj{
         setId(id);
     }
 
-    public Season(int id, ILoadSeasonFactory factory) throws Exception {
+    public Season(int id, ISeasonFactory factory) throws Exception {
         setId(id);
         factory.loadSeasonById(id, this);
     }
 
-    public void addSeason(IAddSeasonFactory addSeasonFactory) throws Exception {
+    public void addSeason(ISeasonFactory addSeasonFactory) throws Exception {
         addSeasonFactory.addSeason(this);
     }
 

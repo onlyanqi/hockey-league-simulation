@@ -1,9 +1,7 @@
-package factory;
+package simulation.factory;
 
-import dao.AddConferenceDao;
-import dao.LoadConferenceDao;
-import simulation.data.IAddConferenceFactory;
-import simulation.data.ILoadConferenceFactory;
+import db.dao.ConferenceDao;
+import db.data.IConferenceFactory;
 import simulation.model.Conference;
 
 public class ConferenceConcrete {
@@ -12,12 +10,12 @@ public class ConferenceConcrete {
         return new Conference();
     }
 
-    public ILoadConferenceFactory newLoadConferenceFactory(){
-        return new LoadConferenceDao();
+    public IConferenceFactory newLoadConferenceFactory(){
+        return new ConferenceDao();
     }
 
-    public IAddConferenceFactory newAddConferenceFactory(){
-        return new AddConferenceDao();
+    public IConferenceFactory newAddConferenceFactory(){
+        return new ConferenceDao();
     }
 
 }

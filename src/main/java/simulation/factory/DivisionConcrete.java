@@ -1,9 +1,7 @@
-package factory;
+package simulation.factory;
 
-import dao.AddDivisionDao;
-import dao.LoadDivisionDao;
-import simulation.data.IAddDivisionFactory;
-import simulation.data.ILoadDivisionFactory;
+import db.dao.DivisionDao;
+import db.data.IDivisionFactory;
 import simulation.model.Division;
 
 public class DivisionConcrete {
@@ -12,12 +10,12 @@ public class DivisionConcrete {
         return new Division();
     }
 
-    public ILoadDivisionFactory newLoadDivisionFactory(){
-        return new LoadDivisionDao();
+    public IDivisionFactory newLoadDivisionFactory(){
+        return new DivisionDao();
     }
 
-    public IAddDivisionFactory newAddDivisionFactory(){
-        return new AddDivisionDao();
+    public IDivisionFactory newAddDivisionFactory(){
+        return new DivisionDao();
     }
 
 }

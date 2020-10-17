@@ -1,3 +1,4 @@
+/*
 package simulation.data;
 
 import simulation.model.Player;
@@ -12,3 +13,4 @@ public interface ILoadPlayerFactory {
 
     List<Player> loadPlayerListByTeamId(int teamId) throws Exception;
 }
+*/

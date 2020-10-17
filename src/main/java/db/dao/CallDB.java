@@ -1,11 +1,11 @@
-package dao;
+package db.dao;
 
 import common.Constants;
-import dao.connect.DBConnection;
-import dao.connect.IDBConnection;
+import db.connect.DBConnection;
+import db.connect.IDBConnection;
 import java.sql.*;
 
-public class CallDB implements ICallDB{
+public class CallDB implements ICallDB {
 
     private String procedureName;
     private Connection connection;

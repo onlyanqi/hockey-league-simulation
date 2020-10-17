@@ -1,3 +1,4 @@
+/*
 package dao;
 
 import common.Constants;
@@ -87,3 +88,4 @@ public class LoadPlayerDao implements ILoadPlayerFactory {
     }
 
 }
+*/

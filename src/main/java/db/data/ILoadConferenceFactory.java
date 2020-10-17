@@ -1,3 +1,4 @@
+/*
 package simulation.data;
 
 import simulation.model.Conference;
@@ -11,3 +12,4 @@ public interface ILoadConferenceFactory {
 
     List<Conference> loadConferenceListByLeagueId(int leagueId) throws Exception;
 }
+*/

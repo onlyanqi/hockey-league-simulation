@@ -1,9 +1,8 @@
 package simulation.model;
 
 
-import simulation.data.IAddTeamFactory;
-import simulation.data.ILoadPlayerFactory;
-import simulation.data.ILoadTeamFactory;
+import db.data.IPlayerFactory;
+import db.data.ITeamFactory;
 
 import java.util.List;
 
@@ -15,12 +14,12 @@ public class Team extends ParentObj{
         setId(id);
     }
 
-    public Team(int id, ILoadTeamFactory factory) throws Exception {
+    public Team(int id, ITeamFactory factory) throws Exception {
         setId(id);
         factory.loadTeamById(id, this);
     }
 
-    public Team(String name, ILoadTeamFactory factory) throws Exception {
+    public Team(String name, ITeamFactory factory) throws Exception {
         factory.loadTeamByName(name, this);
     }
 
@@ -84,11 +83,11 @@ public class Team extends ParentObj{
         this.headCoach = headCoach;
     }
 
-    public void addTeam(IAddTeamFactory addTeamFactory) throws Exception {
+    public void addTeam(ITeamFactory addTeamFactory) throws Exception {
         addTeamFactory.addTeam(this);
     }
 
-    public void loadPlayerListByTeamId(ILoadPlayerFactory loadPlayerFactory) throws Exception {
+    public void loadPlayerListByTeamId(IPlayerFactory loadPlayerFactory) throws Exception {
         this.playerList = loadPlayerFactory.loadPlayerListByTeamId(getId());
     }
 }

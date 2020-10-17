@@ -1,9 +1,7 @@
-package factory;
+package simulation.factory;
 
-import dao.AddUserDao;
-import dao.LoadUserDao;
-import simulation.data.IAddUserFactory;
-import simulation.data.ILoadUserFactory;
+import db.dao.UserDao;
+import db.data.IUserFactory;
 import simulation.model.User;
 
 public class UserConcrete {
@@ -12,16 +10,16 @@ public class UserConcrete {
         return new User();
     }
 
-    public User newUserByName(String name, ILoadUserFactory loadUserFactory) throws Exception {
+    public User newUserByName(String name, IUserFactory loadUserFactory) throws Exception {
         return new User(name, loadUserFactory);
     }
 
-    public ILoadUserFactory newLoadUserFactory(){
-        return new LoadUserDao();
+    public IUserFactory newLoadUserFactory(){
+        return new UserDao();
     }
 
-    public IAddUserFactory newAddUserFactory(){
-        return new AddUserDao();
+    public IUserFactory newAddUserFactory(){
+        return new UserDao();
     }
 
 }

@@ -1,3 +1,4 @@
+/*
 package dao;
 
 import common.Constants;
@@ -79,3 +80,4 @@ public class LoadConferenceDao implements ILoadConferenceFactory {
         return conferenceList;
     }
 }
+*/

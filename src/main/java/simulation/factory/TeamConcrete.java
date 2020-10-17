@@ -1,14 +1,7 @@
-package factory;
+package simulation.factory;
 
-
-import dao.AddTeamDao;
-
-import dao.LoadTeamDao;
-
-import simulation.data.IAddTeamFactory;
-
-import simulation.data.ILoadTeamFactory;
-
+import db.dao.TeamDao;
+import db.data.ITeamFactory;
 import simulation.model.Team;
 
 public class TeamConcrete {
@@ -17,16 +10,16 @@ public class TeamConcrete {
         return new Team();
     }
 
-    public Team newTeamByName(String name, ILoadTeamFactory loadTeamFactory) throws Exception {
+    public Team newTeamByName(String name, ITeamFactory loadTeamFactory) throws Exception {
         return new Team(name, loadTeamFactory);
     }
 
-    public ILoadTeamFactory newLoadTeamFactory(){
-        return new LoadTeamDao();
+    public ITeamFactory newLoadTeamFactory(){
+        return new TeamDao();
     }
 
-    public IAddTeamFactory newAddTeamFactory(){
-        return new AddTeamDao();
+    public ITeamFactory newAddTeamFactory(){
+        return new TeamDao();
     }
 
 }

@@ -1,8 +1,7 @@
 package simulation.model;
 
-import simulation.data.IAddUserFactory;
-import simulation.data.ILoadLeagueFactory;
-import simulation.data.ILoadUserFactory;
+import db.data.ILeagueFactory;
+import db.data.IUserFactory;
 
 import java.util.List;
 
@@ -14,12 +13,12 @@ public class User extends ParentObj{
         setId(id);
     }
 
-    public User(int id, ILoadUserFactory factory) throws Exception {
+    public User(int id, IUserFactory factory) throws Exception {
         setId(id);
         factory.loadUserById(id, this);
     }
 
-    public User(String name, ILoadUserFactory factory) throws Exception {
+    public User(String name, IUserFactory factory) throws Exception {
         factory.loadUserByName(name, this);
     }
 
@@ -43,7 +42,7 @@ public class User extends ParentObj{
         this.password = password;
     }
 
-    public void addUser(IAddUserFactory addUserFactory) throws Exception {
+    public void addUser(IUserFactory addUserFactory) throws Exception {
         addUserFactory.addUser(this);
     }
 
@@ -57,7 +56,7 @@ public class User extends ParentObj{
         this.league = league;
     }
 
-    public void loadLeagueByUserId(ILoadLeagueFactory loadLeagueFactory) throws Exception {
+    public void loadLeagueByUserId(ILeagueFactory loadLeagueFactory) throws Exception {
         this.leagueList = loadLeagueFactory.loadLeagueListByUserId(getId());
     }
 }

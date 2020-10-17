@@ -1,9 +1,7 @@
-package factory;
+package simulation.factory;
 
-import dao.AddFreeAgentDao;
-import dao.LoadFreeAgentDao;
-import simulation.data.IAddFreeAgentFactory;
-import simulation.data.ILoadFreeAgentFactory;
+import db.dao.FreeAgentDao;
+import db.data.IFreeAgentFactory;
 import simulation.model.FreeAgent;
 
 public class FreeAgentConcrete {
@@ -12,12 +10,12 @@ public class FreeAgentConcrete {
         return new FreeAgent();
     }
 
-    public ILoadFreeAgentFactory newLoadFreeAgentFactory(){
-        return new LoadFreeAgentDao();
+    public IFreeAgentFactory newLoadFreeAgentFactory(){
+        return new FreeAgentDao();
     }
 
-    public IAddFreeAgentFactory newAddFreeAgentFactory(){
-        return new AddFreeAgentDao();
+    public IFreeAgentFactory newAddFreeAgentFactory(){
+        return new FreeAgentDao();
     }
 
 }

@@ -1,3 +1,4 @@
+/*
 package simulation.data;
 
 import simulation.model.League;
@@ -9,3 +10,4 @@ public interface ILoadLeagueFactory {
     void loadLeagueByName(String leagueName, int userId, League league) throws Exception;
     List<League> loadLeagueListByUserId(int userId) throws Exception;
 }
+*/

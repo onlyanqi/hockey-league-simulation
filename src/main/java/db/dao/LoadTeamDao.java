@@ -1,3 +1,4 @@
+/*
 package dao;
 
 import common.Constants;
@@ -82,3 +83,4 @@ public class LoadTeamDao implements ILoadTeamFactory {
     }
 
 }
+*/

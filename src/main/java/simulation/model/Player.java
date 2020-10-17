@@ -1,8 +1,7 @@
 package simulation.model;
 
 import common.Constants;
-import simulation.data.IAddPlayerFactory;
-import simulation.data.ILoadPlayerFactory;
+import db.data.IPlayerFactory;
 
 public class Player extends ParentObj{
 
@@ -12,7 +11,7 @@ public class Player extends ParentObj{
         setId(id);
     }
 
-    public Player(int id, ILoadPlayerFactory factory) throws Exception {
+    public Player(int id, IPlayerFactory factory) throws Exception {
         setId(id);
         factory.loadPlayerById(id, this);
     }
@@ -99,7 +98,7 @@ public class Player extends ParentObj{
         return isValid;
     }
 
-    public void addPlayer(IAddPlayerFactory addPlayerFactory) throws Exception {
+    public void addPlayer(IPlayerFactory addPlayerFactory) throws Exception {
         addPlayerFactory.addPlayer(this);
     }
 

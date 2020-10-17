@@ -1,8 +1,7 @@
 package simulation;
 
-import simulation.data.IAddUserFactory;
-import simulation.data.ILoadUserFactory;
-import factory.UserConcrete;
+import db.data.IUserFactory;
+import simulation.factory.UserConcrete;
 import simulation.state.HockeyContext;
 import simulation.model.User;
 import org.json.simple.JSONObject;
@@ -25,7 +24,7 @@ public class App
         try {
             if (userName != null && util.isNotEmpty(userName)) {
                 UserConcrete userConcrete = new UserConcrete();
-                ILoadUserFactory factory = userConcrete.newLoadUserFactory();
+                IUserFactory factory = userConcrete.newLoadUserFactory();
                 User user = userConcrete.newUserByName(userName, factory);
 
                 user.setName(userName);
@@ -60,7 +59,7 @@ public class App
 
     private static void addUser(User user) throws Exception {
         UserConcrete userConcrete = new UserConcrete();
-        IAddUserFactory addUserFactory = userConcrete.newAddUserFactory();
+        IUserFactory addUserFactory = userConcrete.newAddUserFactory();
         user.addUser(addUserFactory);
     }
 

@@ -1,16 +1,11 @@
 package simulation.state;
 
-import factory.*;
-import factory.FreeAgentConcrete;
-import factory.LeagueConcrete;
-import factory.PlayerConcrete;
-import factory.TeamConcrete;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import simulation.factory.*;
 import simulation.model.*;
 import java.util.ArrayList;
 import java.util.List;
-import factory.ConferenceConcrete;
 
 public class ImportState implements IHockeyState {
 
@@ -244,7 +239,7 @@ public class ImportState implements IHockeyState {
             }
 
 
-            factory.ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
+            ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
             Conference conference = conferenceConcrete.newConference();
 
             conference.setName(conferenceName);

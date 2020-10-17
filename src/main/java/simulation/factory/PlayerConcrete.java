@@ -1,9 +1,7 @@
-package factory;
+package simulation.factory;
 
-import dao.AddPlayerDao;
-import dao.LoadPlayerDao;
-import simulation.data.IAddPlayerFactory;
-import simulation.data.ILoadPlayerFactory;
+import db.dao.PlayerDao;
+import db.data.IPlayerFactory;
 import simulation.model.Player;
 
 public class PlayerConcrete {
@@ -12,12 +10,12 @@ public class PlayerConcrete {
         return new Player();
     }
 
-    public ILoadPlayerFactory newLoadPlayerFactory(){
-        return new LoadPlayerDao();
+    public IPlayerFactory newLoadPlayerFactory(){
+        return new PlayerDao();
     }
 
-    public IAddPlayerFactory newAddPlayerFactory(){
-        return new AddPlayerDao();
+    public IPlayerFactory newAddPlayerFactory(){
+        return new PlayerDao();
     }
 
 }

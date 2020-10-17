@@ -1,8 +1,7 @@
 package simulation.model;
 
-import simulation.data.IAddFreeAgentFactory;
-import simulation.data.ILoadFreeAgentFactory;
-import simulation.data.ILoadPlayerFactory;
+import db.data.IFreeAgentFactory;
+import db.data.IPlayerFactory;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class FreeAgent extends ParentObj{
         setId(id);
     }
 
-    public FreeAgent(int id, ILoadFreeAgentFactory loadFreeAgentFactory) throws Exception {
+    public FreeAgent(int id, IFreeAgentFactory loadFreeAgentFactory) throws Exception {
         loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
 
@@ -48,11 +47,11 @@ public class FreeAgent extends ParentObj{
         this.playerList = playerList;
     }
 
-    public void addFreeAgent(IAddFreeAgentFactory addFreeAgentFactory) throws Exception {
+    public void addFreeAgent(IFreeAgentFactory addFreeAgentFactory) throws Exception {
         addFreeAgentFactory.addFreeAgent(this);
     }
 
-    public void loadPlayerListByFreeAgentId(ILoadPlayerFactory loadPlayerFactory) throws Exception {
+    public void loadPlayerListByFreeAgentId(IPlayerFactory loadPlayerFactory) throws Exception {
         this.playerList = loadPlayerFactory.loadPlayerListByFreeAgentId(getId());
     }
 }
