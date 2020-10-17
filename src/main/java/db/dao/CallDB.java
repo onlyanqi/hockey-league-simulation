@@ -1,6 +1,5 @@
 package db.dao;
 
-import common.Constants;
 import db.connect.DBConnection;
 import db.connect.IDBConnection;
 import java.sql.*;
@@ -16,7 +15,7 @@ public class CallDB implements ICallDB {
         IDBConnection dbConnection = new DBConnection();
         connection = dbConnection.getConnection();
 
-        String query = Constants.CALL.concat(Constants.space).concat(procedureName);
+        String query = "call ".concat(procedureName);
         stmt = connection.prepareCall(query);
     }
 

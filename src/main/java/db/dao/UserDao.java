@@ -1,6 +1,5 @@
 package db.dao;
 
-import common.Constants;
 import db.data.IUserFactory;
 import simulation.model.User;
 
@@ -11,8 +10,9 @@ public class UserDao implements IUserFactory {
     @Override
     public long addUser(User user) throws Exception{
         ICallDB callDB = null;
+        String addUser = "AddUser(?,?,?)";
         try{
-            callDB = new CallDB(Constants.addUser);
+            callDB = new CallDB(addUser);
             callDB.setInputParameterString(1, user.getName());
             callDB.setInputParameterString(2, user.getPassword());
             callDB.setOutputParameterInt(3);
@@ -30,8 +30,9 @@ public class UserDao implements IUserFactory {
     @Override
     public void loadUserById(int id, User user) throws Exception{
         ICallDB callDB = null;
+        String loadUserByName = "LoadUserByName(?,?,?)";
         try {
-            callDB = new CallDB(Constants.loadUserByName);
+            callDB = new CallDB(loadUserByName);
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -55,8 +56,9 @@ public class UserDao implements IUserFactory {
     @Override
     public void loadUserByName(String userName, User user) throws Exception {
         ICallDB callDB = null;
+        String loadUserByName = "LoadUserByName(?,?,?)";
         try {
-            callDB = new CallDB(Constants.loadUserByName);
+            callDB = new CallDB(loadUserByName);
             callDB.setInputParameterString(1, userName);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);

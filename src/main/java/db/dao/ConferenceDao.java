@@ -1,6 +1,5 @@
 package db.dao;
 
-import common.Constants;
 import db.data.IConferenceFactory;
 import simulation.model.Conference;
 
@@ -15,7 +14,7 @@ public class ConferenceDao implements IConferenceFactory {
     public int addConference(Conference conference) throws Exception {
         ICallDB callDB = null;
         try{
-            callDB = new CallDB(Constants.addConference);
+            callDB = new CallDB("AddConference(?,?,?)");
             callDB.setInputParameterString(1, conference.getName());
             callDB.setInputParameterInt(2, conference.getLeagueId());
             callDB.setOutputParameterInt(3);
@@ -34,7 +33,7 @@ public class ConferenceDao implements IConferenceFactory {
     public void loadConferenceByName(int id, Conference conference) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB(Constants.loadConference);
+            callDB = new CallDB("LoadConferenceByName(?,?,?,?)");
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -56,7 +55,7 @@ public class ConferenceDao implements IConferenceFactory {
         ICallDB callDB = null;
         Conference conference = null;
         try {
-            callDB = new CallDB(Constants.loadConference);
+            callDB = new CallDB("LoadConferenceByName(?,?,?,?)");
             callDB.setInputParameterString(1, conferenceName);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -79,7 +78,7 @@ public class ConferenceDao implements IConferenceFactory {
         List<Conference> conferenceList = null;
         ICallDB callDB = null;
         try{
-            callDB = new CallDB(Constants.loadConferenceListByLeagueId);
+            callDB = new CallDB("LoadConferenceListByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
             if (rs != null) {

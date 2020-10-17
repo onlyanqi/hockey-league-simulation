@@ -1,6 +1,5 @@
 package db.dao;
 
-import common.Constants;
 import db.data.ITeamFactory;
 import simulation.model.Team;
 
@@ -14,7 +13,7 @@ public class TeamDao implements ITeamFactory {
     public int addTeam(Team team) throws Exception {
         ICallDB callDB = null;
         try{
-            callDB = new CallDB(Constants.addTeam);
+            callDB = new CallDB("AddTeam(?,?,?,?,?)");
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
             callDB.setInputParameterString(3, team.getHeadCoach());
@@ -35,7 +34,7 @@ public class TeamDao implements ITeamFactory {
     public void loadTeamById(int id, Team team) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB(Constants.loadTeamByName);
+            callDB = new CallDB("LoadTeamByName(?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -57,7 +56,7 @@ public class TeamDao implements ITeamFactory {
     public void loadTeamByName(String teamName, Team team) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB(Constants.loadTeamByName);
+            callDB = new CallDB("LoadTeamByName(?,?,?,?,?,?)");
             callDB.setInputParameterString(1, teamName);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -80,7 +79,7 @@ public class TeamDao implements ITeamFactory {
         List<Team> teamList = null;
         ICallDB callDB = null;
         try{
-            callDB = new CallDB(Constants.loadTeamListByDivisionId);
+            callDB = new CallDB("LoadTeamListByDivisionId(?)");
             callDB.setInputParameterInt(1, divisionId);
             ResultSet rs = callDB.executeLoad();
             if (rs != null) {

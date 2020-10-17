@@ -1,6 +1,5 @@
 package db.dao;
 
-import common.Constants;
 import db.data.IDivisionFactory;
 import simulation.model.Division;
 
@@ -14,7 +13,7 @@ public class DivisionDao implements IDivisionFactory {
     public int addDivision(Division division) throws Exception {
         ICallDB callDB = null;
         try{
-            callDB = new CallDB(Constants.addDivision);
+            callDB = new CallDB("AddDivision(?,?,?)");
             callDB.setInputParameterString(1, division.getName());
             callDB.setInputParameterInt(2, division.getConferenceId());
             callDB.setOutputParameterInt(3);
@@ -33,7 +32,7 @@ public class DivisionDao implements IDivisionFactory {
     public void loadDivisionById(int id, Division division) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB(Constants.loadDivisionByName);
+            callDB = new CallDB("LoadDivisionByName(?,?,?,?)");
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -58,7 +57,7 @@ public class DivisionDao implements IDivisionFactory {
         ICallDB callDB = null;
         Division division = null;
         try {
-            callDB = new CallDB(Constants.loadDivisionByName);
+            callDB = new CallDB("LoadDivisionByName(?,?,?,?)");
             callDB.setInputParameterString(1, divisionName);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -83,7 +82,7 @@ public class DivisionDao implements IDivisionFactory {
         List<Division> divisionList = null;
         ICallDB callDB = null;
         try{
-            callDB = new CallDB(Constants.loadDivisionListByConferenceId);
+            callDB = new CallDB("LoadDivisionListByConferenceId(?)");
             callDB.setInputParameterInt(1, conferenceId);
             ResultSet rs = callDB.executeLoad();
             if (rs != null) {

@@ -1,6 +1,5 @@
 package db.dao;
 
-import common.Constants;
 import db.data.IPlayerFactory;
 import simulation.model.Player;
 import java.sql.ResultSet;
@@ -13,7 +12,7 @@ public class PlayerDao implements IPlayerFactory {
     public int addPlayer(Player player) throws Exception {
         ICallDB callDB = null;
         try{
-            callDB = new CallDB(Constants.addPlayer);
+            callDB = new CallDB("AddPlayer(?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, player.getTeamId());
             callDB.setInputParameterInt(2, player.getFreeAgentId());
             callDB.setInputParameterInt(3, player.getSeasonId());
@@ -38,7 +37,7 @@ public class PlayerDao implements IPlayerFactory {
 
         ICallDB callDB = null;
         try {
-            callDB = new CallDB(Constants.loadPlayerByName);
+            callDB = new CallDB("LoadPlayerByName(?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -64,7 +63,7 @@ public class PlayerDao implements IPlayerFactory {
         List<Player> playerList = null;
         ICallDB callDB = null;
         try{
-            callDB = new CallDB(Constants.loadPlayerListByFreeAgentId);
+            callDB = new CallDB("LoadPlayerListByFreeAgentId(?)");
             callDB.setInputParameterInt(1, freeAgentId);
             ResultSet rs = callDB.executeLoad();
             if (rs != null) {
@@ -89,7 +88,7 @@ public class PlayerDao implements IPlayerFactory {
         List<Player> playerList = null;
         ICallDB callDB = null;
         try{
-            callDB = new CallDB(Constants.loadPlayerListByTeamId);
+            callDB = new CallDB("LoadPlayerListByTeamId(?)");
             callDB.setInputParameterInt(1, teamId);
             ResultSet rs = callDB.executeLoad();
             if (rs != null) {

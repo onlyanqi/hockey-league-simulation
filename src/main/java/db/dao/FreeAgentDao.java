@@ -1,6 +1,5 @@
 package db.dao;
 
-import common.Constants;
 import db.data.IFreeAgentFactory;
 import simulation.model.FreeAgent;
 
@@ -9,7 +8,7 @@ public class FreeAgentDao implements IFreeAgentFactory {
     public int addFreeAgent(FreeAgent freeAgent) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB(Constants.addFreeAgent);
+            callDB = new CallDB("AddFreeAgent(?,?,?)");
             callDB.setInputParameterInt(1, freeAgent.getLeagueId());
             callDB.setInputParameterInt(2, freeAgent.getSeasonId());
             callDB.setOutputParameterInt(3);
@@ -28,7 +27,7 @@ public class FreeAgentDao implements IFreeAgentFactory {
     public void loadFreeAgentById(int id, FreeAgent freeAgent) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB(Constants.loadFreeAgentByLeagueId);
+            callDB = new CallDB("LoadFreeAgentByLeagueId(?,?,?,?)");
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterInt(3);
@@ -52,7 +51,7 @@ public class FreeAgentDao implements IFreeAgentFactory {
         ICallDB callDB = null;
         FreeAgent freeAgent = null;
         try {
-            callDB = new CallDB(Constants.loadFreeAgentByLeagueId);
+            callDB = new CallDB("LoadFreeAgentByLeagueId(?,?,?,?)");
             callDB.setInputParameterInt(1, leagueId);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterInt(3);

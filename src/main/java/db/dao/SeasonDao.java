@@ -1,6 +1,5 @@
 package db.dao;
 
-import common.Constants;
 import db.data.ISeasonFactory;
 import simulation.model.Season;
 
@@ -11,7 +10,7 @@ public class SeasonDao implements ISeasonFactory {
     public int addSeason(Season season) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB(Constants.addSeason);
+            callDB = new CallDB("AddSeason(?,?)");
             callDB.setInputParameterString(1, season.getName());
             callDB.setOutputParameterInt(2);
             callDB.execute();
@@ -29,7 +28,7 @@ public class SeasonDao implements ISeasonFactory {
     public void loadSeasonById(int id, Season season) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB(Constants.loadSeasonByName);
+            callDB = new CallDB("LoadSeasonByName(?,?,?)");
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);

@@ -1,7 +1,10 @@
 package simulation.model;
 
-import common.Constants;
 import db.data.IPlayerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Player extends ParentObj{
 
@@ -88,9 +91,9 @@ public class Player extends ParentObj{
 
     public boolean validPosition(){
         boolean isValid = false;
-
+        List<String> playerPositions = new ArrayList<>(Arrays.asList("goalie", "forward", "defense"));
         if(isNotNull(getPosition()) && isNotEmpty(getPosition())){
-             if(Constants.playerPositions.contains(getPosition())){
+             if(playerPositions.contains(getPosition())){
                  isValid = true;
              }
         }

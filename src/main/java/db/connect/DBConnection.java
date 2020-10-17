@@ -1,6 +1,5 @@
 package db.connect;
 
-import common.Constants;
 import util.IPropertyFileReader;
 import util.PropertyFileReader;
 
@@ -14,12 +13,12 @@ public class DBConnection implements IDBConnection {
         String dbURL = "";
 
         if(prop != null) {
-            String dbHost = prop.getProperty(Constants.dbHost);
-            String dbName = prop.getProperty(Constants.dbName);
-            String dbPort = prop.getProperty(Constants.dbPort);
+            String dbHost = prop.getProperty("db.url");
+            String dbName = prop.getProperty("db.Name");
+            String dbPort = prop.getProperty("db.Port");
 
-            dbURL = dbURL.concat("jdbc:mysql://").concat(dbHost).concat(Constants.semiColon)
-                    .concat(dbPort).concat(Constants.forwardSlash).concat(dbName);
+            dbURL = dbURL.concat("jdbc:mysql://").concat(dbHost).concat(";")
+                    .concat(dbPort).concat("/").concat(dbName);
         }
 
         return dbURL;
@@ -32,9 +31,9 @@ public class DBConnection implements IDBConnection {
         try {
 
             IPropertyFileReader read = new PropertyFileReader();
-            Properties prop = read.loadPropertyFile(Constants.dbFile);
+            Properties prop = read.loadPropertyFile("../.properties");
             con = DriverManager.getConnection(formDBURL(prop),
-                    prop.getProperty(Constants.dbUserName),prop.getProperty(Constants.dbPassword));
+                    prop.getProperty("db.User"),prop.getProperty("db.Password"));
 
             return con;
         } catch (Exception ex) {
