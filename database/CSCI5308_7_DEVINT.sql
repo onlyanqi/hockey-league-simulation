@@ -1,16 +1,3 @@
--- MySQL Workbench Forward Engineering
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema CSCI5308_7_DEVINT
--- -----------------------------------------------------
-
 -- -----------------------------------------------------
 -- Schema CSCI5308_7_DEVINT
 -- -----------------------------------------------------
@@ -737,6 +724,31 @@ END$$
 
 DELIMITER ;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+CREATE TABLE `CSCI5308_7_DEVINT`.`Manager` (
+  `idManager` INT NOT NULL AUTO_INCREMENT,
+  `teamId` INT NULL,
+  `freeAgentId` INT NULL,
+  `managerName` VARCHAR(45) NULL,
+  PRIMARY KEY (`idManager`),
+  CONSTRAINT `manager_team`
+    FOREIGN KEY (`teamId`)
+    REFERENCES `CSCI5308_7_DEVINT`.`Team` (`idTeam`),
+  CONSTRAINT `manager_freeagent`
+    FOREIGN KEY (`freeAgentId`)
+    REFERENCES `CSCI5308_7_DEVINT`.`FreeAgent` (`freeAgentId`));
+
+CREATE TABLE `Coach` (
+  `idCoach` int(11) NOT NULL AUTO_INCREMENT,
+  `teamId` int(11) DEFAULT NULL,
+  `freeAgentId` int(11) DEFAULT NULL,
+  `coachName` varchar(45) DEFAULT NULL,
+  `skating` float DEFAULT NULL,
+  `shooting` float DEFAULT NULL,
+  `checking` float DEFAULT NULL,
+  `saving` float DEFAULT NULL,
+  PRIMARY KEY (`idCoach`),
+  KEY `coach_team` (`teamId`),
+  KEY `coach_freeagent` (`freeAgentId`),
+  CONSTRAINT `coach_freeagent` FOREIGN KEY (`freeAgentId`) REFERENCES `FreeAgent` (`freeAgentId`),
+  CONSTRAINT `coach_team` FOREIGN KEY (`teamId`) REFERENCES `Team` (`idTeam`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
