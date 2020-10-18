@@ -75,8 +75,12 @@ public class ImportState implements IHockeyState {
         league.setConferenceList(conferenceList);
         league.setFreeAgent(freeAgent);
     }
-
-
+    /**
+     *
+     * Show list of free agents
+     * Player choice capability
+     *
+     */
 
     private List<Team> loadTeamJSON(JSONArray teams){
         ArrayList<Team> teamList = new ArrayList<Team>();
