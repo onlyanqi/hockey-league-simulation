@@ -1,6 +1,6 @@
 package simulation.state;
 
-public class TraningState implements ISimulateState {
+public class TrainingState implements ISimulateState {
     @Override
     public ISimulateState action() {
         System.out.println("Training Players and Team!");

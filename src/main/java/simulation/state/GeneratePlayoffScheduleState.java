@@ -9,6 +9,6 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
     }
 
     private ISimulateState exit() {
-        return new TraningState();
+        return new TrainingState();
     }
 }

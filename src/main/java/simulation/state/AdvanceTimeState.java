@@ -12,7 +12,7 @@ public class AdvanceTimeState implements ISimulateState {
         if(endOfSeason){
             return new GeneratePlayoffScheduleState();
         }else{
-            return new TraningState();
+            return new TrainingState();
         }
     }
 }
