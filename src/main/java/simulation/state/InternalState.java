@@ -7,12 +7,13 @@ public class InternalState implements IHockeyState {
 
     public InternalState(HockeyContext hockeyContext){
         this.hockeyContext = hockeyContext;
-        simulateState = new TradeState();
+
     }
 
     @Override
     public void entry() {
-        System.out.println("Simulating Season");
+        simulateState = new InitializeSeasonState();
+        simulateState.action();
     }
 
     @Override
