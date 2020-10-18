@@ -47,16 +47,16 @@ public class CreateTeamState implements IHockeyState {
 
         List<String> conferenceNameList = new ArrayList<>();
         for(Conference conference : conferenceList){
-            conferenceNameList.add(conference.getName());
+            conferenceNameList.add(conference.getName().toLowerCase());
         }
-        while(!conferenceNameList.contains(conferenceName)){
+        while(!conferenceNameList.contains(conferenceName.toLowerCase())){
             conferenceName  = GetInput.getUserInput("Please enter conference name from the existing ones");
         }
 
         Conference conference = null;
 
         for(Conference confer : conferenceList){
-            if(confer.getName().equals(conferenceName)){
+            if(confer.getName().toLowerCase().equals(conferenceName.toLowerCase())){
                 conference = confer;
                 break;
             }
@@ -64,18 +64,18 @@ public class CreateTeamState implements IHockeyState {
 
         List<String> divisionNameList = new ArrayList<>();
         for(Division division:conference.getDivisionList()){
-            divisionNameList.add(division.getName());
+            divisionNameList.add(division.getName().toLowerCase());
         }
 
         divisionName  = GetInput.getUserInput("Please enter division name the team belongs to");
 
-        while(!divisionNameList.contains(divisionName)){
+        while(!divisionNameList.contains(divisionName.toLowerCase())){
             divisionName  = GetInput.getUserInput("Please enter division name from the existing ones");
         }
 
         Division division = null;
         for(Division division1 : conference.getDivisionList()){
-            if(division1.getName().equals(divisionName)){
+            if(division1.getName().toLowerCase().equals(divisionName.toLowerCase())){
                 division = division1;
                 break;
             }
@@ -83,12 +83,12 @@ public class CreateTeamState implements IHockeyState {
 
         List<String> teamNameList = new ArrayList<>();
         for(Team team: division.getTeamList()){
-            teamNameList.add(team.getName());
+            teamNameList.add(team.getName().toLowerCase());
         }
 
-        teamName  = GetInput.getUserInput("Please enter team name");
+        teamName  = GetInput.getUserInput("Please enter a team name to create a team ");
 
-        while(teamNameList.contains(teamName)){
+        while(teamNameList.contains(teamName.toLowerCase())){
             teamName  = GetInput.getUserInput("Provided team name  already exists. Please enter a new one!");
         }
 
@@ -192,7 +192,7 @@ public class CreateTeamState implements IHockeyState {
 
         System.out.println("Please wait while we are saving your league information...");
 
-        PlayerChoiceState playerChoiceState = null;
+        IHockeyState hockeyState = null;
         if (league != null) {
             //Persist to DB and transition to next state
             league.setCreatedBy(hockeyContext.getUser().getId());
@@ -252,10 +252,22 @@ public class CreateTeamState implements IHockeyState {
                 System.exit(1);
                 e.printStackTrace();
             }
-            playerChoiceState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
 
+            String createAnotherTeam = GetInput.getUserInput("Do you want to create another team? Yes/Y or No/N");
+            while(createAnotherTeam !=null){
+
+                if(createAnotherTeam.toLowerCase().equals("y") || createAnotherTeam.toLowerCase().equals("yes")  ){
+                    hockeyState = new CreateTeamState(hockeyContext);
+                    break;
+                }else if(createAnotherTeam.toLowerCase().equals("n") || createAnotherTeam.toLowerCase().equals("no")){
+                    hockeyState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
+                    break;
+                }else{
+                    System.out.println("Please enter the right choice. Yes/Y or No/N");
+                }
+            }
         }
-        return playerChoiceState;
+        return hockeyState;
     }
 
     private int addFreeAgent(int leagueId, int seasonId) throws Exception {
