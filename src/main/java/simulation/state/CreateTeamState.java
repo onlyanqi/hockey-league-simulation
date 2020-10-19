@@ -96,17 +96,31 @@ public class CreateTeamState implements IHockeyState {
         while((teamName.isEmpty() || teamName ==null || isTeamPresent(teamName))){
             teamName = GetInput.getUserInput("Please enter valid team name! Make sure there is no existing team with provided name");
         }
+
+        /*
+        * Add logic to show current set of General managers
+        *
+        * */
         generalManagerName  = GetInput.getUserInput("Please enter name of general manager");
 
         while(generalManagerName.isEmpty() || generalManagerName ==null){
             generalManagerName=  GetInput.getUserInput("Please enter GeneralManager name!");
         }
+
+        /*
+         * Add logic to show current set of Head coach
+         *
+         * */
         headCoachName  = GetInput.getUserInput("Please enter name of head coach");
 
         while(headCoachName.isEmpty() || headCoachName ==null){
             headCoachName = GetInput.getUserInput("Please enter HeadCoach Name !");
         }
 
+        /*
+         * Add logic to show team creation
+         *
+         * */
     }
 
     private boolean isTeamPresent(String teamName)  {
@@ -159,7 +173,10 @@ public class CreateTeamState implements IHockeyState {
                         team.setName(teamName);
                         team.setHeadCoach(headCoachName);
                         team.setGeneralManager(generalManagerName);
-
+/*
+* team.setPlayer();
+*
+* */
                         division.getTeamList().add(team);
                     }
                 }
