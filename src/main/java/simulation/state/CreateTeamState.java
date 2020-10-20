@@ -99,7 +99,7 @@ public class CreateTeamState implements IHockeyState {
 
         /*
         * Add logic to show current set of General managers
-        *
+        *league.getManagerList()
         * */
         generalManagerName  = GetInput.getUserInput("Please enter name of general manager");
 
@@ -109,7 +109,7 @@ public class CreateTeamState implements IHockeyState {
 
         /*
          * Add logic to show current set of Head coach
-         *
+         * league.geHeadCoach()
          * */
         headCoachName  = GetInput.getUserInput("Please enter name of head coach");
 
@@ -121,6 +121,9 @@ public class CreateTeamState implements IHockeyState {
          * Add logic to show team creation
          *
          * */
+         List<Player> freeAgentList=league.getFreeAgent().getPlayerList();
+         //get skills associated with players and display them on screen
+
     }
 
     private boolean isTeamPresent(String teamName)  {
