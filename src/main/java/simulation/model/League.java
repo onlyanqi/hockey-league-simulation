@@ -29,6 +29,12 @@ public class League extends ParentObj{
 
     private List<Conference> conferenceList;
 
+    private List<Coach> coachList;
+
+    private List<Manager> managerList;
+
+    private int daysUntilStatIncreaseCheck;
+
     private FreeAgent freeAgent;
 
     public String getCountry() {
@@ -46,6 +52,26 @@ public class League extends ParentObj{
     public void setConferenceList(List<Conference> conferenceList) {
         this.conferenceList = conferenceList;
     }
+
+    public List<Coach> getCoachList() {
+        return coachList;
+    }
+
+    public void setCoachList(List<Coach> coachList) {
+        this.coachList = coachList;
+    }
+
+    public List<Manager> getManagerList() {
+        return managerList;
+    }
+
+    public void setManagerList(List<Manager> managerList) {
+        this.managerList = managerList;
+    }
+
+    public int getDaysUntilStatIncreaseCheck(){return daysUntilStatIncreaseCheck;}
+
+    public void setDaysUntilStatIncreaseCheck(int daysUntilStatIncreaseCheck){this.daysUntilStatIncreaseCheck = daysUntilStatIncreaseCheck;}
 
     public int getCreatedBy() {
         return createdBy;

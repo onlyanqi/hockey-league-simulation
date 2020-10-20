@@ -33,6 +33,14 @@ public class Player extends ParentObj{
 
     private int seasonId;
 
+    private float skating;
+
+    private float shooting;
+
+    private float checking;
+
+    private float saving;
+
     public int getAge() {
         return age;
     }
@@ -76,6 +84,38 @@ public class Player extends ParentObj{
     public int getFreeAgentId() {
         return freeAgentId;
     }
+    public float getSkating() {
+        return skating;
+    }
+
+    public void setSkating(float skating) {
+        this.skating = skating;
+    }
+
+    public float getShooting() {
+        return shooting;
+    }
+
+    public void setShooting(float shooting) {
+        this.shooting = shooting;
+    }
+
+    public float getChecking() {
+        return checking;
+    }
+
+    public void setChecking(float checking) {
+        this.checking = checking;
+    }
+
+    public float getSaving() {
+        return saving;
+    }
+
+    public void setSaving(float saving) {
+        this.saving = saving;
+    }
+
 
     public void setFreeAgentId(int freeAgentId) {
         this.freeAgentId = freeAgentId;
