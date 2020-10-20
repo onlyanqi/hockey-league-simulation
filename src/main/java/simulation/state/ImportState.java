@@ -83,8 +83,12 @@ public class ImportState implements IHockeyState {
         league.setCoachList(coachList);
         league.setManagerList(managerList);
     }
-
-
+    /**
+     *
+     * Show list of free agents
+     * Player choice capability
+     *
+     */
 
     private List<Team> loadTeamJSON(JSONArray teams){
         ArrayList<Team> teamList = new ArrayList<Team>();
@@ -284,7 +288,6 @@ public class ImportState implements IHockeyState {
                 JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
                 String playerName = (String) freeAgentJsonObject.get("playerName");
                 String position = (String) freeAgentJsonObject.get("position");
-                boolean captain = (Boolean) freeAgentJsonObject.get("captain");
 
                 if (validateString(playerName)) {
                     System.out.println("Please make sure player name is valid in Free Agent");
@@ -293,16 +296,6 @@ public class ImportState implements IHockeyState {
 
                 if (validateString(position)) {
                     System.out.println("Please make sure position of the player is valid in Free Agent");
-                    System.exit(1);
-                }
-
-                if (validateBoolean(captain)) {
-                    System.out.println("Please make sure captain is valid in Free Agent ");
-                    System.exit(1);
-                }
-
-                if (captain) {
-                    System.out.println("Free Agents cannot be captains. Please correct them. ");
                     System.exit(1);
                 }
 
@@ -316,7 +309,6 @@ public class ImportState implements IHockeyState {
                 Player player = playerConcrete.newPlayer();
                 player.setName(playerName);
                 player.setPosition(position);
-                player.setCaptain(captain);
 
                 if (player.validPosition() && player.validName()) {
                     freeAgentList.add(player);
