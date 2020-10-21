@@ -8,13 +8,13 @@ public class GameResolver extends ParentObj{
         setId(id);
     }
 
-    private float randomWinChance;
+    private double randomWinChance;
 
-    public float getRandomWinChance() {
+    public double getRandomWinChance() {
         return randomWinChance;
     }
 
-    public void setRandomWinChance(float randomWinChance) {
+    public void setRandomWinChance(double randomWinChance) {
         this.randomWinChance = randomWinChance;
     }
 

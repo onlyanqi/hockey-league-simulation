@@ -8,17 +8,17 @@ public class Injury extends ParentObj{
         setId(id);
     }
 
-    private float randomInjuryChance;
+    private double randomInjuryChance;
 
     private int injuryDaysLow;
 
     private int injuryDaysHigh;
 
-    public float getRandomInjuryChance() {
+    public double getRandomInjuryChance() {
         return randomInjuryChance;
     }
 
-    public void setRandomInjuryChance(float randomInjuryChance) {
+    public void setRandomInjuryChance(double randomInjuryChance) {
         this.randomInjuryChance = randomInjuryChance;
     }
 

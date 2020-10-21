@@ -45,7 +45,7 @@ public class ImportState implements IHockeyState {
     private void parseJSONAndInstantiateLeague(JSONObject leagueJSON){
 
         String leagueName = (String) leagueJSON.get("leagueName");
-//        JSONObject gameplayConfig = (JSONObject) leagueJSON.get("gameplayConfig");
+        JSONObject gameplayConfig = (JSONObject) leagueJSON.get("gameplayConfig");
         JSONArray conferences = (JSONArray) leagueJSON.get("conferences");
         JSONArray freeAgents = (JSONArray) leagueJSON.get("freeAgents");
         JSONArray coaches = (JSONArray) leagueJSON.get("coaches");
@@ -66,10 +66,45 @@ public class ImportState implements IHockeyState {
             System.exit(1);
         }
 
-//        JSONObject aging = (JSONObject) gameplayConfig.get("aging");
-//
-//        JSONObject training = (JSONObject) gameplayConfig.get("training");
-//        int daysUntilStatIncreaseCheck = (Integer) training.get("daysUntilStatIncreaseCheck");
+        JSONObject agingJSONObject = (JSONObject) gameplayConfig.get("aging");
+        int averageRetirementAge = (Integer) agingJSONObject.get("averageRetirementAge");
+        int maximumAge = (Integer) agingJSONObject.get("maximumAge");
+        AgingConcrete agingConcrete = new AgingConcrete();
+        Aging aging = agingConcrete.newAging();
+        aging.setAverageRetirementAge(averageRetirementAge);
+        aging.setMaximumAge(maximumAge);
+
+        JSONObject gameResolverJSONObject = (JSONObject) gameplayConfig.get("gameResolver");
+        double randomWinChance = (Double) gameResolverJSONObject.get("randomWinChance");
+        GameResolverConcrete gameResolverConcrete = new GameResolverConcrete();
+        GameResolver gameResolver = gameResolverConcrete.newGameResolver();
+        gameResolver.setRandomWinChance(randomWinChance);
+
+        JSONObject injuriesJSONObject = (JSONObject) gameplayConfig.get("injuries");
+        double randomInjuryChance = (Double) injuriesJSONObject.get("randomInjuryChance");
+        int injuryDaysLow = (Integer) injuriesJSONObject.get("injuryDaysLow");
+        int injuryDaysHigh = (Integer) injuriesJSONObject.get("injuryDaysHigh");
+        InjuryConcrete injuryConcrete = new InjuryConcrete();
+        Injury injury = injuryConcrete.newInjury();
+        injury.setRandomInjuryChance(randomInjuryChance);
+        injury.setInjuryDaysLow(injuryDaysLow);
+        injury.setInjuryDaysHigh(injuryDaysHigh);
+
+        JSONObject trainingJSONObject = (JSONObject) gameplayConfig.get("training");
+        int daysUntil = (Integer) trainingJSONObject.get("daysUntilStatIncreaseCheck");
+
+        JSONObject tradingJSONObject = (JSONObject) gameplayConfig.get("trading");
+        int lossPoint = (Integer) tradingJSONObject.get("lossPoint");
+        double randomTradeOfferChance = (Double) tradingJSONObject.get("randomTradeOfferChance");
+        int maxPlayersPerTrade = (Integer) tradingJSONObject.get("maxPlayersPerTrade");
+        double randomAcceptanceChance = (Double) tradingJSONObject.get("randomAcceptanceChance");
+        TradingConcrete tradingConcrete = new TradingConcrete();
+        Trading trading = tradingConcrete.newTrading();
+        trading.setLossPoint(lossPoint);
+        trading.setRandomTradeOfferChance(randomTradeOfferChance);
+        trading.setMaxPlayersPerTrade(maxPlayersPerTrade);
+        trading.setRandomAcceptanceChance(randomAcceptanceChance);
+
 
         List<Conference> conferenceList = loadConferenceJSON(conferences);
 
@@ -81,7 +116,7 @@ public class ImportState implements IHockeyState {
         List<Coach> coachList = loadCoachJSON(coaches);
         List<Manager> managerList = loadManagerJSON(managers);
 
-//        league.setDaysUntilStatIncreaseCheck(daysUntilStatIncreaseCheck);
+        league.setDaysUntilStatIncreaseCheck(daysUntil);
         league.setName(leagueName);
         league.setConferenceList(conferenceList);
         league.setFreeAgent(freeAgent);

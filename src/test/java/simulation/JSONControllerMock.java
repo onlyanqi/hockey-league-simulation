@@ -15,8 +15,7 @@ public class JSONControllerMock{
 
     private static JSONObject createJSON(){
         JSONObject league = new JSONObject();
-        league.put("leagueName","Dalhousie Hockey League");
-
+        JSONObject gameplayConfig = new JSONObject();
         JSONArray freeAgents = new JSONArray();
         JSONArray players = new JSONArray();
         JSONArray conferences = new JSONArray();
@@ -24,6 +23,33 @@ public class JSONControllerMock{
         JSONArray teams = new JSONArray();
         JSONArray coaches = new JSONArray();
         JSONArray managers = new JSONArray();
+
+        JSONObject aging = new JSONObject();
+        aging.put("averageRetirementAge",35);
+        aging.put("maximumAge",50);
+
+        JSONObject gameResolver = new JSONObject();
+        gameResolver.put("randomWinChance",0.1);
+
+        JSONObject injuries = new JSONObject();
+        injuries.put("randomInjuryChance",0.05);
+        injuries.put("injuryDaysLow",1);
+        injuries.put("injuryDaysHigh",260);
+
+        JSONObject training = new JSONObject();
+        training.put("daysUntilStatIncreaseCheck",100);
+
+        JSONObject trading = new JSONObject();
+        trading.put("lossPoint",8);
+        trading.put("randomTradeOfferChance",0.05);
+        trading.put("maxPlayersPerTrade",2);
+        trading.put("randomAcceptanceChance",0.05);
+
+        gameplayConfig.put("aging",aging);
+        gameplayConfig.put("gameResolver",gameResolver);
+        gameplayConfig.put("injuries",injuries);
+        gameplayConfig.put("training",training);
+        gameplayConfig.put("trading",trading);
 
         JSONObject freeAgentplayer1 = new JSONObject();
         freeAgentplayer1.put("playerName","Agent One");
@@ -149,10 +175,12 @@ public class JSONControllerMock{
         managers.add(manager3);
 
         league.put("leagueName","Dalhousie Hockey League");
+        league.put("gameplayConfig",gameplayConfig);
         league.put("conferences",conferences);
         league.put("freeAgents",freeAgents);
         league.put("coaches",coaches);
         league.put("generalManagers",managers);
+        league.put("daysUntilStatIncreaseCheck",100);
 
 
         return  league;
