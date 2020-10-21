@@ -42,11 +42,11 @@ public class Trading extends ParentObj{
 
     private int lossPoint;
 
-    private float randomTradeOfferChance;
+    private double randomTradeOfferChance;
 
     private int maxPlayersPerTrade;
 
-    private float randomAcceptanceChance;
+    private double randomAcceptanceChance;
 
     private boolean isTradingPeriod;
 
@@ -151,11 +151,11 @@ public class Trading extends ParentObj{
         this.lossPoint = lossPoint;
     }
 
-    public float getRandomTradeOfferChance() {
+    public double getRandomTradeOfferChance() {
         return randomTradeOfferChance;
     }
 
-    public void setRandomTradeOfferChance(float randomTradeOfferChance) {
+    public void setRandomTradeOfferChance(double randomTradeOfferChance) {
         this.randomTradeOfferChance = randomTradeOfferChance;
     }
 
@@ -167,11 +167,11 @@ public class Trading extends ParentObj{
         this.maxPlayersPerTrade = maxPlayersPerTrade;
     }
 
-    public float getRandomAcceptanceChance() {
+    public double getRandomAcceptanceChance() {
         return randomAcceptanceChance;
     }
 
-    public void setRandomAcceptanceChance(float randomAcceptanceChance) {
+    public void setRandomAcceptanceChance(double randomAcceptanceChance) {
         this.randomAcceptanceChance = randomAcceptanceChance;
     }
 

@@ -45,8 +45,11 @@ public class ImportState implements IHockeyState {
     private void parseJSONAndInstantiateLeague(JSONObject leagueJSON){
 
         String leagueName = (String) leagueJSON.get("leagueName");
+        JSONObject gameplayConfig = (JSONObject) leagueJSON.get("gameplayConfig");
         JSONArray conferences = (JSONArray) leagueJSON.get("conferences");
         JSONArray freeAgents = (JSONArray) leagueJSON.get("freeAgents");
+        JSONArray coaches = (JSONArray) leagueJSON.get("coaches");
+        JSONArray managers = (JSONArray) leagueJSON.get("generalManagers");
 
 
         if(validateString(leagueName) ){
@@ -63,6 +66,45 @@ public class ImportState implements IHockeyState {
             System.exit(1);
         }
 
+        JSONObject agingJSONObject = (JSONObject) gameplayConfig.get("aging");
+        int averageRetirementAge = (Integer) agingJSONObject.get("averageRetirementAge");
+        int maximumAge = (Integer) agingJSONObject.get("maximumAge");
+        AgingConcrete agingConcrete = new AgingConcrete();
+        Aging aging = agingConcrete.newAging();
+        aging.setAverageRetirementAge(averageRetirementAge);
+        aging.setMaximumAge(maximumAge);
+
+        JSONObject gameResolverJSONObject = (JSONObject) gameplayConfig.get("gameResolver");
+        double randomWinChance = (Double) gameResolverJSONObject.get("randomWinChance");
+        GameResolverConcrete gameResolverConcrete = new GameResolverConcrete();
+        GameResolver gameResolver = gameResolverConcrete.newGameResolver();
+        gameResolver.setRandomWinChance(randomWinChance);
+
+        JSONObject injuriesJSONObject = (JSONObject) gameplayConfig.get("injuries");
+        double randomInjuryChance = (Double) injuriesJSONObject.get("randomInjuryChance");
+        int injuryDaysLow = (Integer) injuriesJSONObject.get("injuryDaysLow");
+        int injuryDaysHigh = (Integer) injuriesJSONObject.get("injuryDaysHigh");
+        InjuryConcrete injuryConcrete = new InjuryConcrete();
+        Injury injury = injuryConcrete.newInjury();
+        injury.setRandomInjuryChance(randomInjuryChance);
+        injury.setInjuryDaysLow(injuryDaysLow);
+        injury.setInjuryDaysHigh(injuryDaysHigh);
+
+        JSONObject trainingJSONObject = (JSONObject) gameplayConfig.get("training");
+        int daysUntil = (Integer) trainingJSONObject.get("daysUntilStatIncreaseCheck");
+
+        JSONObject tradingJSONObject = (JSONObject) gameplayConfig.get("trading");
+        int lossPoint = (Integer) tradingJSONObject.get("lossPoint");
+        double randomTradeOfferChance = (Double) tradingJSONObject.get("randomTradeOfferChance");
+        int maxPlayersPerTrade = (Integer) tradingJSONObject.get("maxPlayersPerTrade");
+        double randomAcceptanceChance = (Double) tradingJSONObject.get("randomAcceptanceChance");
+        TradingConcrete tradingConcrete = new TradingConcrete();
+        Trading trading = tradingConcrete.newTrading();
+        trading.setLossPoint(lossPoint);
+        trading.setRandomTradeOfferChance(randomTradeOfferChance);
+        trading.setMaxPlayersPerTrade(maxPlayersPerTrade);
+        trading.setRandomAcceptanceChance(randomAcceptanceChance);
+
 
         List<Conference> conferenceList = loadConferenceJSON(conferences);
 
@@ -71,9 +113,15 @@ public class ImportState implements IHockeyState {
         List<Player> freeAgentList = loadFreeAgentJSON(freeAgents);
         freeAgent.setPlayerList(freeAgentList);
 
+        List<Coach> coachList = loadCoachJSON(coaches);
+        List<Manager> managerList = loadManagerJSON(managers);
+
+        league.setDaysUntilStatIncreaseCheck(daysUntil);
         league.setName(leagueName);
         league.setConferenceList(conferenceList);
         league.setFreeAgent(freeAgent);
+        league.setCoachList(coachList);
+        league.setManagerList(managerList);
     }
     /**
      *
@@ -144,7 +192,11 @@ public class ImportState implements IHockeyState {
                 String playerName = (String) playerJsonObject.get("playerName");
                 String position = (String) playerJsonObject.get("position");
                 boolean captain = (Boolean) playerJsonObject.get("captain");
-
+                int age = (Integer) playerJsonObject.get("age");
+                int skating = (Integer) playerJsonObject.get("skating");
+                int shooting = (Integer) playerJsonObject.get("shooting");
+                int checking = (Integer) playerJsonObject.get("checking");
+                int saving = (Integer) playerJsonObject.get("saving");
 
                 if (validateString(playerName)) {
                     System.out.println("Please make sure player name is valid ");
@@ -178,6 +230,11 @@ public class ImportState implements IHockeyState {
                 player.setName(playerName);
                 player.setPosition(position);
                 player.setCaptain(captain);
+                player.setAge(age);
+                player.setSkating(skating);
+                player.setShooting(shooting);
+                player.setChecking(checking);
+                player.setSaving(saving);
 
                 if (player.validPosition() && player.validName()) {
                     playerList.add(player);
@@ -266,13 +323,17 @@ public class ImportState implements IHockeyState {
 
         ArrayList<Player> freeAgentList =  new ArrayList<>();
 
-        try {
-
 
             for (Object freeAgentObjectFromJSONArray : freeAgents) {
                 JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
+
                 String playerName = (String) freeAgentJsonObject.get("playerName");
                 String position = (String) freeAgentJsonObject.get("position");
+                int age = (Integer) freeAgentJsonObject.get("age");
+                int skating = (Integer) freeAgentJsonObject.get("skating");
+                int shooting = (Integer) freeAgentJsonObject.get("shooting");
+                int checking = (Integer) freeAgentJsonObject.get("checking");
+                int saving = (Integer) freeAgentJsonObject.get("saving");
 
                 if (validateString(playerName)) {
                     System.out.println("Please make sure player name is valid in Free Agent");
@@ -294,6 +355,11 @@ public class ImportState implements IHockeyState {
                 Player player = playerConcrete.newPlayer();
                 player.setName(playerName);
                 player.setPosition(position);
+                player.setAge(age);
+                player.setSkating(skating);
+                player.setShooting(shooting);
+                player.setChecking(checking);
+                player.setSaving(saving);
 
                 if (player.validPosition() && player.validName()) {
                     freeAgentList.add(player);
@@ -303,11 +369,41 @@ public class ImportState implements IHockeyState {
                 }
 
             }
-        }catch(ClassCastException e){
-            System.out.println("Please make sure only boolean is provided for captain field.Exiting the app!");
-            System.exit(1);
-        }
         return freeAgentList;
+    }
+    private List<Manager> loadManagerJSON(JSONArray managers) {
+        ArrayList<Manager> managerList =  new ArrayList<>();
+        int managerSize = managers.size();
+
+        for ( int i =0; i < managerSize; i++) {
+            JSONObject managerJsonObject = (JSONObject) managers.get(i);
+            String name = (String) managerJsonObject.get(i);
+            ManagerConcrete managerConcrete = new ManagerConcrete();
+            Manager manager = managerConcrete.newManagerConcrete();
+            manager.setName(name);
+        }
+        return managerList;
+    }
+
+    private List<Coach> loadCoachJSON(JSONArray coaches) {
+        ArrayList<Coach> coachList =  new ArrayList<>();
+        for (Object coachObjectFromJSONArray : coaches) {
+            JSONObject coachJsonObject = (JSONObject) coachObjectFromJSONArray;
+            String name = (String) coachJsonObject.get("name");
+            Double skating = (Double) coachJsonObject.get("skating");
+            Double shooting = (Double) coachJsonObject.get("shooting");
+            Double checking = (Double) coachJsonObject.get("checking");
+            Double saving = (Double) coachJsonObject.get("saving");
+            CoachConcrete coachConcrete = new CoachConcrete();
+            Coach coach = coachConcrete.newCoach();
+            coach.setName(name);
+            coach.setSkating(skating);
+            coach.setShooting(shooting);
+            coach.setChecking(checking);
+            coach.setSaving(saving);
+            coachList.add(coach);
+        }
+        return coachList;
     }
 
     private boolean validateString(String name) {
