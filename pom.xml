@@ -65,7 +65,7 @@
                 <archive>
                   <manifest>
                     <mainClass>
-                        simulation.icehockey.App
+                        simulation.App
                     </mainClass>
                   </manifest>
                 </archive>
