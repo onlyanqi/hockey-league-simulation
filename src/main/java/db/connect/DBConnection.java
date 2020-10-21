@@ -17,7 +17,7 @@ public class DBConnection implements IDBConnection {
             String dbName = prop.getProperty("db.Name");
             String dbPort = prop.getProperty("db.Port");
 
-            dbURL = dbURL.concat("jdbc:mysql://").concat(dbHost).concat(";")
+            dbURL = dbURL.concat("jdbc:mysql://").concat(dbHost).concat(":")
                     .concat(dbPort).concat("/").concat(dbName);
         }
 
