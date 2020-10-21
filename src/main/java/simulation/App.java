@@ -33,7 +33,6 @@ public class App
                     user.setPassword(password);
                     addUser(user);
                 }
-
                 filePath = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
 
                 if (filePath != null && filePath.length() != 0) {
