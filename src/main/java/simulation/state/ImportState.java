@@ -45,7 +45,7 @@ public class ImportState implements IHockeyState {
     private void parseJSONAndInstantiateLeague(JSONObject leagueJSON){
 
         String leagueName = (String) leagueJSON.get("leagueName");
-        JSONObject gameplayConfig = (JSONObject) leagueJSON.get("gameplayConfig");
+//        JSONObject gameplayConfig = (JSONObject) leagueJSON.get("gameplayConfig");
         JSONArray conferences = (JSONArray) leagueJSON.get("conferences");
         JSONArray freeAgents = (JSONArray) leagueJSON.get("freeAgents");
         JSONArray coaches = (JSONArray) leagueJSON.get("coaches");
@@ -66,6 +66,10 @@ public class ImportState implements IHockeyState {
             System.exit(1);
         }
 
+//        JSONObject aging = (JSONObject) gameplayConfig.get("aging");
+//
+//        JSONObject training = (JSONObject) gameplayConfig.get("training");
+//        int daysUntilStatIncreaseCheck = (Integer) training.get("daysUntilStatIncreaseCheck");
 
         List<Conference> conferenceList = loadConferenceJSON(conferences);
 
@@ -77,6 +81,7 @@ public class ImportState implements IHockeyState {
         List<Coach> coachList = loadCoachJSON(coaches);
         List<Manager> managerList = loadManagerJSON(managers);
 
+//        league.setDaysUntilStatIncreaseCheck(daysUntilStatIncreaseCheck);
         league.setName(leagueName);
         league.setConferenceList(conferenceList);
         league.setFreeAgent(freeAgent);
@@ -153,10 +158,10 @@ public class ImportState implements IHockeyState {
                 String position = (String) playerJsonObject.get("position");
                 boolean captain = (Boolean) playerJsonObject.get("captain");
                 int age = (Integer) playerJsonObject.get("age");
-                float skating = (Float) playerJsonObject.get("skating");
-                float shooting = (Float) playerJsonObject.get("shooting");
-                float checking = (Float) playerJsonObject.get("checking");
-                float saving = (Float) playerJsonObject.get("saving");
+                int skating = (Integer) playerJsonObject.get("skating");
+                int shooting = (Integer) playerJsonObject.get("shooting");
+                int checking = (Integer) playerJsonObject.get("checking");
+                int saving = (Integer) playerJsonObject.get("saving");
 
                 if (validateString(playerName)) {
                     System.out.println("Please make sure player name is valid ");
@@ -192,6 +197,7 @@ public class ImportState implements IHockeyState {
                 player.setCaptain(captain);
                 player.setAge(age);
                 player.setSkating(skating);
+                player.setShooting(shooting);
                 player.setChecking(checking);
                 player.setSaving(saving);
 
@@ -282,12 +288,17 @@ public class ImportState implements IHockeyState {
 
         ArrayList<Player> freeAgentList =  new ArrayList<>();
 
-        try {
 
             for (Object freeAgentObjectFromJSONArray : freeAgents) {
                 JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
+
                 String playerName = (String) freeAgentJsonObject.get("playerName");
                 String position = (String) freeAgentJsonObject.get("position");
+                int age = (Integer) freeAgentJsonObject.get("age");
+                int skating = (Integer) freeAgentJsonObject.get("skating");
+                int shooting = (Integer) freeAgentJsonObject.get("shooting");
+                int checking = (Integer) freeAgentJsonObject.get("checking");
+                int saving = (Integer) freeAgentJsonObject.get("saving");
 
                 if (validateString(playerName)) {
                     System.out.println("Please make sure player name is valid in Free Agent");
@@ -309,6 +320,11 @@ public class ImportState implements IHockeyState {
                 Player player = playerConcrete.newPlayer();
                 player.setName(playerName);
                 player.setPosition(position);
+                player.setAge(age);
+                player.setSkating(skating);
+                player.setShooting(shooting);
+                player.setChecking(checking);
+                player.setSaving(saving);
 
                 if (player.validPosition() && player.validName()) {
                     freeAgentList.add(player);
@@ -318,18 +334,15 @@ public class ImportState implements IHockeyState {
                 }
 
             }
-        }catch(ClassCastException e){
-            System.out.println("Please make sure only boolean is provided for captain field.Exiting the app!");
-            System.exit(1);
-        }
         return freeAgentList;
     }
     private List<Manager> loadManagerJSON(JSONArray managers) {
         ArrayList<Manager> managerList =  new ArrayList<>();
         int managerSize = managers.size();
 
-        for (int i=0;i<managerSize;i++) {
-            String name = (String) managers.get(i);
+        for ( int i =0; i < managerSize; i++) {
+            JSONObject managerJsonObject = (JSONObject) managers.get(i);
+            String name = (String) managerJsonObject.get(i);
             ManagerConcrete managerConcrete = new ManagerConcrete();
             Manager manager = managerConcrete.newManagerConcrete();
             manager.setName(name);
@@ -342,10 +355,10 @@ public class ImportState implements IHockeyState {
         for (Object coachObjectFromJSONArray : coaches) {
             JSONObject coachJsonObject = (JSONObject) coachObjectFromJSONArray;
             String name = (String) coachJsonObject.get("name");
-            float skating = (Float) coachJsonObject.get("skating");
-            float shooting = (Float) coachJsonObject.get("shooting");
-            float checking = (Float) coachJsonObject.get("checking");
-            float saving = (Float) coachJsonObject.get("saving");
+            Double skating = (Double) coachJsonObject.get("skating");
+            Double shooting = (Double) coachJsonObject.get("shooting");
+            Double checking = (Double) coachJsonObject.get("checking");
+            Double saving = (Double) coachJsonObject.get("saving");
             CoachConcrete coachConcrete = new CoachConcrete();
             Coach coach = coachConcrete.newCoach();
             coach.setName(name);

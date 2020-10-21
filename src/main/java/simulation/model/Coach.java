@@ -1,7 +1,5 @@
 package simulation.model;
 
-import java.util.List;
-
 public class Coach extends ParentObj {
     public Coach() {
     }
@@ -21,13 +19,13 @@ public class Coach extends ParentObj {
 
     private int freeAgentId;
 
-    private float skating;
+    private Double skating;
 
-    private float shooting;
+    private Double shooting;
 
-    private float checking;
+    private Double checking;
 
-    private float saving;
+    private Double saving;
 
     public String getName() {
         return name;
@@ -53,35 +51,35 @@ public class Coach extends ParentObj {
         this.freeAgentId = freeAgentId;
     }
 
-    public float getSkating() {
+    public Double getSkating() {
         return skating;
     }
 
-    public void setSkating(float skating) {
+    public void setSkating(Double skating) {
         this.skating = skating;
     }
 
-    public float getShooting() {
+    public Double getShooting() {
         return shooting;
     }
 
-    public void setShooting(float shooting) {
+    public void setShooting(Double shooting) {
         this.shooting = shooting;
     }
 
-    public float getChecking() {
+    public Double getChecking() {
         return checking;
     }
 
-    public void setChecking(float checking) {
+    public void setChecking(Double checking) {
         this.checking = checking;
     }
 
-    public float getSaving() {
+    public Double getSaving() {
         return saving;
     }
 
-    public void setSaving(float saving) {
+    public void setSaving(Double saving) {
         this.saving = saving;
     }
 
