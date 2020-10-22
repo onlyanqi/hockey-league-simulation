@@ -17,7 +17,7 @@ public class Coach extends ParentObj {
 
     private int teamId;
 
-    private int freeAgentId;
+    private int leagueId;
 
     private Double skating;
 
@@ -43,12 +43,13 @@ public class Coach extends ParentObj {
         this.teamId = teamId;
     }
 
-    public int getFreeAgentId() {
-        return freeAgentId;
+
+    public int getLeagueId() {
+        return leagueId;
     }
 
-    public void setFreeAgentId(int freeAgentId) {
-        this.freeAgentId = freeAgentId;
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
     }
 
     public Double getSkating() {
