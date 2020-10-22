@@ -4,6 +4,7 @@ import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
 
+import java.util.Date;
 import java.util.List;
 
 public class League extends ParentObj{
@@ -36,6 +37,16 @@ public class League extends ParentObj{
     private int daysUntilStatIncreaseCheck;
 
     private FreeAgent freeAgent;
+
+    private Date currentDate;
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
+    }
 
     public String getCountry() {
         return country;
