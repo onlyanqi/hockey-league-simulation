@@ -1,9 +1,5 @@
 package simulation.state;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import simulation.factory.*;
 import simulation.model.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -22,37 +18,51 @@ public class TrainingState implements ISimulateState {
                 List<Team> teamList = division.getTeamList();
                 for(Team team : teamList){
                     List<Player> playerList = team.getPlayerList();
-
                     for(Player player : playerList){
-                        StatIncreaseCheckPlayer(player, team.getCoach().getName());
+                        StatIncreaseCheckPlayer(player, team.getCoach());
                     }
                 }
             }
         }
     }
 
-    /*
-    *Change headCoach to obj
-    *
-    * */
+    private void StatIncreaseCheckPlayer(Player player, Coach headCoach){
 
+        double coachStrengthShooting=headCoach.getShooting();
+        double coachStrengthSkating = headCoach.getSkating();
+        double coachStrengthChecking = headCoach.getChecking();
+        double coachStrengthSaving = headCoach.getSaving();
 
-    private void StatIncreaseCheckPlayer(Player player, String headCoach){
-        /*
-         * For each skill run below code
-         *
-         * */
+        if(isRandomLess(coachStrengthShooting)){
+            player.setShooting(player.getShooting()+1);
+        }else{
+            // run injury check
+        }
+        if(isRandomLess(coachStrengthSkating)){
+            player.setSkating(player.getSkating()+1);
+        }else{
+            // run injury check
+        }
+        if(isRandomLess(coachStrengthChecking)){
+            player.setChecking(player.getChecking()+1);
+        }else{
+            // run injury check
+        }
+        if(isRandomLess(coachStrengthSaving)){
+            player.setSaving(player.getSaving()+1);
+        }else{
+            // run injury check
+        }
+    }
 
-        double coachStrength=0.6;   // this will change according to coach's strength of specific  skill
+    boolean isRandomLess(double coachStrength){
         Random rand = new Random();
         double randomNumber = rand.nextDouble();
-        if(randomNumber<coachStrength){
-            //increase that specific stat by one
+        if(randomNumber < coachStrength){
+            return true;
         }else{
-            //trigger an injury check here
+            return false;
         }
-
-
     }
 
     private ISimulateState exit() {
