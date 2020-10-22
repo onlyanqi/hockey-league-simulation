@@ -24,7 +24,7 @@ public class TrainingState implements ISimulateState {
                     List<Player> playerList = team.getPlayerList();
 
                     for(Player player : playerList){
-                        StatIncreaseCheckPlayer(player, team.getHeadCoach());
+                        StatIncreaseCheckPlayer(player, team.getCoach().getName());
                     }
                 }
             }

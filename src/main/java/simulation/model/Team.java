@@ -29,9 +29,12 @@ public class Team extends ParentObj{
 
     private int divisionId;
 
-    private String generalManager;
+    private Coach coach;
+    private Manager manager;
 
-    private String headCoach;
+//    private String generalManager;
+//
+//    private String headCoach;
 
     private List<Player> playerList;
 
@@ -67,20 +70,35 @@ public class Team extends ParentObj{
         this.divisionId = divisionId;
     }
 
-    public String getGeneralManager() {
-        return generalManager;
+//    public String getGeneralManager() {
+//        return generalManager;
+//    }
+//
+//    public void setGeneralManager(String generalManager) {
+//        this.generalManager = generalManager;
+//    }
+
+//    public String getHeadCoach() {
+//        return headCoach;
+//    }
+//
+//    public void setHeadCoach(String headCoach) {
+//        this.headCoach = headCoach;
+//    }
+    public Coach getCoach() {
+        return coach;
     }
 
-    public void setGeneralManager(String generalManager) {
-        this.generalManager = generalManager;
+    public void setCoach(Coach coach) {
+        this.coach = coach;
     }
 
-    public String getHeadCoach() {
-        return headCoach;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setHeadCoach(String headCoach) {
-        this.headCoach = headCoach;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public void addTeam(ITeamFactory addTeamFactory) throws Exception {

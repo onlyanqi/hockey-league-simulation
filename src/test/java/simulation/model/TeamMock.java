@@ -40,8 +40,16 @@ public class TeamMock implements ITeamFactory {
                 team.setDivisionId(1);
                 team.setHometown("Halifax1");
                 team.setMascot("Tiger1");
-                team.setGeneralManager("Manager1");
-                team.setHeadCoach("Coach1");
+                Manager Manager1 = new Manager();
+                Manager1.setName("Manager1");
+                team.setManager(Manager1);
+                Coach Coach1 = new Coach();
+                Coach1.setName("Coach1");
+                Coach1.setSkating(0.8);
+                Coach1.setShooting(0.5);
+                Coach1.setChecking(0.3);
+                Coach1.setSaving(0.5);
+                team.setCoach(Coach1);
                 team.setPlayerList(formPlayerList());
                 break;
 
@@ -53,8 +61,16 @@ public class TeamMock implements ITeamFactory {
                 team.setDivisionId(1);
                 team.setHometown("Halifax2");
                 team.setMascot("Tiger2");
-                team.setGeneralManager("Manager2");
-                team.setHeadCoach("Coach2");
+                Manager Manager2 = new Manager();
+                Manager2.setName("Manager2");
+                team.setManager(Manager2);
+                Coach Coach2 = new Coach();
+                Coach2.setName("Rob");
+                Coach2.setSkating(0.9);
+                Coach2.setShooting(0.3);
+                Coach2.setChecking(0.6);
+                Coach2.setSaving(0.1);
+                team.setCoach(Coach2);
                 team.setPlayerList(formPlayerList());
                 break;
 
@@ -66,8 +82,16 @@ public class TeamMock implements ITeamFactory {
                 team.setDivisionId(1);
                 team.setHometown("Halifax3");
                 team.setMascot("Tiger3");
-                team.setGeneralManager("Manager3");
-                team.setHeadCoach("Coach3");
+                Manager Manager3 = new Manager();
+                Manager3.setName("Manager3");
+                team.setManager(Manager3);
+                Coach Coach3 = new Coach();
+                Coach3.setName("Coach3");
+                Coach3.setSkating(0.2);
+                Coach3.setShooting(0.5);
+                Coach3.setChecking(0.4);
+                Coach3.setSaving(0.8);
+                team.setCoach(Coach3);
                 team.setPlayerList(formPlayerList());
                 break;
 
@@ -79,8 +103,16 @@ public class TeamMock implements ITeamFactory {
                 team.setDivisionId(1);
                 team.setHometown("Halifax4");
                 team.setMascot("Tiger4");
-                team.setGeneralManager("Manager4");
-                team.setHeadCoach("Coach4");
+                Manager Manager4 = new Manager();
+                Manager4.setName("Manager4");
+                team.setManager(Manager4);
+                Coach Coach4 = new Coach();
+                Coach4.setName("Coach3");
+                Coach4.setSkating(0.2);
+                Coach4.setShooting(0.5);
+                Coach4.setChecking(0.4);
+                Coach4.setSaving(0.8);
+                team.setCoach(Coach4);
                 team.setPlayerList(formPlayerList());
                 break;
         }
@@ -97,8 +129,16 @@ public class TeamMock implements ITeamFactory {
         team.setDivisionId(1);
         team.setHometown("Halifax1");
         team.setMascot("Tiger1");
-        team.setGeneralManager("Manager1");
-        team.setHeadCoach("Coach1");
+        Manager Manager1 = new Manager();
+        Manager1.setName("Manager4");
+        team.setManager(Manager1);
+        Coach Coach1 = new Coach();
+        Coach1.setName("Coach1");
+        Coach1.setSkating(0.2);
+        Coach1.setShooting(0.5);
+        Coach1.setChecking(0.4);
+        Coach1.setSaving(0.8);
+        team.setCoach(Coach1);
         team.setPlayerList(formPlayerList());
     }
 
