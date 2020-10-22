@@ -752,3 +752,138 @@ CREATE TABLE `Coach` (
   CONSTRAINT `coach_freeagent` FOREIGN KEY (`freeAgentId`) REFERENCES `FreeAgent` (`freeAgentId`),
   CONSTRAINT `coach_team` FOREIGN KEY (`teamId`) REFERENCES `Team` (`idTeam`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`Coach`
+DROP FOREIGN KEY `coach_team`,
+DROP FOREIGN KEY `coach_freeagent`;
+ALTER TABLE `CSCI5308_7_DEVINT`.`Coach`
+DROP INDEX `coach_freeagent` ,
+DROP INDEX `coach_team` ;
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`Coach`
+CHANGE COLUMN `skating` `skating` DOUBLE NULL DEFAULT NULL ,
+CHANGE COLUMN `shooting` `shooting` DOUBLE NULL DEFAULT NULL ,
+CHANGE COLUMN `checking` `checking` DOUBLE NULL DEFAULT NULL ,
+CHANGE COLUMN `saving` `saving` DOUBLE NULL DEFAULT NULL ;
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`Coach`
+ADD COLUMN `leagueId` INT NULL AFTER `saving`;
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`Coach`
+ADD CONSTRAINT `coach_league`
+  FOREIGN KEY (`leagueId`)
+  REFERENCES `CSCI5308_7_DEVINT`.`League` (`idLeague`);
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`Manager`
+DROP FOREIGN KEY `manager_team`,
+DROP FOREIGN KEY `manager_freeagent`;
+ALTER TABLE `CSCI5308_7_DEVINT`.`Manager`
+DROP INDEX `manager_freeagent` ,
+DROP INDEX `manager_team` ;
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`Manager`
+ADD COLUMN `leagueId` INT NULL;
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`Manager`
+ADD CONSTRAINT `manager_league`
+  FOREIGN KEY (`leagueId`)
+  REFERENCES `CSCI5308_7_DEVINT`.`League` (`idLeague`);
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`Coach`
+DROP COLUMN `freeAgentId`;
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`Manager`
+DROP COLUMN `freeAgentId`;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddCoach`(IN teamId INT, IN freeAgentId INT, IN coachName varchar(45), IN skating Double, IN shooting Double, IN checking Double, IN saving Double, IN leagueId INT, OUT coachId INT)
+BEGIN
+
+	Insert into Coach(teamId, coachName, skating, shooting, checking, saving, leagueId)
+    VALUES (teamId,coachName, skating, shooting, checking, saving, leagueId);
+
+    SET coachId := LAST_INSERT_ID();
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadCoachListByLeagueId`(IN lId INT)
+BEGIN
+	select * from Coach where leagueId = lId;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddManager`(IN teamId INT,  IN managerName varchar(45), IN leagueId INT, OUT managerId INT)
+BEGIN
+
+	Insert into Manager(teamId, managerName,leagueId)
+    VALUES (teamId, managerName,leagueId);
+
+    SET managerId := LAST_INSERT_ID();
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadManagerListByLeagueId`(IN lId INT)
+BEGIN
+	select * from Manager where leagueId = lId;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddPlayer`(IN teamId INT, IN freeAgentId INT, IN seasonId INT, IN playerName VARCHAR(45), In position VARCHAR(45), IN captain boolean, IN skating INT, IN shooting INT, IN checking INT, IN saving INT,OUT playerId INT)
+BEGIN
+
+	Insert into Player(playerName,position)
+    VALUES (playerName,position);
+
+    SET playerId := LAST_INSERT_ID();
+
+	Insert into Player_stats(playerId, seasonId, teamId, captain, age, skating, shooting, freeAgentId, checking, saving)
+    VALUES (playerId, seasonId, teamId, captain, age, skating, shooting, freeAgentId, checking, saving);
+
+END $$
+DELIMITER ;
+
+ALTER TABLE `Team`
+DROP COLUMN `generalManager`;
+
+ALTER TABLE `Team`
+DROP COLUMN `headCoach`;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddTeam`(IN teamName Varchar(45), IN divisionId INT, OUT teamId INT)
+BEGIN
+
+	Insert into Team(teamName, division)
+    VALUES (teamName, divisionId);
+
+    SET teamId := LAST_INSERT_ID();
+
+END $$
+DELIMITER ;
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`League`
+ADD COLUMN `averageRetirementAge` INT NULL AFTER `createdBy`,
+ADD COLUMN `maximumAge` INT NULL AFTER `averageRetirementAge`,
+ADD COLUMN `randomWinChance` DOUBLE NULL AFTER `maximumAge`,
+ADD COLUMN `randomInjuryChance` DOUBLE NULL AFTER `randomWinChance`,
+ADD COLUMN `injuryDaysLow` INT NULL AFTER `randomInjuryChance`,
+ADD COLUMN `injuryDaysHigh` INT NULL AFTER `injuryDaysLow`,
+ADD COLUMN `daysUntilCheck` INT NULL AFTER `injuryDaysHigh`,
+ADD COLUMN `lossPoint` INT NULL AFTER `daysUntilCheck`,
+ADD COLUMN `randomTradeOfferChance` DOUBLE NULL AFTER `lossPoint`,
+ADD COLUMN `maxPlayersPerTrade` INT NULL AFTER `randomTradeOfferChance`,
+ADD COLUMN `randomAcceptanceChance` DOUBLE NULL AFTER `maxPlayersPerTrade`;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddLeague`(IN leagueName VARCHAR(45), In userId INT, IN  averageRetirementAge INT, IN maximumAge INT, IN randomWinChance Double, IN randomInjuryChance Double, IN injuryDaysLow INT, IN injuryDaysHigh INT, IN daysUntilCheck INT, IN lossPoint INT, IN randomTradeOfferChance Double, IN maxPlayersPerTrade INT, IN randomAcceptanceChance Double, OUT leagueId INT)
+BEGIN
+	Insert into League(leagueName, createdBy, averageRetirementAge, maximumAge, randomWinChance, randomInjuryChance, injuryDaysLow, injuryDaysHigh, daysUntilCheck, lossPoint, randomTradeOfferChance, maxPlayersPerTrade, randomAcceptanceChance)
+    VALUES (leagueName,userId, averageRetirementAge, maximumAge, randomWinChance, randomInjuryChance, injuryDaysLow, injuryDaysHigh, daysUntilCheck, lossPoint, randomTradeOfferChance, maxPlayersPerTrade, randomAcceptanceChance);
+    SET leagueId := LAST_INSERT_ID();
+END $$
+DELIMITER ;

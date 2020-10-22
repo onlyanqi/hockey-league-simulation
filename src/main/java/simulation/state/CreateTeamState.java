@@ -14,8 +14,8 @@ public class CreateTeamState implements IHockeyState {
     private String conferenceName;
     private String divisionName;
     private String teamName;
-    private String generalManagerName;
-    private String headCoachName;
+//    private String generalManagerName;
+//    private String headCoachName;
     private String seasonName;
 
 
@@ -67,7 +67,7 @@ public class CreateTeamState implements IHockeyState {
             divisionNameList.add(division.getName().toLowerCase());
         }
 
-        divisionName  = GetInput.getUserInput("Please enter division name the team belongs to");
+        divisionName = GetInput.getUserInput("Please enter division name the team belongs to");
 
         while(!divisionNameList.contains(divisionName.toLowerCase())){
             divisionName  = GetInput.getUserInput("Please enter division name from the existing ones");
@@ -101,21 +101,21 @@ public class CreateTeamState implements IHockeyState {
         * Add logic to show current set of General managers
         *league.getManagerList()
         * */
-        generalManagerName  = GetInput.getUserInput("Please enter name of general manager");
-
-        while(generalManagerName.isEmpty() || generalManagerName ==null){
-            generalManagerName=  GetInput.getUserInput("Please enter GeneralManager name!");
-        }
+//        generalManagerName  = GetInput.getUserInput("Please enter name of general manager");
+//
+//        while(generalManagerName.isEmpty() || generalManagerName ==null){
+//            generalManagerName=  GetInput.getUserInput("Please enter GeneralManager name!");
+//        }
 
         /*
          * Add logic to show current set of Head coach
          * league.geHeadCoach()
          * */
-        headCoachName  = GetInput.getUserInput("Please enter name of head coach");
-
-        while(headCoachName.isEmpty() || headCoachName ==null){
-            headCoachName = GetInput.getUserInput("Please enter HeadCoach Name !");
-        }
+//        headCoachName  = GetInput.getUserInput("Please enter name of head coach");
+//
+//        while(headCoachName.isEmpty() || headCoachName ==null){
+//            headCoachName = GetInput.getUserInput("Please enter HeadCoach Name !");
+//        }
 
         /*
          * Add logic to show team creation
@@ -174,8 +174,11 @@ public class CreateTeamState implements IHockeyState {
                     if(division.getName().equals(divisionName)) {
                         Team team = new Team();
                         team.setName(teamName);
-                        team.setHeadCoach(headCoachName);
-                        team.setGeneralManager(generalManagerName);
+
+//                        Coach coach = new Coach();
+//                        coach.setName(headCoachName);
+//                        team.setCoach(coach);
+//                        team.setManager(manager);
 /*
 * team.setPlayer();
 *

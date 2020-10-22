@@ -21,4 +21,23 @@ public class Manager extends ParentObj{
     public void setName(String name) {
         this.name = name;
     }
+
+    private int leagueId;
+
+    public int getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
+    }
+    private int teamId;
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
 }

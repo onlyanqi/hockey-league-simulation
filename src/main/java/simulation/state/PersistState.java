@@ -10,7 +10,7 @@ public class PersistState implements ISimulateState{
     private ISimulateState exit() {
         Boolean stanleyCupDetermined = true;
         if(stanleyCupDetermined){
-            return new InitializeSeasonState();
+            return null;
         }else{
             return new AdvanceTimeState();
         }

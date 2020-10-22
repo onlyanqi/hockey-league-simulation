@@ -135,33 +135,48 @@ public class ImportState implements IHockeyState {
         for(Object teamObjectFromJSONArray : teams){
             JSONObject teamJSONObject = (JSONObject) teamObjectFromJSONArray;
             String teamName = (String) teamJSONObject.get("teamName");
-            String generalManager = (String) teamJSONObject.get("generalManager");
-            String headCoach = (String) teamJSONObject.get("headCoach");
+            String managerName = (String) teamJSONObject.get("generalManager");
+            ManagerConcrete managerConcrete = new ManagerConcrete();
+            Manager manager = managerConcrete.newManagerConcrete();
+            manager.setName(managerName);
+            JSONObject coachJsonObject = (JSONObject) teamJSONObject.get("headCoach");
+            String coachName = (String) coachJsonObject.get("name");
+            Double skating = (Double) coachJsonObject.get("skating");
+            Double shooting = (Double) coachJsonObject.get("shooting");
+            Double checking = (Double) coachJsonObject.get("checking");
+            Double saving = (Double) coachJsonObject.get("saving");
+            CoachConcrete coachConcrete = new CoachConcrete();
+            Coach coach = coachConcrete.newCoach();
+            coach.setName(coachName);
+            coach.setSkating(skating);
+            coach.setShooting(shooting);
+            coach.setChecking(checking);
+            coach.setSaving(saving);
 
             if(validateString(teamName) ){
                 System.out.println("Please make sure team name is valid ");
                 System.exit(1);
             }
 
-            if(validateString(generalManager) ){
-                System.out.println("Please make sure General Manager name is valid ");
-                System.exit(1);
-            }
-            if(validateString(headCoach) ){
-                System.out.println("Please make sure Head Coach name is valid ");
-                System.exit(1);
-            }
-            if(isTeamExists(teamList,teamName)){
-                System.out.println("Please make sure there are no duplicates in conference name");
-                System.exit(1);
-            }
+//            if(validateString(generalManager) ){
+//                System.out.println("Please make sure General Manager name is valid ");
+//                System.exit(1);
+//            }
+//            if(validateString(headCoach) ){
+//                System.out.println("Please make sure Head Coach name is valid ");
+//                System.exit(1);
+//            }
+//            if(isTeamExists(teamList,teamName)){
+//                System.out.println("Please make sure there are no duplicates in conference name");
+//                System.exit(1);
+//            }
 
 
             TeamConcrete teamConcrete = new TeamConcrete();
             Team team = teamConcrete.newTeam();
             team.setName(teamName);
-            team.setGeneralManager(generalManager);
-            team.setHeadCoach(headCoach);
+            team.setManager(manager);
+            team.setCoach(coach);
 
             JSONArray players = (JSONArray) teamJSONObject.get("players");
 

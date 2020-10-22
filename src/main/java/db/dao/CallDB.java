@@ -35,6 +35,11 @@ public class CallDB implements ICallDB {
     }
 
     @Override
+    public void setInputParameterDouble(int index, double input) throws Exception {
+        stmt.setDouble(index, input);
+    }
+
+    @Override
     public void execute() throws Exception {
         stmt.execute();
     }
@@ -64,6 +69,11 @@ public class CallDB implements ICallDB {
     @Override
     public void setOutputParameterBoolean(int index) throws Exception{
         stmt.registerOutParameter(index, Types.BOOLEAN);
+    }
+
+    @Override
+    public void setOutputParameterDouble(int index, double input) throws Exception {
+        stmt.registerOutParameter(index, Types.DOUBLE);
     }
 
     @Override

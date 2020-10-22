@@ -117,11 +117,19 @@ public class JSONControllerMock{
         players.add(player2);
         players.add(player3);
 
+        JSONObject teamCoach = new JSONObject();
+        teamCoach.put("name","Mary Smith");
+        teamCoach.put("skating",0.5);
+        teamCoach.put("shooting",0.8);
+        teamCoach.put("checking",0.3);
+        teamCoach.put("saving",0.5);
+
+
         JSONObject team = new JSONObject();
         team.put("players",players);
         team.put("teamName","Boston");
-        team.put("generalManager","Mister Feed");
-        team.put("headCoach","Mary Smith");
+        team.put("generalManager","Mister Fred");
+        team.put("headCoach",teamCoach);
 
         teams.add(team);
 
@@ -168,7 +176,7 @@ public class JSONControllerMock{
         manager2.put(1,"Joseph Squidly");
 
         JSONObject manager3 = new JSONObject();
-        manager1.put(2,"Tom Spaghetti");
+        manager3.put(2,"Tom Spaghetti");
 
         managers.add(manager1);
         managers.add(manager2);

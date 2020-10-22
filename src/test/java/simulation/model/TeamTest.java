@@ -74,29 +74,36 @@ public class TeamTest {
     @Test
     public void getGeneralManagerTest() throws Exception {
         Team team = new Team(1, loadTeamFactory);
-        assertTrue(team.getGeneralManager().equals("Manager1"));
+        assertTrue(team.getManager().getName().equals("Manager1"));
     }
 
     @Test
     public void setGeneralManagerTest(){
         Team team = new Team();
-        String generalManager = "Tiger";
-        team.setGeneralManager(generalManager);
-        assertTrue(team.getGeneralManager().equals(generalManager));
+        Manager manager = new Manager();
+        manager.setName("generalManager");
+        team.setManager(manager);
+        assertTrue(team.getManager().getName().equals("generalManager"));
     }
 
     @Test
     public void getHeadCoachTest() throws Exception {
         Team team = new Team(1, loadTeamFactory);
-        assertTrue(team.getHeadCoach().equals("Coach1"));
+        assertTrue(team.getCoach().getName().equals("Coach1"));
     }
 
     @Test
     public void setHeadCoachTest(){
         Team team = new Team();
         String headCoach = "Tiger";
-        team.setHeadCoach(headCoach);
-        assertTrue(team.getHeadCoach().equals(headCoach));
+        Coach Coach1 = new Coach();
+        Coach1.setName("Rob");
+        Coach1.setSkating(0.8);
+        Coach1.setShooting(0.5);
+        Coach1.setChecking(0.3);
+        Coach1.setSaving(0.5);
+        team.setCoach(Coach1);
+        assertTrue(team.getCoach().equals(Coach1));
     }
 
     @Test
