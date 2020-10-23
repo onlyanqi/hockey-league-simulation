@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import simulation.factory.*;
 import simulation.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,7 +179,9 @@ public class ImportState implements IHockeyState {
             for (Object playerObjectFromJSONArray : players) {
                 JSONObject playerJsonObject = (JSONObject) playerObjectFromJSONArray;
                 String playerName = (String) playerJsonObject.get("playerName");
-                String position = (String) playerJsonObject.get("position");
+                String positionString = (String) playerJsonObject.get("position");
+                Player.Position position = Player.Position.valueOf(positionString);
+
                 boolean captain = (Boolean) playerJsonObject.get("captain");
                 int age = (int)(long) playerJsonObject.get("age");
                 int skating = (int)(long) playerJsonObject.get("skating");
@@ -188,11 +191,6 @@ public class ImportState implements IHockeyState {
 
                 if (validateString(playerName)) {
                     System.out.println("Please make sure player name is valid ");
-                    System.exit(1);
-                }
-
-                if (validateString(position)) {
-                    System.out.println("Please make sure position of the player is valid");
                     System.exit(1);
                 }
 
@@ -224,13 +222,7 @@ public class ImportState implements IHockeyState {
                 player.setChecking(checking);
                 player.setSaving(saving);
                 player.setStrength();
-
-                if (player.validPosition() && player.validName()) {
-                    playerList.add(player);
-                } else {
-                    System.out.println("Please make sure either of goalie, forward or defense are provided in the position. Nothing else!");
-                    System.exit(1);
-                }
+                playerList.add(player);
 
             }
         }catch(ClassCastException e){
@@ -317,7 +309,8 @@ public class ImportState implements IHockeyState {
                 JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
 
                 String playerName = (String) freeAgentJsonObject.get("playerName");
-                String position = (String) freeAgentJsonObject.get("position");
+                String positionString = (String) freeAgentJsonObject.get("position");
+                Player.Position position = Player.Position.valueOf(positionString);
                 int age = (int)(long) freeAgentJsonObject.get("age");
                 int skating = (int)(long) freeAgentJsonObject.get("skating");
                 int shooting = (int)(long) freeAgentJsonObject.get("shooting");
@@ -326,11 +319,6 @@ public class ImportState implements IHockeyState {
 
                 if (validateString(playerName)) {
                     System.out.println("Please make sure player name is valid in Free Agent");
-                    System.exit(1);
-                }
-
-                if (validateString(position)) {
-                    System.out.println("Please make sure position of the player is valid in Free Agent");
                     System.exit(1);
                 }
 
@@ -351,7 +339,7 @@ public class ImportState implements IHockeyState {
                 player.setSaving(saving);
                 player.setStrength();
 
-                if (player.validPosition() && player.validName()) {
+                if (player.validName()) {
                     freeAgentList.add(player);
                 } else {
                     System.out.println("Free Agent Position is not valid. Please Correct it. Exiting the app!");

@@ -23,7 +23,13 @@ public class Player extends ParentObj{
 
     private String hometown;
 
-    private String position;
+    private Position position;
+
+    public enum Position{
+        forward,
+        defense,
+        goalie
+    }
 
     private int teamId;
 
@@ -59,11 +65,11 @@ public class Player extends ParentObj{
         this.hometown = hometown;
     }
 
-    public String getPosition() {
+    public Position getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
@@ -120,14 +126,14 @@ public class Player extends ParentObj{
 
 
     public void setStrength() {
-        switch (getPosition()) {
-            case "forward":
+        switch (position) {
+            case forward:
                 this.strength = getSkating() + getShooting() + (getChecking() / 2);
                 break;
-            case "defense":
+            case defense:
                 this.strength = getSkating() + getChecking() + (getShooting() / 2);
                 break;
-            case "goalie":
+            case goalie:
                 this.strength = getSkating() + getSaving();
                 break;
         }
@@ -147,17 +153,6 @@ public class Player extends ParentObj{
 
     public void setCaptain(boolean captain) {
         isCaptain = captain;
-    }
-
-    public boolean validPosition(){
-        boolean isValid = false;
-        List<String> playerPositions = new ArrayList<>(Arrays.asList("goalie", "forward", "defense"));
-        if(isNotNull(getPosition()) && isNotEmpty(getPosition())){
-             if(playerPositions.contains(getPosition())){
-                 isValid = true;
-             }
-        }
-        return isValid;
     }
 
     public void addPlayer(IPlayerFactory addPlayerFactory) throws Exception {
