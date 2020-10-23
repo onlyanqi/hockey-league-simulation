@@ -157,9 +157,7 @@ public class Player extends ParentObj{
         addPlayerFactory.addPlayer(this);
     }
 
-    public void printPlayer(int i){
-        ConsoleOutput.printToConsole("Player Id: "+i+"\tPlayer Name: "+this.getName()+ "Position: "+this.getPosition());
-        ConsoleOutput.printToConsole("age: "+this.getAge()+"\tSkating: "+this.getSkating()+"\tShooting: "+this.getShooting()+"\tChecking: "+this.getChecking()+"\tSaving: "+this.getSaving());
-        ConsoleOutput.printToConsole("\n");
+    public Integer sumOfSkills(){
+        return this.getSkating()+this.getSaving()+this.getShooting()+this.getChecking();
     }
 }

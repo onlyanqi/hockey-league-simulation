@@ -20,12 +20,6 @@ public class Manager extends ParentObj{
             this.setName(manager.getName());
         }
         this.setTeamId(manager.teamId);
-        if(manager.getEndDate()!=null){
-            this.setEndDate(manager.getEndDate());
-        }
-        if(manager.getStartDate()!=null){
-            this.setStartDate(manager.getStartDate());
-        }
     }
 
     private String name;

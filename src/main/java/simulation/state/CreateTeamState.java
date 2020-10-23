@@ -3,7 +3,9 @@ package simulation.state;
 import db.data.*;
 import simulation.factory.*;
 import userIO.ConsoleOutput;
+import userIO.ConsoleOutputForTeamCreation;
 import userIO.GetInput;
+import userIO.UseInputForTeamCreation;
 import simulation.model.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,14 @@ public class CreateTeamState implements IHockeyState {
     private String teamName;
     private Manager generalManager;
     private Coach headCoach;
+    private Team team;
     private String seasonName;
     private List<Player> teamPlayersList;
+    private List<Manager> managerList;
+    private List<Coach> coachList;
+    private List<Player> teamPlayers;
+    private List<Player> freeAgentList;
+    private FreeAgent freeAgent;
 
     public CreateTeamState(HockeyContext hockeyContext){
         this.hockeyContext = hockeyContext;
@@ -33,171 +41,48 @@ public class CreateTeamState implements IHockeyState {
             System.out.println();
             System.exit(1);
         }
+        UseInputForTeamCreation teamCreationInput = new UseInputForTeamCreation();
+        ConsoleOutputForTeamCreation teamCreationOutput = new ConsoleOutputForTeamCreation();
+        seasonName  = teamCreationInput.getSeasonName();
 
-        seasonName  = GetInput.getUserInput("Please enter season name");
+        List<String> conferenceNameList = league.createConferenceNameList();
+        conferenceName  = teamCreationInput.getConferenceName(conferenceNameList);
+        Conference conference =league.getConferenceFromListByName(conferenceName);
 
+        List<String> divisionNameList = conference.getDivisionNameList();
+        divisionName = teamCreationInput.getDivisionName(divisionNameList);
+        Division division = conference.getDivisionFromListByName(divisionName);
 
-        while((seasonName ==null || seasonName.isEmpty() )){
-            seasonName = GetInput.getUserInput("Please enter season name!");
-        }
-
-        conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
-
-        List<Conference> conferenceList =  league.getConferenceList();
-
-
-
-        List<String> conferenceNameList = new ArrayList<>();
-        for(Conference conference : conferenceList){
-            conferenceNameList.add(conference.getName().toLowerCase());
-        }
-        while(!conferenceNameList.contains(conferenceName.toLowerCase())){
-            conferenceName  = GetInput.getUserInput("Please enter conference name from the existing ones");
-        }
-
-        Conference conference = null;
-
-        for(Conference confer : conferenceList){
-            if(confer.getName().toLowerCase().equals(conferenceName.toLowerCase())){
-                conference = confer;
-                break;
-            }
-        }
-
-        List<String> divisionNameList = new ArrayList<>();
-        for(Division division:conference.getDivisionList()){
-            divisionNameList.add(division.getName().toLowerCase());
-        }
-
-        divisionName = GetInput.getUserInput("Please enter division name the team belongs to");
-
-        while(!divisionNameList.contains(divisionName.toLowerCase())){
-            divisionName  = GetInput.getUserInput("Please enter division name from the existing ones");
-        }
-
-        Division division = null;
-        for(Division division1 : conference.getDivisionList()){
-            if(division1.getName().toLowerCase().equals(divisionName.toLowerCase())){
-                division = division1;
-                break;
-            }
-        }
-
-        List<String> teamNameList = new ArrayList<>();
-        for(Team team: division.getTeamList()){
-            teamNameList.add(team.getName().toLowerCase());
-        }
-
-        Team team = new Team();
-        teamName  = GetInput.getUserInput("Please enter a team name to create a team ");
-
-        while(teamNameList.contains(teamName.toLowerCase()) || teamName.isEmpty() || teamName ==null || isTeamPresent(teamName)){
-
-            if(teamNameList.contains(teamName.toLowerCase())){
-                teamName  = GetInput.getUserInput("Provided team name  already exists. Please enter a new one!");
-            }
-            else if(teamName.isEmpty() || teamName ==null || isTeamPresent(teamName)){
-                teamName = GetInput.getUserInput("Please enter valid team name! Make sure there is no existing team with provided name");
-            }
-        }
-
+        List<String> teamNameList = division.getTeamNameList();
+        teamName  = teamCreationInput.getTeamName(teamNameList);
+        team = new Team();
         team.setName(teamName);
 
-        List<Manager> managerList = league.getManagerList();
-        ConsoleOutput.printToConsole("Manager List \n ___________ ");
-        for(int i=0;i<managerList.size();i++){
-            ConsoleOutput.printToConsole("Manager id: "+i);
-            ConsoleOutput.printToConsole("Name of Manager: "+managerList.get(i).getName());
-        }
-
-        int generalManagerId = Integer.parseInt(GetInput.getUserInput("Please enter id of general manager"));
-        while(generalManagerId<0 || (generalManagerId >managerList.size()-1)){
-            generalManagerId = Integer.parseInt(GetInput.getUserInput("Please enter GeneralManager id between 0 to "+ (managerList.size()-1)+". (boundaries inclusive)"));
-        }
+        managerList = league.getManagerList();
+        teamCreationOutput.showManagerListOnScreen(managerList);
+        int generalManagerId = teamCreationInput.getGeneralManagerId(managerList);
         generalManager = new Manager(managerList.get(generalManagerId));
         team.setManager(generalManager);
         managerList=league.removeManagerFromManagerListById(managerList, generalManagerId);
-        league.setManagerList(managerList);
+        teamCreationOutput.showSuccessfulManagerCreationMessage();
 
-        ConsoleOutput.printToConsole("General manager added for this team");
-
-
-        List<Coach> coachList = league.getCoachList();
-        ConsoleOutput.printToConsole("Coach List \n ___________ ");
-        for(int i=0;i<coachList.size();i++){
-            Coach currentCoach = coachList.get(i);
-            currentCoach.printCoach(i);
-        }
-        int headCoachId  = Integer.parseInt(GetInput.getUserInput("Please enter the id of head coach"));
-
-        while(headCoachId<0 || (headCoachId >coachList.size()-1)){
-            headCoachId = Integer.parseInt(GetInput.getUserInput("Please enter HeadCoach id between 0 to "+(coachList.size()-1)+". (boundaries inclusive)"));
-        }
-
+        coachList = league.getCoachList();
+        teamCreationOutput.showCoachListOnScreen(coachList);
+        int headCoachId  = teamCreationInput.getHeadCoachId(coachList);
         headCoach = new Coach(coachList.get(headCoachId));
         team.setCoach(headCoach);
         coachList=league.removeCoachFromCoachListById(coachList,headCoachId);
-        league.setCoachList(coachList);
+        teamCreationOutput.showSuccessfulCoachCreationMessage();
 
-        ConsoleOutput.printToConsole("Head coach added for this team");
+        freeAgent = league.getFreeAgent();
+        freeAgentList=freeAgent.getPlayerList();
+        List<Integer> chosenPlayersIdList = team.createChosenPlayerIdList(freeAgent);
+        teamCreationOutput.showTeamCreationWaitMessage();
 
-        FreeAgent freeAgent = league.getFreeAgent();
-        List<Player> freeAgentList=freeAgent.getPlayerList();
-        int numberOfSkaters=0;
-        int numberOfGoalies=0;
-
-        List<Integer> totalOfSkillsList = new ArrayList<>();
-        for(int i=0;i<freeAgentList.size();i++){
-            Player freeAgentPlayer = freeAgentList.get(i);
-            totalOfSkillsList.add( new Integer (freeAgentPlayer.getSkating()+freeAgentPlayer.getSaving()+freeAgentPlayer.getShooting()+freeAgentPlayer.getChecking()));
-         }
-
-        List<Integer> goodFreeAgentsIdList = freeAgent.getGoodFreeAgentsList(totalOfSkillsList);
-
-        ConsoleOutput.printToConsole("Free agent list \n ___________ \n Please add ids of free agents separated by new line whom you want to add to your team");
-        ConsoleOutput.printToConsole("Below you can see good players separated from below-average players!");
-        ConsoleOutput.printToConsole("You need to choose 18 skaters (forwards and defense) and 2 goalies to complete the team formation process! \n \n");
-        ConsoleOutput.printToConsole("Good free agent list :) \n ___________________ ");
-
-        for(int i=0;i<freeAgentList.size();i++){
-            Player player=freeAgentList.get(i);
-            if(goodFreeAgentsIdList.contains(i)){
-                player.printPlayer(i);
-            }
-        }
-        ConsoleOutput.printToConsole("Below-average free agent list :| \n __________________ ");
-
-        for(int i=0;i<freeAgentList.size();i++){
-            Player player=freeAgentList.get(i);
-            if(!goodFreeAgentsIdList.contains(i)){
-                player.printPlayer(i);
-            }
-        }
-
-        List<Integer> chosenPlayersIdList = new ArrayList<>();
-        int playerId;
-        while(numberOfGoalies!=2 || numberOfSkaters!=18){
-            playerId = Integer.parseInt(GetInput.getUserInput("Please enter id between 0 to "+(freeAgentList.size()-1)+". (boundaries inclusive)"));
-            if(playerId<0 || playerId>=freeAgentList.size() || chosenPlayersIdList.contains(playerId)){
-                continue;
-            }
-            Player player = freeAgentList.get(playerId);
-            if(numberOfGoalies!=2 && player.getPosition().equals("goalie")){
-                chosenPlayersIdList.add(playerId);
-                numberOfGoalies=numberOfGoalies+1;
-                ConsoleOutput.printToConsole("Team needs more "+(2-numberOfGoalies)+" goalies and "+(18-numberOfSkaters)+" skaters");
-            }else if(numberOfSkaters!=18 && (player.getPosition().equals("defense") || player.getPosition().equals("forward"))){
-                chosenPlayersIdList.add(playerId);
-                numberOfSkaters=numberOfSkaters+1;
-                ConsoleOutput.printToConsole("Team needs more "+(2-numberOfGoalies)+" goalies and "+(18-numberOfSkaters)+" skaters");
-            }
-        }
-        ConsoleOutput.printToConsole("\n\nPlease wait your team is getting created...");
-        List<Player> teamPlayers = createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
+        teamPlayers= createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
         freeAgentList=removeChosenPlayersFromFreeAgentList(chosenPlayersIdList, freeAgentList);
         freeAgent.setPlayerList(freeAgentList);
         team.setPlayerList(teamPlayers);
-        league.setFreeAgent(freeAgent);
         teamPlayersList=teamPlayers;
     }
 
@@ -221,24 +106,6 @@ public class CreateTeamState implements IHockeyState {
         return newFreeAgentList;
     }
 
-    private boolean isTeamPresent(String teamName)  {
-        boolean isTeamPresent = false;
-        TeamConcrete teamConcrete = new TeamConcrete();
-        ITeamFactory factory = teamConcrete.newLoadTeamFactory();
-        Team team = null;
-        try {
-            team = teamConcrete.newTeamByName(teamName, factory);
-        }catch (Exception e) {
-            System.out.println("Unable to load team, please try again.");
-            System.exit(1);
-            e.printStackTrace();
-        }
-        if(team!=null && team.getId() > 0) {
-            isTeamPresent = true;
-        }
-        return isTeamPresent;
-    }
-
     private boolean isLeaguePresent(String leagueName){
         LeagueConcrete leagueConcrete = new LeagueConcrete();
         ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
@@ -260,24 +127,15 @@ public class CreateTeamState implements IHockeyState {
     public void process() {
 
         league.setCreatedBy(hockeyContext.getUser().getId());
-
+        league.setManagerList(managerList);
+        league.setCoachList(coachList);
+        league.setFreeAgent(freeAgent);
         List<Conference> conferenceList = league.getConferenceList();
         for(Conference conference : conferenceList ){
             if(conference.getName().equals(conferenceName)){
                 List<Division> divisionList  = conference.getDivisionList();
                 for(Division division: divisionList){
                     if(division.getName().equals(divisionName)) {
-                        Team team = new Team();
-                        team.setName(teamName);
-
-//                        Coach coach = new Coach();
-//                        coach.setName(headCoachName);
-//                        team.setCoach(coach);
-//                        team.setManager(manager);
-/*
-* team.setPlayer();
-*
-* */
                         division.getTeamList().add(team);
                     }
                 }
@@ -294,65 +152,6 @@ public class CreateTeamState implements IHockeyState {
         System.out.println("Please wait while we are saving your league information...");
 
         IHockeyState hockeyState = null;
-        if (league != null) {
-            //Persist to DB and transition to next state
-            league.setCreatedBy(hockeyContext.getUser().getId());
-            Season season = new Season();
-            season.setName(seasonName);
-
-            try {
-                LeagueConcrete leagueConcrete = new LeagueConcrete();
-                ILeagueFactory addLeagueFactory = leagueConcrete.newAddLeagueFactory();
-                league.addLeague(addLeagueFactory);
-                int leagueId = league.getId();
-
-                SeasonConcrete seasonConcrete = new SeasonConcrete();
-                ISeasonFactory addSeasonDao = seasonConcrete.newAddSeasonFactory();
-                season.addSeason(addSeasonDao);
-                int seasonId = season.getId();
-
-                if(leagueId != 0 && seasonId != 0){
-                    if(league.getFreeAgent() != null) {
-                        int freeAgentId = addFreeAgent(leagueId, seasonId);
-                        addPlayerList(0,freeAgentId, seasonId, league.getFreeAgent().getPlayerList());
-                    }
-
-                    if(league.getConferenceList() != null && !league.getConferenceList().isEmpty()){
-                        ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
-                        IConferenceFactory addConferenceDao = conferenceConcrete.newAddConferenceFactory();
-                        for (Conference conference : league.getConferenceList()) {
-                            conference.setLeagueId(leagueId);
-                            conference.addConference(addConferenceDao);
-                            int conferenceId = conference.getId();
-
-                            for (Division division : conference.getDivisionList()) {
-                                DivisionConcrete divisionConcrete = new DivisionConcrete();
-                                IDivisionFactory addDivisionDao = divisionConcrete.newAddDivisionFactory();
-
-                                division.setConferenceId(conferenceId);
-                                division.addDivision(addDivisionDao);
-                                int divisionId = division.getId();
-
-                                for (Team team : division.getTeamList()) {
-                                    TeamConcrete teamConcrete = new TeamConcrete();
-                                    ITeamFactory addTeamDao = teamConcrete.newAddTeamFactory();
-
-                                    team.setDivisionId(divisionId);
-                                    team.addTeam(addTeamDao);
-                                    int teamId = team.getId();
-                                    addPlayerList(teamId,0, seasonId, team.getPlayerList());
-                                }
-                            }
-
-                        }
-                    }
-                }
-
-            } catch (Exception e) {
-                System.out.println("Unable to save the league! Please try again");
-                System.exit(1);
-                e.printStackTrace();
-            }
 
             String createAnotherTeam = GetInput.getUserInput("Do you want to create another team? Yes/Y or No/N");
             while(createAnotherTeam !=null){
@@ -367,7 +166,6 @@ public class CreateTeamState implements IHockeyState {
                     System.out.println("Please enter the right choice. Yes/Y or No/N");
                 }
             }
-        }
         return hockeyState;
     }
 

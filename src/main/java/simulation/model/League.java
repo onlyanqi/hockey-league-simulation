@@ -4,6 +4,7 @@ import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -149,6 +150,25 @@ public class League extends ParentObj{
 
     public void loadConferenceListByLeagueId(IConferenceFactory loadConferenceFactory) throws Exception {
         this.conferenceList = loadConferenceFactory.loadConferenceListByLeagueId(getId());
+    }
+
+    public List<String> createConferenceNameList(){
+        List<String> conferenceNameList = new ArrayList<>();
+        for(Conference conference : conferenceList){
+            conferenceNameList.add(conference.getName().toLowerCase());
+        }
+        return conferenceNameList;
+    }
+
+    public Conference getConferenceFromListByName(String conferenceName){
+        Conference foundConference = null;
+        for(Conference conference : conferenceList) {
+            if (conference.getName().toLowerCase().equals(conferenceName.toLowerCase())) {
+                foundConference = conference;
+                break;
+            }
+        }
+        return foundConference;
     }
 
     public void loadFreeAgentByLeagueId(IFreeAgentFactory loadFreeAgentFactory) throws Exception {
