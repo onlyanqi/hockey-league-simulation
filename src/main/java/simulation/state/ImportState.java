@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import simulation.factory.*;
 import simulation.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class ImportState implements IHockeyState {
     private void parseJSONAndInstantiateLeague(JSONObject leagueJSON){
 
         String leagueName = (String) leagueJSON.get("leagueName");
-        JSONObject gameplayConfig = (JSONObject) leagueJSON.get("gameplayConfig");
+        JSONObject gameplayConfigJSONObject = (JSONObject) leagueJSON.get("gameplayConfig");
         JSONArray conferences = (JSONArray) leagueJSON.get("conferences");
         JSONArray freeAgents = (JSONArray) leagueJSON.get("freeAgents");
         JSONArray coaches = (JSONArray) leagueJSON.get("coaches");
@@ -66,45 +67,28 @@ public class ImportState implements IHockeyState {
             System.exit(1);
         }
 
-        JSONObject agingJSONObject = (JSONObject) gameplayConfig.get("aging");
-        int averageRetirementAge = (Integer) agingJSONObject.get("averageRetirementAge");
-        int maximumAge = (Integer) agingJSONObject.get("maximumAge");
-        AgingConcrete agingConcrete = new AgingConcrete();
-        Aging aging = agingConcrete.newAging();
-        aging.setAverageRetirementAge(averageRetirementAge);
-        aging.setMaximumAge(maximumAge);
+        GamePlayConfigConcrete gamePlayConfigConcrete = new GamePlayConfigConcrete();
+        GamePlayConfig gamePlayConfig = gamePlayConfigConcrete.newGamePlayConfig();
 
-        JSONObject gameResolverJSONObject = (JSONObject) gameplayConfig.get("gameResolver");
-        double randomWinChance = (Double) gameResolverJSONObject.get("randomWinChance");
-        GameResolverConcrete gameResolverConcrete = new GameResolverConcrete();
-        GameResolver gameResolver = gameResolverConcrete.newGameResolver();
-        gameResolver.setRandomWinChance(randomWinChance);
+        JSONObject agingJSONObject = (JSONObject) gameplayConfigJSONObject.get("aging");
+        Aging aging = loadAgingJson(agingJSONObject);
+        gamePlayConfig.setAging(aging);
 
-        JSONObject injuriesJSONObject = (JSONObject) gameplayConfig.get("injuries");
-        double randomInjuryChance = (Double) injuriesJSONObject.get("randomInjuryChance");
-        int injuryDaysLow = (Integer) injuriesJSONObject.get("injuryDaysLow");
-        int injuryDaysHigh = (Integer) injuriesJSONObject.get("injuryDaysHigh");
-        InjuryConcrete injuryConcrete = new InjuryConcrete();
-        Injury injury = injuryConcrete.newInjury();
-        injury.setRandomInjuryChance(randomInjuryChance);
-        injury.setInjuryDaysLow(injuryDaysLow);
-        injury.setInjuryDaysHigh(injuryDaysHigh);
+        JSONObject gameResolverJSONObject = (JSONObject) gameplayConfigJSONObject.get("gameResolver");
+        GameResolver gameResolver = loadGameResolverJson(gameResolverJSONObject);
+        gamePlayConfig.setGameResolver(gameResolver);
 
-        JSONObject trainingJSONObject = (JSONObject) gameplayConfig.get("training");
-        int daysUntil = (Integer) trainingJSONObject.get("daysUntilStatIncreaseCheck");
+        JSONObject injuriesJSONObject = (JSONObject) gameplayConfigJSONObject.get("injuries");
+        Injury injury = loadInjuryJson(injuriesJSONObject);
+        gamePlayConfig.setInjury(injury);
 
-        JSONObject tradingJSONObject = (JSONObject) gameplayConfig.get("trading");
-        int lossPoint = (Integer) tradingJSONObject.get("lossPoint");
-        double randomTradeOfferChance = (Double) tradingJSONObject.get("randomTradeOfferChance");
-        int maxPlayersPerTrade = (Integer) tradingJSONObject.get("maxPlayersPerTrade");
-        double randomAcceptanceChance = (Double) tradingJSONObject.get("randomAcceptanceChance");
-        TradingConcrete tradingConcrete = new TradingConcrete();
-        Trading trading = tradingConcrete.newTrading();
-        trading.setLossPoint(lossPoint);
-        trading.setRandomTradeOfferChance(randomTradeOfferChance);
-        trading.setMaxPlayersPerTrade(maxPlayersPerTrade);
-        trading.setRandomAcceptanceChance(randomAcceptanceChance);
+        JSONObject trainingJSONObject = (JSONObject) gameplayConfigJSONObject.get("training");
+        Training training = loadTrainingJson(trainingJSONObject);
+        gamePlayConfig.setTraining(training);
 
+        JSONObject tradingJSONObject = (JSONObject) gameplayConfigJSONObject.get("trading");
+        Trading trading = loadTradingJson(tradingJSONObject);
+        gamePlayConfig.setTrading(trading);
 
         List<Conference> conferenceList = loadConferenceJSON(conferences);
 
@@ -116,12 +100,13 @@ public class ImportState implements IHockeyState {
         List<Coach> coachList = loadCoachJSON(coaches);
         List<Manager> managerList = loadManagerJSON(managers);
 
-        league.setDaysUntilStatIncreaseCheck(daysUntil);
         league.setName(leagueName);
         league.setConferenceList(conferenceList);
         league.setFreeAgent(freeAgent);
-        league.setCoachList(coachList);
         league.setManagerList(managerList);
+        league.setCoachList(coachList);
+        league.setGamePlayConfig(gamePlayConfig);
+
     }
     /**
      *
@@ -158,25 +143,13 @@ public class ImportState implements IHockeyState {
                 System.exit(1);
             }
 
-//            if(validateString(generalManager) ){
-//                System.out.println("Please make sure General Manager name is valid ");
-//                System.exit(1);
-//            }
-//            if(validateString(headCoach) ){
-//                System.out.println("Please make sure Head Coach name is valid ");
-//                System.exit(1);
-//            }
-//            if(isTeamExists(teamList,teamName)){
-//                System.out.println("Please make sure there are no duplicates in conference name");
-//                System.exit(1);
-//            }
-
 
             TeamConcrete teamConcrete = new TeamConcrete();
             Team team = teamConcrete.newTeam();
             team.setName(teamName);
             team.setManager(manager);
             team.setCoach(coach);
+
 
             JSONArray players = (JSONArray) teamJSONObject.get("players");
 
@@ -188,6 +161,7 @@ public class ImportState implements IHockeyState {
             List<Player> playerList = loadPlayerJSON(players);
 
             team.setPlayerList(playerList);
+            team.setStrength();
             teamList.add(team);
 
         }
@@ -205,21 +179,18 @@ public class ImportState implements IHockeyState {
             for (Object playerObjectFromJSONArray : players) {
                 JSONObject playerJsonObject = (JSONObject) playerObjectFromJSONArray;
                 String playerName = (String) playerJsonObject.get("playerName");
-                String position = (String) playerJsonObject.get("position");
+                String positionString = (String) playerJsonObject.get("position");
+                Player.Position position = Player.Position.valueOf(positionString);
+
                 boolean captain = (Boolean) playerJsonObject.get("captain");
-                int age = (Integer) playerJsonObject.get("age");
-                int skating = (Integer) playerJsonObject.get("skating");
-                int shooting = (Integer) playerJsonObject.get("shooting");
-                int checking = (Integer) playerJsonObject.get("checking");
-                int saving = (Integer) playerJsonObject.get("saving");
+                int age = (int)(long) playerJsonObject.get("age");
+                int skating = (int)(long) playerJsonObject.get("skating");
+                int shooting = (int)(long) playerJsonObject.get("shooting");
+                int checking = (int)(long) playerJsonObject.get("checking");
+                int saving = (int)(long) playerJsonObject.get("saving");
 
                 if (validateString(playerName)) {
                     System.out.println("Please make sure player name is valid ");
-                    System.exit(1);
-                }
-
-                if (validateString(position)) {
-                    System.out.println("Please make sure position of the player is valid");
                     System.exit(1);
                 }
 
@@ -250,13 +221,8 @@ public class ImportState implements IHockeyState {
                 player.setShooting(shooting);
                 player.setChecking(checking);
                 player.setSaving(saving);
-
-                if (player.validPosition() && player.validName()) {
-                    playerList.add(player);
-                } else {
-                    System.out.println("Please make sure either of goalie, forward or defense are provided in the position. Nothing else!");
-                    System.exit(1);
-                }
+                player.setStrength();
+                playerList.add(player);
 
             }
         }catch(ClassCastException e){
@@ -343,20 +309,16 @@ public class ImportState implements IHockeyState {
                 JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
 
                 String playerName = (String) freeAgentJsonObject.get("playerName");
-                String position = (String) freeAgentJsonObject.get("position");
-                int age = (Integer) freeAgentJsonObject.get("age");
-                int skating = (Integer) freeAgentJsonObject.get("skating");
-                int shooting = (Integer) freeAgentJsonObject.get("shooting");
-                int checking = (Integer) freeAgentJsonObject.get("checking");
-                int saving = (Integer) freeAgentJsonObject.get("saving");
+                String positionString = (String) freeAgentJsonObject.get("position");
+                Player.Position position = Player.Position.valueOf(positionString);
+                int age = (int)(long) freeAgentJsonObject.get("age");
+                int skating = (int)(long) freeAgentJsonObject.get("skating");
+                int shooting = (int)(long) freeAgentJsonObject.get("shooting");
+                int checking = (int)(long) freeAgentJsonObject.get("checking");
+                int saving = (int)(long) freeAgentJsonObject.get("saving");
 
                 if (validateString(playerName)) {
                     System.out.println("Please make sure player name is valid in Free Agent");
-                    System.exit(1);
-                }
-
-                if (validateString(position)) {
-                    System.out.println("Please make sure position of the player is valid in Free Agent");
                     System.exit(1);
                 }
 
@@ -375,8 +337,9 @@ public class ImportState implements IHockeyState {
                 player.setShooting(shooting);
                 player.setChecking(checking);
                 player.setSaving(saving);
+                player.setStrength();
 
-                if (player.validPosition() && player.validName()) {
+                if (player.validName()) {
                     freeAgentList.add(player);
                 } else {
                     System.out.println("Free Agent Position is not valid. Please Correct it. Exiting the app!");
@@ -391,11 +354,12 @@ public class ImportState implements IHockeyState {
         int managerSize = managers.size();
 
         for ( int i =0; i < managerSize; i++) {
-            JSONObject managerJsonObject = (JSONObject) managers.get(i);
-            String name = (String) managerJsonObject.get(i);
+
+            String name = (String) managers.get(i);
             ManagerConcrete managerConcrete = new ManagerConcrete();
             Manager manager = managerConcrete.newManagerConcrete();
             manager.setName(name);
+            managerList.add(manager);
         }
         return managerList;
     }
@@ -419,6 +383,59 @@ public class ImportState implements IHockeyState {
             coachList.add(coach);
         }
         return coachList;
+    }
+
+
+    private Aging loadAgingJson(JSONObject agingJSONObject){
+        int averageRetirementAge = (int)(long) agingJSONObject.get("averageRetirementAge");
+        int maximumAge = (int)(long) agingJSONObject.get("maximumAge");
+        AgingConcrete agingConcrete = new AgingConcrete();
+        Aging aging = agingConcrete.newAging();
+        aging.setAverageRetirementAge(averageRetirementAge);
+        aging.setMaximumAge(maximumAge);
+        return aging;
+    }
+
+    private GameResolver loadGameResolverJson (JSONObject gameResolverJSONObject){
+        double randomWinChance = (Double) gameResolverJSONObject.get("randomWinChance");
+        GameResolverConcrete gameResolverConcrete = new GameResolverConcrete();
+        GameResolver gameResolver = gameResolverConcrete.newGameResolver();
+        gameResolver.setRandomWinChance(randomWinChance);
+        return gameResolver;
+    }
+
+    private Injury loadInjuryJson (JSONObject injuriesJSONObject){
+        double randomInjuryChance = (Double) injuriesJSONObject.get("randomInjuryChance");
+        int injuryDaysLow = (int)(long) injuriesJSONObject.get("injuryDaysLow");
+        int injuryDaysHigh = (int)(long) injuriesJSONObject.get("injuryDaysHigh");
+        InjuryConcrete injuryConcrete = new InjuryConcrete();
+        Injury injury = injuryConcrete.newInjury();
+        injury.setRandomInjuryChance(randomInjuryChance);
+        injury.setInjuryDaysLow(injuryDaysLow);
+        injury.setInjuryDaysHigh(injuryDaysHigh);
+        return injury;
+    }
+
+    private Training loadTrainingJson (JSONObject trainingJSONObject){
+        int daysUntil = (int)(long) trainingJSONObject.get("daysUntilStatIncreaseCheck");
+        TrainingConcrete trainingConcrete = new TrainingConcrete();
+        Training training = trainingConcrete.newTraining();
+        training.setDaysUntilStatIncreaseCheck(daysUntil);
+        return training;
+    }
+
+    private  Trading loadTradingJson (JSONObject tradingJSONObject){
+        int lossPoint = (int)(long) tradingJSONObject.get("lossPoint");
+        double randomTradeOfferChance = (Double) tradingJSONObject.get("randomTradeOfferChance");
+        int maxPlayersPerTrade = (int)(long) tradingJSONObject.get("maxPlayersPerTrade");
+        double randomAcceptanceChance = (Double) tradingJSONObject.get("randomAcceptanceChance");
+        TradingConcrete tradingConcrete = new TradingConcrete();
+        Trading trading = tradingConcrete.newTrading();
+        trading.setLossPoint(lossPoint);
+        trading.setRandomTradeOfferChance(randomTradeOfferChance);
+        trading.setMaxPlayersPerTrade(maxPlayersPerTrade);
+        trading.setRandomAcceptanceChance(randomAcceptanceChance);
+        return trading;
     }
 
     private boolean validateString(String name) {

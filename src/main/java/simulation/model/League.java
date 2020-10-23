@@ -35,11 +35,19 @@ public class League extends ParentObj{
 
     private List<Manager> managerList;
 
-    private int daysUntilStatIncreaseCheck;
-
     private FreeAgent freeAgent;
 
     private Date currentDate;
+
+    private GamePlayConfig gamePlayConfig;
+
+    public void setGamePlayConfig(GamePlayConfig gamePlayConfig){
+        this.gamePlayConfig = gamePlayConfig;
+    }
+
+    public GamePlayConfig getGamePlayConfig(){
+        return gamePlayConfig;
+    }
 
     public Date getCurrentDate() {
         return currentDate;
@@ -123,10 +131,6 @@ public class League extends ParentObj{
     public void setManagerList(List<Manager> managerList) {
         this.managerList = managerList;
     }
-
-    public int getDaysUntilStatIncreaseCheck(){return daysUntilStatIncreaseCheck;}
-
-    public void setDaysUntilStatIncreaseCheck(int daysUntilStatIncreaseCheck){this.daysUntilStatIncreaseCheck = daysUntilStatIncreaseCheck;}
 
     public int getCreatedBy() {
         return createdBy;
