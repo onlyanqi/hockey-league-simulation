@@ -1,12 +1,14 @@
 package simulation.state;
 import simulation.model.*;
+import userIO.ConsoleOutput;
+
 import java.util.List;
 import java.util.Random;
 
 public class TrainingState implements ISimulateState {
     @Override
     public ISimulateState action() {
-        System.out.println("Training Players and Team!");
+        ConsoleOutput.printToConsole("Training Players and Team!");
         return exit();
     }
 

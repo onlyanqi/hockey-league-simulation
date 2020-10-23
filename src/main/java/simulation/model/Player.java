@@ -1,6 +1,7 @@
 package simulation.model;
 
 import db.data.IPlayerFactory;
+import userIO.ConsoleOutput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,17 @@ public class Player extends ParentObj{
     public Player(int id, IPlayerFactory factory) throws Exception {
         setId(id);
         factory.loadPlayerById(id, this);
+    }
+
+    public Player(Player player){
+        this.setId(player.getId());
+        this.setName(player.getName());
+        this.setAge(player.getAge());
+        this.setSaving(player.getSaving());
+        this.setChecking(player.getChecking());
+        this.setShooting(player.getShooting());
+        this.setSkating(player.getSkating());
+        this.setPosition(player.getPosition());
     }
 
     private int age;
@@ -145,4 +157,9 @@ public class Player extends ParentObj{
         addPlayerFactory.addPlayer(this);
     }
 
+    public void printPlayer(int i){
+        ConsoleOutput.printToConsole("Player Id: "+i+"\tPlayer Name: "+this.getName()+ "Position: "+this.getPosition());
+        ConsoleOutput.printToConsole("age: "+this.getAge()+"\tSkating: "+this.getSkating()+"\tShooting: "+this.getShooting()+"\tChecking: "+this.getChecking()+"\tSaving: "+this.getSaving());
+        ConsoleOutput.printToConsole("\n");
+    }
 }

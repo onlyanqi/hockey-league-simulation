@@ -13,6 +13,21 @@ public class Manager extends ParentObj{
 //        factory.loadManagerByLeagueId(id, this);
 //    }
 
+    public Manager(Manager manager){
+        this.setId(manager.getId());
+        this.setLeagueId(manager.getLeagueId());
+        if(manager.getName()!=null){
+            this.setName(manager.getName());
+        }
+        this.setTeamId(manager.teamId);
+        if(manager.getEndDate()!=null){
+            this.setEndDate(manager.getEndDate());
+        }
+        if(manager.getStartDate()!=null){
+            this.setStartDate(manager.getStartDate());
+        }
+    }
+
     private String name;
     public String getName() {
         return name;
