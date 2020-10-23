@@ -4,9 +4,9 @@ public class Training {
 
     public Training(){}
 
-    private long daysUntilStatIncreaseCheck;
+    private int daysUntilStatIncreaseCheck;
 
-    public long getDaysUntilStatIncreaseCheck(){return daysUntilStatIncreaseCheck;}
+    public int getDaysUntilStatIncreaseCheck(){return daysUntilStatIncreaseCheck;}
 
-    public void setDaysUntilStatIncreaseCheck(long daysUntilStatIncreaseCheck){this.daysUntilStatIncreaseCheck = daysUntilStatIncreaseCheck;}
+    public void setDaysUntilStatIncreaseCheck(int daysUntilStatIncreaseCheck){this.daysUntilStatIncreaseCheck = daysUntilStatIncreaseCheck;}
 }

@@ -6,9 +6,9 @@ public class Injury {
 
     private double randomInjuryChance;
 
-    private long injuryDaysLow;
+    private int injuryDaysLow;
 
-    private long injuryDaysHigh;
+    private int injuryDaysHigh;
 
     public double getRandomInjuryChance() {
         return randomInjuryChance;
@@ -18,19 +18,19 @@ public class Injury {
         this.randomInjuryChance = randomInjuryChance;
     }
 
-    public long getInjuryDaysLow() {
+    public int getInjuryDaysLow() {
         return injuryDaysLow;
     }
 
-    public void setInjuryDaysLow(long injuryDaysLow) {
+    public void setInjuryDaysLow(int injuryDaysLow) {
         this.injuryDaysLow = injuryDaysLow;
     }
 
-    public long getInjuryDaysHigh() {
+    public int getInjuryDaysHigh() {
         return injuryDaysHigh;
     }
 
-    public void setInjuryDaysHigh(long injuryDaysHigh) {
+    public void setInjuryDaysHigh(int injuryDaysHigh) {
         this.injuryDaysHigh = injuryDaysHigh;
     }
 

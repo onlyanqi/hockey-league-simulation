@@ -13,7 +13,6 @@ public class Coach extends ParentObj {
 //        factory.loadCoachByLeagueId((id, this);
 //    }
 
-    private String name;
 
     private int teamId;
 
@@ -26,14 +25,6 @@ public class Coach extends ParentObj {
     private Double checking;
 
     private Double saving;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getTeamId() {
         return teamId;

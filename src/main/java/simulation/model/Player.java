@@ -19,7 +19,7 @@ public class Player extends ParentObj{
         factory.loadPlayerById(id, this);
     }
 
-    private long age;
+    private int age;
 
     private String hometown;
 
@@ -33,21 +33,21 @@ public class Player extends ParentObj{
 
     private int seasonId;
 
-    private long skating;
+    private int skating;
 
-    private long shooting;
+    private int shooting;
 
-    private long checking;
+    private int checking;
 
-    private long saving;
+    private int saving;
 
     private double strength;
 
-    public long getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(long age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -86,35 +86,35 @@ public class Player extends ParentObj{
     public int getFreeAgentId() {
         return freeAgentId;
     }
-    public long getSkating() {
+    public int getSkating() {
         return skating;
     }
 
-    public void setSkating(long skating) {
+    public void setSkating(int skating) {
         this.skating = skating;
     }
 
-    public long getShooting() {
+    public int getShooting() {
         return shooting;
     }
 
-    public void setShooting(long shooting) {
+    public void setShooting(int shooting) {
         this.shooting = shooting;
     }
 
-    public long getChecking() {
+    public int getChecking() {
         return checking;
     }
 
-    public void setChecking(long checking) {
+    public void setChecking(int checking) {
         this.checking = checking;
     }
 
-    public long getSaving() {
+    public int getSaving() {
         return saving;
     }
 
-    public void setSaving(long saving) {
+    public void setSaving(int saving) {
         this.saving = saving;
     }
 

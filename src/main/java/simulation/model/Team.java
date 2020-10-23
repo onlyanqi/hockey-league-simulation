@@ -32,11 +32,8 @@ public class Team extends ParentObj{
     private double strength;
 
     private Coach coach;
-    private Manager manager;
 
-//    private String generalManager;
-//
-//    private String headCoach;
+    private Manager manager;
 
     private List<Player> playerList;
 
@@ -72,21 +69,6 @@ public class Team extends ParentObj{
         this.divisionId = divisionId;
     }
 
-//    public String getGeneralManager() {
-//        return generalManager;
-//    }
-//
-//    public void setGeneralManager(String generalManager) {
-//        this.generalManager = generalManager;
-//    }
-
-//    public String getHeadCoach() {
-//        return headCoach;
-//    }
-//
-//    public void setHeadCoach(String headCoach) {
-//        this.headCoach = headCoach;
-//    }
     public Coach getCoach() {
         return coach;
     }

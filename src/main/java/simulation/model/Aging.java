@@ -14,23 +14,23 @@ public class Aging extends GamePlayConfig{
 //        factory.loadAgingByLeagueId(id, this);
 //    }
 
-    private long averageRetirementAge;
+    private int averageRetirementAge;
 
-    private long maximumAge;
+    private int maximumAge;
 
-    public long getAverageRetirementAge() {
+    public int getAverageRetirementAge() {
         return averageRetirementAge;
     }
 
-    public void setAverageRetirementAge(long averageRetirementAge) {
+    public void setAverageRetirementAge(int averageRetirementAge) {
         this.averageRetirementAge = averageRetirementAge;
     }
 
-    public long getMaximumAge() {
+    public int getMaximumAge() {
         return maximumAge;
     }
 
-    public void setMaximumAge(long maximumAge) {
+    public void setMaximumAge(int maximumAge) {
         this.maximumAge = maximumAge;
     }
 }

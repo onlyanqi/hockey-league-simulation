@@ -40,11 +40,11 @@ public class Trading extends ParentObj{
 
     private int leagueId;
 
-    private long lossPoint;
+    private int lossPoint;
 
     private double randomTradeOfferChance;
 
-    private long maxPlayersPerTrade;
+    private int maxPlayersPerTrade;
 
     private double randomAcceptanceChance;
 
@@ -143,11 +143,11 @@ public class Trading extends ParentObj{
         this.leagueId = leagueId;
     }
 
-    public long getLossPoint() {
+    public int getLossPoint() {
         return lossPoint;
     }
 
-    public void setLossPoint(long lossPoint) {
+    public void setLossPoint(int lossPoint) {
         this.lossPoint = lossPoint;
     }
 
@@ -159,11 +159,11 @@ public class Trading extends ParentObj{
         this.randomTradeOfferChance = randomTradeOfferChance;
     }
 
-    public long getMaxPlayersPerTrade() {
+    public int getMaxPlayersPerTrade() {
         return maxPlayersPerTrade;
     }
 
-    public void setMaxPlayersPerTrade(long maxPlayersPerTrade) {
+    public void setMaxPlayersPerTrade(int maxPlayersPerTrade) {
         this.maxPlayersPerTrade = maxPlayersPerTrade;
     }
 
