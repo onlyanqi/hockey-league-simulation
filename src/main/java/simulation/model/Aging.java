@@ -14,23 +14,23 @@ public class Aging extends ParentObj{
 //        factory.loadAgingByLeagueId(id, this);
 //    }
 
-    private int averageRetirementAge;
+    private long averageRetirementAge;
 
-    private int maximumAge;
+    private long maximumAge;
 
-    public int getAverageRetirementAge() {
+    public long getAverageRetirementAge() {
         return averageRetirementAge;
     }
 
-    public void setAverageRetirementAge(int averageRetirementAge) {
+    public void setAverageRetirementAge(long averageRetirementAge) {
         this.averageRetirementAge = averageRetirementAge;
     }
 
-    public int getMaximumAge() {
+    public long getMaximumAge() {
         return maximumAge;
     }
 
-    public void setMaximumAge(int maximumAge) {
+    public void setMaximumAge(long maximumAge) {
         this.maximumAge = maximumAge;
     }
 }

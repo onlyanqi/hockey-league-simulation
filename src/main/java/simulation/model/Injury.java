@@ -10,9 +10,9 @@ public class Injury extends ParentObj{
 
     private double randomInjuryChance;
 
-    private int injuryDaysLow;
+    private long injuryDaysLow;
 
-    private int injuryDaysHigh;
+    private long injuryDaysHigh;
 
     public double getRandomInjuryChance() {
         return randomInjuryChance;
@@ -22,19 +22,19 @@ public class Injury extends ParentObj{
         this.randomInjuryChance = randomInjuryChance;
     }
 
-    public int getInjuryDaysLow() {
+    public long getInjuryDaysLow() {
         return injuryDaysLow;
     }
 
-    public void setInjuryDaysLow(int injuryDaysLow) {
+    public void setInjuryDaysLow(long injuryDaysLow) {
         this.injuryDaysLow = injuryDaysLow;
     }
 
-    public int getInjuryDaysHigh() {
+    public long getInjuryDaysHigh() {
         return injuryDaysHigh;
     }
 
-    public void setInjuryDaysHigh(int injuryDaysHigh) {
+    public void setInjuryDaysHigh(long injuryDaysHigh) {
         this.injuryDaysHigh = injuryDaysHigh;
     }
 

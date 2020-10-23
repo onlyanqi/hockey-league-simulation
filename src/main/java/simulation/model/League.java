@@ -34,7 +34,7 @@ public class League extends ParentObj{
 
     private List<Manager> managerList;
 
-    private int daysUntilStatIncreaseCheck;
+    private long daysUntilStatIncreaseCheck;
 
     private FreeAgent freeAgent;
 
@@ -80,9 +80,9 @@ public class League extends ParentObj{
         this.managerList = managerList;
     }
 
-    public int getDaysUntilStatIncreaseCheck(){return daysUntilStatIncreaseCheck;}
+    public long getDaysUntilStatIncreaseCheck(){return daysUntilStatIncreaseCheck;}
 
-    public void setDaysUntilStatIncreaseCheck(int daysUntilStatIncreaseCheck){this.daysUntilStatIncreaseCheck = daysUntilStatIncreaseCheck;}
+    public void setDaysUntilStatIncreaseCheck(long daysUntilStatIncreaseCheck){this.daysUntilStatIncreaseCheck = daysUntilStatIncreaseCheck;}
 
     public int getCreatedBy() {
         return createdBy;

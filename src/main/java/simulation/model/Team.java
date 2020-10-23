@@ -29,6 +29,8 @@ public class Team extends ParentObj{
 
     private int divisionId;
 
+    private double strength;
+
     private Coach coach;
     private Manager manager;
 
@@ -105,6 +107,15 @@ public class Team extends ParentObj{
         addTeamFactory.addTeam(this);
     }
 
+    public void setStrength() {
+        for(Player player : getPlayerList()){
+            strength += player.getStrength();
+        }
+    }
+
+    public double getStrength(){
+        return strength;
+    }
     public void loadPlayerListByTeamId(IPlayerFactory loadPlayerFactory) throws Exception {
         this.playerList = loadPlayerFactory.loadPlayerListByTeamId(getId());
     }

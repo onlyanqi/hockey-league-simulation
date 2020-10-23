@@ -19,7 +19,7 @@ public class Player extends ParentObj{
         factory.loadPlayerById(id, this);
     }
 
-    private int age;
+    private long age;
 
     private String hometown;
 
@@ -33,19 +33,21 @@ public class Player extends ParentObj{
 
     private int seasonId;
 
-    private int skating;
+    private long skating;
 
-    private int shooting;
+    private long shooting;
 
-    private int checking;
+    private long checking;
 
-    private int saving;
+    private long saving;
 
-    public int getAge() {
+    private double strength;
+
+    public long getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(long age) {
         this.age = age;
     }
 
@@ -84,38 +86,56 @@ public class Player extends ParentObj{
     public int getFreeAgentId() {
         return freeAgentId;
     }
-    public int getSkating() {
+    public long getSkating() {
         return skating;
     }
 
-    public void setSkating(int skating) {
+    public void setSkating(long skating) {
         this.skating = skating;
     }
 
-    public int getShooting() {
+    public long getShooting() {
         return shooting;
     }
 
-    public void setShooting(int shooting) {
+    public void setShooting(long shooting) {
         this.shooting = shooting;
     }
 
-    public int getChecking() {
+    public long getChecking() {
         return checking;
     }
 
-    public void setChecking(int checking) {
+    public void setChecking(long checking) {
         this.checking = checking;
     }
 
-    public int getSaving() {
+    public long getSaving() {
         return saving;
     }
 
-    public void setSaving(int saving) {
+    public void setSaving(long saving) {
         this.saving = saving;
     }
 
+
+    public void setStrength() {
+        switch (getPosition()) {
+            case "forward":
+                this.strength = getSkating() + getShooting() + (getChecking() / 2);
+                break;
+            case "defense":
+                this.strength = getSkating() + getChecking() + (getShooting() / 2);
+                break;
+            case "goalie":
+                this.strength = getSkating() + getSaving();
+                break;
+        }
+    }
+
+    public double getStrength(){
+        return strength;
+    }
 
     public void setFreeAgentId(int freeAgentId) {
         this.freeAgentId = freeAgentId;
@@ -137,7 +157,6 @@ public class Player extends ParentObj{
                  isValid = true;
              }
         }
-
         return isValid;
     }
 
