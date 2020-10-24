@@ -85,15 +85,5 @@ public class Coach extends ParentObj {
         this.saving = saving;
     }
 
-    public void printCoach(int i){
-        ConsoleOutput.printToConsole("Coach id: "+(i));
-        ConsoleOutput.printToConsole("\t Coach name: "+this.getName());
-        ConsoleOutput.printToConsole("\t Skating strength: "+this.getSkating());
-        ConsoleOutput.printToConsole("\t Shooting strength: "+this.getShooting());
-        ConsoleOutput.printToConsole("\t Checking strength: "+this.getChecking());
-        ConsoleOutput.printToConsole("\t Saving strength: "+this.getSaving());
-        ConsoleOutput.printToConsole("\n");
-    }
-
 
 }

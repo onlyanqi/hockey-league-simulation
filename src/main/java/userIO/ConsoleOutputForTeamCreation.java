@@ -32,8 +32,18 @@ public class ConsoleOutputForTeamCreation {
         ConsoleOutput.printToConsole("Coach List \n ___________ ");
         for(int i=0;i<coachList.size();i++){
             Coach currentCoach = coachList.get(i);
-            currentCoach.printCoach(i);
+            printCoach(i, currentCoach);
         }
+    }
+
+    public void printCoach(int i, Coach currentCoach){
+        ConsoleOutput.printToConsole("Coach id: "+(i));
+        ConsoleOutput.printToConsole("\t Coach name: "+currentCoach.getName());
+        ConsoleOutput.printToConsole("\t Skating strength: "+currentCoach.getSkating());
+        ConsoleOutput.printToConsole("\t Shooting strength: "+currentCoach.getShooting());
+        ConsoleOutput.printToConsole("\t Checking strength: "+currentCoach.getChecking());
+        ConsoleOutput.printToConsole("\t Saving strength: "+currentCoach.getSaving());
+        ConsoleOutput.printToConsole("\n");
     }
 
     public void showInstructionsForTeamCreation(){
