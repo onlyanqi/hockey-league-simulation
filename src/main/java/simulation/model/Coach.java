@@ -26,12 +26,6 @@ public class Coach extends ParentObj {
         this.setSaving(coach.getSaving());
         this.setShooting(coach.getShooting());
         this.setSkating(coach.getSkating());
-        if(coach.getEndDate()!=null){
-            this.setEndDate(coach.getEndDate());
-        }
-        if(coach.getStartDate()!=null){
-            this.setStartDate(coach.getStartDate());
-        }
     }
     private String name;
 

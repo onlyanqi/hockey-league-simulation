@@ -85,47 +85,19 @@ public class League extends ParentObj{
         return managerList;
     }
 
-    public Manager getManagerByName(List<Manager> managerList, String managerName){
-        for(int i=0;i<managerList.size();i++){
-            if(managerList.get(i).getName().equals(managerName)){
-                return managerList.get(i);
-            }else{
-                return null;
-            }
-        }
-        return null;
-    }
-
     public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject){
         int managerListSize = managerList.size();
-        for(int i=indexOfManagerObject; i<managerListSize-2;i++){
-            Manager manager = new Manager(managerList.get(i+1));
-            managerList.remove(i);
-            managerList.set(i, manager);
-        }
-  //      managerList.remove(managerListSize-1);
+        Manager manager = new Manager(managerList.get(managerListSize-1));
+        managerList.set(indexOfManagerObject, manager);
+        managerList.remove(managerListSize-1);
         return managerList;
-    }
-
-    public Coach getCoachByName(List<Coach> coachList, String coachName){
-        for(int i=0;i<coachList.size();i++){
-            if(coachList.get(i).getName().equals(coachName)){
-                return coachList.get(i);
-            }else{
-                return null;
-            }
-        }
-        return null;
     }
 
     public List<Coach> removeCoachFromCoachListById(List<Coach> coachList, int indexOfCoachObject){
         int coachListSize = coachList.size();
-        for(int i=indexOfCoachObject; i<coachListSize-2;i++){
-            Coach coach = new Coach(coachList.get(i+1));
-            coachList.remove(i);
-            coachList.set(i, coach);
-        }
- //       coachList.remove(coachListSize-1);
+        Coach coach = new Coach(coachList.get(coachListSize-1));
+        coachList.set(indexOfCoachObject, coach);
+        coachList.remove(coachListSize-1);
         return coachList;
     }
 
