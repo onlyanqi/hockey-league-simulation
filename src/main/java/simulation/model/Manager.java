@@ -8,11 +8,6 @@ public class Manager extends ParentObj{
         setId(id);
     }
 
-//    public Manager(int id, IManagerFactory factory) throws Exception {
-//        setId(id);
-//        factory.loadManagerByLeagueId(id, this);
-//    }
-
     public Manager(Manager manager){
         this.setId(manager.getId());
         this.setLeagueId(manager.getLeagueId());

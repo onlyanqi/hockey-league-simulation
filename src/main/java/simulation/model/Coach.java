@@ -10,11 +10,6 @@ public class Coach extends ParentObj {
         setId(id);
     }
 
-//    public Coach(int id, ICoachFactory factory) throws Exception {
-//        setId(id);
-//        factory.loadCoachByLeagueId((id, this);
-//    }
-
     public Coach(Coach coach){
         this.setId(coach.getId());
         if (coach.getName() != null) {
