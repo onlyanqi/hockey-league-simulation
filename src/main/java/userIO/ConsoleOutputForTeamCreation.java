@@ -8,6 +8,10 @@ import java.util.List;
 
 public class ConsoleOutputForTeamCreation {
 
+    public void showLeagueAlreadyExistsError(){
+        ConsoleOutput.printToConsole("League already exists. Please enter a new one");
+    }
+
     public void showManagerListOnScreen(List<Manager> managerList){
         ConsoleOutput.printToConsole("Manager List \n ___________ ");
         for(int i=0;i<managerList.size();i++){
@@ -48,6 +52,11 @@ public class ConsoleOutputForTeamCreation {
         }
     }
 
+    public void playerIdAlreadyChosenMessage(List<Integer> chosenPlayersIdList){
+        ConsoleOutput.printToConsole("Make sure you do not enter the previously chosen id.");
+        ConsoleOutput.printToConsole("Previously chosen ids: "+ chosenPlayersIdList);
+    }
+
     public void showCountOfNeededPlayers(int numberOfGoalies,int numberOfSkaters){
         ConsoleOutput.printToConsole("Team needs more "+ numberOfGoalies +" goalies and "+ numberOfSkaters +" skaters");
     }
@@ -67,7 +76,7 @@ public class ConsoleOutputForTeamCreation {
     }
 
     public void printPlayer(int i,Player player){
-        ConsoleOutput.printToConsole("Player Id: "+i+"\tPlayer Name: "+player.getName()+ "Position: "+player.getPosition());
+        ConsoleOutput.printToConsole("Player Id: "+i+"\tPlayer Name: "+player.getName()+ "\tPosition: "+player.getPosition()+"\tStrength: "+player.getStrength());
         ConsoleOutput.printToConsole("age: "+player.getAge()+"\tSkating: "+player.getSkating()+"\tShooting: "+player.getShooting()+"\tChecking: "+player.getChecking()+"\tSaving: "+player.getSaving());
         ConsoleOutput.printToConsole("\n");
     }

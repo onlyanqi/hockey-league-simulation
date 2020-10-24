@@ -20,7 +20,6 @@ public class CreateTeamState implements IHockeyState {
     private Manager generalManager;
     private Coach headCoach;
     private Team team;
-    private String seasonName;
     private List<Player> teamPlayersList;
     private List<Manager> managerList;
     private List<Coach> coachList;
@@ -35,15 +34,13 @@ public class CreateTeamState implements IHockeyState {
 
     @Override
     public void entry() {
-
+        UseInputForTeamCreation teamCreationInput = new UseInputForTeamCreation();
+        ConsoleOutputForTeamCreation teamCreationOutput = new ConsoleOutputForTeamCreation();
         if(isLeaguePresent(league.getName())){
-            ConsoleOutput.printToConsole("League already exists. Please enter a new one");
+            teamCreationOutput.showLeagueAlreadyExistsError();
             System.out.println();
             System.exit(1);
         }
-        UseInputForTeamCreation teamCreationInput = new UseInputForTeamCreation();
-        ConsoleOutputForTeamCreation teamCreationOutput = new ConsoleOutputForTeamCreation();
-        seasonName  = teamCreationInput.getSeasonName();
 
         List<String> conferenceNameList = league.createConferenceNameList();
         conferenceName  = teamCreationInput.getConferenceName(conferenceNameList);

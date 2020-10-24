@@ -97,12 +97,13 @@ public class League extends ParentObj{
     }
 
     public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject){
-        for(int i=indexOfManagerObject; i<managerList.size()-1;i++){
+        int managerListSize = managerList.size();
+        for(int i=indexOfManagerObject; i<managerListSize-2;i++){
             Manager manager = new Manager(managerList.get(i+1));
             managerList.remove(i);
             managerList.set(i, manager);
         }
-        managerList.remove(managerList.size()-1);
+  //      managerList.remove(managerListSize-1);
         return managerList;
     }
 
@@ -118,13 +119,13 @@ public class League extends ParentObj{
     }
 
     public List<Coach> removeCoachFromCoachListById(List<Coach> coachList, int indexOfCoachObject){
-
-        for(int i=indexOfCoachObject; i<coachList.size()-1;i++){
+        int coachListSize = coachList.size();
+        for(int i=indexOfCoachObject; i<coachListSize-2;i++){
             Coach coach = new Coach(coachList.get(i+1));
             coachList.remove(i);
             coachList.set(i, coach);
         }
-        coachList.remove(coachList.size()-1);
+ //       coachList.remove(coachListSize-1);
         return coachList;
     }
 

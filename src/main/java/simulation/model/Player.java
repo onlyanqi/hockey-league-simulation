@@ -171,7 +171,4 @@ public class Player extends ParentObj{
         addPlayerFactory.addPlayer(this);
     }
 
-    public Integer sumOfSkills(){
-        return this.getSkating()+this.getSaving()+this.getShooting()+this.getChecking();
-    }
 }

@@ -66,24 +66,24 @@ public class FreeAgent extends ParentObj{
         return playerList;
     }
 
-    public List<Integer> getGoodFreeAgentsList(List<Integer> totalOfSkills){
+    public List<Integer> getGoodFreeAgentsList(List<Double> strengthList){
 
-        Double thresholdPointForGoodPlayer=calculateAverage(totalOfSkills);
+        Double thresholdPointForGoodPlayer=calculateAverage(strengthList);
         List<Integer> goodFreeAgentsIdList=new ArrayList<>();
-        for(int i=0;i<totalOfSkills.size();i++){
-            if(totalOfSkills.get(i)>=thresholdPointForGoodPlayer){
+        for(int i=0;i<strengthList.size();i++){
+            if(strengthList.get(i)>=thresholdPointForGoodPlayer){
                 goodFreeAgentsIdList.add(i);
             }
         }
         return goodFreeAgentsIdList;
     }
 
-    public Double calculateAverage(List<Integer> totalOfSkills){
+    public Double calculateAverage(List<Double> strengthList){
         Double average =0.0;
-        for(int i=0;i<totalOfSkills.size();i++){
-            average=average+totalOfSkills.get(i);
+        for(int i=0;i<strengthList.size();i++){
+            average=average+strengthList.get(i);
         }
-        average=average/totalOfSkills.size();
+        average=average/strengthList.size();
         return average;
     }
 }
