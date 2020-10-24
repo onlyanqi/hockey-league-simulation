@@ -10,14 +10,6 @@ import java.util.List;
 
 public class UseInputForTeamCreation {
 
-    public String getSeasonName(){
-        String seasonName=GetInput.getUserInput("Please enter season name");
-        while((seasonName ==null || seasonName.isEmpty() )){
-            seasonName = GetInput.getUserInput("Please enter season name!");
-        }
-        return seasonName;
-    }
-
     public String getConferenceName(List<String> conferenceNameList){
         String conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
         while(!conferenceNameList.contains(conferenceName.toLowerCase())){
@@ -37,12 +29,12 @@ public class UseInputForTeamCreation {
     public String getTeamName(List<String> teamNameList){
         String teamName = GetInput.getUserInput("Please enter a team name to create a team ");
 
-        while(teamNameList.contains(teamName.toLowerCase()) || teamName.isEmpty() || teamName ==null || isTeamPresent(teamName)){
+        while(teamNameList.contains(teamName.toLowerCase()) || teamName.isEmpty() || teamName ==null){
 
             if(teamNameList.contains(teamName.toLowerCase())){
                 teamName  = GetInput.getUserInput("Provided team name  already exists. Please enter a new one!");
             }
-            else if(teamName.isEmpty() || teamName ==null || isTeamPresent(teamName)){
+            else if(teamName.isEmpty() || teamName ==null || teamNameList.contains(teamName.toLowerCase())){
                 teamName = GetInput.getUserInput("Please enter valid team name! Make sure there is no existing team with provided name");
             }
         }
@@ -70,22 +62,22 @@ public class UseInputForTeamCreation {
         return headCoachId;
     }
 
-    private boolean isTeamPresent(String teamName)  {
-        boolean isTeamPresent = false;
-        TeamConcrete teamConcrete = new TeamConcrete();
-        ITeamFactory factory = teamConcrete.newLoadTeamFactory();
-        Team team = null;
-        try {
-            team = teamConcrete.newTeamByName(teamName, factory);
-        }catch (Exception e) {
-            System.out.println("Unable to load team, please try again.");
-            System.exit(1);
-            e.printStackTrace();
-        }
-        if(team!=null && team.getId() > 0) {
-            isTeamPresent = true;
-        }
-        return isTeamPresent;
-    }
+//    private boolean isTeamPresent(String teamName)  {
+//        boolean isTeamPresent = false;
+//        TeamConcrete teamConcrete = new TeamConcrete();
+//        ITeamFactory factory = teamConcrete.newLoadTeamFactory();
+//        Team team = null;
+//        try {
+//            team = teamConcrete.newTeamByName(teamName, factory);
+//        }catch (Exception e) {
+//            System.out.println("Unable to load team, please try again.");
+//            System.exit(1);
+//            e.printStackTrace();
+//        }
+//        if(team!=null && team.getId() > 0) {
+//            isTeamPresent = true;
+//        }
+//        return isTeamPresent;
+//    }
 
 }
