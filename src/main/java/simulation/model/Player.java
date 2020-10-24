@@ -1,6 +1,7 @@
 package simulation.model;
 
 import db.data.IPlayerFactory;
+import userIO.ConsoleOutput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,11 +20,28 @@ public class Player extends ParentObj{
         factory.loadPlayerById(id, this);
     }
 
+    public Player(Player player){
+        this.setId(player.getId());
+        this.setName(player.getName());
+        this.setAge(player.getAge());
+        this.setSaving(player.getSaving());
+        this.setChecking(player.getChecking());
+        this.setShooting(player.getShooting());
+        this.setSkating(player.getSkating());
+        this.setPosition(player.getPosition());
+    }
+
     private int age;
 
     private String hometown;
 
-    private String position;
+    private Position position;
+
+    public enum Position{
+        forward,
+        defense,
+        goalie
+    }
 
     private int teamId;
 
@@ -41,6 +59,8 @@ public class Player extends ParentObj{
 
     private int saving;
 
+    private double strength;
+
     public int getAge() {
         return age;
     }
@@ -57,11 +77,11 @@ public class Player extends ParentObj{
         this.hometown = hometown;
     }
 
-    public String getPosition() {
+    public Position getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
@@ -117,6 +137,24 @@ public class Player extends ParentObj{
     }
 
 
+    public void setStrength() {
+        switch (position) {
+            case forward:
+                this.strength = getSkating() + getShooting() + (getChecking() / 2);
+                break;
+            case defense:
+                this.strength = getSkating() + getChecking() + (getShooting() / 2);
+                break;
+            case goalie:
+                this.strength = getSkating() + getSaving();
+                break;
+        }
+    }
+
+    public double getStrength(){
+        return strength;
+    }
+
     public void setFreeAgentId(int freeAgentId) {
         this.freeAgentId = freeAgentId;
     }
@@ -129,20 +167,11 @@ public class Player extends ParentObj{
         isCaptain = captain;
     }
 
-    public boolean validPosition(){
-        boolean isValid = false;
-        List<String> playerPositions = new ArrayList<>(Arrays.asList("goalie", "forward", "defense"));
-        if(isNotNull(getPosition()) && isNotEmpty(getPosition())){
-             if(playerPositions.contains(getPosition())){
-                 isValid = true;
-             }
-        }
-
-        return isValid;
-    }
-
     public void addPlayer(IPlayerFactory addPlayerFactory) throws Exception {
         addPlayerFactory.addPlayer(this);
     }
 
+    public Integer sumOfSkills(){
+        return this.getSkating()+this.getSaving()+this.getShooting()+this.getChecking();
+    }
 }

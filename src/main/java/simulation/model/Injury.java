@@ -1,11 +1,7 @@
 package simulation.model;
 
-public class Injury extends ParentObj{
+public class Injury {
     public Injury() {
-    }
-
-    public Injury(int id) {
-        setId(id);
     }
 
     private double randomInjuryChance;

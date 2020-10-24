@@ -17,7 +17,7 @@ public class PlayerDao implements IPlayerFactory {
             callDB.setInputParameterInt(2, player.getFreeAgentId());
             callDB.setInputParameterInt(3, player.getSeasonId());
             callDB.setInputParameterString(4, player.getName());
-            callDB.setInputParameterString(5, player.getPosition());
+            callDB.setInputParameterString(5, player.getPosition().toString());
             callDB.setInputParameterBoolean(6, player.isCaptain());
 
             callDB.setOutputParameterInt(7);
@@ -48,7 +48,8 @@ public class PlayerDao implements IPlayerFactory {
 
             player.setId(callDB.returnOutputParameterInt(2));
             player.setName(callDB.returnOutputParameterString(3));
-            player.setPosition(callDB.returnOutputParameterString(4));
+            Player.Position position = Player.Position.valueOf(callDB.returnOutputParameterString(4));
+            player.setPosition(position);
             player.setCaptain(callDB.returnOutputParameterBoolean(5));
 
         }catch (Exception e){

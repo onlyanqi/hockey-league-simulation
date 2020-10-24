@@ -3,6 +3,7 @@ package simulation.model;
 import db.data.IConferenceFactory;
 import db.data.IDivisionFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Conference extends ParentObj{
@@ -34,6 +35,25 @@ public class Conference extends ParentObj{
         return divisionList;
     }
 
+    public List<String> getDivisionNameList(){
+        List<String> divisionNameList = new ArrayList<>();
+        for(Division division:this.getDivisionList()){
+            divisionNameList.add(division.getName().toLowerCase());
+        }
+        return divisionNameList;
+    }
+
+    public Division getDivisionFromListByName(String divisionName){
+        Division foundDivision = null;
+        for(Division division : divisionList){
+            if(division.getName().toLowerCase().equals(divisionName.toLowerCase())){
+                foundDivision = division;
+                break;
+            }
+        }
+        return foundDivision;
+    }
+
     public void setDivisionList(List<Division> divisionList) {
         this.divisionList = divisionList;
     }
@@ -45,5 +65,7 @@ public class Conference extends ParentObj{
     public void loadDivisionListByConferenceId(IDivisionFactory loadDivisionFactory) throws Exception {
         this.divisionList = loadDivisionFactory.loadDivisionListByConferenceId(getId());
     }
+
+
 
 }

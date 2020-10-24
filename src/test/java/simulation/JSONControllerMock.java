@@ -25,24 +25,24 @@ public class JSONControllerMock{
         JSONArray managers = new JSONArray();
 
         JSONObject aging = new JSONObject();
-        aging.put("averageRetirementAge",35);
-        aging.put("maximumAge",50);
+        aging.put("averageRetirementAge",(long)35.0);
+        aging.put("maximumAge",(long)50.0);
 
         JSONObject gameResolver = new JSONObject();
         gameResolver.put("randomWinChance",0.1);
 
         JSONObject injuries = new JSONObject();
         injuries.put("randomInjuryChance",0.05);
-        injuries.put("injuryDaysLow",1);
-        injuries.put("injuryDaysHigh",260);
+        injuries.put("injuryDaysLow",(long)1.0);
+        injuries.put("injuryDaysHigh",(long)260);
 
         JSONObject training = new JSONObject();
-        training.put("daysUntilStatIncreaseCheck",100);
+        training.put("daysUntilStatIncreaseCheck",(long)100);
 
         JSONObject trading = new JSONObject();
-        trading.put("lossPoint",8);
+        trading.put("lossPoint",(long)8.0);
         trading.put("randomTradeOfferChance",0.05);
-        trading.put("maxPlayersPerTrade",2);
+        trading.put("maxPlayersPerTrade",(long)2.0);
         trading.put("randomAcceptanceChance",0.05);
 
         gameplayConfig.put("aging",aging);
@@ -54,29 +54,29 @@ public class JSONControllerMock{
         JSONObject freeAgentplayer1 = new JSONObject();
         freeAgentplayer1.put("playerName","Agent One");
         freeAgentplayer1.put("position","forward");
-        freeAgentplayer1.put("age",25);
-        freeAgentplayer1.put("skating",10);
-        freeAgentplayer1.put("shooting",10);
-        freeAgentplayer1.put("checking",10);
-        freeAgentplayer1.put("saving",0);
+        freeAgentplayer1.put("age",(long)25.0);
+        freeAgentplayer1.put("skating",(long)10.0);
+        freeAgentplayer1.put("shooting",(long)10.0);
+        freeAgentplayer1.put("checking",(long)10.0);
+        freeAgentplayer1.put("saving",(long)0.0);
 
         JSONObject freeAgentPlayer2 = new JSONObject();
         freeAgentPlayer2.put("playerName","Agent Two");
         freeAgentPlayer2.put("position","defense");
-        freeAgentPlayer2.put("age",25);
-        freeAgentPlayer2.put("skating",10);
-        freeAgentPlayer2.put("shooting",10);
-        freeAgentPlayer2.put("checking",10);
-        freeAgentPlayer2.put("saving",0);
+        freeAgentPlayer2.put("age",(long)25.0);
+        freeAgentPlayer2.put("skating",(long)10.0);
+        freeAgentPlayer2.put("shooting",(long)10.0);
+        freeAgentPlayer2.put("checking",(long)10.0);
+        freeAgentPlayer2.put("saving",(long)0.0);
 
         JSONObject freeAgentPlayer3 = new JSONObject();
         freeAgentPlayer3.put("playerName","Agent Three");
         freeAgentPlayer3.put("position","goalie");
-        freeAgentPlayer3.put("age",25);
-        freeAgentPlayer3.put("skating",10);
-        freeAgentPlayer3.put("shooting",5);
-        freeAgentPlayer3.put("checking",5);
-        freeAgentPlayer3.put("saving",10);
+        freeAgentPlayer3.put("age",(long)25.0);
+        freeAgentPlayer3.put("skating",(long)10.0);
+        freeAgentPlayer3.put("shooting",(long)5.0);
+        freeAgentPlayer3.put("checking",(long)5.0);
+        freeAgentPlayer3.put("saving",(long)10.0);
 
         freeAgents.add(freeAgentplayer1);
         freeAgents.add(freeAgentPlayer2);
@@ -86,32 +86,32 @@ public class JSONControllerMock{
         player1.put("playerName","Agent One");
         player1.put("position","forward");
         player1.put("captain",false);
-        player1.put("age",27);
-        player1.put("skating",15);
-        player1.put("shooting",18);
-        player1.put("checking",12);
-        player1.put("saving",0);
+        player1.put("age",(long)27.0);
+        player1.put("skating",(long)15.0);
+        player1.put("shooting",(long)18.0);
+        player1.put("checking",(long)12.0);
+        player1.put("saving",(long)0.0);
 
 
         JSONObject player2 = new JSONObject();
         player2.put("playerName","Agent Two");
         player2.put("position","defense");
         player2.put("captain",false);
-        player2.put("age",20);
-        player2.put("skating",10);
-        player2.put("shooting",10);
-        player2.put("checking",10);
-        player2.put("saving",0);
+        player2.put("age",(long)20.0);
+        player2.put("skating",(long)10.0);
+        player2.put("shooting",(long)10.0);
+        player2.put("checking",(long)10.0);
+        player2.put("saving",(long)0.0);
 
         JSONObject player3 = new JSONObject();
         player3.put("playerName","Agent Three");
         player3.put("position","goalie");
         player3.put("captain",true);
-        player3.put("age",33);
-        player3.put("skating",10);
-        player3.put("shooting",4);
-        player3.put("checking",9);
-        player3.put("saving",8);
+        player3.put("age",(long)33.0);
+        player3.put("skating",(long)10.0);
+        player3.put("shooting",(long)4.0);
+        player3.put("checking",(long)9.0);
+        player3.put("saving",(long)8.0);
 
         players.add(player1);
         players.add(player2);
@@ -169,18 +169,9 @@ public class JSONControllerMock{
         coach3.put("saving",0.0);
         coaches.add(coach3);
 
-        JSONObject manager1 = new JSONObject();
-        manager1.put(0,"Karen Potam");
-
-        JSONObject manager2 = new JSONObject();
-        manager2.put(1,"Joseph Squidly");
-
-        JSONObject manager3 = new JSONObject();
-        manager3.put(2,"Tom Spaghetti");
-
-        managers.add(manager1);
-        managers.add(manager2);
-        managers.add(manager3);
+        managers.add("skdkjjals");
+        managers.add("Joseph Squidly");
+        managers.add("Tom Spaghetti");
 
         league.put("leagueName","Dalhousie Hockey League");
         league.put("gameplayConfig",gameplayConfig);
