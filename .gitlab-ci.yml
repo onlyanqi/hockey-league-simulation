@@ -40,6 +40,12 @@ test:
     - echo "db.Name"=${DB_NAME_DEV} >> .properties
     - echo "db.Port=3306" >> .properties
     - mvn test
+  artifacts:
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+        - target/failsafe-reports/TEST-*.xml
+
 
 deploy_test:
   stage: deploy_test
