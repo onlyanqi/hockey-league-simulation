@@ -3,6 +3,7 @@ package simulation.model;
 import db.data.IDivisionFactory;
 import db.data.ITeamFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Division extends ParentObj{
@@ -44,5 +45,13 @@ public class Division extends ParentObj{
 
     public void loadTeamListByDivisionId(ITeamFactory teamFactory) throws Exception {
         this.teamList = teamFactory.loadTeamListByDivisionId(getId());
+    }
+
+    public List<String> getTeamNameList(){
+        List<String> teamNameList = new ArrayList<>();
+        for(Team team: this.getTeamList()){
+            teamNameList.add(team.getName().toLowerCase());
+        }
+        return teamNameList;
     }
 }
