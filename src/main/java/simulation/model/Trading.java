@@ -129,10 +129,6 @@ public class Trading extends ParentObj{
         startDateCalendar.set(Calendar.MILLISECOND,0);
 
         this.tradeStartDate = startDateCalendar.getTime();
-       /* this.tradeStartDate.setHours(0);
-        this.tradeStartDate.setMinutes(0);
-        this.tradeStartDate.setSeconds(0);
-        this.tradeStartDate.setMill*/
     }
 
     public int getLeagueId() {

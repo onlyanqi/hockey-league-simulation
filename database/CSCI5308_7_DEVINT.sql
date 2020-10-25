@@ -752,3 +752,19 @@ CREATE TABLE `Coach` (
   CONSTRAINT `coach_freeagent` FOREIGN KEY (`freeAgentId`) REFERENCES `FreeAgent` (`freeAgentId`),
   CONSTRAINT `coach_team` FOREIGN KEY (`teamId`) REFERENCES `Team` (`idTeam`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+/* Trading */
+CREATE TABLE `Trading` (
+  `idTrading` int(11) NOT NULL AUTO_INCREMENT,
+  `leagueId` int(11) DEFAULT NULL,
+  `lossPoint` int(11) DEFAULT NULL,
+  `randomTradeOfferChance` float DEFAULT NULL,
+  `maxPlayersPerTrade` int(11) DEFAULT NULL,
+  `randomAcceptanceChance` float DEFAULT NULL,
+  PRIMARY KEY (`idTrading`),
+  CONSTRAINT `leagueId` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`)
+);
+

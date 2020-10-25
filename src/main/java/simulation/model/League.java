@@ -100,4 +100,14 @@ public class League extends ParentObj{
     public void loadFreeAgentByLeagueId(IFreeAgentFactory loadFreeAgentFactory) throws Exception {
         this.freeAgent = loadFreeAgentFactory.loadFreeAgentByLeagueId(getId());
     }
+
+    private Trading trading;
+
+    public Trading getTrading() {
+        return trading;
+    }
+
+    public void setTrading(Trading trading) {
+        this.trading = trading;
+    }
 }

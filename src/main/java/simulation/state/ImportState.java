@@ -14,8 +14,6 @@ public class ImportState implements IHockeyState {
     private JSONObject jsonFromInput;
     private League league;
 
-
-
     public ImportState(HockeyContext hockeyContext,JSONObject jsonFromInput){
         this.jsonFromInput = jsonFromInput;
         this.hockeyContext = hockeyContext;
