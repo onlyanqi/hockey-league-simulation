@@ -69,15 +69,15 @@ public class PlayerTest {
     @Test
     public void getPositionTest() throws Exception {
         Player player = new Player(1, loadPlayerFactory);
-        assertTrue(player.getPosition().equals("goalie"));
+        assertTrue(player.getPosition().equals(Player.Position.valueOf("goalie")));
     }
 
     @Test
     public void setPositionTest(){
         Player player = new Player();
-        String postion = "goalie";
-        player.setPosition(postion);
-        assertTrue(player.getPosition().equals(postion));
+        Player.Position position = Player.Position.valueOf("goalie");
+        player.setPosition(position);
+        assertTrue(player.getPosition().equals(position));
     }
 
     @Test
@@ -106,13 +106,6 @@ public class PlayerTest {
         boolean isCaptain = true;
         player.setCaptain(true);
         assertTrue(player.isCaptain());
-    }
-
-    @Test
-    public void validPositionTest(){
-        Player player = new Player();
-        player.setPosition("goalie");
-        assertTrue(player.validPosition());
     }
 
     @Test

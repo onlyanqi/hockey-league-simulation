@@ -3,3 +3,4 @@
 target/
 .properties
 *.iml
+inputJson.txt

@@ -3,11 +3,18 @@ package simulation.model;
 
 import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
+import userIO.ConsoleOutput;
+import userIO.ConsoleOutputForTeamCreation;
+import userIO.GetInput;
+import userIO.UseInputForTeamCreation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team extends ParentObj{
-
+    public static final String GOALIE = "goalie";
+    public static final String DEFENSE = "defense";
+    public static final String FORWARD = "forward";
     public Team(){}
 
     public Team(int id){
@@ -29,9 +36,11 @@ public class Team extends ParentObj{
 
     private int divisionId;
 
-    private String generalManager;
+    private double strength;
 
-    private String headCoach;
+    private Coach coach;
+
+    private Manager manager;
 
     private List<Player> playerList;
 
@@ -67,27 +76,78 @@ public class Team extends ParentObj{
         this.divisionId = divisionId;
     }
 
-    public String getGeneralManager() {
-        return generalManager;
+    public Coach getCoach() {
+        return coach;
     }
 
-    public void setGeneralManager(String generalManager) {
-        this.generalManager = generalManager;
+    public void setCoach(Coach coach) {
+        this.coach = coach;
     }
 
-    public String getHeadCoach() {
-        return headCoach;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setHeadCoach(String headCoach) {
-        this.headCoach = headCoach;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public void addTeam(ITeamFactory addTeamFactory) throws Exception {
         addTeamFactory.addTeam(this);
     }
 
+    public void setStrength() {
+        for(Player player : getPlayerList()){
+            strength += player.getStrength();
+        }
+    }
+
+    public double getStrength(){
+        return strength;
+    }
     public void loadPlayerListByTeamId(IPlayerFactory loadPlayerFactory) throws Exception {
         this.playerList = loadPlayerFactory.loadPlayerListByTeamId(getId());
+    }
+
+    public List<Integer> createChosenPlayerIdList(FreeAgent freeAgent){
+        UseInputForTeamCreation teamCreationInput = new UseInputForTeamCreation();
+        ConsoleOutputForTeamCreation teamCreationOutput = new ConsoleOutputForTeamCreation();
+        int numberOfSkaters=0;
+        int numberOfGoalies=0;
+        List<Player> freeAgentList = freeAgent.getPlayerList();
+        List<Double> strengthList = new ArrayList<>();
+        for(int i=0;i<freeAgentList.size();i++){
+            Player freeAgentPlayer = freeAgentList.get(i);
+            freeAgentPlayer.setStrength();
+            Double playerStrength = freeAgentPlayer.getStrength();
+            strengthList.add(i,playerStrength) ;
+        }
+
+        List<Integer> goodFreeAgentsIdList = freeAgent.getGoodFreeAgentsList(strengthList);
+        teamCreationOutput.showInstructionsForTeamCreation();
+        teamCreationOutput.showGoodFreeAgentList(freeAgentList,goodFreeAgentsIdList);
+        teamCreationOutput.showBelowAverageFreeAgentList(freeAgentList,goodFreeAgentsIdList);
+
+        List<Integer> chosenPlayersIdList = new ArrayList<>();
+        int playerId;
+        while(numberOfGoalies!=2 || numberOfSkaters!=18){
+            playerId = teamCreationInput.getPlayerId(freeAgentList.size()-1);
+            if(playerId<0 || playerId>=freeAgentList.size()){
+                continue;
+            }else if(chosenPlayersIdList.contains(playerId)){
+                teamCreationOutput.playerIdAlreadyChosenMessage(chosenPlayersIdList);
+            }
+            Player player = freeAgentList.get(playerId);
+            if(numberOfGoalies!=2 && player.getPosition().toString().equals(GOALIE)){
+                chosenPlayersIdList.add(playerId);
+                numberOfGoalies=numberOfGoalies+1;
+                teamCreationOutput.showCountOfNeededPlayers(2-numberOfGoalies, 18-numberOfSkaters);
+            }else if(numberOfSkaters!=18 && (player.getPosition().toString().equals(DEFENSE) || player.getPosition().toString().equals(FORWARD))){
+                chosenPlayersIdList.add(playerId);
+                numberOfSkaters=numberOfSkaters+1;
+                teamCreationOutput.showCountOfNeededPlayers(2-numberOfGoalies, 18-numberOfSkaters);
+            }
+        }
+        return chosenPlayersIdList;
     }
 }

@@ -1,13 +1,13 @@
 package simulation.model;
 
 
-public class Aging extends ParentObj{
+public class Aging extends GamePlayConfig{
     public Aging() {
     }
 
-    public Aging(int id) {
-        setId(id);
-    }
+//    public Aging(int id) {
+//        setId(id);
+//    }
 
 //    public Aging (int id, IAgingFactory factory) throws Exception {
 //        setId(id);

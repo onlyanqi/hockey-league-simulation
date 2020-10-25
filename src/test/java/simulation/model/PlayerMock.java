@@ -24,7 +24,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setEndDate(new Date(2050, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
-                player.setPosition("goalie");
+                player.setPosition(Player.Position.valueOf("goalie"));
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
@@ -38,7 +38,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setEndDate(new Date(2050, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
-                player.setPosition("goalie");
+                player.setPosition(Player.Position.valueOf("goalie"));
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
@@ -52,7 +52,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setEndDate(new Date(2000, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
-                player.setPosition("goalie");
+                player.setPosition(Player.Position.valueOf("goalie"));
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
@@ -66,7 +66,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setEndDate(new Date(2000, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
-                player.setPosition("referee");
+                player.setPosition(Player.Position.valueOf("referee"));
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
@@ -80,7 +80,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setEndDate(new Date(2040, 0, 0));
                 player.setAge(17);
                 player.setHometown("Montreal");
-                player.setPosition("forward");
+                player.setPosition(Player.Position.valueOf("forward"));
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
