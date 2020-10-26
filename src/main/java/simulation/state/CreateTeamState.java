@@ -1,6 +1,7 @@
 package simulation.state;
 
 import db.data.*;
+import scala.tools.jline_embedded.console.UserInterruptException;
 import simulation.factory.*;
 import simulation.serializers.LeagueDataSerializer;
 import userIO.*;
@@ -140,13 +141,12 @@ public class CreateTeamState implements IHockeyState {
             }
         }
         league.setConferenceList(conferenceList);
-        LeagueDataSerializer dataSerializer = new LeagueDataSerializer();
-        dataSerializer.serialize(league);
-        hockeyContext.getUser().setLeague(league);
     }
 
     @Override
     public IHockeyState exit() {
+        IUserInputForTeamCreation userInputForTeamCreation = new UseInputForTeamCreation();
+        IConsoleOutputForTeamCreation teamCreationOutput = new ConsoleOutputForTeamCreation();
 
         System.out.println("Please wait while we are saving your league information...");
 
@@ -159,6 +159,13 @@ public class CreateTeamState implements IHockeyState {
                     hockeyState = new CreateTeamState(hockeyContext);
                     break;
                 }else if(createAnotherTeam.toLowerCase().equals("n") || createAnotherTeam.toLowerCase().equals("no")){
+                    String performSerialization = userInputForTeamCreation.getUserChoiceForSerialization();
+                    if(performSerialization.toLowerCase().equals("y") || performSerialization.toLowerCase().equals("Yes")){
+                        LeagueDataSerializer dataSerializer = new LeagueDataSerializer();
+                        dataSerializer.serialize(league);
+                        hockeyContext.getUser().setLeague(league);
+                        teamCreationOutput.showSuccessfulSerializationMessage();
+                    }
                     hockeyState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
                     break;
                 }else{

@@ -29,6 +29,11 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation{
     }
 
     @Override
+    public String getUserChoiceForSerialization(){
+        String userChoice = GetInput.getUserInput("Do you want to serialize league object to JSON?");
+        return userChoice;
+    }
+    @Override
     public String getTeamName(List<String> teamNameList){
         String teamName = GetInput.getUserInput("Please enter a team name to create a team ");
 

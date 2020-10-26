@@ -10,6 +10,8 @@ public interface IUserInputForTeamCreation {
 
     String getDivisionName(List<String> divisionNameList);
 
+    String getUserChoiceForSerialization();
+
     String getTeamName(List<String> teamNameList);
 
     int getPlayerId(int upperBound);

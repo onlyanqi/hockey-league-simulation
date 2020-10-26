@@ -12,6 +12,8 @@ public interface IConsoleOutputForTeamCreation {
 
     void showManagerListOnScreen(List<Manager> managerList);
 
+    void showSuccessfulSerializationMessage();
+
     void showSuccessfulManagerCreationMessage();
 
     void showSuccessfulCoachCreationMessage();
