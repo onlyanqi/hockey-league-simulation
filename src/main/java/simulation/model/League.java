@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
+import simulation.RegularSeasonEvents.NHLEvents;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +58,36 @@ public class League extends ParentObj{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    private transient Games games;
+
+    private transient RegularSeasonScoreBoard regularSeasonScoreBoard;
+
+    private transient NHLEvents nhlEvents;
+
+    public NHLEvents getNhlRegularSeasonEvents() {
+        return nhlEvents;
+    }
+
+    public void setNhlRegularSeasonEvents(NHLEvents nhlEvents) {
+        this.nhlEvents = nhlEvents;
+    }
+
+    public RegularSeasonScoreBoard getRegularSeasonScoreBoard() {
+        return regularSeasonScoreBoard;
+    }
+
+    public void setRegularSeasonScoreBoard(RegularSeasonScoreBoard regularSeasonScoreBoard) {
+        this.regularSeasonScoreBoard = regularSeasonScoreBoard;
+    }
+
+    public Games getGames() {
+        return games;
+    }
+
+    public void setGames(Games games) {
+        this.games = games;
     }
 
     public void setGamePlayConfig(GamePlayConfig gamePlayConfig){
@@ -182,5 +213,18 @@ public class League extends ParentObj{
 
     public void loadFreeAgentByLeagueId(IFreeAgentFactory loadFreeAgentFactory) throws Exception {
         this.freeAgent = loadFreeAgentFactory.loadFreeAgentByLeagueId(getId());
+    }
+
+    public Team getTeamByTeamName(String teamName){
+        for (Conference conference : getConferenceList()){
+            for (Division division : conference.getDivisionList()) {
+                for (Team team : division.getTeamList()) {
+                    if(team.getName().equals(teamName)){
+                        return team;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

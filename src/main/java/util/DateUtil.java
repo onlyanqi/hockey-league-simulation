@@ -12,4 +12,11 @@ public class DateUtil {
         cal.add(Calendar.DATE, days);
         return cal.getTime();
     }
+    public static Date minusDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -days);
+        return cal.getTime();
+    }
 }
