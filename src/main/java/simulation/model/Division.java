@@ -1,5 +1,6 @@
 package simulation.model;
 
+import com.google.gson.annotations.SerializedName;
 import db.data.IDivisionFactory;
 import db.data.ITeamFactory;
 
@@ -7,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Division extends ParentObj{
+
+    @SerializedName("divisionName")
+    String name;
 
     public Division(){}
 
@@ -19,8 +23,17 @@ public class Division extends ParentObj{
         factory.loadDivisionById(id, this);
     }
 
-    private int conferenceId;
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private transient int conferenceId;
+
+    @SerializedName("teams")
     private List<Team> teamList;
 
     public List<Team> getTeamList() {

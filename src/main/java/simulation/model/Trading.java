@@ -5,10 +5,11 @@ import java.util.*;
 
 public class Trading extends ParentObj{
 
-    private List<Integer> currentYearSeasonMonths = new ArrayList<>
+    String name;
+    private transient List<Integer> currentYearSeasonMonths = new ArrayList<>
             (Arrays.asList(9, 10, 11));
 
-    private List<Integer> nextYearSeasonMonths = new ArrayList<>
+    private transient List<Integer> nextYearSeasonMonths = new ArrayList<>
             (Arrays.asList(0, 1));
 
     public Trading(){}
@@ -16,6 +17,14 @@ public class Trading extends ParentObj{
     public Trading(int tradingId, ITradingFactory factory){
         setId(tradingId);
         factory.loadTradingDetailsByTradingId(tradingId, this);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Integer> getCurrentYearSeasonMonths() {
@@ -34,11 +43,11 @@ public class Trading extends ParentObj{
         this.nextYearSeasonMonths = nextYearSeasonMonths;
     }
 
-    private Date tradeStartDate;
+    private transient Date tradeStartDate;
 
-    private Date tradeEndDate;
+    private transient Date tradeEndDate;
 
-    private int leagueId;
+    private transient int leagueId;
 
     private int lossPoint;
 
@@ -48,7 +57,7 @@ public class Trading extends ParentObj{
 
     private double randomAcceptanceChance;
 
-    private boolean isTradingPeriod;
+    private transient boolean isTradingPeriod;
 
     public void isLeagueInTradingPeriod(Date leagueDate){
         if(leagueDate != null){

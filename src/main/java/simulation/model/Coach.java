@@ -1,8 +1,8 @@
 package simulation.model;
 
-import userIO.ConsoleOutput;
-
 public class Coach extends ParentObj {
+    String name;
+
     public Coach() {
     }
 
@@ -22,11 +22,18 @@ public class Coach extends ParentObj {
         this.setShooting(coach.getShooting());
         this.setSkating(coach.getSkating());
     }
-    private String name;
 
-    private int teamId;
+    public String getName() {
+        return name;
+    }
 
-    private int leagueId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private transient int teamId;
+
+    private transient int leagueId;
 
     private Double skating;
 

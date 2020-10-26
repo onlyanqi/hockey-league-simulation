@@ -1,9 +1,12 @@
 package simulation.model;
 
+import com.google.gson.annotations.SerializedName;
 
 public class GamePlayConfig {
-    private int leagueId;
+
+    private transient int leagueId;
     private Aging aging;
+    @SerializedName("injuries")
     private Injury injury;
     private GameResolver gameResolver;
     private Trading trading;

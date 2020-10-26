@@ -2,10 +2,11 @@ package simulation.model;
 
 import db.data.ILeagueFactory;
 import db.data.IUserFactory;
-
 import java.util.List;
 
 public class User extends ParentObj{
+
+    String name;
 
     public User(){}
 
@@ -25,6 +26,14 @@ public class User extends ParentObj{
     private String password;
 
     private List<League> leagueList;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public List<League> getLeagueList() {
         return leagueList;

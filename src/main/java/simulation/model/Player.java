@@ -1,13 +1,11 @@
 package simulation.model;
 
+import com.google.gson.annotations.SerializedName;
 import db.data.IPlayerFactory;
-import userIO.ConsoleOutput;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Player extends ParentObj{
+
+    @SerializedName("playerName")
+    String name;
 
     public Player(){}
 
@@ -23,12 +21,21 @@ public class Player extends ParentObj{
     public Player(Player player){
         this.setId(player.getId());
         this.setName(player.getName());
+        this.isFreeAgent=player.isFreeAgent;
         this.setAge(player.getAge());
         this.setSaving(player.getSaving());
         this.setChecking(player.getChecking());
         this.setShooting(player.getShooting());
         this.setSkating(player.getSkating());
         this.setPosition(player.getPosition());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     private int age;
@@ -43,13 +50,24 @@ public class Player extends ParentObj{
         goalie
     }
 
-    private int teamId;
+    private transient int teamId;
 
-    private int freeAgentId;
+    private transient int freeAgentId;
 
+    @SerializedName("captain")
     private boolean isCaptain;
 
-    private int seasonId;
+    public boolean isFreeAgent() {
+        return isFreeAgent;
+    }
+
+    public void setIsFreeAgent(boolean freeAgent) {
+        isFreeAgent = freeAgent;
+    }
+
+    private transient boolean isFreeAgent=false;
+
+    private transient int seasonId;
 
     private int skating;
 
@@ -59,7 +77,7 @@ public class Player extends ParentObj{
 
     private int saving;
 
-    private double strength;
+    private transient double strength;
 
     public int getAge() {
         return age;

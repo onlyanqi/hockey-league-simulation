@@ -1,11 +1,10 @@
 package simulation.model;
 
 
+import com.google.gson.annotations.SerializedName;
 import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
-import userIO.ConsoleOutput;
 import userIO.ConsoleOutputForTeamCreation;
-import userIO.GetInput;
 import userIO.UseInputForTeamCreation;
 
 import java.util.ArrayList;
@@ -15,6 +14,10 @@ public class Team extends ParentObj{
     public static final String GOALIE = "goalie";
     public static final String DEFENSE = "defense";
     public static final String FORWARD = "forward";
+
+    @SerializedName("teamName")
+    String name;
+
     public Team(){}
 
     public Team(int id){
@@ -34,14 +37,27 @@ public class Team extends ParentObj{
 
     private String mascot;
 
-    private int divisionId;
+    public String getName() {
+        return name;
+    }
 
-    private double strength;
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    private transient int divisionId;
+
+    private transient double strength;
+
+    @SerializedName("headCoach")
     private Coach coach;
 
-    private Manager manager;
+    private transient Manager manager;
 
+    @SerializedName("generalManager")
+    private String generalManagerName;
+
+    @SerializedName("players")
     private List<Player> playerList;
 
     public List<Player> getPlayerList() {
@@ -90,6 +106,7 @@ public class Team extends ParentObj{
 
     public void setManager(Manager manager) {
         this.manager = manager;
+        this.generalManagerName = manager.getName();
     }
 
     public void addTeam(ITeamFactory addTeamFactory) throws Exception {
@@ -136,6 +153,7 @@ public class Team extends ParentObj{
                 continue;
             }else if(chosenPlayersIdList.contains(playerId)){
                 teamCreationOutput.playerIdAlreadyChosenMessage(chosenPlayersIdList);
+                continue;
             }
             Player player = freeAgentList.get(playerId);
             if(numberOfGoalies!=2 && player.getPosition().toString().equals(GOALIE)){
