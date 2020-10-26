@@ -1,17 +1,14 @@
 package simulation.model;
 
 public class Manager extends ParentObj{
+    String name;
+
     public Manager() {
     }
 
     public Manager(int id) {
         setId(id);
     }
-
-//    public Manager(int id, IManagerFactory factory) throws Exception {
-//        setId(id);
-//        factory.loadManagerByLeagueId(id, this);
-//    }
 
     public Manager(Manager manager){
         this.setId(manager.getId());
@@ -22,7 +19,7 @@ public class Manager extends ParentObj{
         this.setTeamId(manager.teamId);
     }
 
-    private String name;
+
     public String getName() {
         return name;
     }
@@ -31,7 +28,7 @@ public class Manager extends ParentObj{
         this.name = name;
     }
 
-    private int leagueId;
+    private transient int leagueId;
 
     public int getLeagueId() {
         return leagueId;
@@ -40,7 +37,7 @@ public class Manager extends ParentObj{
     public void setLeagueId(int leagueId) {
         this.leagueId = leagueId;
     }
-    private int teamId;
+    private transient int teamId;
 
     public int getTeamId() {
         return teamId;

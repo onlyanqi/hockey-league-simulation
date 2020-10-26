@@ -17,9 +17,9 @@ public class ParentObj {
         parentObjFactory.loadParentObj(id, this);
     }
 
-    private int id;
+    private transient int id;
 
-    private String name;
+    transient String  name;
 
     private Date startDate;
 

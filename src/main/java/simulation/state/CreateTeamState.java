@@ -1,11 +1,10 @@
 package simulation.state;
 
 import db.data.*;
+import scala.tools.jline_embedded.console.UserInterruptException;
 import simulation.factory.*;
-import userIO.ConsoleOutput;
-import userIO.ConsoleOutputForTeamCreation;
-import userIO.GetInput;
-import userIO.UseInputForTeamCreation;
+import simulation.serializers.LeagueDataSerializer;
+import userIO.*;
 import simulation.model.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,8 @@ public class CreateTeamState implements IHockeyState {
 
     @Override
     public void entry() {
-        UseInputForTeamCreation teamCreationInput = new UseInputForTeamCreation();
-        ConsoleOutputForTeamCreation teamCreationOutput = new ConsoleOutputForTeamCreation();
+        IUserInputForTeamCreation teamCreationInput = new UseInputForTeamCreation();
+        IConsoleOutputForTeamCreation teamCreationOutput = new ConsoleOutputForTeamCreation();
         if(isLeaguePresent(league.getName())){
             teamCreationOutput.showLeagueAlreadyExistsError();
             System.out.println();
@@ -97,7 +96,9 @@ public class CreateTeamState implements IHockeyState {
         List<Player> newFreeAgentList= new ArrayList<>();
         for(int i=0;i<freeAgentList.size();i++){
             if(!chosenPlayersIdList.contains(i)){
-                newFreeAgentList.add(new Player(freeAgentList.get(i)));
+                Player newFreeAgent = new Player(freeAgentList.get(i));
+                newFreeAgent.setIsFreeAgent(true);
+                newFreeAgentList.add(newFreeAgent);
             }
         }
         return newFreeAgentList;
@@ -129,10 +130,10 @@ public class CreateTeamState implements IHockeyState {
         league.setFreeAgent(freeAgent);
         List<Conference> conferenceList = league.getConferenceList();
         for(Conference conference : conferenceList ){
-            if(conference.getName().equals(conferenceName)){
+            if(conference.getName().toLowerCase().equals(conferenceName.toLowerCase())){
                 List<Division> divisionList  = conference.getDivisionList();
                 for(Division division: divisionList){
-                    if(division.getName().equals(divisionName)) {
+                    if(division.getName().toLowerCase().equals(divisionName.toLowerCase())) {
                         division.getTeamList().add(team);
                     }
                 }
@@ -140,11 +141,12 @@ public class CreateTeamState implements IHockeyState {
             }
         }
         league.setConferenceList(conferenceList);
-        hockeyContext.getUser().setLeague(league);
     }
 
     @Override
     public IHockeyState exit() {
+        IUserInputForTeamCreation userInputForTeamCreation = new UseInputForTeamCreation();
+        IConsoleOutputForTeamCreation teamCreationOutput = new ConsoleOutputForTeamCreation();
 
         System.out.println("Please wait while we are saving your league information...");
 
@@ -157,6 +159,13 @@ public class CreateTeamState implements IHockeyState {
                     hockeyState = new CreateTeamState(hockeyContext);
                     break;
                 }else if(createAnotherTeam.toLowerCase().equals("n") || createAnotherTeam.toLowerCase().equals("no")){
+                    String performSerialization = userInputForTeamCreation.getUserChoiceForSerialization();
+                    if(performSerialization.toLowerCase().equals("y") || performSerialization.toLowerCase().equals("Yes")){
+                        LeagueDataSerializer dataSerializer = new LeagueDataSerializer();
+                        dataSerializer.serialize(league);
+                        hockeyContext.getUser().setLeague(league);
+                        teamCreationOutput.showSuccessfulSerializationMessage();
+                    }
                     hockeyState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
                     break;
                 }else{
@@ -166,26 +175,4 @@ public class CreateTeamState implements IHockeyState {
         return hockeyState;
     }
 
-    private int addFreeAgent(int leagueId, int seasonId) throws Exception {
-        FreeAgentConcrete freeAgentConcrete = new FreeAgentConcrete();
-        IFreeAgentFactory freeAgentDao = freeAgentConcrete.newAddFreeAgentFactory();
-        FreeAgent freeAgent = league.getFreeAgent();
-        freeAgent.setSeasonId(seasonId);
-        freeAgent.setLeagueId(leagueId);
-        freeAgent.addFreeAgent(freeAgentDao);
-        return freeAgent.getId();
-    }
-
-    private void addPlayerList(int teamId, int freeAgentId, int seasonId, List<Player> playerList) throws Exception {
-        if(playerList != null && !playerList.isEmpty()) {
-            PlayerConcrete playerConcrete = new PlayerConcrete();
-            IPlayerFactory addPlayerDao = playerConcrete.newAddPlayerFactory();
-            for (Player player : playerList) {
-                player.setTeamId(teamId);
-                player.setFreeAgentId(freeAgentId);
-                player.setSeasonId(seasonId);
-                addPlayerDao.addPlayer(player);
-            }
-        }
-    }
 }

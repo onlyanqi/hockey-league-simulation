@@ -1,5 +1,6 @@
 package simulation.model;
 
+import com.google.gson.annotations.SerializedName;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
@@ -10,6 +11,9 @@ import java.util.Date;
 import java.util.List;
 
 public class League extends ParentObj{
+
+    @SerializedName("leagueName")
+    String name;
 
     public League(){}
 
@@ -28,19 +32,33 @@ public class League extends ParentObj{
 
     private String country;
 
-    private int createdBy;
+    private transient int createdBy;
 
+    @SerializedName("conferences")
     private List<Conference> conferenceList;
 
+    @SerializedName("coaches")
     private List<Coach> coachList;
 
-    private List<Manager> managerList;
+    private transient List<Manager> managerList;
 
-    private FreeAgent freeAgent;
+    private List<String> generalManagers;
+
+    private transient FreeAgent freeAgent;
+
+    private List<Player> freeAgents;
 
     private Date currentDate;
 
     private GamePlayConfig gamePlayConfig;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     private transient Games games;
 
@@ -88,6 +106,10 @@ public class League extends ParentObj{
         this.currentDate = currentDate;
     }
 
+    public List<Player> getFreeAgentList(){
+        return freeAgents;
+    }
+
     public String getCountry() {
         return country;
     }
@@ -116,52 +138,33 @@ public class League extends ParentObj{
         return managerList;
     }
 
-    public Manager getManagerByName(List<Manager> managerList, String managerName){
-        for(int i=0;i<managerList.size();i++){
-            if(managerList.get(i).getName().equals(managerName)){
-                return managerList.get(i);
-            }else{
-                return null;
-            }
-        }
-        return null;
-    }
-
     public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject){
         int managerListSize = managerList.size();
-        for(int i=indexOfManagerObject; i<managerListSize-2;i++){
-            Manager manager = new Manager(managerList.get(i+1));
-            managerList.remove(i);
-            managerList.set(i, manager);
-        }
-  //      managerList.remove(managerListSize-1);
+        Manager manager = new Manager(managerList.get(managerListSize-1));
+        managerList.set(indexOfManagerObject, manager);
+        managerList.remove(managerListSize-1);
         return managerList;
-    }
-
-    public Coach getCoachByName(List<Coach> coachList, String coachName){
-        for(int i=0;i<coachList.size();i++){
-            if(coachList.get(i).getName().equals(coachName)){
-                return coachList.get(i);
-            }else{
-                return null;
-            }
-        }
-        return null;
     }
 
     public List<Coach> removeCoachFromCoachListById(List<Coach> coachList, int indexOfCoachObject){
         int coachListSize = coachList.size();
-        for(int i=indexOfCoachObject; i<coachListSize-2;i++){
-            Coach coach = new Coach(coachList.get(i+1));
-            coachList.remove(i);
-            coachList.set(i, coach);
-        }
- //       coachList.remove(coachListSize-1);
+        Coach coach = new Coach(coachList.get(coachListSize-1));
+        coachList.set(indexOfCoachObject, coach);
+        coachList.remove(coachListSize-1);
         return coachList;
     }
 
     public void setManagerList(List<Manager> managerList) {
         this.managerList = managerList;
+        this.generalManagers = createManagerNameList(managerList);
+    }
+
+    public List<String> createManagerNameList(List<Manager> managerList){
+        List<String> managerNameList = new ArrayList<>();
+        for(int i=0; i<managerList.size();i++){
+            managerNameList.add(managerList.get(i).getName());
+        }
+        return managerNameList;
     }
 
     public int getCreatedBy() {
@@ -178,6 +181,7 @@ public class League extends ParentObj{
 
     public void setFreeAgent(FreeAgent freeAgent) {
         this.freeAgent = freeAgent;
+        this.freeAgents = freeAgent.getPlayerList();
     }
 
     public void addLeague(ILeagueFactory addLeagueFactory) throws Exception {
