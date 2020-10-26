@@ -1,4 +1,5 @@
 package simulation.state;
+import simulation.RegularSeasonEvents.NHLEvents;
 import simulation.model.*;
 import userIO.ConsoleOutput;
 
@@ -6,6 +7,15 @@ import java.util.List;
 import java.util.Random;
 
 public class TrainingState implements ISimulateState {
+
+    private HockeyContext hockeyContext;
+    private League league;
+
+    public TrainingState(HockeyContext hockeyContext) {
+        this.hockeyContext = hockeyContext;
+        league = hockeyContext.getUser().getLeague();
+    }
+
     @Override
     public ISimulateState action() {
         ConsoleOutput.printToConsole("Training Players and Team!");
@@ -68,18 +78,18 @@ public class TrainingState implements ISimulateState {
     }
 
     private ISimulateState exit() {
-        Boolean unplannedGamesScheduled = true;
-        Boolean tradeDeadlinePassed = true;
+        NHLEvents nhlEvents = league.getNhlRegularSeasonEvents();
 
-        if(unplannedGamesScheduled){
-            return new SimulateGameState();
+        Games games = league.getGames();
+        List<Game> gamesOnCurrentDay = games.getGamesOnDate(league.getCurrentDate());
+        if(gamesOnCurrentDay.size()!=0){
+            return new SimulateGameState(hockeyContext);
         }else{
-            if(tradeDeadlinePassed){
-                return new AgingState();
+            if(nhlEvents.isTradeDeadlinePassed(league.getCurrentDate())){
+                return new AgingState(hockeyContext);
             }else{
-                return new ExecuteTradeState();
+                return new ExecuteTradeState(hockeyContext);
             }
         }
-
     }
 }

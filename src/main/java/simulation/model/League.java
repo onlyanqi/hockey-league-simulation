@@ -3,11 +3,11 @@ package simulation.model;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
+import simulation.RegularSeasonEvents.NHLEvents;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class League extends ParentObj{
 
@@ -41,6 +41,36 @@ public class League extends ParentObj{
     private Date currentDate;
 
     private GamePlayConfig gamePlayConfig;
+
+    private transient Games games;
+
+    private transient RegularSeasonScoreBoard regularSeasonScoreBoard;
+
+    private transient NHLEvents nhlEvents;
+
+    public NHLEvents getNhlRegularSeasonEvents() {
+        return nhlEvents;
+    }
+
+    public void setNhlRegularSeasonEvents(NHLEvents nhlEvents) {
+        this.nhlEvents = nhlEvents;
+    }
+
+    public RegularSeasonScoreBoard getRegularSeasonScoreBoard() {
+        return regularSeasonScoreBoard;
+    }
+
+    public void setRegularSeasonScoreBoard(RegularSeasonScoreBoard regularSeasonScoreBoard) {
+        this.regularSeasonScoreBoard = regularSeasonScoreBoard;
+    }
+
+    public Games getGames() {
+        return games;
+    }
+
+    public void setGames(Games games) {
+        this.games = games;
+    }
 
     public void setGamePlayConfig(GamePlayConfig gamePlayConfig){
         this.gamePlayConfig = gamePlayConfig;
@@ -180,16 +210,17 @@ public class League extends ParentObj{
     public void loadFreeAgentByLeagueId(IFreeAgentFactory loadFreeAgentFactory) throws Exception {
         this.freeAgent = loadFreeAgentFactory.loadFreeAgentByLeagueId(getId());
     }
-    public Date callAging (long span, TimeUnit unit){
-        this.setCurrentDate(new Date(this.getCurrentDate().getTime() + unit.toMillis(span)));
-        return this.getCurrentDate();
-    }
 
-    /*
-    source: https://stackoverflow.com/questions/1555262/calculating-the-difference-between-two-java-date-instances
-     */
-    public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-        long diffInMillis = date2.getTime() - date1.getTime();
-        return timeUnit.convert(diffInMillis,TimeUnit.MILLISECONDS);
+    public Team getTeamByTeamName(String teamName){
+        for (Conference conference : getConferenceList()){
+            for (Division division : conference.getDivisionList()) {
+                for (Team team : division.getTeamList()) {
+                    if(team.getName().equals(teamName)){
+                        return team;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
