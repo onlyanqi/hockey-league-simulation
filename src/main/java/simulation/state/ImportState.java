@@ -222,6 +222,7 @@ public class ImportState implements IHockeyState {
                 player.setChecking(checking);
                 player.setSaving(saving);
                 player.setStrength();
+                player.setInjured(false);
                 playerList.add(player);
 
             }
@@ -338,6 +339,7 @@ public class ImportState implements IHockeyState {
                 player.setChecking(checking);
                 player.setSaving(saving);
                 player.setStrength();
+                player.setInjured(false);
 
                 if (player.validName()) {
                     freeAgentList.add(player);

@@ -98,13 +98,18 @@ public class Team extends ParentObj{
 
     public void setStrength() {
         for(Player player : getPlayerList()){
-            strength += player.getStrength();
+            if (player.getInjured()){
+                this.strength += 0.5*player.getStrength();
+            }else{
+                this.strength += player.getStrength();
+            }
         }
     }
 
     public double getStrength(){
         return strength;
     }
+
     public void loadPlayerListByTeamId(IPlayerFactory loadPlayerFactory) throws Exception {
         this.playerList = loadPlayerFactory.loadPlayerListByTeamId(getId());
     }
