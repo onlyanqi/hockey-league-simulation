@@ -180,4 +180,16 @@ public class League extends ParentObj{
     public void loadFreeAgentByLeagueId(IFreeAgentFactory loadFreeAgentFactory) throws Exception {
         this.freeAgent = loadFreeAgentFactory.loadFreeAgentByLeagueId(getId());
     }
+    public Date callAging (long span, TimeUnit unit){
+        this.setCurrentDate(new Date(this.getCurrentDate().getTime() + unit.toMillis(span)));
+        return this.getCurrentDate();
+    }
+
+    /*
+    source: https://stackoverflow.com/questions/1555262/calculating-the-difference-between-two-java-date-instances
+     */
+    public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillis = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillis,TimeUnit.MILLISECONDS);
+    }
 }
