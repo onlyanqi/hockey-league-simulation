@@ -26,7 +26,7 @@ public class AdvanceTimeState implements ISimulateState {
     }
 
     private ISimulateState exit() {
-        NHLEvents nhlEvents = league.getNhlRegularSeasonEvents();
+        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         if(nhlEvents.isEndOfRegularSeason(league.getCurrentDate())){
             return new GeneratePlayoffScheduleState(hockeyContext);
         }else{

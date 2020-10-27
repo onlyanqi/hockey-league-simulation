@@ -1,4 +1,5 @@
 package simulation.state;
+
 import simulation.RegularSeasonEvents.NHLEvents;
 import simulation.model.*;
 import userIO.ConsoleOutput;
@@ -6,12 +7,13 @@ import userIO.ConsoleOutput;
 import java.util.List;
 import java.util.Random;
 
-public class TrainingState implements ISimulateState {
+public class TrainingState implements ISimulateState, ITrainingState {
 
     private HockeyContext hockeyContext;
     private League league;
 
     public TrainingState(HockeyContext hockeyContext) {
+        //Null check
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
     }
@@ -22,90 +24,94 @@ public class TrainingState implements ISimulateState {
         return exit();
     }
 
-    private void StatIncreaseCheck(League league) {
-        List<Conference> conferenceList=league.getConferenceList();
-        for(Conference conference : conferenceList){
+    @Override
+    public void statIncreaseCheck(League league) {
+        List<Conference> conferenceList = league.getConferenceList();
+        for (Conference conference : conferenceList) {
             List<Division> divisionList = conference.getDivisionList();
-            for(Division division : divisionList){
+            for (Division division : divisionList) {
                 List<Team> teamList = division.getTeamList();
-                for(Team team : teamList){
+                for (Team team : teamList) {
                     List<Player> playerList = team.getPlayerList();
-                    for(Player player : playerList){
-                        StatIncreaseCheckPlayer(player, team.getCoach());
+                    for (Player player : playerList) {
+                        statIncreaseCheckForPlayer(player, team.getCoach());
                     }
                 }
             }
         }
     }
 
-    private void StatIncreaseCheckPlayer(Player player, Coach headCoach){
+    @Override
+    public void statIncreaseCheckForPlayer(Player player, Coach headCoach) {
 
-        double coachStrengthShooting=headCoach.getShooting();
-        double coachStrengthSkating = headCoach.getSkating();
-        double coachStrengthChecking = headCoach.getChecking();
-        double coachStrengthSaving = headCoach.getSaving();
+        double coachShootingStrength = headCoach.getShooting();
+        double coachSkatingStrength = headCoach.getSkating();
+        double coachCheckingStrength = headCoach.getChecking();
+        double coachSavingStrength = headCoach.getSaving();
 
-        if(isRandomLess(coachStrengthShooting)){
-            if(isStrengthInRangeAfterIncrease(player.getShooting()+1)){
-                player.setShooting(player.getShooting()+1);
+        if (isRandomLess(coachShootingStrength)) {
+            if (isStrengthInRangeAfterIncrease(player.getShooting() + 1)) {
+                player.setShooting(player.getShooting() + 1);
             }
-        }else{
+        } else {
             // run injury check
         }
-        if(isRandomLess(coachStrengthSkating)){
-            if(isStrengthInRangeAfterIncrease(player.getSkating()+1)){
-                player.setSkating(player.getSkating()+1);
+        if (isRandomLess(coachSkatingStrength)) {
+            if (isStrengthInRangeAfterIncrease(player.getSkating() + 1)) {
+                player.setSkating(player.getSkating() + 1);
             }
 
-        }else{
+        } else {
             // run injury check
         }
-        if(isRandomLess(coachStrengthChecking)){
-            if(isStrengthInRangeAfterIncrease(player.getChecking()+1)){
-                player.setChecking(player.getChecking()+1);
+        if (isRandomLess(coachCheckingStrength)) {
+            if (isStrengthInRangeAfterIncrease(player.getChecking() + 1)) {
+                player.setChecking(player.getChecking() + 1);
             }
 
-        }else{
+        } else {
             // run injury check
         }
-        if(isRandomLess(coachStrengthSaving)){
-            if(isStrengthInRangeAfterIncrease(player.getSaving()+1)){
-                player.setSaving(player.getSaving()+1);
+        if (isRandomLess(coachSavingStrength)) {
+            if (isStrengthInRangeAfterIncrease(player.getSaving() + 1)) {
+                player.setSaving(player.getSaving() + 1);
             }
-        }else{
+        } else {
             // run injury check
         }
     }
 
-    boolean isStrengthInRangeAfterIncrease(int strengthAfterIncrease){
-        if(strengthAfterIncrease>=1 && strengthAfterIncrease<=20){
+    @Override
+    public boolean isStrengthInRangeAfterIncrease(int strengthAfterIncrease) {
+        if (strengthAfterIncrease >= 1 && strengthAfterIncrease <= 20) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    boolean isRandomLess(double coachStrength){
+    @Override
+    public boolean isRandomLess(double coachStrength) {
         Random rand = new Random();
         double randomNumber = rand.nextDouble();
-        if(randomNumber < coachStrength){
+        if (randomNumber < coachStrength) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    private ISimulateState exit() {
-        NHLEvents nhlEvents = league.getNhlRegularSeasonEvents();
+    public ISimulateState exit() {
+        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
         Games games = league.getGames();
         List<Game> gamesOnCurrentDay = games.getGamesOnDate(league.getCurrentDate());
-        if(gamesOnCurrentDay.size()!=0){
+        if (gamesOnCurrentDay.size() != 0) {
             return new SimulateGameState(hockeyContext);
-        }else{
-            if(nhlEvents.isTradeDeadlinePassed(league.getCurrentDate())){
+        } else {
+            if (nhlEvents.isTradeDeadlinePassed(league.getCurrentDate())) {
                 return new AgingState(hockeyContext);
-            }else{
+            } else {
                 return new ExecuteTradeState(hockeyContext);
             }
         }

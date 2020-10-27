@@ -11,12 +11,10 @@ public class PlayerSerializer implements JsonSerializer<Player> {
     public JsonElement serialize(Player player, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject jsonObjectPlayer = (JsonObject) new GsonBuilder().create().toJsonTree(player);
 
-        if(player.isFreeAgent()){
+        if (player.isFreeAgent()) {
             jsonObjectPlayer.remove("captain");
         }
-//        String name = player.getName();
-//        jsonObjectPlayer.remove("name");
-//        jsonObjectPlayer.addProperty("playerName",name);
+
         return jsonObjectPlayer;
     }
 }

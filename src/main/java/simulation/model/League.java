@@ -67,7 +67,7 @@ public class League extends ParentObj{
 
     private NHLEvents nhlEvents;
 
-    public NHLEvents getNhlRegularSeasonEvents() {
+    public NHLEvents getNHLRegularSeasonEvents() {
         return nhlEvents;
     }
 

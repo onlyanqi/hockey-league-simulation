@@ -14,7 +14,7 @@ public class ExecuteTradeState implements ISimulateState {
         return exit();
     }
 
-    private ISimulateState exit() {
+    public ISimulateState exit() {
         return new AgingState(hockeyContext);
     }
 }

@@ -1,5 +1,9 @@
 package simulation.state;
 
+import config.AppConfig;
+import userIO.IConsoleOutputForTeamCreation;
+import userIO.IUserInputForTeamCreation;
+
 import java.util.Scanner;
 
 public class PlayerChoiceState implements IHockeyState{
@@ -34,7 +38,10 @@ public class PlayerChoiceState implements IHockeyState{
             case "importState":
             {
                 if(userInput.equals("1")){
-                    CreateTeamState createTeamState = new CreateTeamState(hockeyContext);
+                    IUserInputForTeamCreation inputForTeamCreation = AppConfig.getInstance().getInputForTeamCreation();
+                    IConsoleOutputForTeamCreation outputForTeamCreation = AppConfig.getInstance().getOutputForTeamCreation();
+                    CreateTeamState createTeamState = new CreateTeamState(hockeyContext,
+                            inputForTeamCreation,outputForTeamCreation);
                     return createTeamState;
                 }else if(userInput.equals("2")){
                     LoadTeamState loadTeamState = new LoadTeamState(hockeyContext);
@@ -54,4 +61,5 @@ public class PlayerChoiceState implements IHockeyState{
         }
         return null;
     }
+
 }

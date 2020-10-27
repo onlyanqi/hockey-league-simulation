@@ -26,7 +26,7 @@ public class InjuryCheckState implements ISimulateState {
     }
 
     private ISimulateState exit() {
-        NHLEvents nhlEvents = league.getNhlRegularSeasonEvents();
+        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
         //Mani, delete the game from the gamesFromCurrentDay List.
         Games games = league.getGames();
