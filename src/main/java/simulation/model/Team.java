@@ -24,6 +24,10 @@ public class Team extends ParentObj {
     private transient double strength;
     @SerializedName("headCoach")
     private Coach coach;
+    private Boolean aiTeam;
+
+
+
     private transient Manager manager;
     @SerializedName("generalManager")
     private String generalManagerName;
@@ -115,6 +119,13 @@ public class Team extends ParentObj {
 
     public double getStrength() {
         return strength;
+    }
+    public Boolean getAiTeam() {
+        return aiTeam;
+    }
+
+    public void setAiTeam(Boolean aiTeam) {
+        this.aiTeam = aiTeam;
     }
 
     public void loadPlayerListByTeamId(IPlayerFactory loadPlayerFactory) throws Exception {
