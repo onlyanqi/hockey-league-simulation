@@ -1,11 +1,11 @@
 package simulation.state;
 
 import simulation.RegularSeasonEvents.NHLEvents;
-import simulation.RegularSeasonEvents.NHLRegularSeasonInitialize;
 import simulation.model.*;
 import util.DateUtil;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class InitializeSeasonState implements ISimulateState {
@@ -39,12 +39,11 @@ public class InitializeSeasonState implements ISimulateState {
 
     private void InitializeRegularSeason() throws ParseException {
 
-        NHLRegularSeasonInitialize nhlRegularSeasonInitialize = new NHLRegularSeasonInitialize();
         NHLEvents nhlEvents = new NHLEvents();
 
 
-        Date currentDate = DateUtil.minusDays(nhlEvents.getRegularSeasonStartDate(), 1);
-        Date endDate = nhlEvents.getEndOfRegularSeason();
+        LocalDate currentDate = DateUtil.minusDays(nhlEvents.getRegularSeasonStartDate(), 1);
+        LocalDate endDate = nhlEvents.getEndOfRegularSeason();
 
         league.setCurrentDate(currentDate);
 
@@ -153,7 +152,7 @@ public class InitializeSeasonState implements ISimulateState {
         //Hey Mani, delete timestamp in the date thing :)
 
 
-        int diffInDays = (int) ((endDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));
+        int diffInDays = (int) DateUtil.diffDays(currentDate,endDate);
 
         Games games = new Games();
         List<Game> gameList1 = games.getGameList();
