@@ -49,21 +49,25 @@ public class TrainingState implements ISimulateState {
             player.setShooting(player.getShooting()+1);
         }else{
             // run injury check
+            player.injuryCheck (league);
         }
         if(isRandomLess(coachStrengthSkating)){
             player.setSkating(player.getSkating()+1);
         }else{
             // run injury check
+            player.injuryCheck (league);
         }
         if(isRandomLess(coachStrengthChecking)){
             player.setChecking(player.getChecking()+1);
         }else{
             // run injury check
+            player.injuryCheck (league);
         }
         if(isRandomLess(coachStrengthSaving)){
             player.setSaving(player.getSaving()+1);
         }else{
             // run injury check
+            player.injuryCheck (league);
         }
     }
 

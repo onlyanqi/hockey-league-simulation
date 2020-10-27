@@ -1,10 +1,9 @@
 package simulation.model;
 
 import db.data.IPlayerFactory;
-
+import util.DateUtil;
 import java.util.Date;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Player extends ParentObj {
 
@@ -147,10 +146,10 @@ public class Player extends ParentObj {
     public void setStrength() {
         switch (position) {
             case forward:
-                this.strength = this.getSkating() + this.getShooting() + (this.getChecking() / 2);
+                this.strength = this.getSkating() + this.getShooting() + (double)(this.getChecking() / 2);
                 break;
             case defense:
-                this.strength = this.getSkating() + this.getChecking() + (this.getShooting() / 2);
+                this.strength = this.getSkating() + this.getChecking() + (double)(this.getShooting() / 2);
                 break;
             case goalie:
                 this.strength = this.getSkating() + this.getSaving();
@@ -202,41 +201,41 @@ public class Player extends ParentObj {
         addPlayerFactory.addPlayer(this);
     }
 
+    public boolean retirementCheck(Aging aging) {
+        double increaseRate = 0.5 / (aging.getMaximumAge() - aging.getAverageRetirementAge());
+        if (this.age < aging.getAverageRetirementAge()) {
+            Random randomRetire1 = new Random();
+            double chance1 = (aging.getAverageRetirementAge() - this.age) * (1 - increaseRate) * 0.5;
+            return randomRetire1.nextDouble() < chance1;
+        } else if (this.age < aging.getMaximumAge()) {
+            Random randomRetire2 = new Random();
+            double chance2 = (this.age - aging.getAverageRetirementAge()) * (1 + increaseRate) * 0.5;
+            return randomRetire2.nextDouble() < chance2;
+        } else return this.age >= aging.getMaximumAge();
+    }
+
     public void getOlder() {
         this.age++;
     }
 
-    public boolean retirementCheck(Aging aging) {
-        double increaseRate = 0.5 / (aging.getMaximumAge() - aging.getAverageRetirementAge());
-        if(this.age < aging.getAverageRetirementAge()){
-            Random randomRetire1 = new Random();
-            double chance1 = (aging.getAverageRetirementAge() - this.age) * ( 1 - increaseRate) * 0.5;
-            return randomRetire1.nextDouble() < chance1;
-        }else if (this.age < aging.getMaximumAge()){
-            Random randomRetire2 = new Random();
-            double chance2 = (this.age - aging.getAverageRetirementAge()) * ( 1 + increaseRate) * 0.5;
-            return randomRetire2.nextDouble() < chance2;
-        }
-        else return this.age >= aging.getMaximumAge();
-    }
-
-    public boolean injuryCheck(League league) {
+    public void injuryCheck(League league) {
         Random randomInjuryChance = new Random();
         double chanceOfInjury = randomInjuryChance.nextDouble();
-        if (league.getDateDiff(this.getInjuryStartDate(), league.getCurrentDate(), TimeUnit.DAYS) >= this.getInjuryDatesRange()) {
-            this.setInjured(false);
-            this.setInjuryStartDate(null);
-        }
-        if (this.getInjured()) {
-            return true;
-        } else if (chanceOfInjury < league.getGamePlayConfig().getInjury().getRandomInjuryChance()) {
+        if (!this.getInjured() && chanceOfInjury < league.getGamePlayConfig().getInjury().getRandomInjuryChance()) {
             this.setInjuryStartDate(league.getCurrentDate());
             Random randomInjuryDays = new Random();
             int injuryDaysHigh = league.getGamePlayConfig().getInjury().getInjuryDaysHigh();
             int injuryDaysLow = league.getGamePlayConfig().getInjury().getInjuryDaysLow();
-            this.setInjuryDatesRange(randomInjuryDays.nextInt( injuryDaysHigh - injuryDaysLow ) + injuryDaysLow);
+            this.setInjuryDatesRange(randomInjuryDays.nextInt(injuryDaysHigh - injuryDaysLow) + injuryDaysLow);
             this.setInjured(true);
         }
-        return this.getInjured();
     }
+
+    public void agingInjuryRecovery(League league) {
+        if (this.getInjured() && DateUtil.getDateDiff(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
+            this.setInjured(false);
+            this.setInjuryStartDate(null);
+        }
+    }
+
 }

@@ -170,7 +170,7 @@ public class ImportState implements IHockeyState {
     }
     private List<Player> loadPlayerJSON(JSONArray players){
 
-        ArrayList<Player> playerList = new ArrayList<Player>();
+        ArrayList<Player> playerList = new ArrayList<>();
 
         ArrayList<Boolean> captainList = new ArrayList<>();
 
