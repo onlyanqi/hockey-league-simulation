@@ -5,7 +5,10 @@ import db.data.ILeagueFactory;
 import simulation.factory.LeagueConcrete;
 import simulation.model.*;
 import simulation.serializers.LeagueDataSerializer;
-import userIO.*;
+import userIO.ConsoleOutput;
+import userIO.GetInput;
+import userIO.IConsoleOutputForTeamCreation;
+import userIO.IUserInputForTeamCreation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,16 +183,10 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
                 IUserInputForTeamCreation inputForTeamCreation = AppConfig.getInstance().getInputForTeamCreation();
                 IConsoleOutputForTeamCreation outputForTeamCreation = AppConfig.getInstance().getOutputForTeamCreation();
                 hockeyState = new CreateTeamState(hockeyContext,
-                        inputForTeamCreation,outputForTeamCreation);
+                        inputForTeamCreation, outputForTeamCreation);
                 break;
             } else if (createAnotherTeam.toLowerCase().equals("n") || createAnotherTeam.toLowerCase().equals("no")) {
-                String performSerialization = teamCreationInput.getUserChoiceForSerialization();
-                if (performSerialization.toLowerCase().equals("y") || performSerialization.toLowerCase().equals("Yes")) {
-                    LeagueDataSerializer dataSerializer = AppConfig.getInstance().getDataSerializer();
-                    dataSerializer.serialize(league);
-                    hockeyContext.getUser().setLeague(league);
-                    teamCreationOutput.showSuccessfulSerializationMessage();
-                }
+                hockeyContext.getUser().setLeague(league);
                 hockeyState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
                 break;
             } else {
@@ -198,5 +195,4 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         }
         return hockeyState;
     }
-
 }

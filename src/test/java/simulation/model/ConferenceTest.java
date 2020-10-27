@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ConferenceTest {
@@ -14,7 +15,7 @@ public class ConferenceTest {
     private static IConferenceFactory loadConferenceFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadConferenceFactory = new ConferenceMock();
     }
 
@@ -47,10 +48,10 @@ public class ConferenceTest {
     }
 
     @Test
-    public void setLeagueIdTest(){
+    public void setLeagueIdTest() {
         Conference conference = new Conference();
         int leagueId = 1;
-        conference.setLeagueId( leagueId);
+        conference.setLeagueId(leagueId);
         assertTrue(conference.getLeagueId() == leagueId);
     }
 

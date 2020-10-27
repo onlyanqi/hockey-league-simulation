@@ -1,6 +1,6 @@
 package simulation.state;
 
-public class PersistState implements ISimulateState{
+public class PersistState implements ISimulateState {
 
     private HockeyContext hockeyContext;
 
@@ -16,9 +16,9 @@ public class PersistState implements ISimulateState{
 
     private ISimulateState exit() {
         Boolean stanleyCupDetermined = true;
-        if(stanleyCupDetermined){
+        if (stanleyCupDetermined) {
             return null;
-        }else{
+        } else {
             return new AdvanceTimeState(hockeyContext);
         }
     }

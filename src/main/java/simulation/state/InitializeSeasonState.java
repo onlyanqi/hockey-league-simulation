@@ -6,19 +6,31 @@ import util.DateUtil;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class InitializeSeasonState implements ISimulateState {
 
+    private final int TotalGamesPerUser = 82;
     private League league;
     private HockeyContext hockeyContext;
-    private final int TotalGamesPerUser = 82;
-
 
 
     public InitializeSeasonState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
+    }
+
+    public static boolean checkMaxGamesReached(List<Game> gameList, String name, int count) {
+        int i = 0;
+        for (Game g : gameList) {
+            if (g.getTeam1().equals(name) || g.getTeam2().equals(name)) {
+                i++;
+            }
+        }
+        if (i >= count) return false;
+        else return true;
     }
 
     @Override
@@ -136,7 +148,7 @@ public class InitializeSeasonState implements ISimulateState {
             }
         }
 
-        for (Conference conference2 : league.getConferenceList()){
+        for (Conference conference2 : league.getConferenceList()) {
             for (Division division : conference2.getDivisionList()) {
                 for (Team team : division.getTeamList()) {
                     int i = 0;
@@ -152,16 +164,16 @@ public class InitializeSeasonState implements ISimulateState {
         //Hey Mani, delete timestamp in the date thing :)
 
 
-        int diffInDays = (int) DateUtil.diffDays(currentDate,endDate);
+        int diffInDays = (int) DateUtil.diffDays(currentDate, endDate);
 
         Games games = new Games();
         List<Game> gameList1 = games.getGameList();
         Random rand = new Random();
 
         //Hey Mani, also make sure a team wont play more than one game on same day.
-        for(int i=0;i<diffInDays;i++){
-            currentDate = DateUtil.addDays(currentDate,1);
-            for(int j=0;j<TotalGames/diffInDays;j++){
+        for (int i = 0; i < diffInDays; i++) {
+            currentDate = DateUtil.addDays(currentDate, 1);
+            for (int j = 0; j < TotalGames / diffInDays; j++) {
                 int randomNumber = rand.nextInt(gameList.size());
                 Game game = gameList.get(randomNumber);
                 game.setDate(currentDate);
@@ -170,8 +182,8 @@ public class InitializeSeasonState implements ISimulateState {
             }
         }
 
-        currentDate = DateUtil.addDays(currentDate,1);
-        for(int j=0;j<TotalGames%diffInDays;j++){
+        currentDate = DateUtil.addDays(currentDate, 1);
+        for (int j = 0; j < TotalGames % diffInDays; j++) {
             int randomNumber = rand.nextInt(gameList.size());
             Game game = gameList.get(randomNumber);
             game.setDate(currentDate);
@@ -208,10 +220,9 @@ public class InitializeSeasonState implements ISimulateState {
 
     }
 
-
     private Integer getTotalTeamsCount() {
         int teamsCount = 0;
-        for(Conference conference2: league.getConferenceList()) {
+        for (Conference conference2 : league.getConferenceList()) {
             for (Division division : conference2.getDivisionList()) {
                 for (Team team : division.getTeamList()) {
                     teamsCount = teamsCount + 1;
@@ -219,17 +230,6 @@ public class InitializeSeasonState implements ISimulateState {
             }
         }
         return teamsCount;
-    }
-
-    public static boolean checkMaxGamesReached(List<Game> gameList, String name, int count){
-        int i =0;
-        for(Game g: gameList){
-            if(g.getTeam1().equals(name) ||g.getTeam2().equals(name)){
-                i++;
-            }
-        }
-        if(i >= count) return false;
-        else return true;
     }
 
     public League getLeague() {

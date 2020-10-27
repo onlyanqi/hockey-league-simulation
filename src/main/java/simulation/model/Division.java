@@ -7,14 +7,15 @@ import db.data.ITeamFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Division extends ParentObj{
+public class Division extends ParentObj {
 
-    @SerializedName("divisionName")
-    String name;
+    private int conferenceId;
+    private List<Team> teamList;
 
-    public Division(){}
+    public Division() {
+    }
 
-    public Division(int id){
+    public Division(int id) {
         setId(id);
     }
 
@@ -22,19 +23,6 @@ public class Division extends ParentObj{
         setId(id);
         factory.loadDivisionById(id, this);
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    private transient int conferenceId;
-
-    @SerializedName("teams")
-    private List<Team> teamList;
 
     public List<Team> getTeamList() {
         return teamList;
@@ -60,11 +48,12 @@ public class Division extends ParentObj{
         this.teamList = teamFactory.loadTeamListByDivisionId(getId());
     }
 
-    public List<String> getTeamNameList(){
+    public List<String> getTeamNameList() {
         List<String> teamNameList = new ArrayList<>();
-        for(Team team: this.getTeamList()){
+        for (Team team : this.getTeamList()) {
             teamNameList.add(team.getName().toLowerCase());
         }
         return teamNameList;
     }
+
 }

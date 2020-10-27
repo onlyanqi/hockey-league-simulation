@@ -2,8 +2,6 @@ package simulation.model;
 
 import db.data.ILeagueFactory;
 import db.data.IUserFactory;
-import simulation.model.League;
-import simulation.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,7 @@ public class UserMock implements IUserFactory {
     @Override
     public void loadUserById(int id, User user) throws Exception {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all correct data
                 user.setId(1);

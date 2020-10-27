@@ -16,21 +16,21 @@ public class TeamStanding {
         this.regularSeasonScoreBoard = regularSeasonScoreBoard;
     }
 
-    public HashMap<String, Integer> getTeamsRankAcrossLeague(){
+    public HashMap<String, Integer> getTeamsRankAcrossLeague() {
         HashMap<String, Integer> teamsScore = regularSeasonScoreBoard.getTeamsScore();
         return sortHashMap(teamsScore);
     }
 
-    public HashMap<String, Integer> getTeamsRankAcrossConference(League league, String conferenceName){
+    public HashMap<String, Integer> getTeamsRankAcrossConference(League league, String conferenceName) {
 
         HashMap<String, Integer> teamsScore = regularSeasonScoreBoard.getTeamsScore();
-        HashMap<String,Integer> teamsScoreWithinConference = new HashMap<>();
+        HashMap<String, Integer> teamsScoreWithinConference = new HashMap<>();
 
-        for(Conference conference: league.getConferenceList() ){
-            for(Division division: conference.getDivisionList()){
-                for(Team team: division.getTeamList()){
-                    if(conference.getName().equals(conferenceName)){
-                        teamsScoreWithinConference.put(team.getName(),teamsScore.get(team.getName()));
+        for (Conference conference : league.getConferenceList()) {
+            for (Division division : conference.getDivisionList()) {
+                for (Team team : division.getTeamList()) {
+                    if (conference.getName().equals(conferenceName)) {
+                        teamsScoreWithinConference.put(team.getName(), teamsScore.get(team.getName()));
                     }
                 }
             }
@@ -38,15 +38,15 @@ public class TeamStanding {
         return sortHashMap(teamsScoreWithinConference);
     }
 
-    public HashMap<String, Integer> getTeamsRankAcrossDivision(League league, String divisionName){
+    public HashMap<String, Integer> getTeamsRankAcrossDivision(League league, String divisionName) {
         HashMap<String, Integer> teamsScore = regularSeasonScoreBoard.getTeamsScore();
-        HashMap<String,Integer> teamsScoreWithinDivision = new HashMap<>();
+        HashMap<String, Integer> teamsScoreWithinDivision = new HashMap<>();
 
-        for(Conference conference: league.getConferenceList() ){
-            for(Division division: conference.getDivisionList()){
-                for(Team team: division.getTeamList()){
-                    if(division.getName().equals(divisionName)){
-                        teamsScoreWithinDivision.put(team.getName(),teamsScore.get(team.getName()));
+        for (Conference conference : league.getConferenceList()) {
+            for (Division division : conference.getDivisionList()) {
+                for (Team team : division.getTeamList()) {
+                    if (division.getName().equals(divisionName)) {
+                        teamsScoreWithinDivision.put(team.getName(), teamsScore.get(team.getName()));
                     }
                 }
             }
@@ -62,17 +62,16 @@ public class TeamStanding {
         this.teamsRank = teamsRank;
     }
 
-    public HashMap<String, Integer> sortHashMap(HashMap<String, Integer> teamsScore){
+    public HashMap<String, Integer> sortHashMap(HashMap<String, Integer> teamsScore) {
         //Reference : https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/
         // Create a list from elements of HashMap
-        List<Map.Entry<String, Integer> > teamsScoreList =
-                new LinkedList<Map.Entry<String, Integer> >(teamsScore.entrySet());
+        List<Map.Entry<String, Integer>> teamsScoreList =
+                new LinkedList<Map.Entry<String, Integer>>(teamsScore.entrySet());
 
         // Sort the list
-        Collections.sort(teamsScoreList, new Comparator<Map.Entry<String, Integer> >() {
+        Collections.sort(teamsScoreList, new Comparator<Map.Entry<String, Integer>>() {
             public int compare(Map.Entry<String, Integer> team1score,
-                               Map.Entry<String, Integer> team2score)
-            {
+                               Map.Entry<String, Integer> team2score) {
                 return (team1score.getValue()).compareTo(team2score.getValue());
             }
         });

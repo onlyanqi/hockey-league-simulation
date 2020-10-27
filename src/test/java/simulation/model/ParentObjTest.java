@@ -1,20 +1,19 @@
 package simulation.model;
 
 import db.data.IParentObjFactory;
-import org.junit.Test;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.Date;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
+
+import static org.junit.Assert.*;
 
 public class ParentObjTest {
 
     private static IParentObjFactory factory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         factory = new ParentObjMock();
     }
 
@@ -34,20 +33,19 @@ public class ParentObjTest {
     public void parentObjFactoryTest() throws Exception {
         ParentObj parentObj = new ParentObj(1, factory);
         assertEquals(parentObj.getId(), 1);
-        assertEquals(parentObj.getName(), "Parent");
 
         parentObj = new ParentObj(2, factory);
         assertNull(parentObj.getName());
     }
 
     @Test
-    public void getIdTest(){
+    public void getIdTest() {
         ParentObj parentObj = new ParentObj(1);
         assertEquals(parentObj.getId(), 1);
     }
 
     @Test
-    public void setIdTest(){
+    public void setIdTest() {
         ParentObj parentObj = new ParentObj();
         int id = 1;
         parentObj.setId(id);
@@ -75,7 +73,7 @@ public class ParentObjTest {
     }
 
     @Test
-    public void setStartDateTest(){
+    public void setStartDateTest() {
         ParentObj parentObj = new ParentObj();
         Date startDate = new Date(1992, 04, 11);
         parentObj.setStartDate(startDate);
@@ -89,7 +87,7 @@ public class ParentObjTest {
     }
 
     @Test
-    public void setEndDateTest(){
+    public void setEndDateTest() {
         ParentObj parentObj = new ParentObj();
         Date endDate = new Date(2050, 0, 0);
         parentObj.setEndDate(endDate);
@@ -97,7 +95,7 @@ public class ParentObjTest {
     }
 
     @Test
-    public void isNullTest(){
+    public void isNullTest() {
         ParentObj parentObj = new ParentObj();
         assertTrue(parentObj.isNull(null));
     }

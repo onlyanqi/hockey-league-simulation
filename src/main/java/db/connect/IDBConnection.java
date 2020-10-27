@@ -6,6 +6,7 @@ import java.util.Properties;
 public interface IDBConnection {
 
     Connection getConnection() throws Exception;
+
     String formDBURL(Properties prop);
 
 }

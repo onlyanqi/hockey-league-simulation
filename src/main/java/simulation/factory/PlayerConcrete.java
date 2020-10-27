@@ -6,15 +6,15 @@ import simulation.model.Player;
 
 public class PlayerConcrete {
 
-    public Player newPlayer(){
+    public Player newPlayer() {
         return new Player();
     }
 
-    public IPlayerFactory newLoadPlayerFactory(){
+    public IPlayerFactory newLoadPlayerFactory() {
         return new PlayerDao();
     }
 
-    public IPlayerFactory newAddPlayerFactory(){
+    public IPlayerFactory newAddPlayerFactory() {
         return new PlayerDao();
     }
 

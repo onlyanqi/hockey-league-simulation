@@ -55,7 +55,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
             }
         } else {
             // run injury check
-            player.injuryCheck (league);
+            player.injuryCheck(league);
         }
         if (isRandomLess(coachSkatingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getSkating() + 1)) {
@@ -64,7 +64,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
         } else {
             // run injury check
-            player.injuryCheck (league);
+            player.injuryCheck(league);
         }
         if (isRandomLess(coachCheckingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getChecking() + 1)) {
@@ -73,7 +73,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
         } else {
             // run injury check
-            player.injuryCheck (league);
+            player.injuryCheck(league);
         }
         if (isRandomLess(coachSavingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getSaving() + 1)) {
@@ -81,7 +81,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
             }
         } else {
             // run injury check
-            player.injuryCheck (league);
+            player.injuryCheck(league);
         }
     }
 

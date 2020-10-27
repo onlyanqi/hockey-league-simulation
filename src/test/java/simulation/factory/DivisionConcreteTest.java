@@ -1,33 +1,33 @@
 package simulation.factory;
 
 import db.dao.DivisionDao;
-import simulation.model.Division;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
+import simulation.model.Division;
+
+import static org.junit.Assert.assertTrue;
 
 public class DivisionConcreteTest {
 
     private DivisionConcrete divisionConcrete;
 
     @Before
-    public void init(){
+    public void init() {
         divisionConcrete = new DivisionConcrete();
     }
 
     @Test
-    public void newDivisionTest(){
+    public void newDivisionTest() {
         assertTrue(divisionConcrete.newDivision() instanceof Division);
     }
 
     @Test
-    public void newLoadDivisionFactory(){
+    public void newLoadDivisionFactory() {
         assertTrue(divisionConcrete.newLoadDivisionFactory() instanceof DivisionDao);
     }
 
     @Test
-    public void newAddDivisionFactory(){
+    public void newAddDivisionFactory() {
         assertTrue(divisionConcrete.newAddDivisionFactory() instanceof DivisionDao);
     }
 

@@ -1,14 +1,12 @@
 package simulation.model;
 
 public class Injury {
+    private double randomInjuryChance;
+    private int injuryDaysLow;
+    private int injuryDaysHigh;
+
     public Injury() {
     }
-
-    private double randomInjuryChance;
-
-    private int injuryDaysLow;
-
-    private int injuryDaysHigh;
 
     public double getRandomInjuryChance() {
         return randomInjuryChance;

@@ -1,9 +1,10 @@
 package simulation.factory;
 
 import db.dao.FreeAgentDao;
-import simulation.model.FreeAgent;
 import org.junit.Before;
 import org.junit.Test;
+import simulation.model.FreeAgent;
+
 import static org.junit.Assert.assertTrue;
 
 public class FreeAgentConcreteTest {
@@ -11,7 +12,7 @@ public class FreeAgentConcreteTest {
     private FreeAgentConcrete freeAgentConcrete;
 
     @Before
-    public void init(){
+    public void init() {
         freeAgentConcrete = new FreeAgentConcrete();
     }
 
@@ -21,12 +22,12 @@ public class FreeAgentConcreteTest {
     }
 
     @Test
-    public void newLoadFreeAgentFactory(){
+    public void newLoadFreeAgentFactory() {
         assertTrue(freeAgentConcrete.newLoadFreeAgentFactory() instanceof FreeAgentDao);
     }
 
     @Test
-    public void newAddFreeAgentFactory(){
+    public void newAddFreeAgentFactory() {
         assertTrue(freeAgentConcrete.newAddFreeAgentFactory() instanceof FreeAgentDao);
     }
 

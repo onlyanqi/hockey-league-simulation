@@ -2,7 +2,11 @@ package db.dao;
 
 import db.connect.DBConnection;
 import db.connect.IDBConnection;
-import java.sql.*;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Types;
 
 public class CallDB implements ICallDB {
 
@@ -10,7 +14,7 @@ public class CallDB implements ICallDB {
     private Connection connection;
     private CallableStatement stmt;
 
-    public CallDB(String procedureName) throws Exception{
+    public CallDB(String procedureName) throws Exception {
         this.procedureName = procedureName;
         IDBConnection dbConnection = new DBConnection();
         connection = dbConnection.getConnection();
@@ -20,17 +24,17 @@ public class CallDB implements ICallDB {
     }
 
     @Override
-    public void setInputParameterString(int index, String input) throws Exception{
+    public void setInputParameterString(int index, String input) throws Exception {
         stmt.setString(index, input);
     }
 
     @Override
-    public void setInputParameterInt(int index, int input) throws Exception{
+    public void setInputParameterInt(int index, int input) throws Exception {
         stmt.setInt(index, input);
     }
 
     @Override
-    public void setInputParameterBoolean(int index, boolean input) throws Exception{
+    public void setInputParameterBoolean(int index, boolean input) throws Exception {
         stmt.setBoolean(index, input);
     }
 
@@ -46,14 +50,14 @@ public class CallDB implements ICallDB {
 
     @Override
     public ResultSet executeLoad() throws Exception {
-        if(stmt.execute()){
+        if (stmt.execute()) {
             return stmt.getResultSet();
         }
         return null;
     }
 
     @Override
-    public void setOutputParameterInt(int index) throws Exception{
+    public void setOutputParameterInt(int index) throws Exception {
         stmt.registerOutParameter(index, Types.INTEGER);
     }
 
@@ -63,11 +67,12 @@ public class CallDB implements ICallDB {
     }
 
     @Override
-    public int returnOutputParameterInt(int index) throws Exception{
+    public int returnOutputParameterInt(int index) throws Exception {
         return stmt.getInt(index);
     }
+
     @Override
-    public void setOutputParameterBoolean(int index) throws Exception{
+    public void setOutputParameterBoolean(int index) throws Exception {
         stmt.registerOutParameter(index, Types.BOOLEAN);
     }
 
@@ -87,15 +92,15 @@ public class CallDB implements ICallDB {
     }
 
     @Override
-    public void closeConnection() throws Exception{
-        try{
-            if(stmt != null){
+    public void closeConnection() throws Exception {
+        try {
+            if (stmt != null) {
                 stmt.close();
             }
-            if(connection != null){
+            if (connection != null) {
                 connection.close();
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }

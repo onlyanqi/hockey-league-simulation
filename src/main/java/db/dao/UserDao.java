@@ -8,10 +8,10 @@ import java.sql.SQLException;
 public class UserDao implements IUserFactory {
 
     @Override
-    public long addUser(User user) throws Exception{
+    public long addUser(User user) throws Exception {
         ICallDB callDB = null;
         String addUser = "AddUser(?,?,?)";
-        try{
+        try {
             callDB = new CallDB(addUser);
             callDB.setInputParameterString(1, user.getName());
             callDB.setInputParameterString(2, user.getPassword());
@@ -19,7 +19,7 @@ public class UserDao implements IUserFactory {
             callDB.execute();
             user.setId(callDB.returnOutputParameterInt(3));
 
-        } catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -28,7 +28,7 @@ public class UserDao implements IUserFactory {
     }
 
     @Override
-    public void loadUserById(int id, User user) throws Exception{
+    public void loadUserById(int id, User user) throws Exception {
         ICallDB callDB = null;
         String loadUserByName = "LoadUserByName(?,?,?)";
         try {
@@ -42,7 +42,7 @@ public class UserDao implements IUserFactory {
             user.setId(callDB.returnOutputParameterInt(2));
             user.setPassword(callDB.returnOutputParameterString(3));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
 

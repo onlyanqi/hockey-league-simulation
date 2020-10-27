@@ -3,8 +3,6 @@ package simulation.state;
 import simulation.model.Conference;
 import simulation.model.Division;
 import simulation.model.Player;
-import userIO.IConsoleOutputForTeamCreation;
-import userIO.IUserInputForTeamCreation;
 
 import java.util.List;
 

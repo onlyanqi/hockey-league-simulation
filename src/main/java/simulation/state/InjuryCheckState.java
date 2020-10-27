@@ -24,21 +24,21 @@ public class InjuryCheckState implements ISimulateState {
     }
 
     private void playerInjuryCheck(League league) {
-        List<Conference> conferenceList=league.getConferenceList();
-        List<Player> freeAgentList=league.getFreeAgent().getPlayerList();
-        for(Conference conference : conferenceList){
+        List<Conference> conferenceList = league.getConferenceList();
+        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
+        for (Conference conference : conferenceList) {
             List<Division> divisionList = conference.getDivisionList();
-            for(Division division : divisionList){
+            for (Division division : divisionList) {
                 List<Team> teamList = division.getTeamList();
-                for(Team team : teamList){
+                for (Team team : teamList) {
                     List<Player> playerList = team.getPlayerList();
-                    for(Player teamPlayer : playerList){
+                    for (Player teamPlayer : playerList) {
                         teamPlayer.injuryCheck(league);
                     }
                 }
             }
         }
-        for(Player freeAgentPlayer : freeAgentList){
+        for (Player freeAgentPlayer : freeAgentList) {
             freeAgentPlayer.injuryCheck(league);
         }
     }
@@ -49,12 +49,12 @@ public class InjuryCheckState implements ISimulateState {
         //Mani, delete the game from the gamesFromCurrentDay List.
         Games games = league.getGames();
         List<Game> gamesOnCurrentDay = games.getGamesOnDate(league.getCurrentDate());
-        if(gamesOnCurrentDay.size()!=0){
+        if (gamesOnCurrentDay.size() != 0) {
             return new SimulateGameState(hockeyContext);
-        }else{
-            if(nhlEvents.isTradeDeadlinePassed(league.getCurrentDate())){
+        } else {
+            if (nhlEvents.isTradeDeadlinePassed(league.getCurrentDate())) {
                 return new AgingState(hockeyContext);
-            }else{
+            } else {
                 return new ExecuteTradeState(hockeyContext);
             }
         }

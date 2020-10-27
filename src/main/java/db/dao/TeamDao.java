@@ -12,7 +12,7 @@ public class TeamDao implements ITeamFactory {
     @Override
     public int addTeam(Team team) throws Exception {
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("AddTeam(?,?,?)");
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
@@ -20,7 +20,7 @@ public class TeamDao implements ITeamFactory {
             callDB.execute();
             team.setId(callDB.returnOutputParameterInt(3));
 
-        } catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -43,7 +43,7 @@ public class TeamDao implements ITeamFactory {
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();
@@ -65,7 +65,7 @@ public class TeamDao implements ITeamFactory {
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();
@@ -76,7 +76,7 @@ public class TeamDao implements ITeamFactory {
     public List<Team> loadTeamListByDivisionId(int divisionId) throws Exception {
         List<Team> teamList = null;
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("LoadTeamListByDivisionId(?)");
             callDB.setInputParameterInt(1, divisionId);
             ResultSet rs = callDB.executeLoad();
@@ -90,7 +90,7 @@ public class TeamDao implements ITeamFactory {
                     teamList.add(team);
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
 

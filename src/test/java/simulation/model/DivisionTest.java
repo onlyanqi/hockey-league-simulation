@@ -2,11 +2,12 @@ package simulation.model;
 
 import db.data.IDivisionFactory;
 import db.data.ITeamFactory;
-import org.junit.Test;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class DivisionTest {
@@ -14,7 +15,7 @@ public class DivisionTest {
     private static IDivisionFactory loadDivisionFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadDivisionFactory = new DivisionMock();
     }
 
@@ -47,7 +48,7 @@ public class DivisionTest {
     }
 
     @Test
-    public void setConferenceIdTest(){
+    public void setConferenceIdTest() {
         Division division = new Division();
         int conferenceId = 1;
         division.setConferenceId(conferenceId);

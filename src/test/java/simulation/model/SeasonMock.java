@@ -1,7 +1,6 @@
 package simulation.model;
 
 import db.data.ISeasonFactory;
-import simulation.model.Season;
 
 public class SeasonMock implements ISeasonFactory {
 
@@ -12,9 +11,9 @@ public class SeasonMock implements ISeasonFactory {
     }
 
     @Override
-    public void loadSeasonById(int id, Season season){
+    public void loadSeasonById(int id, Season season) {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all correct data
                 season.setId(1);
