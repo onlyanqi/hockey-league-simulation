@@ -1,6 +1,5 @@
 package simulation.model;
 
-
 import com.google.gson.annotations.SerializedName;
 import config.AppConfig;
 import db.data.IPlayerFactory;
@@ -25,8 +24,6 @@ public class Team extends ParentObj {
     @SerializedName("headCoach")
     private Coach coach;
     private Boolean aiTeam;
-
-
 
     private transient Manager manager;
     @SerializedName("generalManager")
@@ -112,8 +109,12 @@ public class Team extends ParentObj {
     }
 
     public void setStrength() {
-        for (Player player : getPlayerList()) {
-            strength += player.getStrength();
+        for(Player player : getPlayerList()){
+            if (player.getInjured()){
+                this.strength += 0.5*player.getStrength();
+            }else{
+                this.strength += player.getStrength();
+            }
         }
     }
 

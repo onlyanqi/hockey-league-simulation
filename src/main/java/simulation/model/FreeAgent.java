@@ -1,6 +1,5 @@
 package simulation.model;
 
-import com.google.gson.annotations.SerializedName;
 import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
 

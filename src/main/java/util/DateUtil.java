@@ -21,4 +21,5 @@ public class DateUtil{
     public static long diffDays(LocalDate beforeDate, LocalDate afterDate){
         return DAYS.between(beforeDate, afterDate);
     }
+
 }
