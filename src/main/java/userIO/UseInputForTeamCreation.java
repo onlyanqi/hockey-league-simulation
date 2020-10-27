@@ -8,8 +8,9 @@ import simulation.model.Team;
 
 import java.util.List;
 
-public class UseInputForTeamCreation {
+public class UseInputForTeamCreation implements IUserInputForTeamCreation{
 
+    @Override
     public String getConferenceName(List<String> conferenceNameList){
         String conferenceName  = GetInput.getUserInput("Please enter conference name the team belongs to");
         while(!conferenceNameList.contains(conferenceName.toLowerCase())){
@@ -18,6 +19,7 @@ public class UseInputForTeamCreation {
         return conferenceName;
     }
 
+    @Override
     public String getDivisionName(List<String> divisionNameList){
         String divisionName = GetInput.getUserInput("Please enter division name the team belongs to");
         while(!divisionNameList.contains(divisionName.toLowerCase())){
@@ -26,6 +28,12 @@ public class UseInputForTeamCreation {
         return divisionName;
     }
 
+    @Override
+    public String getUserChoiceForSerialization(){
+        String userChoice = GetInput.getUserInput("Do you want to serialize league object to JSON?");
+        return userChoice;
+    }
+    @Override
     public String getTeamName(List<String> teamNameList){
         String teamName = GetInput.getUserInput("Please enter a team name to create a team ");
 
@@ -41,11 +49,13 @@ public class UseInputForTeamCreation {
         return teamName;
     }
 
+    @Override
     public int getPlayerId(int upperBound){
         int playerId = Integer.parseInt(GetInput.getUserInput("Please enter id between 0 to "+upperBound+". (boundaries inclusive)"));
         return playerId;
     }
 
+    @Override
     public int getGeneralManagerId(List<Manager> managerList){
         int generalManagerId = Integer.parseInt(GetInput.getUserInput("Please enter id of general manager"));
         while(generalManagerId<0 || (generalManagerId >managerList.size()-1)){
@@ -54,6 +64,7 @@ public class UseInputForTeamCreation {
         return generalManagerId;
     }
 
+    @Override
     public int getHeadCoachId(List<Coach> coachList){
         int headCoachId = Integer.parseInt(GetInput.getUserInput("Please enter the id of head coach"));
         while(headCoachId<0 || (headCoachId >coachList.size()-1)){
@@ -61,23 +72,5 @@ public class UseInputForTeamCreation {
         }
         return headCoachId;
     }
-
-//    private boolean isTeamPresent(String teamName)  {
-//        boolean isTeamPresent = false;
-//        TeamConcrete teamConcrete = new TeamConcrete();
-//        ITeamFactory factory = teamConcrete.newLoadTeamFactory();
-//        Team team = null;
-//        try {
-//            team = teamConcrete.newTeamByName(teamName, factory);
-//        }catch (Exception e) {
-//            System.out.println("Unable to load team, please try again.");
-//            System.exit(1);
-//            e.printStackTrace();
-//        }
-//        if(team!=null && team.getId() > 0) {
-//            isTeamPresent = true;
-//        }
-//        return isTeamPresent;
-//    }
 
 }

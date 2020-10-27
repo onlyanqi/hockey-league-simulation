@@ -46,28 +46,46 @@ public class TrainingState implements ISimulateState {
         double coachStrengthSaving = headCoach.getSaving();
 
         if(isRandomLess(coachStrengthShooting)){
-            player.setShooting(player.getShooting()+1);
+            if(isStrengthInRangeAfterIncrease(player.getShooting()+1)){
+                player.setShooting(player.getShooting()+1);
+            }
         }else{
             // run injury check
             player.injuryCheck (league);
         }
         if(isRandomLess(coachStrengthSkating)){
-            player.setSkating(player.getSkating()+1);
+            if(isStrengthInRangeAfterIncrease(player.getSkating()+1)){
+                player.setSkating(player.getSkating()+1);
+            }
+
         }else{
             // run injury check
             player.injuryCheck (league);
         }
         if(isRandomLess(coachStrengthChecking)){
-            player.setChecking(player.getChecking()+1);
+            if(isStrengthInRangeAfterIncrease(player.getChecking()+1)){
+                player.setChecking(player.getChecking()+1);
+            }
+
         }else{
             // run injury check
             player.injuryCheck (league);
         }
         if(isRandomLess(coachStrengthSaving)){
-            player.setSaving(player.getSaving()+1);
+            if(isStrengthInRangeAfterIncrease(player.getSaving()+1)){
+                player.setSaving(player.getSaving()+1);
+            }
         }else{
             // run injury check
             player.injuryCheck (league);
+        }
+    }
+
+    boolean isStrengthInRangeAfterIncrease(int strengthAfterIncrease){
+        if(strengthAfterIncrease>=1 && strengthAfterIncrease<=20){
+            return true;
+        }else{
+            return false;
         }
     }
 

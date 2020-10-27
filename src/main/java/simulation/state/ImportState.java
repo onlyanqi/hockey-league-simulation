@@ -108,12 +108,6 @@ public class ImportState implements IHockeyState {
         league.setGamePlayConfig(gamePlayConfig);
 
     }
-    /**
-     *
-     * Show list of free agents
-     * Player choice capability
-     *
-     */
 
     private List<Team> loadTeamJSON(JSONArray teams){
         ArrayList<Team> teamList = new ArrayList<Team>();
@@ -491,8 +485,6 @@ public class ImportState implements IHockeyState {
         return flag;
     }
     private boolean isTeamExists(ArrayList<Team> list,String name){
-
-
         boolean flag = false;
         for(ParentObj obj : list){
             if(obj.getName().equals(name)){
@@ -501,6 +493,7 @@ public class ImportState implements IHockeyState {
         }
         return flag;
     }
+
     private boolean isPlayerExists(ArrayList<Player> list,String name){
 
 

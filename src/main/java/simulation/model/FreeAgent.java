@@ -8,6 +8,8 @@ import java.util.List;
 
 public class FreeAgent extends ParentObj{
 
+    transient String name;
+
     public FreeAgent(){}
 
     public FreeAgent(int id){
@@ -18,7 +20,15 @@ public class FreeAgent extends ParentObj{
         loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
 
-    private int seasonId;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private transient int seasonId;
 
     public int getSeasonId() {
         return seasonId;
@@ -28,7 +38,7 @@ public class FreeAgent extends ParentObj{
         this.seasonId = seasonId;
     }
 
-    private int leagueId;
+    private transient int leagueId;
 
     public int getLeagueId() {
         return leagueId;

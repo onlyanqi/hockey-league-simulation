@@ -6,12 +6,14 @@ import simulation.model.Player;
 
 import java.util.List;
 
-public class ConsoleOutputForTeamCreation {
+public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreation{
 
+    @Override
     public void showLeagueAlreadyExistsError(){
         ConsoleOutput.printToConsole("League already exists. Please enter a new one");
     }
 
+    @Override
     public void showManagerListOnScreen(List<Manager> managerList){
         ConsoleOutput.printToConsole("Manager List \n ___________ ");
         for(int i=0;i<managerList.size();i++){
@@ -20,28 +22,49 @@ public class ConsoleOutputForTeamCreation {
         }
     }
 
+    @Override
+    public void showSuccessfulSerializationMessage(){
+        ConsoleOutput.printToConsole("Successfully created JSON output file named JsonOutput.txt which you will be able to see after program stops.");
+    }
+
+    @Override
     public void showSuccessfulManagerCreationMessage(){
         ConsoleOutput.printToConsole("General manager added for this team");
     }
 
+    @Override
     public void showSuccessfulCoachCreationMessage(){
         ConsoleOutput.printToConsole("Head coach added for this team");
     }
 
+    @Override
     public void showCoachListOnScreen(List<Coach> coachList){
         ConsoleOutput.printToConsole("Coach List \n ___________ ");
         for(int i=0;i<coachList.size();i++){
             Coach currentCoach = coachList.get(i);
-            currentCoach.printCoach(i);
+            printCoach(i, currentCoach);
         }
     }
 
+    @Override
+    public void printCoach(int i, Coach currentCoach){
+        ConsoleOutput.printToConsole("Coach id: "+(i));
+        ConsoleOutput.printToConsole("\t Coach name: "+currentCoach.getName());
+        ConsoleOutput.printToConsole("\t Skating strength: "+currentCoach.getSkating());
+        ConsoleOutput.printToConsole("\t Shooting strength: "+currentCoach.getShooting());
+        ConsoleOutput.printToConsole("\t Checking strength: "+currentCoach.getChecking());
+        ConsoleOutput.printToConsole("\t Saving strength: "+currentCoach.getSaving());
+        ConsoleOutput.printToConsole("\n");
+    }
+
+    @Override
     public void showInstructionsForTeamCreation(){
         ConsoleOutput.printToConsole("Free agent list \n ___________ \n Please add ids of free agents separated by new line whom you want to add to your team");
         ConsoleOutput.printToConsole("Below you can see good players separated from below-average players!");
         ConsoleOutput.printToConsole("You need to choose 18 skaters (forwards and defense) and 2 goalies to complete the team formation process! \n \n");
     }
 
+    @Override
     public void showGoodFreeAgentList(List<Player> freeAgentList, List<Integer> goodFreeAgentsIdList) {
         ConsoleOutput.printToConsole("Good free agent list :) \n ___________________ ");
         for(int i=0;i<freeAgentList.size();i++){
@@ -52,19 +75,23 @@ public class ConsoleOutputForTeamCreation {
         }
     }
 
+    @Override
     public void playerIdAlreadyChosenMessage(List<Integer> chosenPlayersIdList){
         ConsoleOutput.printToConsole("Make sure you do not enter the previously chosen id.");
         ConsoleOutput.printToConsole("Previously chosen ids: "+ chosenPlayersIdList);
     }
 
+    @Override
     public void showCountOfNeededPlayers(int numberOfGoalies,int numberOfSkaters){
         ConsoleOutput.printToConsole("Team needs more "+ numberOfGoalies +" goalies and "+ numberOfSkaters +" skaters");
     }
 
+    @Override
     public void showTeamCreationWaitMessage(){
         ConsoleOutput.printToConsole("\n\nPlease wait your team is getting created...");
     }
 
+    @Override
     public void showBelowAverageFreeAgentList(List<Player> freeAgentList, List<Integer> goodFreeAgentsIdList){
         ConsoleOutput.printToConsole("Below-average free agent list :| \n __________________ ");
         for(int i=0;i<freeAgentList.size();i++){
@@ -75,6 +102,7 @@ public class ConsoleOutputForTeamCreation {
         }
     }
 
+    @Override
     public void printPlayer(int i,Player player){
         ConsoleOutput.printToConsole("Player Id: "+i+"\tPlayer Name: "+player.getName()+ "\tPosition: "+player.getPosition()+"\tStrength: "+player.getStrength());
         ConsoleOutput.printToConsole("age: "+player.getAge()+"\tSkating: "+player.getSkating()+"\tShooting: "+player.getShooting()+"\tChecking: "+player.getChecking()+"\tSaving: "+player.getSaving());

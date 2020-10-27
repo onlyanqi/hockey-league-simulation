@@ -1,5 +1,6 @@
 package simulation.model;
 
+import com.google.gson.annotations.SerializedName;
 import db.data.IConferenceFactory;
 import db.data.IDivisionFactory;
 
@@ -7,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Conference extends ParentObj{
+
+    @SerializedName("conferenceName")
+    String name;
 
     public Conference(){ }
 
@@ -19,9 +23,18 @@ public class Conference extends ParentObj{
         factory.loadConferenceByName(id, this);
     }
 
-    private int leagueId;
+    private transient int leagueId;
 
+    @SerializedName("divisions")
     private List<Division> divisionList;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getLeagueId() {
         return leagueId;
