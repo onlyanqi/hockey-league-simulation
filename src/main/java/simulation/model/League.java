@@ -6,6 +6,7 @@ import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
 import simulation.RegularSeasonEvents.NHLEvents;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +49,7 @@ public class League extends ParentObj{
 
     private List<Player> freeAgents;
 
-    private Date currentDate;
+    private LocalDate currentDate;
 
     private GamePlayConfig gamePlayConfig;
 
@@ -60,13 +61,13 @@ public class League extends ParentObj{
         this.name = name;
     }
 
-    private transient Games games;
+    private Games games;
 
-    private transient RegularSeasonScoreBoard regularSeasonScoreBoard;
+    private RegularSeasonScoreBoard regularSeasonScoreBoard;
 
-    private transient NHLEvents nhlEvents;
+    private NHLEvents nhlEvents;
 
-    public NHLEvents getNhlRegularSeasonEvents() {
+    public NHLEvents getNHLRegularSeasonEvents() {
         return nhlEvents;
     }
 
@@ -98,11 +99,11 @@ public class League extends ParentObj{
         return gamePlayConfig;
     }
 
-    public Date getCurrentDate() {
+    public LocalDate getCurrentDate() {
         return currentDate;
     }
 
-    public void setCurrentDate(Date currentDate) {
+    public void setCurrentDate(LocalDate currentDate) {
         this.currentDate = currentDate;
     }
 

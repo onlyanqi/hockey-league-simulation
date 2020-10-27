@@ -14,7 +14,7 @@ public class LeagueConcrete {
         return new LeagueDao();
     }
 
-    public League newLeagueNameUserId(String leagueName, int userId, ILeagueFactory leagueFactory) throws Exception {
+    public League createLeagueFromNameAndUserId(String leagueName, int userId, ILeagueFactory leagueFactory) throws Exception {
         return new League(leagueName, userId, leagueFactory);
     }
 

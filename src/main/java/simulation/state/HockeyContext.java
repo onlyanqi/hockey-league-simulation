@@ -1,7 +1,10 @@
 package simulation.state;
 
+import config.AppConfig;
 import simulation.model.User;
 import org.json.simple.JSONObject;
+import userIO.IConsoleOutputForTeamCreation;
+import userIO.IUserInputForTeamCreation;
 
 public class HockeyContext {
 
@@ -34,7 +37,10 @@ public class HockeyContext {
             hockeyState = new ImportState(this,jsonFromInput);
             hockeyState.entry();
             hockeyState.process();
-            hockeyState = new CreateTeamState(this);
+            IUserInputForTeamCreation inputForTeamCreation = AppConfig.getInstance().getInputForTeamCreation();
+            IConsoleOutputForTeamCreation outputForTeamCreation = AppConfig.getInstance().getOutputForTeamCreation();
+            hockeyState = new CreateTeamState(this,
+                    inputForTeamCreation,outputForTeamCreation);
         }else{
             hockeyState = new LoadTeamState(this);
             hockeyState.entry();

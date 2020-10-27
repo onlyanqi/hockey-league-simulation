@@ -78,7 +78,7 @@ public class FreeAgent extends ParentObj{
 
     public List<Integer> getGoodFreeAgentsList(List<Double> strengthList){
 
-        Double thresholdPointForGoodPlayer=calculateAverage(strengthList);
+        Double thresholdPointForGoodPlayer=calculateStrengthAverage(strengthList);
         List<Integer> goodFreeAgentsIdList=new ArrayList<>();
         for(int i=0;i<strengthList.size();i++){
             if(strengthList.get(i)>=thresholdPointForGoodPlayer){
@@ -88,7 +88,7 @@ public class FreeAgent extends ParentObj{
         return goodFreeAgentsIdList;
     }
 
-    public Double calculateAverage(List<Double> strengthList){
+    public Double calculateStrengthAverage(List<Double> strengthList){
         Double average =0.0;
         for(int i=0;i<strengthList.size();i++){
             average=average+strengthList.get(i);

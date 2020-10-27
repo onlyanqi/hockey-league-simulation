@@ -1,19 +1,20 @@
 package simulation.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Game {
 
     String team1;
     String team2;
-    Date date;
+    LocalDate date;
     int result;
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
