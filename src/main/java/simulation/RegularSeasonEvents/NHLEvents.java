@@ -22,6 +22,7 @@ public class NHLEvents {
         initializeRegularSeasonStartDate();
         initializePlayOffStartDate();
         initializeLastDayStanleyCupFinals();
+        initializeNextSeasonDate();
     }
 
     public LocalDate getNextSeasonDate() {

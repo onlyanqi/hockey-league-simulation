@@ -54,6 +54,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         String teamName = teamCreationInput.getTeamName(teamNameList);
         team = new Team();
         team.setName(teamName);
+        team.setAiTeam(false);
     }
 
     @Override
