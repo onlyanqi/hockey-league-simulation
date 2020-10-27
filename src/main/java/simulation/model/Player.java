@@ -3,15 +3,16 @@ package simulation.model;
 import com.google.gson.annotations.SerializedName;
 import db.data.IPlayerFactory;
 import util.DateUtil;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Random;
 
-public class Player extends ParentObj{
+public class Player extends ParentObj {
 
     @SerializedName("playerName")
     String name;
 
-    public Player(){}
+    public Player() {
+    }
 
     public Player(int id) {
         setId(id);
@@ -25,7 +26,7 @@ public class Player extends ParentObj{
     public Player(Player player) {
         this.setId(player.getId());
         this.setName(player.getName());
-        this.isFreeAgent=player.isFreeAgent;
+        this.isFreeAgent = player.isFreeAgent;
         this.setAge(player.getAge());
         this.setSaving(player.getSaving());
         this.setChecking(player.getChecking());
@@ -63,7 +64,7 @@ public class Player extends ParentObj{
 
     private boolean isInjured;
 
-    private Date injuryStartDate;
+    private LocalDate injuryStartDate;
 
     private int injuryDatesRange;
 
@@ -77,7 +78,7 @@ public class Player extends ParentObj{
         isFreeAgent = freeAgent;
     }
 
-    private transient boolean isFreeAgent=false;
+    private transient boolean isFreeAgent = false;
 
     private int skating;
 
@@ -88,6 +89,8 @@ public class Player extends ParentObj{
     private int saving;
 
     private transient double strength;
+
+
 
     public int getAge() {
         return age;
@@ -169,10 +172,10 @@ public class Player extends ParentObj{
     public void setStrength() {
         switch (position) {
             case forward:
-                this.strength = this.getSkating() + this.getShooting() + (double)(this.getChecking() / 2);
+                this.strength = this.getSkating() + this.getShooting() + (double) (this.getChecking() / 2);
                 break;
             case defense:
-                this.strength = this.getSkating() + this.getChecking() + (double)(this.getShooting() / 2);
+                this.strength = this.getSkating() + this.getChecking() + (double) (this.getShooting() / 2);
                 break;
             case goalie:
                 this.strength = this.getSkating() + this.getSaving();
@@ -204,11 +207,11 @@ public class Player extends ParentObj{
         this.isInjured = isInjured;
     }
 
-    public void setInjuryStartDate(Date injuryStartDate) {
+    public void setInjuryStartDate(LocalDate injuryStartDate) {
         this.injuryStartDate = injuryStartDate;
     }
 
-    public Date getInjuryStartDate() {
+    public LocalDate getInjuryStartDate() {
         return this.injuryStartDate;
     }
 
@@ -255,7 +258,7 @@ public class Player extends ParentObj{
     }
 
     public void agingInjuryRecovery(League league) {
-        if (this.getInjured() && DateUtil.getDateDiff(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
+        if (this.getInjured() && DateUtil.diffDays(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
             this.setInjured(false);
             this.setInjuryStartDate(null);
         }

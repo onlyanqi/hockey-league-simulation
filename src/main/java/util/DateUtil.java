@@ -22,8 +22,4 @@ public class DateUtil{
         return DAYS.between(beforeDate, afterDate);
     }
 
-    public static int getDateDiff(Date startDate, Date endDate) {
-        return (int) ((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-    }
-
 }

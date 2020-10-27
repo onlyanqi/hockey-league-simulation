@@ -1,6 +1,5 @@
 package simulation.model;
 
-
 import com.google.gson.annotations.SerializedName;
 import config.AppConfig;
 import db.data.IPlayerFactory;
@@ -25,8 +24,6 @@ public class Team extends ParentObj {
     @SerializedName("headCoach")
     private Coach coach;
     private Boolean aiTeam;
-
-
 
     private transient Manager manager;
     @SerializedName("generalManager")

@@ -69,6 +69,7 @@ public class AgingState implements ISimulateState {
                 }
             }
         }
+
         for(Player freeAgentPlayer : freeAgentList){
             for(int i = freeAgentList.size()-1; i >= 0; i--) {
                 freeAgentPlayer.getOlder();
@@ -83,15 +84,15 @@ public class AgingState implements ISimulateState {
     private void findReplacement (List<Player> playerList, Player.Position position, int index){
         List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
 
-        Collections.sort(freeAgentList, new Comparator<Player>() {
-            public int compare(Player p1, Player p2){
+        freeAgentList.sort(new Comparator<Player>() {
+            public int compare(Player p1, Player p2) {
                 return Double.compare(p2.getStrength(), p1.getStrength());
             }
         });
         Player replacePlayer = new Player();
         for(int i= 0; i < freeAgentList.size(); i++){
             if(freeAgentList.get(i).getPosition().equals(position)){
-                replacePlayer = freeAgentList.get(i);
+                replacePlayer = new Player(freeAgentList.get(i));
                 freeAgentList.remove(i);
                 break;
             }
