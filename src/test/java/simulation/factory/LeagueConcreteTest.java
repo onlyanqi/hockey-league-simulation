@@ -34,7 +34,7 @@ public class LeagueConcreteTest {
         String leagueName = "Name";
         int userId = 1;
         ILeagueFactory loadLeagueFactory = new LeagueMock();
-        League league = leagueConcrete.newLeagueNameUserId(leagueName, userId, loadLeagueFactory);
+        League league = leagueConcrete.createLeagueFromNameAndUserId(leagueName, userId, loadLeagueFactory);
         assertTrue(league instanceof League);
     }
 
