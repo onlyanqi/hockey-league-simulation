@@ -18,10 +18,26 @@ public class Team extends ParentObj {
 
     @SerializedName("teamName")
     String name;
+    private String hometown;
+    private String mascot;
+    private transient int divisionId;
+    private transient double strength;
+    @SerializedName("headCoach")
+    private Coach coach;
+    private Boolean aiTeam;
 
-    public Team(){}
 
-    public Team(int id){
+
+    private transient Manager manager;
+    @SerializedName("generalManager")
+    private String generalManagerName;
+    @SerializedName("players")
+    private List<Player> playerList;
+
+    public Team() {
+    }
+
+    public Team(int id) {
         setId(id);
     }
 
@@ -34,10 +50,6 @@ public class Team extends ParentObj {
         factory.loadTeamByName(name, this);
     }
 
-    private String hometown;
-
-    private String mascot;
-
     public String getName() {
         return name;
     }
@@ -45,21 +57,6 @@ public class Team extends ParentObj {
     public void setName(String name) {
         this.name = name;
     }
-
-    private transient int divisionId;
-
-    private transient double strength;
-
-    @SerializedName("headCoach")
-    private Coach coach;
-
-    private transient Manager manager;
-
-    @SerializedName("generalManager")
-    private String generalManagerName;
-
-    @SerializedName("players")
-    private List<Player> playerList;
 
     public List<Player> getPlayerList() {
         return playerList;
@@ -124,9 +121,17 @@ public class Team extends ParentObj {
         }
     }
 
-    public double getStrength(){
+    public double getStrength() {
         return strength;
     }
+    public Boolean getAiTeam() {
+        return aiTeam;
+    }
+
+    public void setAiTeam(Boolean aiTeam) {
+        this.aiTeam = aiTeam;
+    }
+
     public void loadPlayerListByTeamId(IPlayerFactory loadPlayerFactory) throws Exception {
         this.playerList = loadPlayerFactory.loadPlayerListByTeamId(getId());
     }

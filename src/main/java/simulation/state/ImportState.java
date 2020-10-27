@@ -143,7 +143,7 @@ public class ImportState implements IHockeyState {
             team.setName(teamName);
             team.setManager(manager);
             team.setCoach(coach);
-
+            team.setAiTeam(true);
 
             JSONArray players = (JSONArray) teamJSONObject.get("players");
 
