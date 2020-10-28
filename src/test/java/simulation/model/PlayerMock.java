@@ -20,8 +20,6 @@ public class PlayerMock implements IPlayerFactory {
             case 1:
                 //all correct data
                 player.setName("Player1");
-                player.setStartDate(new Date(2000, 0, 0));
-                player.setEndDate(new Date(2050, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
                 player.setPosition(Player.Position.valueOf("goalie"));
@@ -29,13 +27,14 @@ public class PlayerMock implements IPlayerFactory {
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
                 player.setCaptain(true);
+                player.setSkating(10);
+                player.setSaving(10);
+                player.setStrength();
                 break;
 
             case 2:
                 //name null
                 player.setName(null);
-                player.setStartDate(new Date(2000, 0, 0));
-                player.setEndDate(new Date(2050, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
                 player.setPosition(Player.Position.valueOf("goalie"));
@@ -43,13 +42,14 @@ public class PlayerMock implements IPlayerFactory {
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
                 player.setCaptain(false);
+                player.setSkating(20);
+                player.setSaving(20);
+                player.setStrength();
                 break;
 
             case 3:
                 //end date less than start date
                 player.setName("Invalid Date");
-                player.setStartDate(new Date(2010, 0, 0));
-                player.setEndDate(new Date(2000, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
                 player.setPosition(Player.Position.valueOf("goalie"));
@@ -57,13 +57,14 @@ public class PlayerMock implements IPlayerFactory {
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
                 player.setCaptain(true);
+                player.setSkating(30);
+                player.setSaving(30);
+                player.setStrength();
                 break;
 
             case 4:
                 //invalid position
                 player.setName("Invalid Position");
-                player.setStartDate(new Date(2010, 0, 0));
-                player.setEndDate(new Date(2000, 0, 0));
                 player.setAge(15);
                 player.setHometown("Halifax");
                 player.setPosition(Player.Position.valueOf("referee"));
@@ -71,13 +72,14 @@ public class PlayerMock implements IPlayerFactory {
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
                 player.setCaptain(false);
+                player.setSkating(40);
+                player.setSaving(40);
+                player.setStrength();
                 break;
 
             case 5:
                 //all correct data
                 player.setName("Player5");
-                player.setStartDate(new Date(2010, 0, 0));
-                player.setEndDate(new Date(2040, 0, 0));
                 player.setAge(17);
                 player.setHometown("Montreal");
                 player.setPosition(Player.Position.valueOf("forward"));
@@ -85,6 +87,35 @@ public class PlayerMock implements IPlayerFactory {
                 player.setFreeAgentId(1);
                 player.setSeasonId(1);
                 player.setCaptain(true);
+                player.setSkating(50);
+                player.setSaving(50);
+                player.setStrength();
+                break;
+
+            case 6:
+                //all correct data
+                player.setName("Player6");
+                player.setAge(21);
+                player.setPosition(Player.Position.valueOf("defense"));
+                player.setTeamId(1);
+                player.setFreeAgentId(1);
+                player.setSeasonId(1);
+                player.setSkating(60);
+                player.setSaving(60);
+                player.setStrength();
+                break;
+
+            case 7:
+                //all correct data
+                player.setName("Player7");
+                player.setAge(22);
+                player.setPosition(Player.Position.valueOf("forward"));
+                player.setTeamId(1);
+                player.setFreeAgentId(1);
+                player.setSeasonId(1);
+                player.setSkating(70);
+                player.setSaving(70);
+                player.setStrength();
                 break;
         }
 

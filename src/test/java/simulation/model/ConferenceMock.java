@@ -35,8 +35,6 @@ public class ConferenceMock implements IConferenceFactory {
             case 1:
                 //all correct data
                 conference.setName("Conference1");
-                conference.setStartDate(new Date(2000, 0, 0));
-                conference.setEndDate(new Date(2050, 0, 0));
                 conference.setLeagueId(1);
                 conference.setDivisionList(formDivisionList());
                 break;
@@ -44,8 +42,6 @@ public class ConferenceMock implements IConferenceFactory {
             case 2:
                 //name null
                 conference.setName(null);
-                conference.setStartDate(new Date(2000, 0, 0));
-                conference.setEndDate(new Date(2050, 0, 0));
                 conference.setLeagueId(1);
                 conference.setDivisionList(formDivisionList());
                 break;
@@ -53,8 +49,6 @@ public class ConferenceMock implements IConferenceFactory {
             case 3:
                 //end date less than start date
                 conference.setName("Invalid Date");
-                conference.setStartDate(new Date(2010, 0, 0));
-                conference.setEndDate(new Date(2000, 0, 0));
                 conference.setLeagueId(1);
                 conference.setDivisionList(formDivisionList());
                 break;
@@ -66,8 +60,6 @@ public class ConferenceMock implements IConferenceFactory {
     public Conference loadConferenceByName(String conferenceName) throws Exception {
         Conference conference = new Conference();
         conference.setName("Conference1");
-        conference.setStartDate(new Date(2000, 0, 0));
-        conference.setEndDate(new Date(2050, 0, 0));
         conference.setLeagueId(1);
         conference.setDivisionList(formDivisionList());
         return conference;

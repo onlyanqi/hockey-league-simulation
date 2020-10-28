@@ -1,5 +1,6 @@
 package simulation.model;
 
+import db.data.*;
 import com.google.gson.annotations.SerializedName;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
@@ -10,9 +11,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class League extends ParentObj {
+public class League extends SharedAttributes {
 
-    private String country;
     private int createdBy;
     private List<Conference> conferenceList;
     private List<Coach> coachList;
@@ -79,14 +79,6 @@ public class League extends ParentObj {
 
     public List<Player> getFreeAgentList() {
         return freeAgents;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public List<Conference> getConferenceList() {
@@ -222,4 +214,33 @@ public class League extends ParentObj {
         }
         return null;
     }
+
+    private transient Trading trading;
+
+    public Trading getTrading() {
+        return trading;
+    }
+
+    public void setTrading(Trading trading) {
+        this.trading = trading;
+    }
+
+    public void loadTradingDetailsByLeagueId(ITradingFactory tradingFactory) throws Exception {
+        this.trading = tradingFactory.loadTradingDetailsByLeagueId(getId());
+    }
+
+    private transient List<TradeOffer> tradeOfferList;
+
+    public List<TradeOffer> getTradingOfferList(){
+        return this.tradeOfferList;
+    }
+
+    public void setTradingOfferList(List<TradeOffer> tradeOfferList){
+        this.tradeOfferList = tradeOfferList;
+    }
+
+    public void loadTradingOfferDetailsByLeagueId(ITradeOfferFactory tradingOfferFactory) throws Exception {
+        this.tradeOfferList = tradingOfferFactory.loadTradingOfferDetailsByLeagueId(getId());
+    }
+
 }

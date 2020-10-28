@@ -37,8 +37,6 @@ public class FreeAgentMock implements IFreeAgentFactory {
                 freeAgent.setName("freeAgent1");
                 freeAgent.setSeasonId(1);
                 freeAgent.setLeagueId(1);
-                freeAgent.setStartDate(new Date(2000, 0, 0));
-                freeAgent.setEndDate(new Date(2050, 0, 0));
                 freeAgent.setPlayerList(formPlayerList());
                 break;
 
@@ -47,8 +45,6 @@ public class FreeAgentMock implements IFreeAgentFactory {
                 freeAgent.setName(null);
                 freeAgent.setSeasonId(1);
                 freeAgent.setLeagueId(1);
-                freeAgent.setStartDate(new Date(2000, 0, 0));
-                freeAgent.setEndDate(new Date(2050, 0, 0));
                 freeAgent.setPlayerList(formPlayerList());
                 break;
 
@@ -57,8 +53,6 @@ public class FreeAgentMock implements IFreeAgentFactory {
                 freeAgent.setName("Invalid Date");
                 freeAgent.setSeasonId(1);
                 freeAgent.setLeagueId(1);
-                freeAgent.setStartDate(new Date(2010, 0, 0));
-                freeAgent.setEndDate(new Date(2000, 0, 0));
                 freeAgent.setPlayerList(formPlayerList());
                 break;
 
@@ -67,8 +61,6 @@ public class FreeAgentMock implements IFreeAgentFactory {
                 freeAgent.setName("Invalid Postion");
                 freeAgent.setSeasonId(1);
                 freeAgent.setLeagueId(1);
-                freeAgent.setStartDate(new Date(2010, 0, 0));
-                freeAgent.setEndDate(new Date(2000, 0, 0));
                 freeAgent.setPlayerList(formPlayerList());
                 break;
         }
@@ -79,8 +71,6 @@ public class FreeAgentMock implements IFreeAgentFactory {
         FreeAgent freeAgent = new FreeAgent();
         freeAgent.setLeagueId(id);
         freeAgent.setName("FreeAgent1");
-        freeAgent.setStartDate(new Date(2010, 0, 0));
-        freeAgent.setEndDate(new Date(2000, 0, 0));
         freeAgent.setPlayerList(formPlayerList());
         return freeAgent;
     }

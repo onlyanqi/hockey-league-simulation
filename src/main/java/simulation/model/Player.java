@@ -3,11 +3,10 @@ package simulation.model;
 import com.google.gson.annotations.SerializedName;
 import db.data.IPlayerFactory;
 import util.DateUtil;
-
 import java.time.LocalDate;
 import java.util.Random;
 
-public class Player extends ParentObj {
+public class Player extends SharedAttributes implements Comparable<Player> {
 
     private int age;
     private String hometown;
@@ -236,4 +235,25 @@ public class Player extends ParentObj {
         goalie
     }
 
+    private String playerTradeStatus;
+
+    public String getPlayerTradeStatus() {
+        return playerTradeStatus;
+    }
+
+    public void setPlayerTradeStatus(String playerTradeStatus) {
+        this.playerTradeStatus = playerTradeStatus;
+    }
+
+    @Override
+    public int compareTo(Player player) {
+        double compare = this.getStrength()-player.getStrength();
+        int returnValue = 0;
+        if(compare > 0){
+            returnValue = 1;
+        } else if (compare < 0){
+            returnValue = -1;
+        }
+        return returnValue;
+    }
 }

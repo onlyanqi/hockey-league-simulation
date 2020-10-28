@@ -45,34 +45,6 @@ public class LeagueTest {
     }
 
     @Test
-    public void getCountryTest() throws Exception {
-        League league = new League(1, loadLeagueFactory);
-        assertTrue(league.getCountry().equals("Canada"));
-    }
-
-    @Test
-    public void setCountryTest() {
-        League league = new League();
-        String country = "Canada";
-        league.setCountry(country);
-        assertTrue(league.getCountry().equals(country));
-    }
-
-    @Test
-    public void getCreatedByTest() throws Exception {
-        League league = new League(1, loadLeagueFactory);
-        assertTrue(league.getCreatedBy() == 1);
-    }
-
-    @Test
-    public void setCreatedByTest() {
-        League league = new League();
-        int createdBy = 1;
-        league.setCreatedBy(createdBy);
-        assertTrue(league.getCreatedBy() == (createdBy));
-    }
-
-    @Test
     public void getConferenceListTest() throws Exception {
         League league = new League(1, loadLeagueFactory);
         List<Conference> conferenceList = league.getConferenceList();

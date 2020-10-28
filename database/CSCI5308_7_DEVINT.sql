@@ -887,3 +887,64 @@ BEGIN
     SET leagueId := LAST_INSERT_ID();
 END $$
 DELIMITER ;
+
+
+
+
+/* Trading */
+CREATE TABLE `Trading` (
+  `idTrading` int(11) NOT NULL AUTO_INCREMENT,
+  `leagueId` int(11) DEFAULT NULL,
+  `lossPoint` int(11) DEFAULT NULL,
+  `randomTradeOfferChance` float DEFAULT NULL,
+  `maxPlayersPerTrade` int(11) DEFAULT NULL,
+  `randomAcceptanceChance` float DEFAULT NULL,
+  PRIMARY KEY (`idTrading`),
+  CONSTRAINT `leagueId` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`)
+);
+
+
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddTrading`(IN leagueId INT, IN lossPoint INT, IN maxPlayersPerTrade DOUBLE, IN randomAcceptanceChance DOUBLE, IN randomTradeOfferChance DOUBLE, OUT tradingId INT)
+BEGIN
+	Insert into Trading(leagueId, lossPoint, maxPlayersPerTrade, randomAcceptanceChance, randomTradeOfferChance)
+    VALUES (leagueId, lossPoint, maxPlayersPerTrade, randomAcceptanceChance, randomTradeOfferChance);
+
+    SET tradingId := LAST_INSERT_ID();
+
+END
+
+
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTradingDetailsByLeagueId`(IN leagueId INT)
+BEGIN
+	select * from Trading where leagueId = leagueId;
+END
+
+
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTradingDetailsByTradingId`(IN tradingId INT)
+BEGIN
+	select * from Trading where idTrading = tradingId;
+END
+
+CREATE TABLE `TradingOffer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `leagueId` int(11) DEFAULT NULL,
+  `tradingId` int(11) DEFAULT NULL,
+  `fromTeamId` int(11) DEFAULT NULL,
+  `toTeamId` int(11) DEFAULT NULL,
+  `fromPlayerId` int(11) DEFAULT NULL,
+  `toPlayerId` int(11) DEFAULT NULL,
+  `seasonId` int(11) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`),
+  FOREIGN KEY (`tradingId`) REFERENCES `Trading` (`idTrading`),
+  FOREIGN KEY (`fromTeamId`) REFERENCES `Team` (`idTeam`),
+  FOREIGN KEY (`toTeamId`) REFERENCES `Team` (`idTeam`),
+  FOREIGN KEY (`fromPlayerId`) REFERENCES `Player` (`idPlayer`),
+  FOREIGN KEY (`toPlayerId`) REFERENCES `Player` (`idPlayer`),
+  FOREIGN KEY (`seasonId`) REFERENCES `Season` (`idSeason`)
+);
+
+
+
+/* Trading */
