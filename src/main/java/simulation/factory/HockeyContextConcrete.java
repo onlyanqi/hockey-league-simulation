@@ -4,7 +4,7 @@ import simulation.state.HockeyContext;
 
 public class HockeyContextConcrete {
 
-    public HockeyContext newHockeyContext(){
+    public HockeyContext newHockeyContext() {
         return new HockeyContext();
     }
 

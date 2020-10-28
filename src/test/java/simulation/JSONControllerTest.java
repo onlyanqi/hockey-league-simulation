@@ -13,6 +13,6 @@ public class JSONControllerTest {
     public void readJSONTest() {
         JSONObject leagueJSON = JSONControllerMock.getJSON(1);
         assertTrue(leagueJSON != null);
-        assertEquals(leagueJSON.get("leagueName"),"Dalhousie Hockey League");
+        assertEquals(leagueJSON.get("leagueName"), "Dalhousie Hockey League");
     }
 }

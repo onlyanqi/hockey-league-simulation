@@ -7,9 +7,14 @@ import java.util.List;
 
 public class User extends SharedAttributes {
 
-    public User(){}
+    private String password;
+    private List<League> leagueList;
+    private League league;
 
-    public User(int id){
+    public User() {
+    }
+
+    public User(int id) {
         setId(id);
     }
 
@@ -21,10 +26,6 @@ public class User extends SharedAttributes {
     public User(String name, IUserFactory factory) throws Exception {
         factory.loadUserByName(name, this);
     }
-
-    private String password;
-
-    private List<League> leagueList;
 
     public List<League> getLeagueList() {
         return leagueList;
@@ -46,8 +47,6 @@ public class User extends SharedAttributes {
         addUserFactory.addUser(this);
     }
 
-    private League league;
-
     public League getLeague() {
         return league;
     }
@@ -59,4 +58,5 @@ public class User extends SharedAttributes {
     public void loadLeagueByUserId(ILeagueFactory loadLeagueFactory) throws Exception {
         this.leagueList = loadLeagueFactory.loadLeagueListByUserId(getId());
     }
+
 }

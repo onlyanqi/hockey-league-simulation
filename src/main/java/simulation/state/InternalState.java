@@ -1,13 +1,11 @@
 package simulation.state;
 
-import simulation.model.League;
-
 public class InternalState implements IHockeyState {
 
     private HockeyContext hockeyContext;
     private ISimulateState simulateState;
 
-    public InternalState(HockeyContext hockeyContext){
+    public InternalState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
     }
 
@@ -19,9 +17,9 @@ public class InternalState implements IHockeyState {
 
     @Override
     public void process() {
-        do{
+        do {
             simulateState = simulateState.action();
-        }while(simulateState!=null);
+        } while (simulateState != null);
     }
 
     @Override

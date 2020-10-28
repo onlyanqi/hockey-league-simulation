@@ -4,9 +4,10 @@ import db.data.ISeasonFactory;
 
 public class Season extends SharedAttributes {
 
-    public Season(){}
+    public Season() {
+    }
 
-    public Season(int id){
+    public Season(int id) {
         setId(id);
     }
 
@@ -18,5 +19,4 @@ public class Season extends SharedAttributes {
     public void addSeason(ISeasonFactory addSeasonFactory) throws Exception {
         addSeasonFactory.addSeason(this);
     }
-
 }

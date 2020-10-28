@@ -31,7 +31,7 @@ public class TeamMock implements ITeamFactory {
     @Override
     public void loadTeamById(int id, Team team) throws Exception {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all correct data
                 team.setName("Team1");

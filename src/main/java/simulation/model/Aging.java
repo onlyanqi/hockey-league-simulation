@@ -1,9 +1,8 @@
 package simulation.model;
 
 
-public class Aging extends GamePlayConfig{
-    public Aging() {
-    }
+public class Aging extends GamePlayConfig {
+    private int averageRetirementAge;
 
 //    public Aging(int id) {
 //        setId(id);
@@ -13,10 +12,10 @@ public class Aging extends GamePlayConfig{
 //        setId(id);
 //        factory.loadAgingByLeagueId(id, this);
 //    }
-
-    private int averageRetirementAge;
-
     private int maximumAge;
+
+    public Aging() {
+    }
 
     public int getAverageRetirementAge() {
         return averageRetirementAge;

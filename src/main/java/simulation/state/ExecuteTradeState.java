@@ -4,6 +4,13 @@ import simulation.model.*;
 import java.util.*;
 
 public class ExecuteTradeState implements ISimulateState {
+
+    private HockeyContext hockeyContext;
+
+    public ExecuteTradeState(HockeyContext hockeyContext) {
+        this.hockeyContext = hockeyContext;
+    }
+
     private final String PENDING = "pending";
     private final String ACCEPTED = "accepted";
     private final String BOUGHT = "bought";
@@ -351,7 +358,7 @@ public class ExecuteTradeState implements ISimulateState {
         return isTradingNeeded;
     }
 
-    private ISimulateState exit() {
-        return new AgingState();
+    public ISimulateState exit() {
+        return new AgingState(hockeyContext);
     }
 }

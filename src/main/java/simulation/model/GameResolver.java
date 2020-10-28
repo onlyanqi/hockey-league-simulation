@@ -1,6 +1,9 @@
 package simulation.model;
 
 public class GameResolver extends SharedAttributes {
+public class GameResolver extends ParentObj {
+    private double randomWinChance;
+
     public GameResolver() {
     }
 
@@ -8,7 +11,6 @@ public class GameResolver extends SharedAttributes {
         setId(id);
     }
 
-    private double randomWinChance;
 
     public double getRandomWinChance() {
         return randomWinChance;
@@ -17,5 +19,4 @@ public class GameResolver extends SharedAttributes {
     public void setRandomWinChance(double randomWinChance) {
         this.randomWinChance = randomWinChance;
     }
-
 }

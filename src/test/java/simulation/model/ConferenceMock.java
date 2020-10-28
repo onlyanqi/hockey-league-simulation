@@ -2,6 +2,7 @@ package simulation.model;
 
 import db.data.IConferenceFactory;
 import db.data.IDivisionFactory;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ public class ConferenceMock implements IConferenceFactory {
     @Override
     public void loadConferenceByName(int id, Conference conference) throws Exception {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all correct data
                 conference.setName("Conference1");

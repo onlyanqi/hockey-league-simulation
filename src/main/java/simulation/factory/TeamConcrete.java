@@ -6,7 +6,7 @@ import simulation.model.Team;
 
 public class TeamConcrete {
 
-    public Team newTeam(){
+    public Team newTeam() {
         return new Team();
     }
 
@@ -14,11 +14,11 @@ public class TeamConcrete {
         return new Team(name, loadTeamFactory);
     }
 
-    public ITeamFactory newLoadTeamFactory(){
+    public ITeamFactory newLoadTeamFactory() {
         return new TeamDao();
     }
 
-    public ITeamFactory newAddTeamFactory(){
+    public ITeamFactory newAddTeamFactory() {
         return new TeamDao();
     }
 

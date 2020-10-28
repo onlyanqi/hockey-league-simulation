@@ -13,7 +13,7 @@ public class ConferenceDao implements IConferenceFactory {
     @Override
     public int addConference(Conference conference) throws Exception {
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("AddConference(?,?,?)");
             callDB.setInputParameterString(1, conference.getName());
             callDB.setInputParameterInt(2, conference.getLeagueId());
@@ -21,7 +21,7 @@ public class ConferenceDao implements IConferenceFactory {
             callDB.execute();
             conference.setId(callDB.returnOutputParameterInt(3));
 
-        } catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -43,7 +43,7 @@ public class ConferenceDao implements IConferenceFactory {
             conference.setId(callDB.returnOutputParameterInt(2));
             conference.setName(callDB.returnOutputParameterString(3));
             conference.setLeagueId(callDB.returnOutputParameterInt(4));
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();
@@ -65,7 +65,7 @@ public class ConferenceDao implements IConferenceFactory {
             conference.setId(callDB.returnOutputParameterInt(2));
             conference.setName(callDB.returnOutputParameterString(3));
             conference.setLeagueId(callDB.returnOutputParameterInt(4));
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();
@@ -77,7 +77,7 @@ public class ConferenceDao implements IConferenceFactory {
     public List<Conference> loadConferenceListByLeagueId(int leagueId) throws Exception {
         List<Conference> conferenceList = null;
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("LoadConferenceListByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
@@ -91,7 +91,7 @@ public class ConferenceDao implements IConferenceFactory {
                     conferenceList.add(conference);
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
 

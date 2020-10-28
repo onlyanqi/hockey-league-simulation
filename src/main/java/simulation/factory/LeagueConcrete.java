@@ -6,19 +6,19 @@ import simulation.model.League;
 
 public class LeagueConcrete {
 
-    public League newLeague(){
+    public League newLeague() {
         return new League();
     }
 
-    public ILeagueFactory newLoadLeagueFactory(){
+    public ILeagueFactory newLoadLeagueFactory() {
         return new LeagueDao();
     }
 
-    public League newLeagueNameUserId(String leagueName, int userId, ILeagueFactory leagueFactory) throws Exception {
+    public League createLeagueFromNameAndUserId(String leagueName, int userId, ILeagueFactory leagueFactory) throws Exception {
         return new League(leagueName, userId, leagueFactory);
     }
 
-    public ILeagueFactory newAddLeagueFactory(){
+    public ILeagueFactory newAddLeagueFactory() {
         return new LeagueDao();
     }
 

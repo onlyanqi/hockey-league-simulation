@@ -31,7 +31,7 @@ public class DivisionMock implements IDivisionFactory {
     @Override
     public void loadDivisionById(int id, Division division) throws Exception {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all correct data
                 division.setName("Division1");

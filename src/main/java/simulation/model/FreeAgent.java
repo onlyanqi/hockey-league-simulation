@@ -8,9 +8,14 @@ import java.util.List;
 
 public class FreeAgent extends SharedAttributes {
 
-    public FreeAgent(){}
+    private int seasonId;
+    private int leagueId;
+    private List<Player> playerList;
 
-    public FreeAgent(int id){
+    public FreeAgent() {
+    }
+
+    public FreeAgent(int id) {
         setId(id);
     }
 
@@ -18,7 +23,6 @@ public class FreeAgent extends SharedAttributes {
         loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
 
-    private int seasonId;
 
     public int getSeasonId() {
         return seasonId;
@@ -28,8 +32,6 @@ public class FreeAgent extends SharedAttributes {
         this.seasonId = seasonId;
     }
 
-    private int leagueId;
-
     public int getLeagueId() {
         return leagueId;
     }
@@ -37,8 +39,6 @@ public class FreeAgent extends SharedAttributes {
     public void setLeagueId(int leagueId) {
         this.leagueId = leagueId;
     }
-
-    private List<Player> playerList;
 
     public List<Player> getPlayerList() {
         return playerList;
@@ -56,34 +56,35 @@ public class FreeAgent extends SharedAttributes {
         this.playerList = loadPlayerFactory.loadPlayerListByFreeAgentId(getId());
     }
 
-    public List<Player> removeFreeAgentFromList(List<Player> playerList, int indexOfPlayerObject){
-        for(int i=indexOfPlayerObject; i<playerList.size()-1;i++){
-            Player player = new Player(playerList.get(i+1));
+    public List<Player> removeFreeAgentFromList(List<Player> playerList, int indexOfPlayerObject) {
+        for (int i = indexOfPlayerObject; i < playerList.size() - 1; i++) {
+            Player player = new Player(playerList.get(i + 1));
             playerList.remove(i);
             playerList.set(i, player);
         }
-        playerList.remove(playerList.size()-1);
+        playerList.remove(playerList.size() - 1);
         return playerList;
     }
 
-    public List<Integer> getGoodFreeAgentsList(List<Double> strengthList){
+    public List<Integer> getGoodFreeAgentsList(List<Double> strengthList) {
 
-        Double thresholdPointForGoodPlayer=calculateAverage(strengthList);
-        List<Integer> goodFreeAgentsIdList=new ArrayList<>();
-        for(int i=0;i<strengthList.size();i++){
-            if(strengthList.get(i)>=thresholdPointForGoodPlayer){
+        Double thresholdPointForGoodPlayer = calculateStrengthAverage(strengthList);
+        List<Integer> goodFreeAgentsIdList = new ArrayList<>();
+        for (int i = 0; i < strengthList.size(); i++) {
+            if (strengthList.get(i) >= thresholdPointForGoodPlayer) {
                 goodFreeAgentsIdList.add(i);
             }
         }
         return goodFreeAgentsIdList;
     }
 
-    public Double calculateAverage(List<Double> strengthList){
-        Double average =0.0;
-        for(int i=0;i<strengthList.size();i++){
-            average=average+strengthList.get(i);
+    public Double calculateStrengthAverage(List<Double> strengthList) {
+        Double average = 0.0;
+        for (int i = 0; i < strengthList.size(); i++) {
+            average = average + strengthList.get(i);
         }
-        average=average/strengthList.size();
+        average = average / strengthList.size();
         return average;
     }
+
 }

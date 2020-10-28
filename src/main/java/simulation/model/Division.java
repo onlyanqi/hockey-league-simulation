@@ -8,9 +8,13 @@ import java.util.List;
 
 public class Division extends SharedAttributes {
 
-    public Division(){}
+    private int conferenceId;
+    private List<Team> teamList;
 
-    public Division(int id){
+    public Division() {
+    }
+
+    public Division(int id) {
         setId(id);
     }
 
@@ -18,10 +22,6 @@ public class Division extends SharedAttributes {
         setId(id);
         factory.loadDivisionById(id, this);
     }
-
-    private int conferenceId;
-
-    private List<Team> teamList;
 
     public List<Team> getTeamList() {
         return teamList;
@@ -47,11 +47,12 @@ public class Division extends SharedAttributes {
         this.teamList = teamFactory.loadTeamListByDivisionId(getId());
     }
 
-    public List<String> getTeamNameList(){
+    public List<String> getTeamNameList() {
         List<String> teamNameList = new ArrayList<>();
-        for(Team team: this.getTeamList()){
+        for (Team team : this.getTeamList()) {
             teamNameList.add(team.getName().toLowerCase());
         }
         return teamNameList;
     }
+
 }

@@ -63,7 +63,7 @@ public class LeagueMock implements ILeagueFactory {
     @Override
     public void loadLeagueById(int id, League league) throws Exception {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all correct data
                 league.setName("League1");

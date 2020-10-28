@@ -6,7 +6,7 @@ import simulation.model.User;
 
 public class UserConcrete {
 
-    public User newUser(){
+    public User newUser() {
         return new User();
     }
 
@@ -14,11 +14,11 @@ public class UserConcrete {
         return new User(name, loadUserFactory);
     }
 
-    public IUserFactory newLoadUserFactory(){
+    public IUserFactory newLoadUserFactory() {
         return new UserDao();
     }
 
-    public IUserFactory newAddUserFactory(){
+    public IUserFactory newAddUserFactory() {
         return new UserDao();
     }
 

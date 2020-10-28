@@ -1,15 +1,22 @@
 package util;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class DateUtil {
 
-    public static Date addDays(Date date, int days)
-    {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, days);
-        return cal.getTime();
+
+    public static LocalDate addDays(LocalDate date, int days) {
+        return date.plusDays(days);
     }
+
+    public static LocalDate minusDays(LocalDate date, int days) {
+        return date.minusDays(days);
+    }
+
+    public static long diffDays(LocalDate beforeDate, LocalDate afterDate) {
+        return DAYS.between(beforeDate, afterDate);
+    }
+
 }

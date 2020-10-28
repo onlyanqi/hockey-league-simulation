@@ -1,17 +1,23 @@
 package simulation.state;
 
-import simulation.model.User;
+import config.AppConfig;
 import org.json.simple.JSONObject;
+import simulation.model.User;
+import userIO.IConsoleOutputForTeamCreation;
+import userIO.IUserInputForTeamCreation;
 
 public class HockeyContext {
 
     private IHockeyState hockeyState;
     private User user;
 
-    public void setHockeyState(IHockeyState hockeyState) {
-        this.hockeyState = hockeyState;
+    public HockeyContext() {
     }
 
+
+    public HockeyContext(User user) {
+        this.user = user;
+    }
 
     public User getUser() {
         return user;
@@ -21,38 +27,36 @@ public class HockeyContext {
         this.user = user;
     }
 
-    public HockeyContext(){}
-
-    public HockeyContext(User user){
-        this.user = user;
-    }
-
-
     public void startAction(JSONObject jsonFromInput) throws Exception {
 
-        if(jsonFromInput!= null){
-            hockeyState = new ImportState(this,jsonFromInput);
+        if (jsonFromInput != null) {
+            hockeyState = new ImportState(this, jsonFromInput);
             hockeyState.entry();
             hockeyState.process();
-            hockeyState = new CreateTeamState(this);
-        }else{
+            IUserInputForTeamCreation inputForTeamCreation = AppConfig.getInstance().getInputForTeamCreation();
+            IConsoleOutputForTeamCreation outputForTeamCreation = AppConfig.getInstance().getOutputForTeamCreation();
+            hockeyState = new CreateTeamState(this,
+                    inputForTeamCreation, outputForTeamCreation);
+        } else {
             hockeyState = new LoadTeamState(this);
             hockeyState.entry();
             hockeyState.process();
             hockeyState = hockeyState.exit();
         }
 
-        do{
+        do {
             hockeyState.entry();
             hockeyState.process();
             hockeyState = hockeyState.exit();
-        }while(hockeyState!=null);
+        } while (hockeyState != null);
 
     }
 
-
-
     public IHockeyState getHockeyState() {
         return hockeyState;
+    }
+
+    public void setHockeyState(IHockeyState hockeyState) {
+        this.hockeyState = hockeyState;
     }
 }
