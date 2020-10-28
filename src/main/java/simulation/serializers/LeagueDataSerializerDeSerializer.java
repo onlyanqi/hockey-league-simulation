@@ -14,7 +14,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class LeagueDataSerializer {
+public class LeagueDataSerializerDeSerializer {
 
     public void serialize(League league) {
         Gson gson = new GsonBuilder()

@@ -48,24 +48,65 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
 
     @Override
     public int getPlayerId(int upperBound) {
-        int playerId = Integer.parseInt(GetInput.getUserInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)"));
+        String playerIdStr = GetInput.getUserInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)");
+        int playerId=-1;
+        while(playerId==-1){
+            if(isDigit(playerIdStr)){
+                playerId = Integer.parseInt(playerIdStr);
+            }else{
+                ConsoleOutput.printToConsole("Please enter valid digits.");
+                playerIdStr = GetInput.getUserInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)");
+            }
+        }
         return playerId;
+    }
+
+    public boolean isDigit(String str){
+        if(str.matches("[0-9]+") && str.length() > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
     public int getGeneralManagerId(List<Manager> managerList) {
-        int generalManagerId = Integer.parseInt(GetInput.getUserInput("Please enter id of general manager"));
-        while (generalManagerId < 0 || (generalManagerId > managerList.size() - 1)) {
-            generalManagerId = Integer.parseInt(GetInput.getUserInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)"));
+        String generalManagerIdStr = GetInput.getUserInput("Please enter id of general manager");
+        int generalManagerId = -1;
+
+        while(generalManagerId==-1){
+            if(isDigit(generalManagerIdStr)){
+                generalManagerId = Integer.parseInt(generalManagerIdStr);
+                if(generalManagerId < 0 || (generalManagerId > managerList.size() - 1)){
+                    generalManagerId = -1;
+                    ConsoleOutput.printToConsole("Please enter valid digits.");
+                    generalManagerIdStr = GetInput.getUserInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
+                }
+            }else{
+                ConsoleOutput.printToConsole("Please enter valid digits.");
+                generalManagerIdStr = GetInput.getUserInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
+            }
         }
         return generalManagerId;
     }
 
     @Override
     public int getHeadCoachId(List<Coach> coachList) {
-        int headCoachId = Integer.parseInt(GetInput.getUserInput("Please enter the id of head coach"));
-        while (headCoachId < 0 || (headCoachId > coachList.size() - 1)) {
-            headCoachId = Integer.parseInt(GetInput.getUserInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)"));
+        String headCoachIdStr = GetInput.getUserInput("Please enter the id of head coach");
+        int headCoachId = -1;
+
+        while(headCoachId==-1){
+            if(isDigit(headCoachIdStr)){
+                headCoachId = Integer.parseInt(headCoachIdStr);
+                if(headCoachId < 0 || (headCoachId > coachList.size() - 1)){
+                    headCoachId = -1;
+                    ConsoleOutput.printToConsole("Please enter valid digits.");
+                    headCoachIdStr = GetInput.getUserInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
+                }
+            }else{
+                ConsoleOutput.printToConsole("Please enter valid digits.");
+                headCoachIdStr = GetInput.getUserInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
+            }
         }
         return headCoachId;
     }
