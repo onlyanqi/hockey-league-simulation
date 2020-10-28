@@ -3,7 +3,9 @@ package simulation.state;
 import simulation.RegularSeasonEvents.NHLEvents;
 import simulation.model.*;
 import userIO.ConsoleOutput;
+import util.DateUtil;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
@@ -13,7 +15,6 @@ public class TrainingState implements ISimulateState, ITrainingState {
     private League league;
 
     public TrainingState(HockeyContext hockeyContext) {
-        //Null check
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
     }
@@ -21,6 +22,15 @@ public class TrainingState implements ISimulateState, ITrainingState {
     @Override
     public ISimulateState action() {
         ConsoleOutput.printToConsole("Training Players and Team!");
+        LocalDate currentDate = league.getCurrentDate();
+        LocalDate seasonStartDate = league.getNHLRegularSeasonEvents().getRegularSeasonStartDate();
+        Integer daysUntilStatIncreaseCheck  =league.getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck();
+        Long diffDays = DateUtil.diffDays(seasonStartDate,currentDate);
+        if(diffDays % daysUntilStatIncreaseCheck == 1){
+            ConsoleOutput.printToConsole("Performing stat increase check");
+            statIncreaseCheck(league);
+        }
+
         return exit();
     }
 
@@ -54,7 +64,6 @@ public class TrainingState implements ISimulateState, ITrainingState {
                 player.setShooting(player.getShooting() + 1);
             }
         } else {
-            // run injury check
             player.injuryCheck(league);
         }
         if (isRandomLess(coachSkatingStrength)) {
@@ -63,7 +72,6 @@ public class TrainingState implements ISimulateState, ITrainingState {
             }
 
         } else {
-            // run injury check
             player.injuryCheck(league);
         }
         if (isRandomLess(coachCheckingStrength)) {
@@ -72,7 +80,6 @@ public class TrainingState implements ISimulateState, ITrainingState {
             }
 
         } else {
-            // run injury check
             player.injuryCheck(league);
         }
         if (isRandomLess(coachSavingStrength)) {
@@ -80,7 +87,6 @@ public class TrainingState implements ISimulateState, ITrainingState {
                 player.setSaving(player.getSaving() + 1);
             }
         } else {
-            // run injury check
             player.injuryCheck(league);
         }
     }

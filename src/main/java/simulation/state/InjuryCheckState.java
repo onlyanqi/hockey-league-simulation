@@ -17,9 +17,8 @@ public class InjuryCheckState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-
-        //Mani, do the injury check here. Pass in the game if required.
         System.out.println("Injury Check!");
+        playerInjuryCheck(league);
         return exit();
     }
 
@@ -46,7 +45,6 @@ public class InjuryCheckState implements ISimulateState {
     private ISimulateState exit() {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
-        //Mani, delete the game from the gamesFromCurrentDay List.
         Games games = league.getGames();
         List<Game> gamesOnCurrentDay = games.getUnplayedGamesOnDate(league.getCurrentDate());
         if(gamesOnCurrentDay.size()!=0){

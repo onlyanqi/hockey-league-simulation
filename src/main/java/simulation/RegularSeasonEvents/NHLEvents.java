@@ -27,10 +27,6 @@ public class NHLEvents {
         return nextSeasonDate;
     }
 
-    public void setNextSeasonDate(LocalDate nextSeasonDate) {
-        this.nextSeasonDate = nextSeasonDate;
-    }
-
     public LocalDate getRegularSeasonStartDate() {
         return regularSeasonStartDate;
     }
@@ -125,7 +121,7 @@ public class NHLEvents {
         setLastDayStanleyCupFinals(stanleyCupLastDay);
     }
     public void initializeNextSeasonDate(){
-        LocalDate  nextSeasonStartDate = LocalDate.of(LocalDate.now().getYear()+1, Month.SEPTEMBER,30);
+        LocalDate  nextSeasonStartDate = LocalDate.of(LocalDate.now().getYear()+1, Month.SEPTEMBER,29);
         setNextSeasonDate(nextSeasonStartDate);
     }
 

@@ -26,7 +26,7 @@ public class Games {
     public List<Game> getGamesOnDate(LocalDate date) {
         List<Game> gameListOnGivenDate = new ArrayList<>();
         for (Game game : gameList) {
-            if (game.date.equals(date)) {
+            if (game.getDate().equals(date)) {
                 gameListOnGivenDate.add(game);
             }
         }

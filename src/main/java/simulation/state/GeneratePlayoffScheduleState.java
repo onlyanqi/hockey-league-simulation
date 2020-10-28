@@ -31,12 +31,13 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
 
         if(nhlEvents.isEndOfRegularSeason(league.getCurrentDate())){
             generatePlayOffFirstRoundSchedule();
-        }
-        if(games.doGamesDoesNotExistAfterDate(league.getCurrentDate())){
-            generatePlayOffOtherRoundSchedule();
-        }
-        if(games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 4 ){
-            generateStanleyCupSchedule();
+        }else if(games.doGamesDoesNotExistAfterDate(league.getCurrentDate())){
+            if(teamStanding.getTeamsScoreList().size() == 4){
+                generateStanleyCupSchedule();
+            }else{
+                generatePlayOffOtherRoundSchedule();
+            }
+
         }
 
         return exit();

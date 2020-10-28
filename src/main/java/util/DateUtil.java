@@ -21,4 +21,8 @@ public class DateUtil{
         return DAYS.between(beforeDate, afterDate);
     }
 
+    public static boolean isDateNotPassed(LocalDate date1,LocalDate date2){
+        return date1.isBefore(date2);
+    }
+
 }
