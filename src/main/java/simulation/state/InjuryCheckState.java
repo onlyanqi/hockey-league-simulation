@@ -30,7 +30,7 @@ public class InjuryCheckState implements ISimulateState {
 
         //Mani, delete the game from the gamesFromCurrentDay List.
         Games games = league.getGames();
-        List<Game> gamesOnCurrentDay = games.getGamesOnDate(league.getCurrentDate());
+        List<Game> gamesOnCurrentDay = games.getUnplayedGamesOnDate(league.getCurrentDate());
         if(gamesOnCurrentDay.size()!=0){
             return new SimulateGameState(hockeyContext);
         }else{

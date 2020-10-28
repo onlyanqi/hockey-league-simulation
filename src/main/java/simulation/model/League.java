@@ -8,7 +8,6 @@ import simulation.RegularSeasonEvents.NHLEvents;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class League extends ParentObj{
@@ -53,6 +52,16 @@ public class League extends ParentObj{
 
     private GamePlayConfig gamePlayConfig;
 
+    private Games games;
+
+    private TeamStanding regularSeasonStanding;
+
+    private TeamStanding playOffStanding;
+
+    private transient TeamStanding activeTeamStanding;
+
+    private NHLEvents nhlEvents;
+
     public String getName() {
         return name;
     }
@@ -61,26 +70,12 @@ public class League extends ParentObj{
         this.name = name;
     }
 
-    private Games games;
-
-    private RegularSeasonScoreBoard regularSeasonScoreBoard;
-
-    private NHLEvents nhlEvents;
-
     public NHLEvents getNHLRegularSeasonEvents() {
         return nhlEvents;
     }
 
     public void setNhlRegularSeasonEvents(NHLEvents nhlEvents) {
         this.nhlEvents = nhlEvents;
-    }
-
-    public RegularSeasonScoreBoard getRegularSeasonScoreBoard() {
-        return regularSeasonScoreBoard;
-    }
-
-    public void setRegularSeasonScoreBoard(RegularSeasonScoreBoard regularSeasonScoreBoard) {
-        this.regularSeasonScoreBoard = regularSeasonScoreBoard;
     }
 
     public Games getGames() {
@@ -137,6 +132,30 @@ public class League extends ParentObj{
 
     public List<Manager> getManagerList() {
         return managerList;
+    }
+
+    public TeamStanding getRegularSeasonStanding() {
+        return regularSeasonStanding;
+    }
+
+    public void setRegularSeasonStanding(TeamStanding regularSeasonStanding) {
+        this.regularSeasonStanding = regularSeasonStanding;
+    }
+
+    public TeamStanding getPlayOffStanding() {
+        return playOffStanding;
+    }
+
+    public void setPlayOffStanding(TeamStanding playOffStanding) {
+        this.playOffStanding = playOffStanding;
+    }
+
+    public TeamStanding getActiveTeamStanding() {
+        return activeTeamStanding;
+    }
+
+    public void setActiveTeamStanding(TeamStanding activeTeamStanding) {
+        this.activeTeamStanding = activeTeamStanding;
     }
 
     public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject){

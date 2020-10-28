@@ -2,64 +2,152 @@ package simulation.state;
 
 import simulation.RegularSeasonEvents.NHLEvents;
 import simulation.model.*;
+import util.DateUtil;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class GeneratePlayoffScheduleState implements  ISimulateState{
 
     private HockeyContext hockeyContext;
     private League league;
+    private NHLEvents nhlEvents;
+    private Games games;
     private TeamStanding teamStanding;
+    private final Integer numberOfGames = 7;
 
     public GeneratePlayoffScheduleState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
+        this.nhlEvents = league.getNHLRegularSeasonEvents();
+        this.games = league.getGames();
+        this.teamStanding = league.getActiveTeamStanding();
     }
 
     @Override
     public ISimulateState action() {
 
-        ArrayList<String> winnerList = new ArrayList<>();
-        NHLEvents nhlEvents = new NHLEvents();
-
         if(nhlEvents.isEndOfRegularSeason(league.getCurrentDate())){
             generatePlayOffFirstRoundSchedule();
         }
-        if(nhlEvents.isRegularSeasonPassed(league.getCurrentDate()) && league.getGames().getGameList().size() == 0 && winnerList.size()!=2){
+        if(games.doGamesDoesNotExistAfterDate(league.getCurrentDate())){
             generatePlayOffOtherRoundSchedule();
         }
-        if(nhlEvents.isRegularSeasonPassed(league.getCurrentDate()) && league.getGames().getGameList().size() == 0 && winnerList.size()==2){
+        if(games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 4 ){
             generateStanleyCupSchedule();
         }
-        System.out.println("Generating Play off Schedule");
 
         return exit();
     }
 
     private void generatePlayOffFirstRoundSchedule() {
-        teamStanding = new TeamStanding(league.getRegularSeasonScoreBoard());
+        TeamStanding regularSeasonStanding = league.getRegularSeasonStanding();
+        league.setActiveTeamStanding(league.getPlayOffStanding());
+
+        HashMap<String,List<String>> playOffTeams = new HashMap<>();
+        for(Conference conference : league.getConferenceList()){
+            List<String> teams = new ArrayList<>();
+            for(Division division: conference.getDivisionList()){
+                List<TeamScore> teamsScoreWithinDivision = regularSeasonStanding.getTeamsRankAcrossDivision(league,division.getName());
+                teams.add(teamsScoreWithinDivision.get(0).getTeamName());
+                teams.add(teamsScoreWithinDivision.get(1).getTeamName());
+                teams.add(teamsScoreWithinDivision.get(2).getTeamName());
+            }
+            List<TeamScore> teamsScoreWithinConference = regularSeasonStanding.getTeamsRankAcrossConference(league,conference.getName());
+            teams.add(teamsScoreWithinConference.get(6).getTeamName());
+            teams.add(teamsScoreWithinConference.get(7).getTeamName());
+            playOffTeams.put(conference.getName(),teams);
+        }
+
+        initializeGamesPlayOffFirstRound(playOffTeams);
+        initializeTeamStandingsFirstRound(playOffTeams);
 
     }
 
-//    private boolean mani(){
-//        for(Conference conference: league.getConferenceList()){
-//            for(Division division: conference.getDivisionList()){
-//                teamStanding.getTeamsRankAcrossDivision(league,division.getName());
-//            }
-//        }
-//    }
+    private void initializeTeamStandingsFirstRound(HashMap<String, List<String>> playOffTeams) {
+        List<String> teamsAcrossConferences = new ArrayList<>();
+        for(Conference conference:league.getConferenceList()){
+            List<String> teams = playOffTeams.get(conference.getName());
+            teamsAcrossConferences.addAll(teams);
+        }
+
+        league.getActiveTeamStanding().initializeTeamStandings(teamsAcrossConferences);
+    }
+
+    private void initializeGamesPlayOffFirstRound(HashMap<String, List<String>> playOffTeams) {
+        LocalDate playOffStartDate = nhlEvents.getPlayOffStartDate();
+        List<Game> games = this.games.getGameList();
+        for(Conference conference:league.getConferenceList()){
+            List<String> teams = playOffTeams.get(conference.getName());
+            scheduleGameBetweenTeams(teams.get(0),teams.get(7),games,playOffStartDate);
+            scheduleGameBetweenTeams(teams.get(3),teams.get(6),games, DateUtil.addDays(playOffStartDate,1));
+            scheduleGameBetweenTeams(teams.get(1),teams.get(2),games,playOffStartDate);
+            scheduleGameBetweenTeams(teams.get(4),teams.get(5),games,DateUtil.addDays(playOffStartDate,1));
+        }
+    }
+
+    private void scheduleGameBetweenTeams(String team1, String team2,List<Game> games,LocalDate startDate){
+        LocalDate currentDate = startDate;
+        for(Integer i =0;i<numberOfGames;i++){
+            Game game = new Game();
+            game.setTeam1(team1);
+            game.setTeam2(team2);
+            game.setDate(currentDate);
+            games.add(game);
+            currentDate = DateUtil.addDays(currentDate,2);
+        }
+    }
 
     private void generatePlayOffOtherRoundSchedule() {
+        List<TeamScore> teamScoreList = teamStanding.getTeamsScoreList();
+        updateTeamStanding(teamStanding,teamScoreList);
+    }
 
+    private void updateTeamStanding(TeamStanding teamStanding, List<TeamScore> teamScoreList) {
+        List<String> qualifiedTeams = new ArrayList<>();
+        for(Integer i = 0 ;i< teamScoreList.size();i=i+2){
+            if(declareTeam1Winner(teamScoreList.get(i),teamScoreList.get(i+1))){
+                qualifiedTeams.add(teamScoreList.get(i).getTeamName());
+            }else{
+                qualifiedTeams.add(teamScoreList.get(i+1).getTeamName());
+            }
+        }
+        initializeGamesPlayOff(qualifiedTeams);
+        teamStanding.initializeTeamStandings(qualifiedTeams);
+    }
+
+    private void initializeGamesPlayOff(List<String> qualifiedTeams) {
+
+        for(Integer i = 0 ;i< qualifiedTeams.size();i=i+2){
+            scheduleGameBetweenTeams(qualifiedTeams.get(i),qualifiedTeams.get(1),games.getGameList(),league.getCurrentDate());
+        }
+
+    }
+
+    private Boolean declareTeam1Winner(TeamScore teamScore1, TeamScore teamScore2){
+        if(teamScore1.getScore() > teamScore2.getScore()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     private void generateStanleyCupSchedule() {
-
+        List<TeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
+        List<String> qualifiedTeams = new ArrayList<>();
+        for(Integer i = 0 ;i< teamScoreList.size();i=i+2){
+            if(declareTeam1Winner(teamScoreList.get(i),teamScoreList.get(i+1))){
+                qualifiedTeams.add(teamScoreList.get(i).getTeamName());
+            }else{
+                qualifiedTeams.add(teamScoreList.get(i+1).getTeamName());
+            }
+        }
+        initializeGamesPlayOff(qualifiedTeams);
+        teamStanding.initializeTeamStandings(qualifiedTeams);
     }
-
-
-
-    
 
     private ISimulateState exit() {
         return new TrainingState(hockeyContext);

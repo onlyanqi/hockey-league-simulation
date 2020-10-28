@@ -81,7 +81,7 @@ public class NHLEvents {
         }
     }
     public boolean isEndOfRegularSeason(LocalDate currentDate){
-        if(currentDate.compareTo(endOfRegularSeason) == 0){
+        if(currentDate.equals(endOfRegularSeason)){
             return true;
         }else{
             return false;

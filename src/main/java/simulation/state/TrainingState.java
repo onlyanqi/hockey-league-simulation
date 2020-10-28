@@ -105,7 +105,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
         Games games = league.getGames();
-        List<Game> gamesOnCurrentDay = games.getGamesOnDate(league.getCurrentDate());
+        List<Game> gamesOnCurrentDay = games.getUnplayedGamesOnDate(league.getCurrentDate());
         if (gamesOnCurrentDay.size() != 0) {
             return new SimulateGameState(hockeyContext);
         } else {

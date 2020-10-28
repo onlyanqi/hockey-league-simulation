@@ -2,14 +2,11 @@ package simulation.state;
 
 import simulation.model.Game;
 import simulation.model.League;
-import simulation.model.RegularSeasonScoreBoard;
 import simulation.model.Team;
+import simulation.model.TeamStanding;
 
-import java.util.HashMap;
 import java.util.List;
 import java.lang.Math;
-
-import static java.lang.Math.random;
 
 public class SimulateGameState implements ISimulateState {
 
@@ -23,19 +20,11 @@ public class SimulateGameState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-        List<Game> gamesOnCurrentDay = league.getGames().getGamesOnDate(league.getCurrentDate());
+        List<Game> gamesOnCurrentDay = league.getGames().getUnplayedGamesOnDate(league.getCurrentDate());
         Game game = gamesOnCurrentDay.get(0);
 
-        int winner = simulateGame(game);
-        game.setResult(winner);
-        RegularSeasonScoreBoard regularSeasonScoreBoard = league.getRegularSeasonScoreBoard();
-        HashMap<String,Integer> teamScores = regularSeasonScoreBoard.getTeamsScore();
-
-        if(winner ==0){
-            regularSeasonScoreBoard.setTeamScore(game.getTeam1());
-        }else{
-            regularSeasonScoreBoard.setTeamScore(game.getTeam2());
-        }
+        simulateGame(game);
+        updateTeamStandings(game);
 
         return exit();
     }
@@ -44,29 +33,39 @@ public class SimulateGameState implements ISimulateState {
         return new InjuryCheckState(hockeyContext);
     }
 
-    private int simulateGame(Game game) {
-        //Hey Mani, 0 is team1 and 1 is team2. enum this later.
-        int winner;
+    private void simulateGame(Game game) {
         double upset = league.getGamePlayConfig().getGameResolver().getRandomWinChance();
         Team team1 = league.getTeamByTeamName(game.getTeam1());
         Team team2 = league.getTeamByTeamName(game.getTeam2());
 
-
         if(team1!=null && team2!=null){
             if(team1.getStrength()>team2.getStrength()){
-                winner = 0;
+                game.setWinner(Game.Result.TEAM1);
             }else{
-                winner = 1;
+                game.setWinner(Game.Result.TEAM2);
             }
             if(Math.random() <= upset){
-                if(winner ==0){
-                    winner = 1;
+                if(game.getWinner().equals(Game.Result.TEAM1)){
+                    game.setWinner(Game.Result.TEAM2);
                 }else{
-                    winner =0;
+                    game.setWinner(Game.Result.TEAM1);
                 }
             }
-            return winner;
+            game.setPlayed(true);
         }
-        return 0;
+    }
+
+    private void updateTeamStandings(Game game){
+        TeamStanding teamStanding = league.getActiveTeamStanding();
+
+        if(game.getWinner().equals(Game.Result.TEAM1)){
+            teamStanding.setTeamPoints(game.getTeam1());
+            teamStanding.setTeamWins(game.getTeam1());
+            teamStanding.setTeamLoss(game.getTeam2());
+        }else if(game.getWinner().equals(Game.Result.TEAM2)){
+            teamStanding.setTeamPoints(game.getTeam2());
+            teamStanding.setTeamWins(game.getTeam1());
+            teamStanding.setTeamLoss(game.getTeam2());
+        }
     }
 }
