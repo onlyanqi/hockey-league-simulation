@@ -235,7 +235,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         goalie
     }
 
-    private String playerTradeStatus;
+    /*private String playerTradeStatus;
 
     public String getPlayerTradeStatus() {
         return playerTradeStatus;
@@ -243,7 +243,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
 
     public void setPlayerTradeStatus(String playerTradeStatus) {
         this.playerTradeStatus = playerTradeStatus;
-    }
+    }*/
 
     @Override
     public int compareTo(Player player) {

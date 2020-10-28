@@ -945,6 +945,16 @@ CREATE TABLE `TradingOffer` (
   FOREIGN KEY (`seasonId`) REFERENCES `Season` (`idSeason`)
 );
 
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddTeam`(IN teamName Varchar(45), IN divisionId INT, IN aiTeam boolean, OUT teamId INT)
+BEGIN
 
+	Insert into Team(teamName, division, aiTeam)
+    VALUES (teamName, divisionId, aiteam);
+
+    SET teamId := LAST_INSERT_ID();
+
+END
+
+alter table Team add column aiTeam tinyint(4);
 
 /* Trading */

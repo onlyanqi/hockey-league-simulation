@@ -13,9 +13,10 @@ public class TeamDao implements ITeamFactory {
     public int addTeam(Team team) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddTeam(?,?,?)");
+            callDB = new CallDB("AddTeam(?,?,?,?)");
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
+            callDB.setInputParameterBoolean(3, team.isAiTeam());
             callDB.setOutputParameterInt(3);
             callDB.execute();
             team.setId(callDB.returnOutputParameterInt(3));

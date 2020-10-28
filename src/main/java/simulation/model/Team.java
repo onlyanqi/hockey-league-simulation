@@ -1,6 +1,5 @@
 package simulation.model;
 
-import com.google.gson.annotations.SerializedName;
 import config.AppConfig;
 import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
@@ -15,12 +14,11 @@ public class Team extends SharedAttributes {
     public static final String DEFENSE = "defense";
     public static final String FORWARD = "forward";
 
-    private String hometown;
     private String mascot;
     private int divisionId;
     private double strength;
     private Coach coach;
-    private Boolean aiTeam;
+    private boolean aiTeam;
 
     private Manager manager;
     private String generalManagerName;
@@ -48,14 +46,6 @@ public class Team extends SharedAttributes {
 
     public void setPlayerList(List<Player> playerList) {
         this.playerList = playerList;
-    }
-
-    public String getHometown() {
-        return hometown;
-    }
-
-    public void setHometown(String hometown) {
-        this.hometown = hometown;
     }
 
     public String getMascot() {
@@ -109,11 +99,11 @@ public class Team extends SharedAttributes {
         return strength;
     }
 
-    public Boolean getAiTeam() {
+    public boolean isAiTeam() {
         return aiTeam;
     }
 
-    public void setAiTeam(Boolean aiTeam) {
+    public void setAiTeam(boolean aiTeam) {
         this.aiTeam = aiTeam;
     }
 
