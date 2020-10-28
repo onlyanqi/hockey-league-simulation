@@ -7,14 +7,15 @@ import db.data.IDivisionFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Conference extends ParentObj{
+public class Conference extends ParentObj {
 
-    @SerializedName("conferenceName")
-    String name;
+    private int leagueId;
+    private List<Division> divisionList;
 
-    public Conference(){ }
+    public Conference() {
+    }
 
-    public Conference(int id){
+    public Conference(int id) {
         setId(id);
     }
 
@@ -23,18 +24,6 @@ public class Conference extends ParentObj{
         factory.loadConferenceByName(id, this);
     }
 
-    private transient int leagueId;
-
-    @SerializedName("divisions")
-    private List<Division> divisionList;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getLeagueId() {
         return leagueId;
@@ -48,27 +37,27 @@ public class Conference extends ParentObj{
         return divisionList;
     }
 
-    public List<String> getDivisionNameList(){
+    public void setDivisionList(List<Division> divisionList) {
+        this.divisionList = divisionList;
+    }
+
+    public List<String> getDivisionNameList() {
         List<String> divisionNameList = new ArrayList<>();
-        for(Division division:this.getDivisionList()){
+        for (Division division : this.getDivisionList()) {
             divisionNameList.add(division.getName().toLowerCase());
         }
         return divisionNameList;
     }
 
-    public Division getDivisionFromListByName(String divisionName){
+    public Division getDivisionFromListByName(String divisionName) {
         Division foundDivision = null;
-        for(Division division : divisionList){
-            if(division.getName().toLowerCase().equals(divisionName.toLowerCase())){
+        for (Division division : divisionList) {
+            if (division.getName().toLowerCase().equals(divisionName.toLowerCase())) {
                 foundDivision = division;
                 break;
             }
         }
         return foundDivision;
-    }
-
-    public void setDivisionList(List<Division> divisionList) {
-        this.divisionList = divisionList;
     }
 
     public void addConference(IConferenceFactory addConferenceFactory) throws Exception {
@@ -78,7 +67,5 @@ public class Conference extends ParentObj{
     public void loadDivisionListByConferenceId(IDivisionFactory loadDivisionFactory) throws Exception {
         this.divisionList = loadDivisionFactory.loadDivisionListByConferenceId(getId());
     }
-
-
 
 }

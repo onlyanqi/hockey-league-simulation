@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.IPlayerFactory;
 import simulation.model.Player;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class PlayerDao implements IPlayerFactory {
     @Override
     public int addPlayer(Player player) throws Exception {
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("AddPlayer(?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, player.getTeamId());
             callDB.setInputParameterInt(2, player.getFreeAgentId());
@@ -24,7 +25,7 @@ public class PlayerDao implements IPlayerFactory {
             callDB.execute();
             player.setId(callDB.returnOutputParameterInt(7));
 
-        } catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -52,7 +53,7 @@ public class PlayerDao implements IPlayerFactory {
             player.setPosition(position);
             player.setCaptain(callDB.returnOutputParameterBoolean(5));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();
@@ -63,7 +64,7 @@ public class PlayerDao implements IPlayerFactory {
     public List<Player> loadPlayerListByFreeAgentId(int freeAgentId) throws Exception {
         List<Player> playerList = null;
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("LoadPlayerListByFreeAgentId(?)");
             callDB.setInputParameterInt(1, freeAgentId);
             ResultSet rs = callDB.executeLoad();
@@ -77,7 +78,7 @@ public class PlayerDao implements IPlayerFactory {
                     playerList.add(player);
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
 
@@ -88,7 +89,7 @@ public class PlayerDao implements IPlayerFactory {
     public List<Player> loadPlayerListByTeamId(int teamId) throws Exception {
         List<Player> playerList = null;
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("LoadPlayerListByTeamId(?)");
             callDB.setInputParameterInt(1, teamId);
             ResultSet rs = callDB.executeLoad();
@@ -102,7 +103,7 @@ public class PlayerDao implements IPlayerFactory {
                     playerList.add(player);
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
 

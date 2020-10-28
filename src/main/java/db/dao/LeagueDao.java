@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.ILeagueFactory;
 import simulation.model.League;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,9 +11,9 @@ import java.util.List;
 public class LeagueDao implements ILeagueFactory {
 
     @Override
-    public int addLeague(League league) throws Exception{
+    public int addLeague(League league) throws Exception {
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("AddLeague(?,?,?)");
             callDB.setInputParameterString(1, league.getName());
             callDB.setInputParameterInt(2, league.getCreatedBy());
@@ -20,7 +21,7 @@ public class LeagueDao implements ILeagueFactory {
             callDB.execute();
             league.setId(callDB.returnOutputParameterInt(3));
 
-        } catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -29,7 +30,7 @@ public class LeagueDao implements ILeagueFactory {
     }
 
     @Override
-    public void loadLeagueById(int id, League league) throws Exception{
+    public void loadLeagueById(int id, League league) throws Exception {
         ICallDB callDB = null;
         try {
             callDB = new CallDB("LoadLeagueByName(?,?,?,?)");
@@ -45,7 +46,7 @@ public class LeagueDao implements ILeagueFactory {
             league.setCreatedBy(callDB.returnOutputParameterInt(4));
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
         } finally {
@@ -61,14 +62,14 @@ public class LeagueDao implements ILeagueFactory {
             callDB.setInputParameterString(1, leagueName);
             callDB.setInputParameterInt(2, userId);
             ResultSet rs = callDB.executeLoad();
-            if(rs != null) {
-                while(rs.next()) {
+            if (rs != null) {
+                while (rs.next()) {
                     league.setId(rs.getInt(1));
                     league.setName(rs.getString(2));
                     league.setCreatedBy(rs.getInt(3));
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();
@@ -79,7 +80,7 @@ public class LeagueDao implements ILeagueFactory {
     public List<League> loadLeagueListByUserId(int userId) throws Exception {
         List<League> leagueList = null;
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("LoadLeagueListByUserId(?)");
             callDB.setInputParameterInt(1, userId);
             ResultSet rs = callDB.executeLoad();
@@ -93,7 +94,7 @@ public class LeagueDao implements ILeagueFactory {
                     leagueList.add(league);
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
 

@@ -1,7 +1,5 @@
 package simulation.RegularSeasonEvents;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
@@ -27,6 +25,10 @@ public class NHLEvents {
 
     public LocalDate getNextSeasonDate() {
         return nextSeasonDate;
+    }
+
+    public void setNextSeasonDate(LocalDate nextSeasonDate) {
+        this.nextSeasonDate = nextSeasonDate;
     }
 
     public LocalDate getRegularSeasonStartDate() {
@@ -90,13 +92,13 @@ public class NHLEvents {
     public boolean isRegularSeasonPassed(LocalDate currentDate){
         if(currentDate.compareTo(endOfRegularSeason) > 0){
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public void initializeRegularSeasonStartDate(){
-        LocalDate seasonStartDate = LocalDate.of(LocalDate.now().getYear(), Month.SEPTEMBER,30);
+    public void initializeRegularSeasonStartDate() {
+        LocalDate seasonStartDate = LocalDate.of(LocalDate.now().getYear(), Month.SEPTEMBER, 30);
         setRegularSeasonStartDate(seasonStartDate);
     }
 

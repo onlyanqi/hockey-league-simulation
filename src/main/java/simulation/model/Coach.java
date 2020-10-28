@@ -1,7 +1,12 @@
 package simulation.model;
 
 public class Coach extends ParentObj {
-    String name;
+    private int teamId;
+    private int leagueId;
+    private Double skating;
+    private Double shooting;
+    private Double checking;
+    private Double saving;
 
     public Coach() {
     }
@@ -10,7 +15,7 @@ public class Coach extends ParentObj {
         setId(id);
     }
 
-    public Coach(Coach coach){
+    public Coach(Coach coach) {
         this.setId(coach.getId());
         if (coach.getName() != null) {
             this.setName(coach.getName());
@@ -22,26 +27,6 @@ public class Coach extends ParentObj {
         this.setShooting(coach.getShooting());
         this.setSkating(coach.getSkating());
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    private transient int teamId;
-
-    private transient int leagueId;
-
-    private Double skating;
-
-    private Double shooting;
-
-    private Double checking;
-
-    private Double saving;
 
     public int getTeamId() {
         return teamId;

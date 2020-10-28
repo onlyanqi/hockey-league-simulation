@@ -8,9 +8,9 @@ import java.util.Date;
 public class ParentObjMock implements IParentObjFactory {
 
     @Override
-    public void loadParentObj(int id, ParentObj parentObj){
+    public void loadParentObj(int id, ParentObj parentObj) {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all valid data
                 parentObj.setName("Parent");

@@ -14,9 +14,9 @@ public class PlayerMock implements IPlayerFactory {
     }
 
     @Override
-    public void loadPlayerById(int id, Player player){
+    public void loadPlayerById(int id, Player player) {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all correct data
                 player.setName("Player1");

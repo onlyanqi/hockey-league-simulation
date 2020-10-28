@@ -2,14 +2,34 @@ package simulation.model;
 
 import com.google.gson.annotations.SerializedName;
 import db.data.IPlayerFactory;
-public class Player extends ParentObj{
+import util.DateUtil;
 
-    @SerializedName("playerName")
-    String name;
+import java.time.LocalDate;
+import java.util.Random;
 
-    public Player(){}
+public class Player extends ParentObj {
 
-    public Player(int id){
+    private int age;
+    private String hometown;
+    private Position position;
+    private int teamId;
+    private int freeAgentId;
+    private boolean isCaptain;
+    private boolean isInjured;
+    private LocalDate injuryStartDate;
+    private int injuryDatesRange;
+    private int seasonId;
+    private boolean isFreeAgent = false;
+    private int skating;
+    private int shooting;
+    private int checking;
+    private int saving;
+    private double strength;
+
+    public Player() {
+    }
+
+    public Player(int id) {
         setId(id);
     }
 
@@ -18,10 +38,10 @@ public class Player extends ParentObj{
         factory.loadPlayerById(id, this);
     }
 
-    public Player(Player player){
+    public Player(Player player) {
         this.setId(player.getId());
         this.setName(player.getName());
-        this.isFreeAgent=player.isFreeAgent;
+        this.isFreeAgent = player.isFreeAgent;
         this.setAge(player.getAge());
         this.setSaving(player.getSaving());
         this.setChecking(player.getChecking());
@@ -30,33 +50,6 @@ public class Player extends ParentObj{
         this.setPosition(player.getPosition());
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    private int age;
-
-    private String hometown;
-
-    private Position position;
-
-    public enum Position{
-        forward,
-        defense,
-        goalie
-    }
-
-    private transient int teamId;
-
-    private transient int freeAgentId;
-
-    @SerializedName("captain")
-    private boolean isCaptain;
-
     public boolean isFreeAgent() {
         return isFreeAgent;
     }
@@ -64,20 +57,6 @@ public class Player extends ParentObj{
     public void setIsFreeAgent(boolean freeAgent) {
         isFreeAgent = freeAgent;
     }
-
-    private transient boolean isFreeAgent=false;
-
-    private transient int seasonId;
-
-    private int skating;
-
-    private int shooting;
-
-    private int checking;
-
-    private int saving;
-
-    private transient double strength;
 
     public int getAge() {
         return age;
@@ -122,6 +101,11 @@ public class Player extends ParentObj{
     public int getFreeAgentId() {
         return freeAgentId;
     }
+
+    public void setFreeAgentId(int freeAgentId) {
+        this.freeAgentId = freeAgentId;
+    }
+
     public int getSkating() {
         return skating;
     }
@@ -158,23 +142,19 @@ public class Player extends ParentObj{
     public void setStrength() {
         switch (position) {
             case forward:
-                this.strength = getSkating() + getShooting() + (getChecking() / 2);
+                this.strength = this.getSkating() + this.getShooting() + (double) (this.getChecking() / 2);
                 break;
             case defense:
-                this.strength = getSkating() + getChecking() + (getShooting() / 2);
+                this.strength = this.getSkating() + this.getChecking() + (double) (this.getShooting() / 2);
                 break;
             case goalie:
-                this.strength = getSkating() + getSaving();
+                this.strength = this.getSkating() + this.getSaving();
                 break;
         }
     }
 
-    public double getStrength(){
+    public double getStrength() {
         return strength;
-    }
-
-    public void setFreeAgentId(int freeAgentId) {
-        this.freeAgentId = freeAgentId;
     }
 
     public boolean isCaptain() {
@@ -185,8 +165,75 @@ public class Player extends ParentObj{
         isCaptain = captain;
     }
 
+    public boolean getInjured() {
+        return isInjured;
+    }
+
+    public void setInjured(boolean isInjured) {
+        this.isInjured = isInjured;
+    }
+
+    public LocalDate getInjuryStartDate() {
+        return this.injuryStartDate;
+    }
+
+    public void setInjuryStartDate(LocalDate injuryStartDate) {
+        this.injuryStartDate = injuryStartDate;
+    }
+
+    public int getInjuryDatesRange() {
+        return this.injuryDatesRange;
+    }
+
+    public void setInjuryDatesRange(int injuryDatesRange) {
+        this.injuryDatesRange = injuryDatesRange;
+    }
+
     public void addPlayer(IPlayerFactory addPlayerFactory) throws Exception {
         addPlayerFactory.addPlayer(this);
+    }
+
+    public boolean retirementCheck(Aging aging) {
+        double increaseRate = 0.5 / (aging.getMaximumAge() - aging.getAverageRetirementAge());
+        if (this.age < aging.getAverageRetirementAge()) {
+            Random randomRetire1 = new Random();
+            double chance1 = (aging.getAverageRetirementAge() - this.age) * (1 - increaseRate) * 0.5;
+            return randomRetire1.nextDouble() < chance1;
+        } else if (this.age < aging.getMaximumAge()) {
+            Random randomRetire2 = new Random();
+            double chance2 = (this.age - aging.getAverageRetirementAge()) * (1 + increaseRate) * 0.5;
+            return randomRetire2.nextDouble() < chance2;
+        } else return this.age >= aging.getMaximumAge();
+    }
+
+    public void getOlder() {
+        this.age++;
+    }
+
+    public void injuryCheck(League league) {
+        Random randomInjuryChance = new Random();
+        double chanceOfInjury = randomInjuryChance.nextDouble();
+        if (!this.getInjured() && chanceOfInjury < league.getGamePlayConfig().getInjury().getRandomInjuryChance()) {
+            this.setInjuryStartDate(league.getCurrentDate());
+            Random randomInjuryDays = new Random();
+            int injuryDaysHigh = league.getGamePlayConfig().getInjury().getInjuryDaysHigh();
+            int injuryDaysLow = league.getGamePlayConfig().getInjury().getInjuryDaysLow();
+            this.setInjuryDatesRange(randomInjuryDays.nextInt(injuryDaysHigh - injuryDaysLow) + injuryDaysLow);
+            this.setInjured(true);
+        }
+    }
+
+    public void agingInjuryRecovery(League league) {
+        if (this.getInjured() && DateUtil.diffDays(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
+            this.setInjured(false);
+            this.setInjuryStartDate(null);
+        }
+    }
+
+    public enum Position {
+        forward,
+        defense,
+        goalie
     }
 
 }

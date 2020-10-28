@@ -10,64 +10,36 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class League extends ParentObj{
+public class League extends ParentObj {
 
-    @SerializedName("leagueName")
-    String name;
+    private String country;
+    private int createdBy;
+    private List<Conference> conferenceList;
+    private List<Coach> coachList;
+    private List<Manager> managerList;
+    private List<String> generalManagers;
+    private FreeAgent freeAgent;
+    private List<Player> freeAgents;
+    private LocalDate currentDate;
+    private GamePlayConfig gamePlayConfig;
+    private Games games;
+    private RegularSeasonScoreBoard regularSeasonScoreBoard;
+    private NHLEvents nhlEvents;
 
-    public League(){}
+    public League() {
+    }
 
-    public League(int id){
+    public League(int id) {
         setId(id);
     }
 
-    public League(int id, ILeagueFactory factory) throws Exception{
+    public League(int id, ILeagueFactory factory) throws Exception {
         setId(id);
         factory.loadLeagueById(id, this);
     }
 
     public League(String leagueName, int userId, ILeagueFactory loadLeagueFactory) throws Exception {
         loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
-    }
-
-    private String country;
-
-    private transient int createdBy;
-
-    @SerializedName("conferences")
-    private List<Conference> conferenceList;
-
-    @SerializedName("coaches")
-    private List<Coach> coachList;
-
-    private transient List<Manager> managerList;
-
-    private List<String> generalManagers;
-
-    private transient FreeAgent freeAgent;
-
-    private List<Player> freeAgents;
-
-    private LocalDate currentDate;
-
-    private GamePlayConfig gamePlayConfig;
-
-    private Games games;
-
-    private TeamStanding regularSeasonStanding;
-
-    private TeamStanding playOffStanding;
-
-    private transient TeamStanding activeTeamStanding;
-
-    private NHLEvents nhlEvents;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public NHLEvents getNHLRegularSeasonEvents() {
@@ -78,6 +50,14 @@ public class League extends ParentObj{
         this.nhlEvents = nhlEvents;
     }
 
+    public RegularSeasonScoreBoard getRegularSeasonScoreBoard() {
+        return regularSeasonScoreBoard;
+    }
+
+    public void setRegularSeasonScoreBoard(RegularSeasonScoreBoard regularSeasonScoreBoard) {
+        this.regularSeasonScoreBoard = regularSeasonScoreBoard;
+    }
+
     public Games getGames() {
         return games;
     }
@@ -86,12 +66,12 @@ public class League extends ParentObj{
         this.games = games;
     }
 
-    public void setGamePlayConfig(GamePlayConfig gamePlayConfig){
-        this.gamePlayConfig = gamePlayConfig;
+    public GamePlayConfig getGamePlayConfig() {
+        return gamePlayConfig;
     }
 
-    public GamePlayConfig getGamePlayConfig(){
-        return gamePlayConfig;
+    public void setGamePlayConfig(GamePlayConfig gamePlayConfig) {
+        this.gamePlayConfig = gamePlayConfig;
     }
 
     public LocalDate getCurrentDate() {
@@ -102,7 +82,7 @@ public class League extends ParentObj{
         this.currentDate = currentDate;
     }
 
-    public List<Player> getFreeAgentList(){
+    public List<Player> getFreeAgentList() {
         return freeAgents;
     }
 
@@ -134,54 +114,30 @@ public class League extends ParentObj{
         return managerList;
     }
 
-    public TeamStanding getRegularSeasonStanding() {
-        return regularSeasonStanding;
-    }
-
-    public void setRegularSeasonStanding(TeamStanding regularSeasonStanding) {
-        this.regularSeasonStanding = regularSeasonStanding;
-    }
-
-    public TeamStanding getPlayOffStanding() {
-        return playOffStanding;
-    }
-
-    public void setPlayOffStanding(TeamStanding playOffStanding) {
-        this.playOffStanding = playOffStanding;
-    }
-
-    public TeamStanding getActiveTeamStanding() {
-        return activeTeamStanding;
-    }
-
-    public void setActiveTeamStanding(TeamStanding activeTeamStanding) {
-        this.activeTeamStanding = activeTeamStanding;
-    }
-
-    public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject){
-        int managerListSize = managerList.size();
-        Manager manager = new Manager(managerList.get(managerListSize-1));
-        managerList.set(indexOfManagerObject, manager);
-        managerList.remove(managerListSize-1);
-        return managerList;
-    }
-
-    public List<Coach> removeCoachFromCoachListById(List<Coach> coachList, int indexOfCoachObject){
-        int coachListSize = coachList.size();
-        Coach coach = new Coach(coachList.get(coachListSize-1));
-        coachList.set(indexOfCoachObject, coach);
-        coachList.remove(coachListSize-1);
-        return coachList;
-    }
-
     public void setManagerList(List<Manager> managerList) {
         this.managerList = managerList;
         this.generalManagers = createManagerNameList(managerList);
     }
 
-    public List<String> createManagerNameList(List<Manager> managerList){
+    public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject) {
+        int managerListSize = managerList.size();
+        Manager manager = new Manager(managerList.get(managerListSize - 1));
+        managerList.set(indexOfManagerObject, manager);
+        managerList.remove(managerListSize - 1);
+        return managerList;
+    }
+
+    public List<Coach> removeCoachFromCoachListById(List<Coach> coachList, int indexOfCoachObject) {
+        int coachListSize = coachList.size();
+        Coach coach = new Coach(coachList.get(coachListSize - 1));
+        coachList.set(indexOfCoachObject, coach);
+        coachList.remove(coachListSize - 1);
+        return coachList;
+    }
+
+    public List<String> createManagerNameList(List<Manager> managerList) {
         List<String> managerNameList = new ArrayList<>();
-        for(int i=0; i<managerList.size();i++){
+        for (int i = 0; i < managerList.size(); i++) {
             managerNameList.add(managerList.get(i).getName());
         }
         return managerNameList;
@@ -212,17 +168,17 @@ public class League extends ParentObj{
         this.conferenceList = loadConferenceFactory.loadConferenceListByLeagueId(getId());
     }
 
-    public List<String> createConferenceNameList(){
+    public List<String> createConferenceNameList() {
         List<String> conferenceNameList = new ArrayList<>();
-        for(Conference conference : conferenceList){
+        for (Conference conference : conferenceList) {
             conferenceNameList.add(conference.getName().toLowerCase());
         }
         return conferenceNameList;
     }
 
-    public Conference getConferenceFromListByName(String conferenceName){
+    public Conference getConferenceFromListByName(String conferenceName) {
         Conference foundConference = null;
-        for(Conference conference : conferenceList) {
+        for (Conference conference : conferenceList) {
             if (conference.getName().toLowerCase().equals(conferenceName.toLowerCase())) {
                 foundConference = conference;
                 break;
@@ -235,11 +191,11 @@ public class League extends ParentObj{
         this.freeAgent = loadFreeAgentFactory.loadFreeAgentByLeagueId(getId());
     }
 
-    public Team getTeamByTeamName(String teamName){
-        for (Conference conference : getConferenceList()){
+    public Team getTeamByTeamName(String teamName) {
+        for (Conference conference : getConferenceList()) {
             for (Division division : conference.getDivisionList()) {
                 for (Team team : division.getTeamList()) {
-                    if(team.getName().equals(teamName)){
+                    if (team.getName().equals(teamName)) {
                         return team;
                     }
                 }

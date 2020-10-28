@@ -2,9 +2,9 @@ package simulation.factory;
 
 import db.dao.TeamDao;
 import db.data.ITeamFactory;
-import simulation.model.Team;
 import org.junit.Before;
 import org.junit.Test;
+import simulation.model.Team;
 import simulation.model.TeamMock;
 
 import static org.junit.Assert.assertTrue;
@@ -14,12 +14,12 @@ public class TeamConcreteTest {
     private TeamConcrete teamConcrete;
 
     @Before
-    public void init(){
+    public void init() {
         teamConcrete = new TeamConcrete();
     }
 
     @Test
-    public void newTeamTest(){
+    public void newTeamTest() {
         assertTrue(teamConcrete.newTeam() instanceof Team);
     }
 
@@ -32,12 +32,12 @@ public class TeamConcreteTest {
     }
 
     @Test
-    public void newLoadTeamFactoryTest(){
+    public void newLoadTeamFactoryTest() {
         assertTrue(teamConcrete.newLoadTeamFactory() instanceof TeamDao);
     }
 
     @Test
-    public void newAddTeamFactoryTest(){
+    public void newAddTeamFactoryTest() {
         assertTrue(teamConcrete.newAddTeamFactory() instanceof TeamDao);
     }
 

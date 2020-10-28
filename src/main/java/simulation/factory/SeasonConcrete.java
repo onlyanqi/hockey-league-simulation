@@ -6,15 +6,15 @@ import simulation.model.Season;
 
 public class SeasonConcrete {
 
-    public Season newSeason(){
+    public Season newSeason() {
         return new Season();
     }
 
-    public ISeasonFactory newLoadSeasonFactory(){
+    public ISeasonFactory newLoadSeasonFactory() {
         return new SeasonDao();
     }
 
-    public ISeasonFactory newAddSeasonFactory(){
+    public ISeasonFactory newAddSeasonFactory() {
         return new SeasonDao();
     }
 

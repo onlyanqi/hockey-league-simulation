@@ -13,7 +13,7 @@ public class CreateTeamStateTest {
     static HockeyContext hockeyContext;
     static IHockeyState hockeyState;
     static IHockeyState hockeyState2;
-    static User user ;
+    static User user;
     static League league;
     private static Team team;
 
@@ -21,7 +21,7 @@ public class CreateTeamStateTest {
     private static ITeamFactory factory2;
 
     @BeforeClass
-    public static void setState(){
+    public static void setState() {
 //
 //        user = new User();
 //        user.setId(2);
@@ -32,7 +32,6 @@ public class CreateTeamStateTest {
 //        hockeyState = new CreateTeamState(hockeyContext);
 //
 //        hockeyState2 = new CreateTeamState(hockeyContext);
-
 
 
     }
@@ -57,7 +56,7 @@ public class CreateTeamStateTest {
     }
 
     @Test
-    public void exitTest(){
+    public void exitTest() {
 
         //assertTrue(hockeyState.exit() instanceof PlayerChoiceState);
     }

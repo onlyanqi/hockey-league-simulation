@@ -20,7 +20,18 @@ public class AppConfig {
         inputForTeamCreation = new UseInputForTeamCreation();
         outputForTeamCreation = new ConsoleOutputForTeamCreation();
         leagueConcrete = new LeagueConcrete();
-        dataSerializer= new LeagueDataSerializer();
+        dataSerializer = new LeagueDataSerializer();
+    }
+
+    public static AppConfig getInstance() {
+        if (null == AppConfig.getUniqueInstance()) {
+            appConfig = new AppConfig();
+        }
+        return appConfig;
+    }
+
+    private static Object getUniqueInstance() {
+        return appConfig;
     }
 
     public IUserInputForTeamCreation getInputForTeamCreation() {
@@ -37,17 +48,6 @@ public class AppConfig {
 
     public LeagueConcrete getLeagueConcrete() {
         return leagueConcrete;
-    }
-
-    public static AppConfig getInstance(){
-        if (null == AppConfig.getUniqueInstance()){
-            appConfig = new AppConfig();
-        }
-        return appConfig;
-    }
-
-    private static Object getUniqueInstance() {
-        return appConfig;
     }
 
 }
