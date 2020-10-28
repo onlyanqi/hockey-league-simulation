@@ -1,7 +1,7 @@
 package config;
 
 import simulation.factory.LeagueConcrete;
-import simulation.serializers.LeagueDataSerializer;
+import simulation.serializers.LeagueDataSerializerDeSerializer;
 import userIO.ConsoleOutputForTeamCreation;
 import userIO.IConsoleOutputForTeamCreation;
 import userIO.IUserInputForTeamCreation;
@@ -13,14 +13,14 @@ public class AppConfig {
 
     private IUserInputForTeamCreation inputForTeamCreation;
     private IConsoleOutputForTeamCreation outputForTeamCreation;
-    private LeagueDataSerializer dataSerializer;
+    private LeagueDataSerializerDeSerializer dataSerializer;
     private LeagueConcrete leagueConcrete;
 
     public AppConfig() {
         inputForTeamCreation = new UseInputForTeamCreation();
         outputForTeamCreation = new ConsoleOutputForTeamCreation();
         leagueConcrete = new LeagueConcrete();
-        dataSerializer = new LeagueDataSerializer();
+        dataSerializer = new LeagueDataSerializerDeSerializer();
     }
 
     public static AppConfig getInstance() {
@@ -42,7 +42,7 @@ public class AppConfig {
         return outputForTeamCreation;
     }
 
-    public LeagueDataSerializer getDataSerializer() {
+    public LeagueDataSerializerDeSerializer getDataSerializer() {
         return dataSerializer;
     }
 

@@ -3,7 +3,9 @@ package db.dao;
 import db.data.IManagerFactory;
 import simulation.model.Manager;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ManagerDao implements IManagerFactory {
     @Override
@@ -29,12 +31,73 @@ public class ManagerDao implements IManagerFactory {
     }
 
     @Override
-    public void loadManagerById(int id, Manager manager) throws Exception {
-
+    public void loadManagerById(int managerId, Manager manager) throws Exception {
+        ICallDB callDB = null;
+        try {
+            callDB = new CallDB("LoadManagerById(?)");
+            callDB.setInputParameterInt(1, managerId);
+            ResultSet rs = callDB.executeLoad();
+            if(rs!=null){
+                manager = new Manager();
+                manager.setId(rs.getInt(1));
+                manager.setTeamId(rs.getInt(2));
+                manager.setName(rs.getString(3));
+                manager.setLeagueId(rs.getInt(4));
+            }
+        }catch (SQLException sqlException) {
+            throw sqlException;
+        } finally {
+            callDB.closeConnection();
+        }
     }
 
     @Override
-    public Manager loadManagerByLeagueId(int id) throws Exception {
-        return null;
+    public List<Manager> loadFreeManagersByLeagueId(int leagueId) throws Exception {
+        ICallDB callDB = null;
+        List<Manager> managers = null;
+        try {
+            callDB = new CallDB("LoadManagerListByLeagueIdd(?)");
+            callDB.setInputParameterInt(1, leagueId);
+            ResultSet rs = callDB.executeLoad();
+            if(rs!=null){
+                while (rs.next()) {
+                    Manager manager = new Manager();
+                    manager = new Manager();
+                    manager.setId(rs.getInt(1));
+                    manager.setTeamId(rs.getInt(2));
+                    manager.setName(rs.getString(3));
+                    manager.setLeagueId(rs.getInt(4));
+                    managers.add(manager);
+                }
+            }
+        }catch (SQLException sqlException) {
+            throw sqlException;
+        } finally {
+            callDB.closeConnection();
+        }
+        return managers;
+    }
+
+    @Override
+    public Manager loadManagerByTeamId(int teamId) throws Exception {
+        ICallDB callDB = null;
+        Manager manager = null;
+        try {
+            callDB = new CallDB("LoadManagerByTeamId(?)");
+            callDB.setInputParameterInt(1, teamId);
+            ResultSet rs = callDB.executeLoad();
+            if(rs!=null){
+                manager = new Manager();
+                manager.setId(rs.getInt(1));
+                manager.setTeamId(rs.getInt(2));
+                manager.setName(rs.getString(3));
+                manager.setLeagueId(rs.getInt(4));
+            }
+        }catch (SQLException sqlException) {
+            throw sqlException;
+        } finally {
+            callDB.closeConnection();
+        }
+        return manager;
     }
 }

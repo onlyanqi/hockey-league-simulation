@@ -4,7 +4,6 @@ import config.AppConfig;
 import db.data.ILeagueFactory;
 import simulation.factory.LeagueConcrete;
 import simulation.model.*;
-import simulation.serializers.LeagueDataSerializer;
 import userIO.ConsoleOutput;
 import userIO.GetInput;
 import userIO.IConsoleOutputForTeamCreation;
