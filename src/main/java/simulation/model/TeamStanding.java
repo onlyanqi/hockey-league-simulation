@@ -1,86 +1,114 @@
 package simulation.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class TeamStanding {
 
-    HashMap<String, Integer> teamsRank;
-    RegularSeasonScoreBoard regularSeasonScoreBoard;
+    private List<TeamScore> teamsScoreList;
 
-    public TeamStanding(HashMap<String, Integer> teamsRank, RegularSeasonScoreBoard regularSeasonScoreBoard) {
-        this.teamsRank = teamsRank;
-        this.regularSeasonScoreBoard = regularSeasonScoreBoard;
+    public TeamStanding() {
+        teamsScoreList = new ArrayList<>();
     }
 
-    public TeamStanding(RegularSeasonScoreBoard regularSeasonScoreBoard) {
-        this.regularSeasonScoreBoard = regularSeasonScoreBoard;
+    public void initializeTeamStandings(List<String> teamNames){
+        Integer teamsSize = teamNames.size();
+        teamsScoreList = new ArrayList<>(teamsSize);
+        for(String teamName : teamNames){
+            teamsScoreList.add(new TeamScore(teamName));
+        }
     }
 
-    public HashMap<String, Integer> getTeamsRankAcrossLeague() {
-        HashMap<String, Integer> teamsScore = regularSeasonScoreBoard.getTeamsScore();
-        return sortHashMap(teamsScore);
+    public void initializeTeamStandingsRegularSeason(League league){
+        for(Conference conference: league.getConferenceList() ){
+            for(Division division: conference.getDivisionList()){
+                for(Team team: division.getTeamList()){
+                    teamsScoreList.add(new TeamScore(team.getName()));
+                }
+            }
+        }
     }
 
-    public HashMap<String, Integer> getTeamsRankAcrossConference(League league, String conferenceName) {
+    public List<TeamScore> getTeamsScoreList() {
+        return teamsScoreList;
+    }
 
-        HashMap<String, Integer> teamsScore = regularSeasonScoreBoard.getTeamsScore();
-        HashMap<String, Integer> teamsScoreWithinConference = new HashMap<>();
+    public void setTeamsScoreList(List<TeamScore> teamsScoreList) {
+        this.teamsScoreList = teamsScoreList;
+    }
 
-        for (Conference conference : league.getConferenceList()) {
-            for (Division division : conference.getDivisionList()) {
-                for (Team team : division.getTeamList()) {
-                    if (conference.getName().equals(conferenceName)) {
-                        teamsScoreWithinConference.put(team.getName(), teamsScore.get(team.getName()));
+    public void setTeamPoints(String teamName){
+        for(TeamScore teamScore: teamsScoreList){
+            if(teamScore.getTeamName().equals(teamName)){
+                int previousScore = teamScore.getScore();
+                int newTeamScore = previousScore + 2;
+                teamScore.setScore(newTeamScore);
+            }
+        }
+    }
+    public void setTeamWins(String teamName){
+        for(TeamScore teamScore: teamsScoreList){
+            if(teamScore.getTeamName().equals(teamName)){
+                int previousNumberOfWins = teamScore.getNumberOfWins();
+                teamScore.setNumberOfWins(previousNumberOfWins + 1);
+                setTeamPoints(teamScore.getTeamName());
+            }
+        }
+    }
+    public void setTeamLoss(String teamName){
+        for(TeamScore teamScore: teamsScoreList){
+            if(teamScore.getTeamName().equals(teamName)){
+                int previousNumberOfLoss = teamScore.getNumberOfLoss();
+                teamScore.setNumberOfLoss(previousNumberOfLoss + 1);
+            }
+        }
+    }
+    public List<TeamScore> getTeamsRankAcrossLeague(){
+        List<TeamScore> teamsScoreListLocal =  this.teamsScoreList;
+        return sortTeamsScoreList(teamsScoreListLocal);
+    }
+
+    public List<TeamScore> getTeamsRankAcrossConference(League league, String conferenceName){
+
+        List<TeamScore> teamsScoreListLocal =  this.teamsScoreList;
+        List<TeamScore> teamsScoreWithinConference = new ArrayList<>();
+
+        for(Conference conference: league.getConferenceList() ){
+            for(Division division: conference.getDivisionList()){
+                for(Team team: division.getTeamList()){
+                    if(conference.getName().equals(conferenceName)){
+                        teamsScoreWithinConference.add(getTeamScoreByTeamName(teamsScoreListLocal,team.getName()));
                     }
                 }
             }
         }
-        return sortHashMap(teamsScoreWithinConference);
+        return sortTeamsScoreList(teamsScoreWithinConference);
     }
 
-    public HashMap<String, Integer> getTeamsRankAcrossDivision(League league, String divisionName) {
-        HashMap<String, Integer> teamsScore = regularSeasonScoreBoard.getTeamsScore();
-        HashMap<String, Integer> teamsScoreWithinDivision = new HashMap<>();
+    public List<TeamScore> getTeamsRankAcrossDivision(League league, String divisionName){
+        List<TeamScore> teamsScoreListLocal =  this.teamsScoreList;
+        List<TeamScore> teamsScoreWithinDivision = new ArrayList<>();
 
-        for (Conference conference : league.getConferenceList()) {
-            for (Division division : conference.getDivisionList()) {
-                for (Team team : division.getTeamList()) {
-                    if (division.getName().equals(divisionName)) {
-                        teamsScoreWithinDivision.put(team.getName(), teamsScore.get(team.getName()));
+        for(Conference conference: league.getConferenceList() ){
+            for(Division division: conference.getDivisionList()){
+                for(Team team: division.getTeamList()){
+                    if(division.getName().equals(divisionName)){
+                        teamsScoreWithinDivision.add(getTeamScoreByTeamName(teamsScoreListLocal,team.getName()));
                     }
                 }
             }
         }
-        return sortHashMap(teamsScoreWithinDivision);
+        return sortTeamsScoreList(teamsScoreWithinDivision);
     }
 
-    public HashMap<String, Integer> getTeamsRank() {
-        return teamsRank;
+    public List<TeamScore> sortTeamsScoreList(List<TeamScore> teamsScoreList){
+        teamsScoreList.sort((TeamScore team1,TeamScore team2) ->team1.getScore().compareTo(team2.getScore()));
+        return teamsScoreList;
     }
 
-    public void setTeamsRank(HashMap<String, Integer> teamsRank) {
-        this.teamsRank = teamsRank;
+    public TeamScore getTeamScoreByTeamName(List<TeamScore> teamsScoreList,String teamName){
+       return teamsScoreList.stream().filter(teamScore -> teamScore.getTeamName().equals(teamName)).findFirst().get();
     }
 
-    public HashMap<String, Integer> sortHashMap(HashMap<String, Integer> teamsScore) {
-        //Reference : https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/
-        // Create a list from elements of HashMap
-        List<Map.Entry<String, Integer>> teamsScoreList =
-                new LinkedList<Map.Entry<String, Integer>>(teamsScore.entrySet());
-
-        // Sort the list
-        Collections.sort(teamsScoreList, new Comparator<Map.Entry<String, Integer>>() {
-            public int compare(Map.Entry<String, Integer> team1score,
-                               Map.Entry<String, Integer> team2score) {
-                return (team1score.getValue()).compareTo(team2score.getValue());
-            }
-        });
-
-        // put data from sorted list to hashmap
-        HashMap<String, Integer> teamsRanking = new LinkedHashMap<String, Integer>();
-        for (Map.Entry<String, Integer> aa : teamsScoreList) {
-            teamsRanking.put(aa.getKey(), aa.getValue());
-        }
-        return teamsRanking;
-    }
 }

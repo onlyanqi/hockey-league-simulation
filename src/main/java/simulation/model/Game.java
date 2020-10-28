@@ -4,10 +4,28 @@ import java.time.LocalDate;
 
 public class Game {
 
-    String team1;
-    String team2;
-    LocalDate date;
-    int result;
+    private String team1;
+    private String team2;
+    private LocalDate date;
+    private Boolean played;
+    private Result winner;
+    public enum Result{
+        TEAM1,
+        TEAM2,
+        TIE
+    };
+
+    public Game() {
+        this.played = false;
+    }
+
+    public Result getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Result winner) {
+        this.winner = winner;
+    }
 
     public LocalDate getDate() {
         return date;
@@ -17,13 +35,6 @@ public class Game {
         this.date = date;
     }
 
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
 
     public String getTeam1() {
         return team1;
@@ -41,4 +52,19 @@ public class Game {
         this.team2 = team2;
     }
 
+    public Boolean getPlayed() {
+        return played;
+    }
+
+    public void setPlayed(Boolean played) {
+        this.played = played;
+    }
+
+    public Boolean isGameUnPlayed(){
+        if(played){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
