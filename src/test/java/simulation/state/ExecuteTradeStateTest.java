@@ -37,7 +37,9 @@ public class ExecuteTradeStateTest {
         ExecuteTradeState state = new ExecuteTradeState();
         ILeagueFactory leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
-        assertTrue(state.loopAllTeamsForTradeInitiation(league));
+        for(int i=0;i<500;i++) {
+            assertTrue(state.loopAllTeamsForTradeInitiation(league));
+        }
         league.setConferenceList(null);
         assertFalse(state.loopAllTeamsForTradeInitiation(league));
     }
@@ -52,36 +54,12 @@ public class ExecuteTradeStateTest {
         League league = new League(1, leagueFactory);
 
         for(int i = 0; i < 50 ; i++) {
-            Map<String, Object> swap = state.tradingLogic(team, league);
-
-            if(swap != null) {
-                TradeOffer tradeOffer = (TradeOffer) swap.get(TRADEOFFER);
-
-                if (tradeOffer != null) {
-
-                    Player fromPlayer = (Player) swap.get(FROMPLAYER);
-                    assertNotNull(fromPlayer);
-
-                    Team fromTeam = (Team) swap.get(FROMTEAM);
-                    assertNotNull(fromTeam);
-
-                    Player toPlayer = (Player) swap.get(TOPLAYER);
-                    assertNotNull(toPlayer);
-
-                    Team toTeam = (Team) swap.get(TOTEAM);
-                    assertNotNull(toTeam);
-
-
-                    assertEquals(tradeOffer.getFromPlayerId(), fromPlayer.getId());
-                    assertEquals(tradeOffer.getToPlayerId(), toPlayer.getId());
-                    assertEquals(tradeOffer.getFromTeamId(), fromTeam.getId());
-                    assertEquals(tradeOffer.getToTeamId(), toTeam.getId());
-
-                    assertNotEquals(tradeOffer.getFromPlayerId(), toPlayer.getId());
-                    assertNotEquals(tradeOffer.getToPlayerId(), fromPlayer.getId());
-                    assertNotEquals(tradeOffer.getFromTeamId(), toTeam.getId());
-                    assertNotEquals(tradeOffer.getToTeamId(), fromTeam.getId());
-                }
+            state.tradingLogic(team, league);
+            double beforeTradeStrength = team.getStrength();
+            if(league.getTradingOfferList() != null && league.getTradingOfferList().size() > 0){
+                assertNotNull(league.getTradingOfferList().get(0).getStatus());
+                double afterTradeStrength = team.getStrength();
+                assertTrue(afterTradeStrength >= beforeTradeStrength);
             }
         }
     }
@@ -226,7 +204,8 @@ public class ExecuteTradeStateTest {
         Player player = new Player(5, playerFactory);
 
         ExecuteTradeState state = new ExecuteTradeState();
-        Map<String, Object> players = state.findBestSwapPlayer(team, league, player);
+        Map<String, Object> players = new HashMap<>();
+        state.findBestSwapPlayer(team, league, player, players);
 
         assertNotNull(players.get(FROMPLAYER));
         assertNotNull(players.get(TOPLAYER));
@@ -239,7 +218,7 @@ public class ExecuteTradeStateTest {
         assertNotEquals(toPlayer.getId(), player.getId());
 
         player = new Player(1, playerFactory);
-        players = state.findBestSwapPlayer(team, league, player);
+        state.findBestSwapPlayer(team, league, player, players);
 
         assertNotNull(players);
         assertNotNull(players.get(FROMPLAYER));

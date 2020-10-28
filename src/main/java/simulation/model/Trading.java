@@ -1,5 +1,6 @@
 package simulation.model;
 
+import db.data.ITradeOfferFactory;
 import db.data.ITradingFactory;
 import java.util.*;
 
@@ -177,5 +178,9 @@ public class Trading extends SharedAttributes {
 
     public void setTradingPeriod(boolean tradingPeriod) {
         isTradingPeriod = tradingPeriod;
+    }
+
+    public void addTrading(ITradingFactory tradingFactory) throws Exception {
+        tradingFactory.addTradingDetails(this);
     }
 }
