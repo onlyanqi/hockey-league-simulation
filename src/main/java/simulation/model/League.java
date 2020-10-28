@@ -13,7 +13,6 @@ import java.util.List;
 
 public class League extends SharedAttributes {
 
-    private String country;
     private int createdBy;
     private List<Conference> conferenceList;
     private List<Coach> coachList;
@@ -85,14 +84,6 @@ public class League extends SharedAttributes {
 
     public List<Player> getFreeAgentList() {
         return freeAgents;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public List<Conference> getConferenceList() {

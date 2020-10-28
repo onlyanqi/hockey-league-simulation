@@ -6,7 +6,7 @@ import util.DateUtil;
 import java.time.LocalDate;
 import java.util.Random;
 
-public class Player extends SharedAttributes {
+public class Player extends SharedAttributes implements Comparable<Player> {
 
     private int age;
     private String hometown;

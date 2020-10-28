@@ -23,6 +23,7 @@ public class TradeOfferMock implements ITradeOfferFactory {
         tradeOffer.setFromPlayerId(to);
         tradeOffer.setToPlayerId(to);
         tradeOffer.setSeasonId(from);
+        tradeOffer.setStatus("pending");
     }
 
     @Override
@@ -32,9 +33,11 @@ public class TradeOfferMock implements ITradeOfferFactory {
         getTradeOffer(tradeOffer, 1, 2);
         tradeOffer.setStatus("pending");
         tradeOfferList.add(tradeOffer);
+        tradeOffer = new TradeOffer();
         getTradeOffer(tradeOffer, 3, 4);
         tradeOffer.setStatus("accepted");
         tradeOfferList.add(tradeOffer);
+        tradeOffer = new TradeOffer();
         getTradeOffer(tradeOffer, 5, 6);
         tradeOffer.setStatus("rejected");
         tradeOfferList.add(tradeOffer);
@@ -49,7 +52,6 @@ public class TradeOfferMock implements ITradeOfferFactory {
 
     @Override
     public void loadTradingOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception {
-        tradeOffer = new TradeOffer();
         getTradeOffer(tradeOffer, tradingOfferId, 3);
     }
 }

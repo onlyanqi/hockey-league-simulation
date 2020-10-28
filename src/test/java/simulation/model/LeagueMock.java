@@ -2,6 +2,7 @@ package simulation.model;
 
 import db.data.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,14 +51,9 @@ public class LeagueMock implements ILeagueFactory {
         return trading;
     }
 
-    public List<TradeOffer> getTradeOfferList() throws Exception {
-        List<TradeOffer> tradeOfferList = new ArrayList<>();
+    public List<TradeOffer> getTradeOfferList(int leagueId) throws Exception {
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
-        TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
-        tradeOfferList.add(tradeOffer);
-        tradeOffer = new TradeOffer(2, tradeOfferFactory);
-        tradeOfferList.add(tradeOffer);
-        return tradeOfferList;
+        return tradeOfferFactory.loadTradingOfferDetailsByLeagueId(leagueId);
     }
 
     @Override
@@ -70,7 +66,8 @@ public class LeagueMock implements ILeagueFactory {
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
                 league.setTrading(getTrading());
-                league.setTradingOfferList(getTradeOfferList());
+                league.setTradingOfferList(getTradeOfferList(1));
+                league.setCurrentDate(LocalDate.now());
                 break;
 
             case 2:
@@ -79,7 +76,8 @@ public class LeagueMock implements ILeagueFactory {
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
                 league.setTrading(getTrading());
-                league.setTradingOfferList(getTradeOfferList());
+                league.setTradingOfferList(getTradeOfferList(2));
+                league.setCurrentDate(LocalDate.now());
                 break;
 
             case 3:
@@ -88,7 +86,8 @@ public class LeagueMock implements ILeagueFactory {
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
                 league.setTrading(getTrading());
-                league.setTradingOfferList(getTradeOfferList());
+                league.setTradingOfferList(getTradeOfferList(3));
+                league.setCurrentDate(LocalDate.now());
                 break;
         }
 

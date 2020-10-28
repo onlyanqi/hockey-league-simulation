@@ -19,6 +19,15 @@ public class TeamMock implements ITeamFactory {
         player = new Player(5, playerFactory);
         playerList.add(player);
 
+        player = new Player(10, playerFactory);
+        playerList.add(player);
+
+        player = new Player(6, playerFactory);
+        playerList.add(player);
+
+        player = new Player(7, playerFactory);
+        playerList.add(player);
+
         return playerList;
     }
 
@@ -49,6 +58,8 @@ public class TeamMock implements ITeamFactory {
                 Coach1.setSaving(0.5);
                 team.setCoach(Coach1);
                 team.setPlayerList(formPlayerList());
+                team.setLossPoint(0);
+                team.setStrength();
                 break;
 
             case 2:
@@ -68,6 +79,7 @@ public class TeamMock implements ITeamFactory {
                 Coach2.setSaving(0.1);
                 team.setCoach(Coach2);
                 team.setPlayerList(formPlayerList());
+                team.setStrength();
                 break;
 
             case 3:
@@ -87,6 +99,7 @@ public class TeamMock implements ITeamFactory {
                 Coach3.setSaving(0.8);
                 team.setCoach(Coach3);
                 team.setPlayerList(formPlayerList());
+                team.setStrength();
                 break;
 
             case 4:
@@ -106,6 +119,28 @@ public class TeamMock implements ITeamFactory {
                 Coach4.setSaving(0.8);
                 team.setCoach(Coach4);
                 team.setPlayerList(formPlayerList());
+                team.setStrength();
+                break;
+
+            case 5:
+                //invalid position
+                team.setName("TeamName");
+                team.setDivisionId(1);
+                team.setHometown("Halifax5");
+                team.setMascot("Tiger5");
+                Manager Manager5 = new Manager();
+                Manager5.setName("Manager5");
+                team.setManager(Manager5);
+                Coach Coach5 = new Coach();
+                Coach5.setName("Coach3");
+                Coach5.setSkating(0.2);
+                Coach5.setShooting(0.5);
+                Coach5.setChecking(0.4);
+                Coach5.setSaving(0.8);
+                team.setCoach(Coach5);
+                team.setLossPoint(4);
+                team.setPlayerList(formPlayerList());
+                team.setStrength();
                 break;
         }
 
