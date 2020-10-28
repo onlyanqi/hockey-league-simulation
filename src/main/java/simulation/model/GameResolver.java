@@ -18,13 +18,13 @@ public class GameResolver extends ParentObj{
         this.name = name;
     }
 
-    private double randomWinChance;
+    private Double randomWinChance;
 
-    public double getRandomWinChance() {
+    public Double getRandomWinChance() {
         return randomWinChance;
     }
 
-    public void setRandomWinChance(double randomWinChance) {
+    public void setRandomWinChance(Double randomWinChance) {
         this.randomWinChance = randomWinChance;
     }
 

@@ -8,8 +8,7 @@ import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.junit.BeforeClass;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class ImportStateTest {
@@ -45,8 +44,25 @@ public class ImportStateTest {
         state.process();
         System.out.println(hockeyContext.getUser().getLeague().getName());
 
-        assertTrue(hockeyContext.getUser().getLeague()!=null);
+        assertNotNull(hockeyContext.getUser().getLeague());
         assertEquals(hockeyContext.getUser().getLeague().getName() , "Dalhousie Hockey League");
+        assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getAging().getMaximumAge(),50);
+        assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getGameResolver().getRandomWinChance(),(Double)0.1);
+        assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getInjury().getInjuryDaysLow(),1);
+        assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck(),100);
+        assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getTrading().getMaxPlayersPerTrade(),2);
+        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getName(),"Eastern Conference");
+        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getName(),"Atlantic");
+        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getName(),"Boston");
+        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getCoach().getShooting(),(Double)0.8);
+        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getPlayerList().get(0).getName(),"Player One");
+        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getPlayerList().get(0).getChecking(),12);
+        assertEquals(hockeyContext.getUser().getLeague().getFreeAgentList().get(2).getName(),"Agent Three");
+        assertEquals(hockeyContext.getUser().getLeague().getFreeAgentList().get(1).getChecking(),10);
+        assertEquals(hockeyContext.getUser().getLeague().getCoachList().get(1).getName(),"Frank Smith");
+        assertEquals(hockeyContext.getUser().getLeague().getCoachList().get(2).getSkating(),(Double)1.0);
+        assertEquals(hockeyContext.getUser().getLeague().getManagerList().get(0).getName(),"Karen Potam");
+
 
     }
 

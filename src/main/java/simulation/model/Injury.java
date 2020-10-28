@@ -4,17 +4,17 @@ public class Injury {
     public Injury() {
     }
 
-    private double randomInjuryChance;
+    private Double randomInjuryChance;
 
     private int injuryDaysLow;
 
     private int injuryDaysHigh;
 
-    public double getRandomInjuryChance() {
+    public Double getRandomInjuryChance() {
         return randomInjuryChance;
     }
 
-    public void setRandomInjuryChance(double randomInjuryChance) {
+    public void setRandomInjuryChance(Double randomInjuryChance) {
         this.randomInjuryChance = randomInjuryChance;
     }
 

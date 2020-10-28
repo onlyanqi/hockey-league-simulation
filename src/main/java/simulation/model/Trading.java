@@ -51,11 +51,11 @@ public class Trading extends ParentObj{
 
     private int lossPoint;
 
-    private double randomTradeOfferChance;
+    private Double randomTradeOfferChance;
 
     private int maxPlayersPerTrade;
 
-    private double randomAcceptanceChance;
+    private Double randomAcceptanceChance;
 
     private transient boolean isTradingPeriod;
 

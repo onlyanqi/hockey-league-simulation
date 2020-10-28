@@ -2,9 +2,6 @@ package simulation;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import scala.util.parsing.json.JSON;
-
-import java.io.File;
 
 public class JSONControllerMock{
 
@@ -25,24 +22,24 @@ public class JSONControllerMock{
         JSONArray managers = new JSONArray();
 
         JSONObject aging = new JSONObject();
-        aging.put("averageRetirementAge",(long)35.0);
-        aging.put("maximumAge",(long)50.0);
+        aging.put("averageRetirementAge",(long)35);
+        aging.put("maximumAge",(long)50);
 
         JSONObject gameResolver = new JSONObject();
         gameResolver.put("randomWinChance",0.1);
 
         JSONObject injuries = new JSONObject();
         injuries.put("randomInjuryChance",0.05);
-        injuries.put("injuryDaysLow",(long)1.0);
+        injuries.put("injuryDaysLow",(long)1);
         injuries.put("injuryDaysHigh",(long)260);
 
         JSONObject training = new JSONObject();
         training.put("daysUntilStatIncreaseCheck",(long)100);
 
         JSONObject trading = new JSONObject();
-        trading.put("lossPoint",(long)8.0);
+        trading.put("lossPoint",(long)8);
         trading.put("randomTradeOfferChance",0.05);
-        trading.put("maxPlayersPerTrade",(long)2.0);
+        trading.put("maxPlayersPerTrade",(long)2);
         trading.put("randomAcceptanceChance",0.05);
 
         gameplayConfig.put("aging",aging);
@@ -54,64 +51,64 @@ public class JSONControllerMock{
         JSONObject freeAgentplayer1 = new JSONObject();
         freeAgentplayer1.put("playerName","Agent One");
         freeAgentplayer1.put("position","forward");
-        freeAgentplayer1.put("age",(long)25.0);
-        freeAgentplayer1.put("skating",(long)10.0);
-        freeAgentplayer1.put("shooting",(long)10.0);
-        freeAgentplayer1.put("checking",(long)10.0);
-        freeAgentplayer1.put("saving",(long)0.0);
+        freeAgentplayer1.put("age",(long)25);
+        freeAgentplayer1.put("skating",(long)10);
+        freeAgentplayer1.put("shooting",(long)10);
+        freeAgentplayer1.put("checking",(long)10);
+        freeAgentplayer1.put("saving",(long)0);
 
         JSONObject freeAgentPlayer2 = new JSONObject();
         freeAgentPlayer2.put("playerName","Agent Two");
         freeAgentPlayer2.put("position","defense");
-        freeAgentPlayer2.put("age",(long)25.0);
-        freeAgentPlayer2.put("skating",(long)10.0);
-        freeAgentPlayer2.put("shooting",(long)10.0);
-        freeAgentPlayer2.put("checking",(long)10.0);
-        freeAgentPlayer2.put("saving",(long)0.0);
+        freeAgentPlayer2.put("age",(long)25);
+        freeAgentPlayer2.put("skating",(long)10);
+        freeAgentPlayer2.put("shooting",(long)10);
+        freeAgentPlayer2.put("checking",(long)10);
+        freeAgentPlayer2.put("saving",(long)0);
 
         JSONObject freeAgentPlayer3 = new JSONObject();
         freeAgentPlayer3.put("playerName","Agent Three");
         freeAgentPlayer3.put("position","goalie");
-        freeAgentPlayer3.put("age",(long)25.0);
-        freeAgentPlayer3.put("skating",(long)10.0);
-        freeAgentPlayer3.put("shooting",(long)5.0);
-        freeAgentPlayer3.put("checking",(long)5.0);
-        freeAgentPlayer3.put("saving",(long)10.0);
+        freeAgentPlayer3.put("age",(long)25);
+        freeAgentPlayer3.put("skating",(long)10);
+        freeAgentPlayer3.put("shooting",(long)5);
+        freeAgentPlayer3.put("checking",(long)5);
+        freeAgentPlayer3.put("saving",(long)10);
 
         freeAgents.add(freeAgentplayer1);
         freeAgents.add(freeAgentPlayer2);
         freeAgents.add(freeAgentPlayer3);
 
         JSONObject player1 = new JSONObject();
-        player1.put("playerName","Agent One");
+        player1.put("playerName","Player One");
         player1.put("position","forward");
-        player1.put("captain",false);
-        player1.put("age",(long)27.0);
-        player1.put("skating",(long)15.0);
-        player1.put("shooting",(long)18.0);
-        player1.put("checking",(long)12.0);
-        player1.put("saving",(long)0.0);
+        player1.put("captain",true);
+        player1.put("age",(long)27);
+        player1.put("skating",(long)15);
+        player1.put("shooting",(long)18);
+        player1.put("checking",(long)12);
+        player1.put("saving",(long)0);
 
 
         JSONObject player2 = new JSONObject();
-        player2.put("playerName","Agent Two");
+        player2.put("playerName","Player Two");
         player2.put("position","defense");
         player2.put("captain",false);
-        player2.put("age",(long)20.0);
-        player2.put("skating",(long)10.0);
-        player2.put("shooting",(long)10.0);
-        player2.put("checking",(long)10.0);
-        player2.put("saving",(long)0.0);
+        player2.put("age",(long)20);
+        player2.put("skating",(long)10);
+        player2.put("shooting",(long)10);
+        player2.put("checking",(long)10);
+        player2.put("saving",(long)0);
 
         JSONObject player3 = new JSONObject();
-        player3.put("playerName","Agent Three");
+        player3.put("playerName","Player Three");
         player3.put("position","goalie");
-        player3.put("captain",true);
-        player3.put("age",(long)33.0);
-        player3.put("skating",(long)10.0);
-        player3.put("shooting",(long)4.0);
-        player3.put("checking",(long)9.0);
-        player3.put("saving",(long)8.0);
+        player3.put("captain",false);
+        player3.put("age",(long)33);
+        player3.put("skating",(long)10);
+        player3.put("shooting",(long)4);
+        player3.put("checking",(long)9);
+        player3.put("saving",(long)18);
 
         players.add(player1);
         players.add(player2);
@@ -169,7 +166,7 @@ public class JSONControllerMock{
         coach3.put("saving",0.0);
         coaches.add(coach3);
 
-        managers.add("skdkjjals");
+        managers.add("Karen Potam");
         managers.add("Joseph Squidly");
         managers.add("Tom Spaghetti");
 
@@ -180,7 +177,6 @@ public class JSONControllerMock{
         league.put("coaches",coaches);
         league.put("generalManagers",managers);
         league.put("daysUntilStatIncreaseCheck",100);
-
 
         return  league;
     }

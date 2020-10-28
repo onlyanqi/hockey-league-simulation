@@ -1,6 +1,5 @@
 package simulation.state;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import simulation.factory.*;
