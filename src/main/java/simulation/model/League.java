@@ -23,7 +23,9 @@ public class League extends SharedAttributes {
     private LocalDate currentDate;
     private GamePlayConfig gamePlayConfig;
     private Games games;
-    private RegularSeasonScoreBoard regularSeasonScoreBoard;
+    private TeamStanding regularSeasonStanding;
+    private TeamStanding playOffStanding;
+    private transient TeamStanding activeTeamStanding;
     private NHLEvents nhlEvents;
 
     public League() {
@@ -50,13 +52,6 @@ public class League extends SharedAttributes {
         this.nhlEvents = nhlEvents;
     }
 
-    public RegularSeasonScoreBoard getRegularSeasonScoreBoard() {
-        return regularSeasonScoreBoard;
-    }
-
-    public void setRegularSeasonScoreBoard(RegularSeasonScoreBoard regularSeasonScoreBoard) {
-        this.regularSeasonScoreBoard = regularSeasonScoreBoard;
-    }
 
     public Games getGames() {
         return games;
@@ -109,6 +104,30 @@ public class League extends SharedAttributes {
     public void setManagerList(List<Manager> managerList) {
         this.managerList = managerList;
         this.generalManagers = createManagerNameList(managerList);
+    }
+
+    public TeamStanding getRegularSeasonStanding() {
+        return regularSeasonStanding;
+    }
+
+    public void setRegularSeasonStanding(TeamStanding regularSeasonStanding) {
+        this.regularSeasonStanding = regularSeasonStanding;
+    }
+
+    public TeamStanding getPlayOffStanding() {
+        return playOffStanding;
+    }
+
+    public void setPlayOffStanding(TeamStanding playOffStanding) {
+        this.playOffStanding = playOffStanding;
+    }
+
+    public TeamStanding getActiveTeamStanding() {
+        return activeTeamStanding;
+    }
+
+    public void setActiveTeamStanding(TeamStanding activeTeamStanding) {
+        this.activeTeamStanding = activeTeamStanding;
     }
 
     public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject) {
