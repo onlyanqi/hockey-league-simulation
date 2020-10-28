@@ -3,6 +3,7 @@ package simulation.model;
 import db.data.IManagerFactory;
 
 public class Manager extends ParentObj {
+public class Manager extends SharedAttributes {
     private int leagueId;
     private int teamId;
 

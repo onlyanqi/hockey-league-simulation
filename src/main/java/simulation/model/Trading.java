@@ -1,29 +1,20 @@
 package simulation.model;
 
+import db.data.ITradeOfferFactory;
 import db.data.ITradingFactory;
-
 import java.util.*;
 
-public class Trading extends ParentObj {
+public class Trading extends SharedAttributes {
 
     private List<Integer> currentYearSeasonMonths = new ArrayList<>
             (Arrays.asList(9, 10, 11));
 
     private List<Integer> nextYearSeasonMonths = new ArrayList<>
             (Arrays.asList(0, 1));
-    private Date tradeStartDate;
-    private Date tradeEndDate;
-    private int leagueId;
-    private int lossPoint;
-    private double randomTradeOfferChance;
-    private int maxPlayersPerTrade;
-    private double randomAcceptanceChance;
-    private boolean isTradingPeriod;
 
-    public Trading() {
-    }
+    public Trading(){}
 
-    public Trading(int tradingId, ITradingFactory factory) {
+    public Trading(int tradingId, ITradingFactory factory) throws Exception {
         setId(tradingId);
         factory.loadTradingDetailsByTradingId(tradingId, this);
     }
@@ -44,11 +35,27 @@ public class Trading extends ParentObj {
         this.nextYearSeasonMonths = nextYearSeasonMonths;
     }
 
-    public void isLeagueInTradingPeriod(Date leagueDate) {
-        if (leagueDate != null) {
+    private Date tradeStartDate;
+
+    private Date tradeEndDate;
+
+    private int leagueId;
+
+    private int lossPoint;
+
+    private double randomTradeOfferChance;
+
+    private int maxPlayersPerTrade;
+
+    private double randomAcceptanceChance;
+
+    private boolean isTradingPeriod;
+
+    public void isLeagueInTradingPeriod(Date leagueDate){
+        if(leagueDate != null){
             calTradeEndDateFromLeagueDate(leagueDate);
             int compare = leagueDate.compareTo(tradeEndDate);
-            if (compare <= 0) {
+            if(compare <= 0){
                 this.isTradingPeriod = true;
                 return;
             }
@@ -74,13 +81,13 @@ public class Trading extends ParentObj {
 
     public void calTradeEndDateFromLeagueDate(Date leagueDate) {
 
-        int currentLeagueYear = leagueDate.getYear() + 1900;
+        int currentLeagueYear = leagueDate.getYear()+1900;
         int currentLeagueMonth = leagueDate.getMonth();
         int tradingEndYear = 0;
 
-        if (currentYearSeasonMonths.contains(currentLeagueMonth)) {
-            tradingEndYear = currentLeagueYear + 1;
-        } else if (nextYearSeasonMonths.contains(currentLeagueMonth)) {
+        if(currentYearSeasonMonths.contains(currentLeagueMonth)){
+            tradingEndYear = currentLeagueYear+1;
+        } else if(nextYearSeasonMonths.contains(currentLeagueMonth)) {
             tradingEndYear = currentLeagueYear;
         }
 
@@ -88,12 +95,12 @@ public class Trading extends ParentObj {
         endDateCalendar.set(GregorianCalendar.YEAR, tradingEndYear);
         endDateCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         endDateCalendar.set(GregorianCalendar.MONTH, Calendar.FEBRUARY);
-        endDateCalendar.set(GregorianCalendar.DAY_OF_WEEK, Calendar.MONDAY);
+        endDateCalendar.set(GregorianCalendar.DAY_OF_WEEK,Calendar.MONDAY);
         endDateCalendar.set(GregorianCalendar.DAY_OF_WEEK_IN_MONTH, -1);
-        endDateCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        endDateCalendar.set(Calendar.MINUTE, 0);
-        endDateCalendar.set(Calendar.SECOND, 0);
-        endDateCalendar.set(Calendar.MILLISECOND, 0);
+        endDateCalendar.set(Calendar.HOUR_OF_DAY,0);
+        endDateCalendar.set(Calendar.MINUTE,0);
+        endDateCalendar.set(Calendar.SECOND,0);
+        endDateCalendar.set(Calendar.MILLISECOND,0);
 
         this.tradeEndDate = endDateCalendar.getTime();
         this.tradeEndDate.setHours(23);
@@ -103,13 +110,13 @@ public class Trading extends ParentObj {
 
     public void calTradeStartDateFromLeagueDate(Date leagueDate) {
 
-        int currentLeagueYear = leagueDate.getYear() + 1900;
+        int currentLeagueYear = leagueDate.getYear()+1900;
         int currentLeagueMonth = leagueDate.getMonth();
         int tradingStartYear = 0;
 
-        if (currentYearSeasonMonths.contains(currentLeagueMonth)) {
+        if(currentYearSeasonMonths.contains(currentLeagueMonth)){
             tradingStartYear = currentLeagueYear;
-        } else if (nextYearSeasonMonths.contains(currentLeagueMonth)) {
+        } else if(nextYearSeasonMonths.contains(currentLeagueMonth)) {
             tradingStartYear = currentLeagueYear - 1;
         }
 
@@ -117,16 +124,12 @@ public class Trading extends ParentObj {
         startDateCalendar.set(GregorianCalendar.YEAR, tradingStartYear);
         startDateCalendar.set(Calendar.DAY_OF_MONTH, 1);
         startDateCalendar.set(GregorianCalendar.MONTH, Calendar.OCTOBER);
-        startDateCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        startDateCalendar.set(Calendar.MINUTE, 0);
-        startDateCalendar.set(Calendar.SECOND, 0);
-        startDateCalendar.set(Calendar.MILLISECOND, 0);
+        startDateCalendar.set(Calendar.HOUR_OF_DAY,0);
+        startDateCalendar.set(Calendar.MINUTE,0);
+        startDateCalendar.set(Calendar.SECOND,0);
+        startDateCalendar.set(Calendar.MILLISECOND,0);
 
         this.tradeStartDate = startDateCalendar.getTime();
-       /* this.tradeStartDate.setHours(0);
-        this.tradeStartDate.setMinutes(0);
-        this.tradeStartDate.setSeconds(0);
-        this.tradeStartDate.setMill*/
     }
 
     public int getLeagueId() {
@@ -177,4 +180,7 @@ public class Trading extends ParentObj {
         isTradingPeriod = tradingPeriod;
     }
 
+    public void addTrading(ITradingFactory tradingFactory) throws Exception {
+        tradingFactory.addTradingDetails(this);
+    }
 }

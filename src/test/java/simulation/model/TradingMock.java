@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class TradingMock implements ITradingFactory {
 
-    private Trading createObj(int leagueId, int tradingId, Trading trading) {
+    private Trading getTrading(int leagueId, int tradingId, Trading trading){
         trading.setId(1);
         trading.setLeagueId(1);
         trading.setLossPoint(2);
@@ -17,22 +17,23 @@ public class TradingMock implements ITradingFactory {
         trading.setTradingPeriod(true);
         trading.setCurrentYearSeasonMonths(Arrays.asList(9, 10, 11));
         trading.setNextYearSeasonMonths(Arrays.asList(0, 1));
-        trading.setTradeStartDate(new Date((2020 - 1900), 9, 1));
-        trading.setTradeEndDate(new Date((2021 - 1900), 1, 22));
+        trading.setTradeStartDate(new Date((2020-1900), 9, 1));
+        trading.setTradeEndDate(new Date((2021-1900),1,22));
         return trading;
     }
 
     @Override
     public int addTradingDetails(Trading trading) {
-        trading = createObj(1, 1, trading);
+        trading = getTrading(1, 1, trading);
         return trading.getId();
     }
 
     @Override
-    public void loadTradingDetailsByLeagueId(int leagueId, Trading trading) {
-        trading = createObj(leagueId, 1, trading);
+    public Trading loadTradingDetailsByLeagueId(int leagueId) {
+        Trading trading = new Trading();
+        trading = getTrading(leagueId, 1, trading);
 
-        switch (leagueId) {
+        switch (leagueId){
 
             //case 1 normal obj
             //case 2 trading false
@@ -63,14 +64,15 @@ public class TradingMock implements ITradingFactory {
                 trading.setRandomTradeOfferChance(0.0f);
                 break;
         }
+        return trading;
     }
 
     @Override
     public void loadTradingDetailsByTradingId(int tradingId, Trading trading) {
 
-        trading = createObj(1, tradingId, trading);
+        trading = getTrading(1, tradingId, trading);
 
-        switch (tradingId) {
+        switch (tradingId){
 
             //case 1 normal obj
             //case 2 trading false

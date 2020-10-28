@@ -1,6 +1,5 @@
 package simulation.model;
 
-import com.google.gson.annotations.SerializedName;
 import config.AppConfig;
 import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
@@ -10,17 +9,16 @@ import userIO.IUserInputForTeamCreation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Team extends ParentObj {
+public class Team extends SharedAttributes {
     public static final String GOALIE = "goalie";
     public static final String DEFENSE = "defense";
     public static final String FORWARD = "forward";
 
-    private String hometown;
     private String mascot;
     private int divisionId;
     private double strength;
     private Coach coach;
-    private Boolean aiTeam;
+    private boolean aiTeam;
 
     private Manager manager;
     private String generalManagerName;
@@ -48,14 +46,6 @@ public class Team extends ParentObj {
 
     public void setPlayerList(List<Player> playerList) {
         this.playerList = playerList;
-    }
-
-    public String getHometown() {
-        return hometown;
-    }
-
-    public void setHometown(String hometown) {
-        this.hometown = hometown;
     }
 
     public String getMascot() {
@@ -109,11 +99,11 @@ public class Team extends ParentObj {
         return strength;
     }
 
-    public Boolean getAiTeam() {
+    public boolean isAiTeam() {
         return aiTeam;
     }
 
-    public void setAiTeam(Boolean aiTeam) {
+    public void setAiTeam(boolean aiTeam) {
         this.aiTeam = aiTeam;
     }
 
@@ -174,4 +164,24 @@ public class Team extends ParentObj {
         }
     }
 
+
+    private int pendingTradeOfferCount;
+
+    public int getPendingTradeOfferCount() {
+        return pendingTradeOfferCount;
+    }
+
+    public void setPendingTradeOfferCount(int pendingTradeOfferCount) {
+        this.pendingTradeOfferCount = pendingTradeOfferCount;
+    }
+
+    private int lossPoint;
+
+    public int getLossPoint() {
+        return lossPoint;
+    }
+
+    public void setLossPoint(int lossPoint) {
+        this.lossPoint = lossPoint;
+    }
 }

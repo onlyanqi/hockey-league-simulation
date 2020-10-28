@@ -6,7 +6,7 @@ import db.data.IPlayerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreeAgent extends ParentObj {
+public class FreeAgent extends SharedAttributes {
 
     private int seasonId;
     private int leagueId;
