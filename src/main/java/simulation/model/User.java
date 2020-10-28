@@ -2,15 +2,19 @@ package simulation.model;
 
 import db.data.ILeagueFactory;
 import db.data.IUserFactory;
+
 import java.util.List;
 
-public class User extends ParentObj{
+public class User extends ParentObj {
 
-    String name;
+    private String password;
+    private List<League> leagueList;
+    private League league;
 
-    public User(){}
+    public User() {
+    }
 
-    public User(int id){
+    public User(int id) {
         setId(id);
     }
 
@@ -21,18 +25,6 @@ public class User extends ParentObj{
 
     public User(String name, IUserFactory factory) throws Exception {
         factory.loadUserByName(name, this);
-    }
-
-    private String password;
-
-    private List<League> leagueList;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<League> getLeagueList() {
@@ -55,8 +47,6 @@ public class User extends ParentObj{
         addUserFactory.addUser(this);
     }
 
-    private League league;
-
     public League getLeague() {
         return league;
     }
@@ -68,4 +58,5 @@ public class User extends ParentObj{
     public void loadLeagueByUserId(ILeagueFactory loadLeagueFactory) throws Exception {
         this.leagueList = loadLeagueFactory.loadLeagueListByUserId(getId());
     }
+
 }

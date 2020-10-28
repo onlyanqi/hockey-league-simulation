@@ -5,14 +5,15 @@ import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class UserTest {
 
     private static IUserFactory loadUserFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadUserFactory = new UserMock();
     }
 
@@ -29,7 +30,7 @@ public class UserTest {
     }
 
     @Test
-    public void userFactoryTest() throws Exception{
+    public void userFactoryTest() throws Exception {
         User user = new User(1, loadUserFactory);
         assertEquals(user.getId(), 1);
         assertEquals(user.getName(), "User1");
@@ -39,13 +40,13 @@ public class UserTest {
     }
 
     @Test
-    public void getPasswordTest() throws Exception{
+    public void getPasswordTest() throws Exception {
         User user = new User(1, loadUserFactory);
         assertEquals(user.getPassword(), ("Password1"));
     }
 
     @Test
-    public void setPasswordTest(){
+    public void setPasswordTest() {
         User user = new User();
         String password = "Password";
         user.setPassword(password);
@@ -53,7 +54,7 @@ public class UserTest {
     }
 
     @Test
-    public void getLeagueTest() throws Exception{
+    public void getLeagueTest() throws Exception {
         User user = new User(1, loadUserFactory);
         League league = user.getLeagueList().get(0);
         assertEquals(league.getId(), (1));
@@ -68,7 +69,7 @@ public class UserTest {
     }
 
     @Test
-    public void getLeagueListTest() throws Exception{
+    public void getLeagueListTest() throws Exception {
         User user = new User(1, loadUserFactory);
         League league = user.getLeagueList().get(0);
         assertEquals(league.getId(), (1));
@@ -91,7 +92,6 @@ public class UserTest {
         assertEquals(1, user.getId());
         assertEquals("User1", (user.getName()));
     }
-
 
 
 }

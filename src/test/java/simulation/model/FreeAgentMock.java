@@ -2,6 +2,7 @@ package simulation.model;
 
 import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ public class FreeAgentMock implements IFreeAgentFactory {
     @Override
     public void loadFreeAgentById(int id, FreeAgent freeAgent) throws Exception {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all correct data
                 freeAgent.setName("freeAgent1");

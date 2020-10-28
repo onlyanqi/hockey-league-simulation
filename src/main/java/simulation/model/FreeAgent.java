@@ -6,13 +6,16 @@ import db.data.IPlayerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreeAgent extends ParentObj{
+public class FreeAgent extends ParentObj {
 
-    transient String name;
+    private int seasonId;
+    private int leagueId;
+    private List<Player> playerList;
 
-    public FreeAgent(){}
+    public FreeAgent() {
+    }
 
-    public FreeAgent(int id){
+    public FreeAgent(int id) {
         setId(id);
     }
 
@@ -20,15 +23,6 @@ public class FreeAgent extends ParentObj{
         loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    private transient int seasonId;
 
     public int getSeasonId() {
         return seasonId;
@@ -38,8 +32,6 @@ public class FreeAgent extends ParentObj{
         this.seasonId = seasonId;
     }
 
-    private transient int leagueId;
-
     public int getLeagueId() {
         return leagueId;
     }
@@ -47,8 +39,6 @@ public class FreeAgent extends ParentObj{
     public void setLeagueId(int leagueId) {
         this.leagueId = leagueId;
     }
-
-    private List<Player> playerList;
 
     public List<Player> getPlayerList() {
         return playerList;
@@ -66,34 +56,35 @@ public class FreeAgent extends ParentObj{
         this.playerList = loadPlayerFactory.loadPlayerListByFreeAgentId(getId());
     }
 
-    public List<Player> removeFreeAgentFromList(List<Player> playerList, int indexOfPlayerObject){
-        for(int i=indexOfPlayerObject; i<playerList.size()-1;i++){
-            Player player = new Player(playerList.get(i+1));
+    public List<Player> removeFreeAgentFromList(List<Player> playerList, int indexOfPlayerObject) {
+        for (int i = indexOfPlayerObject; i < playerList.size() - 1; i++) {
+            Player player = new Player(playerList.get(i + 1));
             playerList.remove(i);
             playerList.set(i, player);
         }
-        playerList.remove(playerList.size()-1);
+        playerList.remove(playerList.size() - 1);
         return playerList;
     }
 
-    public List<Integer> getGoodFreeAgentsList(List<Double> strengthList){
+    public List<Integer> getGoodFreeAgentsList(List<Double> strengthList) {
 
-        Double thresholdPointForGoodPlayer=calculateStrengthAverage(strengthList);
-        List<Integer> goodFreeAgentsIdList=new ArrayList<>();
-        for(int i=0;i<strengthList.size();i++){
-            if(strengthList.get(i)>=thresholdPointForGoodPlayer){
+        Double thresholdPointForGoodPlayer = calculateStrengthAverage(strengthList);
+        List<Integer> goodFreeAgentsIdList = new ArrayList<>();
+        for (int i = 0; i < strengthList.size(); i++) {
+            if (strengthList.get(i) >= thresholdPointForGoodPlayer) {
                 goodFreeAgentsIdList.add(i);
             }
         }
         return goodFreeAgentsIdList;
     }
 
-    public Double calculateStrengthAverage(List<Double> strengthList){
-        Double average =0.0;
-        for(int i=0;i<strengthList.size();i++){
-            average=average+strengthList.get(i);
+    public Double calculateStrengthAverage(List<Double> strengthList) {
+        Double average = 0.0;
+        for (int i = 0; i < strengthList.size(); i++) {
+            average = average + strengthList.get(i);
         }
-        average=average/strengthList.size();
+        average = average / strengthList.size();
         return average;
     }
+
 }

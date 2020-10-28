@@ -18,7 +18,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
 
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
-        while(league.getCurrentDate() != nhlEvents.nextSeasonDate){
+        while (league.getCurrentDate() != nhlEvents.nextSeasonDate) {
             //Perform aging
         }
         return exit();

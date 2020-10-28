@@ -9,7 +9,7 @@ public class ManagerDao implements IManagerFactory {
     @Override
     public int addManager(Manager manager) throws Exception {
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("AddManager(?,?,?,?)");
             callDB.setInputParameterInt(1, manager.getTeamId());
             callDB.setInputParameterString(2, manager.getName());
@@ -20,7 +20,7 @@ public class ManagerDao implements IManagerFactory {
             callDB.execute();
             manager.setId(callDB.returnOutputParameterInt(4));
 
-        } catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
             callDB.closeConnection();

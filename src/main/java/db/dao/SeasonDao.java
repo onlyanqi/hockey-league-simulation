@@ -38,7 +38,7 @@ public class SeasonDao implements ISeasonFactory {
             season.setId(callDB.returnOutputParameterInt(2));
             season.setName(callDB.returnOutputParameterString(3));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();

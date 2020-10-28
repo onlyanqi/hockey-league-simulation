@@ -6,14 +6,14 @@ import userIO.IUserInputForTeamCreation;
 
 import java.util.Scanner;
 
-public class PlayerChoiceState implements IHockeyState{
+public class PlayerChoiceState implements IHockeyState {
 
     private String input;
     private String stateName;
     private HockeyContext hockeyContext;
     private String userInput;
 
-    public PlayerChoiceState(HockeyContext hockeyContext,String input,String stateName){
+    public PlayerChoiceState(HockeyContext hockeyContext, String input, String stateName) {
         this.input = input;
         this.stateName = stateName;
         this.hockeyContext = hockeyContext;
@@ -33,29 +33,25 @@ public class PlayerChoiceState implements IHockeyState{
 
     @Override
     public IHockeyState exit() {
-        switch (stateName)
-        {
-            case "importState":
-            {
-                if(userInput.equals("1")){
+        switch (stateName) {
+            case "importState": {
+                if (userInput.equals("1")) {
                     IUserInputForTeamCreation inputForTeamCreation = AppConfig.getInstance().getInputForTeamCreation();
                     IConsoleOutputForTeamCreation outputForTeamCreation = AppConfig.getInstance().getOutputForTeamCreation();
                     CreateTeamState createTeamState = new CreateTeamState(hockeyContext,
-                            inputForTeamCreation,outputForTeamCreation);
+                            inputForTeamCreation, outputForTeamCreation);
                     return createTeamState;
-                }else if(userInput.equals("2")){
+                } else if (userInput.equals("2")) {
                     LoadTeamState loadTeamState = new LoadTeamState(hockeyContext);
-                    return  loadTeamState;
+                    return loadTeamState;
                 }
                 break;
             }
-            case "createOrLoadTeam":
-            {
+            case "createOrLoadTeam": {
                 InternalState internalState = new InternalState(hockeyContext);
                 return internalState;
             }
-            default:
-            {
+            default: {
 
             }
         }

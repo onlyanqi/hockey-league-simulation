@@ -4,6 +4,7 @@ import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class FreeAgentTest {
     private static IFreeAgentFactory loadFreeAgentFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadFreeAgentFactory = new FreeAgentMock();
     }
 
@@ -35,7 +36,7 @@ public class FreeAgentTest {
         FreeAgent freeAgent = new FreeAgent(1, loadFreeAgentFactory);
         List<Player> playerList = freeAgent.getPlayerList();
         Player player = playerList.get(0);
-        assertEquals(player.getId(),1);
+        assertEquals(player.getId(), 1);
         assertTrue(player.getName().equals("Player1"));
     }
 
@@ -85,7 +86,7 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void setSeasonIdTest(){
+    public void setSeasonIdTest() {
         FreeAgent freeAgent = new FreeAgent();
         int seasonId = 1;
         freeAgent.setSeasonId(seasonId);
@@ -99,7 +100,7 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void setLeagueIdTest(){
+    public void setLeagueIdTest() {
         FreeAgent freeAgent = new FreeAgent();
         int leagueId = 1;
         freeAgent.setLeagueId(leagueId);

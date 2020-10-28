@@ -11,7 +11,7 @@ public class SeasonTest {
     private static ISeasonFactory loadSeasonFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadSeasonFactory = new SeasonMock();
     }
 

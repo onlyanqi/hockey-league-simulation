@@ -1,18 +1,18 @@
 package simulation;
 
 import db.data.IUserFactory;
-import simulation.factory.UserConcrete;
-import simulation.state.HockeyContext;
-import simulation.model.User;
 import org.json.simple.JSONObject;
+import simulation.factory.UserConcrete;
+import simulation.model.User;
+import simulation.state.HockeyContext;
 import userIO.GetInput;
 import util.CommonUtil;
+
 import java.io.FileNotFoundException;
 
 
-public class App
-{
-    public static void main( String[] args ) {
+public class App {
+    public static void main(String[] args) {
 
         String filePath = "";
         JSONObject jsonFromInput = null;
@@ -37,7 +37,7 @@ public class App
 
                 if (filePath != null && filePath.length() != 0) {
 
-                    if(JSONController.invalidJSON(filePath)){
+                    if (JSONController.invalidJSON(filePath)) {
                         System.out.println("Invalid JSON file Provided.Exiting the app!");
                         System.exit(1);
                     }
@@ -61,10 +61,6 @@ public class App
         IUserFactory addUserFactory = userConcrete.newAddUserFactory();
         user.addUser(addUserFactory);
     }
-
-
-
-
 
 
 }

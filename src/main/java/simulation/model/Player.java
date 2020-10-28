@@ -3,13 +3,28 @@ package simulation.model;
 import com.google.gson.annotations.SerializedName;
 import db.data.IPlayerFactory;
 import util.DateUtil;
+
 import java.time.LocalDate;
 import java.util.Random;
 
 public class Player extends ParentObj {
 
-    @SerializedName("playerName")
-    String name;
+    private int age;
+    private String hometown;
+    private Position position;
+    private int teamId;
+    private int freeAgentId;
+    private boolean isCaptain;
+    private boolean isInjured;
+    private LocalDate injuryStartDate;
+    private int injuryDatesRange;
+    private int seasonId;
+    private boolean isFreeAgent = false;
+    private int skating;
+    private int shooting;
+    private int checking;
+    private int saving;
+    private double strength;
 
     public Player() {
     }
@@ -35,41 +50,6 @@ public class Player extends ParentObj {
         this.setPosition(player.getPosition());
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    private int age;
-
-    private String hometown;
-
-    private Position position;
-
-    public enum Position {
-        forward,
-        defense,
-        goalie
-    }
-
-    private transient int teamId;
-
-    private transient int freeAgentId;
-
-    @SerializedName("captain")
-    private boolean isCaptain;
-
-    private boolean isInjured;
-
-    private LocalDate injuryStartDate;
-
-    private int injuryDatesRange;
-
-    private int seasonId;
-
     public boolean isFreeAgent() {
         return isFreeAgent;
     }
@@ -77,20 +57,6 @@ public class Player extends ParentObj {
     public void setIsFreeAgent(boolean freeAgent) {
         isFreeAgent = freeAgent;
     }
-
-    private transient boolean isFreeAgent = false;
-
-    private int skating;
-
-    private int shooting;
-
-    private int checking;
-
-    private int saving;
-
-    private transient double strength;
-
-
 
     public int getAge() {
         return age;
@@ -134,6 +100,10 @@ public class Player extends ParentObj {
 
     public int getFreeAgentId() {
         return freeAgentId;
+    }
+
+    public void setFreeAgentId(int freeAgentId) {
+        this.freeAgentId = freeAgentId;
     }
 
     public int getSkating() {
@@ -187,10 +157,6 @@ public class Player extends ParentObj {
         return strength;
     }
 
-    public void setFreeAgentId(int freeAgentId) {
-        this.freeAgentId = freeAgentId;
-    }
-
     public boolean isCaptain() {
         return isCaptain;
     }
@@ -207,20 +173,20 @@ public class Player extends ParentObj {
         this.isInjured = isInjured;
     }
 
-    public void setInjuryStartDate(LocalDate injuryStartDate) {
-        this.injuryStartDate = injuryStartDate;
-    }
-
     public LocalDate getInjuryStartDate() {
         return this.injuryStartDate;
     }
 
-    public void setInjuryDatesRange(int injuryDatesRange) {
-        this.injuryDatesRange = injuryDatesRange;
+    public void setInjuryStartDate(LocalDate injuryStartDate) {
+        this.injuryStartDate = injuryStartDate;
     }
 
     public int getInjuryDatesRange() {
         return this.injuryDatesRange;
+    }
+
+    public void setInjuryDatesRange(int injuryDatesRange) {
+        this.injuryDatesRange = injuryDatesRange;
     }
 
     public void addPlayer(IPlayerFactory addPlayerFactory) throws Exception {
@@ -262,6 +228,12 @@ public class Player extends ParentObj {
             this.setInjured(false);
             this.setInjuryStartDate(null);
         }
+    }
+
+    public enum Position {
+        forward,
+        defense,
+        goalie
     }
 
 }

@@ -1,11 +1,12 @@
 package simulation.state;
 
 import simulation.RegularSeasonEvents.NHLEvents;
-import simulation.model.*;
+import simulation.model.League;
+import simulation.model.TeamStanding;
 
 import java.util.ArrayList;
 
-public class GeneratePlayoffScheduleState implements  ISimulateState{
+public class GeneratePlayoffScheduleState implements ISimulateState {
 
     private HockeyContext hockeyContext;
     private League league;
@@ -22,13 +23,13 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
         ArrayList<String> winnerList = new ArrayList<>();
         NHLEvents nhlEvents = new NHLEvents();
 
-        if(nhlEvents.isEndOfRegularSeason(league.getCurrentDate())){
+        if (nhlEvents.isEndOfRegularSeason(league.getCurrentDate())) {
             generatePlayOffFirstRoundSchedule();
         }
-        if(nhlEvents.isRegularSeasonPassed(league.getCurrentDate()) && league.getGames().getGameList().size() == 0 && winnerList.size()!=2){
+        if (nhlEvents.isRegularSeasonPassed(league.getCurrentDate()) && league.getGames().getGameList().size() == 0 && winnerList.size() != 2) {
             generatePlayOffOtherRoundSchedule();
         }
-        if(nhlEvents.isRegularSeasonPassed(league.getCurrentDate()) && league.getGames().getGameList().size() == 0 && winnerList.size()==2){
+        if (nhlEvents.isRegularSeasonPassed(league.getCurrentDate()) && league.getGames().getGameList().size() == 0 && winnerList.size() == 2) {
             generateStanleyCupSchedule();
         }
         System.out.println("Generating Play off Schedule");
@@ -57,9 +58,6 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
 
     }
 
-
-
-    
 
     private ISimulateState exit() {
         return new TrainingState(hockeyContext);

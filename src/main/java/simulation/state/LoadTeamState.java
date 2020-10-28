@@ -15,7 +15,7 @@ public class LoadTeamState implements IHockeyState {
     private League league;
 
 
-    public LoadTeamState(HockeyContext hockeyContext){
+    public LoadTeamState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
     }
 
@@ -23,9 +23,9 @@ public class LoadTeamState implements IHockeyState {
     public void entry() throws Exception {
         //prompt team name
 
-        teamName  = GetInput.getUserInput("Please enter team name");
+        teamName = GetInput.getUserInput("Please enter team name");
 
-        while((teamName.isEmpty() || teamName ==null || isTeamNotPresent(teamName))){
+        while ((teamName.isEmpty() || teamName == null || isTeamNotPresent(teamName))) {
             teamName = GetInput.getUserInput("Please enter valid and existing team name");
         }
 
@@ -43,7 +43,7 @@ public class LoadTeamState implements IHockeyState {
 
         hockeyContext.getUser().loadLeagueByUserId(iLoadLeagueFactory);
 
-        if(hockeyContext.getUser().getLeagueList().size()==0){
+        if (hockeyContext.getUser().getLeagueList().size() == 0) {
             System.out.println("You do not have any league, Please create it.");
             System.exit(1);
         }
@@ -55,20 +55,20 @@ public class LoadTeamState implements IHockeyState {
         IConferenceFactory iLoadConferenceFactory = conferenceConcrete.newLoadConferenceFactory();
         league.loadConferenceListByLeagueId(iLoadConferenceFactory);
         List<Conference> conferenceList = league.getConferenceList();
-        for(Conference conference: conferenceList){
+        for (Conference conference : conferenceList) {
             DivisionConcrete divisionConcrete = new DivisionConcrete();
             IDivisionFactory iLoadDivisionFactory = divisionConcrete.newLoadDivisionFactory();
             conference.loadDivisionListByConferenceId(iLoadDivisionFactory);
             List<Division> divisionList = conference.getDivisionList();
-            for(Division division: divisionList){
+            for (Division division : divisionList) {
                 TeamConcrete teamConcrete = new TeamConcrete();
                 ITeamFactory iLoadTeamFactory = teamConcrete.newLoadTeamFactory();
                 division.loadTeamListByDivisionId(iLoadTeamFactory);
 
                 List<Team> teamArrayList = division.getTeamList();
-                for(Team team: teamArrayList){
+                for (Team team : teamArrayList) {
 
-                    if(teamName != null && team.getName() != null && team.getName().equals(teamName)){
+                    if (teamName != null && team.getName() != null && team.getName().equals(teamName)) {
                         div = division;
                     }
 
@@ -91,12 +91,12 @@ public class LoadTeamState implements IHockeyState {
         freeAgent.loadPlayerListByFreeAgentId(iLoadPlayerFactory);
 
         Conference conf = null;
-        if(league.getConferenceList() != null && !league.getConferenceList().isEmpty()) {
+        if (league.getConferenceList() != null && !league.getConferenceList().isEmpty()) {
             for (Conference conference : league.getConferenceList()) {
-                if(conference.getDivisionList() != null && !conference.getDivisionList().isEmpty()) {
+                if (conference.getDivisionList() != null && !conference.getDivisionList().isEmpty()) {
                     for (Division division : conference.getDivisionList()) {
-                        if(division.getName() != null && div.getName() != null &&
-                                division.getName().equals(div.getName())){
+                        if (division.getName() != null && div.getName() != null &&
+                                division.getName().equals(div.getName())) {
                             conf = conference;
                             break;
                         }
@@ -105,9 +105,9 @@ public class LoadTeamState implements IHockeyState {
             }
         }
 
-        System.out.println("The team belongs to \""+league.getName()+"\" league.");
-        System.out.println("The team belongs to \""+conf.getName()+"\" conference.");
-        System.out.println("The team belongs to \""+div.getName()+"\" division.");
+        System.out.println("The team belongs to \"" + league.getName() + "\" league.");
+        System.out.println("The team belongs to \"" + conf.getName() + "\" conference.");
+        System.out.println("The team belongs to \"" + div.getName() + "\" division.");
 
     }
 
@@ -115,7 +115,7 @@ public class LoadTeamState implements IHockeyState {
     public IHockeyState exit() {
         //Instantiate Model Objects and transition state
 
-        PlayerChoiceState playerChoiceState = new PlayerChoiceState(hockeyContext,"How many seasons do you want to simulate","createOrLoadTeam");
+        PlayerChoiceState playerChoiceState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
         return playerChoiceState;
     }
 
@@ -125,12 +125,12 @@ public class LoadTeamState implements IHockeyState {
         Team team = null;
         try {
             team = teamConcrete.newTeamByName(teamName, factory);
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Unable to load team, please try again.");
             System.exit(1);
             e.printStackTrace();
         }
-        if(team!=null && team.getId() >0) return false;
+        if (team != null && team.getId() > 0) return false;
         else return true;
 
     }

@@ -1,18 +1,17 @@
 package simulation.model;
 
 import db.data.IPlayerFactory;
-import org.junit.Test;
 import org.junit.BeforeClass;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class PlayerTest {
 
     private static IPlayerFactory loadPlayerFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadPlayerFactory = new PlayerMock();
     }
 
@@ -45,7 +44,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void setAgeTest(){
+    public void setAgeTest() {
         Player player = new Player();
         int age = 15;
         player.setAge(age);
@@ -59,7 +58,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void setHomeTownTest(){
+    public void setHomeTownTest() {
         Player player = new Player();
         String homeTown = "Halifax";
         player.setHometown(homeTown);
@@ -73,7 +72,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void setPositionTest(){
+    public void setPositionTest() {
         Player player = new Player();
         Player.Position position = Player.Position.valueOf("goalie");
         player.setPosition(position);
@@ -87,7 +86,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void setTeamIdTest(){
+    public void setTeamIdTest() {
         Player player = new Player();
         int teamId = 1;
         player.setTeamId(teamId);
@@ -101,7 +100,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void setCaptainTest(){
+    public void setCaptainTest() {
         Player player = new Player();
         boolean isCaptain = true;
         player.setCaptain(true);
@@ -125,7 +124,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void setFreeAgentIdTest(){
+    public void setFreeAgentIdTest() {
         Player player = new Player();
         int freeAgentId = 1;
         player.setFreeAgentId(freeAgentId);
@@ -139,7 +138,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void setSeasonIdTest(){
+    public void setSeasonIdTest() {
         Player player = new Player();
         int seasonId = 1;
         player.setSeasonId(seasonId);

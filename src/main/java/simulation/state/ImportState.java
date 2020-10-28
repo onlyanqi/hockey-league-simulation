@@ -1,6 +1,5 @@
 package simulation.state;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import simulation.factory.*;
@@ -491,8 +490,8 @@ public class ImportState implements IHockeyState {
 
 
         boolean flag = false;
-        for (ParentObj obj : list) {
-            if (obj.getName().equals(name)) {
+        for (Division division : list) {
+            if (division.getName().equals(name)) {
                 flag = true;
             }
         }
@@ -503,8 +502,8 @@ public class ImportState implements IHockeyState {
 
 
         boolean flag = false;
-        for (ParentObj obj : list) {
-            if (obj.getName().equals(name)) {
+        for (Conference conference : list) {
+            if (conference.getName().equals(name)) {
                 flag = true;
             }
         }
@@ -513,8 +512,8 @@ public class ImportState implements IHockeyState {
 
     private boolean isTeamExists(ArrayList<Team> list, String name) {
         boolean flag = false;
-        for (ParentObj obj : list) {
-            if (obj.getName().equals(name)) {
+        for (Team team : list) {
+            if (team.getName().equals(name)) {
                 flag = true;
             }
         }
@@ -524,8 +523,8 @@ public class ImportState implements IHockeyState {
     private boolean isPlayerExists(ArrayList<Player> list, String name) {
 
         boolean flag = false;
-        for (ParentObj obj : list) {
-            if (obj.getName().equals(name)) {
+        for (Player player : list) {
+            if (player.getName().equals(name)) {
                 flag = true;
             }
         }

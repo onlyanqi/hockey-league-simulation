@@ -6,15 +6,15 @@ import simulation.model.FreeAgent;
 
 public class FreeAgentConcrete {
 
-    public FreeAgent newFreeAgent(){
+    public FreeAgent newFreeAgent() {
         return new FreeAgent();
     }
 
-    public IFreeAgentFactory newLoadFreeAgentFactory(){
+    public IFreeAgentFactory newLoadFreeAgentFactory() {
         return new FreeAgentDao();
     }
 
-    public IFreeAgentFactory newAddFreeAgentFactory(){
+    public IFreeAgentFactory newAddFreeAgentFactory() {
         return new FreeAgentDao();
     }
 

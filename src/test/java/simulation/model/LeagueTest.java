@@ -6,6 +6,7 @@ import db.data.ILeagueFactory;
 import db.data.IPlayerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class LeagueTest {
 
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadLeagueFactory = new LeagueMock();
     }
 
@@ -34,7 +35,7 @@ public class LeagueTest {
     }
 
     @Test
-    public void leagueFactoryTest() throws Exception{
+    public void leagueFactoryTest() throws Exception {
         League league = new League(1, loadLeagueFactory);
         assertEquals(league.getId(), 1);
         assertEquals(league.getName(), "League1");
@@ -44,13 +45,13 @@ public class LeagueTest {
     }
 
     @Test
-    public void getCountryTest() throws Exception{
+    public void getCountryTest() throws Exception {
         League league = new League(1, loadLeagueFactory);
         assertTrue(league.getCountry().equals("Canada"));
     }
 
     @Test
-    public void setCountryTest(){
+    public void setCountryTest() {
         League league = new League();
         String country = "Canada";
         league.setCountry(country);
@@ -58,13 +59,13 @@ public class LeagueTest {
     }
 
     @Test
-    public void getCreatedByTest() throws Exception{
+    public void getCreatedByTest() throws Exception {
         League league = new League(1, loadLeagueFactory);
         assertTrue(league.getCreatedBy() == 1);
     }
 
     @Test
-    public void setCreatedByTest(){
+    public void setCreatedByTest() {
         League league = new League();
         int createdBy = 1;
         league.setCreatedBy(createdBy);
@@ -72,7 +73,7 @@ public class LeagueTest {
     }
 
     @Test
-    public void getConferenceListTest() throws Exception{
+    public void getConferenceListTest() throws Exception {
         League league = new League(1, loadLeagueFactory);
         List<Conference> conferenceList = league.getConferenceList();
         assertNotNull(conferenceList);
@@ -110,7 +111,7 @@ public class LeagueTest {
     }
 
     @Test
-    public void setFreeAgentTest() throws Exception{
+    public void setFreeAgentTest() throws Exception {
         FreeAgent freeAgent = new FreeAgent();
         League league = new League();
         IPlayerFactory playerFactory = new PlayerMock();

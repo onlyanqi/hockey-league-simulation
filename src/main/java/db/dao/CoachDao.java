@@ -9,7 +9,7 @@ public class CoachDao implements ICoachFactory {
     @Override
     public int addCoach(Coach coach) throws Exception {
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("AddCoach(?,?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, coach.getTeamId());
             callDB.setInputParameterString(2, coach.getName());
@@ -24,7 +24,7 @@ public class CoachDao implements ICoachFactory {
             callDB.execute();
             coach.setId(callDB.returnOutputParameterInt(8));
 
-        } catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
             callDB.closeConnection();
