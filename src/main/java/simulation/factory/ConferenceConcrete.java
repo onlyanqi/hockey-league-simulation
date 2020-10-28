@@ -6,15 +6,15 @@ import simulation.model.Conference;
 
 public class ConferenceConcrete {
 
-    public Conference newConference(){
+    public Conference newConference() {
         return new Conference();
     }
 
-    public IConferenceFactory newLoadConferenceFactory(){
+    public IConferenceFactory newLoadConferenceFactory() {
         return new ConferenceDao();
     }
 
-    public IConferenceFactory newAddConferenceFactory(){
+    public IConferenceFactory newAddConferenceFactory() {
         return new ConferenceDao();
     }
 

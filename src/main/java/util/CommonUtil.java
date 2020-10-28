@@ -10,7 +10,7 @@ public class CommonUtil {
         return isNotEmpty;
     }
 
-    public boolean isNotNull(String string){
+    public boolean isNotNull(String string) {
         return true;
     }
 }

@@ -9,10 +9,10 @@ import java.util.Properties;
 
 public class DBConnection implements IDBConnection {
 
-    public String formDBURL(Properties prop){
+    public String formDBURL(Properties prop) {
         String dbURL = "";
 
-        if(prop != null) {
+        if (prop != null) {
             String dbHost = prop.getProperty("db.url");
             String dbName = prop.getProperty("db.Name");
             String dbPort = prop.getProperty("db.Port");
@@ -33,7 +33,7 @@ public class DBConnection implements IDBConnection {
             IPropertyFileReader read = new PropertyFileReader();
             Properties prop = read.loadPropertyFile("../.properties");
             con = DriverManager.getConnection(formDBURL(prop),
-                    prop.getProperty("db.User"),prop.getProperty("db.Password"));
+                    prop.getProperty("db.User"), prop.getProperty("db.Password"));
 
             return con;
         } catch (Exception ex) {

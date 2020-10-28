@@ -2,22 +2,20 @@ package simulation.model;
 
 import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
-import org.junit.Test;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+
+import static org.junit.Assert.*;
 
 public class TeamTest {
 
     private static ITeamFactory loadTeamFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadTeamFactory = new TeamMock();
     }
 
@@ -50,7 +48,7 @@ public class TeamTest {
     }
 
     @Test
-    public void setHomeTownTest(){
+    public void setHomeTownTest() {
         Team team = new Team();
         String homeTown = "Halifax";
         team.setHometown(homeTown);
@@ -64,7 +62,7 @@ public class TeamTest {
     }
 
     @Test
-    public void setMascotTest(){
+    public void setMascotTest() {
         Team team = new Team();
         String mascot = "Tiger";
         team.setMascot(mascot);
@@ -78,7 +76,7 @@ public class TeamTest {
     }
 
     @Test
-    public void setGeneralManagerTest(){
+    public void setGeneralManagerTest() {
         Team team = new Team();
         Manager manager = new Manager();
         manager.setName("generalManager");
@@ -93,7 +91,7 @@ public class TeamTest {
     }
 
     @Test
-    public void setHeadCoachTest(){
+    public void setHeadCoachTest() {
         Team team = new Team();
         String headCoach = "Tiger";
         Coach Coach1 = new Coach();
@@ -113,7 +111,7 @@ public class TeamTest {
     }
 
     @Test
-    public void setDivisionIdTest(){
+    public void setDivisionIdTest() {
         Team team = new Team();
         int divisionId = 1;
         team.setDivisionId(divisionId);

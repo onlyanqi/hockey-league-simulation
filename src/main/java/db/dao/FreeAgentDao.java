@@ -39,7 +39,7 @@ public class FreeAgentDao implements IFreeAgentFactory {
             freeAgent.setLeagueId(callDB.returnOutputParameterInt(3));
             freeAgent.setSeasonId(callDB.returnOutputParameterInt(4));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();
@@ -63,7 +63,7 @@ public class FreeAgentDao implements IFreeAgentFactory {
             freeAgent.setLeagueId(callDB.returnOutputParameterInt(3));
             freeAgent.setSeasonId(callDB.returnOutputParameterInt(4));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();

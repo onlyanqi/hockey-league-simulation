@@ -15,20 +15,15 @@ public class Team extends ParentObj {
     public static final String DEFENSE = "defense";
     public static final String FORWARD = "forward";
 
-    @SerializedName("teamName")
-    String name;
     private String hometown;
     private String mascot;
-    private transient int divisionId;
-    private transient double strength;
-    @SerializedName("headCoach")
+    private int divisionId;
+    private double strength;
     private Coach coach;
     private Boolean aiTeam;
 
-    private transient Manager manager;
-    @SerializedName("generalManager")
+    private Manager manager;
     private String generalManagerName;
-    @SerializedName("players")
     private List<Player> playerList;
 
     public Team() {
@@ -45,14 +40,6 @@ public class Team extends ParentObj {
 
     public Team(String name, ITeamFactory factory) throws Exception {
         factory.loadTeamByName(name, this);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<Player> getPlayerList() {
@@ -109,10 +96,10 @@ public class Team extends ParentObj {
     }
 
     public void setStrength() {
-        for(Player player : getPlayerList()){
-            if (player.getInjured()){
-                this.strength += 0.5*player.getStrength();
-            }else{
+        for (Player player : getPlayerList()) {
+            if (player.getInjured()) {
+                this.strength += 0.5 * player.getStrength();
+            } else {
                 this.strength += player.getStrength();
             }
         }
@@ -121,6 +108,7 @@ public class Team extends ParentObj {
     public double getStrength() {
         return strength;
     }
+
     public Boolean getAiTeam() {
         return aiTeam;
     }
@@ -185,4 +173,5 @@ public class Team extends ParentObj {
             }
         }
     }
+
 }

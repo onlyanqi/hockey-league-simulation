@@ -7,9 +7,6 @@ import simulation.model.Team;
 
 import java.util.HashMap;
 import java.util.List;
-import java.lang.Math;
-
-import static java.lang.Math.random;
 
 public class SimulateGameState implements ISimulateState {
 
@@ -29,11 +26,11 @@ public class SimulateGameState implements ISimulateState {
         int winner = simulateGame(game);
         game.setResult(winner);
         RegularSeasonScoreBoard regularSeasonScoreBoard = league.getRegularSeasonScoreBoard();
-        HashMap<String,Integer> teamScores = regularSeasonScoreBoard.getTeamsScore();
+        HashMap<String, Integer> teamScores = regularSeasonScoreBoard.getTeamsScore();
 
-        if(winner ==0){
+        if (winner == 0) {
             regularSeasonScoreBoard.setTeamScore(game.getTeam1());
-        }else{
+        } else {
             regularSeasonScoreBoard.setTeamScore(game.getTeam2());
         }
 
@@ -52,17 +49,17 @@ public class SimulateGameState implements ISimulateState {
         Team team2 = league.getTeamByTeamName(game.getTeam2());
 
 
-        if(team1!=null && team2!=null){
-            if(team1.getStrength()>team2.getStrength()){
+        if (team1 != null && team2 != null) {
+            if (team1.getStrength() > team2.getStrength()) {
                 winner = 0;
-            }else{
+            } else {
                 winner = 1;
             }
-            if(Math.random() <= upset){
-                if(winner ==0){
+            if (Math.random() <= upset) {
+                if (winner == 0) {
                     winner = 1;
-                }else{
-                    winner =0;
+                } else {
+                    winner = 0;
                 }
             }
             return winner;

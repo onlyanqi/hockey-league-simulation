@@ -6,15 +6,15 @@ import simulation.model.Division;
 
 public class DivisionConcrete {
 
-    public Division newDivision(){
+    public Division newDivision() {
         return new Division();
     }
 
-    public IDivisionFactory newLoadDivisionFactory(){
+    public IDivisionFactory newLoadDivisionFactory() {
         return new DivisionDao();
     }
 
-    public IDivisionFactory newAddDivisionFactory(){
+    public IDivisionFactory newAddDivisionFactory() {
         return new DivisionDao();
     }
 

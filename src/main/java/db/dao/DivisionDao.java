@@ -12,7 +12,7 @@ public class DivisionDao implements IDivisionFactory {
     @Override
     public int addDivision(Division division) throws Exception {
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("AddDivision(?,?,?)");
             callDB.setInputParameterString(1, division.getName());
             callDB.setInputParameterInt(2, division.getConferenceId());
@@ -20,7 +20,7 @@ public class DivisionDao implements IDivisionFactory {
             callDB.execute();
             division.setId(callDB.returnOutputParameterInt(3));
 
-        } catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -40,12 +40,11 @@ public class DivisionDao implements IDivisionFactory {
             callDB.executeLoad();
 
 
-
             division.setId(callDB.returnOutputParameterInt(2));
             division.setName(callDB.returnOutputParameterString(3));
             division.setConferenceId(callDB.returnOutputParameterInt(4));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();
@@ -69,7 +68,7 @@ public class DivisionDao implements IDivisionFactory {
             division.setId(callDB.returnOutputParameterInt(2));
             division.setName(callDB.returnOutputParameterString(3));
             division.setConferenceId(callDB.returnOutputParameterInt(4));
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             callDB.closeConnection();
@@ -81,7 +80,7 @@ public class DivisionDao implements IDivisionFactory {
     public List<Division> loadDivisionListByConferenceId(int conferenceId) throws Exception {
         List<Division> divisionList = null;
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("LoadDivisionListByConferenceId(?)");
             callDB.setInputParameterInt(1, conferenceId);
             ResultSet rs = callDB.executeLoad();
@@ -95,7 +94,7 @@ public class DivisionDao implements IDivisionFactory {
                     divisionList.add(division);
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
 
