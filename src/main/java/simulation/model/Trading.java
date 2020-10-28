@@ -3,7 +3,7 @@ package simulation.model;
 import db.data.ITradingFactory;
 import java.util.*;
 
-public class Trading extends ParentObj{
+public class Trading extends SharedAttributes {
 
     private List<Integer> currentYearSeasonMonths = new ArrayList<>
             (Arrays.asList(9, 10, 11));
@@ -13,7 +13,7 @@ public class Trading extends ParentObj{
 
     public Trading(){}
 
-    public Trading(int tradingId, ITradingFactory factory){
+    public Trading(int tradingId, ITradingFactory factory) throws Exception {
         setId(tradingId);
         factory.loadTradingDetailsByTradingId(tradingId, this);
     }

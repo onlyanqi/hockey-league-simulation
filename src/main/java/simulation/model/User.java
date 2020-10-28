@@ -5,7 +5,7 @@ import db.data.IUserFactory;
 
 import java.util.List;
 
-public class User extends ParentObj{
+public class User extends SharedAttributes {
 
     public User(){}
 

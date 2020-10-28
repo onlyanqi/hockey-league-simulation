@@ -2,7 +2,7 @@ package simulation.model;
 
 import userIO.ConsoleOutput;
 
-public class Coach extends ParentObj {
+public class Coach extends SharedAttributes {
     public Coach() {
     }
 

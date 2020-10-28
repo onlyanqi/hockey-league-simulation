@@ -6,7 +6,7 @@ import db.data.IDivisionFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Conference extends ParentObj{
+public class Conference extends SharedAttributes {
 
     public Conference(){ }
 

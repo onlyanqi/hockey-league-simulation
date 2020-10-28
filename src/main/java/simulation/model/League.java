@@ -1,14 +1,12 @@
 package simulation.model;
 
-import db.data.IConferenceFactory;
-import db.data.IFreeAgentFactory;
-import db.data.ILeagueFactory;
+import db.data.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class League extends ParentObj{
+public class League extends SharedAttributes {
 
     public League(){}
 
@@ -24,10 +22,6 @@ public class League extends ParentObj{
     public League(String leagueName, int userId, ILeagueFactory loadLeagueFactory) throws Exception {
         loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
     }
-
-    private String country;
-
-    private int createdBy;
 
     private List<Conference> conferenceList;
 
@@ -55,14 +49,6 @@ public class League extends ParentObj{
 
     public void setCurrentDate(Date currentDate) {
         this.currentDate = currentDate;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public List<Conference> getConferenceList() {
@@ -133,14 +119,6 @@ public class League extends ParentObj{
         this.managerList = managerList;
     }
 
-    public int getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(int createdBy) {
-        this.createdBy = createdBy;
-    }
-
     public FreeAgent getFreeAgent() {
         return freeAgent;
     }
@@ -180,7 +158,7 @@ public class League extends ParentObj{
         this.freeAgent = loadFreeAgentFactory.loadFreeAgentByLeagueId(getId());
     }
 
-    private Trading trading;
+    private transient Trading trading;
 
     public Trading getTrading() {
         return trading;
@@ -189,4 +167,23 @@ public class League extends ParentObj{
     public void setTrading(Trading trading) {
         this.trading = trading;
     }
+
+    public void loadTradingDetailsByLeagueId(ITradingFactory tradingFactory) throws Exception {
+        this.trading = tradingFactory.loadTradingDetailsByLeagueId(getId());
+    }
+
+    private transient List<TradeOffer> tradeOfferList;
+
+    public List<TradeOffer> getTradingOfferList(){
+        return this.tradeOfferList;
+    }
+
+    public void setTradingOfferList(List<TradeOffer> tradeOfferList){
+        this.tradeOfferList = tradeOfferList;
+    }
+
+    public void loadTradingOfferDetailsByLeagueId(ITradeOfferFactory tradingOfferFactory) throws Exception {
+        this.tradeOfferList = tradingOfferFactory.loadTradingOfferDetailsByLeagueId(getId());
+    }
+
 }

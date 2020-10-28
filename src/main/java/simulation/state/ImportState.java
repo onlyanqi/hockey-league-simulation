@@ -468,7 +468,7 @@ public class ImportState implements IHockeyState {
 
 
         boolean flag = false;
-        for(ParentObj obj : list){
+        for(SharedAttributes obj : list){
             if(obj.getName().equals(name)){
                 flag =  true;
             }
@@ -479,7 +479,7 @@ public class ImportState implements IHockeyState {
 
 
         boolean flag = false;
-        for(ParentObj obj : list){
+        for(SharedAttributes obj : list){
             if(obj.getName().equals(name)){
                 flag =  true;
             }
@@ -490,7 +490,7 @@ public class ImportState implements IHockeyState {
 
 
         boolean flag = false;
-        for(ParentObj obj : list){
+        for(SharedAttributes obj : list){
             if(obj.getName().equals(name)){
                 flag =  true;
             }
@@ -501,7 +501,7 @@ public class ImportState implements IHockeyState {
 
 
         boolean flag = false;
-        for(ParentObj obj : list){
+        for(SharedAttributes obj : list){
             if(obj.getName().equals(name)){
                 flag =  true;
             }

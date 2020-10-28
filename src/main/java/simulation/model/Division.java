@@ -6,7 +6,7 @@ import db.data.ITeamFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Division extends ParentObj{
+public class Division extends SharedAttributes {
 
     public Division(){}
 

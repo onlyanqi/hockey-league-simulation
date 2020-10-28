@@ -1,6 +1,6 @@
 package simulation.model;
 
-public class Manager extends ParentObj{
+public class Manager extends SharedAttributes {
     public Manager() {
     }
 

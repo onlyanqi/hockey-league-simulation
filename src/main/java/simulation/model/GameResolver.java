@@ -1,6 +1,6 @@
 package simulation.model;
 
-public class GameResolver extends ParentObj{
+public class GameResolver extends SharedAttributes {
     public GameResolver() {
     }
 

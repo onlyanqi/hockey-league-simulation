@@ -2,7 +2,7 @@ package simulation.model;
 
 import db.data.ISeasonFactory;
 
-public class Season extends ParentObj{
+public class Season extends SharedAttributes {
 
     public Season(){}
 

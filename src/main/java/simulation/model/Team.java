@@ -3,15 +3,13 @@ package simulation.model;
 
 import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
-import userIO.ConsoleOutput;
 import userIO.ConsoleOutputForTeamCreation;
-import userIO.GetInput;
 import userIO.UseInputForTeamCreation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Team extends ParentObj{
+public class Team extends SharedAttributes {
     public static final String GOALIE = "goalie";
     public static final String DEFENSE = "defense";
     public static final String FORWARD = "forward";
@@ -149,5 +147,25 @@ public class Team extends ParentObj{
             }
         }
         return chosenPlayersIdList;
+    }
+
+    private int pendingTradeOfferCount;
+
+    public int getPendingTradeOfferCount() {
+        return pendingTradeOfferCount;
+    }
+
+    public void setPendingTradeOfferCount(int pendingTradeOfferCount) {
+        this.pendingTradeOfferCount = pendingTradeOfferCount;
+    }
+
+    private int lossPoint;
+
+    public int getLossPoint() {
+        return lossPoint;
+    }
+
+    public void setLossPoint(int lossPoint) {
+        this.lossPoint = lossPoint;
     }
 }

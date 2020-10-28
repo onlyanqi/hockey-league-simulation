@@ -1,29 +1,23 @@
 package simulation.model;
 
-import db.data.IParentObjFactory;
+import db.data.ISharedAttributesFactory;
 
-import java.util.Date;
+public class SharedAttributes {
 
-public class ParentObj {
+    public SharedAttributes(){}
 
-    public ParentObj() { }
-
-    public ParentObj(int id){
-        this.id = id;
+    public SharedAttributes(int id){
+        setId(id);
     }
 
-    public ParentObj(int id, IParentObjFactory parentObjFactory) throws Exception {
-        this.id = id;
+    public SharedAttributes(int id, ISharedAttributesFactory parentObjFactory) throws Exception {
+        setId(id);
         parentObjFactory.loadParentObj(id, this);
     }
 
     private int id;
 
     private String name;
-
-    private Date startDate;
-
-    private Date endDate;
 
     public int getId() {
         return id;
@@ -39,22 +33,6 @@ public class ParentObj {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 
     public boolean isNull(String input){
@@ -85,16 +63,6 @@ public class ParentObj {
         boolean isValid = false;
 
         if(isNotNull(getName()) && isNotEmpty(getName())){
-            isValid = true;
-        }
-
-        return isValid;
-    }
-
-    public boolean validEndDate(){
-        boolean isValid = false;
-
-        if(getEndDate().compareTo(getStartDate()) >= 0){
             isValid = true;
         }
 

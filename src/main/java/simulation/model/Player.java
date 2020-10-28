@@ -1,13 +1,8 @@
 package simulation.model;
 
 import db.data.IPlayerFactory;
-import userIO.ConsoleOutput;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class Player extends ParentObj{
+public class Player extends SharedAttributes implements Comparable<Player>{
 
     public Player(){}
 
@@ -36,6 +31,18 @@ public class Player extends ParentObj{
     private String hometown;
 
     private Position position;
+
+    @Override
+    public int compareTo(Player player) {
+        double compare = this.getStrength()-player.getStrength();
+        int returnValue = 0;
+        if(compare > 0){
+            returnValue = 1;
+        } else if (compare < 0){
+            returnValue = -1;
+        }
+        return returnValue;
+    }
 
     public enum Position{
         forward,
@@ -171,4 +178,13 @@ public class Player extends ParentObj{
         addPlayerFactory.addPlayer(this);
     }
 
+    private String playerTradeStatus;
+
+    public String getPlayerTradeStatus() {
+        return playerTradeStatus;
+    }
+
+    public void setPlayerTradeStatus(String playerTradeStatus) {
+        this.playerTradeStatus = playerTradeStatus;
+    }
 }

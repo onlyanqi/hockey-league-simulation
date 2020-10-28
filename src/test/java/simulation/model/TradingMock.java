@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class TradingMock implements ITradingFactory {
 
-    private Trading createObj(int leagueId, int tradingId, Trading trading){
+    private Trading getTrading(int leagueId, int tradingId, Trading trading){
         trading.setId(1);
         trading.setLeagueId(1);
         trading.setLossPoint(2);
@@ -24,13 +24,14 @@ public class TradingMock implements ITradingFactory {
 
     @Override
     public int addTradingDetails(Trading trading) {
-        trading = createObj(1, 1, trading);
+        trading = getTrading(1, 1, trading);
         return trading.getId();
     }
 
     @Override
-    public void loadTradingDetailsByLeagueId(int leagueId, Trading trading) {
-        trading = createObj(leagueId, 1, trading);
+    public Trading loadTradingDetailsByLeagueId(int leagueId) {
+        Trading trading = new Trading();
+        trading = getTrading(leagueId, 1, trading);
 
         switch (leagueId){
 
@@ -63,12 +64,13 @@ public class TradingMock implements ITradingFactory {
                 trading.setRandomTradeOfferChance(0.0f);
                 break;
         }
+        return trading;
     }
 
     @Override
     public void loadTradingDetailsByTradingId(int tradingId, Trading trading) {
 
-        trading = createObj(1, tradingId, trading);
+        trading = getTrading(1, tradingId, trading);
 
         switch (tradingId){
 

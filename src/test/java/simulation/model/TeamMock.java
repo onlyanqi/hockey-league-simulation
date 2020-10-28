@@ -35,8 +35,6 @@ public class TeamMock implements ITeamFactory {
             case 1:
                 //all correct data
                 team.setName("Team1");
-                team.setStartDate(new Date(2000, 0, 0));
-                team.setEndDate(new Date(2050, 0, 0));
                 team.setDivisionId(1);
                 team.setHometown("Halifax1");
                 team.setMascot("Tiger1");
@@ -56,8 +54,6 @@ public class TeamMock implements ITeamFactory {
             case 2:
                 //name null
                 team.setName(null);
-                team.setStartDate(new Date(2000, 0, 0));
-                team.setEndDate(new Date(2050, 0, 0));
                 team.setDivisionId(1);
                 team.setHometown("Halifax2");
                 team.setMascot("Tiger2");
@@ -77,8 +73,6 @@ public class TeamMock implements ITeamFactory {
             case 3:
                 //end date less than start date
                 team.setName("Invalid Date");
-                team.setStartDate(new Date(2010, 0, 0));
-                team.setEndDate(new Date(2000, 0, 0));
                 team.setDivisionId(1);
                 team.setHometown("Halifax3");
                 team.setMascot("Tiger3");
@@ -98,8 +92,6 @@ public class TeamMock implements ITeamFactory {
             case 4:
                 //invalid position
                 team.setName("Invalid Postion");
-                team.setStartDate(new Date(2010, 0, 0));
-                team.setEndDate(new Date(2000, 0, 0));
                 team.setDivisionId(1);
                 team.setHometown("Halifax4");
                 team.setMascot("Tiger4");
@@ -124,8 +116,6 @@ public class TeamMock implements ITeamFactory {
     public void loadTeamByName(String teamName, Team team) throws Exception {
         team = new Team();
         team.setName("Team1");
-        team.setStartDate(new Date(2000, 0, 0));
-        team.setEndDate(new Date(2050, 0, 0));
         team.setDivisionId(1);
         team.setHometown("Halifax1");
         team.setMascot("Tiger1");
