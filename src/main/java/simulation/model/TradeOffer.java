@@ -8,7 +8,7 @@ public class TradeOffer extends SharedAttributes {
 
     public TradeOffer(int tradingOfferId, ITradeOfferFactory factory) throws Exception {
         setId(tradingOfferId);
-        factory.loadTradingOfferDetailsById(tradingOfferId, this);
+        factory.loadTradeOfferDetailsById(tradingOfferId, this);
     }
 
     private int leagueId;
@@ -84,7 +84,9 @@ public class TradeOffer extends SharedAttributes {
         this.status = status;
     }
 
-
+    public void addTradeOffer(ITradeOfferFactory tradeOfferFactory) throws Exception {
+        tradeOfferFactory.addTradeOfferDetails(this);
+    }
 
 
 }

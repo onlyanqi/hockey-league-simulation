@@ -1,7 +1,6 @@
 package simulation.model;
 
 import db.data.*;
-import com.google.gson.annotations.SerializedName;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
@@ -240,7 +239,7 @@ public class League extends SharedAttributes {
     }
 
     public void loadTradingOfferDetailsByLeagueId(ITradeOfferFactory tradingOfferFactory) throws Exception {
-        this.tradeOfferList = tradingOfferFactory.loadTradingOfferDetailsByLeagueId(getId());
+        this.tradeOfferList = tradingOfferFactory.loadTradeOfferDetailsByLeagueId(getId());
     }
 
 }

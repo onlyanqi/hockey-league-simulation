@@ -262,7 +262,7 @@ public class ExecuteTradeStateTest {
         int toPlayerId = 2;
         int leagueId = 1;
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
-        List<TradeOffer> tradeOfferList = tradeOfferFactory.loadTradingOfferDetailsByLeagueId(leagueId);
+        List<TradeOffer> tradeOfferList = tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
 
         ExecuteTradeState state = new ExecuteTradeState();
         assertFalse(state.checkExistingTradeOffer(fromPlayerId, toPlayerId, tradeOfferList));
@@ -346,6 +346,45 @@ public class ExecuteTradeStateTest {
         team = new Team(5, teamFactory);
 
         assertTrue(state.checkLossPoint(team, trading));
+    }
+
+    @Test
+    public void getRandomDoubleTest(){
+        ExecuteTradeState state = new ExecuteTradeState();
+        double randomDouble = state.getRandomDouble();
+        assertTrue(0 < randomDouble);
+        assertTrue(1 > randomDouble);
+        assertFalse(2 < randomDouble);
+        assertNotEquals(0, randomDouble);
+    }
+
+    @Test
+    public void removeObjectFromListTest() throws Exception {
+        IPlayerFactory playerFactory = new PlayerMock();
+        List<Player> list = new ArrayList<>();
+        Player player = new Player(1, playerFactory);
+        list.add(player);
+        player = new Player(5, playerFactory);
+        list.add(player);
+        boolean isPlayerExist = false;
+        for(Player player1 : list){
+            if(player1.getId() == 5){
+                isPlayerExist = true;
+            }
+        }
+        assertTrue(isPlayerExist);
+
+        ExecuteTradeState state = new ExecuteTradeState();
+        state.removeObjectFromList(list, player);
+
+        isPlayerExist = false;
+
+        for(Player player1 : list){
+            if(player1.getId() == 5){
+                isPlayerExist = true;
+            }
+        }
+        assertFalse(isPlayerExist);
     }
 
 }

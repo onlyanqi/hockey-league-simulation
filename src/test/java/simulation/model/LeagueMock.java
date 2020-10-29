@@ -53,7 +53,7 @@ public class LeagueMock implements ILeagueFactory {
 
     public List<TradeOffer> getTradeOfferList(int leagueId) throws Exception {
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
-        return tradeOfferFactory.loadTradingOfferDetailsByLeagueId(leagueId);
+        return tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
     }
 
     @Override

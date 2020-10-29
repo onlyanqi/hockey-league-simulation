@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ITradeOfferFactory {
 
-    int addTradingOfferDetails(TradeOffer trading) throws Exception;
-    List loadTradingOfferDetailsByLeagueId(int leagueId) throws Exception;
-    void loadTradingOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception;
-    void loadTradingOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception;
+    int addTradeOfferDetails(TradeOffer tradeOffer) throws Exception;
+    List loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception;
+    void loadTradeOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception;
+    void loadTradeOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception;
 
 }

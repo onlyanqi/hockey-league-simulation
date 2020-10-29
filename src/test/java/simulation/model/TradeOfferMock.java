@@ -8,7 +8,7 @@ import java.util.List;
 public class TradeOfferMock implements ITradeOfferFactory {
 
     @Override
-    public int addTradingOfferDetails(TradeOffer tradeOffer) throws Exception {
+    public int addTradeOfferDetails(TradeOffer tradeOffer) throws Exception {
         tradeOffer = new TradeOffer();
         tradeOffer.setId(1);
         return tradeOffer.getId();
@@ -27,7 +27,7 @@ public class TradeOfferMock implements ITradeOfferFactory {
     }
 
     @Override
-    public List<TradeOffer> loadTradingOfferDetailsByLeagueId(int leagueId) throws Exception {
+    public List<TradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
         List<TradeOffer> tradeOfferList = new ArrayList<>();
         TradeOffer tradeOffer = new TradeOffer();
         getTradeOffer(tradeOffer, 1, 2);
@@ -45,13 +45,13 @@ public class TradeOfferMock implements ITradeOfferFactory {
     }
 
     @Override
-    public void loadTradingOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception {
+    public void loadTradeOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception {
         tradeOffer = new TradeOffer();
         getTradeOffer(tradeOffer, tradingId, 3);
     }
 
     @Override
-    public void loadTradingOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception {
+    public void loadTradeOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception {
         getTradeOffer(tradeOffer, tradingOfferId, 3);
     }
 }
