@@ -2,7 +2,7 @@ package simulation.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GamePlayConfig {
+public class GamePlayConfig extends SharedAttributes{
 
     private int leagueId;
     private Aging aging;

@@ -2,7 +2,7 @@ package simulation.model;
 
 import java.time.LocalDate;
 
-public abstract class Events {
+public abstract class Events{
 
     public Events() {
 

@@ -1,6 +1,6 @@
 package simulation.model;
 
-public class TeamScore{
+public class TeamScore extends SharedAttributes{
 
     public TeamScore(String teamName){
         this.teamName = teamName;
@@ -48,4 +48,11 @@ public class TeamScore{
         this.numberOfLoss = numberOfLoss;
     }
 
+    public Integer getNumberOfTies() {
+        return numberOfTies;
+    }
+
+    public void setNumberOfTies(Integer numberOfTies) {
+        this.numberOfTies = numberOfTies;
+    }
 }

@@ -3,7 +3,7 @@ package simulation.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamStanding {
+public class TeamStanding extends SharedAttributes{
 
     private List<TeamScore> teamsScoreList;
 

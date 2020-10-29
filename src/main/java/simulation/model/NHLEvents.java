@@ -6,7 +6,7 @@ import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
 
 
-public class NHLEvents {
+public class NHLEvents extends SharedAttributes{
 
     public NHLEvents() {
         initializeEndOfRegularSeason();
@@ -63,6 +63,14 @@ public class NHLEvents {
 
     public void setNextSeasonDate(LocalDate nextSeasonDate) {
         this.nextSeasonDate = nextSeasonDate;
+    }
+
+    public LocalDate getTradeDeadlineDate() {
+        return tradeDeadlineDate;
+    }
+
+    public LocalDate getLastDayStanleyCupFinals() {
+        return lastDayStanleyCupFinals;
     }
 
     public boolean checkTradeDeadlinePassed(LocalDate currentDate) {

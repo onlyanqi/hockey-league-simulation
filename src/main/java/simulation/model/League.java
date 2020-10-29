@@ -22,7 +22,7 @@ public class League extends SharedAttributes {
     private Games games;
     private TeamStanding regularSeasonStanding;
     private TeamStanding playOffStanding;
-    private transient TeamStanding activeTeamStanding;
+    private TeamStanding activeTeamStanding;
     private NHLEvents nhlEvents;
 
     public League() {

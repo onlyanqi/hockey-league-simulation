@@ -2,7 +2,7 @@ package simulation.model;
 
 import java.time.LocalDate;
 
-public class Game {
+public class Game extends SharedAttributes{
 
     public Game() {
         this.played = false;

@@ -122,9 +122,9 @@ public class TrainingState implements ISimulateState, ITrainingState {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
         Games games = league.getGames();
-        List<Game> gamesOnCurrentDay = games.getUnplayedGamesOnDate(league.getCurrentDate());
+        List<Game> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
         if(gamesOnCurrentDay.size()== 0){
-            if (nhlEvents.isTradeDeadlinePassed(league.getCurrentDate())) {
+            if (nhlEvents.checkTradeDeadlinePassed(league.getCurrentDate())) {
                 return new AgingState(hockeyContext);
             } else {
                 return new ExecuteTradeState(hockeyContext);
