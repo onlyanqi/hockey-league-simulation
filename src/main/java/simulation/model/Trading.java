@@ -36,6 +36,16 @@ public class Trading extends SharedAttributes {
         this.nextYearSeasonMonths = nextYearSeasonMonths;
     }
 
+    public boolean isNotNull(Object input){
+        boolean isNotNull = true;
+
+        if(input == null){
+            isNotNull = false;
+        }
+
+        return isNotNull;
+    }
+
     private Date tradeStartDate;
 
     private Date tradeEndDate;
@@ -53,7 +63,7 @@ public class Trading extends SharedAttributes {
     private boolean isTradingPeriod;
 
     public void isLeagueInTradingPeriod(Date leagueDate){
-        if(leagueDate != null){
+        if(isNotNull(leagueDate)){
             calTradeEndDateFromLeagueDate(leagueDate);
             int compare = leagueDate.compareTo(tradeEndDate);
             if(compare <= 0){

@@ -23,6 +23,25 @@ public class ExecuteTradeStateTest {
 
     }
 
+    public boolean isNotNull(Object input){
+        boolean isNotNull = true;
+
+        if(input == null){
+            isNotNull = false;
+        }
+
+        return isNotNull;
+    }
+
+    @Test
+    public void isNotNullTest(){
+        String a = null;
+        ExecuteTradeState state = new ExecuteTradeState();
+        assertFalse(state.isNotNull(a));
+        a = "a";
+        assertTrue(state.isNotNull(a));
+    }
+
     @Test
     public void isListNotEmptyTest() {
         ExecuteTradeState state = new ExecuteTradeState();
@@ -55,7 +74,7 @@ public class ExecuteTradeStateTest {
         for(int i = 0; i < 50 ; i++) {
             state.tradingLogic(team, league);
             double beforeTradeStrength = team.getStrength();
-            if(league.getTradingOfferList() != null && league.getTradingOfferList().size() > 0){
+            if(isNotNull(league.getTradingOfferList()) && league.getTradingOfferList().size() > 0){
                 assertNotNull(league.getTradingOfferList().get(0).getStatus());
                 double afterTradeStrength = team.getStrength();
                 assertTrue(afterTradeStrength >= beforeTradeStrength);

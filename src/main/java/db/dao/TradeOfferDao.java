@@ -43,7 +43,9 @@ public class TradeOfferDao implements ITradeOfferFactory {
             callDB = new CallDB("LoadTradingDetailsByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (rs == null) {
+                tradeOfferList = null;
+            } else {
                 tradeOfferList = new ArrayList<>();
                 while (rs.next()) {
                     TradeOffer tradeOffer = new TradeOffer();
