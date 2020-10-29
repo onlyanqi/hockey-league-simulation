@@ -56,8 +56,8 @@ public class ImportStateTest {
         assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getCoach().getShooting(),(Double)0.8);
         assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getPlayerList().get(0).getName(),"Player One");
         assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getPlayerList().get(0).getChecking(),12);
-        assertEquals(hockeyContext.getUser().getLeague().getFreeAgentList().get(2).getName(),"Agent Three");
-        assertEquals(hockeyContext.getUser().getLeague().getFreeAgentList().get(1).getChecking(),10);
+        assertEquals(hockeyContext.getUser().getLeague().getFreeAgent().getPlayerList().get(2).getName(),"Agent Three");
+        assertEquals(hockeyContext.getUser().getLeague().getFreeAgent().getPlayerList().get(1).getChecking(),10);
         assertEquals(hockeyContext.getUser().getLeague().getCoachList().get(1).getName(),"Frank Smith");
         assertEquals(hockeyContext.getUser().getLeague().getCoachList().get(2).getSkating(),(Double)1.0);
         assertEquals(hockeyContext.getUser().getLeague().getManagerList().get(0).getName(),"Karen Potam");
