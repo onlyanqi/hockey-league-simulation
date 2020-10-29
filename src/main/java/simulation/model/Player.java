@@ -135,9 +135,10 @@ public class Player extends ParentObj {
     }
 
     public void setSaving(int saving) {
-        this.saving = saving;
+        if(this.position.toString().equals("goalie")){
+            this.saving = saving;
+        }
     }
-
 
     public void setStrength() {
         switch (position) {

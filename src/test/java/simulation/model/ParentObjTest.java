@@ -3,6 +3,7 @@ package simulation.model;
 import db.data.IParentObjFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.model.mock.ParentObjMock;
 
 import java.util.Date;
 

@@ -3,6 +3,7 @@ package simulation.model;
 import db.data.ITradingFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.model.mock.TradingMock;
 
 import java.util.ArrayList;
 import java.util.Arrays;

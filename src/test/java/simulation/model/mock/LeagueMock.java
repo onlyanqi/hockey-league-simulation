@@ -1,8 +1,12 @@
-package simulation.model;
+package simulation.model.mock;
 
 import db.data.IConferenceFactory;
 import db.data.ILeagueFactory;
 import db.data.IPlayerFactory;
+import simulation.model.Conference;
+import simulation.model.FreeAgent;
+import simulation.model.League;
+import simulation.model.Player;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,6 +1,7 @@
-package simulation.model;
+package simulation.model.mock;
 
 import db.data.ISeasonFactory;
+import simulation.model.Season;
 
 public class SeasonMock implements ISeasonFactory {
 

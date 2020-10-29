@@ -1,7 +1,9 @@
-package simulation.model;
+package simulation.model.mock;
 
 import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
+import simulation.model.FreeAgent;
+import simulation.model.Player;
 
 import java.util.ArrayList;
 import java.util.Date;

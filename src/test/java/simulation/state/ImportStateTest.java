@@ -1,7 +1,7 @@
 package simulation.state;
 
 import db.data.ILeagueFactory;
-import simulation.model.LeagueMock;
+import simulation.model.mock.LeagueMock;
 import simulation.model.User;
 import simulation.JSONControllerMock;
 import org.json.simple.JSONObject;
@@ -19,7 +19,6 @@ public class ImportStateTest {
 
     @BeforeClass
     public static void setAll(){
-
         factory = new LeagueMock();
         user = new User();
         user.setName("user1");

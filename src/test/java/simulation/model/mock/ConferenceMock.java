@@ -1,7 +1,9 @@
-package simulation.model;
+package simulation.model.mock;
 
 import db.data.IConferenceFactory;
 import db.data.IDivisionFactory;
+import simulation.model.Conference;
+import simulation.model.Division;
 
 import java.util.ArrayList;
 import java.util.Date;

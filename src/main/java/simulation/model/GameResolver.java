@@ -1,24 +1,10 @@
 package simulation.model;
 
-public class GameResolver extends ParentObj {
-    private double randomWinChance;
+public class GameResolver{
+    private Double randomWinChance;
 
     public GameResolver() {
     }
-
-    public GameResolver(int id) {
-        setId(id);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    private Double randomWinChance;
 
     public Double getRandomWinChance() {
         return randomWinChance;

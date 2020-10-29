@@ -1,9 +1,15 @@
 package simulation.model;
 
-
 import db.data.IAgingFactory;
 
 public class Aging extends ParentObj {
+
+    private int averageRetirementAge;
+
+    private int maximumAge;
+
+    private int leagueId;
+
     public Aging() {
     }
 
@@ -16,10 +22,6 @@ public class Aging extends ParentObj {
         loadAgingFactory.loadAgingById(id, this);
     }
 
-    private int averageRetirementAge;
-
-    private int maximumAge;
-
     public int getLeagueId() {
         return leagueId;
     }
@@ -27,8 +29,6 @@ public class Aging extends ParentObj {
     public void setLeagueId(int leagueId) {
         this.leagueId = leagueId;
     }
-
-    private int leagueId;
 
     public int getAverageRetirementAge() {
         return averageRetirementAge;

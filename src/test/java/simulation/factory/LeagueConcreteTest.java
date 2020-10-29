@@ -6,7 +6,7 @@ import db.data.ILeagueFactory;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.model.League;
-import simulation.model.LeagueMock;
+import simulation.model.mock.LeagueMock;
 
 import static org.junit.Assert.assertTrue;
 

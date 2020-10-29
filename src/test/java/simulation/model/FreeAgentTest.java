@@ -4,6 +4,8 @@ import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.model.mock.FreeAgentMock;
+import simulation.model.mock.PlayerMock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,10 +115,10 @@ public class FreeAgentTest {
         IPlayerFactory playerFactory = new PlayerMock();
         freeAgent.loadPlayerListByFreeAgentId(playerFactory);
 
-        assertTrue(freeAgent.getPlayerList().get(0).getId() == (1));
-        assertTrue(freeAgent.getPlayerList().get(1).getId() == (5));
+        assertTrue(freeAgent.getPlayerList().get(0).getId() == 1);
+        assertTrue(freeAgent.getPlayerList().get(19).getId() == 20);
         assertTrue(freeAgent.getPlayerList().get(0).getName().equals("Player1"));
-        assertTrue(freeAgent.getPlayerList().get(1).getName().equals("Player5"));
+        assertTrue(freeAgent.getPlayerList().get(19).getName().equals("Player20"));
     }
 
 

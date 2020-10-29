@@ -1,7 +1,8 @@
-package simulation.model;
+package simulation.model.mock;
 
 
 import db.data.IParentObjFactory;
+import simulation.model.ParentObj;
 
 import java.util.Date;
 

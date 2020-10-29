@@ -3,6 +3,7 @@ package simulation.model;
 import db.data.ISeasonFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.model.mock.SeasonMock;
 
 import static org.junit.Assert.*;
 
