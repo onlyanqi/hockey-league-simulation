@@ -1,7 +1,8 @@
-package simulation.model;
+package simulation.mock;
 
 
 import db.data.ISharedAttributesFactory;
+import simulation.model.SharedAttributes;
 
 public class SharedAttributesMock implements ISharedAttributesFactory {
 

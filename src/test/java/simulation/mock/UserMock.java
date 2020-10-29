@@ -1,4 +1,4 @@
-package simulation.model.mock;
+package simulation.mock;
 
 import db.data.ILeagueFactory;
 import db.data.IUserFactory;

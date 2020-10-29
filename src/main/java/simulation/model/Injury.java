@@ -3,7 +3,7 @@ package simulation.model;
 import db.data.IAgingFactory;
 import db.data.IInjuryFactory;
 
-public class Injury extends ParentObj{
+public class Injury extends SharedAttributes{
 
     private Double randomInjuryChance;
 

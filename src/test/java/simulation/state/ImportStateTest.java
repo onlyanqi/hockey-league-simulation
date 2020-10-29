@@ -1,9 +1,9 @@
 package simulation.state;
 
 import db.data.ILeagueFactory;
-import simulation.model.mock.LeagueMock;
+import simulation.mock.LeagueMock;
 import simulation.model.User;
-import simulation.JSONControllerMock;
+import simulation.mock.JSONControllerMock;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.junit.BeforeClass;

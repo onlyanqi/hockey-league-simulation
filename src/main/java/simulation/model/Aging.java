@@ -2,7 +2,7 @@ package simulation.model;
 
 import db.data.IAgingFactory;
 
-public class Aging extends ParentObj {
+public class Aging extends SharedAttributes {
 
     private int averageRetirementAge;
 

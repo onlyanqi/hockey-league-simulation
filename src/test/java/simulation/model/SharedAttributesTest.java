@@ -3,6 +3,7 @@ package simulation.model;
 import db.data.ISharedAttributesFactory;
 import org.junit.Test;
 import org.junit.BeforeClass;
+import simulation.mock.SharedAttributesMock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

@@ -1,9 +1,8 @@
-package simulation.model.mock;
+package simulation.mock;
 
 import db.data.IPlayerFactory;
 import simulation.model.Player;
 
-import java.util.Date;
 import java.util.List;
 
 public class PlayerMock implements IPlayerFactory {
@@ -293,20 +292,6 @@ public class PlayerMock implements IPlayerFactory {
                 break;
 
             case 22:
-                //end date less than start date
-                player.setName("Invalid Date");
-                player.setStartDate(new Date(2010, 0, 0));
-                player.setEndDate(new Date(2000, 0, 0));
-                player.setAge(15);
-                player.setHometown("Halifax");
-                player.setPosition(Player.Position.valueOf("goalie"));
-                player.setTeamId(1);
-                player.setFreeAgentId(1);
-                player.setSeasonId(1);
-                player.setCaptain(true);
-                break;
-
-            case 23:
                 //invalid position
                 player.setName("Invalid Position");
                 player.setPosition(Player.Position.valueOf("referee"));

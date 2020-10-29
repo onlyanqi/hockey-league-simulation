@@ -1,4 +1,4 @@
-package simulation.model.mock;
+package simulation.mock;
 
 import db.data.ISeasonFactory;
 import simulation.model.Season;

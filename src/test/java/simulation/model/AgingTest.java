@@ -3,7 +3,7 @@ package simulation.model;
 import db.data.IAgingFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.model.mock.AgingMock;
+import simulation.mock.AgingMock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

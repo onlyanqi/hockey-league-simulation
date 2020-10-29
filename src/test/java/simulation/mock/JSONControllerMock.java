@@ -1,4 +1,4 @@
-package simulation;
+package simulation.mock;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

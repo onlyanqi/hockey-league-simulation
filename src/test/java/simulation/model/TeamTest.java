@@ -4,8 +4,8 @@ import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.model.mock.PlayerMock;
-import simulation.model.mock.TeamMock;
+import simulation.mock.PlayerMock;
+import simulation.mock.TeamMock;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,10 +3,7 @@ package simulation.model;
 import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.model.mock.ConferenceMock;
-import simulation.model.mock.FreeAgentMock;
-import simulation.model.mock.LeagueMock;
-import simulation.model.mock.PlayerMock;
+import simulation.mock.*;
 
 import java.util.ArrayList;
 import java.util.List;

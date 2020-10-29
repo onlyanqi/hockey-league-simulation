@@ -3,7 +3,7 @@ package simulation.model;
 import db.data.IPlayerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.model.mock.PlayerMock;
+import simulation.mock.PlayerMock;
 
 import static org.junit.Assert.*;
 

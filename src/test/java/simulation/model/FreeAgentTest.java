@@ -4,8 +4,8 @@ import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.model.mock.FreeAgentMock;
-import simulation.model.mock.PlayerMock;
+import simulation.mock.FreeAgentMock;
+import simulation.mock.PlayerMock;
 
 import java.util.ArrayList;
 import java.util.List;

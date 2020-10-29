@@ -4,8 +4,8 @@ import db.data.ILeagueFactory;
 import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.model.mock.LeagueMock;
-import simulation.model.mock.UserMock;
+import simulation.mock.LeagueMock;
+import simulation.mock.UserMock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

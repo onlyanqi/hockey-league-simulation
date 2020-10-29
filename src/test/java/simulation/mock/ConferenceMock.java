@@ -1,4 +1,4 @@
-package simulation.model.mock;
+package simulation.mock;
 
 import db.data.IConferenceFactory;
 import db.data.IDivisionFactory;
@@ -6,7 +6,6 @@ import simulation.model.Conference;
 import simulation.model.Division;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ConferenceMock implements IConferenceFactory {
