@@ -1,12 +1,6 @@
 package simulation.model;
 
-public class TeamScore{
-
-    String teamName;
-    Integer points;
-    Integer numberOfWins;
-    Integer numberOfLoss;
-    Integer numberOfTies;
+public class TeamScore extends SharedAttributes{
 
     public TeamScore(String teamName){
         this.teamName = teamName;
@@ -16,13 +10,11 @@ public class TeamScore{
         this.points = 0;
     }
 
-    public TeamScore(String teamName, Integer score, Integer numberOfWins, Integer numberOfLoss, Integer numberOfTies) {
-        this.teamName = teamName;
-        this.points = score;
-        this.numberOfWins = numberOfWins;
-        this.numberOfLoss = numberOfLoss;
-        this.numberOfTies = numberOfTies;
-    }
+    String teamName;
+    Integer points;
+    Integer numberOfWins;
+    Integer numberOfLoss;
+    Integer numberOfTies;
 
     public String getTeamName() {
         return teamName;
@@ -32,12 +24,12 @@ public class TeamScore{
         this.teamName = teamName;
     }
 
-    public Integer getScore() {
+    public Integer getPoints() {
         return points;
     }
 
-    public void setScore(Integer score) {
-        this.points = score;
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 
     public Integer getNumberOfWins() {

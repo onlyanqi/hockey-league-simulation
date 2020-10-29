@@ -1,13 +1,12 @@
 package simulation.state;
 
-import simulation.RegularSeasonEvents.NHLEvents;
+import simulation.model.NHLEvents;
 import simulation.model.Games;
 import simulation.model.League;
 import simulation.model.TeamStanding;
 
 import simulation.model.*;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class AgingState implements ISimulateState {
@@ -59,7 +58,7 @@ public class AgingState implements ISimulateState {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         Games games = league.getGames();
         TeamStanding teamStanding = league.getActiveTeamStanding();
-        if(nhlEvents.isRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2 ){
+        if(nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2 ){
             return true;
         }
         return false;

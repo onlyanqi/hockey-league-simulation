@@ -4,7 +4,7 @@ import db.data.*;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
-import simulation.RegularSeasonEvents.NHLEvents;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class League extends SharedAttributes {
     private Games games;
     private TeamStanding regularSeasonStanding;
     private TeamStanding playOffStanding;
-    private transient TeamStanding activeTeamStanding;
+    private TeamStanding activeTeamStanding;
     private NHLEvents nhlEvents;
 
     public League() {

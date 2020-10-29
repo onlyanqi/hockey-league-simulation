@@ -1,6 +1,6 @@
 package simulation.state;
 
-import simulation.RegularSeasonEvents.NHLEvents;
+import simulation.model.NHLEvents;
 import simulation.model.*;
 import util.DateUtil;
 
@@ -29,15 +29,14 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
     @Override
     public ISimulateState action() {
 
-        if(nhlEvents.isEndOfRegularSeason(league.getCurrentDate())){
+        if(nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())){
             generatePlayOffFirstRoundSchedule();
-        }else if(games.doGamesDoesNotExistAfterDate(league.getCurrentDate())){
+        }else if(games.doGamesDoesNotExistOnOrAfterDate(league.getCurrentDate())){
             if(teamStanding.getTeamsScoreList().size() == 4){
                 generateStanleyCupSchedule();
             }else{
                 generatePlayOffOtherRoundSchedule();
             }
-
         }
 
         return exit();
@@ -83,8 +82,8 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
         for(Conference conference:league.getConferenceList()){
             List<String> teams = playOffTeams.get(conference.getName());
             scheduleGameBetweenTeams(teams.get(0),teams.get(7),games,playOffStartDate);
-            scheduleGameBetweenTeams(teams.get(3),teams.get(6),games, DateUtil.addDays(playOffStartDate,1));
             scheduleGameBetweenTeams(teams.get(1),teams.get(2),games,playOffStartDate);
+            scheduleGameBetweenTeams(teams.get(3),teams.get(6),games, DateUtil.addDays(playOffStartDate,1));
             scheduleGameBetweenTeams(teams.get(4),teams.get(5),games,DateUtil.addDays(playOffStartDate,1));
         }
     }
@@ -122,13 +121,13 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
     private void initializeGamesPlayOff(List<String> qualifiedTeams) {
 
         for(Integer i = 0 ;i< qualifiedTeams.size();i=i+2){
-            scheduleGameBetweenTeams(qualifiedTeams.get(i),qualifiedTeams.get(1),games.getGameList(),league.getCurrentDate());
+            scheduleGameBetweenTeams(qualifiedTeams.get(i),qualifiedTeams.get(i+1),games.getGameList(),league.getCurrentDate());
         }
 
     }
 
     private Boolean declareTeam1Winner(TeamScore teamScore1, TeamScore teamScore2){
-        if(teamScore1.getScore() > teamScore2.getScore()){
+        if(teamScore1.getPoints() > teamScore2.getPoints()){
             return true;
         }
         else{

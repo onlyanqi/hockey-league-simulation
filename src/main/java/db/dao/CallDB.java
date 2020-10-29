@@ -4,6 +4,7 @@ import db.connect.DBConnection;
 import db.connect.IDBConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class CallDB implements ICallDB {
 
@@ -84,6 +85,11 @@ public class CallDB implements ICallDB {
     }
 
     @Override
+    public void setOutputParameterDate(int index, LocalDate date) throws Exception {
+        stmt.registerOutParameter(index, Types.DATE);
+    }
+
+    @Override
     public String returnOutputParameterString(int index) throws Exception {
         return stmt.getString(index);
     }
@@ -91,6 +97,11 @@ public class CallDB implements ICallDB {
     @Override
     public Boolean returnOutputParameterBoolean(int index) throws Exception {
         return stmt.getBoolean(index);
+    }
+
+    @Override
+    public LocalDate returnOutputParameterDate(int index) throws Exception {
+        return stmt.getDate(index).toLocalDate();
     }
 
     @Override
