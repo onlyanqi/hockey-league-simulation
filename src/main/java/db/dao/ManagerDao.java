@@ -10,14 +10,15 @@ import java.util.List;
 public class ManagerDao implements IManagerFactory {
     @Override
     public int addManager(Manager manager) throws Exception {
+        if(manager == null){
+            return -1;
+        }
         ICallDB callDB = null;
         try {
             callDB = new CallDB("AddManager(?,?,?,?)");
             callDB.setInputParameterInt(1, manager.getTeamId());
             callDB.setInputParameterString(2, manager.getName());
             callDB.setInputParameterInt(3, manager.getLeagueId());
-
-
             callDB.setOutputParameterInt(4);
             callDB.execute();
             manager.setId(callDB.returnOutputParameterInt(4));
@@ -32,6 +33,9 @@ public class ManagerDao implements IManagerFactory {
 
     @Override
     public void loadManagerById(int managerId, Manager manager) throws Exception {
+        if(manager == null){
+            return;
+        }
         ICallDB callDB = null;
         try {
             callDB = new CallDB("LoadManagerById(?)");
