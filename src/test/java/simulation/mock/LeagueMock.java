@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueMock implements ILeagueFactory {
+    static final String FREEAGENT = "FreeAgent";
+    static final String MANAGER = "Manager";
 
     public List<Conference> formConferenceList() throws Exception {
         List<Conference> conferenceList = new ArrayList<>();
@@ -45,19 +47,35 @@ public class LeagueMock implements ILeagueFactory {
 
     private FreeAgent formFreeAgent() throws Exception {
         FreeAgent freeAgent = new FreeAgent();
-
         freeAgent.setId(1);
         List<Player> playerList = new ArrayList<>();
-
-        IPlayerFactory playerFactory = new PlayerMock();
-        Player player = new Player(1, playerFactory);
-        playerList.add(player);
-
-        player = new Player(5, playerFactory);
-        playerList.add(player);
-
+        for(int i=0;i<30;i++){
+            Player player = new Player();
+            player.setId(i);
+            player.setIsFreeAgent(true);
+            player.setName(FREEAGENT+i);
+            player.setAge(25);
+            player.setChecking(10);
+            player.setSaving(0);
+            player.setSkating(11);
+            player.setShooting(12);
+            player.setFreeAgentId(1);
+            player.setCaptain(false);
+            if(i%2 == 0){
+                player.setPosition(Player.Position.forward);
+            }else{
+                player.setPosition(Player.Position.defense);
+            }
+            if(i == 3 || i ==4 || i==5 || i==10){
+                player.setPosition(Player.Position.goalie);
+                player.setSaving(10);
+                player.setChecking(15);
+                player.setSkating(16);
+                player.setShooting(19);
+            }
+            playerList.add(player);
+        }
         freeAgent.setPlayerList(playerList);
-
         return freeAgent;
     }
 
@@ -72,6 +90,19 @@ public class LeagueMock implements ILeagueFactory {
         return tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
     }
 
+    public List<Manager> formManagerList(){
+        List<Manager> managerList = new ArrayList<>();
+        for(int i =0; i<5; i++){
+            Manager manager = new Manager();
+            manager.setLeagueId(0);
+            manager.setId(0);
+            manager.setTeamId(0);
+            manager.setName(MANAGER+i);
+            managerList.add(manager);
+        }
+        return managerList;
+    }
+
     @Override
     public void loadLeagueById(int id, League league) throws Exception {
 
@@ -82,6 +113,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
                 league.setTrading(getTrading());
+                league.setManagerList(formManagerList());
                 league.setTradingOfferList(getTradeOfferList(1));
                 league.setCurrentDate(LocalDate.now());
                 break;
@@ -90,6 +122,7 @@ public class LeagueMock implements ILeagueFactory {
                 //name null
                 league.setName(null);
                 league.setConferenceList(formConferenceList());
+                league.setManagerList(formManagerList());
                 league.setFreeAgent(formFreeAgent());
                 league.setTrading(getTrading());
                 league.setTradingOfferList(getTradeOfferList(2));
@@ -100,6 +133,7 @@ public class LeagueMock implements ILeagueFactory {
                 //end date less than start date
                 league.setName("Invalid Date");
                 league.setConferenceList(formConferenceList());
+                league.setManagerList(formManagerList());
                 league.setFreeAgent(formFreeAgent());
                 league.setTrading(getTrading());
                 league.setTradingOfferList(getTradeOfferList(3));
