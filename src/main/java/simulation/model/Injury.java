@@ -1,18 +1,35 @@
 package simulation.model;
 
-public class Injury {
-    private double randomInjuryChance;
+import db.data.IAgingFactory;
+import db.data.IInjuryFactory;
+
+public class Injury extends SharedAttributes{
+
+    private Double randomInjuryChance;
+
     private int injuryDaysLow;
+
     private int injuryDaysHigh;
 
-    public Injury() {
+    private int leagueId;
+
+    public Injury(){
     }
 
-    public double getRandomInjuryChance() {
+    public Injury(int id){
+        setId(id);
+    }
+
+    public Injury(int id, IInjuryFactory loadInjuryFactory) throws Exception {
+        setId(id);
+        loadInjuryFactory.loadInjuryById(id, this);
+    }
+
+    public Double getRandomInjuryChance() {
         return randomInjuryChance;
     }
 
-    public void setRandomInjuryChance(double randomInjuryChance) {
+    public void setRandomInjuryChance(Double randomInjuryChance) {
         this.randomInjuryChance = randomInjuryChance;
     }
 
@@ -32,5 +49,12 @@ public class Injury {
         this.injuryDaysHigh = injuryDaysHigh;
     }
 
+    public int getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
+    }
 
 }

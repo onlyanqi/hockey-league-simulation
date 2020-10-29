@@ -1,10 +1,11 @@
-package simulation.model;
+package simulation.mock;
 
 import db.data.IDivisionFactory;
 import db.data.ITeamFactory;
+import simulation.model.Division;
+import simulation.model.Team;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DivisionMock implements IDivisionFactory {

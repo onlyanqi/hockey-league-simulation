@@ -1,7 +1,7 @@
 package simulation.model;
 
-public class GameResolver extends SharedAttributes {
-    private double randomWinChance;
+public class GameResolver extends SharedAttributes{
+    private Double randomWinChance;
 
     public GameResolver() {
     }
@@ -11,7 +11,7 @@ public class GameResolver extends SharedAttributes {
     }
 
 
-    public double getRandomWinChance() {
+    public Double getRandomWinChance() {
         return randomWinChance;
     }
 

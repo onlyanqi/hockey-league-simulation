@@ -1,5 +1,6 @@
 package db.dao;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 
 public interface ICallDB {
@@ -11,6 +12,8 @@ public interface ICallDB {
     void setInputParameterBoolean(int index, boolean input) throws Exception;
 
     void setInputParameterDouble(int index, double input) throws Exception;
+
+    void setInputParameterDate(int index, Date input) throws Exception;
 
     void execute() throws Exception;
 

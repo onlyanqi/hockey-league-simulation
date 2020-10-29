@@ -1,6 +1,7 @@
-package simulation.model;
+package simulation.mock;
 
 import db.data.ITradingFactory;
+import simulation.model.Trading;
 
 import java.util.Arrays;
 import java.util.Date;

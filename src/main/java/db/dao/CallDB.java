@@ -3,10 +3,7 @@ package db.dao;
 import db.connect.DBConnection;
 import db.connect.IDBConnection;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Types;
+import java.sql.*;
 
 public class CallDB implements ICallDB {
 
@@ -41,6 +38,11 @@ public class CallDB implements ICallDB {
     @Override
     public void setInputParameterDouble(int index, double input) throws Exception {
         stmt.setDouble(index, input);
+    }
+
+    @Override
+    public void setInputParameterDate(int index, Date input) throws Exception {
+        stmt.setDate(index,input);
     }
 
     @Override

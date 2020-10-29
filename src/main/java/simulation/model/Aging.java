@@ -1,20 +1,33 @@
 package simulation.model;
 
+import db.data.IAgingFactory;
 
-public class Aging extends GamePlayConfig {
+public class Aging extends SharedAttributes {
+
     private int averageRetirementAge;
 
-//    public Aging(int id) {
-//        setId(id);
-//    }
-
-//    public Aging (int id, IAgingFactory factory) throws Exception {
-//        setId(id);
-//        factory.loadAgingByLeagueId(id, this);
-//    }
     private int maximumAge;
 
+    private int leagueId;
+
     public Aging() {
+    }
+
+    public Aging(int id) {
+        setId(id);
+    }
+
+    public Aging(int id, IAgingFactory loadAgingFactory) throws Exception {
+        setId(id);
+        loadAgingFactory.loadAgingById(id, this);
+    }
+
+    public int getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
     }
 
     public int getAverageRetirementAge() {
