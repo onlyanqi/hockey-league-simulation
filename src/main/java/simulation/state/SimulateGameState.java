@@ -20,7 +20,7 @@ public class SimulateGameState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-        List<Game> gamesOnCurrentDay = league.getGames().getUnplayedGamesOnDate(league.getCurrentDate());
+        List<Game> gamesOnCurrentDay = league.getGames().getUnPlayedGamesOnDate(league.getCurrentDate());
         Game game = gamesOnCurrentDay.get(0);
 
         simulateGame(game);
@@ -64,8 +64,8 @@ public class SimulateGameState implements ISimulateState {
             teamStanding.setTeamLoss(game.getTeam2());
         }else if(game.getWinner().equals(Game.Result.TEAM2)){
             teamStanding.setTeamPoints(game.getTeam2());
-            teamStanding.setTeamWins(game.getTeam1());
-            teamStanding.setTeamLoss(game.getTeam2());
+            teamStanding.setTeamWins(game.getTeam2());
+            teamStanding.setTeamLoss(game.getTeam1());
         }
     }
 }

@@ -1,6 +1,6 @@
 package simulation.state;
 
-import simulation.RegularSeasonEvents.NHLEvents;
+import simulation.model.NHLEvents;
 import simulation.model.*;
 
 import java.util.List;
@@ -46,15 +46,16 @@ public class InjuryCheckState implements ISimulateState {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
         Games games = league.getGames();
-        List<Game> gamesOnCurrentDay = games.getUnplayedGamesOnDate(league.getCurrentDate());
+        List<Game> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
         if(gamesOnCurrentDay.size()!=0){
             return new SimulateGameState(hockeyContext);
         }else{
-            if(nhlEvents.isTradeDeadlinePassed(league.getCurrentDate())){
+            if(nhlEvents.checkTradeDeadlinePassed(league.getCurrentDate())){
                 return new AgingState(hockeyContext);
             }else{
                 return new ExecuteTradeState(hockeyContext);
             }
         }
     }
+
 }

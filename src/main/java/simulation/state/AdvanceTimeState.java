@@ -1,11 +1,10 @@
 package simulation.state;
 
-import simulation.RegularSeasonEvents.NHLEvents;
+import simulation.model.NHLEvents;
 import simulation.model.League;
 import util.DateUtil;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class AdvanceTimeState implements ISimulateState {
 
@@ -27,7 +26,7 @@ public class AdvanceTimeState implements ISimulateState {
 
     private ISimulateState exit() {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
-        if(nhlEvents.isEndOfRegularSeason(league.getCurrentDate()) || nhlEvents.isRegularSeasonPassed(league.getCurrentDate())){
+        if(nhlEvents.checkEndOfRegularSeason(league.getCurrentDate()) || nhlEvents.checkRegularSeasonPassed(league.getCurrentDate())){
             return new GeneratePlayoffScheduleState(hockeyContext);
         }else{
             return new TrainingState(hockeyContext);
