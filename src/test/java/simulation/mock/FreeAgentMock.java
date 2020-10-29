@@ -1,7 +1,9 @@
 package simulation.mock;
 
+import db.data.ICoachFactory;
 import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
+import simulation.model.Coach;
 import simulation.model.FreeAgent;
 import simulation.model.Player;
 
