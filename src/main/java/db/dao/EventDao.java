@@ -5,6 +5,7 @@ import simulation.model.Game;
 import simulation.model.NHLEvents;
 
 import java.awt.*;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,12 +16,12 @@ public class EventDao implements IEventFactory {
         try {
             callDB = new CallDB("AddEvent(?,?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, leagueId);
-            callDB.setInputParameterDate(2, events.getRegularSeasonStartDate());
-            callDB.setInputParameterDate(3, events.getTradeDeadlineDate());
-            callDB.setInputParameterDate(4, events.getEndOfRegularSeason());
-            callDB.setInputParameterDate(5,events.getPlayOffStartDate());
-            callDB.setInputParameterDate(6,events.getLastDayStanleyCupFinals());
-            callDB.setInputParameterDate(7,events.getNextSeasonDate());
+            callDB.setInputParameterDate(2, Date.valueOf(events.getRegularSeasonStartDate()));
+            callDB.setInputParameterDate(3, Date.valueOf(events.getTradeDeadlineDate()));
+            callDB.setInputParameterDate(4, Date.valueOf(events.getEndOfRegularSeason()));
+            callDB.setInputParameterDate(5,Date.valueOf(events.getPlayOffStartDate()));
+            callDB.setInputParameterDate(6,Date.valueOf(events.getLastDayStanleyCupFinals()));
+            callDB.setInputParameterDate(7,Date.valueOf(events.getNextSeasonDate()));
             callDB.setOutputParameterInt(8);
             callDB.execute();
             events.setId(callDB.returnOutputParameterInt(8));

@@ -4,6 +4,7 @@ import db.data.IGameFactory;
 import simulation.model.Game;
 import simulation.model.Training;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,7 +15,7 @@ public class GameDao implements IGameFactory {
         try {
             callDB = new CallDB("AddGame(?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, leagueId);
-            callDB.setInputParameterDate(2, game.getDate());
+            callDB.setInputParameterDate(2, Date.valueOf(game.getDate()));
             callDB.setInputParameterString(3, game.getTeam1());
             callDB.setInputParameterString(4, game.getTeam2());
             callDB.setInputParameterBoolean(5,game.getPlayed());
