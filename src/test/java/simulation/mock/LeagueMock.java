@@ -11,7 +11,7 @@ public class LeagueMock implements ILeagueFactory {
     static final String FREEAGENT = "FreeAgent";
     static final String MANAGER = "Manager";
 
-    public List formConferenceList() throws Exception {
+    public List<Conference> formConferenceList() throws Exception {
         List<Conference> conferenceList = new ArrayList<>();
 
         IConferenceFactory conferenceFactory = new ConferenceMock();
@@ -22,6 +22,20 @@ public class LeagueMock implements ILeagueFactory {
         conferenceList.add(conference);
 
         return conferenceList;
+    }
+
+    public List<Coach> formCoachList() throws Exception {
+        List<Coach> coachList = new ArrayList<>();
+
+        ICoachFactory coachFactory = new CoachMock();
+
+        for (int i = 0; i < 6; i++) {
+            Coach coach = new Coach(i, coachFactory);
+            coachList.add(coach);
+            coachList.add(coach);
+        }
+
+        return coachList;
     }
 
     @Override

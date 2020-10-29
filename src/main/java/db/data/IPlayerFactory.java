@@ -14,4 +14,6 @@ public interface IPlayerFactory {
 
     List<Player> loadPlayerListByTeamId(int teamId) throws Exception;
 
+    void updatePlayerById(int id, Player player) throws  Exception;
+
 }
