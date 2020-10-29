@@ -1,5 +1,6 @@
 package db.dao;
 
+import java.sql.Date;
 import scala.tools.nsc.backend.icode.Members;
 
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ public interface ICallDB {
 
     void setInputParameterDouble(int index, double input) throws Exception;
 
-    void setInputParameterDate(int index, LocalDate date) throws Exception;
+    void setInputParameterDate(int index, Date input) throws Exception;
 
     void execute() throws Exception;
 

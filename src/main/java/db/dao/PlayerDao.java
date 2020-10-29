@@ -3,8 +3,10 @@ package db.dao;
 import db.data.IPlayerFactory;
 import simulation.model.Player;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,21 +15,30 @@ public class PlayerDao implements IPlayerFactory {
     public int addPlayer(Player player) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddPlayer(?,?,?,?,?,?,?)");
-            callDB.setInputParameterInt(1, player.getTeamId());
-            callDB.setInputParameterInt(2, player.getFreeAgentId());
-            callDB.setInputParameterInt(3, player.getSeasonId());
-            callDB.setInputParameterString(4, player.getName());
-            callDB.setInputParameterString(5, player.getPosition().toString());
-            callDB.setInputParameterBoolean(6, player.isCaptain());
+            callDB = new CallDB("AddPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            callDB.setInputParameterString(1, player.getName());
+            callDB.setInputParameterString(2, player.getPosition().toString());
+            callDB.setInputParameterBoolean(3, player.isCaptain());
+            callDB.setInputParameterInt(4, player.getTeamId());
+            callDB.setInputParameterInt(5, player.getFreeAgentId());
+            callDB.setInputParameterInt(6, player.getAge());
+            callDB.setInputParameterInt(7, player.getSkating());
+            callDB.setInputParameterInt(8, player.getShooting());
+            callDB.setInputParameterInt(9, player.getChecking());
+            callDB.setInputParameterInt(10, player.getSaving());
+            callDB.setInputParameterBoolean(11, player.getInjured());
+            callDB.setInputParameterDate(12, Date.valueOf(player.getInjuryStartDate()));
+            callDB.setInputParameterInt(13, player.getInjuryDatesRange());
+            callDB.setInputParameterDouble(14, player.getStrength());
 
-            callDB.setOutputParameterInt(7);
+            callDB.setOutputParameterInt(15);
             callDB.execute();
-            player.setId(callDB.returnOutputParameterInt(7));
+            player.setId(callDB.returnOutputParameterInt(15));
 
         } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
+            assert callDB != null;
             callDB.closeConnection();
         }
         return player.getId();
@@ -38,26 +49,38 @@ public class PlayerDao implements IPlayerFactory {
 
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadPlayerByName(?,?,?,?,?,?,?)");
+            callDB = new CallDB("LoadPlayerById(?)");
             callDB.setInputParameterInt(1, id);
-            callDB.setOutputParameterInt(2);
-            callDB.setOutputParameterString(3);
-            callDB.setOutputParameterString(4);
-            callDB.setOutputParameterBoolean(5);
-            callDB.executeLoad();
+            ResultSet rs = callDB.executeLoad();
 
+            if (rs != null) {
+                setPlayerFromDB(player, rs);
 
-            player.setId(callDB.returnOutputParameterInt(2));
-            player.setName(callDB.returnOutputParameterString(3));
-            Player.Position position = Player.Position.valueOf(callDB.returnOutputParameterString(4));
-            player.setPosition(position);
-            player.setCaptain(callDB.returnOutputParameterBoolean(5));
+            }
 
         } catch (Exception e) {
             throw e;
         } finally {
+            assert callDB != null;
             callDB.closeConnection();
         }
+    }
+
+    private void setPlayerFromDB(Player player, ResultSet rs) throws SQLException {
+        player.setId(rs.getInt(1));
+        player.setName(rs.getString(2));
+        player.setPosition(Player.Position.valueOf(rs.getString(3)));
+        player.setCaptain(rs.getBoolean(4));
+        player.setTeamId(rs.getInt(5));
+        player.setFreeAgentId(rs.getInt(6));
+        player.setAge(rs.getInt(7));
+        player.setSkating(rs.getInt(8));
+        player.setShooting(rs.getInt(9));
+        player.setChecking(rs.getInt(10));
+        player.setSaving(rs.getInt(11));
+        player.setInjured(rs.getBoolean(12));
+        player.setInjuryStartDate(rs.getDate(13).toLocalDate());
+        player.setInjuryDatesRange(rs.getInt(14));
     }
 
     @Override
@@ -68,20 +91,22 @@ public class PlayerDao implements IPlayerFactory {
             callDB = new CallDB("LoadPlayerListByFreeAgentId(?)");
             callDB.setInputParameterInt(1, freeAgentId);
             ResultSet rs = callDB.executeLoad();
+
             if (rs != null) {
                 playerList = new ArrayList<>();
                 while (rs.next()) {
                     Player player = new Player();
-                    player.setId(rs.getInt(1));
-                    player.setName(rs.getString(2));
-                    player.setFreeAgentId(freeAgentId);
+                    setPlayerFromDB(player, rs);
                     playerList.add(player);
                 }
             }
+
         } catch (Exception e) {
             throw e;
+        } finally {
+            assert callDB != null;
+            callDB.closeConnection();
         }
-
         return playerList;
     }
 
@@ -93,21 +118,22 @@ public class PlayerDao implements IPlayerFactory {
             callDB = new CallDB("LoadPlayerListByTeamId(?)");
             callDB.setInputParameterInt(1, teamId);
             ResultSet rs = callDB.executeLoad();
+
             if (rs != null) {
                 playerList = new ArrayList<>();
                 while (rs.next()) {
                     Player player = new Player();
-                    player.setId(rs.getInt(1));
-                    player.setName(rs.getString(2));
-                    player.setTeamId(teamId);
+                    setPlayerFromDB(player, rs);
                     playerList.add(player);
                 }
             }
+
         } catch (Exception e) {
             throw e;
+        } finally {
+            assert callDB != null;
+            callDB.closeConnection();
         }
-
         return playerList;
     }
-
 }

@@ -1,7 +1,9 @@
-package simulation.model;
+package simulation.mock;
 
 import db.data.ILeagueFactory;
 import db.data.IUserFactory;
+import simulation.model.League;
+import simulation.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

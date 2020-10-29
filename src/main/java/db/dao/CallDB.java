@@ -42,8 +42,8 @@ public class CallDB implements ICallDB {
     }
 
     @Override
-    public void setInputParameterDate(int index, LocalDate date) throws Exception {
-        stmt.setDate(index, Date.valueOf(date));
+    public void setInputParameterDate(int index, Date input) throws Exception {
+        stmt.setDate(index,input);
     }
 
     @Override

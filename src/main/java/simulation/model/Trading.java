@@ -2,6 +2,7 @@ package simulation.model;
 
 import db.data.ITradeOfferFactory;
 import db.data.ITradingFactory;
+
 import java.util.*;
 
 public class Trading extends SharedAttributes {
