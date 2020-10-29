@@ -8,9 +8,9 @@ import userIO.ConsoleOutput;
 import userIO.GetInput;
 import userIO.IConsoleOutputForTeamCreation;
 import userIO.IUserInputForTeamCreation;
-
 import java.util.ArrayList;
 import java.util.List;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
@@ -24,6 +24,16 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
     private FreeAgent freeAgent;
     private IUserInputForTeamCreation teamCreationInput;
     private IConsoleOutputForTeamCreation teamCreationOutput;
+    private static final String UNABLETOLOADLEAGUE = "Unable to load league, please try again.";
+    private static final String WAITMESSAGE = "Please wait while we are saving your league information...";
+    private static final String CREATEANOTHERTEAMQUESTION = "Do you want to create another team? Yes/Y or No/N";
+    private static final String Y="y";
+    private static final String YES="yes";
+    private static final String N="n";
+    private static final String NO="no";
+    private static final String CREATEORLOADTEAM = "createOrLoadTeam";
+    private static final String HOWMANYSEASONS = "How many seasons do you want to simulate";
+    private static final String RIGHTCHOICEREQUEST = "Please enter the right choice. Yes/Y or No/N";
 
     public CreateTeamState(HockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
                            IConsoleOutputForTeamCreation teamCreationOutput) {
@@ -52,6 +62,9 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
     @Override
     public void getTeamName(Division division) {
+        if(division == null){
+            return;
+        }
         List<String> teamNameList = division.getTeamNameList();
         String teamName = teamCreationInput.getTeamName(teamNameList);
         team = new Team();
@@ -61,6 +74,9 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
     @Override
     public Division chooseDivision(Conference conference) {
+        if(conference == null){
+            return null;
+        }
         List<String> divisionNameList = conference.getDivisionNameList();
         divisionName = teamCreationInput.getDivisionName(divisionNameList);
         return conference.getDivisionFromListByName(divisionName);
@@ -109,6 +125,9 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
     @Override
     public List<Player> createPlayerListByChosenPlayerId(List<Integer> chosenPlayersIdList, List<Player> freeAgentList) {
+        if(chosenPlayersIdList == null || freeAgentList == null){
+            return null;
+        }
         List<Player> teamPlayers = new ArrayList<>();
         for (int freeAgentIndex : chosenPlayersIdList) {
             teamPlayers.add(new Player(freeAgentList.get(freeAgentIndex)));
@@ -118,6 +137,9 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
     @Override
     public List<Player> removeChosenPlayersFromFreeAgentList(List<Integer> chosenPlayersIdList, List<Player> freeAgentList) {
+        if(chosenPlayersIdList == null || freeAgentList == null){
+            return null;
+        }
         List<Player> newFreeAgentList = new ArrayList<>();
         for (int i = 0; i < freeAgentList.size(); i++) {
             boolean notChosen = (!chosenPlayersIdList.contains(i));
@@ -139,7 +161,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
             int userId = hockeyContext.getUser().getId();
             league = leagueConcrete.createLeagueFromNameAndUserId(leagueName, userId, loadLeagueFactory);
         } catch (Exception e) {
-            ConsoleOutput.printToConsole("Unable to load league, please try again.");
+            ConsoleOutput.printToConsole(UNABLETOLOADLEAGUE);
             System.exit(1);
             e.printStackTrace();
         }
@@ -172,26 +194,28 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
     @Override
     public IHockeyState exit() {
 
-        ConsoleOutput.printToConsole("Please wait while we are saving your league information...");
+        ConsoleOutput.printToConsole(WAITMESSAGE);
         IHockeyState hockeyState = null;
 
-        String createAnotherTeam = GetInput.getUserInput("Do you want to create another team? Yes/Y or No/N");
-        while (createAnotherTeam != null) {
+        String createAnotherTeam = GetInput.getUserInput(CREATEANOTHERTEAMQUESTION);
+        Boolean notEmpty = !isEmpty(createAnotherTeam);
+        while (notEmpty) {
 
-            if (createAnotherTeam.toLowerCase().equals("y") || createAnotherTeam.toLowerCase().equals("yes")) {
+            if (createAnotherTeam.toLowerCase().equals(Y) || createAnotherTeam.toLowerCase().equals(YES)) {
                 IUserInputForTeamCreation inputForTeamCreation = AppConfig.getInstance().getInputForTeamCreation();
                 IConsoleOutputForTeamCreation outputForTeamCreation = AppConfig.getInstance().getOutputForTeamCreation();
                 hockeyState = new CreateTeamState(hockeyContext,
                         inputForTeamCreation, outputForTeamCreation);
                 break;
-            } else if (createAnotherTeam.toLowerCase().equals("n") || createAnotherTeam.toLowerCase().equals("no")) {
+            } else if (createAnotherTeam.toLowerCase().equals(N) || createAnotherTeam.toLowerCase().equals(NO)) {
                 hockeyContext.getUser().setLeague(league);
-                hockeyState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
+                hockeyState = new PlayerChoiceState(hockeyContext, HOWMANYSEASONS, CREATEORLOADTEAM);
                 break;
             } else {
-                ConsoleOutput.printToConsole("Please enter the right choice. Yes/Y or No/N");
+                ConsoleOutput.printToConsole(RIGHTCHOICEREQUEST);
             }
         }
         return hockeyState;
     }
+
 }

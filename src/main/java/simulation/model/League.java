@@ -16,9 +16,7 @@ public class League extends SharedAttributes {
     private List<Conference> conferenceList;
     private List<Coach> coachList;
     private List<Manager> managerList;
-    private List<String> generalManagers;
     private FreeAgent freeAgent;
-    private List<Player> freeAgents;
     private LocalDate currentDate;
     private GamePlayConfig gamePlayConfig;
     private Games games;
@@ -76,10 +74,6 @@ public class League extends SharedAttributes {
         this.currentDate = currentDate;
     }
 
-    public List<Player> getFreeAgentList() {
-        return freeAgents;
-    }
-
     public List<Conference> getConferenceList() {
         return conferenceList;
     }
@@ -102,7 +96,6 @@ public class League extends SharedAttributes {
 
     public void setManagerList(List<Manager> managerList) {
         this.managerList = managerList;
-        this.generalManagers = createManagerNameList(managerList);
     }
 
     public TeamStanding getRegularSeasonStanding() {
@@ -145,14 +138,6 @@ public class League extends SharedAttributes {
         return coachList;
     }
 
-    public List<String> createManagerNameList(List<Manager> managerList) {
-        List<String> managerNameList = new ArrayList<>();
-        for (int i = 0; i < managerList.size(); i++) {
-            managerNameList.add(managerList.get(i).getName());
-        }
-        return managerNameList;
-    }
-
     public int getCreatedBy() {
         return createdBy;
     }
@@ -167,7 +152,6 @@ public class League extends SharedAttributes {
 
     public void setFreeAgent(FreeAgent freeAgent) {
         this.freeAgent = freeAgent;
-        this.freeAgents = freeAgent.getPlayerList();
     }
 
     public void addLeague(ILeagueFactory addLeagueFactory) throws Exception {

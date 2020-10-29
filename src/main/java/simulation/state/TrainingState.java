@@ -12,7 +12,8 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     private HockeyContext hockeyContext;
     private League league;
-
+    private static final String TRAININGINFORMATION = "Training Players and Team!";
+    private static final String STATCHECKINFORMATION = "Performing stat increase check";
     public TrainingState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
@@ -20,13 +21,14 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     @Override
     public ISimulateState action() {
-        ConsoleOutput.printToConsole("Training Players and Team!");
+
+        ConsoleOutput.printToConsole(TRAININGINFORMATION);
         LocalDate currentDate = league.getCurrentDate();
         LocalDate seasonStartDate = league.getNHLRegularSeasonEvents().getRegularSeasonStartDate();
         Integer daysUntilStatIncreaseCheck  =league.getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck();
         Long diffDays = DateUtil.diffDays(seasonStartDate,currentDate);
         if(diffDays % daysUntilStatIncreaseCheck == 1){
-            ConsoleOutput.printToConsole("Performing stat increase check");
+            ConsoleOutput.printToConsole(STATCHECKINFORMATION);
             statIncreaseCheck(league);
         }
 
@@ -35,6 +37,9 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     @Override
     public void statIncreaseCheck(League league) {
+        if(league==null){
+            return;
+        }
         List<Conference> conferenceList = league.getConferenceList();
         for (Conference conference : conferenceList) {
             List<Division> divisionList = conference.getDivisionList();
@@ -53,6 +58,9 @@ public class TrainingState implements ISimulateState, ITrainingState {
     @Override
     public void statIncreaseCheckForPlayer(Player player, Coach headCoach) {
 
+        if(player==null || headCoach ==null){
+            return;
+        }
         double coachShootingStrength = headCoach.getShooting();
         double coachSkatingStrength = headCoach.getSkating();
         double coachCheckingStrength = headCoach.getChecking();
@@ -114,15 +122,15 @@ public class TrainingState implements ISimulateState, ITrainingState {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
         Games games = league.getGames();
-        List<Game> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
-        if (gamesOnCurrentDay.size() != 0) {
-            return new SimulateGameState(hockeyContext);
-        } else {
-            if (nhlEvents.checkTradeDeadlinePassed(league.getCurrentDate())) {
+        List<Game> gamesOnCurrentDay = games.getUnplayedGamesOnDate(league.getCurrentDate());
+        if(gamesOnCurrentDay.size()== 0){
+            if (nhlEvents.isTradeDeadlinePassed(league.getCurrentDate())) {
                 return new AgingState(hockeyContext);
             } else {
                 return new ExecuteTradeState(hockeyContext);
             }
+        }else{
+            return new SimulateGameState(hockeyContext);
         }
     }
 }

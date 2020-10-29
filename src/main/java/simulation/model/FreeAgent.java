@@ -23,7 +23,6 @@ public class FreeAgent extends SharedAttributes {
         loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
 
-
     public int getSeasonId() {
         return seasonId;
     }
@@ -56,18 +55,7 @@ public class FreeAgent extends SharedAttributes {
         this.playerList = loadPlayerFactory.loadPlayerListByFreeAgentId(getId());
     }
 
-    public List<Player> removeFreeAgentFromList(List<Player> playerList, int indexOfPlayerObject) {
-        for (int i = indexOfPlayerObject; i < playerList.size() - 1; i++) {
-            Player player = new Player(playerList.get(i + 1));
-            playerList.remove(i);
-            playerList.set(i, player);
-        }
-        playerList.remove(playerList.size() - 1);
-        return playerList;
-    }
-
     public List<Integer> getGoodFreeAgentsList(List<Double> strengthList) {
-
         Double thresholdPointForGoodPlayer = calculateStrengthAverage(strengthList);
         List<Integer> goodFreeAgentsIdList = new ArrayList<>();
         for (int i = 0; i < strengthList.size(); i++) {
