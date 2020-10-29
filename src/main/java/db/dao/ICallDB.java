@@ -1,7 +1,10 @@
 package db.dao;
 
 import java.sql.Date;
+import scala.tools.nsc.backend.icode.Members;
+
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 public interface ICallDB {
 
@@ -21,6 +24,8 @@ public interface ICallDB {
 
     Boolean returnOutputParameterBoolean(int index) throws Exception;
 
+    LocalDate returnOutputParameterDate(int index) throws Exception;
+
     void closeConnection() throws Exception;
 
     void setOutputParameterInt(int index) throws Exception;
@@ -30,6 +35,8 @@ public interface ICallDB {
     void setOutputParameterBoolean(int index) throws Exception;
 
     void setOutputParameterDouble(int index, double input) throws Exception;
+
+    void setOutputParameterDate(int index, LocalDate date) throws Exception;
 
     int returnOutputParameterInt(int index) throws Exception;
 

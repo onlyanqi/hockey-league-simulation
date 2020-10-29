@@ -958,3 +958,153 @@ END
 alter table Team add column aiTeam tinyint(4);
 
 /* Trading */
+
+/*Games, Events,Teamstanding */
+
+CREATE TABLE `Event` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `seasonStartDate` date DEFAULT NULL,
+  `tradeDeadline` date DEFAULT NULL,
+  `endOfRegularSeason` date DEFAULT NULL,
+  `playOffStartDate` date DEFAULT NULL,
+  `lastDayStanleyCup` date DEFAULT NULL,
+  `nextSeasonDate` date DEFAULT NULL,
+  `leagueid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `Game` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gamedate` date DEFAULT NULL,
+  `team1` varchar(45) DEFAULT NULL,
+  `team2` varchar(45) DEFAULT NULL,
+  `played` tinyint(4) DEFAULT NULL,
+  `winner` varchar(45) DEFAULT NULL,
+  `leagueid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `GameResolver` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `leagueid` int(11) DEFAULT NULL,
+  `randonWinChance` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `TeamStanding` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `point` int(11) DEFAULT NULL,
+  `teamName` varchar(45) DEFAULT NULL,
+  `wins` int(11) DEFAULT NULL,
+  `loss` int(11) DEFAULT NULL,
+  `ties` int(11) DEFAULT NULL,
+  `leagueid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddEvent`(IN leagueId INT, IN seasonStartDate DATE, IN tradeDeadline DATE, IN endOfRegularSeason DATE, IN playOffStartDate DATE,IN lastDayStanleyCup DATE,IN nextSeasonDate DATE, OUT eventId INT)
+BEGIN
+	Insert into Event(leagueId, seasonStartDate, tradeDeadline, endOfRegularSeason, playOffStartDate,lastDayStanleyCup,nextSeasonDate)
+    VALUES (leagueId, seasonStartDate, tradeDeadline, endOfRegularSeason, playOffStartDate,lastDayStanleyCup,nextSeasonDate);
+
+    SET eventId := LAST_INSERT_ID();
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddGameResolver`(IN leagueId INT, IN randonWinChance DOUBLE, IN tradeDeadline DATE, OUT gameResolverId INT)
+BEGIN
+	Insert into GameResolver(leagueId, randonWinChance)
+    VALUES (leagueId, randonWinChance);
+
+    SET gameResolverId := LAST_INSERT_ID();
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddGame`(IN leagueId INT, IN date DATE, IN team1 VARCHAR(45),IN team2 VARCHAR(45),IN played BOOLEAN,IN winner VARCHAR(45), OUT gameId INT)
+BEGIN
+	Insert into Game(leagueId, date,team1,team2,played,winner)
+    VALUES (leagueId, gamedate,team1,team2,played,winner);
+
+    SET gameId := LAST_INSERT_ID();
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddTeamStanding`(IN leagueId INT, IN point INT, IN teamName VARCHAR(45),IN wins INT,IN loss INT,IN ties INT, OUT teamStandingId INT)
+BEGIN
+	Insert into TeamStanding(leagueId,point, teamName,wins,loss,ties)
+    VALUES (leagueId,point, teamName,wins,loss,ties);
+
+    SET teamStandingId := LAST_INSERT_ID();
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadEventByLeagueId`(IN leagueid INT)
+BEGIN
+	select * from Event where Event.leagueid= leagueid;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadEventById`(IN id INT)
+BEGIN
+	select * from Event where Event.id= id;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadGameResolverByLeagueId`(IN leagueid INT)
+BEGIN
+	select * from GameResolver where GameResolver.leagueid= leagueid;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadGameResolverById`(IN id INT)
+BEGIN
+	select * from GameResolver where GameResolver.id= id;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadGameByLeagueId`(IN leagueid INT)
+BEGIN
+	select * from Game where Game.leagueid= leagueid;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadGameById`(IN id INT)
+BEGIN
+	select * from Game where Game.id= id;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamStandingByLeagueId`(IN leagueid INT)
+BEGIN
+	select * from TeamStanding where TeamStanding.leagueid= leagueid;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamStandingById`(IN teamstandingid INT)
+BEGIN
+	select * from TeamStanding where TeamStanding.id= teamstandingid;
+END$$
+DELIMITER ;
+
+
+
+
+/*Games, Events,Teamstanding */
+

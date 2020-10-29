@@ -1,10 +1,9 @@
 package simulation.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class TeamStanding {
+public class TeamStanding extends SharedAttributes{
 
     private List<TeamScore> teamsScoreList;
 
@@ -41,12 +40,13 @@ public class TeamStanding {
     public void setTeamPoints(String teamName){
         for(TeamScore teamScore: teamsScoreList){
             if(teamScore.getTeamName().equals(teamName)){
-                int previousScore = teamScore.getScore();
+                int previousScore = teamScore.getPoints();
                 int newTeamScore = previousScore + 2;
-                teamScore.setScore(newTeamScore);
+                teamScore.setPoints(newTeamScore);
             }
         }
     }
+
     public void setTeamWins(String teamName){
         for(TeamScore teamScore: teamsScoreList){
             if(teamScore.getTeamName().equals(teamName)){
@@ -56,6 +56,7 @@ public class TeamStanding {
             }
         }
     }
+
     public void setTeamLoss(String teamName){
         for(TeamScore teamScore: teamsScoreList){
             if(teamScore.getTeamName().equals(teamName)){
@@ -64,16 +65,15 @@ public class TeamStanding {
             }
         }
     }
+
     public List<TeamScore> getTeamsRankAcrossLeague(){
         List<TeamScore> teamsScoreListLocal =  this.teamsScoreList;
         return sortTeamsScoreList(teamsScoreListLocal);
     }
 
     public List<TeamScore> getTeamsRankAcrossConference(League league, String conferenceName){
-
         List<TeamScore> teamsScoreListLocal =  this.teamsScoreList;
         List<TeamScore> teamsScoreWithinConference = new ArrayList<>();
-
         for(Conference conference: league.getConferenceList() ){
             for(Division division: conference.getDivisionList()){
                 for(Team team: division.getTeamList()){
@@ -103,7 +103,7 @@ public class TeamStanding {
     }
 
     public List<TeamScore> sortTeamsScoreList(List<TeamScore> teamsScoreList){
-        teamsScoreList.sort((TeamScore team1,TeamScore team2) ->team1.getScore().compareTo(team2.getScore()));
+        teamsScoreList.sort((TeamScore team1,TeamScore team2) ->team1.getPoints().compareTo(team2.getPoints()));
         return teamsScoreList;
     }
 

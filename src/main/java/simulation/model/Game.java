@@ -2,7 +2,11 @@ package simulation.model;
 
 import java.time.LocalDate;
 
-public class Game {
+public class Game extends SharedAttributes{
+
+    public Game() {
+        this.played = false;
+    }
 
     private String team1;
     private String team2;
@@ -14,10 +18,6 @@ public class Game {
         TEAM2,
         TIE
     };
-
-    public Game() {
-        this.played = false;
-    }
 
     public Result getWinner() {
         return winner;
@@ -34,7 +34,6 @@ public class Game {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
 
     public String getTeam1() {
         return team1;
@@ -61,7 +60,7 @@ public class Game {
     }
 
     public Boolean isGameUnPlayed(){
-        if(played){
+        if(this.played){
             return false;
         }else{
             return true;

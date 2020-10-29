@@ -1,9 +1,8 @@
 package simulation.state;
 
-import simulation.RegularSeasonEvents.NHLEvents;
-import simulation.model.Games;
-import simulation.model.League;
-import simulation.model.TeamStanding;
+import simulation.model.*;
+
+import java.util.List;
 
 public class PersistState implements ISimulateState{
 
@@ -23,6 +22,13 @@ public class PersistState implements ISimulateState{
 
     private ISimulateState exit() {
         if(stanleyCupWinnerDetermined()){
+            List<TeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
+            for(TeamScore teamscore : teamScoreList){
+                if(teamscore.getNumberOfWins() ==1 ){
+                    System.out.println(teamscore.getTeamName() +" won the stanley cup!");
+                }
+            }
+
             return null;
         }else{
             return new AdvanceTimeState(hockeyContext);
@@ -32,7 +38,7 @@ public class PersistState implements ISimulateState{
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         Games games = league.getGames();
         TeamStanding teamStanding = league.getActiveTeamStanding();
-        if(nhlEvents.isRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2 ){
+        if(nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2 ){
             return true;
         }
         return false;

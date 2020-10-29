@@ -42,11 +42,13 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         this.setName(player.getName());
         this.isFreeAgent = player.isFreeAgent;
         this.setAge(player.getAge());
-        this.setSaving(player.getSaving());
+        this.setPosition(player.getPosition());
+        if(player.getPosition().toString().equals("goalie")){
+            this.setSaving(player.getSaving());
+        }
         this.setChecking(player.getChecking());
         this.setShooting(player.getShooting());
         this.setSkating(player.getSkating());
-        this.setPosition(player.getPosition());
     }
 
     public boolean isFreeAgent() {

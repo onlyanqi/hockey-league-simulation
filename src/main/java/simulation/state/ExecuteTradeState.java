@@ -31,7 +31,7 @@ public class ExecuteTradeState implements ISimulateState {
     @Override
     public ISimulateState action() {
         System.out.println("Trading Players!");
-        return null;
+        return exit();
     }
 
     public boolean isListNotEmpty(List list){
