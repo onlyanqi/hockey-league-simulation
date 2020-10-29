@@ -1,6 +1,7 @@
-package simulation.model;
+package simulation.mock;
 
 import db.data.ITradeOfferFactory;
+import simulation.model.TradeOffer;
 
 import java.util.ArrayList;
 import java.util.List;

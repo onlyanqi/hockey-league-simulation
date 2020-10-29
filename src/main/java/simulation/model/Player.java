@@ -134,9 +134,10 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     }
 
     public void setSaving(int saving) {
-        this.saving = saving;
+        if(this.position.toString().equals("goalie")){
+            this.saving = saving;
+        }
     }
-
 
     public void setStrength() {
         switch (position) {

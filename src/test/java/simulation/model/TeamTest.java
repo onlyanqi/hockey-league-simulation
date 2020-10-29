@@ -4,6 +4,8 @@ import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.mock.PlayerMock;
+import simulation.mock.TeamMock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,10 +110,10 @@ public class TeamTest {
         Team team = new Team(1, loadTeamFactory);
         List<Player> playerList = team.getPlayerList();
         assertNotNull(playerList);
-        assertEquals(playerList.get(0).getId(), (1));
-        assertEquals(playerList.get(1).getId(), (5));
-        assertEquals(playerList.get(0).getName(), ("Player1"));
-        assertEquals(playerList.get(1).getName(), ("Player5"));
+        assertEquals(1, playerList.get(0).getId());
+        assertEquals(5, playerList.get(4).getId());
+        assertEquals("Player1", playerList.get(0).getName());
+        assertEquals("Player5", playerList.get(4).getName());
     }
 
     @Test
@@ -126,10 +128,10 @@ public class TeamTest {
         Team team = new Team();
         team.setPlayerList(playerList);
 
-        assertEquals(team.getPlayerList().get(0).getId(), (1));
-        assertEquals(team.getPlayerList().get(1).getId(), (5));
-        assertEquals(team.getPlayerList().get(0).getName(), ("Player1"));
-        assertEquals(team.getPlayerList().get(1).getName(), ("Player5"));
+        assertTrue(team.getPlayerList().get(0).getId() == (1));
+        assertTrue(team.getPlayerList().get(1).getId() == (5));
+        assertTrue(team.getPlayerList().get(0).getName().equals("Player1"));
+        assertTrue(team.getPlayerList().get(1).getName().equals("Player5"));
     }
 
     @Test

@@ -1,10 +1,11 @@
-package simulation.model;
+package simulation.mock;
 
 import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
+import simulation.model.FreeAgent;
+import simulation.model.Player;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class FreeAgentMock implements IFreeAgentFactory {

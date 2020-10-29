@@ -1,6 +1,7 @@
-package simulation.model;
+package simulation.mock;
 
 import db.data.*;
+import simulation.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     @Override
-    public int addLeague(League league) throws Exception {
+    public int addLeague(
+            League league) throws Exception {
         league = new League(1);
         return league.getId();
     }

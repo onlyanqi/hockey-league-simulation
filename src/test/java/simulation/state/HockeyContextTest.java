@@ -4,7 +4,7 @@ package simulation.state;
 import db.data.ILeagueFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.model.LeagueMock;
+import simulation.mock.LeagueMock;
 import simulation.model.User;
 
 import static org.junit.Assert.assertEquals;

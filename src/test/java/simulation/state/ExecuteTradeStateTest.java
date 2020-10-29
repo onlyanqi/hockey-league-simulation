@@ -262,7 +262,7 @@ public class ExecuteTradeStateTest {
         int toPlayerId = 2;
         int leagueId = 1;
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
-        List<TradeOffer> tradeOfferList = tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
+        List<TradeOffer> tradeOfferList = tradeOfferFactory.loadTradingOfferDetailsByLeagueId(leagueId);
 
         ExecuteTradeState state = new ExecuteTradeState();
         assertFalse(state.checkExistingTradeOffer(fromPlayerId, toPlayerId, tradeOfferList));

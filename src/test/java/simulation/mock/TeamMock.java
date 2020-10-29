@@ -1,34 +1,30 @@
-package simulation.model;
+package simulation.mock;
 
 import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
+import simulation.model.Coach;
+import simulation.model.Manager;
+import simulation.model.Player;
+import simulation.model.Team;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TeamMock implements ITeamFactory {
 
     public List formPlayerList() throws Exception {
         List<Player> playerList = new ArrayList<>();
-
         IPlayerFactory playerFactory = new PlayerMock();
-        Player player = new Player(1, playerFactory);
-        playerList.add(player);
-
-        player = new Player(5, playerFactory);
-        playerList.add(player);
-
-        player = new Player(10, playerFactory);
-        playerList.add(player);
-
-        player = new Player(6, playerFactory);
-        playerList.add(player);
-
-        player = new Player(7, playerFactory);
-        playerList.add(player);
-
+        addPlayerInList(playerList, playerFactory);
         return playerList;
+    }
+
+    private void addPlayerInList(List<Player> playerList, IPlayerFactory playerFactory) throws Exception {
+        Player player;
+        for (int i = 1; i < 21; i++) {
+            player = new Player(i, playerFactory);
+            playerList.add(player);
+        }
     }
 
     @Override

@@ -5,7 +5,7 @@ import db.data.IUserFactory;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.model.User;
-import simulation.model.UserMock;
+import simulation.mock.UserMock;
 
 import static org.junit.Assert.assertTrue;
 
