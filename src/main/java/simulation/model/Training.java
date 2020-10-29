@@ -13,6 +13,9 @@ public class Training {
     }
 
     public Training(int LeagueId, ITrainingFactory trainingFactory) throws Exception{
+        if(trainingFactory == null){
+            return;
+        }
         setId(id);
         trainingFactory.loadTrainingByLeagueId(id, this);
     }

@@ -1,4 +1,4 @@
-package userIO;
+package presentation;
 
 import simulation.model.Coach;
 import simulation.model.Manager;

@@ -3,8 +3,8 @@ package simulation.state;
 import config.AppConfig;
 import org.json.simple.JSONObject;
 import simulation.model.User;
-import userIO.IConsoleOutputForTeamCreation;
-import userIO.IUserInputForTeamCreation;
+import presentation.IConsoleOutputForTeamCreation;
+import presentation.IUserInputForTeamCreation;
 
 public class HockeyContext {
 

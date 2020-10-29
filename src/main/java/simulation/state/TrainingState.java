@@ -1,7 +1,7 @@
 package simulation.state;
 
 import simulation.model.*;
-import userIO.ConsoleOutput;
+import presentation.ConsoleOutput;
 import util.DateUtil;
 
 import java.time.LocalDate;
