@@ -1,12 +1,17 @@
 package simulation.model;
 
-public class GameResolver{
+public class GameResolver implements ParentObj{
     private Double randomWinChance;
 
     public GameResolver() {
     }
 
-    public Double getRandomWinChance() {
+    public GameResolver(int id) {
+        setId(id);
+    }
+
+
+    public double getRandomWinChance() {
         return randomWinChance;
     }
 

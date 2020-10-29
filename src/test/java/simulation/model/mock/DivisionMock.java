@@ -37,8 +37,6 @@ public class DivisionMock implements IDivisionFactory {
             case 1:
                 //all correct data
                 division.setName("Division1");
-                division.setStartDate(new Date(2000, 0, 0));
-                division.setEndDate(new Date(2050, 0, 0));
                 division.setConferenceId(1);
                 division.setTeamList(formTeamList());
                 break;
@@ -46,8 +44,6 @@ public class DivisionMock implements IDivisionFactory {
             case 2:
                 //name null
                 division.setName(null);
-                division.setStartDate(new Date(2000, 0, 0));
-                division.setEndDate(new Date(2050, 0, 0));
                 division.setConferenceId(1);
                 division.setTeamList(formTeamList());
                 break;
@@ -55,8 +51,6 @@ public class DivisionMock implements IDivisionFactory {
             case 3:
                 //end date less than start date
                 division.setName("Invalid Date");
-                division.setStartDate(new Date(2010, 0, 0));
-                division.setEndDate(new Date(2000, 0, 0));
                 division.setConferenceId(1);
                 division.setTeamList(formTeamList());
                 break;
@@ -68,8 +62,6 @@ public class DivisionMock implements IDivisionFactory {
     public Division loadDivisionByName(String divisionName) throws Exception {
         Division division = new Division();
         division.setName("Division1");
-        division.setStartDate(new Date(2000, 0, 0));
-        division.setEndDate(new Date(2050, 0, 0));
         division.setConferenceId(1);
         division.setTeamList(formTeamList());
         return division;

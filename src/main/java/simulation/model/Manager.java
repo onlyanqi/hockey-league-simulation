@@ -1,6 +1,8 @@
 package simulation.model;
 
-public class Manager extends ParentObj {
+import db.data.IManagerFactory;
+
+public class Manager extends SharedAttributes {
     private int leagueId;
     private int teamId;
 
@@ -21,6 +23,10 @@ public class Manager extends ParentObj {
         this.setTeamId(manager.teamId);
     }
 
+    public Manager(int id, IManagerFactory managerFactory) throws Exception{
+        setId(id);
+        managerFactory.loadManagerById(id,this);
+    }
 
     public int getLeagueId() {
         return leagueId;

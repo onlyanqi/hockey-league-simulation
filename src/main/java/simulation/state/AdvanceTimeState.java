@@ -5,6 +5,7 @@ import simulation.model.League;
 import util.DateUtil;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class AdvanceTimeState implements ISimulateState {
 
@@ -18,17 +19,17 @@ public class AdvanceTimeState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-        System.out.println("Advanced day!");
-        LocalDate advancedDate = DateUtil.addDays(league.getCurrentDate(), 1);
+        LocalDate advancedDate = DateUtil.addDays(league.getCurrentDate(),1);
         league.setCurrentDate(advancedDate);
+        System.out.println("Advanced day! Current date is" + advancedDate);
         return exit();
     }
 
     private ISimulateState exit() {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
-        if (nhlEvents.isEndOfRegularSeason(league.getCurrentDate())) {
+        if(nhlEvents.isEndOfRegularSeason(league.getCurrentDate()) || nhlEvents.isRegularSeasonPassed(league.getCurrentDate())){
             return new GeneratePlayoffScheduleState(hockeyContext);
-        } else {
+        }else{
             return new TrainingState(hockeyContext);
         }
     }

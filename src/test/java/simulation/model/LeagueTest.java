@@ -1,9 +1,6 @@
 package simulation.model;
 
-import db.data.IConferenceFactory;
-import db.data.IFreeAgentFactory;
-import db.data.ILeagueFactory;
-import db.data.IPlayerFactory;
+import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.model.mock.ConferenceMock;
@@ -18,12 +15,12 @@ import static org.junit.Assert.*;
 
 public class LeagueTest {
 
-    private static ILeagueFactory loadLeagueFactory;
+    private static ILeagueFactory leagueFactory;
 
 
     @BeforeClass
     public static void setFactoryObj() {
-        loadLeagueFactory = new LeagueMock();
+        leagueFactory = new LeagueMock();
     }
 
     @Test
@@ -40,45 +37,17 @@ public class LeagueTest {
 
     @Test
     public void leagueFactoryTest() throws Exception {
-        League league = new League(1, loadLeagueFactory);
+        League league = new League(1, leagueFactory);
         assertEquals(league.getId(), 1);
         assertEquals(league.getName(), "League1");
 
-        league = new League(2, loadLeagueFactory);
+        league = new League(2, leagueFactory);
         assertNull(league.getName());
     }
 
     @Test
-    public void getCountryTest() throws Exception {
-        League league = new League(1, loadLeagueFactory);
-        assertTrue(league.getCountry().equals("Canada"));
-    }
-
-    @Test
-    public void setCountryTest() {
-        League league = new League();
-        String country = "Canada";
-        league.setCountry(country);
-        assertTrue(league.getCountry().equals(country));
-    }
-
-    @Test
-    public void getCreatedByTest() throws Exception {
-        League league = new League(1, loadLeagueFactory);
-        assertTrue(league.getCreatedBy() == 1);
-    }
-
-    @Test
-    public void setCreatedByTest() {
-        League league = new League();
-        int createdBy = 1;
-        league.setCreatedBy(createdBy);
-        assertTrue(league.getCreatedBy() == (createdBy));
-    }
-
-    @Test
     public void getConferenceListTest() throws Exception {
-        League league = new League(1, loadLeagueFactory);
+        League league = new League(1, leagueFactory);
         List<Conference> conferenceList = league.getConferenceList();
         assertNotNull(conferenceList);
 
@@ -108,7 +77,7 @@ public class LeagueTest {
 
     @Test
     public void getFreeAgentTest() throws Exception {
-        League league = new League(1, loadLeagueFactory);
+        League league = new League(1, leagueFactory);
         assertEquals(league.getFreeAgent().getId(), 1);
         List<Player> playerList = league.getFreeAgent().getPlayerList();
         assertTrue(playerList.get(0).getName().equals("Player1"));
@@ -142,7 +111,7 @@ public class LeagueTest {
         League league = new League();
         league.setId(1);
         league.setName("League1");
-        league.addLeague(loadLeagueFactory);
+        league.addLeague(leagueFactory);
         assertTrue(1 == league.getId());
         assertTrue("League1".equals(league.getName()));
     }
@@ -165,6 +134,74 @@ public class LeagueTest {
         IFreeAgentFactory loadFreeAgentFactory = new FreeAgentMock();
         league.loadFreeAgentByLeagueId(loadFreeAgentFactory);
         assertTrue(league.getFreeAgent().getLeagueId() == league.getId());
+    }
+
+    @Test
+    public void getTradingTest() throws Exception {
+        ITradingFactory tradingFactory = new TradingMock();
+        Trading trading = new Trading(1, tradingFactory);
+        League league = new League(1, leagueFactory);
+        assertEquals(trading.getId(), league.getTrading().getId());
+        assertEquals(trading.getMaxPlayersPerTrade(), league.getTrading().getMaxPlayersPerTrade());
+    }
+
+    @Test
+    public void setTradingTest() throws Exception {
+        ITradingFactory tradingFactory = new TradingMock();
+        Trading trading = new Trading(1, tradingFactory);
+        League league = new League();
+        league.setTrading(trading);
+        assertEquals(1, league.getTrading().getId());
+        assertEquals(3, league.getTrading().getMaxPlayersPerTrade());
+        assertNotEquals(2, league.getTrading().getId());
+    }
+
+    @Test
+    public void loadTradingDetailsByLeagueId() throws Exception {
+        League league = new League();
+        league.setId(1);
+        ITradingFactory tradingFactory = new TradingMock();
+        league.loadTradingDetailsByLeagueId(tradingFactory);
+        assertNotNull(league.getTrading());
+        assertEquals(1, league.getTrading().getId());
+        assertEquals(3, league.getTrading().getMaxPlayersPerTrade());
+        assertNotEquals(2, league.getTrading().getId());
+        assertNotEquals(2, league.getTrading().getMaxPlayersPerTrade());
+    }
+
+    @Test
+    public void getTradingOfferListTest() throws Exception {
+        League league = new League(1, leagueFactory);
+        ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
+        TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
+        assertEquals(league.getTradingOfferList().get(0).getId(), tradeOffer.getId());
+        assertEquals(league.getTradingOfferList().get(0).getFromTeamId(), tradeOffer.getFromTeamId());
+    }
+
+    @Test
+    public void setTradingOfferListTest() throws Exception {
+        ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
+        TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
+        TradeOffer tradeOffer1 = new TradeOffer(2, tradeOfferFactory);
+        List<TradeOffer> tradeOfferList = new ArrayList<>();
+        tradeOfferList.add(tradeOffer);
+        tradeOfferList.add(tradeOffer1);
+        League league = new League(1, leagueFactory);
+        league.setTradingOfferList(tradeOfferList);
+        assertEquals(league.getTradingOfferList().get(0).getId(), tradeOffer.getId());
+        assertEquals(league.getTradingOfferList().get(1).getId(), tradeOffer1.getId());
+        assertNotEquals(league.getTradingOfferList().get(1).getId(), tradeOffer.getId());
+        assertNotEquals(league.getTradingOfferList().get(0).getId(), tradeOffer1.getId());
+    }
+
+    @Test
+    public void loadTradingOfferDetailsByLeagueId() throws Exception {
+        League league = new League();
+        league.setId(1);
+        ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
+        league.loadTradingOfferDetailsByLeagueId(tradeOfferFactory);
+        assertEquals(league.getTradingOfferList().get(0).getId(), 1);
+        assertNotEquals(league.getTradingOfferList().get(1).getId(), 1);
     }
 
 }

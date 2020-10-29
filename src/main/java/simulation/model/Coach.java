@@ -1,6 +1,6 @@
 package simulation.model;
 
-public class Coach extends ParentObj {
+public class Coach extends SharedAttributes {
     private int teamId;
     private int leagueId;
     private Double skating;

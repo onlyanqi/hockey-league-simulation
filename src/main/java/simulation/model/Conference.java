@@ -1,13 +1,12 @@
 package simulation.model;
 
-import com.google.gson.annotations.SerializedName;
 import db.data.IConferenceFactory;
 import db.data.IDivisionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Conference extends ParentObj {
+public class Conference extends SharedAttributes {
 
     private int leagueId;
     private List<Division> divisionList;

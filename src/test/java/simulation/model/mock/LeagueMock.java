@@ -1,15 +1,9 @@
 package simulation.model.mock;
 
-import db.data.IConferenceFactory;
-import db.data.ILeagueFactory;
-import db.data.IPlayerFactory;
-import simulation.model.Conference;
-import simulation.model.FreeAgent;
-import simulation.model.League;
-import simulation.model.Player;
+import db.data.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class LeagueMock implements ILeagueFactory {
@@ -51,6 +45,17 @@ public class LeagueMock implements ILeagueFactory {
         return freeAgent;
     }
 
+    public Trading getTrading() throws Exception {
+        ITradingFactory tradingFactory = new TradingMock();
+        Trading trading = new Trading(1, tradingFactory);
+        return trading;
+    }
+
+    public List<TradeOffer> getTradeOfferList(int leagueId) throws Exception {
+        ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
+        return tradeOfferFactory.loadTradingOfferDetailsByLeagueId(leagueId);
+    }
+
     @Override
     public void loadLeagueById(int id, League league) throws Exception {
 
@@ -58,32 +63,31 @@ public class LeagueMock implements ILeagueFactory {
             case 1:
                 //all correct data
                 league.setName("League1");
-                league.setStartDate(new Date(2000, 0, 0));
-                league.setEndDate(new Date(2050, 0, 0));
-                league.setCountry("Canada");
-                league.setCreatedBy(1);
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
+                league.setTrading(getTrading());
+                league.setTradingOfferList(getTradeOfferList(1));
+                league.setCurrentDate(LocalDate.now());
                 break;
 
             case 2:
                 //name null
                 league.setName(null);
-                league.setStartDate(new Date(2000, 0, 0));
-                league.setEndDate(new Date(2050, 0, 0));
-                league.setCreatedBy(2);
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
+                league.setTrading(getTrading());
+                league.setTradingOfferList(getTradeOfferList(2));
+                league.setCurrentDate(LocalDate.now());
                 break;
 
             case 3:
                 //end date less than start date
                 league.setName("Invalid Date");
-                league.setStartDate(new Date(2010, 0, 0));
-                league.setEndDate(new Date(2000, 0, 0));
-                league.setCreatedBy(3);
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
+                league.setTrading(getTrading());
+                league.setTradingOfferList(getTradeOfferList(3));
+                league.setCurrentDate(LocalDate.now());
                 break;
         }
 
@@ -92,10 +96,6 @@ public class LeagueMock implements ILeagueFactory {
     @Override
     public void loadLeagueByName(String leagueName, int userId, League league) throws Exception {
         league.setName("League1");
-        league.setStartDate(new Date(2000, 0, 0));
-        league.setEndDate(new Date(2050, 0, 0));
-        league.setCountry("Canada");
-        league.setCreatedBy(userId);
         league.setConferenceList(formConferenceList());
         league.setFreeAgent(formFreeAgent());
     }

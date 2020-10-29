@@ -1,5 +1,6 @@
 package simulation.model;
 
+import db.data.*;
 import com.google.gson.annotations.SerializedName;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
@@ -10,9 +11,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class League extends ParentObj {
+public class League extends SharedAttributes {
 
-    private String country;
     private int createdBy;
     private List<Conference> conferenceList;
     private List<Coach> coachList;
@@ -23,7 +23,9 @@ public class League extends ParentObj {
     private LocalDate currentDate;
     private GamePlayConfig gamePlayConfig;
     private Games games;
-    private RegularSeasonScoreBoard regularSeasonScoreBoard;
+    private TeamStanding regularSeasonStanding;
+    private TeamStanding playOffStanding;
+    private transient TeamStanding activeTeamStanding;
     private NHLEvents nhlEvents;
 
     public League() {
@@ -50,13 +52,6 @@ public class League extends ParentObj {
         this.nhlEvents = nhlEvents;
     }
 
-    public RegularSeasonScoreBoard getRegularSeasonScoreBoard() {
-        return regularSeasonScoreBoard;
-    }
-
-    public void setRegularSeasonScoreBoard(RegularSeasonScoreBoard regularSeasonScoreBoard) {
-        this.regularSeasonScoreBoard = regularSeasonScoreBoard;
-    }
 
     public Games getGames() {
         return games;
@@ -86,14 +81,6 @@ public class League extends ParentObj {
         return freeAgents;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public List<Conference> getConferenceList() {
         return conferenceList;
     }
@@ -117,6 +104,30 @@ public class League extends ParentObj {
     public void setManagerList(List<Manager> managerList) {
         this.managerList = managerList;
         this.generalManagers = createManagerNameList(managerList);
+    }
+
+    public TeamStanding getRegularSeasonStanding() {
+        return regularSeasonStanding;
+    }
+
+    public void setRegularSeasonStanding(TeamStanding regularSeasonStanding) {
+        this.regularSeasonStanding = regularSeasonStanding;
+    }
+
+    public TeamStanding getPlayOffStanding() {
+        return playOffStanding;
+    }
+
+    public void setPlayOffStanding(TeamStanding playOffStanding) {
+        this.playOffStanding = playOffStanding;
+    }
+
+    public TeamStanding getActiveTeamStanding() {
+        return activeTeamStanding;
+    }
+
+    public void setActiveTeamStanding(TeamStanding activeTeamStanding) {
+        this.activeTeamStanding = activeTeamStanding;
     }
 
     public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject) {
@@ -203,4 +214,33 @@ public class League extends ParentObj {
         }
         return null;
     }
+
+    private transient Trading trading;
+
+    public Trading getTrading() {
+        return trading;
+    }
+
+    public void setTrading(Trading trading) {
+        this.trading = trading;
+    }
+
+    public void loadTradingDetailsByLeagueId(ITradingFactory tradingFactory) throws Exception {
+        this.trading = tradingFactory.loadTradingDetailsByLeagueId(getId());
+    }
+
+    private transient List<TradeOffer> tradeOfferList;
+
+    public List<TradeOffer> getTradingOfferList(){
+        return this.tradeOfferList;
+    }
+
+    public void setTradingOfferList(List<TradeOffer> tradeOfferList){
+        this.tradeOfferList = tradeOfferList;
+    }
+
+    public void loadTradingOfferDetailsByLeagueId(ITradeOfferFactory tradingOfferFactory) throws Exception {
+        this.tradeOfferList = tradingOfferFactory.loadTradingOfferDetailsByLeagueId(getId());
+    }
+
 }

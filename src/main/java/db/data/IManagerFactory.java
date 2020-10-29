@@ -2,11 +2,16 @@ package db.data;
 
 import simulation.model.Manager;
 
+import java.util.List;
+
 public interface IManagerFactory {
 
     int addManager(Manager manager) throws Exception;
 
-    void loadManagerById(int id, Manager manager) throws Exception;
+    void loadManagerById(int managerId, Manager manager) throws Exception;
 
-    Manager loadManagerByLeagueId(int id) throws Exception;
+    List<Manager> loadFreeManagersByLeagueId(int leagueId) throws Exception;
+
+    Manager loadManagerByTeamId(int teamId) throws Exception;
+
 }
