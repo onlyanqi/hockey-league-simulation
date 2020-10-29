@@ -2,10 +2,10 @@ package config;
 
 import simulation.factory.LeagueConcrete;
 import simulation.serializers.LeagueDataSerializerDeSerializer;
-import userIO.ConsoleOutputForTeamCreation;
-import userIO.IConsoleOutputForTeamCreation;
-import userIO.IUserInputForTeamCreation;
-import userIO.UseInputForTeamCreation;
+import presentation.ConsoleOutputForTeamCreation;
+import presentation.IConsoleOutputForTeamCreation;
+import presentation.IUserInputForTeamCreation;
+import presentation.UseInputForTeamCreation;
 
 public class AppConfig {
 
