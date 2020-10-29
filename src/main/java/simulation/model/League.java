@@ -292,7 +292,7 @@ public class League extends SharedAttributes {
         if(tradingOfferFactory == null){
             return;
         }
-        this.tradeOfferList = tradingOfferFactory.loadTradingOfferDetailsByLeagueId(getId());
+        this.tradeOfferList = tradingOfferFactory.loadTradeOfferDetailsByLeagueId(getId());
     }
 
 }

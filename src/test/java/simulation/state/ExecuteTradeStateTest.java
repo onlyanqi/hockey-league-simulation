@@ -2,12 +2,10 @@ package simulation.state;
 
 import db.data.*;
 import org.junit.Test;
-import simulation.model.*;
 import simulation.mock.*;
-
+import simulation.model.*;
 import java.time.LocalDate;
 import java.util.*;
-
 import static org.junit.Assert.*;
 
 public class ExecuteTradeStateTest {
@@ -23,6 +21,25 @@ public class ExecuteTradeStateTest {
     @Test
     public void actionTest() {
 
+    }
+
+    public boolean isNotNull(Object input){
+        boolean isNotNull = true;
+
+        if(input == null){
+            isNotNull = false;
+        }
+
+        return isNotNull;
+    }
+
+    @Test
+    public void isNotNullTest(){
+        String a = null;
+        ExecuteTradeState state = new ExecuteTradeState();
+        assertFalse(state.isNotNull(a));
+        a = "a";
+        assertTrue(state.isNotNull(a));
     }
 
     @Test
@@ -57,7 +74,7 @@ public class ExecuteTradeStateTest {
         for(int i = 0; i < 50 ; i++) {
             state.tradingLogic(team, league);
             double beforeTradeStrength = team.getStrength();
-            if(league.getTradingOfferList() != null && league.getTradingOfferList().size() > 0){
+            if(isNotNull(league.getTradingOfferList()) && league.getTradingOfferList().size() > 0){
                 assertNotNull(league.getTradingOfferList().get(0).getStatus());
                 double afterTradeStrength = team.getStrength();
                 assertTrue(afterTradeStrength >= beforeTradeStrength);
@@ -98,8 +115,8 @@ public class ExecuteTradeStateTest {
 
         Team fromTeam = new Team(1, teamFactory);
         Team toTeam = new Team(2, teamFactory);
-        Player fromPlayer = new Player(12, playerFactory);
-        Player toPlayer = new Player(11, playerFactory);
+        Player fromPlayer = new Player(30, playerFactory);
+        Player toPlayer = new Player(31, playerFactory);
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
 
         fromTeam.getPlayerList().add(fromPlayer);
@@ -127,20 +144,20 @@ public class ExecuteTradeStateTest {
             }
         }
 
-//        assertTrue(isPlayerSwapped);
-//        assertFalse(isPlayerNotSwapped);
-//
-//        for (Player boughtPlayer : fromTeam.getPlayerList()) {
-//            if (toPlayer.getId() == boughtPlayer.getId()) {
-//                isPlayerSwapped = true;
-//            }
-//            if (fromPlayer.getId() == boughtPlayer.getId()) {
-//                isPlayerNotSwapped = true;
-//            }
-//        }
-//
-//        assertTrue(isPlayerSwapped);
-//        assertFalse(isPlayerNotSwapped);
+        assertTrue(isPlayerSwapped);
+        assertFalse(isPlayerNotSwapped);
+
+        for (Player boughtPlayer : fromTeam.getPlayerList()) {
+            if (toPlayer.getId() == boughtPlayer.getId()) {
+                isPlayerSwapped = true;
+            }
+            if (fromPlayer.getId() == boughtPlayer.getId()) {
+                isPlayerNotSwapped = true;
+            }
+        }
+
+        assertTrue(isPlayerSwapped);
+        assertFalse(isPlayerNotSwapped);
 
         tradeDetails = new HashMap<>();
         toPlayer.setCaptain(true);
@@ -183,15 +200,15 @@ public class ExecuteTradeStateTest {
 
         Team team = new Team(1, teamFactory);
         Player existingPlayer = team.getPlayerList().get(0);
-        Player newPlayer = new Player(2, playerFactory);
+        Player newPlayer = new Player(5, playerFactory);
 
         ExecuteTradeState state = new ExecuteTradeState();
         assertTrue(state.checkTeamStrength(team, newPlayer, existingPlayer));
 
-        existingPlayer = new Player(3, playerFactory);
+        existingPlayer = new Player(7, playerFactory);
         team.getPlayerList().add(existingPlayer);
         team.setStrength();
-//        assertFalse(state.checkTeamStrength(team, newPlayer, existingPlayer));
+        assertFalse(state.checkTeamStrength(team, newPlayer, existingPlayer));
     }
 
     @Test
@@ -218,7 +235,7 @@ public class ExecuteTradeStateTest {
         assertTrue(fromPlayer.getStrength() <= toPlayer.getStrength());
         assertNotEquals(toPlayer.getId(), player.getId());
 
-        player = new Player(1, playerFactory);
+        player = new Player(4, playerFactory);
         state.findBestSwapPlayer(team, league, player, players);
 
         assertNotNull(players);
@@ -250,7 +267,7 @@ public class ExecuteTradeStateTest {
         assertTrue(newPlayer.getStrength() >= swapPlayer.getStrength());
 
         swapPlayer = null;
-        weakestPlayer = new Player(1, playerFactory);
+        weakestPlayer = new Player(4, playerFactory);
         tradeOffer.setFromPlayerId(12);
         newPlayer = state.algorithmToFindSwapPlayer(team, league, weakestPlayer, swapPlayer);
 
@@ -263,7 +280,7 @@ public class ExecuteTradeStateTest {
         int toPlayerId = 2;
         int leagueId = 1;
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
-        List<TradeOffer> tradeOfferList = tradeOfferFactory.loadTradingOfferDetailsByLeagueId(leagueId);
+        List<TradeOffer> tradeOfferList = tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
 
         ExecuteTradeState state = new ExecuteTradeState();
         assertFalse(state.checkExistingTradeOffer(fromPlayerId, toPlayerId, tradeOfferList));
@@ -347,6 +364,45 @@ public class ExecuteTradeStateTest {
         team = new Team(5, teamFactory);
 
         assertTrue(state.checkLossPoint(team, trading));
+    }
+
+    @Test
+    public void getRandomDoubleTest(){
+        ExecuteTradeState state = new ExecuteTradeState();
+        double randomDouble = state.getRandomDouble();
+        assertTrue(0 < randomDouble);
+        assertTrue(1 > randomDouble);
+        assertFalse(2 < randomDouble);
+        assertNotEquals(0, randomDouble);
+    }
+
+    @Test
+    public void removeObjectFromListTest() throws Exception {
+        IPlayerFactory playerFactory = new PlayerMock();
+        List<Player> list = new ArrayList<>();
+        Player player = new Player(1, playerFactory);
+        list.add(player);
+        player = new Player(5, playerFactory);
+        list.add(player);
+        boolean isPlayerExist = false;
+        for(Player player1 : list){
+            if(player1.getId() == 5){
+                isPlayerExist = true;
+            }
+        }
+        assertTrue(isPlayerExist);
+
+        ExecuteTradeState state = new ExecuteTradeState();
+        state.removeObjectFromList(list, player);
+
+        isPlayerExist = false;
+
+        for(Player player1 : list){
+            if(player1.getId() == 5){
+                isPlayerExist = true;
+            }
+        }
+        assertFalse(isPlayerExist);
     }
 
 }
