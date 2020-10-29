@@ -20,6 +20,9 @@ public class FreeAgent extends SharedAttributes {
     }
 
     public FreeAgent(int id, IFreeAgentFactory loadFreeAgentFactory) throws Exception {
+        if(loadFreeAgentFactory == null){
+            return;
+        }
         loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
 
@@ -44,18 +47,30 @@ public class FreeAgent extends SharedAttributes {
     }
 
     public void setPlayerList(List<Player> playerList) {
+        if(playerList == null){
+            return;
+        }
         this.playerList = playerList;
     }
 
     public void addFreeAgent(IFreeAgentFactory addFreeAgentFactory) throws Exception {
+        if(addFreeAgentFactory == null){
+            return;
+        }
         addFreeAgentFactory.addFreeAgent(this);
     }
 
     public void loadPlayerListByFreeAgentId(IPlayerFactory loadPlayerFactory) throws Exception {
+        if(loadPlayerFactory == null){
+            return;
+        }
         this.playerList = loadPlayerFactory.loadPlayerListByFreeAgentId(getId());
     }
 
     public List<Integer> getGoodFreeAgentsList(List<Double> strengthList) {
+        if(strengthList == null){
+            return null;
+        }
         Double thresholdPointForGoodPlayer = calculateStrengthAverage(strengthList);
         List<Integer> goodFreeAgentsIdList = new ArrayList<>();
         for (int i = 0; i < strengthList.size(); i++) {
@@ -67,6 +82,9 @@ public class FreeAgent extends SharedAttributes {
     }
 
     public Double calculateStrengthAverage(List<Double> strengthList) {
+        if(strengthList == null){
+            return null;
+        }
         Double average = 0.0;
         for (int i = 0; i < strengthList.size(); i++) {
             average = average + strengthList.get(i);

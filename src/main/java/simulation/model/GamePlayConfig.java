@@ -24,6 +24,9 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setAging(Aging aging) {
+        if(aging == null){
+            return;
+        }
         this.aging = aging;
     }
 
@@ -32,6 +35,9 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setInjury(Injury injury) {
+        if(injury == null){
+            return;
+        }
         this.injury = injury;
     }
 
@@ -40,6 +46,9 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setGameResolver(GameResolver gameResolver) {
+        if(gameResolver == null){
+            return;
+        }
         this.gameResolver = gameResolver;
     }
 
@@ -48,6 +57,9 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setTrading(Trading trading) {
+        if(trading == null){
+            return;
+        }
         this.trading = trading;
     }
 
@@ -56,6 +68,9 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setTraining(Training training) {
+        if(training == null){
+            return;
+        }
         this.training = training;
     }
 }

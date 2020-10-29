@@ -19,6 +19,9 @@ public class Division extends SharedAttributes {
     }
 
     public Division(int id, IDivisionFactory factory) throws Exception {
+        if(factory == null){
+            return;
+        }
         setId(id);
         factory.loadDivisionById(id, this);
     }
@@ -28,6 +31,9 @@ public class Division extends SharedAttributes {
     }
 
     public void setTeamList(List<Team> teamList) {
+        if(teamList == null){
+            return;
+        }
         this.teamList = teamList;
     }
 
@@ -40,10 +46,16 @@ public class Division extends SharedAttributes {
     }
 
     public void addDivision(IDivisionFactory addDivisionFactory) throws Exception {
+        if(addDivisionFactory == null){
+            return;
+        }
         addDivisionFactory.addDivision(this);
     }
 
     public void loadTeamListByDivisionId(ITeamFactory teamFactory) throws Exception {
+        if(teamFactory == null){
+            return;
+        }
         this.teamList = teamFactory.loadTeamListByDivisionId(getId());
     }
 
