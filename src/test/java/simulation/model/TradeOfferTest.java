@@ -3,6 +3,8 @@ package simulation.model;
 import db.data.ITradeOfferFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.mock.TradeOfferMock;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

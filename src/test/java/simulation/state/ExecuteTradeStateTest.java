@@ -2,11 +2,10 @@ package simulation.state;
 
 import db.data.*;
 import org.junit.Test;
+import simulation.mock.*;
 import simulation.model.*;
-
 import java.time.LocalDate;
 import java.util.*;
-
 import static org.junit.Assert.*;
 
 public class ExecuteTradeStateTest {
@@ -97,8 +96,8 @@ public class ExecuteTradeStateTest {
 
         Team fromTeam = new Team(1, teamFactory);
         Team toTeam = new Team(2, teamFactory);
-        Player fromPlayer = new Player(12, playerFactory);
-        Player toPlayer = new Player(11, playerFactory);
+        Player fromPlayer = new Player(30, playerFactory);
+        Player toPlayer = new Player(31, playerFactory);
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
 
         fromTeam.getPlayerList().add(fromPlayer);
@@ -182,12 +181,12 @@ public class ExecuteTradeStateTest {
 
         Team team = new Team(1, teamFactory);
         Player existingPlayer = team.getPlayerList().get(0);
-        Player newPlayer = new Player(2, playerFactory);
+        Player newPlayer = new Player(5, playerFactory);
 
         ExecuteTradeState state = new ExecuteTradeState();
         assertTrue(state.checkTeamStrength(team, newPlayer, existingPlayer));
 
-        existingPlayer = new Player(3, playerFactory);
+        existingPlayer = new Player(7, playerFactory);
         team.getPlayerList().add(existingPlayer);
         team.setStrength();
         assertFalse(state.checkTeamStrength(team, newPlayer, existingPlayer));
@@ -217,7 +216,7 @@ public class ExecuteTradeStateTest {
         assertTrue(fromPlayer.getStrength() <= toPlayer.getStrength());
         assertNotEquals(toPlayer.getId(), player.getId());
 
-        player = new Player(1, playerFactory);
+        player = new Player(4, playerFactory);
         state.findBestSwapPlayer(team, league, player, players);
 
         assertNotNull(players);
@@ -249,7 +248,7 @@ public class ExecuteTradeStateTest {
         assertTrue(newPlayer.getStrength() >= swapPlayer.getStrength());
 
         swapPlayer = null;
-        weakestPlayer = new Player(1, playerFactory);
+        weakestPlayer = new Player(4, playerFactory);
         tradeOffer.setFromPlayerId(12);
         newPlayer = state.algorithmToFindSwapPlayer(team, league, weakestPlayer, swapPlayer);
 
@@ -262,7 +261,7 @@ public class ExecuteTradeStateTest {
         int toPlayerId = 2;
         int leagueId = 1;
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
-        List<TradeOffer> tradeOfferList = tradeOfferFactory.loadTradingOfferDetailsByLeagueId(leagueId);
+        List<TradeOffer> tradeOfferList = tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
 
         ExecuteTradeState state = new ExecuteTradeState();
         assertFalse(state.checkExistingTradeOffer(fromPlayerId, toPlayerId, tradeOfferList));
