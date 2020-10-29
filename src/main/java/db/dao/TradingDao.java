@@ -37,7 +37,9 @@ public class TradingDao implements ITradingFactory {
             callDB = new CallDB("LoadTradingDetailsByTradingId(?)");
             callDB.setInputParameterInt(1, tradingId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (rs == null) {
+                trading = null;
+            } else{
                 trading = new Trading();
                 while (rs.next()) {
                     trading.setId(rs.getInt(1));
@@ -63,7 +65,9 @@ public class TradingDao implements ITradingFactory {
             callDB = new CallDB("LoadTradingDetailsByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (rs == null) {
+                trading = null;
+            } else {
                 trading = new Trading();
                 while (rs.next()) {
                     trading.setId(rs.getInt(1));
