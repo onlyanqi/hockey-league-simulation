@@ -3,7 +3,7 @@ package simulation.state;
 import db.data.*;
 import simulation.factory.*;
 import simulation.model.*;
-import userIO.GetInput;
+import presentation.GetInput;
 
 import java.util.List;
 

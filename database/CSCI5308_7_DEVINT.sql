@@ -7,118 +7,93 @@ USE `CSCI5308_7_DEVINT` ;
 -- -----------------------------------------------------
 -- Table `CSCI5308_7_DEVINT`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CSCI5308_7_DEVINT`.`User` (
-  `idUser` INT(11) NOT NULL AUTO_INCREMENT,
-  `userName` VARCHAR(45) NULL DEFAULT NULL,
-  `password` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`idUser`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 77
-DEFAULT CHARACTER SET = latin1;
-
+CREATE TABLE `User` (
+  `idUser` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idUser`)
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1;
 
 -- -----------------------------------------------------
 -- Table `CSCI5308_7_DEVINT`.`League`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CSCI5308_7_DEVINT`.`League` (
-  `idLeague` INT(11) NOT NULL AUTO_INCREMENT,
-  `leagueName` VARCHAR(45) NULL DEFAULT NULL,
-  `createdBy` INT(11) NULL DEFAULT NULL,
+CREATE TABLE `League` (
+  `idLeague` int(11) NOT NULL AUTO_INCREMENT,
+  `leagueName` varchar(45) DEFAULT NULL,
+  `createdBy` int(11) DEFAULT NULL,
   PRIMARY KEY (`idLeague`),
-  INDEX `createdBy` (`createdBy` ASC) VISIBLE,
-  CONSTRAINT `createdBy`
-    FOREIGN KEY (`createdBy`)
-    REFERENCES `CSCI5308_7_DEVINT`.`User` (`idUser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 117
-DEFAULT CHARACTER SET = latin1;
+  KEY `createdBy` (`createdBy`),
+  CONSTRAINT `createdBy` FOREIGN KEY (`createdBy`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
 -- Table `CSCI5308_7_DEVINT`.`Conference`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CSCI5308_7_DEVINT`.`Conference` (
-  `idConference` INT(11) NOT NULL AUTO_INCREMENT,
-  `conferenceName` VARCHAR(45) NULL DEFAULT NULL,
-  `league` INT(11) NULL DEFAULT NULL,
+CREATE TABLE `Conference` (
+  `idConference` int(11) NOT NULL AUTO_INCREMENT,
+  `conferenceName` varchar(45) DEFAULT NULL,
+  `league` int(11) DEFAULT NULL,
   PRIMARY KEY (`idConference`),
-  INDEX `league` (`league` ASC) VISIBLE,
-  CONSTRAINT `league`
-    FOREIGN KEY (`league`)
-    REFERENCES `CSCI5308_7_DEVINT`.`League` (`idLeague`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 22
-DEFAULT CHARACTER SET = latin1;
+  KEY `league` (`league`),
+  CONSTRAINT `league` FOREIGN KEY (`league`) REFERENCES `League` (`idLeague`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
 -- Table `CSCI5308_7_DEVINT`.`Division`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CSCI5308_7_DEVINT`.`Division` (
-  `idDivision` INT(11) NOT NULL AUTO_INCREMENT,
-  `divisionName` VARCHAR(45) NULL DEFAULT NULL,
-  `conference` INT(11) NULL DEFAULT NULL,
+CREATE TABLE `Division` (
+  `idDivision` int(11) NOT NULL AUTO_INCREMENT,
+  `divisionName` varchar(45) DEFAULT NULL,
+  `conference` int(11) DEFAULT NULL,
   PRIMARY KEY (`idDivision`),
-  INDEX `conference` (`conference` ASC) VISIBLE,
-  CONSTRAINT `conference`
-    FOREIGN KEY (`conference`)
-    REFERENCES `CSCI5308_7_DEVINT`.`Conference` (`idConference`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 27
-DEFAULT CHARACTER SET = latin1;
-
+  KEY `conference` (`conference`),
+  CONSTRAINT `conference` FOREIGN KEY (`conference`) REFERENCES `Conference` (`idConference`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
 -- -----------------------------------------------------
 -- Table `CSCI5308_7_DEVINT`.`Season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CSCI5308_7_DEVINT`.`Season` (
-  `idSeason` INT(11) NOT NULL AUTO_INCREMENT,
-  `seasonName` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`idSeason`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 60
-DEFAULT CHARACTER SET = latin1;
+CREATE TABLE `Season` (
+  `idSeason` int(11) NOT NULL AUTO_INCREMENT,
+  `seasonName` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idSeason`)
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
 -- Table `CSCI5308_7_DEVINT`.`FreeAgent`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CSCI5308_7_DEVINT`.`FreeAgent` (
-  `league` INT(11) NULL DEFAULT NULL,
-  `season` INT(11) NULL DEFAULT NULL,
-  `freeAgentId` INT(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `FreeAgent` (
+  `league` int(11) DEFAULT NULL,
+  `freeAgentId` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`freeAgentId`),
-  INDEX `league` (`league` ASC) VISIBLE,
-  INDEX `season` (`season` ASC) VISIBLE,
-  CONSTRAINT `FreeAgent_ibfk_1`
-    FOREIGN KEY (`league`)
-    REFERENCES `CSCI5308_7_DEVINT`.`League` (`idLeague`),
-  CONSTRAINT `FreeAgent_ibfk_2`
-    FOREIGN KEY (`season`)
-    REFERENCES `CSCI5308_7_DEVINT`.`Season` (`idSeason`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 31
-DEFAULT CHARACTER SET = latin1;
-
+  KEY `league` (`league`),
+  CONSTRAINT `FreeAgent_ibfk_1` FOREIGN KEY (`league`) REFERENCES `League` (`idLeague`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 -- -----------------------------------------------------
 -- Table `CSCI5308_7_DEVINT`.`Player`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CSCI5308_7_DEVINT`.`Player` (
-  `idPlayer` INT(11) NOT NULL AUTO_INCREMENT,
-  `playerName` VARCHAR(45) NULL DEFAULT NULL,
-  `playerDOB` VARCHAR(45) NULL DEFAULT NULL,
-  `position` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`idPlayer`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 907
-DEFAULT CHARACTER SET = latin1;
+CREATE TABLE `Player` (
+  `idPlayer` int(11) NOT NULL AUTO_INCREMENT,
+  `playerName` varchar(45) DEFAULT NULL,
+  `position` varchar(45) DEFAULT NULL,
+  `captain` tinyint(4) DEFAULT NULL,
+  `teamId` int(11) DEFAULT NULL,
+  `freeAgentId` int(11) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `skating` int(11) DEFAULT NULL,
+  `shooting` int(11) DEFAULT NULL,
+  `checking` int(11) DEFAULT NULL,
+  `saving` int(11) DEFAULT NULL,
+  `isInjured` tinyint(4) DEFAULT NULL,
+  `injuryStartDate` date DEFAULT NULL,
+  `injuryDatesRange` int(11) DEFAULT NULL,
+  `strength` double DEFAULT NULL,
+  PRIMARY KEY (`idPlayer`)
+) ENGINE=InnoDB AUTO_INCREMENT=920 DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
@@ -164,22 +139,15 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `CSCI5308_7_DEVINT`.`Team`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CSCI5308_7_DEVINT`.`Team` (
-  `idTeam` INT(11) NOT NULL AUTO_INCREMENT,
-  `teamName` VARCHAR(45) NULL DEFAULT NULL,
-  `division` INT(11) NULL DEFAULT NULL,
-  `generalManager` VARCHAR(45) NULL DEFAULT NULL,
-  `headCoach` VARCHAR(45) NULL DEFAULT NULL,
+CREATE TABLE `Team` (
+  `idTeam` int(11) NOT NULL AUTO_INCREMENT,
+  `teamName` varchar(45) DEFAULT NULL,
+  `division` int(11) DEFAULT NULL,
+  `aiTeam` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`idTeam`),
-  INDEX `division` (`division` ASC) VISIBLE,
-  CONSTRAINT `division`
-    FOREIGN KEY (`division`)
-    REFERENCES `CSCI5308_7_DEVINT`.`Division` (`idDivision`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 98
-DEFAULT CHARACTER SET = latin1;
+  KEY `division` (`division`),
+  CONSTRAINT `division` FOREIGN KEY (`division`) REFERENCES `Division` (`idDivision`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
@@ -237,6 +205,176 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 USE `CSCI5308_7_DEVINT` ;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`Aging`
+-- -----------------------------------------------------
+
+CREATE TABLE `Aging` (
+  `idAging` int(11) NOT NULL AUTO_INCREMENT,
+  `averageRetirementAge` int(11) NOT NULL,
+  `maximumAge` int(11) NOT NULL,
+  `leagueId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idAging`),
+  KEY `aging_league` (`leagueId`),
+  CONSTRAINT `aging_league` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`Coach`
+-- -----------------------------------------------------
+
+CREATE TABLE `Coach` (
+  `idCoach` int(11) NOT NULL AUTO_INCREMENT,
+  `teamId` int(11) DEFAULT NULL,
+  `coachName` varchar(45) DEFAULT NULL,
+  `skating` double DEFAULT NULL,
+  `shooting` double DEFAULT NULL,
+  `checking` double DEFAULT NULL,
+  `saving` double DEFAULT NULL,
+  `leagueId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idCoach`),
+  KEY `coach_league` (`leagueId`),
+  CONSTRAINT `coach_league` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`Manager`
+-- -----------------------------------------------------
+CREATE TABLE `Manager` (
+  `idManager` int(11) NOT NULL AUTO_INCREMENT,
+  `teamId` int(11) DEFAULT NULL,
+  `managerName` varchar(45) DEFAULT NULL,
+  `leagueId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idManager`),
+  KEY `manager_league` (`leagueId`),
+  CONSTRAINT `manager_league` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`Event`
+-- -----------------------------------------------------
+
+CREATE TABLE `Event` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `seasonStartDate` date DEFAULT NULL,
+  `tradeDeadline` date DEFAULT NULL,
+  `endOfRegularSeason` date DEFAULT NULL,
+  `playOffStartDate` date DEFAULT NULL,
+  `lastDayStanleyCup` date DEFAULT NULL,
+  `nextSeasonDate` date DEFAULT NULL,
+  `leagueid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`Game`
+-- -----------------------------------------------------
+CREATE TABLE `Game` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gamedate` date DEFAULT NULL,
+  `team1` varchar(45) DEFAULT NULL,
+  `team2` varchar(45) DEFAULT NULL,
+  `played` tinyint(4) DEFAULT NULL,
+  `winner` varchar(45) DEFAULT NULL,
+  `leagueid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`GameResolver`
+-- -----------------------------------------------------
+CREATE TABLE `GameResolver` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `leagueid` int(11) DEFAULT NULL,
+  `randonWinChance` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`Injury`
+-- -----------------------------------------------------
+CREATE TABLE `Injury` (
+  `idInjury` int(11) NOT NULL AUTO_INCREMENT,
+  `randomInjuryChance` double DEFAULT NULL,
+  `injuryDaysLow` int(11) DEFAULT NULL,
+  `injuryDaysHigh` int(11) DEFAULT NULL,
+  `leagueId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idInjury`),
+  KEY `injury_league` (`leagueId`),
+  CONSTRAINT `injury_league` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`TeamStanding`
+-- -----------------------------------------------------
+CREATE TABLE `TeamStanding` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `point` int(11) DEFAULT NULL,
+  `teamName` varchar(45) DEFAULT NULL,
+  `wins` int(11) DEFAULT NULL,
+  `loss` int(11) DEFAULT NULL,
+  `ties` int(11) DEFAULT NULL,
+  `leagueid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`Trading`
+-- -----------------------------------------------------
+CREATE TABLE `Trading` (
+  `idTrading` int(11) NOT NULL AUTO_INCREMENT,
+  `leagueId` int(11) DEFAULT NULL,
+  `lossPoint` int(11) DEFAULT NULL,
+  `randomTradeOfferChance` float DEFAULT NULL,
+  `maxPlayersPerTrade` int(11) DEFAULT NULL,
+  `randomAcceptanceChance` float DEFAULT NULL,
+  PRIMARY KEY (`idTrading`),
+  KEY `leagueId` (`leagueId`),
+  CONSTRAINT `leagueId` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`Training`
+-- -----------------------------------------------------
+CREATE TABLE `Training` (
+  `idTraining` int(11) NOT NULL AUTO_INCREMENT,
+  `daysUntilStatCheck` int(11) NOT NULL,
+  `leagueId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idTraining`),
+  KEY `leagueId` (`leagueId`),
+  CONSTRAINT `Training_ibfk_1` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- -----------------------------------------------------
+-- Table `CSCI5308_7_DEVINT`.`TradingOffer`
+-- -----------------------------------------------------
+CREATE TABLE `TradingOffer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `leagueId` int(11) DEFAULT NULL,
+  `tradingId` int(11) DEFAULT NULL,
+  `fromTeamId` int(11) DEFAULT NULL,
+  `toTeamId` int(11) DEFAULT NULL,
+  `fromPlayerId` int(11) DEFAULT NULL,
+  `toPlayerId` int(11) DEFAULT NULL,
+  `seasonId` int(11) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `leagueId` (`leagueId`),
+  KEY `tradingId` (`tradingId`),
+  KEY `fromTeamId` (`fromTeamId`),
+  KEY `toTeamId` (`toTeamId`),
+  KEY `fromPlayerId` (`fromPlayerId`),
+  KEY `toPlayerId` (`toPlayerId`),
+  KEY `seasonId` (`seasonId`),
+  CONSTRAINT `TradingOffer_ibfk_1` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`),
+  CONSTRAINT `TradingOffer_ibfk_2` FOREIGN KEY (`tradingId`) REFERENCES `Trading` (`idTrading`),
+  CONSTRAINT `TradingOffer_ibfk_3` FOREIGN KEY (`fromTeamId`) REFERENCES `Team` (`idTeam`),
+  CONSTRAINT `TradingOffer_ibfk_4` FOREIGN KEY (`toTeamId`) REFERENCES `Team` (`idTeam`),
+  CONSTRAINT `TradingOffer_ibfk_5` FOREIGN KEY (`fromPlayerId`) REFERENCES `Player` (`idPlayer`),
+  CONSTRAINT `TradingOffer_ibfk_6` FOREIGN KEY (`toPlayerId`) REFERENCES `Player` (`idPlayer`),
+  CONSTRAINT `TradingOffer_ibfk_7` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`idSeason`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- -----------------------------------------------------
 -- procedure AddConference
@@ -710,6 +848,56 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
+-- procedure Related to manager
+-- -----------------------------------------------------
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddManager`(IN teamId INT,  IN managerName varchar(45), IN leagueId INT, OUT managerId INT)
+BEGIN
+
+	Insert into Manager(teamId, managerName,leagueId)
+    VALUES (teamId, managerName,leagueId);
+
+    SET managerId := LAST_INSERT_ID();
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadManagerByTeamId`(IN tId INT)
+BEGIN
+	select * from Manager where teamId = tId;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadManagerListByLeagueId`(IN lId INT)
+BEGIN
+	select * from Manager where leagueId = lId and teamId = 0;
+END$$
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure Related to Training
+-- -----------------------------------------------------
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddTraining`(IN daysUntilStatCheck INT, IN leagueId INT , OUT idTraining INT)
+BEGIN
+	Insert into Training(daysUntilStatCheck,leagueId)
+    VALUES (daysUntilStatCheck,leagueId);
+
+    SET idTraining := LAST_INSERT_ID();
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTrainingByLeagueId`(IN idL INT)
+BEGIN
+	select * from Training where leagueId=idL;
+END$$
+DELIMITER ;
+
+-- -----------------------------------------------------
 -- procedure LoadUserByName
 -- -----------------------------------------------------
 
@@ -1102,6 +1290,7 @@ BEGIN
 	select * from TeamStanding where TeamStanding.id= teamstandingid;
 END$$
 DELIMITER ;
+
 
 
 

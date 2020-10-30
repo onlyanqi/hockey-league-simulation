@@ -15,6 +15,9 @@ public class Manager extends SharedAttributes {
     }
 
     public Manager(Manager manager) {
+        if(manager == null){
+            return;
+        }
         this.setId(manager.getId());
         this.setLeagueId(manager.getLeagueId());
         if (manager.getName() != null) {
@@ -24,6 +27,9 @@ public class Manager extends SharedAttributes {
     }
 
     public Manager(int id, IManagerFactory managerFactory) throws Exception{
+        if(managerFactory == null){
+            return;
+        }
         setId(id);
         managerFactory.loadManagerById(id,this);
     }

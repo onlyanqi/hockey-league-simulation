@@ -4,13 +4,14 @@ import config.AppConfig;
 import db.data.ILeagueFactory;
 import simulation.factory.LeagueConcrete;
 import simulation.model.*;
-import userIO.ConsoleOutput;
-import userIO.GetInput;
-import userIO.IConsoleOutputForTeamCreation;
-import userIO.IUserInputForTeamCreation;
+import presentation.ConsoleOutput;
+import presentation.GetInput;
+import presentation.IConsoleOutputForTeamCreation;
+import presentation.IUserInputForTeamCreation;
 import java.util.ArrayList;
 import java.util.List;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
@@ -198,8 +199,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         IHockeyState hockeyState = null;
 
         String createAnotherTeam = GetInput.getUserInput(CREATEANOTHERTEAMQUESTION);
-        Boolean notEmpty = !isEmpty(createAnotherTeam);
-        while (notEmpty) {
+        while (isNotEmpty(createAnotherTeam)) {
 
             if (createAnotherTeam.toLowerCase().equals(Y) || createAnotherTeam.toLowerCase().equals(YES)) {
                 IUserInputForTeamCreation inputForTeamCreation = AppConfig.getInstance().getInputForTeamCreation();

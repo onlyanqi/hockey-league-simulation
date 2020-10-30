@@ -29,6 +29,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(18);
                 player.setChecking(12);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 2:
@@ -42,6 +43,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(18);
                 player.setChecking(12);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 3:
@@ -55,6 +57,8 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(18);
                 player.setChecking(12);
                 player.setSaving(0);
+                player.setStrength();
+                break;
 
             case 4:
                 player.setName("Player4");
@@ -67,6 +71,8 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(9);
                 player.setChecking(15);
                 player.setSaving(11);
+                player.setStrength();
+                break;
 
             case 5:
                 //forward with saving set not 0
@@ -80,6 +86,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(18);
                 player.setChecking(12);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 6:
@@ -93,6 +100,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(18);
                 player.setChecking(12);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 7:
@@ -106,6 +114,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(18);
                 player.setChecking(12);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 8:
@@ -119,6 +128,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(18);
                 player.setChecking(12);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 9:
@@ -132,6 +142,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(18);
                 player.setChecking(12);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 10:
@@ -145,6 +156,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(21);
                 player.setChecking(9);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 11:
@@ -158,6 +170,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(11);
                 player.setChecking(29);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 12:
@@ -171,6 +184,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(19);
                 player.setChecking(17);
                 player.setSaving(5);
+                player.setStrength();
                 break;
 
             case 13:
@@ -184,6 +198,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(19);
                 player.setChecking(17);
                 player.setSaving(5);
+                player.setStrength();
                 break;
 
             case 14:
@@ -197,6 +212,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(19);
                 player.setChecking(17);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 15:
@@ -210,6 +226,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(9);
                 player.setChecking(27);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 16:
@@ -223,6 +240,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(12);
                 player.setChecking(22);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 17:
@@ -236,6 +254,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(11);
                 player.setChecking(19);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 18:
@@ -249,6 +268,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(17);
                 player.setChecking(18);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 19:
@@ -262,6 +282,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(21);
                 player.setChecking(16);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 20:
@@ -275,6 +296,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(16);
                 player.setChecking(21);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 21:
@@ -289,6 +311,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(16);
                 player.setChecking(21);
                 player.setSaving(0);
+                player.setStrength();
                 break;
 
             case 22:
@@ -303,6 +326,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setShooting(18);
                 player.setChecking(12);
                 player.setSaving(0);
+                player.setStrength();
                 break;
         }
 
@@ -318,6 +342,24 @@ public class PlayerMock implements IPlayerFactory {
     public List<Player> loadPlayerListByTeamId(int teamId) throws Exception {
         FreeAgentMock loadFreeAgentMock = new FreeAgentMock();
         return loadFreeAgentMock.formPlayerList();
+    }
+
+    @Override
+    public void updatePlayerById(int id, Player player) throws Exception {
+
+        player.setId(id);
+        player.setName("Player");
+        player.setPosition(Player.Position.valueOf("forward"));
+        player.setCaptain(false);
+        player.setTeamId(1);
+        player.setFreeAgentId(0);
+        player.setAge(25);
+        player.setSkating(3);
+        player.setShooting(19);
+        player.setChecking(17);
+        player.setSaving(0);
+        player.setStrength();
+
     }
 
 }

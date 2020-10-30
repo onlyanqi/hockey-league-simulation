@@ -11,7 +11,7 @@ import java.util.List;
 public class TradeOfferDao implements ITradeOfferFactory {
 
     @Override
-    public int addTradingOfferDetails(TradeOffer tradeOffer) throws Exception {
+    public int addTradeOfferDetails(TradeOffer tradeOffer) throws Exception {
         ICallDB callDB = null;
         try{
             callDB = new CallDB("AddTradingOffer(?,?,?,?,?,?,?,?,?)");
@@ -36,14 +36,16 @@ public class TradeOfferDao implements ITradeOfferFactory {
     }
 
     @Override
-    public List loadTradingOfferDetailsByLeagueId(int leagueId) throws Exception {
+    public List loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
         ICallDB callDB = null;
         List<TradeOffer> tradeOfferList = null;
         try{
             callDB = new CallDB("LoadTradingDetailsByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (rs == null) {
+                tradeOfferList = null;
+            } else {
                 tradeOfferList = new ArrayList<>();
                 while (rs.next()) {
                     TradeOffer tradeOffer = new TradeOffer();
@@ -67,12 +69,12 @@ public class TradeOfferDao implements ITradeOfferFactory {
 
 
     @Override
-    public void loadTradingOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception {
+    public void loadTradeOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception {
 
     }
 
     @Override
-    public void loadTradingOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception {
+    public void loadTradeOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception {
 
     }
 }

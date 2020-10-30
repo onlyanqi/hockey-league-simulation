@@ -3,8 +3,8 @@ package simulation.model;
 import config.AppConfig;
 import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
-import userIO.IConsoleOutputForTeamCreation;
-import userIO.IUserInputForTeamCreation;
+import presentation.IConsoleOutputForTeamCreation;
+import presentation.IUserInputForTeamCreation;
 
 import java.util.ArrayList;
 import java.util.List;

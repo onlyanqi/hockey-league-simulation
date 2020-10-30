@@ -41,14 +41,18 @@ public class SimulateGameState implements ISimulateState {
         if(team1!=null && team2!=null){
             if(team1.getStrength()>team2.getStrength()){
                 game.setWinner(Game.Result.TEAM1);
+                team2.setLossPoint(team2.getLossPoint()+1);
             }else{
                 game.setWinner(Game.Result.TEAM2);
+                team1.setLossPoint(team1.getLossPoint()+1);
             }
             if(Math.random() <= upset){
                 if(game.getWinner().equals(Game.Result.TEAM1)){
                     game.setWinner(Game.Result.TEAM2);
+                    team1.setLossPoint(team1.getLossPoint()+1);
                 }else{
                     game.setWinner(Game.Result.TEAM1);
+                    team2.setLossPoint(team2.getLossPoint()+1);
                 }
             }
             game.setPlayed(true);

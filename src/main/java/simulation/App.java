@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 import simulation.factory.UserConcrete;
 import simulation.model.User;
 import simulation.state.HockeyContext;
-import userIO.GetInput;
+import presentation.GetInput;
 import util.CommonUtil;
 
 import java.io.FileNotFoundException;
@@ -52,8 +52,6 @@ public class App {
         } catch (Exception e) {
             System.out.println("System faced unexpected exception. Please contact team. " + e);
         }
-
-
     }
 
     private static void addUser(User user) throws Exception {
