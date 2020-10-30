@@ -55,7 +55,7 @@ public class JSONControllerMock{
         freeAgentplayer1.put("skating",(long)10);
         freeAgentplayer1.put("shooting",(long)10);
         freeAgentplayer1.put("checking",(long)10);
-        freeAgentplayer1.put("saving",(long)0);
+        freeAgentplayer1.put("saving",(long)1);
 
         JSONObject freeAgentPlayer2 = new JSONObject();
         freeAgentPlayer2.put("playerName","Agent Two");
@@ -64,7 +64,7 @@ public class JSONControllerMock{
         freeAgentPlayer2.put("skating",(long)10);
         freeAgentPlayer2.put("shooting",(long)10);
         freeAgentPlayer2.put("checking",(long)10);
-        freeAgentPlayer2.put("saving",(long)0);
+        freeAgentPlayer2.put("saving",(long)1);
 
         JSONObject freeAgentPlayer3 = new JSONObject();
         freeAgentPlayer3.put("playerName","Agent Three");
@@ -87,7 +87,7 @@ public class JSONControllerMock{
         player1.put("skating",(long)15);
         player1.put("shooting",(long)18);
         player1.put("checking",(long)12);
-        player1.put("saving",(long)0);
+        player1.put("saving",(long)1);
 
 
         JSONObject player2 = new JSONObject();
@@ -98,7 +98,7 @@ public class JSONControllerMock{
         player2.put("skating",(long)10);
         player2.put("shooting",(long)10);
         player2.put("checking",(long)10);
-        player2.put("saving",(long)0);
+        player2.put("saving",(long)1);
 
         JSONObject player3 = new JSONObject();
         player3.put("playerName","Player Three");

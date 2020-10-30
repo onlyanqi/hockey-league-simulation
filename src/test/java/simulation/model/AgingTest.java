@@ -34,7 +34,7 @@ public class AgingTest {
         assertEquals(aging.getId(),1);
         assertEquals(aging.getAverageRetirementAge(),35);
         assertEquals(aging.getMaximumAge(),50);
-        assertTrue("Maximum age (" + aging.getMaximumAge() + ") should be greater than current (" + aging.getAverageRetirementAge() + ")", aging.getMaximumAge() > aging.getAverageRetirementAge());
+        assertTrue("Maximum age (" + aging.getMaximumAge() + ") should be greater than average retirement age (" + aging.getAverageRetirementAge() + ")", aging.getMaximumAge() > aging.getAverageRetirementAge());
 
     }
 
