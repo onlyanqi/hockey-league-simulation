@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.IPlayerFactory;
 import simulation.model.Player;
+import util.DateUtil;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -27,7 +28,7 @@ public class PlayerDao implements IPlayerFactory {
             callDB.setInputParameterInt(9, player.getChecking());
             callDB.setInputParameterInt(10, player.getSaving());
             callDB.setInputParameterBoolean(11, player.getInjured());
-            callDB.setInputParameterDate(12, Date.valueOf(player.getInjuryStartDate()));
+            callDB.setInputParameterDate(12, DateUtil.convertLocalDateToSQLDate(player.getInjuryStartDate()));
             callDB.setInputParameterInt(13, player.getInjuryDatesRange());
             callDB.setInputParameterDouble(14, player.getStrength());
 
@@ -37,6 +38,8 @@ public class PlayerDao implements IPlayerFactory {
 
         } catch (SQLException sqlException) {
             throw sqlException;
+        } catch(Exception exception) {
+            throw exception;
         } finally {
             assert callDB != null;
             callDB.closeConnection();
@@ -135,5 +138,32 @@ public class PlayerDao implements IPlayerFactory {
             callDB.closeConnection();
         }
         return playerList;
+    }
+
+    @Override
+    public void updatePlayerById(int id, Player player) throws Exception {
+        ICallDB callDB = null;
+        try {
+            callDB = new CallDB("UpdatePlayerById(?,?,?,?,?,?,?,?,?,?,?,?)");
+            callDB.setInputParameterInt(1, player.getId());
+            callDB.setInputParameterInt(2, player.getTeamId());
+            callDB.setInputParameterInt(3, player.getFreeAgentId());
+            callDB.setInputParameterInt(4, player.getAge());
+            callDB.setInputParameterInt(5, player.getSkating());
+            callDB.setInputParameterInt(6, player.getShooting());
+            callDB.setInputParameterInt(7, player.getChecking());
+            callDB.setInputParameterInt(8, player.getSaving());
+            callDB.setInputParameterBoolean(9, player.getInjured());
+            callDB.setInputParameterDate(10, Date.valueOf(player.getInjuryStartDate()));
+            callDB.setInputParameterInt(11, player.getInjuryDatesRange());
+            callDB.setInputParameterDouble(12, player.getStrength());
+            callDB.execute();
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            assert callDB != null;
+            callDB.closeConnection();
+        }
     }
 }

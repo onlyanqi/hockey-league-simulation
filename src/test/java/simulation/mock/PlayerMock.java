@@ -344,4 +344,22 @@ public class PlayerMock implements IPlayerFactory {
         return loadFreeAgentMock.formPlayerList();
     }
 
+    @Override
+    public void updatePlayerById(int id, Player player) throws Exception {
+
+        player.setId(id);
+        player.setName("Player");
+        player.setPosition(Player.Position.valueOf("forward"));
+        player.setCaptain(false);
+        player.setTeamId(1);
+        player.setFreeAgentId(0);
+        player.setAge(25);
+        player.setSkating(3);
+        player.setShooting(19);
+        player.setChecking(17);
+        player.setSaving(0);
+        player.setStrength();
+
+    }
+
 }

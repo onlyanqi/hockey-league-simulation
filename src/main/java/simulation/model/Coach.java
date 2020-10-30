@@ -1,5 +1,7 @@
 package simulation.model;
 
+import db.data.ICoachFactory;
+
 public class Coach extends SharedAttributes {
     private int teamId;
     private int leagueId;
@@ -16,6 +18,9 @@ public class Coach extends SharedAttributes {
     }
 
     public Coach(Coach coach) {
+        if (coach == null) {
+            return;
+        }
         this.setId(coach.getId());
         if (coach.getName() != null) {
             this.setName(coach.getName());
@@ -26,6 +31,14 @@ public class Coach extends SharedAttributes {
         this.setSaving(coach.getSaving());
         this.setShooting(coach.getShooting());
         this.setSkating(coach.getSkating());
+    }
+
+    public Coach(int id, ICoachFactory coachFactory) throws Exception {
+        if (coachFactory == null) {
+            return;
+        }
+        setId(id);
+        coachFactory.loadCoachById(id, this);
     }
 
     public int getTeamId() {
@@ -50,6 +63,9 @@ public class Coach extends SharedAttributes {
     }
 
     public void setSkating(Double skating) {
+        if (skating == null) {
+            return;
+        }
         this.skating = skating;
     }
 
@@ -58,6 +74,9 @@ public class Coach extends SharedAttributes {
     }
 
     public void setShooting(Double shooting) {
+        if (shooting == null) {
+            return;
+        }
         this.shooting = shooting;
     }
 
@@ -66,6 +85,9 @@ public class Coach extends SharedAttributes {
     }
 
     public void setChecking(Double checking) {
+        if (checking == null) {
+            return;
+        }
         this.checking = checking;
     }
 
@@ -74,6 +96,9 @@ public class Coach extends SharedAttributes {
     }
 
     public void setSaving(Double saving) {
+        if (saving == null) {
+            return;
+        }
         this.saving = saving;
     }
 

@@ -1,10 +1,9 @@
 package simulation.state;
 
 import db.data.*;
+import presentation.ReadUserInput;
 import simulation.factory.*;
 import simulation.model.*;
-import userIO.GetInput;
-
 import java.util.List;
 
 
@@ -23,10 +22,10 @@ public class LoadTeamState implements IHockeyState {
     public void entry() throws Exception {
         //prompt team name
 
-        teamName = GetInput.getUserInput("Please enter team name");
+        teamName = ReadUserInput.getUserInput("Please enter team name");
 
         while ((teamName.isEmpty() || teamName == null || isTeamNotPresent(teamName))) {
-            teamName = GetInput.getUserInput("Please enter valid and existing team name");
+            teamName = ReadUserInput.getUserInput("Please enter valid and existing team name");
         }
 
     }

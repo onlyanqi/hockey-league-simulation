@@ -1,6 +1,8 @@
 package simulation.model;
 
 import db.data.ISharedAttributesFactory;
+import org.apache.commons.lang3.StringUtils;
+
 
 public class SharedAttributes {
 
@@ -52,11 +54,7 @@ public class SharedAttributes {
     }
 
     public boolean isNotEmpty(String input){
-        boolean isNotEmpty = false;
-        if(input != null && input.trim() != ""){
-            isNotEmpty = true;
-        }
-        return isNotEmpty;
+        return StringUtils.isNotEmpty(input);
     }
 
     public boolean validName(){

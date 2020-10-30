@@ -1,6 +1,7 @@
 package simulation.factory;
 
-import userIO.ReadUserInput;
+
+import presentation.ReadUserInput;
 
 public class ReadUserInputConcrete {
 

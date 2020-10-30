@@ -1,8 +1,8 @@
 package simulation.state;
 
 import config.AppConfig;
-import userIO.IConsoleOutputForTeamCreation;
-import userIO.IUserInputForTeamCreation;
+import presentation.IConsoleOutputForTeamCreation;
+import presentation.IUserInputForTeamCreation;
 
 import java.util.Scanner;
 

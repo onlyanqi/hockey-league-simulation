@@ -3,6 +3,7 @@ package db.dao;
 import db.data.IGameFactory;
 import simulation.model.Game;
 import simulation.model.Training;
+import util.DateUtil;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -15,11 +16,16 @@ public class GameDao implements IGameFactory {
         try {
             callDB = new CallDB("AddGame(?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, leagueId);
-            callDB.setInputParameterDate(2, Date.valueOf(game.getDate()));
+            callDB.setInputParameterDate(2, DateUtil.convertLocalDateToSQLDate(game.getDate()));
             callDB.setInputParameterString(3, game.getTeam1());
             callDB.setInputParameterString(4, game.getTeam2());
             callDB.setInputParameterBoolean(5,game.getPlayed());
-            callDB.setInputParameterString(6,game.getWinner().toString());
+            if(game.getWinner()==null){
+                callDB.setInputParameterString(6,null);
+            }else{
+                callDB.setInputParameterString(6,game.getWinner().toString());
+            }
+
 
 
             callDB.setOutputParameterInt(7);
@@ -28,7 +34,9 @@ public class GameDao implements IGameFactory {
 
         } catch (SQLException sqlException) {
             throw sqlException;
-        } finally {
+        } catch (Exception exception){
+            throw exception;
+        }finally {
             callDB.closeConnection();
         }
         return game.getId();

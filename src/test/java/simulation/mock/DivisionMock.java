@@ -17,7 +17,7 @@ public class DivisionMock implements IDivisionFactory {
         Team team = new Team(1, teamFactory);
         teamList.add(team);
 
-        team = new Team(2, teamFactory);
+        team = new Team(3, teamFactory);
         teamList.add(team);
 
         return teamList;

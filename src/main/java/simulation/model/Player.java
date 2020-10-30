@@ -1,10 +1,9 @@
 package simulation.model;
-
-import com.google.gson.annotations.SerializedName;
 import db.data.IPlayerFactory;
 import util.DateUtil;
 import java.time.LocalDate;
 import java.util.Random;
+
 
 public class Player extends SharedAttributes implements Comparable<Player> {
 
@@ -24,6 +23,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     private int checking;
     private int saving;
     private double strength;
+    private static final String GOALIE = "goalie";
 
     public Player() {
     }
@@ -38,12 +38,15 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     }
 
     public Player(Player player) {
+        if(player == null){
+            return;
+        }
         this.setId(player.getId());
         this.setName(player.getName());
         this.isFreeAgent = player.isFreeAgent;
         this.setAge(player.getAge());
         this.setPosition(player.getPosition());
-        if(player.getPosition().toString().equals("goalie")){
+        if(player.getPosition().toString().equals(GOALIE)){
             this.setSaving(player.getSaving());
         }
         this.setChecking(player.getChecking());
@@ -72,7 +75,9 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     }
 
     public void setHometown(String hometown) {
-        this.hometown = hometown;
+        if(isNotEmpty(hometown)){
+            this.hometown = hometown;
+        }
     }
 
     public Position getPosition() {
@@ -136,7 +141,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     }
 
     public void setSaving(int saving) {
-        if(this.position.toString().equals("goalie")){
+        if(this.position.toString().equals(GOALIE)){
             this.saving = saving;
         }
     }
@@ -192,10 +197,16 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     }
 
     public void addPlayer(IPlayerFactory addPlayerFactory) throws Exception {
+        if(addPlayerFactory ==  null){
+            return;
+        }
         addPlayerFactory.addPlayer(this);
     }
 
     public boolean retirementCheck(Aging aging) {
+        if(aging == null){
+            return false;
+        }
         double increaseRate = 0.5 / (aging.getMaximumAge() - aging.getAverageRetirementAge());
         if (this.age < aging.getAverageRetirementAge()) {
             Random randomRetire1 = new Random();
@@ -213,6 +224,9 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     }
 
     public void injuryCheck(League league) {
+        if(league == null){
+            return;
+        }
         Random randomInjuryChance = new Random();
         double chanceOfInjury = randomInjuryChance.nextDouble();
         if (!this.getInjured() && chanceOfInjury < league.getGamePlayConfig().getInjury().getRandomInjuryChance()) {
@@ -226,6 +240,9 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     }
 
     public void agingInjuryRecovery(League league) {
+        if(league == null){
+            return;
+        }
         if (this.getInjured() && DateUtil.diffDays(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
             this.setInjured(false);
             this.setInjuryStartDate(null);
@@ -238,18 +255,11 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         goalie
     }
 
-    /*private String playerTradeStatus;
-
-    public String getPlayerTradeStatus() {
-        return playerTradeStatus;
-    }
-
-    public void setPlayerTradeStatus(String playerTradeStatus) {
-        this.playerTradeStatus = playerTradeStatus;
-    }*/
-
     @Override
     public int compareTo(Player player) {
+        if(player == null){
+            return -2;
+        }
         double compare = this.getStrength()-player.getStrength();
         int returnValue = 0;
         if(compare > 0){

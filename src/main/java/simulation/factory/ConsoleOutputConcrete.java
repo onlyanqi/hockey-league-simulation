@@ -1,6 +1,6 @@
 package simulation.factory;
 
-import userIO.ConsoleOutput;
+import presentation.ConsoleOutput;
 
 public class ConsoleOutputConcrete {
 

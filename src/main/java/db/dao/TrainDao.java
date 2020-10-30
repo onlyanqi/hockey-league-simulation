@@ -11,6 +11,9 @@ public class TrainDao implements ITrainingFactory {
 
     @Override
     public int addTraining(Training training) throws Exception {
+        if(training==null){
+            return -1;
+        }
         ICallDB callDB = null;
         try {
             callDB = new CallDB("AddTraining(?,?,?)");
@@ -31,6 +34,9 @@ public class TrainDao implements ITrainingFactory {
 
     @Override
     public void loadTrainingByLeagueId(int leagueId, Training training) throws Exception {
+        if(training==null){
+            return;
+        }
         ICallDB callDB = null;
         try {
             callDB = new CallDB("LoadTrainingByLeagueId(?)");

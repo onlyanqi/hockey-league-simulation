@@ -17,9 +17,9 @@ public class TeamDao implements ITeamFactory {
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
             callDB.setInputParameterBoolean(3, team.isAiTeam());
-            callDB.setOutputParameterInt(3);
+            callDB.setOutputParameterInt(4);
             callDB.execute();
-            team.setId(callDB.returnOutputParameterInt(3));
+            team.setId(callDB.returnOutputParameterInt(4));
 
         } catch (SQLException sqlException) {
             throw sqlException;

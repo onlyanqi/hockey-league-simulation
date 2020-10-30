@@ -1,12 +1,9 @@
 package simulation.state;
 
+import presentation.ConsoleOutput;
+import presentation.ReadUserInput;
 import simulation.factory.TradeOfferConcrete;
 import simulation.model.*;
-import userIO.ConsoleOutput;
-import userIO.IConsoleOutput;
-import userIO.IReadUserInput;
-import userIO.ReadUserInput;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -37,7 +34,7 @@ public class ExecuteTradeState implements ISimulateState {
     @Override
     public ISimulateState action() {
         System.out.println("Trading Players");
-        loopAllTeamsForTradeInitiation(league);
+        //loopAllTeamsForTradeInitiation(league);
         return exit();
     }
 
@@ -91,7 +88,7 @@ public class ExecuteTradeState implements ISimulateState {
         Map<String, Object> swap = new HashMap<>();
         Trading trading = league.getGamePlayConfig().getTrading();
         if(checkTradingPeriod(trading, league.getCurrentDate())){
-            System.out.println("team name: "+team.getName()+" loss point: "+team.getLossPoint());
+            //System.out.println("team name: "+team.getName()+" loss point: "+team.getLossPoint());
             if(checkLossPoint(team, trading)){
                 if(checkCurrentTradeOffer(team, league)) {
                     double tradeOfferChance = getRandomDouble();
@@ -99,7 +96,6 @@ public class ExecuteTradeState implements ISimulateState {
                         List<Player> tradingPlayerList = getWeakestPlayerList(team, league);
                         if(isListNotEmpty(tradingPlayerList)) {
                             for(Player weakestPlayer : tradingPlayerList) {
-                                swap.put(FROMPLAYER, weakestPlayer);
                                 swap.put(FROMTEAM, team);
                                 findBestSwapPlayer(team, league, weakestPlayer, swap);
                                 Player swapPlayer = (Player) swap.get(TOPLAYER);
@@ -231,6 +227,7 @@ public class ExecuteTradeState implements ISimulateState {
         Player toPlayer = (Player) tradeDetails.get(TOPLAYER);
 
         fromTeam.setLossPoint(0);
+        fromTeam.setPendingTradeOfferCount(0);
         tradeOffer.setStatus(ACCEPTED);
         List<Player> fromPlayerList = fromTeam.getPlayerList();
         fromPlayerList.remove(fromPlayer);
@@ -312,6 +309,7 @@ public class ExecuteTradeState implements ISimulateState {
                     swapPlayer = player;
                     swap.put(TOPLAYER, player);
                     swap.put(TOTEAM, otherTeam);
+                    swap.put(FROMPLAYER, weakestPlayer);
                 }
             }
         }
