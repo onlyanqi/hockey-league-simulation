@@ -102,7 +102,7 @@ public class LeagueMock implements ILeagueFactory {
     @Override
     public void loadLeagueById(int id, League league) throws Exception {
 
-        IGamePlayConfigFactory gamePlayConfigFactory = new GamePlayConfigFactoryMock();
+        IGamePlayConfigFactory gamePlayConfigFactory = new GamePlayConfigMock();
         GamePlayConfig gamePlayConfig = new GamePlayConfig(id, gamePlayConfigFactory);
 
         switch (new Long(id).intValue()) {
@@ -115,6 +115,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setTradingOfferList(getTradeOfferList(1));
                 league.setCurrentDate(LocalDate.now());
                 league.setGamePlayConfig(gamePlayConfig);
+                league.setCreatedBy(1);
                 break;
 
             case 2:

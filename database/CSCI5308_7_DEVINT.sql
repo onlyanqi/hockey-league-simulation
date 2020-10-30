@@ -810,9 +810,9 @@ DELIMITER ;
 
 DELIMITER $$
 USE `CSCI5308_7_DEVINT`$$
-CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamById`(IN tId INT, OUT teamId INT, OUT teamName varchar(45), OUT divisionId INT)
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamById`(IN tId INT, OUT teamId INT, OUT teamName varchar(45), OUT divisionId INT, OUT pendingTradeOfferCount INT, OUT lossPoint INT)
 BEGIN
-	select Team.idTeam, Team.teamName, Team.division from Team
+	select Team.idTeam, Team.teamName, Team.division, Team.pendingTradeOfferCount, Team.lossPoint from Team
     where Team.idTeam = tId
     limit 1;
 END$$
@@ -825,9 +825,10 @@ DELIMITER ;
 
 DELIMITER $$
 USE `CSCI5308_7_DEVINT`$$
-CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamByName`(IN tName VARCHAR(45), OUT teamId INT, OUT teamName varchar(45), OUT divisionId INT, OUT headCoach VARCHAR(45), OUT generalManager VARCHAR(45))
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamByName`(IN tName VARCHAR(45), OUT teamId INT, OUT teamName varchar(45), OUT divisionId INT, OUT pendingTradeOfferCount INT, OUT lossPoint INT)
 BEGIN
-	select Team.idTeam, Team.teamName, Team.division, Team.headCoach, Team.generalManager into teamId,teamName,divisionId,headCoach,generalManager from Team
+	select Team.idTeam, Team.teamName, Team.division, Team.pendingTradeOfferCount,
+    Team.lossPoint into teamId,teamName,divisionId,pendingTradeOfferCount,lossPoint from Team
     where Team.teamName = tName
     Limit 1;
 END$$
@@ -1357,4 +1358,7 @@ END
 
 
 /*Altered tables - 30th Oct*/
+
+alter table Team add column pendingTradeOfferCount int(4);
+alter table Team add column lossPoint int(4);
 
