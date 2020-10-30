@@ -337,10 +337,6 @@ public class ImportState implements IHockeyState {
 
                 int saving = getPlayerSaving(playerJsonObject);
 
-                if (isPlayerExists(playerList, playerName)) {
-                    throw new IllegalArgumentException("Please make sure player is not duplicated in JSON");
-                }
-
                 Player player = setTeamPlayerVariables(playerName, position, captain, age, skating, shooting, checking, saving);
 
                 playerList.add(player);
@@ -502,11 +498,6 @@ public class ImportState implements IHockeyState {
             int checking = getPlayerChecking(freeAgentJsonObject);
 
             int saving = getPlayerSaving(freeAgentJsonObject);
-
-
-            if (isPlayerExists(freeAgentList, playerName)) {
-                throw new IllegalArgumentException("Please make sure only  Player is unique in free agent");
-            }
 
             Player player = setFreePlayerVariables(playerName, position, age, skating, shooting, checking, saving);
 
