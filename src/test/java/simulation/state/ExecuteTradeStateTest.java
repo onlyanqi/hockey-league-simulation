@@ -254,7 +254,7 @@ public class ExecuteTradeStateTest {
         ILeagueFactory leagueFactory = new LeagueMock();
         IPlayerFactory playerFactory = new PlayerMock();
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
-
+        Map<String, Object> swap = new HashMap<>();
         Team team = new Team(5, teamFactory);
         League league = new League(1, leagueFactory);
         Player weakestPlayer = new Player(5, playerFactory);
@@ -262,33 +262,16 @@ public class ExecuteTradeStateTest {
         TradeOffer tradeOffer = new TradeOffer(10, tradeOfferFactory);
 
         ExecuteTradeState state = new ExecuteTradeState();
-        Player newPlayer = state.algorithmToFindSwapPlayer(team, league, weakestPlayer, swapPlayer);
+        Player newPlayer = state.algorithmToFindSwapPlayer(team, weakestPlayer, swapPlayer, swap);
 
         assertTrue(newPlayer.getStrength() >= swapPlayer.getStrength());
 
         swapPlayer = null;
         weakestPlayer = new Player(4, playerFactory);
         tradeOffer.setFromPlayerId(12);
-        newPlayer = state.algorithmToFindSwapPlayer(team, league, weakestPlayer, swapPlayer);
+        newPlayer = state.algorithmToFindSwapPlayer(team, weakestPlayer, swapPlayer, swap);
 
         assertTrue(weakestPlayer.getId() == newPlayer.getId());
-    }
-
-    @Test
-    public void checkExistingTradeOfferTest() throws Exception {
-        int fromPlayerId = 1;
-        int toPlayerId = 2;
-        int leagueId = 1;
-        ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
-        List<TradeOffer> tradeOfferList = tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
-
-        ExecuteTradeState state = new ExecuteTradeState();
-        assertFalse(state.checkExistingTradeOffer(fromPlayerId, toPlayerId, tradeOfferList));
-
-        fromPlayerId = 10;
-        toPlayerId = 11;
-
-        assertTrue(state.checkExistingTradeOffer(fromPlayerId, toPlayerId, tradeOfferList));
     }
 
     @Test
@@ -302,7 +285,7 @@ public class ExecuteTradeStateTest {
         ExecuteTradeState state = new ExecuteTradeState();
         List<Player> weakPlayerList = state.getWeakestPlayerList(team, league);
 
-        assertEquals(weakPlayerList.size(), 0);
+        assertNull(weakPlayerList);
 
         Player strongPlayer1 = new Player(10, playerFactory);
         Player strongPlayer2 = new Player(11, playerFactory);

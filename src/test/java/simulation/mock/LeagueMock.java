@@ -47,11 +47,13 @@ public class LeagueMock implements ILeagueFactory {
         return freeAgent;
     }
 
+    /*
     public Trading getTrading() throws Exception {
         ITradingFactory tradingFactory = new TradingMock();
         Trading trading = new Trading(1, tradingFactory);
         return trading;
     }
+     */
 
     public List<TradeOffer> getTradeOfferList(int leagueId) throws Exception {
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
@@ -67,7 +69,6 @@ public class LeagueMock implements ILeagueFactory {
                 league.setName("League1");
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
-                league.setTrading(getTrading());
                 league.setTradingOfferList(getTradeOfferList(1));
                 league.setCurrentDate(LocalDate.now());
                 break;
@@ -77,7 +78,6 @@ public class LeagueMock implements ILeagueFactory {
                 league.setName(null);
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
-                league.setTrading(getTrading());
                 league.setTradingOfferList(getTradeOfferList(2));
                 league.setCurrentDate(LocalDate.now());
                 break;
@@ -87,7 +87,6 @@ public class LeagueMock implements ILeagueFactory {
                 league.setName("Invalid Date");
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
-                league.setTrading(getTrading());
                 league.setTradingOfferList(getTradeOfferList(3));
                 league.setCurrentDate(LocalDate.now());
                 break;
