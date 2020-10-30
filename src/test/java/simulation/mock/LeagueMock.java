@@ -51,21 +51,21 @@ public class LeagueMock implements ILeagueFactory {
         List<Player> playerList = new ArrayList<>();
         for(int i=0;i<30;i++){
             Player player = new Player();
-            player.setId(i);
-            player.setIsFreeAgent(true);
-            player.setName(FREEAGENT+i);
-            player.setAge(25);
-            player.setChecking(10);
-            player.setSaving(0);
-            player.setSkating(11);
-            player.setShooting(12);
-            player.setFreeAgentId(1);
-            player.setCaptain(false);
             if(i%2 == 0){
                 player.setPosition(Player.Position.forward);
             }else{
                 player.setPosition(Player.Position.defense);
             }
+            player.setId(i);
+            player.setIsFreeAgent(true);
+            player.setName(FREEAGENT+i);
+            player.setAge(25);
+            player.setChecking(10);
+            player.setSaving(1);
+            player.setSkating(11);
+            player.setShooting(12);
+            player.setFreeAgentId(1);
+            player.setCaptain(false);
             if(i == 3 || i ==4 || i==5 || i==10){
                 player.setPosition(Player.Position.goalie);
                 player.setSaving(10);

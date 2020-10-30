@@ -35,8 +35,6 @@ public class ImportStateTest {
         assertEquals(hockeyContext.getUser().getId(),user.getId());
         assertEquals(hockeyContext.getUser().getName(),user.getName());
 
-
-
         JSONObject leagueObject = JSONControllerMock.getJSON(1);
         state = new ImportState(hockeyContext,leagueObject);
 
