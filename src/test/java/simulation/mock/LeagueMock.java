@@ -143,6 +143,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setManagerList(formManagerList());
                 league.setTradingOfferList(getTradeOfferList(1));
                 league.setCurrentDate(LocalDate.now());
+                league.setCreatedBy(1);
                 break;
 
             case 2:

@@ -1,8 +1,8 @@
-package userIO;
+package presentation;
 
 public interface IConsoleOutput {
 
     void printToConsole(String outString);
-    void printToConsoleOnSameLine(String outString);
-
+    void printAITradeDetailsToUser();
+    void printUserTradeDetailsToUser();
 }

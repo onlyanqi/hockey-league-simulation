@@ -1,5 +1,6 @@
 package simulation.state;
 
+
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.TradeOfferConcrete;
@@ -12,12 +13,24 @@ public class ExecuteTradeState implements ISimulateState {
 
     private HockeyContext hockeyContext;
     private League league;
+    private ConsoleOutput consoleOutput;
+    private ReadUserInput readUserInput;
+
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
+    }
 
     public ExecuteTradeState(){}
 
     public ExecuteTradeState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
+        consoleOutput = ConsoleOutput.getInstance();
+        readUserInput = ReadUserInput.getInstance();
     }
 
     private final String PENDING = "pending";
@@ -34,7 +47,7 @@ public class ExecuteTradeState implements ISimulateState {
     @Override
     public ISimulateState action() {
         System.out.println("Trading Players");
-        //loopAllTeamsForTradeInitiation(league);
+        loopAllTeamsForTradeInitiation(league);
         return exit();
     }
 
@@ -137,11 +150,11 @@ public class ExecuteTradeState implements ISimulateState {
         if(toTeam.isAiTeam()) {
             if (acceptRejectTradeOffer(swap)) {
                 updateTradingDetails(swap);
-                ConsoleOutput.printToConsole("Below trade is accepted successfully.");
-                printTradeDetailsToUser(swap);
+                consoleOutput.printMsgToConsole("Below trade is accepted successfully.");
+                consoleOutput.printAITradeDetailsToUser(swap);
             } else {
-                ConsoleOutput.printToConsole("Below trade is rejected.");
-                printTradeDetailsToUser(swap);
+                consoleOutput.printMsgToConsole("Below trade is rejected.");
+                consoleOutput.printAITradeDetailsToUser(swap);
             }
         } else {
             performUserTrade(swap);
@@ -149,53 +162,13 @@ public class ExecuteTradeState implements ISimulateState {
     }
 
     public void performUserTrade(Map<String, Object> swap){
-        printTradeDetailsToUser(swap);
-        String userResponse = readUserInput(swap);
-        if(userResponse.equals("A".trim()) || userResponse.equals("a".trim())){
+        consoleOutput.printUserTradeDetailsToUser(swap);
+        String userResponse = readUserInput.getUserTradeResponse();
+        if(userResponse.equalsIgnoreCase("A".trim())){
             updateTradingDetails(swap);
         } else {
-            ConsoleOutput.printToConsole("Trade offer rejected successfully.");
+            consoleOutput.printMsgToConsole("Trade offer rejected successfully.");
         }
-    }
-
-    public void printTradeDetailsToUser(Map<String, Object> swap){
-        Player fromPlayer = (Player) swap.get(FROMPLAYER);
-        Player toPlayer = (Player) swap.get(TOPLAYER);
-        Team fromTeam = (Team) swap.get(FROMTEAM);
-        Team toTeam = (Team) swap.get(TOTEAM);
-
-        ConsoleOutput.printToConsole("Below Trade Offer is received:");
-        ConsoleOutput.printToConsole("----------------------------------");
-        ConsoleOutput.printToConsole("\tFrom team: "+fromTeam.getName());
-        ConsoleOutput.printToConsole("\t\tPlayer name: "+fromPlayer.getName());
-        ConsoleOutput.printToConsole("\t\tPlayer strength: "+fromPlayer.getStrength());
-        ConsoleOutput.printToConsole("\tTo Team name: "+toTeam.getName());
-        ConsoleOutput.printToConsole("\t\tPlayer name: "+toPlayer.getName());
-        ConsoleOutput.printToConsole("\t\tPlayer strength: "+toPlayer.getStrength());
-        ConsoleOutput.printToConsole("----------------------------------");
-    }
-
-    public String readUserInput(Map<String, Object> swap){
-        String userResponse;
-        boolean isValid;
-        userResponse = ReadUserInput.getUserInput("Enter \"A\" to accept or \"R\" to reject the trade offer.");
-        do {
-            if(userResponse == null || userResponse.equals("".trim())){
-                userResponse = ReadUserInput.getUserInput("Kindly check the input. " +
-                        "Enter \"A\" to accept or \"R\" to reject the trade offer.");
-                isValid = true;
-            } else if(userResponse.equals("A".trim()) && userResponse.equals("R".trim())
-                    && userResponse.equals("a".trim()) && userResponse.equals("r".trim())){
-
-                isValid = false;
-            } else {
-                userResponse = ReadUserInput.getUserInput("Kindly check the input. " +
-                        "Enter \"A\" to accept or \"R\" to reject the trade offer.");
-                isValid = true;
-            }
-        } while(isValid);
-
-        return userResponse;
     }
 
     public boolean acceptRejectTradeOffer(Map<String, Object> tradeDetails){
@@ -394,6 +367,7 @@ public class ExecuteTradeState implements ISimulateState {
     }
 
     public ISimulateState exit() {
+        hockeyContext.getUser().setLeague(league);
         return new AgingState(hockeyContext);
     }
 }
