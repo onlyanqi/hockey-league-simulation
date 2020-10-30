@@ -98,7 +98,7 @@ public class NHLEvents extends SharedAttributes{
     }
 
     public void initializeRegularSeasonStartDate() {
-        LocalDate seasonStartDate = LocalDate.of(LocalDate.now().getYear(), Month.SEPTEMBER, 30);
+        LocalDate seasonStartDate = LocalDate.of(LocalDate.now().getYear(), Month.OCTOBER, 01);
         setRegularSeasonStartDate(seasonStartDate);
     }
 

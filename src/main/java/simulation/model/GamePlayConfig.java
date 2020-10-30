@@ -1,6 +1,7 @@
 package simulation.model;
 
 import com.google.gson.annotations.SerializedName;
+import db.data.ITradingFactory;
 
 public class GamePlayConfig extends SharedAttributes{
 
@@ -49,6 +50,10 @@ public class GamePlayConfig extends SharedAttributes{
 
     public void setTrading(Trading trading) {
         this.trading = trading;
+    }
+
+    public void loadTradingDetailsByLeagueId(ITradingFactory tradingFactory) throws Exception {
+        this.trading = tradingFactory.loadTradingDetailsByLeagueId(getId());
     }
 
     public Training getTraining() {

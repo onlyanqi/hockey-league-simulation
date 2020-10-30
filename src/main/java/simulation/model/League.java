@@ -198,20 +198,6 @@ public class League extends SharedAttributes {
         return null;
     }
 
-    private transient Trading trading;
-
-    public Trading getTrading() {
-        return trading;
-    }
-
-    public void setTrading(Trading trading) {
-        this.trading = trading;
-    }
-
-    public void loadTradingDetailsByLeagueId(ITradingFactory tradingFactory) throws Exception {
-        this.trading = tradingFactory.loadTradingDetailsByLeagueId(getId());
-    }
-
     private transient List<TradeOffer> tradeOfferList;
 
     public List<TradeOffer> getTradingOfferList(){
