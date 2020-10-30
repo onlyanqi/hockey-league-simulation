@@ -39,7 +39,7 @@ public class DBConnection implements IDBConnection {
         try {
 
             IPropertyFileReader read = new PropertyFileReader();
-            Properties prop = read.loadPropertyFile("./.properties");
+            Properties prop = read.loadPropertyFile("../.properties");
             con = DriverManager.getConnection(formDBURL(prop),
                     prop.getProperty("db.User"), prop.getProperty("db.Password"));
 

@@ -37,9 +37,9 @@ public class ImportState implements IHockeyState {
         try {
             parseJSONAndInstantiateLeague(jsonFromInput);
         } catch (IllegalArgumentException e) {
-            ConsoleOutput.printToConsole("IllegalArgumentException caught while parsing JSON");
+            e.getMessage();
         } catch (Exception ex) {
-            ConsoleOutput.printToConsole("Exception caught while parsing JSON");
+            ex.printStackTrace();
         }
         hockeyContext.getUser().setLeague(league);
     }
@@ -87,7 +87,7 @@ public class ImportState implements IHockeyState {
 
     }
 
-    private JSONArray validateManagers(JSONObject leagueJSON) throws Exception {
+    private JSONArray validateManagers(JSONObject leagueJSON) throws IllegalArgumentException {
         if (notValidKeyInObject(leagueJSON, "generalManagers")) {
             throw new IllegalArgumentException("Please make sure generalManagers are provided in JSON");
         }
@@ -98,7 +98,7 @@ public class ImportState implements IHockeyState {
         return managers;
     }
 
-    private JSONArray validateCoaches(JSONObject leagueJSON) throws Exception {
+    private JSONArray validateCoaches(JSONObject leagueJSON) throws IllegalArgumentException {
         if (notValidKeyInObject(leagueJSON, "coaches")) {
             throw new IllegalArgumentException("Please make sure coaches are provided in JSON");
         }
@@ -109,7 +109,7 @@ public class ImportState implements IHockeyState {
         return coaches;
     }
 
-    private JSONArray validateFreeAgents(JSONObject leagueJSON) throws Exception {
+    private JSONArray validateFreeAgents(JSONObject leagueJSON) throws IllegalArgumentException {
         if (notValidKeyInObject(leagueJSON, "freeAgents")) {
             throw new IllegalArgumentException("Please make sure freeAgents are provided in JSON");
         }
@@ -120,7 +120,7 @@ public class ImportState implements IHockeyState {
         return freeAgents;
     }
 
-    private JSONArray validateConferences(JSONObject leagueJSON) throws Exception {
+    private JSONArray validateConferences(JSONObject leagueJSON) throws IllegalArgumentException {
         if (notValidKeyInObject(leagueJSON, "conferences")) {
             throw new IllegalArgumentException("Please make sure conferences are provided in JSON");
         }
@@ -189,7 +189,7 @@ public class ImportState implements IHockeyState {
         league.setGamePlayConfig(gamePlayConfig);
     }
 
-    private List<Team> loadTeamJSON(JSONArray teams) throws Exception {
+    private List<Team> loadTeamJSON(JSONArray teams) throws IllegalArgumentException {
         ArrayList<Team> teamList = new ArrayList<>();
         for (Object teamObjectFromJSONArray : teams) {
 
@@ -216,7 +216,7 @@ public class ImportState implements IHockeyState {
         return teamList;
     }
 
-    private List<Player> setTeamPlayerList(JSONObject teamJSONObject) throws Exception {
+    private List<Player> setTeamPlayerList(JSONObject teamJSONObject) throws IllegalArgumentException {
         if (notValidKeyInObject(teamJSONObject, "players")) {
             throw new IllegalArgumentException("Please make sure team players is provided in JSON");
         }
@@ -346,11 +346,8 @@ public class ImportState implements IHockeyState {
                 playerList.add(player);
 
             }
-        } catch (ClassCastException e) {
-            ConsoleOutput.printToConsole("ClassCastException caught in loadPlayerJSON");
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return playerList;
 

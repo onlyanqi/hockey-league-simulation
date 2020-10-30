@@ -85,6 +85,24 @@ public class LeagueMock implements ILeagueFactory {
         return trading;
     }
 
+    public Injury getInjury() throws Exception {
+        IInjuryFactory injuryFactory = new InjuryMock();
+        Injury injury = new Injury(1, injuryFactory);
+        return injury;
+    }
+
+    public Aging getAging() throws Exception {
+        IAgingFactory agingFactory = new AgingMock();
+        Aging aging = new Aging(1,agingFactory);
+        return aging;
+    }
+
+    public Training getTraining() throws Exception {
+        ITrainingFactory trainingFactory = new TrainingMock();
+        Training training = new Training(1,trainingFactory);
+        return training;
+    }
+
     public List<TradeOffer> getTradeOfferList(int leagueId) throws Exception {
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
         return tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
@@ -103,6 +121,15 @@ public class LeagueMock implements ILeagueFactory {
         return managerList;
     }
 
+    public GamePlayConfig formGamePlayConfig() throws Exception {
+        GamePlayConfig gamePlayConfig = new GamePlayConfig();
+        gamePlayConfig.setTrading(getTrading());
+        gamePlayConfig.setAging(getAging());
+        gamePlayConfig.setInjury(getInjury());
+        gamePlayConfig.setTraining(getTraining());
+        return gamePlayConfig;
+    }
+
     @Override
     public void loadLeagueById(int id, League league) throws Exception {
 
@@ -112,7 +139,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setName("League1");
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
-                league.setTrading(getTrading());
+                league.setGamePlayConfig(formGamePlayConfig());
                 league.setManagerList(formManagerList());
                 league.setTradingOfferList(getTradeOfferList(1));
                 league.setCurrentDate(LocalDate.now());
@@ -124,7 +151,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setConferenceList(formConferenceList());
                 league.setManagerList(formManagerList());
                 league.setFreeAgent(formFreeAgent());
-                league.setTrading(getTrading());
+                league.setGamePlayConfig(formGamePlayConfig());
                 league.setTradingOfferList(getTradeOfferList(2));
                 league.setCurrentDate(LocalDate.now());
                 break;
@@ -135,7 +162,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setConferenceList(formConferenceList());
                 league.setManagerList(formManagerList());
                 league.setFreeAgent(formFreeAgent());
-                league.setTrading(getTrading());
+                league.setGamePlayConfig(formGamePlayConfig());
                 league.setTradingOfferList(getTradeOfferList(3));
                 league.setCurrentDate(LocalDate.now());
                 break;
