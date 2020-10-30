@@ -28,7 +28,7 @@ public class PersistState implements ISimulateState{
     private void saveToPersistence(League league) {
 
         if(todayIsStartOfSeason()){
-            //persistLeagueToDB();
+            persistLeagueToDB();
         }else{
             updateDataBaseWithSimulatedDate();
         }
@@ -54,6 +54,12 @@ public class PersistState implements ISimulateState{
                 ISeasonFactory addSeasonDao = seasonConcrete.newAddSeasonFactory();
                 season.addSeason(addSeasonDao);
                 int seasonId = season.getId();
+
+                addEvents(league.getId(),league.getNHLRegularSeasonEvents());
+
+                addGameList(league.getId(),league.getGames().getGameList());
+
+                addTeamStanding(league.getId(),league.getActiveTeamStanding().getTeamsScoreList());
 
                 if (leagueId != 0 && seasonId != 0) {
                     if (league.getFreeAgent() != null) {
@@ -98,6 +104,30 @@ public class PersistState implements ISimulateState{
                 sqlException.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    private void addTeamStanding(int id, List<TeamScore> teamScoreList) throws Exception {
+        TeamStandingConcrete teamStandingConcrete = new TeamStandingConcrete();
+        ITeamStandingFactory addTeamStandingFactory = teamStandingConcrete.newAddTeamStandingFactory();
+        for (TeamScore teamScore : teamScoreList) {
+            addTeamStandingFactory.addTeamStanding(id,teamScore);
+        }
+    }
+
+    private void addEvents(int leagueId,NHLEvents nhlEvents) throws Exception {
+        EventConcrete eventConcrete = new EventConcrete();
+        IEventFactory addEventFactory = eventConcrete.newAddEventsFactory();
+        addEventFactory.addEvent(leagueId,nhlEvents);
+    }
+
+    private void addGameList(int leagueId,List<Game> gameList) throws Exception {
+        if(gameList != null && !gameList.isEmpty()) {
+            GameConcrete gameConcrete = new GameConcrete();
+            IGameFactory addGamesFactory = gameConcrete.newAddGamesFactory();
+            for (Game game : gameList) {
+                addGamesFactory.addGame(leagueId,game);
             }
         }
     }
