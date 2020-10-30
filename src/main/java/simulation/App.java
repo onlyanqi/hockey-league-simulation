@@ -2,10 +2,10 @@ package simulation;
 
 import db.data.IUserFactory;
 import org.json.simple.JSONObject;
+import presentation.ReadUserInput;
 import simulation.factory.UserConcrete;
 import simulation.model.User;
 import simulation.state.HockeyContext;
-import presentation.GetInput;
 import util.CommonUtil;
 
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ public class App {
         String filePath = "";
         JSONObject jsonFromInput = null;
 
-        String userName = GetInput.getUserInput("Please enter username");
+        String userName = ReadUserInput.getUserInput("Please enter username");
 
         CommonUtil util = new CommonUtil();
 
@@ -29,11 +29,11 @@ public class App {
 
                 user.setName(userName);
                 if (user.getId() == 0) {
-                    String password = GetInput.getUserInput("Please enter password to register yourself");
+                    String password = ReadUserInput.getUserInput("Please enter password to register yourself");
                     user.setPassword(password);
                     addUser(user);
                 }
-                filePath = GetInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
+                filePath = ReadUserInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
 
                 if (filePath != null && filePath.length() != 0) {
 

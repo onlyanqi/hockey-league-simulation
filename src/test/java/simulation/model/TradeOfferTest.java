@@ -21,6 +21,7 @@ public class TradeOfferTest {
     public void defaultConstructorTest(){
         TradeOffer tradeOffer = new TradeOffer();
         assertEquals(tradeOffer.getId(), 0);
+        assertNotEquals(tradeOffer.getId(), 1);
     }
 
     @Test

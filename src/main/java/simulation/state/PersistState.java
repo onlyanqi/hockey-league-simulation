@@ -6,6 +6,7 @@ import simulation.model.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class PersistState implements ISimulateState{
@@ -20,8 +21,9 @@ public class PersistState implements ISimulateState{
 
     @Override
     public ISimulateState action() {
-        System.out.println("Saving league to DB");
+        System.out.println("Saving league to DB 1 "+new Date());
         saveToPersistence(league);
+        System.out.println("Saving league to DB 2 "+new Date());
         return exit();
     }
 
@@ -49,6 +51,8 @@ public class PersistState implements ISimulateState{
                 ILeagueFactory addLeagueFactory = leagueConcrete.newAddLeagueFactory();
                 league.addLeague(addLeagueFactory);
                 int leagueId = league.getId();
+
+                System.out.println("League done....");
 
                 SeasonConcrete seasonConcrete = new SeasonConcrete();
                 ISeasonFactory addSeasonDao = seasonConcrete.newAddSeasonFactory();

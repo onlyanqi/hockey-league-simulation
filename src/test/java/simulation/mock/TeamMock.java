@@ -56,7 +56,7 @@ public class TeamMock implements ITeamFactory {
                 team.setLossPoint(0);
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setPendingTradeOfferCount(1);
+                team.setPendingTradeOfferCount(0);
                 break;
 
             case 2:
@@ -99,7 +99,7 @@ public class TeamMock implements ITeamFactory {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(false);
-                team.setPendingTradeOfferCount(3);
+                team.setPendingTradeOfferCount(0);
                 break;
 
             case 4:
