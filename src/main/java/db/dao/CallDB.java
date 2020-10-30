@@ -14,8 +14,8 @@ public class CallDB implements ICallDB {
 
     public CallDB(String procedureName) throws Exception {
         this.procedureName = procedureName;
-        IDBConnection dbConnection = new DBConnection();
-        connection = dbConnection.getConnection();
+        //IDBConnection dbConnection = new DBConnection();
+        connection = DBConnection.getInstance().getConnection();
 
         String query = "call ".concat(procedureName);
         stmt = connection.prepareCall(query);

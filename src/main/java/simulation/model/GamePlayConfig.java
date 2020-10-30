@@ -1,6 +1,7 @@
 package simulation.model;
 
-import com.google.gson.annotations.SerializedName;
+import db.data.IGamePlayConfigFactory;
+import db.data.ITradingFactory;
 
 public class GamePlayConfig extends SharedAttributes{
 
@@ -10,6 +11,12 @@ public class GamePlayConfig extends SharedAttributes{
     private GameResolver gameResolver;
     private Trading trading;
     private Training training;
+
+    public GamePlayConfig(){}
+
+    public GamePlayConfig(int leagueId, IGamePlayConfigFactory gamePlayConfigFactory) throws Exception {
+        gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
+    }
 
     public int getLeagueId() {
         return leagueId;
@@ -61,6 +68,10 @@ public class GamePlayConfig extends SharedAttributes{
             return;
         }
         this.trading = trading;
+    }
+
+    public void loadTradingDetailsByLeagueId(ITradingFactory tradingFactory) throws Exception {
+        this.trading = tradingFactory.loadTradingDetailsByLeagueId(getId());
     }
 
     public Training getTraining() {

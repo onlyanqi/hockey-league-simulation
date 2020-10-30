@@ -1297,3 +1297,64 @@ DELIMITER ;
 
 /*Games, Events,Teamstanding */
 
+
+/*Alter tables - 30th Oct */
+league change
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`League`
+ADD COLUMN `averageRetirementAge` INT(11) NULL AFTER `createdBy`,
+ADD COLUMN `maximumAge` INT(11) NULL AFTER `averageRetirementAge`,
+ADD COLUMN `randomWinChance` DOUBLE NULL AFTER `maximumAge`,
+ADD COLUMN `randomInjuryChance` DOUBLE NULL AFTER `randomWinChance`,
+ADD COLUMN `injuryDaysLow` INT(11) NULL AFTER `randomInjuryChance`,
+ADD COLUMN `injuryDaysHigh` INT(11) NULL AFTER `injuryDaysLow`,
+ADD COLUMN `daysUntilCheck` INT(11) NULL AFTER `injuryDaysHigh`,
+ADD COLUMN `lossPoint` INT(11) NULL AFTER `daysUntilCheck`,
+ADD COLUMN `randomTradeOfferChance` DOUBLE NULL AFTER `lossPoint`,
+ADD COLUMN `maxPlayersPerTrade` INT(11) NULL AFTER `randomTradeOfferChance`,
+ADD COLUMN `randomAcceptanceChance` DOUBLE NULL AFTER `maxPlayersPerTrade`;
+
+
+
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddFreeAgent`( In leagueId INT,OUT freeAgentId INT)
+BEGIN
+	Insert into FreeAgent(league)
+    VALUES (leagueId);
+    Set freeAgentId := LAST_INSERT_ID();
+END
+
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddPlayer`(IN playerName VARCHAR(45),  In position VARCHAR(45), IN captain boolean, IN teamId INT, IN freeAgentId INT, IN age int, IN skating INT, IN shooting INT, IN checking INT, IN saving INT, IN isInjured boolean, IN injuryStartDate DATE, IN injuryDatesRange INT, IN strength Double,OUT playerId INT)
+BEGIN
+
+	Insert into Player(playerName, position, captain, teamId, freeAgentId, age, skating, shooting, checking, saving, isInjured, injuryStartDate, injuryDatesRange, strength)
+    VALUES (playerName, position, captain, teamId, freeAgentId, age, skating, shooting, checking, saving, isInjured, injuryStartDate, injuryDatesRange, strength);
+
+    SET playerId := LAST_INSERT_ID();
+
+END
+
+
+ALTER TABLE `CSCI5308_7_DEVINT`.`League`
+ADD COLUMN `currentDate` DATE NULL AFTER `randomAcceptanceChance`;
+
+
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddLeague`(IN leagueName VARCHAR(45), In userId INT, IN  averageRetirementAge INT, IN maximumAge INT, IN randomWinChance Double, IN randomInjuryChance Double, IN injuryDaysLow INT, IN injuryDaysHigh INT, IN daysUntilCheck INT, IN lossPoint INT, IN randomTradeOfferChance Double, IN maxPlayersPerTrade INT, IN randomAcceptanceChance Double, IN currentDate DATE,OUT leagueId INT)
+BEGIN
+	Insert into League(leagueName, createdBy, averageRetirementAge, maximumAge, randomWinChance, randomInjuryChance, injuryDaysLow, injuryDaysHigh, daysUntilCheck, lossPoint, randomTradeOfferChance, maxPlayersPerTrade, randomAcceptanceChance,currentDate)
+    VALUES (leagueName,userId, averageRetirementAge, maximumAge, randomWinChance, randomInjuryChance, injuryDaysLow, injuryDaysHigh, daysUntilCheck, lossPoint, randomTradeOfferChance, maxPlayersPerTrade, randomAcceptanceChance,currentDate);
+    SET leagueId := LAST_INSERT_ID();
+END
+
+
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddGame`(IN leagueId INT, IN gamedate DATE, IN team1 VARCHAR(45),IN team2 VARCHAR(45),IN played BOOLEAN,IN winner VARCHAR(45), OUT gameId INT)
+BEGIN
+	Insert into Game(leagueId, gamedate,team1,team2,played,winner)
+    VALUES (leagueId, gamedate,team1,team2,played,winner);
+
+    SET gameId := LAST_INSERT_ID();
+
+END
+
+
+/*Altered tables - 30th Oct*/
+

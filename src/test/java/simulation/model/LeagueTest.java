@@ -133,6 +133,7 @@ public class LeagueTest {
         assertTrue(league.getFreeAgent().getLeagueId() == league.getId());
     }
 
+    /*
     @Test
     public void getTradingTest() throws Exception {
         ITradingFactory tradingFactory = new TradingMock();
@@ -165,6 +166,7 @@ public class LeagueTest {
         assertNotEquals(2, league.getTrading().getId());
         assertNotEquals(2, league.getTrading().getMaxPlayersPerTrade());
     }
+*/
 
     @Test
     public void getTradingOfferListTest() throws Exception {

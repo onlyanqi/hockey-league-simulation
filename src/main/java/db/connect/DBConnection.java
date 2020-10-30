@@ -9,6 +9,15 @@ import java.util.Properties;
 
 public class DBConnection implements IDBConnection {
 
+    private static DBConnection dbConnection;
+
+    public static DBConnection getInstance(){
+        if(null == dbConnection){
+            dbConnection = new DBConnection();
+        }
+        return dbConnection;
+    }
+
     public String formDBURL(Properties prop) {
         String dbURL = "";
 
@@ -23,7 +32,6 @@ public class DBConnection implements IDBConnection {
 
         return dbURL;
     }
-
 
     public Connection getConnection() throws Exception {
         Connection con = null;
