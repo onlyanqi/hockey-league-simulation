@@ -98,7 +98,7 @@ public class TeamMock implements ITeamFactory {
                 team.setCoach(Coach3);
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
-                team.setAiTeam(false);
+                team.setAiTeam(true);
                 team.setPendingTradeOfferCount(0);
                 break;
 

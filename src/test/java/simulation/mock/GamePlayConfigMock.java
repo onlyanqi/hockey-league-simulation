@@ -4,7 +4,7 @@ import db.data.IGamePlayConfigFactory;
 import db.data.ITradingFactory;
 import simulation.model.*;
 
-public class GamePlayConfigFactoryMock implements IGamePlayConfigFactory {
+public class GamePlayConfigMock implements IGamePlayConfigFactory {
 
     public void loadGamePlayConfigByLeagueId(int leagueId, GamePlayConfig gamePlayConfig) throws Exception {
 
