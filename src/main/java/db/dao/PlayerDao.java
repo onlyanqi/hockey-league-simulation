@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.IPlayerFactory;
 import simulation.model.Player;
+import util.DateUtil;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -27,7 +28,7 @@ public class PlayerDao implements IPlayerFactory {
             callDB.setInputParameterInt(9, player.getChecking());
             callDB.setInputParameterInt(10, player.getSaving());
             callDB.setInputParameterBoolean(11, player.getInjured());
-            callDB.setInputParameterDate(12, Date.valueOf(player.getInjuryStartDate()));
+            callDB.setInputParameterDate(12, DateUtil.convertLocalDateToSQLDate(player.getInjuryStartDate()));
             callDB.setInputParameterInt(13, player.getInjuryDatesRange());
             callDB.setInputParameterDouble(14, player.getStrength());
 
@@ -37,6 +38,8 @@ public class PlayerDao implements IPlayerFactory {
 
         } catch (SQLException sqlException) {
             throw sqlException;
+        } catch(Exception exception) {
+            throw exception;
         } finally {
             assert callDB != null;
             callDB.closeConnection();

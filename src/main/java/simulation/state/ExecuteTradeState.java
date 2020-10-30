@@ -33,7 +33,7 @@ public class ExecuteTradeState implements ISimulateState {
     @Override
     public ISimulateState action() {
         System.out.println("Trading Players");
-        loopAllTeamsForTradeInitiation(league);
+        //loopAllTeamsForTradeInitiation(league);
         return exit();
     }
 

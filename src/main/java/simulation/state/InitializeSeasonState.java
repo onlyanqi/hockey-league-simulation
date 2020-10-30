@@ -11,8 +11,6 @@ public class InitializeSeasonState implements ISimulateState {
     private League league;
     private HockeyContext hockeyContext;
     private final Integer TotalGamesPerTeam = 82;
-    private final Integer gamesPerTeamPerComponent = TotalGamesPerTeam / 3 - TotalGamesPerTeam % 3 ;
-
     public InitializeSeasonState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
@@ -20,7 +18,12 @@ public class InitializeSeasonState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-        InitializeRegularSeason();
+        if(isMinimumTeamCountSatisfiedForPlayoffs(league)){
+            InitializeRegularSeason();
+        }else{
+            System.out.println("Please make sure minimum number of teams(5) for each division are provided for the league");
+            return null;
+        }
         return exit();
     }
 
@@ -40,14 +43,19 @@ public class InitializeSeasonState implements ISimulateState {
 
         league.setCurrentDate(previousDateOfRegularSeasonStart);
 
-        List<String> team_list_in_division = new ArrayList<>();
-        List<String> team_list_out_division = new ArrayList<>();
-        List<String> team_list_out_conference = new ArrayList<>();
         List<Game> tempGameList = new ArrayList<>();
 
-        getGamesWithinDivision(team_list_in_division,tempGameList);
-        getGamesWithinConference(team_list_out_division,tempGameList);
-        getGamesAcrossLeague(team_list_out_conference,tempGameList);
+        for(Conference conf: league.getConferenceList()){
+            for(Division division : conf.getDivisionList()){
+                for(Team team : division.getTeamList()) {
+                    while (checkMaxGamesNotReachedForTeam(tempGameList, team)) {
+                        addGamesWithinDivision(tempGameList,team,division);
+                        addGamesOutsideDivision(tempGameList,team,division,conf);
+                        addGamesOutsideConference(tempGameList,team,division,conf);
+                    }
+                }
+            }
+        }
 
         Games games = new Games();
         List<Game> gameList = games.getGameList();
@@ -68,6 +76,103 @@ public class InitializeSeasonState implements ISimulateState {
         league.setGames(games);
         league.setActiveTeamStanding(league.getRegularSeasonStanding());
         league.setNhlRegularSeasonEvents(nhlEvents);
+    }
+
+    private Boolean isMinimumTeamCountSatisfiedForPlayoffs(League league) {
+        for (Conference conference : league.getConferenceList()) {
+            for (Division division : conference.getDivisionList()) {
+                if(division.getTeamList().size() <=4){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void addGamesOutsideConference(List<Game> tempGameList, Team team,Division division,Conference conf) {
+        for (Conference otherConference : league.getConferenceList()) {
+            if ((otherConference.getName().equals(conf.getName()))) continue;
+            for (Division division3 : otherConference.getDivisionList()) {
+                for (Team teamOutsideConference : division3.getTeamList()) {
+                    if (checkMaxGamesReached(tempGameList, team)) {
+                        break;
+                    }
+                    if (checkMaxGamesReached(tempGameList, teamOutsideConference)) {
+                        continue;
+                    }
+                    Game game = new Game();
+                    game.setTeam1(team.getName());
+                    game.setTeam2(teamOutsideConference.getName());
+                    tempGameList.add(game);
+                }
+            }
+        }
+    }
+
+    private void addGamesOutsideDivision(List<Game> tempGameList, Team team,Division division,Conference conf) {
+        for (Division OtherDivision : conf.getDivisionList()) {
+            if ((OtherDivision.getName().equals(division.getName()))) continue;
+            for (Team teamOutsideDivision : OtherDivision.getTeamList()) {
+                if (checkMaxGamesReached(tempGameList, team)) {
+                    break;
+                }
+                if (checkMaxGamesReached(tempGameList, teamOutsideDivision)) {
+                    continue;
+                }
+                Game game = new Game();
+                game.setTeam1(team.getName());
+                game.setTeam2(teamOutsideDivision.getName());
+                tempGameList.add(game);
+            }
+        }
+    }
+
+    private void addGamesWithinDivision(List<Game> tempGameList, Team team,Division division) {
+        for (Team teamInsideDivision : division.getTeamList()) {
+            if ((team.getName().equals(teamInsideDivision.getName()))) continue;
+            if (checkMaxGamesReached(tempGameList, team)) {
+                break;
+            }
+            if (checkMaxGamesReached(tempGameList, teamInsideDivision)) {
+                continue;
+            }
+            Game game = new Game();
+            game.setTeam1(team.getName());
+            game.setTeam2(teamInsideDivision.getName());
+            tempGameList.add(game);
+        }
+    }
+
+    private boolean checkMaxGamesReached(List<Game> gameList, Team team) {
+        int teamCount =0;
+
+        for(Game g: gameList){
+            if(g.getTeam1().equals(team.getName()) ||g.getTeam2().equals(team.getName())){
+                teamCount++;
+            }
+        }
+
+        if(teamCount == TotalGamesPerTeam ){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private boolean checkMaxGamesNotReachedForTeam(List<Game> gameList, Team team) {
+        int teamCount =0;
+        for(Game g: gameList){
+            if(g.getTeam1().equals(team.getName()) ||g.getTeam2().equals(team.getName())){
+                teamCount++;
+            }
+        }
+        if(teamCount == TotalGamesPerTeam ){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     private void scheduleGamesForRemainingGeneratedOnes(List<Game> gameList, List<Game> tempGameList, LocalDate currentDate, Integer totalGamesAdded, int diffInDays) {
@@ -95,92 +200,6 @@ public class InitializeSeasonState implements ISimulateState {
         }
     }
 
-    private void getGamesAcrossLeague(List<String> team_list_out_conference, List<Game> tempGameList) {
-        for (Conference conf : league.getConferenceList()) {
-            for (Division division : conf.getDivisionList()) {
-                for (Team teamInLoop : division.getTeamList()) {
-                    while (true) {
-                        for (Conference conference2 : league.getConferenceList()) {
-                            if ((conference2.getName().equals(conf.getName()))) continue;
-                            for (Division division3 : conference2.getDivisionList()) {
-                                for (Team team2InLoop : division3.getTeamList()) {
-                                    if (checkMaxGamesReached(tempGameList, team2InLoop.getName(), gamesPerTeamPerComponent * 3))
-                                        continue;
-                                    if (checkMaxGamesReached(tempGameList, teamInLoop.getName(), gamesPerTeamPerComponent * 3))
-                                        continue;
-                                    if (!(team_list_out_conference.contains(team2InLoop.getName()))) {
-                                        Game game = new Game();
-                                        game.setTeam1(teamInLoop.getName());
-                                        game.setTeam2(team2InLoop.getName());
-                                        tempGameList.add(game);
-                                    }
-                                }
-                                if (checkMaxGamesReached(tempGameList, teamInLoop.getName(), gamesPerTeamPerComponent * 3)) break;
-                            }
-                            if (checkMaxGamesReached(tempGameList, teamInLoop.getName(), gamesPerTeamPerComponent * 3)) break;
-                        }
-                        team_list_out_conference.add(teamInLoop.getName());
-                        if (checkMaxGamesReached(tempGameList, teamInLoop.getName(), gamesPerTeamPerComponent * 3)) break;
-                    }
-                }
-            }
-        }
-    }
-
-    private void getGamesWithinConference(List<String> team_list_out_division, List<Game> tempGameList) {
-        for (Conference conf : league.getConferenceList()) {
-            for (Division division : conf.getDivisionList()) {
-                for (Team teamInLoop : division.getTeamList()) {
-                    while (true) {
-                        for (Division division3 : conf.getDivisionList()) {
-                            if ((division3.getName().equals(division.getName()))) continue;
-                            for (Team team2InLoop : division3.getTeamList()) {
-                                if (checkMaxGamesReached(tempGameList, team2InLoop.getName(), gamesPerTeamPerComponent * 2))
-                                    continue;
-                                if (checkMaxGamesReached(tempGameList, teamInLoop.getName(), gamesPerTeamPerComponent * 2))
-                                    continue;
-                                if (!(team_list_out_division.contains(team2InLoop.getName()))) {
-                                    Game game = new Game();
-                                    game.setTeam1(teamInLoop.getName());
-                                    game.setTeam2(team2InLoop.getName());
-                                    tempGameList.add(game);
-                                }
-                            }
-                            if (checkMaxGamesReached(tempGameList, teamInLoop.getName(), gamesPerTeamPerComponent * 2)) break;
-                        }
-                        team_list_out_division.add(teamInLoop.getName());
-                        if (checkMaxGamesReached(tempGameList, teamInLoop.getName(), gamesPerTeamPerComponent * 2)) break;
-                    }
-                }
-            }
-        }
-    }
-
-    private void getGamesWithinDivision(List<String> team_list_in_division, List<Game> tempGameList) {
-        for (Conference conf : league.getConferenceList()) {
-            for (Division division : conf.getDivisionList()) {
-                for (Team teamInLoop : division.getTeamList()) {
-                    while (true) {
-                        for (Team team2InLoop : division.getTeamList()) {
-                            if ((teamInLoop.getName().equals(team2InLoop.getName()))) continue;
-                            if (checkMaxGamesReached(tempGameList, team2InLoop.getName(), this.gamesPerTeamPerComponent)) continue;
-                            if (checkMaxGamesReached(tempGameList, teamInLoop.getName(), this.gamesPerTeamPerComponent)) continue;
-                            if (!(team_list_in_division.contains(team2InLoop.getName()))) {
-                                Game game = new Game();
-                                game.setTeam1(teamInLoop.getName());
-                                game.setTeam2(team2InLoop.getName());
-                                System.out.println(teamInLoop.getName()+" & "+team2InLoop.getName());
-                                tempGameList.add(game);
-                            }
-                        }
-                        if (checkMaxGamesReached(tempGameList, teamInLoop.getName(), this.gamesPerTeamPerComponent)) break;
-                    }
-                    team_list_in_division.add(teamInLoop.getName());
-                }
-            }
-        }
-    }
-
     private Integer getTotalTeamsCount() {
         int teamsCount = 0;
         for(Conference conference2: league.getConferenceList()) {
@@ -191,17 +210,6 @@ public class InitializeSeasonState implements ISimulateState {
             }
         }
         return teamsCount;
-    }
-
-    public static boolean checkMaxGamesReached(List<Game> gameList, String name, int count){
-        int i =0;
-        for(Game g: gameList){
-            if(g.getTeam1().equals(name) ||g.getTeam2().equals(name)){
-                i++;
-            }
-        }
-        if(i >= count) return true;
-        else return false;
     }
 
     public League getLeague() {
