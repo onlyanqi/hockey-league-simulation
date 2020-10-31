@@ -41,7 +41,7 @@ public class LeagueMock implements ILeagueFactory {
 
         ICoachFactory coachFactory = new CoachMock();
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 2; i++) {
             Coach coach = new Coach(i, coachFactory);
             coachList.add(coach);
             coachList.add(coach);
@@ -81,9 +81,6 @@ public class LeagueMock implements ILeagueFactory {
         for(int i=1;i<22;i++){
             Player player = new Player(i, playerFactory);
             playerList.add(player);
-        }
-
-        return playerList;
         }
 
         return playerList;
@@ -138,7 +135,6 @@ public class LeagueMock implements ILeagueFactory {
                 league.setName("League1");
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
-                league.setTrading(getTrading());
                 league.setCoachList(formCoachList());
                 league.setGamePlayConfig(formGamePlayConfig());
                 league.setManagerList(formManagerList());
@@ -154,7 +150,6 @@ public class LeagueMock implements ILeagueFactory {
                 league.setManagerList(formManagerList());
                 league.setFreeAgent(formFreeAgent());
                 league.setCoachList(formCoachList());
-                league.setTrading(getTrading());
                 league.setGamePlayConfig(formGamePlayConfig());
                 league.setTradingOfferList(getTradeOfferList(2));
                 league.setCurrentDate(LocalDate.now());
@@ -168,7 +163,6 @@ public class LeagueMock implements ILeagueFactory {
                 league.setManagerList(formManagerList());
                 league.setFreeAgent(formFreeAgent());
                 league.setGamePlayConfig(formGamePlayConfig());
-                league.setTrading(getTrading());
                 league.setTradingOfferList(getTradeOfferList(3));
                 league.setCurrentDate(LocalDate.now());
                 break;
@@ -178,7 +172,6 @@ public class LeagueMock implements ILeagueFactory {
                 league.setName("League4");
                 league.setConferenceList(formCreateTeamConferenceList());
                 league.setFreeAgent(formFreeAgent());
-                league.setTrading(getTrading());
                 league.setCoachList(formCoachList());
                 league.setManagerList(formManagerList());
                 league.setTradingOfferList(getTradeOfferList(1));
