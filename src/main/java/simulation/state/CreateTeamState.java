@@ -10,7 +10,6 @@ import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import java.util.ArrayList;
 import java.util.List;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class CreateTeamState implements IHockeyState, ICreateTeamState {
@@ -44,6 +43,10 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         this.teamCreationOutput = teamCreationOutput;
     }
 
+    public CreateTeamState() {
+
+    }
+
     @Override
     public void entry() {
         if (isLeaguePresent(league.getName())) {
@@ -51,14 +54,64 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
             System.out.println();
             System.exit(1);
         }
+        if(hasEnoughCoaches(league.getCoachList()) && hasEnoughFreeAgent(league.getFreeAgent()) && hasEnoughManagers(league.getManagerList())){
+            Conference conference = chooseConference();
+            Division division = chooseDivision(conference);
+            getTeamName(division);
 
-        Conference conference = chooseConference();
-        Division division = chooseDivision(conference);
-        getTeamName(division);
 
-        chooseManager();
-        chooseCoach();
-        choosePlayers();
+            chooseManager();
+            chooseCoach();
+            choosePlayers();
+        }else{
+            teamCreationOutput.showNotEnoughMembersError();
+            exit();
+        }
+
+
+    }
+
+    public boolean hasEnoughManagers(List<Manager> managerList){
+        if(managerList == null){
+            return false;
+        }
+        if(managerList.size()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean hasEnoughCoaches(List<Coach> coachList){
+        if(coachList == null){
+            return false;
+        }
+        if(coachList.size()>=1) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean hasEnoughFreeAgent(FreeAgent freeAgent){
+        if(freeAgent == null){
+            return false;
+        }
+        List<Player> freeAgentList = freeAgent.getPlayerList();
+        int countOfGoalie = 0;
+        int countOfSkaters = 0;
+        for(int i=0;i<freeAgentList.size();i++){
+            if (freeAgentList.get(i).getPosition().toString().equals("goalie")){
+                countOfGoalie++;
+            }else{
+                countOfSkaters++;
+            }
+        }
+        if(countOfGoalie>=2 && countOfSkaters>=18){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -190,12 +243,13 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
             }
         }
         league.setConferenceList(conferenceList);
+        ConsoleOutput.printToConsole(WAITMESSAGE);
     }
 
     @Override
     public IHockeyState exit() {
 
-        ConsoleOutput.printToConsole(WAITMESSAGE);
+
         IHockeyState hockeyState = null;
 
         String createAnotherTeam = GetInput.getUserInput(CREATEANOTHERTEAMQUESTION);

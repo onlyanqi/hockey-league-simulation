@@ -23,6 +23,19 @@ public class ConferenceMock implements IConferenceFactory {
         return divisionList;
     }
 
+    public List formCreateTeamDivisionList() throws Exception {
+        List<Division> divisionList = new ArrayList<>();
+
+        IDivisionFactory divisionFactory = new DivisionMock();
+        Division division = new Division(1, divisionFactory);
+        divisionList.add(division);
+
+        division = new Division(4, divisionFactory);
+        divisionList.add(division);
+
+        return divisionList;
+    }
+
     @Override
     public int addConference(Conference conference) throws Exception {
         conference = new Conference(1);
@@ -52,6 +65,12 @@ public class ConferenceMock implements IConferenceFactory {
                 conference.setName("Invalid Date");
                 conference.setLeagueId(1);
                 conference.setDivisionList(formDivisionList());
+                break;
+
+            case 4:
+                conference.setName("Conference4");
+                conference.setLeagueId(1);
+                conference.setDivisionList(formCreateTeamDivisionList());
                 break;
         }
 

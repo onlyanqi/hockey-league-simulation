@@ -24,14 +24,21 @@ public class LeagueDataSerializerDeSerializer {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting().create();
 
-        FileWriter fileWriter;
+        FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(FILENAME);
             gson.toJson(league, fileWriter);
-            fileWriter.flush();
-            fileWriter.close();
+
         } catch (Exception e) {
             ConsoleOutput.printToConsole(JSONCREATIONERROR);
+        }finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                ConsoleOutput.printToConsole(JSONCREATIONERROR);
+            }
+
         }
     }
 

@@ -9,6 +9,11 @@ import java.util.List;
 public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreation {
 
     @Override
+    public void showNotEnoughMembersError(){
+        ConsoleOutput.printToConsole("There is insufficient managers or coaches or free agents, thus you will not be able to create a new team.");
+    }
+
+    @Override
     public void showLeagueAlreadyExistsError() {
         ConsoleOutput.printToConsole("League already exists. Please enter a new one");
     }
@@ -24,7 +29,6 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
             System.out.format("%5s %20s",
                     i,managerList.get(i).getName());
             ConsoleOutput.printToConsole("\n");
-
         }
     }
 

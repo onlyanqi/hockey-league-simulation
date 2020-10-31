@@ -48,9 +48,9 @@ public class FreeAgentTest {
         List<Player> playerList = freeAgent.getPlayerList();
         assertNotNull(playerList);
         assertTrue(playerList.get(0).getId() == (1));
-        assertTrue(playerList.get(1).getId() == (5));
+        assertTrue(playerList.get(4).getId() == (5));
         assertTrue(playerList.get(0).getName().equals("Player1"));
-        assertTrue(playerList.get(1).getName().equals("Player5"));
+        assertTrue(playerList.get(4).getName().equals("Player5"));
     }
 
     @Test

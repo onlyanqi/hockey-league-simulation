@@ -75,7 +75,7 @@ public class LeagueTest {
     @Test
     public void getFreeAgentTest() throws Exception {
         League league = new League(1, leagueFactory);
-        assertEquals(league.getFreeAgent().getId(), 1);
+        assertEquals(league.getFreeAgent().getId(), 0);
         List<Player> playerList = league.getFreeAgent().getPlayerList();
         assertTrue(playerList.get(0).getName().equals("Player1"));
     }

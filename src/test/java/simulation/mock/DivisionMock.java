@@ -23,6 +23,16 @@ public class DivisionMock implements IDivisionFactory {
         return teamList;
     }
 
+    public List formCreateTeamTeamList() throws Exception {
+        List<Team> teamList = new ArrayList<>();
+
+        ITeamFactory teamFactory = new TeamMock();
+        Team team = new Team(1, teamFactory);
+        teamList.add(team);
+        return teamList;
+
+    }
+
     @Override
     public int addDivision(Division division) throws Exception {
         division = new Division(1);
@@ -53,6 +63,10 @@ public class DivisionMock implements IDivisionFactory {
                 division.setConferenceId(1);
                 division.setTeamList(formTeamList());
                 break;
+            case 4:
+                division.setName("Division4");
+                division.setConferenceId(1);
+                division.setTeamList(formCreateTeamTeamList());
         }
 
     }

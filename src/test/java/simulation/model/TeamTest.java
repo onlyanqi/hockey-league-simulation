@@ -151,9 +151,9 @@ public class TeamTest {
         team.loadPlayerListByTeamId(playerFactory);
 
         assertEquals(team.getPlayerList().get(0).getId(), (1));
-        assertEquals(team.getPlayerList().get(1).getId(), (5));
+        assertEquals(team.getPlayerList().get(1).getId(), (2));
         assertEquals(team.getPlayerList().get(0).getName(), ("Player1"));
-        assertEquals(team.getPlayerList().get(1).getName(), ("Player5"));
+        assertEquals(team.getPlayerList().get(1).getName(), ("Player2"));
     }
 
     @Test
