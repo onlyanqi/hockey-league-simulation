@@ -31,9 +31,18 @@ public class CreateTeamStateTest {
     }
 
     @Test
+    public void entryTest() throws Exception {
+         chooseConferenceTest();
+         chooseCoachTest();
+         chooseDivisionTest();
+         chooseManagerTest();
+         choosePlayersTest();
+    }
+
+    @Test
     public void hasEnoughManagersTest() throws Exception {
         CreateTeamState createTeamState = new CreateTeamState();
-        List<Manager> managerList= new ArrayList<>();
+        List<Manager> managerList;
         IManagerFactory managerFactory = new ManagerMock();
         managerList = managerFactory.loadFreeManagersByLeagueId(1);
         assertTrue(createTeamState.hasEnoughManagers(managerList));
@@ -43,7 +52,7 @@ public class CreateTeamStateTest {
     @Test
     public void hasEnoughCoachTest() throws Exception {
         CreateTeamState createTeamState = new CreateTeamState();
-        List<Coach> coachList= new ArrayList<>();
+        List<Coach> coachList;
         ICoachFactory coachFactory = new CoachMock();
         coachList = coachFactory.loadFreeCoachListByLeagueId(1);
         assertTrue(createTeamState.hasEnoughCoaches(coachList));
@@ -89,10 +98,8 @@ public class CreateTeamStateTest {
         League league = new League(4,leagueFactory);
         List<String> conferenceNameList = league.createConferenceNameList();
         String conferenceName = "Conference4";
-        System.out.println(conferenceNameList);
         assertTrue(conferenceName,conferenceNameList.contains(conferenceName.toLowerCase()));
         conferenceName = "Conference5";
-        System.out.println(conferenceNameList);
         assertFalse(conferenceName,conferenceNameList.contains(conferenceName.toLowerCase()));
     }
 
@@ -198,6 +205,8 @@ public class CreateTeamStateTest {
 
     @Test
     public void exitTest() {
-
+        IHockeyState hockeyState = new CreateTeamState();
+        assertFalse(hockeyState == null);
+        assertEquals(hockeyState.getClass().toString(),"class simulation.state.CreateTeamState");
     }
 }

@@ -47,6 +47,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
     }
 
+
     @Override
     public void entry() {
         if (isLeaguePresent(league.getName())) {
@@ -67,8 +68,6 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
             teamCreationOutput.showNotEnoughMembersError();
             exit();
         }
-
-
     }
 
     public boolean hasEnoughManagers(List<Manager> managerList){
