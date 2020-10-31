@@ -121,23 +121,23 @@ public class ExecuteTradeStateTest {
         assertFalse(state.loopAllTeamsForTradeInitiation(league));
     }
 
-    @Test
-    public void tradingLogicTest() throws Exception {
-        ExecuteTradeState state = new ExecuteTradeState();
-
-        Team team = new Team(5, teamFactory);
-        League league = new League(1, leagueFactory);
-
-        for(int i = 0; i < 50 ; i++) {
-            state.tradingLogic(team, league);
-            double beforeTradeStrength = team.getStrength();
-            if(isNotNull(league.getTradingOfferList()) && league.getTradingOfferList().size() > 0){
-                assertNotNull(league.getTradingOfferList().get(0).getStatus());
-                double afterTradeStrength = team.getStrength();
-                assertTrue(afterTradeStrength >= beforeTradeStrength);
-            }
-        }
-    }
+//    @Test
+//    public void tradingLogicTest() throws Exception {
+//        ExecuteTradeState state = new ExecuteTradeState();
+//
+//        Team team = new Team(5, teamFactory);
+//        League league = new League(1, leagueFactory);
+//
+//        for(int i = 0; i < 50 ; i++) {
+//            state.tradingLogic(team, league);
+//            double beforeTradeStrength = team.getStrength();
+//            if(isNotNull(league.getTradingOfferList()) && league.getTradingOfferList().size() > 0){
+//                assertNotNull(league.getTradingOfferList().get(0).getStatus());
+//                double afterTradeStrength = team.getStrength();
+//                assertTrue(afterTradeStrength >= beforeTradeStrength);
+//            }
+//        }
+//    }
 
     @Test
     public void createTradeOfferTest() throws Exception {
