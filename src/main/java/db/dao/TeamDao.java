@@ -13,13 +13,15 @@ public class TeamDao implements ITeamFactory {
     public int addTeam(Team team) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddTeam(?,?,?,?)");
+            callDB = new CallDB("AddTeam(?,?,?,?,?,?)");
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
             callDB.setInputParameterBoolean(3, team.isAiTeam());
-            callDB.setOutputParameterInt(3);
+            callDB.setInputParameterInt(4, team.getPendingTradeOfferCount());
+            callDB.setInputParameterInt(5, team.getLossPoint());
+            callDB.setOutputParameterInt(6);
             callDB.execute();
-            team.setId(callDB.returnOutputParameterInt(3));
+            team.setId(callDB.returnOutputParameterInt(6));
 
         } catch (SQLException sqlException) {
             throw sqlException;
@@ -33,16 +35,20 @@ public class TeamDao implements ITeamFactory {
     public void loadTeamById(int id, Team team) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadTeamByName(?,?,?,?,?,?)");
+            callDB = new CallDB("LoadTeamById(?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
+            callDB.setOutputParameterInt(5);
+            callDB.setOutputParameterInt(6);
             callDB.executeLoad();
 
             team.setId(callDB.returnOutputParameterInt(2));
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));
+            team.setPendingTradeOfferCount(callDB.returnOutputParameterInt(5));
+            team.setLossPoint(callDB.returnOutputParameterInt(6));
 
         } catch (Exception e) {
             throw e;
@@ -60,11 +66,15 @@ public class TeamDao implements ITeamFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
+            callDB.setOutputParameterInt(5);
+            callDB.setOutputParameterInt(6);
             callDB.executeLoad();
 
             team.setId(callDB.returnOutputParameterInt(2));
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));
+            team.setPendingTradeOfferCount(callDB.returnOutputParameterInt(5));
+            team.setLossPoint(callDB.returnOutputParameterInt(6));
 
         } catch (Exception e) {
             throw e;
@@ -76,7 +86,7 @@ public class TeamDao implements ITeamFactory {
     @Override
     public List<Team> loadTeamListByDivisionId(int divisionId) throws Exception {
         List<Team> teamList = null;
-        ICallDB callDB = null;
+        ICallDB callDB;
         try {
             callDB = new CallDB("LoadTeamListByDivisionId(?)");
             callDB.setInputParameterInt(1, divisionId);
@@ -88,6 +98,9 @@ public class TeamDao implements ITeamFactory {
                     team.setId(rs.getInt(1));
                     team.setName(rs.getString(2));
                     team.setDivisionId(divisionId);
+                    team.setAiTeam(rs.getBoolean(4));
+                    team.setPendingTradeOfferCount(rs.getInt(5));
+                    team.setLossPoint(rs.getInt(6));
                     teamList.add(team);
                 }
             }

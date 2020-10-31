@@ -8,12 +8,11 @@ public class FreeAgentDao implements IFreeAgentFactory {
     public int addFreeAgent(FreeAgent freeAgent) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddFreeAgent(?,?,?)");
+            callDB = new CallDB("AddFreeAgent(?,?)");
             callDB.setInputParameterInt(1, freeAgent.getLeagueId());
-            callDB.setInputParameterInt(2, freeAgent.getSeasonId());
-            callDB.setOutputParameterInt(3);
+            callDB.setOutputParameterInt(2);
             callDB.execute();
-            freeAgent.setId(callDB.returnOutputParameterInt(3));
+            freeAgent.setId(callDB.returnOutputParameterInt(2));
 
         } catch (Exception e) {
             throw e;

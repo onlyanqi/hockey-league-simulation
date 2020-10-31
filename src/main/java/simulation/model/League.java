@@ -255,26 +255,6 @@ public class League extends SharedAttributes {
         return null;
     }
 
-    private transient Trading trading;
-
-    public Trading getTrading() {
-        return trading;
-    }
-
-    public void setTrading(Trading trading) {
-        if(trading == null){
-            return;
-        }
-        this.trading = trading;
-    }
-
-    public void loadTradingDetailsByLeagueId(ITradingFactory tradingFactory) throws Exception {
-        if(tradingFactory == null){
-            return;
-        }
-        this.trading = tradingFactory.loadTradingDetailsByLeagueId(getId());
-    }
-
     private transient List<TradeOffer> tradeOfferList;
 
     public List<TradeOffer> getTradingOfferList(){
@@ -282,16 +262,10 @@ public class League extends SharedAttributes {
     }
 
     public void setTradingOfferList(List<TradeOffer> tradeOfferList){
-        if(tradeOfferList == null){
-            return;
-        }
         this.tradeOfferList = tradeOfferList;
     }
 
     public void loadTradingOfferDetailsByLeagueId(ITradeOfferFactory tradingOfferFactory) throws Exception {
-        if(tradingOfferFactory == null){
-            return;
-        }
         this.tradeOfferList = tradingOfferFactory.loadTradeOfferDetailsByLeagueId(getId());
     }
 

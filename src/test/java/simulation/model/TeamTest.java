@@ -159,7 +159,7 @@ public class TeamTest {
     @Test
     public void getPendingTradeOfferCount() throws Exception {
         Team team = new Team(1, loadTeamFactory);
-        assertEquals(team.getPendingTradeOfferCount(), 1);
+        assertEquals(team.getPendingTradeOfferCount(), 0);
         assertNotEquals(team.getPendingTradeOfferCount(), 2);
         team = new Team(2, loadTeamFactory);
         assertEquals(team.getPendingTradeOfferCount(), 2);

@@ -62,10 +62,9 @@ public class DivisionTest {
         Division division = new Division(1, loadDivisionFactory);
         List<Team> teamList = division.getTeamList();
         assertNotNull(teamList);
-        assertTrue(teamList.get(0).getId() == (1));
-        assertTrue(teamList.get(1).getId() == (2));
-        assertTrue(teamList.get(0).getName().equals("Team1"));
-        assertNull(teamList.get(1).getName());
+        assertEquals(teamList.get(0).getId(), (1));
+        assertEquals(teamList.get(1).getId(), (3));
+        assertEquals(teamList.get(0).getName(), ("Team1"));
     }
 
     @Test
@@ -103,9 +102,8 @@ public class DivisionTest {
         division.loadTeamListByDivisionId(loadTeamFactory);
 
         assertTrue(division.getTeamList().get(0).getId() == (1));
-        assertTrue(division.getTeamList().get(1).getId() == (2));
+        assertTrue(division.getTeamList().get(1).getId() == (3));
         assertTrue(division.getTeamList().get(0).getName().equals("Team1"));
-        assertNull(division.getTeamList().get(1).getName());
     }
 
 }

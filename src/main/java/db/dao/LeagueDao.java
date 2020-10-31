@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.ILeagueFactory;
 import simulation.model.League;
+import util.DateUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,12 +15,25 @@ public class LeagueDao implements ILeagueFactory {
     public int addLeague(League league) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddLeague(?,?,?)");
+            callDB = new CallDB("AddLeague(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             callDB.setInputParameterString(1, league.getName());
             callDB.setInputParameterInt(2, league.getCreatedBy());
-            callDB.setOutputParameterInt(3);
+            callDB.setInputParameterInt(3, league.getGamePlayConfig().getAging().getAverageRetirementAge());
+            callDB.setInputParameterInt(4, league.getGamePlayConfig().getAging().getMaximumAge());
+            callDB.setInputParameterDouble(5, league.getGamePlayConfig().getGameResolver().getRandomWinChance());
+            callDB.setInputParameterDouble(6, league.getGamePlayConfig().getInjury().getRandomInjuryChance());
+            callDB.setInputParameterInt(7, league.getGamePlayConfig().getInjury().getInjuryDaysLow());
+            callDB.setInputParameterInt(8, league.getGamePlayConfig().getInjury().getInjuryDaysHigh());
+            callDB.setInputParameterInt(9, league.getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck());
+            callDB.setInputParameterInt(10, league.getGamePlayConfig().getTrading().getLossPoint());
+            callDB.setInputParameterDouble(11, league.getGamePlayConfig().getTrading().getRandomTradeOfferChance());
+            callDB.setInputParameterInt(12, league.getGamePlayConfig().getTrading().getMaxPlayersPerTrade());
+            callDB.setInputParameterInt(13, league.getGamePlayConfig().getTrading().getMaxPlayersPerTrade());
+            callDB.setInputParameterDate(14, DateUtil.convertLocalDateToSQLDate(league.getCurrentDate()));
+
+            callDB.setOutputParameterInt(15);
             callDB.execute();
-            league.setId(callDB.returnOutputParameterInt(3));
+            league.setId(callDB.returnOutputParameterInt(15));
 
         } catch (SQLException sqlException) {
             throw sqlException;

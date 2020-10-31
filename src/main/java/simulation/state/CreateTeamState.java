@@ -2,10 +2,10 @@ package simulation.state;
 
 import config.AppConfig;
 import db.data.ILeagueFactory;
+import presentation.ReadUserInput;
 import simulation.factory.LeagueConcrete;
 import simulation.model.*;
 import presentation.ConsoleOutput;
-import presentation.GetInput;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import java.util.ArrayList;
@@ -252,7 +252,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
         IHockeyState hockeyState = null;
 
-        String createAnotherTeam = GetInput.getUserInput(CREATEANOTHERTEAMQUESTION);
+        String createAnotherTeam = ReadUserInput.getUserInput(CREATEANOTHERTEAMQUESTION);
         while (isNotEmpty(createAnotherTeam)) {
 
             if (createAnotherTeam.toLowerCase().equals(Y) || createAnotherTeam.toLowerCase().equals(YES)) {
