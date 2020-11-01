@@ -1,12 +1,14 @@
 package simulation.model;
 
+import db.data.IEventFactory;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
 
 
-public class NHLEvents extends SharedAttributes{
+public class NHLEvents {
 
     public NHLEvents() {
         initializeEndOfRegularSeason();
@@ -17,12 +19,26 @@ public class NHLEvents extends SharedAttributes{
         initializeNextSeasonDate();
     }
 
+    public NHLEvents(int leagueId, IEventFactory iEventFactory) throws Exception{
+        iEventFactory.loadEventByLeagueId(leagueId, this);
+    }
+
+    public int id;
+
     public LocalDate regularSeasonStartDate;
     public LocalDate tradeDeadlineDate;
     public LocalDate endOfRegularSeason;
     public LocalDate playOffStartDate;
     public LocalDate lastDayStanleyCupFinals;
     public LocalDate nextSeasonDate;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public LocalDate getNextSeasonDate() {
         return nextSeasonDate;

@@ -30,7 +30,7 @@ public class PersistState implements ISimulateState{
     private void saveToPersistence(League league) {
 
         if(todayIsStartOfSeason()){
-            persistLeagueToDB();
+           // persistLeagueToDB();
         }else{
             updateDataBaseWithSimulatedDate();
         }
@@ -113,10 +113,10 @@ public class PersistState implements ISimulateState{
     }
 
     private void addTeamStanding(int id, List<TeamScore> teamScoreList) throws Exception {
-        TeamStandingConcrete teamStandingConcrete = new TeamStandingConcrete();
-        ITeamStandingFactory addTeamStandingFactory = teamStandingConcrete.newAddTeamStandingFactory();
+        TeamScoreConcrete teamScoreConcrete = new TeamScoreConcrete();
+        ITeamScoreFactory addTeamScoreFactory = teamScoreConcrete.newAddTeamScoreFactory();
         for (TeamScore teamScore : teamScoreList) {
-            addTeamStandingFactory.addTeamStanding(id,teamScore);
+            addTeamScoreFactory.addTeamScore(id,0,teamScore);
         }
     }
 

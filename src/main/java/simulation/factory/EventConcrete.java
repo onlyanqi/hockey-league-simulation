@@ -1,11 +1,8 @@
 package simulation.factory;
 
 import db.dao.EventDao;
-import db.dao.TeamStandingDao;
 import db.data.IEventFactory;
-import db.data.ITeamStandingFactory;
 import simulation.model.NHLEvents;
-import simulation.model.TeamStanding;
 
 public class EventConcrete {
 

@@ -1,13 +1,21 @@
 package simulation.model;
 
+import db.data.IGameFactory;
+
 import java.time.LocalDate;
 
-public class Game extends SharedAttributes{
+public class Game {
 
     public Game() {
         this.played = false;
     }
 
+    public Game(int id,IGameFactory factory) throws Exception{
+        setId(id);
+        factory.loadGameById(id,this);
+    }
+
+    private int id;
     private String team1;
     private String team2;
     private LocalDate date;
@@ -18,6 +26,15 @@ public class Game extends SharedAttributes{
         TEAM2,
         TIE
     };
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Result getWinner() {
         return winner;

@@ -3,13 +3,31 @@ package simulation.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamStanding extends SharedAttributes{
-
-    private List<TeamScore> teamsScoreList;
+public class TeamStanding {
 
     public TeamStanding() {
         teamsScoreList = new ArrayList<>();
     }
+
+    private int id;
+    private List<TeamScore> teamsScoreList;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<TeamScore> getTeamsScoreList() {
+        return teamsScoreList;
+    }
+
+    public void setTeamsScoreList(List<TeamScore> teamsScoreList) {
+        this.teamsScoreList = teamsScoreList;
+    }
+
 
     public void initializeTeamStandings(List<String> teamNames){
         Integer teamsSize = teamNames.size();
@@ -27,14 +45,6 @@ public class TeamStanding extends SharedAttributes{
                 }
             }
         }
-    }
-
-    public List<TeamScore> getTeamsScoreList() {
-        return teamsScoreList;
-    }
-
-    public void setTeamsScoreList(List<TeamScore> teamsScoreList) {
-        this.teamsScoreList = teamsScoreList;
     }
 
     public void setTeamPoints(String teamName){

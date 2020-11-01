@@ -65,7 +65,6 @@ public class InitializeSeasonState implements ISimulateState {
         Integer totalGamesAdded = tempGameList.size();
 
         scheduleGamesForGeneratedOnes(gameList,tempGameList,currentDate,totalGamesAdded,diffInDays);
-        currentDate = DateUtil.addDays(currentDate,1);
         scheduleGamesForRemainingGeneratedOnes(gameList,tempGameList,currentDate,totalGamesAdded,diffInDays);
 
         TeamStanding regularSeasonTeamStanding = new TeamStanding();
@@ -189,7 +188,6 @@ public class InitializeSeasonState implements ISimulateState {
     private void scheduleGamesForGeneratedOnes(List<Game> gameList, List<Game> tempGameList, LocalDate currentDate, Integer totalGamesAdded, int diffInDays) {
         Random rand = new Random();
         for(int i=0;i<diffInDays;i++){
-            currentDate = DateUtil.addDays(currentDate,1);
             for(int j=0;j<totalGamesAdded/diffInDays;j++){
                 int randomNumber = rand.nextInt(tempGameList.size());
                 Game game = tempGameList.get(randomNumber);
@@ -197,6 +195,7 @@ public class InitializeSeasonState implements ISimulateState {
                 tempGameList.remove(randomNumber);
                 gameList.add(game);
             }
+            currentDate = DateUtil.addDays(currentDate,1);
         }
     }
 
