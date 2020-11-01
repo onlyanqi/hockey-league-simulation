@@ -134,38 +134,7 @@ public class LeagueTest {
     }
 
     /*
-    @Test
-    public void getTradingTest() throws Exception {
-        ITradingFactory tradingFactory = new TradingMock();
-        Trading trading = new Trading(1, tradingFactory);
-        League league = new League(1, leagueFactory);
-        assertEquals(trading.getId(), league.getTrading().getId());
-        assertEquals(trading.getMaxPlayersPerTrade(), league.getTrading().getMaxPlayersPerTrade());
-    }
 
-    @Test
-    public void setTradingTest() throws Exception {
-        ITradingFactory tradingFactory = new TradingMock();
-        Trading trading = new Trading(1, tradingFactory);
-        League league = new League();
-        league.setTrading(trading);
-        assertEquals(1, league.getTrading().getId());
-        assertEquals(3, league.getTrading().getMaxPlayersPerTrade());
-        assertNotEquals(2, league.getTrading().getId());
-    }
-
-    @Test
-    public void loadTradingDetailsByLeagueId() throws Exception {
-        League league = new League();
-        league.setId(1);
-        ITradingFactory tradingFactory = new TradingMock();
-        league.loadTradingDetailsByLeagueId(tradingFactory);
-        assertNotNull(league.getTrading());
-        assertEquals(1, league.getTrading().getId());
-        assertEquals(3, league.getTrading().getMaxPlayersPerTrade());
-        assertNotEquals(2, league.getTrading().getId());
-        assertNotEquals(2, league.getTrading().getMaxPlayersPerTrade());
-    }
 */
 
     @Test

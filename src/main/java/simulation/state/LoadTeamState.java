@@ -49,6 +49,8 @@ public class LoadTeamState implements IHockeyState {
         }
         league = hockeyContext.getUser().getLeagueList().get(0);
 
+        updateTradingDetailsToLeague();
+
         Division div = null;
 
         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
@@ -109,6 +111,12 @@ public class LoadTeamState implements IHockeyState {
         System.out.println("The team belongs to \"" + conf.getName() + "\" conference.");
         System.out.println("The team belongs to \"" + div.getName() + "\" division.");
 
+    }
+
+    public void updateTradingDetailsToLeague() throws Exception {
+        TradingConcrete tradingConcrete = new TradingConcrete();
+        ITradingFactory tradingFactory = tradingConcrete.newTradingFactory();
+        league.getGamePlayConfig().setTrading(tradingFactory.loadTradingDetailsByLeagueId(league.getId()));
     }
 
     @Override
