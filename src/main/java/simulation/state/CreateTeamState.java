@@ -64,8 +64,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
             Conference conference = chooseConference();
             Division division = chooseDivision(conference);
             getTeamName(division);
-
-
+            
             chooseManager();
             chooseCoach();
             choosePlayers();

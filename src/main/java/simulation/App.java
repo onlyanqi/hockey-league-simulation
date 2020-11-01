@@ -2,6 +2,7 @@ package simulation;
 
 import db.data.IUserFactory;
 import org.json.simple.JSONObject;
+import presentation.ReadUserInput;
 import simulation.factory.UserConcrete;
 import simulation.model.User;
 import simulation.state.HockeyContext;
@@ -16,8 +17,9 @@ public class App {
         String filePath = "";
         JSONObject jsonFromInput = null;
 
-        //String userName = ReadUserInput.getUserInput("Please enter username");
-        String userName = "mpk";
+        ReadUserInput readUserInput = ReadUserInput.getInstance();
+
+        String userName = readUserInput.getInput("Please enter username");
 
         Validation validation = new Validation();
 
@@ -29,14 +31,12 @@ public class App {
 
                 user.setName(userName);
                 if (user.getId() == 0) {
-                    //String password = ReadUserInput.getUserInput("Please enter password to register yourself");
-                    String password = "mpk";
+                    String password = readUserInput.getInput("Please enter password to register yourself");
 
                     user.setPassword(password);
                     addUser(user);
                 }
-                //filePath = ReadUserInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
-                filePath = "C:\\Users\\prath\\MPK\\studies\\Term3\\CSCI5308-Adv SDC\\Project\\Milestone2\\league.json";
+                filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
 
                 if (filePath != null && filePath.length() != 0) {
 
