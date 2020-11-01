@@ -2,10 +2,12 @@ package simulation.model;
 
 import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
+import db.data.ITeamFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.FreeAgentMock;
 import simulation.mock.PlayerMock;
+import simulation.mock.TeamMock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +112,7 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void loadPlayerListByFreeAgentId() throws Exception {
+    public void loadPlayerListByFreeAgentIdTest() throws Exception {
         FreeAgent freeAgent = new FreeAgent(1);
         IPlayerFactory playerFactory = new PlayerMock();
         freeAgent.loadPlayerListByFreeAgentId(playerFactory);
@@ -120,6 +122,18 @@ public class FreeAgentTest {
         assertTrue(freeAgent.getPlayerList().get(0).getName().equals("Player1"));
         assertTrue(freeAgent.getPlayerList().get(19).getName().equals("Player20"));
     }
+
+    @Test
+    public void getGoodFreeAgentsListTest() throws Exception {
+        FreeAgent freeAgent = new FreeAgent(1, loadFreeAgentFactory);
+        List<Player> playerList = freeAgent.getPlayerList();
+        ITeamFactory teamFactory = new TeamMock();
+        Team team = new Team(1,teamFactory);
+        List<Double> strengthList = team.createStrengthList(playerList);
+        assertTrue(freeAgent.getGoodFreeAgentsList(strengthList).size()<=playerList.size());
+        assertFalse(freeAgent.getGoodFreeAgentsList(strengthList).size()>playerList.size());
+    }
+
 
 
 }
