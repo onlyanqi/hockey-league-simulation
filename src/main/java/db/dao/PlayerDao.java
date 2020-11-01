@@ -154,7 +154,7 @@ public class PlayerDao implements IPlayerFactory {
             callDB.setInputParameterInt(7, player.getChecking());
             callDB.setInputParameterInt(8, player.getSaving());
             callDB.setInputParameterBoolean(9, player.getInjured());
-            callDB.setInputParameterDate(10, Date.valueOf(player.getInjuryStartDate()));
+            callDB.setInputParameterDate(10, DateUtil.convertLocalDateToSQLDate(player.getInjuryStartDate()));
             callDB.setInputParameterInt(11, player.getInjuryDatesRange());
             callDB.setInputParameterDouble(12, player.getStrength());
             callDB.execute();

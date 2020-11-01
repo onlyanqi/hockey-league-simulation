@@ -119,7 +119,7 @@ public class TeamScoreDao implements ITeamScoreFactory {
     public void updateTeamScoreById(TeamScore teamScore) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("updateTeamStanding(?,?,?,?,?,?)");
+            callDB = new CallDB("UpdateTeamStanding(?,?,?,?,?,?)");
             callDB.setInputParameterDouble(1, teamScore.getPoints());
             callDB.setInputParameterString(2, teamScore.getTeamName());
             callDB.setInputParameterInt(3, teamScore.getNumberOfWins());
