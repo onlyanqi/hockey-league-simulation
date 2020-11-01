@@ -60,16 +60,16 @@ public class PersistState implements ISimulateState{
 
                 System.out.println("League done....");
 
-                List<TradeOffer> tradeOfferList = league.getTradingOfferList();
-                if(validation.isListNotEmpty(tradeOfferList)){
-                    addTradeOfferList(tradeOfferList);
-                }
-
                 Trading trading = league.getGamePlayConfig().getTrading();
                 trading.setLeagueId(leagueId);
-                int tradingId;
+                int tradingId = 0;
                 if(validation.isNotNull(trading)){
                     tradingId = addTrading(trading);
+                }
+
+                List<TradeOffer> tradeOfferList = league.getTradingOfferList();
+                if(validation.isListNotEmpty(tradeOfferList)){
+                    addTradeOfferList(tradeOfferList, tradingId);
                 }
 
                 SeasonConcrete seasonConcrete = new SeasonConcrete();
@@ -152,10 +152,11 @@ public class PersistState implements ISimulateState{
         return tradingFactory.addTradingDetails(trading);
     }
 
-    public void addTradeOfferList(List<TradeOffer> tradeOfferList) throws Exception {
+    public void addTradeOfferList(List<TradeOffer> tradeOfferList, int tradingId) throws Exception {
         TradeOfferConcrete tradeOfferConcrete = new TradeOfferConcrete();
         ITradeOfferFactory tradeOfferFactory = tradeOfferConcrete.newTradeOfferFactory();
         for(TradeOffer tradeOffer : tradeOfferList){
+            tradeOffer.setTradingId(tradingId);
             tradeOfferFactory.addTradeOfferDetails(tradeOffer);
         }
     }
