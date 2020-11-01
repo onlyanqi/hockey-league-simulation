@@ -9,7 +9,6 @@ import presentation.ConsoleOutput;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 

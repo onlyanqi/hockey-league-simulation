@@ -22,7 +22,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     @Override
     public ISimulateState action() {
-        ConsoleOutput.printToConsole(TRAININGINFORMATION);
+        consoleOutput.printMsgToConsole(TRAININGINFORMATION);
         LocalDate currentDate = league.getCurrentDate();
         LocalDate seasonStartDate = league.getNHLRegularSeasonEvents().getRegularSeasonStartDate();
         Integer daysUntilStatIncreaseCheck  =league.getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck();
