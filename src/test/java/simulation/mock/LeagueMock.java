@@ -41,7 +41,7 @@ public class LeagueMock implements ILeagueFactory {
 
         ICoachFactory coachFactory = new CoachMock();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             Coach coach = new Coach(i, coachFactory);
             coachList.add(coach);
             coachList.add(coach);
