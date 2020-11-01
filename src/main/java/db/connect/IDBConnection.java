@@ -1,3 +1,4 @@
+/*
 package db.connect;
 
 import java.sql.Connection;
@@ -10,3 +11,4 @@ public interface IDBConnection {
     String formDBURL(Properties prop);
 
 }
+*/

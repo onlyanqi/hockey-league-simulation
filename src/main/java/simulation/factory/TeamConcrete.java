@@ -14,11 +14,7 @@ public class TeamConcrete {
         return new Team(name, loadTeamFactory);
     }
 
-    public ITeamFactory newLoadTeamFactory() {
-        return new TeamDao();
-    }
-
-    public ITeamFactory newAddTeamFactory() {
+    public ITeamFactory newTeamFactory() {
         return new TeamDao();
     }
 

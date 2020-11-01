@@ -6,6 +6,12 @@ import java.util.List;
 
 public class UseInputForTeamCreation implements IUserInputForTeamCreation {
 
+    private ConsoleOutput consoleOutput;
+
+    public UseInputForTeamCreation(){
+        consoleOutput = ConsoleOutput.getInstance();
+    }
+
     @Override
     public String getConferenceName(List<String> conferenceNameList) {
         String conferenceName = ReadUserInput.getUserInput("Please enter conference name the team belongs to");
@@ -53,7 +59,7 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
             if(isDigit(playerIdStr)){
                 playerId = Integer.parseInt(playerIdStr);
             }else{
-                ConsoleOutput.printToConsole("Please enter valid digits.");
+                consoleOutput.printMsgToConsole("Please enter valid digits.");
                 playerIdStr = ReadUserInput.getUserInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)");
             }
         }
@@ -78,11 +84,11 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
                 generalManagerId = Integer.parseInt(generalManagerIdStr);
                 if(generalManagerId < 0 || (generalManagerId > managerList.size() - 1)){
                     generalManagerId = -1;
-                    ConsoleOutput.printToConsole("Please enter valid digits.");
+                    consoleOutput.printMsgToConsole("Please enter valid digits.");
                     generalManagerIdStr = ReadUserInput.getUserInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
                 }
             }else{
-                ConsoleOutput.printToConsole("Please enter valid digits.");
+                consoleOutput.printMsgToConsole("Please enter valid digits.");
                 generalManagerIdStr = ReadUserInput.getUserInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
             }
         }
@@ -99,11 +105,11 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
                 headCoachId = Integer.parseInt(headCoachIdStr);
                 if(headCoachId < 0 || (headCoachId > coachList.size() - 1)){
                     headCoachId = -1;
-                    ConsoleOutput.printToConsole("Please enter valid digits.");
+                    consoleOutput.printMsgToConsole("Please enter valid digits.");
                     headCoachIdStr = ReadUserInput.getUserInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
                 }
             }else{
-                ConsoleOutput.printToConsole("Please enter valid digits.");
+                consoleOutput.printMsgToConsole("Please enter valid digits.");
                 headCoachIdStr = ReadUserInput.getUserInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
             }
         }

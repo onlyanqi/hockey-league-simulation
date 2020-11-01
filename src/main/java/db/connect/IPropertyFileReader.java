@@ -1,4 +1,4 @@
-package util;
+package db.connect;
 
 import java.util.Properties;
 

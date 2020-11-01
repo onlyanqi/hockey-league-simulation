@@ -33,12 +33,12 @@ public class UserConcreteTest {
 
     @Test
     public void newLoadUserFactoryTest() {
-        assertTrue(userConcrete.newLoadUserFactory() instanceof UserDao);
+        assertTrue(userConcrete.newUserFactory() instanceof UserDao);
     }
 
     @Test
     public void newAddUserFactoryTest() {
-        assertTrue(userConcrete.newAddUserFactory() instanceof UserDao);
+        assertTrue(userConcrete.newUserFactory() instanceof UserDao);
     }
 
 }

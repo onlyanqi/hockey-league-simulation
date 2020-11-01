@@ -4,8 +4,6 @@ import db.data.*;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +23,7 @@ public class League extends SharedAttributes {
     private TeamStanding activeTeamStanding;
     private NHLEvents nhlEvents;
 
-    public League() {
-    }
+    public League() {}
 
     public League(int id) {
         setId(id);
@@ -56,7 +53,6 @@ public class League extends SharedAttributes {
         }
         this.nhlEvents = nhlEvents;
     }
-
 
     public Games getGames() {
         return games;
