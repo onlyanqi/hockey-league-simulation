@@ -7,8 +7,9 @@ import validator.Validation;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PersistState implements ISimulateState{
 
@@ -28,29 +29,22 @@ public class PersistState implements ISimulateState{
     @Override
     public ISimulateState action() {
         System.out.println("Saving league to DB 1 "+league.getCurrentDate());
-        saveToPersistence(league);
+        saveToPersistence();
         System.out.println("Saving league to DB 2 "+league.getCurrentDate());
         return exit();
     }
 
-    private void saveToPersistence(League league) {
-
+    private void saveToPersistence() {
         if(todayIsStartOfSeason()){
            persistLeagueToDB();
         }else{
             updateDataBaseWithSimulatedDate();
         }
-
     }
 
     private void updateDataBaseWithSimulatedDate() {
         if (league != null) {
-
             try {
-
-                //Update Game
-                //updateGame();
-                //Update TeamStanding
                 if(league.getCurrentDate().equals(nhlEvents.getEndOfRegularSeason().plusDays(1))){
                     addPlayOffTeamStanding(league.getId(),league.getActiveTeamStanding().getTeamsScoreList());
                 }else if(league.getCurrentDate().isBefore(nhlEvents.getEndOfRegularSeason().plusDays(1))) {
@@ -58,13 +52,9 @@ public class PersistState implements ISimulateState{
                 }else if(league.getCurrentDate().isAfter(nhlEvents.getPlayOffStartDate().minusDays(1))){
                     updatePlayOffStanding(league.getId(), league.getActiveTeamStanding().getTeamsScoreList());
                 }
-                //Add TradeOffer
-
-                //Update Team
-                //updateTeam();
-                //Update Player
+                updateGames();
+                addNewTradeOffers();
                 updatePlayers();
-
             }catch(SQLException sqlException){
                 System.out.println("Unable to save the league! Please try again" + sqlException.getMessage());
                 System.exit(1);
@@ -73,6 +63,74 @@ public class PersistState implements ISimulateState{
                 e.printStackTrace();
             }
         }
+    }
+
+    private void updateGames() throws Exception {
+        if(league.getCurrentDate().isBefore(nhlEvents.getEndOfRegularSeason().plusDays(1))){
+          updateGameOnCurrentDay();
+        }else{
+            addNewGames();
+            updateGameOnCurrentDay();
+        }
+    }
+
+    private void updateGameOnCurrentDay() throws Exception {
+        List<Game> gameList = league.getGames().getGamesOnDate(league.getCurrentDate());
+
+        GameConcrete gameConcrete = new GameConcrete();
+        IGameFactory gameFactory = gameConcrete.newAddGamesFactory();
+        for (Game game : gameList) {
+            gameFactory.updateGameById(game);
+        }
+
+    }
+
+    private void addNewTradeOffers() throws Exception {
+
+        List<TradeOffer> tradeOffers = getNewTradeOffers();
+        addTradeOfferList(tradeOffers);
+    }
+
+    private List<TradeOffer> getNewTradeOffers() throws Exception {
+
+        TradeOfferConcrete tradeOfferConcrete = new TradeOfferConcrete();
+        ITradeOfferFactory tradeOfferFactory = tradeOfferConcrete.newTradeOfferFactory();
+        List<TradeOffer> tradeOffersFromPersistence = tradeOfferFactory.loadTradeOfferDetailsByLeagueId(league.getId());
+
+        List<TradeOffer> tradeOffersFromModel = league.getTradingOfferList();
+
+        Set<Integer> ids = tradeOffersFromPersistence.stream()
+                .map(TradeOffer::getId)
+                .collect(Collectors.toSet());
+        List<TradeOffer> tradeOffers = tradeOffersFromModel.stream()
+                .filter(tradeOffer -> !ids.contains(tradeOffer.getId()))
+                .collect(Collectors.toList());
+
+        return tradeOffers;
+    }
+
+    private void addNewGames() throws Exception {
+
+        List<Game> games = getNewGames();
+        addGameList(league.getId(),games);
+    }
+
+    private List<Game> getNewGames() throws Exception {
+
+        GameConcrete gameConcrete = new GameConcrete();
+        IGameFactory gameFactory = gameConcrete.newAddGamesFactory();
+        List<Game> gameListFromPersistence = gameFactory.loadGamesByLeagueId(league.getId());
+
+        List<Game> gamesFromModel = league.getGames().getGameList();
+
+        Set<Integer> ids = gameListFromPersistence.stream()
+                .map(Game::getId)
+                .collect(Collectors.toSet());
+        List<Game> tradeOffers = gamesFromModel.stream()
+                .filter(game -> !ids.contains(game.getId()))
+                .collect(Collectors.toList());
+
+        return tradeOffers;
     }
 
     private void persistLeagueToDB() {
