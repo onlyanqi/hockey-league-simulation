@@ -41,7 +41,7 @@ public class LeagueMock implements ILeagueFactory {
 
         ICoachFactory coachFactory = new CoachMock();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             Coach coach = new Coach(i, coachFactory);
             coachList.add(coach);
             coachList.add(coach);
@@ -60,6 +60,40 @@ public class LeagueMock implements ILeagueFactory {
             managerList.add(manager);
         }
         return managerList;
+    }
+
+    public Games formGames() throws Exception{
+        Games games = new Games();
+        List<Game> gameList = new ArrayList<>();
+
+        IGameFactory gameFactory = new GameMock();
+
+        for(int i =0; i<4; i++){
+            Game game = new Game(i,gameFactory);
+            gameList.add(game);
+        }
+        games.setGameList(gameList);
+        return games;
+    }
+
+    public TeamStanding formTeamStanding() throws Exception{
+        TeamStanding teamStanding = new TeamStanding();
+        List<TeamScore> teamScoreList = new ArrayList<>();
+
+        ITeamScoreFactory teamScoreFactory = new TeamScoreMock();
+
+        for(int i =1;i<4;i++){
+            TeamScore teamScore = new TeamScore(i,teamScoreFactory);
+            teamScoreList.add(teamScore);
+        }
+        teamStanding.setTeamsScoreList(teamScoreList);
+        return teamStanding;
+    }
+
+    public NHLEvents formNHLEvents(int id) throws Exception{
+        IEventFactory eventFactory = new NHLEventMock();
+        NHLEvents nhlEvents = new NHLEvents(id,eventFactory);
+        return nhlEvents;
     }
 
     @Override
@@ -116,7 +150,6 @@ public class LeagueMock implements ILeagueFactory {
     }
 
 
-
     public GamePlayConfig formGamePlayConfig() throws Exception {
         GamePlayConfig gamePlayConfig = new GamePlayConfig();
         gamePlayConfig.setTrading(getTrading());
@@ -140,6 +173,9 @@ public class LeagueMock implements ILeagueFactory {
                 league.setManagerList(formManagerList());
                 league.setTradingOfferList(getTradeOfferList(1));
                 league.setCurrentDate(LocalDate.now());
+                league.setGames(formGames());
+                league.setActiveTeamStanding(formTeamStanding());
+                league.setNhlRegularSeasonEvents(formNHLEvents(0));
                 league.setCreatedBy(1);
                 break;
 
@@ -152,6 +188,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setCoachList(formCoachList());
                 league.setGamePlayConfig(formGamePlayConfig());
                 league.setTradingOfferList(getTradeOfferList(2));
+                league.setNhlRegularSeasonEvents(formNHLEvents(1));
                 league.setCurrentDate(LocalDate.now());
                 break;
 
@@ -164,6 +201,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setFreeAgent(formFreeAgent());
                 league.setGamePlayConfig(formGamePlayConfig());
                 league.setTradingOfferList(getTradeOfferList(3));
+                league.setNhlRegularSeasonEvents(formNHLEvents(2));
                 league.setCurrentDate(LocalDate.now());
                 break;
 
@@ -175,6 +213,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setCoachList(formCoachList());
                 league.setManagerList(formManagerList());
                 league.setTradingOfferList(getTradeOfferList(1));
+                league.setNhlRegularSeasonEvents(formNHLEvents(0));
                 league.setCurrentDate(LocalDate.now());
                 break;
         }

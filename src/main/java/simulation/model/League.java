@@ -4,8 +4,6 @@ import db.data.*;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +23,14 @@ public class League extends SharedAttributes {
     private TeamStanding activeTeamStanding;
     private NHLEvents nhlEvents;
 
-    public League() {
-    }
+    public League() {}
 
     public League(int id) {
         setId(id);
     }
 
     public League(int id, ILeagueFactory factory) throws Exception {
-        if(factory == null){
+        if (factory == null) {
             return;
         }
         setId(id);
@@ -41,7 +38,7 @@ public class League extends SharedAttributes {
     }
 
     public League(String leagueName, int userId, ILeagueFactory loadLeagueFactory) throws Exception {
-        if(isNotEmpty(leagueName)){
+        if (isNotEmpty(leagueName)) {
             loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
         }
     }
@@ -51,19 +48,18 @@ public class League extends SharedAttributes {
     }
 
     public void setNhlRegularSeasonEvents(NHLEvents nhlEvents) {
-        if(nhlEvents == null){
+        if (nhlEvents == null) {
             return;
         }
         this.nhlEvents = nhlEvents;
     }
-
 
     public Games getGames() {
         return games;
     }
 
     public void setGames(Games games) {
-        if(games == null){
+        if (games == null) {
             return;
         }
         this.games = games;
@@ -74,7 +70,7 @@ public class League extends SharedAttributes {
     }
 
     public void setGamePlayConfig(GamePlayConfig gamePlayConfig) {
-        if(gamePlayConfig == null){
+        if (gamePlayConfig == null) {
             return;
         }
         this.gamePlayConfig = gamePlayConfig;
@@ -85,7 +81,7 @@ public class League extends SharedAttributes {
     }
 
     public void setCurrentDate(LocalDate currentDate) {
-        if(currentDate == null){
+        if (currentDate == null) {
             return;
         }
         this.currentDate = currentDate;
@@ -96,7 +92,7 @@ public class League extends SharedAttributes {
     }
 
     public void setConferenceList(List<Conference> conferenceList) {
-        if(conferenceList == null){
+        if (conferenceList == null) {
             return;
         }
         this.conferenceList = conferenceList;
@@ -107,7 +103,7 @@ public class League extends SharedAttributes {
     }
 
     public void setCoachList(List<Coach> coachList) {
-        if(coachList == null){
+        if (coachList == null) {
             return;
         }
         this.coachList = coachList;
@@ -118,7 +114,7 @@ public class League extends SharedAttributes {
     }
 
     public void setManagerList(List<Manager> managerList) {
-        if(managerList == null){
+        if (managerList == null) {
             return;
         }
         this.managerList = managerList;
@@ -129,7 +125,7 @@ public class League extends SharedAttributes {
     }
 
     public void setRegularSeasonStanding(TeamStanding regularSeasonStanding) {
-        if(regularSeasonStanding == null){
+        if (regularSeasonStanding == null) {
             return;
         }
         this.regularSeasonStanding = regularSeasonStanding;
@@ -140,7 +136,7 @@ public class League extends SharedAttributes {
     }
 
     public void setPlayOffStanding(TeamStanding playOffStanding) {
-        if(playOffStanding == null){
+        if (playOffStanding == null) {
             return;
         }
         this.playOffStanding = playOffStanding;
@@ -151,14 +147,14 @@ public class League extends SharedAttributes {
     }
 
     public void setActiveTeamStanding(TeamStanding activeTeamStanding) {
-        if(activeTeamStanding == null){
+        if (activeTeamStanding == null) {
             return;
         }
         this.activeTeamStanding = activeTeamStanding;
     }
 
     public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject) {
-        if(null == managerList){
+        if(null == managerList) {
             return null;
         }
         int managerListSize = managerList.size();
@@ -169,7 +165,7 @@ public class League extends SharedAttributes {
     }
 
     public List<Coach> removeCoachFromCoachListById(List<Coach> coachList, int indexOfCoachObject) {
-        if(null == coachList){
+        if(null == coachList) {
             return null;
         }
         int coachListSize = coachList.size();
@@ -192,21 +188,21 @@ public class League extends SharedAttributes {
     }
 
     public void setFreeAgent(FreeAgent freeAgent) {
-        if(freeAgent == null){
+        if (freeAgent == null) {
             return;
         }
         this.freeAgent = freeAgent;
     }
 
     public void addLeague(ILeagueFactory addLeagueFactory) throws Exception {
-        if(addLeagueFactory == null){
+        if (addLeagueFactory == null) {
             return;
         }
         addLeagueFactory.addLeague(this);
     }
 
     public void loadConferenceListByLeagueId(IConferenceFactory loadConferenceFactory) throws Exception {
-        if(loadConferenceFactory == null){
+        if (loadConferenceFactory == null) {
             return;
         }
         this.conferenceList = loadConferenceFactory.loadConferenceListByLeagueId(getId());
@@ -221,7 +217,7 @@ public class League extends SharedAttributes {
     }
 
     public Conference getConferenceFromListByName(String conferenceName) {
-        if(isNotEmpty(conferenceName)){
+        if (isNotEmpty(conferenceName)) {
             Conference foundConference = null;
             for (Conference conference : conferenceList) {
                 if (conference.getName().toLowerCase().equals(conferenceName.toLowerCase())) {
@@ -230,7 +226,7 @@ public class League extends SharedAttributes {
                 }
             }
             return foundConference;
-        }else{
+        } else {
             return null;
         }
 
@@ -241,7 +237,7 @@ public class League extends SharedAttributes {
     }
 
     public Team getTeamByTeamName(String teamName) {
-        if(isNotEmpty(teamName)){
+        if (isNotEmpty(teamName)) {
             for (Conference conference : getConferenceList()) {
                 for (Division division : conference.getDivisionList()) {
                     for (Team team : division.getTeamList()) {
@@ -257,11 +253,11 @@ public class League extends SharedAttributes {
 
     private transient List<TradeOffer> tradeOfferList;
 
-    public List<TradeOffer> getTradingOfferList(){
+    public List<TradeOffer> getTradingOfferList() {
         return this.tradeOfferList;
     }
 
-    public void setTradingOfferList(List<TradeOffer> tradeOfferList){
+    public void setTradingOfferList(List<TradeOffer> tradeOfferList) {
         this.tradeOfferList = tradeOfferList;
     }
 

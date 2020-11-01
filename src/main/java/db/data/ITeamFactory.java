@@ -13,4 +13,6 @@ public interface ITeamFactory {
     void loadTeamByName(String teamName, Team team) throws Exception;
 
     List<Team> loadTeamListByDivisionId(int divisionId) throws Exception;
+
+    void updateTeamById(Team team) throws Exception;
 }

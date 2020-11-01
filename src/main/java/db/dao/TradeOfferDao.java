@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TradeOfferDao implements ITradeOfferFactory {
+public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory {
 
     @Override
     public int addTradeOfferDetails(TradeOffer tradeOffer) throws Exception {
         ICallDB callDB = null;
         try{
-            callDB = new CallDB("AddTradingOffer(?,?,?,?,?,?,?,?,?)");
+            callDB = new CallDB("AddTradeOffer(?,?,?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, tradeOffer.getLeagueId());
             callDB.setInputParameterInt(2, tradeOffer.getSeasonId());
             callDB.setInputParameterInt(3, tradeOffer.getFromTeamId());
@@ -28,6 +28,7 @@ public class TradeOfferDao implements ITradeOfferFactory {
             tradeOffer.setId(callDB.returnOutputParameterInt(9));
 
         } catch (SQLException sqlException){
+            printLog("TradeOfferDao: addTradeOfferDetails: SQLException: "+sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -40,7 +41,7 @@ public class TradeOfferDao implements ITradeOfferFactory {
         ICallDB callDB = null;
         List<TradeOffer> tradeOfferList = null;
         try{
-            callDB = new CallDB("LoadTradingDetailsByLeagueId(?)");
+            callDB = new CallDB("LoadTradeOfferListByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
             if (rs == null) {
@@ -61,20 +62,39 @@ public class TradeOfferDao implements ITradeOfferFactory {
                     tradeOfferList.add(tradeOffer);
                 }
             }
-        } catch (Exception e){
+        } catch (SQLException e){
+            printLog("TradeOfferDao: loadTradeOfferDetailsByLeagueId: Exception: "+e);
             throw e;
         }
         return tradeOfferList;
     }
 
-
     @Override
-    public void loadTradeOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception {
-
+    public void loadTradeOfferDetailsById(int tradeOfferId, TradeOffer tradeOffer) throws Exception {
+        ICallDB callDB;
+        try{
+            callDB = new CallDB("LoadTradeOfferListByLeagueId(?)");
+            callDB.setInputParameterInt(1, tradeOfferId);
+            ResultSet rs = callDB.executeLoad();
+            if (rs == null) {
+                return;
+            } else {
+                while (rs.next()) {
+                    tradeOffer.setId(rs.getInt(1));
+                    tradeOffer.setLeagueId(rs.getInt(2));
+                    tradeOffer.setTradingId(rs.getInt(3));
+                    tradeOffer.setFromTeamId(rs.getInt(4));
+                    tradeOffer.setToTeamId(rs.getInt(5));
+                    tradeOffer.setFromPlayerId(rs.getInt(6));
+                    tradeOffer.setToPlayerId(rs.getInt(7));
+                    tradeOffer.setSeasonId(rs.getInt(8));
+                    tradeOffer.setStatus(rs.getString(9));
+                }
+            }
+        } catch (SQLException e){
+            printLog("TradeOfferDao: loadTradeOfferDetailsById: Exception: "+e);
+            throw e;
+        }
     }
 
-    @Override
-    public void loadTradeOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception {
-
-    }
 }

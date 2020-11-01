@@ -1,4 +1,4 @@
-package factory;
+package simulation.factory;
 
 import simulation.state.HockeyContext;
 

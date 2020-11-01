@@ -14,11 +14,7 @@ public class UserConcrete {
         return new User(name, loadUserFactory);
     }
 
-    public IUserFactory newLoadUserFactory() {
-        return new UserDao();
-    }
-
-    public IUserFactory newAddUserFactory() {
+    public IUserFactory newUserFactory() {
         return new UserDao();
     }
 

@@ -6,9 +6,7 @@ public class Manager extends SharedAttributes {
     private int leagueId;
     private int teamId;
 
-    public Manager() {
-    }
-
+    public Manager() {}
 
     public Manager(int id) {
         setId(id);

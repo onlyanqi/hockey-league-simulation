@@ -28,7 +28,7 @@ public class TeamMock implements ITeamFactory {
     }
 
     @Override
-    public int addTeam(Team team) throws Exception {
+    public int addTeam(Team team) {
         team = new Team(1);
         return team.getId();
     }
@@ -56,7 +56,7 @@ public class TeamMock implements ITeamFactory {
                 team.setLossPoint(0);
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setPendingTradeOfferCount(0);
+                team.setTradeOfferCountOfSeason(0);
                 break;
 
             case 2:
@@ -78,7 +78,7 @@ public class TeamMock implements ITeamFactory {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setPendingTradeOfferCount(2);
+                team.setTradeOfferCountOfSeason(2);
                 break;
 
             case 3:
@@ -99,7 +99,7 @@ public class TeamMock implements ITeamFactory {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setPendingTradeOfferCount(0);
+                team.setTradeOfferCountOfSeason(0);
                 break;
 
             case 4:
@@ -120,7 +120,7 @@ public class TeamMock implements ITeamFactory {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(false);
-                team.setPendingTradeOfferCount(1);
+                team.setTradeOfferCountOfSeason(1);
                 break;
 
             case 5:
@@ -142,7 +142,7 @@ public class TeamMock implements ITeamFactory {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setPendingTradeOfferCount(1);
+                team.setTradeOfferCountOfSeason(6);
                 break;
         }
 
@@ -172,6 +172,11 @@ public class TeamMock implements ITeamFactory {
     public List<Team> loadTeamListByDivisionId(int divisionId) throws Exception {
         DivisionMock loadDivisionMock = new DivisionMock();
         return loadDivisionMock.formTeamList();
+    }
+
+    @Override
+    public void updateTeamById(Team team) throws Exception {
+
     }
 
 }

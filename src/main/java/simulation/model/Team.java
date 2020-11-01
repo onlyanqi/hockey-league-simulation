@@ -165,14 +165,14 @@ public class Team extends SharedAttributes {
     }
 
 
-    private int pendingTradeOfferCount;
+    private int tradeOfferCountOfSeason;
 
-    public int getPendingTradeOfferCount() {
-        return pendingTradeOfferCount;
+    public int getTradeOfferCountOfSeason() {
+        return tradeOfferCountOfSeason;
     }
 
-    public void setPendingTradeOfferCount(int pendingTradeOfferCount) {
-        this.pendingTradeOfferCount = pendingTradeOfferCount;
+    public void setTradeOfferCountOfSeason(int tradeOfferCountOfSeason) {
+        this.tradeOfferCountOfSeason = tradeOfferCountOfSeason;
     }
 
     private int lossPoint;

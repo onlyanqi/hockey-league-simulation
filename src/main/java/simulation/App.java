@@ -6,7 +6,7 @@ import presentation.ReadUserInput;
 import simulation.factory.UserConcrete;
 import simulation.model.User;
 import simulation.state.HockeyContext;
-import util.CommonUtil;
+import validator.Validation;
 
 import java.io.FileNotFoundException;
 
@@ -17,23 +17,26 @@ public class App {
         String filePath = "";
         JSONObject jsonFromInput = null;
 
-        String userName = ReadUserInput.getUserInput("Please enter username");
+        ReadUserInput readUserInput = ReadUserInput.getInstance();
 
-        CommonUtil util = new CommonUtil();
+        String userName = readUserInput.getInput("Please enter username");
+
+        Validation validation = new Validation();
 
         try {
-            if (userName != null && util.isNotEmpty(userName)) {
+            if (userName != null && validation.isNotEmpty(userName)) {
                 UserConcrete userConcrete = new UserConcrete();
-                IUserFactory factory = userConcrete.newLoadUserFactory();
+                IUserFactory factory = userConcrete.newUserFactory();
                 User user = userConcrete.newUserByName(userName, factory);
 
                 user.setName(userName);
                 if (user.getId() == 0) {
-                    String password = ReadUserInput.getUserInput("Please enter password to register yourself");
+                    String password = readUserInput.getInput("Please enter password to register yourself");
+
                     user.setPassword(password);
                     addUser(user);
                 }
-                filePath = ReadUserInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
+                filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
 
                 if (filePath != null && filePath.length() != 0) {
 
@@ -56,7 +59,7 @@ public class App {
 
     private static void addUser(User user) throws Exception {
         UserConcrete userConcrete = new UserConcrete();
-        IUserFactory addUserFactory = userConcrete.newAddUserFactory();
+        IUserFactory addUserFactory = userConcrete.newUserFactory();
         user.addUser(addUserFactory);
     }
 

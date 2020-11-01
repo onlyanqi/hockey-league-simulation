@@ -1,7 +1,9 @@
 package db.dao;
 
 import db.data.ITeamFactory;
+import simulation.model.Game;
 import simulation.model.Team;
+import util.DateUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,15 +15,16 @@ public class TeamDao implements ITeamFactory {
     public int addTeam(Team team) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddTeam(?,?,?,?,?,?)");
+            callDB = new CallDB("AddTeam(?,?,?,?,?,?,?)");
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
             callDB.setInputParameterBoolean(3, team.isAiTeam());
-            callDB.setInputParameterInt(4, team.getPendingTradeOfferCount());
+            callDB.setInputParameterInt(4, team.getTradeOfferCountOfSeason());
             callDB.setInputParameterInt(5, team.getLossPoint());
-            callDB.setOutputParameterInt(6);
+            callDB.setInputParameterDouble(6,team.getStrength());
+            callDB.setOutputParameterInt(7);
             callDB.execute();
-            team.setId(callDB.returnOutputParameterInt(6));
+            team.setId(callDB.returnOutputParameterInt(7));
 
         } catch (SQLException sqlException) {
             throw sqlException;
@@ -47,7 +50,7 @@ public class TeamDao implements ITeamFactory {
             team.setId(callDB.returnOutputParameterInt(2));
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));
-            team.setPendingTradeOfferCount(callDB.returnOutputParameterInt(5));
+            team.setTradeOfferCountOfSeason(callDB.returnOutputParameterInt(5));
             team.setLossPoint(callDB.returnOutputParameterInt(6));
 
         } catch (Exception e) {
@@ -73,7 +76,7 @@ public class TeamDao implements ITeamFactory {
             team.setId(callDB.returnOutputParameterInt(2));
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));
-            team.setPendingTradeOfferCount(callDB.returnOutputParameterInt(5));
+            team.setTradeOfferCountOfSeason(callDB.returnOutputParameterInt(5));
             team.setLossPoint(callDB.returnOutputParameterInt(6));
 
         } catch (Exception e) {
@@ -99,7 +102,7 @@ public class TeamDao implements ITeamFactory {
                     team.setName(rs.getString(2));
                     team.setDivisionId(divisionId);
                     team.setAiTeam(rs.getBoolean(4));
-                    team.setPendingTradeOfferCount(rs.getInt(5));
+                    team.setTradeOfferCountOfSeason(rs.getInt(5));
                     team.setLossPoint(rs.getInt(6));
                     teamList.add(team);
                 }
@@ -109,6 +112,27 @@ public class TeamDao implements ITeamFactory {
         }
 
         return teamList;
+    }
+
+    @Override
+    public void updateTeamById(Team team) throws Exception {
+        ICallDB callDB = null;
+        try {
+            callDB = new CallDB("UpdateTeamById(?,?,?,?,?,?,?)");
+            callDB.setInputParameterString(1, team.getName());
+            callDB.setInputParameterInt(2, team.getDivisionId());
+            callDB.setInputParameterBoolean(3, team.isAiTeam());
+            callDB.setInputParameterInt(4, team.getTradeOfferCountOfSeason());
+            callDB.setInputParameterInt(5, team.getLossPoint());
+            callDB.setInputParameterDouble(6,team.getStrength());
+            callDB.setInputParameterInt(7,team.getId());
+            callDB.execute();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            assert callDB != null;
+            callDB.closeConnection();
+        }
     }
 
 }
