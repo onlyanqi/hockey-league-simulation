@@ -17,8 +17,9 @@ public class App {
         String filePath = "";
         JSONObject jsonFromInput = null;
 
-        //String userName = ReadUserInput.getUserInput("Please enter username");
-        String userName = "mpk";
+        ReadUserInput readUserInput = ReadUserInput.getInstance();
+
+        String userName = readUserInput.getInput("Please enter username");
 
         Validation validation = new Validation();
 
@@ -30,13 +31,13 @@ public class App {
 
                 user.setName(userName);
                 if (user.getId() == 0) {
-                    //String password = ReadUserInput.getUserInput("Please enter password to register yourself");
-                    String password = "mpk";
+                    String password = readUserInput.getInput("Please enter password to register yourself");
 
                     user.setPassword(password);
                     addUser(user);
                 }
-                filePath = ReadUserInput.getInstance().getInput("Please provide location of JSON file. If not please press ENTER");
+                filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
+
                 if (filePath != null && filePath.length() != 0) {
 
                     if (JSONController.invalidJSON(filePath)) {
