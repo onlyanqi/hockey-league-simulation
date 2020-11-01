@@ -1,13 +1,10 @@
 package db.connect;
 
-import util.IPropertyFileReader;
-import util.PropertyFileReader;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-public class DBConnection implements IDBConnection {
+public class DBConnection {
 
     private static DBConnection dbConnection;
 

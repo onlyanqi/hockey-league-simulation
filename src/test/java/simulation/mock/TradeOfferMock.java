@@ -45,14 +45,18 @@ public class TradeOfferMock implements ITradeOfferFactory {
         return tradeOfferList;
     }
 
+    /*
     @Override
     public void loadTradeOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception {
         tradeOffer = new TradeOffer();
         getTradeOffer(tradeOffer, tradingId, 3);
     }
+*/
 
     @Override
     public void loadTradeOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception {
         getTradeOffer(tradeOffer, tradingOfferId, 3);
     }
+
+
 }

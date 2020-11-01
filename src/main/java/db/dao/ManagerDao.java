@@ -2,12 +2,12 @@ package db.dao;
 
 import db.data.IManagerFactory;
 import simulation.model.Manager;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ManagerDao implements IManagerFactory {
+public class ManagerDao extends DBExceptionLog implements IManagerFactory {
+
     @Override
     public int addManager(Manager manager) throws Exception {
         if(manager == null){
@@ -24,6 +24,7 @@ public class ManagerDao implements IManagerFactory {
             manager.setId(callDB.returnOutputParameterInt(4));
 
         } catch (SQLException sqlException) {
+            printLog("ManagerDao: addManager: SQLException: "+sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -49,6 +50,7 @@ public class ManagerDao implements IManagerFactory {
                 manager.setLeagueId(rs.getInt(4));
             }
         }catch (SQLException sqlException) {
+            printLog("ManagerDao: loadManagerById: SQLException: "+sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -75,6 +77,7 @@ public class ManagerDao implements IManagerFactory {
                 }
             }
         }catch (SQLException sqlException) {
+            printLog("ManagerDao: loadFreeManagersByLeagueId: SQLException: "+sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -98,6 +101,7 @@ public class ManagerDao implements IManagerFactory {
                 manager.setLeagueId(rs.getInt(4));
             }
         }catch (SQLException sqlException) {
+            printLog("ManagerDao: loadManagerByTeamId: SQLException: "+sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();

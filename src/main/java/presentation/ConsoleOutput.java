@@ -2,7 +2,6 @@ package presentation;
 
 import simulation.model.Player;
 import simulation.model.Team;
-
 import java.util.Map;
 
 public class ConsoleOutput {
@@ -14,10 +13,6 @@ public class ConsoleOutput {
             consoleOutput = new ConsoleOutput();
         }
         return consoleOutput;
-    }
-
-    public static void printToConsole(String outString) {
-        System.out.println(outString);
     }
 
     public void printMsgToConsole(String outString) {

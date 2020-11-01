@@ -59,17 +59,27 @@ public class PersistState implements ISimulateState{
                 season.addSeason(addSeasonDao);
                 int seasonId = season.getId();
 
+                System.out.println("Season done....");
+
                 addEvents(league.getId(),league.getNHLRegularSeasonEvents());
+
+                System.out.println("Events done....");
 
                 addGameList(league.getId(),league.getGames().getGameList());
 
+                System.out.println("Game done....");
+
                 addTeamStanding(league.getId(),league.getActiveTeamStanding().getTeamsScoreList());
+
+                System.out.println("Team standing done....");
 
                 if (leagueId != 0 && seasonId != 0) {
                     if (league.getFreeAgent() != null) {
                         int freeAgentId = addFreeAgent(leagueId, seasonId);
                         addPlayerList(0, freeAgentId, seasonId, league.getFreeAgent().getPlayerList());
                     }
+
+                    System.out.println("Free agent done....");
 
                     if (league.getConferenceList() != null && !league.getConferenceList().isEmpty()) {
                         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
@@ -79,6 +89,8 @@ public class PersistState implements ISimulateState{
                             conference.addConference(addConferenceDao);
                             int conferenceId = conference.getId();
 
+                            System.out.println("Conference done....");
+
                             for (Division division : conference.getDivisionList()) {
                                 DivisionConcrete divisionConcrete = new DivisionConcrete();
                                 IDivisionFactory addDivisionDao = divisionConcrete.newAddDivisionFactory();
@@ -87,14 +99,18 @@ public class PersistState implements ISimulateState{
                                 division.addDivision(addDivisionDao);
                                 int divisionId = division.getId();
 
+                                System.out.println("Division done....");
+
                                 for (Team team : division.getTeamList()) {
                                     TeamConcrete teamConcrete = new TeamConcrete();
-                                    ITeamFactory addTeamDao = teamConcrete.newAddTeamFactory();
+                                    ITeamFactory addTeamDao = teamConcrete.newTeamFactory();
 
                                     team.setDivisionId(divisionId);
                                     team.addTeam(addTeamDao);
                                     int teamId = team.getId();
                                     addPlayerList(teamId, 0, seasonId, team.getPlayerList());
+
+                                    System.out.println("Player done....");
                                 }
                             }
 
@@ -132,6 +148,7 @@ public class PersistState implements ISimulateState{
             IGameFactory addGamesFactory = gameConcrete.newAddGamesFactory();
             for (Game game : gameList) {
                 addGamesFactory.addGame(leagueId,game);
+                System.out.println("Game done...");
             }
         }
     }
@@ -154,6 +171,7 @@ public class PersistState implements ISimulateState{
                 player.setTeamId(teamId);
                 player.setFreeAgentId(freeAgentId);
                 addPlayerDao.addPlayer(player);
+                System.out.println("One Player Done...");
             }
         }
     }

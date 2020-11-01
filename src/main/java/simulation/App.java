@@ -2,11 +2,10 @@ package simulation;
 
 import db.data.IUserFactory;
 import org.json.simple.JSONObject;
-import presentation.ReadUserInput;
 import simulation.factory.UserConcrete;
 import simulation.model.User;
 import simulation.state.HockeyContext;
-import util.CommonUtil;
+import validator.Validation;
 
 import java.io.FileNotFoundException;
 
@@ -17,23 +16,27 @@ public class App {
         String filePath = "";
         JSONObject jsonFromInput = null;
 
-        String userName = ReadUserInput.getUserInput("Please enter username");
+        //String userName = ReadUserInput.getUserInput("Please enter username");
+        String userName = "mpk";
 
-        CommonUtil util = new CommonUtil();
+        Validation validation = new Validation();
 
         try {
-            if (userName != null && util.isNotEmpty(userName)) {
+            if (userName != null && validation.isNotEmpty(userName)) {
                 UserConcrete userConcrete = new UserConcrete();
-                IUserFactory factory = userConcrete.newLoadUserFactory();
+                IUserFactory factory = userConcrete.newUserFactory();
                 User user = userConcrete.newUserByName(userName, factory);
 
                 user.setName(userName);
                 if (user.getId() == 0) {
-                    String password = ReadUserInput.getUserInput("Please enter password to register yourself");
+                    //String password = ReadUserInput.getUserInput("Please enter password to register yourself");
+                    String password = "mpk";
+
                     user.setPassword(password);
                     addUser(user);
                 }
-                filePath = ReadUserInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
+                //filePath = ReadUserInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
+                filePath = "C:\\Users\\prath\\MPK\\studies\\Term3\\CSCI5308-Adv SDC\\Project\\Milestone2\\league.json";
 
                 if (filePath != null && filePath.length() != 0) {
 
@@ -56,7 +59,7 @@ public class App {
 
     private static void addUser(User user) throws Exception {
         UserConcrete userConcrete = new UserConcrete();
-        IUserFactory addUserFactory = userConcrete.newAddUserFactory();
+        IUserFactory addUserFactory = userConcrete.newUserFactory();
         user.addUser(addUserFactory);
     }
 

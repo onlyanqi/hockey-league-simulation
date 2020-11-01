@@ -12,20 +12,21 @@ public class LoadTeamState implements IHockeyState {
     private HockeyContext hockeyContext;
     private String teamName;
     private League league;
-
+    private ReadUserInput readUserInput;
 
     public LoadTeamState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
+        readUserInput = ReadUserInput.getInstance();
     }
 
     @Override
     public void entry() throws Exception {
         //prompt team name
 
-        teamName = ReadUserInput.getUserInput("Please enter team name");
+        teamName = readUserInput.getInput("Please enter team name");
 
         while ((teamName.isEmpty() || teamName == null || isTeamNotPresent(teamName))) {
-            teamName = ReadUserInput.getUserInput("Please enter valid and existing team name");
+            teamName = readUserInput.getInput("Please enter valid and existing team name");
         }
 
     }
@@ -61,7 +62,7 @@ public class LoadTeamState implements IHockeyState {
             List<Division> divisionList = conference.getDivisionList();
             for (Division division : divisionList) {
                 TeamConcrete teamConcrete = new TeamConcrete();
-                ITeamFactory iLoadTeamFactory = teamConcrete.newLoadTeamFactory();
+                ITeamFactory iLoadTeamFactory = teamConcrete.newTeamFactory();
                 division.loadTeamListByDivisionId(iLoadTeamFactory);
 
                 List<Team> teamArrayList = division.getTeamList();
@@ -120,7 +121,7 @@ public class LoadTeamState implements IHockeyState {
 
     private boolean isTeamNotPresent(String teamName) throws Exception {
         TeamConcrete teamConcrete = new TeamConcrete();
-        ITeamFactory factory = teamConcrete.newLoadTeamFactory();
+        ITeamFactory factory = teamConcrete.newTeamFactory();
         Team team = null;
         try {
             team = teamConcrete.newTeamByName(teamName, factory);
