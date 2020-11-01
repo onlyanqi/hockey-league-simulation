@@ -15,4 +15,5 @@ public interface ITeamScoreFactory {
 
     List<TeamScore> loadPlayoffTeamScoreListByLeagueId(int leagueId) throws Exception;
 
+    void updateTeamScoreById(TeamScore teamScore) throws Exception;
 }

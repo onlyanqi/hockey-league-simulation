@@ -123,4 +123,14 @@ public class TeamScoreMock implements ITeamScoreFactory {
         }
         return teamScoreList;
     }
+
+    @Override
+    public void updateTeamScoreById(TeamScore teamScore) {
+        teamScore.setId(teamScore.getId());
+        teamScore.setPoints(teamScore.getPoints());
+        teamScore.setNumberOfWins(teamScore.getNumberOfWins());
+        teamScore.setNumberOfLoss(teamScore.getNumberOfLoss());
+        teamScore.setNumberOfTies(teamScore.getNumberOfTies());
+        teamScore.setTeamName(teamScore.getName());
+    }
 }

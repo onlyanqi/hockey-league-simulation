@@ -15,6 +15,10 @@ public class Games extends SharedAttributes{
         return gameList;
     }
 
+    public void setGameList(List<Game> gameList) {
+        this.gameList = gameList;
+    }
+
     public List<Game> getUnPlayedGamesOnDate(LocalDate date) {
         List<Game> gameListOnGivenDate = new ArrayList<>();
         for(Game game: gameList){

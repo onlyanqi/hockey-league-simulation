@@ -1,7 +1,10 @@
 package db.dao;
 
 import db.data.ITeamScoreFactory;
+import simulation.model.Player;
 import simulation.model.TeamScore;
+
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -110,6 +113,27 @@ public class TeamScoreDao implements ITeamScoreFactory {
             callDB.closeConnection();
         }
         return teamScoreList;
+    }
+
+    @Override
+    public void updateTeamScoreById(TeamScore teamScore) throws Exception {
+        ICallDB callDB = null;
+        try {
+            callDB = new CallDB("updateTeamStanding(?,?,?,?,?,?)");
+            callDB.setInputParameterDouble(1, teamScore.getPoints());
+            callDB.setInputParameterString(2, teamScore.getTeamName());
+            callDB.setInputParameterInt(3, teamScore.getNumberOfWins());
+            callDB.setInputParameterInt(4,teamScore.getNumberOfLoss());
+            callDB.setInputParameterInt(5,teamScore.getNumberOfTies());
+            callDB.setInputParameterInt(6,teamScore.getId());
+            callDB.execute();
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            assert callDB != null;
+            callDB.closeConnection();
+        }
     }
 
 }

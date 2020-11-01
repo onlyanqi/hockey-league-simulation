@@ -20,7 +20,7 @@ public class ReadUserInput {
     public String getInput(String input){
         consoleOutput.printMsgToConsole(input);
         Scanner scanner = new Scanner(System.in);
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     public String getUserTradeResponse(){

@@ -100,4 +100,14 @@ public class GameMock implements IGameFactory {
         }
         return gameList;
     }
+
+    @Override
+    public void updateGameById(Game game) {
+        game.setId(game.getId());
+        game.setTeam1(game.getTeam1());
+        game.setTeam2(game.getTeam2());
+        game.setDate(game.getDate());
+        game.setPlayed(game.getPlayed());
+        game.setWinner(game.getWinner());
+    }
 }

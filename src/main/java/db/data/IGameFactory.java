@@ -10,4 +10,6 @@ public interface IGameFactory {
     void loadGameById(int id, Game game) throws Exception;
 
     List<Game> loadGamesByLeagueId(int leagueId) throws Exception;
+
+    void updateGameById(Game game) throws Exception;
 }

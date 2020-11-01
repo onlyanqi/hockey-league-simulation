@@ -270,7 +270,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
                 hockeyState = new PlayerChoiceState(hockeyContext, HOWMANYSEASONS, CREATEORLOADTEAM);
                 break;
             } else {
-                consoleOutput.printMsgToConsole(RIGHTCHOICEREQUEST);
+                createAnotherTeam = readUserInput.getInput(RIGHTCHOICEREQUEST);
             }
         }
         return hockeyState;

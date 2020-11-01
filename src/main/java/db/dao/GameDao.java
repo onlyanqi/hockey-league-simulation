@@ -1,11 +1,7 @@
 package db.dao;
-
 import db.data.IGameFactory;
 import simulation.model.Game;
-import simulation.model.Training;
 import util.DateUtil;
-
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -91,5 +87,30 @@ public class GameDao implements IGameFactory {
             callDB.closeConnection();
         }
         return gameList;
+    }
+
+    @Override
+    public void updateGameById(Game game) throws Exception {
+        ICallDB callDB = null;
+        try {
+            callDB = new CallDB("UpdateGameById(?,?,?,?,?,?)");
+            callDB.setInputParameterDate(1, DateUtil.convertLocalDateToSQLDate(game.getDate()));
+            callDB.setInputParameterString(2, game.getTeam1());
+            callDB.setInputParameterString(3, game.getTeam2());
+            callDB.setInputParameterBoolean(4,game.getPlayed());
+            if(game.getWinner()==null){
+                callDB.setInputParameterString(5,null);
+            }else{
+                callDB.setInputParameterString(5,game.getWinner().toString());
+            }
+            callDB.setInputParameterInt(6,game.getId());
+            callDB.execute();
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            assert callDB != null;
+            callDB.closeConnection();
+        }
     }
 }
