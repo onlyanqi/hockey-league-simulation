@@ -24,7 +24,7 @@ public class TeamDao implements ITeamFactory {
             callDB.setInputParameterDouble(6,team.getStrength());
             callDB.setOutputParameterInt(7);
             callDB.execute();
-            team.setId(callDB.returnOutputParameterInt(6));
+            team.setId(callDB.returnOutputParameterInt(7));
 
         } catch (SQLException sqlException) {
             throw sqlException;
