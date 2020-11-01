@@ -19,6 +19,14 @@ public class LoadTeamState implements IHockeyState {
         readUserInput = ReadUserInput.getInstance();
     }
 
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
+    }
+
     @Override
     public void entry() throws Exception {
         //prompt team name
@@ -49,7 +57,9 @@ public class LoadTeamState implements IHockeyState {
         }
         league = hockeyContext.getUser().getLeagueList().get(0);
 
-        updateTradingDetailsToLeague();
+        TradingConcrete tradingConcrete = new TradingConcrete();
+        ITradingFactory tradingFactory = tradingConcrete.newTradingFactory();
+        updateTradingDetailsToLeague(tradingFactory);
 
         Division div = null;
 
@@ -113,9 +123,7 @@ public class LoadTeamState implements IHockeyState {
 
     }
 
-    public void updateTradingDetailsToLeague() throws Exception {
-        TradingConcrete tradingConcrete = new TradingConcrete();
-        ITradingFactory tradingFactory = tradingConcrete.newTradingFactory();
+    public void updateTradingDetailsToLeague(ITradingFactory tradingFactory) throws Exception {
         league.getGamePlayConfig().setTrading(tradingFactory.loadTradingDetailsByLeagueId(league.getId()));
     }
 
