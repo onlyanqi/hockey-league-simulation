@@ -2,6 +2,7 @@ package simulation;
 
 import db.data.IUserFactory;
 import org.json.simple.JSONObject;
+import presentation.ReadUserInput;
 import simulation.factory.UserConcrete;
 import simulation.model.User;
 import simulation.state.HockeyContext;
@@ -35,9 +36,7 @@ public class App {
                     user.setPassword(password);
                     addUser(user);
                 }
-                //filePath = ReadUserInput.getUserInput("Please provide location of JSON file. If not please press ENTER");
-                filePath = "C:\\Users\\prath\\MPK\\studies\\Term3\\CSCI5308-Adv SDC\\Project\\Milestone2\\league.json";
-
+                filePath = ReadUserInput.getInstance().getInput("Please provide location of JSON file. If not please press ENTER");
                 if (filePath != null && filePath.length() != 0) {
 
                     if (JSONController.invalidJSON(filePath)) {
