@@ -112,15 +112,15 @@ public class PersistState implements ISimulateState{
 
                 System.out.println("Season done....");
 
-                //addEvents(league.getId(),league.getNHLRegularSeasonEvents());
+                addEvents(league.getId(),league.getNHLRegularSeasonEvents());
 
                 System.out.println("Events done....");
 
-                //addGameList(league.getId(),league.getGames().getGameList());
+//                addGameList(league.getId(),league.getGames().getGameList());
 
                 System.out.println("Game done....");
 
-                //addTeamStanding(league.getId(),league.getActiveTeamStanding().getTeamsScoreList());
+                addTeamStanding(league.getId(),league.getActiveTeamStanding().getTeamsScoreList());
 
                 System.out.println("Team standing done....");
 
@@ -170,12 +170,14 @@ public class PersistState implements ISimulateState{
                                     CoachConcrete coachConcrete = new CoachConcrete();
                                     ICoachFactory addCoachFactory = coachConcrete.newCoachFactory();
                                     Coach coach = team.getCoach();
+                                    coach.setLeagueId(leagueId);
                                     coach.setTeamId(teamId);
                                     addCoachFactory.addCoach(coach);
 
                                     ManagerConcrete managerConcrete = new ManagerConcrete();
                                     IManagerFactory addManagerFactory = managerConcrete.newManagerFactory();
                                     Manager manager = team.getManager();
+                                    manager.setLeagueId(leagueId);
                                     manager.setTeamId(teamId);
                                     addManagerFactory.addManager(manager);
 
