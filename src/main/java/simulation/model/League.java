@@ -158,7 +158,7 @@ public class League extends SharedAttributes {
     }
 
     public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject) {
-        if(managerList == null){
+        if(null == managerList){
             return null;
         }
         int managerListSize = managerList.size();
@@ -169,7 +169,7 @@ public class League extends SharedAttributes {
     }
 
     public List<Coach> removeCoachFromCoachListById(List<Coach> coachList, int indexOfCoachObject) {
-        if(coachList == null){
+        if(null == coachList){
             return null;
         }
         int coachListSize = coachList.size();

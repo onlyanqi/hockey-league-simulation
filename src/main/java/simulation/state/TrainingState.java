@@ -1,9 +1,7 @@
 package simulation.state;
-
 import simulation.model.*;
 import presentation.ConsoleOutput;
 import util.DateUtil;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
@@ -19,9 +17,9 @@ public class TrainingState implements ISimulateState, ITrainingState {
         league = hockeyContext.getUser().getLeague();
     }
 
+
     @Override
     public ISimulateState action() {
-
         ConsoleOutput.printToConsole(TRAININGINFORMATION);
         LocalDate currentDate = league.getCurrentDate();
         LocalDate seasonStartDate = league.getNHLRegularSeasonEvents().getRegularSeasonStartDate();
@@ -31,7 +29,6 @@ public class TrainingState implements ISimulateState, ITrainingState {
             ConsoleOutput.printToConsole(STATCHECKINFORMATION);
             statIncreaseCheck(league);
         }
-
         return exit();
     }
 
@@ -57,7 +54,6 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     @Override
     public void statIncreaseCheckForPlayer(Player player, Coach headCoach) {
-
         if(player==null || headCoach ==null){
             return;
         }
@@ -107,8 +103,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
         }
     }
 
-    @Override
-    public boolean isRandomLess(double coachStrength) {
+    private boolean isRandomLess(double coachStrength) {
         Random rand = new Random();
         double randomNumber = rand.nextDouble();
         if (randomNumber < coachStrength) {

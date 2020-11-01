@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-public class CreateTeamState implements IHockeyState, ICreateTeamState {
+public class CreateTeamState implements IHockeyState {
 
     private HockeyContext hockeyContext;
     private League league;
@@ -113,8 +113,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         }
     }
 
-    @Override
-    public void getTeamName(Division division) {
+    private void getTeamName(Division division) {
         if(division == null){
             return;
         }
@@ -125,8 +124,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         team.setAiTeam(false);
     }
 
-    @Override
-    public Division chooseDivision(Conference conference) {
+    private Division chooseDivision(Conference conference) {
         if(conference == null){
             return null;
         }
@@ -135,15 +133,13 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         return conference.getDivisionFromListByName(divisionName);
     }
 
-    @Override
-    public Conference chooseConference() {
+    private Conference chooseConference() {
         List<String> conferenceNameList = league.createConferenceNameList();
         conferenceName = teamCreationInput.getConferenceName(conferenceNameList);
         return league.getConferenceFromListByName(conferenceName);
     }
 
-    @Override
-    public void choosePlayers() {
+    private void choosePlayers() {
         freeAgent = league.getFreeAgent();
         List<Player> freeAgentList = freeAgent.getPlayerList();
         List<Integer> chosenPlayersIdList = team.createChosenPlayerIdList(freeAgent);
@@ -154,8 +150,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         team.setPlayerList(teamPlayers);
     }
 
-    @Override
-    public void chooseCoach() {
+    private void chooseCoach() {
         coachList = league.getCoachList();
         teamCreationOutput.showCoachListOnScreen(coachList);
         int headCoachId = teamCreationInput.getHeadCoachId(coachList);
@@ -165,8 +160,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         teamCreationOutput.showSuccessfulCoachCreationMessage();
     }
 
-    @Override
-    public void chooseManager() {
+    private void chooseManager() {
         managerList = league.getManagerList();
         teamCreationOutput.showManagerListOnScreen(managerList);
         int generalManagerId = teamCreationInput.getGeneralManagerId(managerList);
@@ -176,7 +170,6 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         teamCreationOutput.showSuccessfulManagerCreationMessage();
     }
 
-    @Override
     public List<Player> createPlayerListByChosenPlayerId(List<Integer> chosenPlayersIdList, List<Player> freeAgentList) {
         if(chosenPlayersIdList == null || freeAgentList == null){
             return null;
@@ -188,7 +181,6 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         return teamPlayers;
     }
 
-    @Override
     public List<Player> removeChosenPlayersFromFreeAgentList(List<Integer> chosenPlayersIdList, List<Player> freeAgentList) {
         if(chosenPlayersIdList == null || freeAgentList == null){
             return null;
@@ -205,8 +197,7 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         return newFreeAgentList;
     }
 
-    @Override
-    public boolean isLeaguePresent(String leagueName) {
+    private boolean isLeaguePresent(String leagueName) {
         LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
         ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
         League league = null;
@@ -224,7 +215,6 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
     @Override
     public void process() {
-
         league.setCreatedBy(hockeyContext.getUser().getId());
         league.setManagerList(managerList);
         league.setCoachList(coachList);
@@ -247,13 +237,9 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
 
     @Override
     public IHockeyState exit() {
-
-
         IHockeyState hockeyState = null;
-
         String createAnotherTeam = ReadUserInput.getUserInput(CREATEANOTHERTEAMQUESTION);
         while (isNotEmpty(createAnotherTeam)) {
-
             if (createAnotherTeam.toLowerCase().equals(Y) || createAnotherTeam.toLowerCase().equals(YES)) {
                 IUserInputForTeamCreation inputForTeamCreation = AppConfig.getInstance().getInputForTeamCreation();
                 IConsoleOutputForTeamCreation outputForTeamCreation = AppConfig.getInstance().getOutputForTeamCreation();
@@ -270,5 +256,4 @@ public class CreateTeamState implements IHockeyState, ICreateTeamState {
         }
         return hockeyState;
     }
-
 }

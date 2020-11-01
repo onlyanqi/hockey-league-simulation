@@ -16,7 +16,7 @@ public class LeagueTest {
 
 
     @BeforeClass
-    public static void setFactoryObj() {
+    public static void setFactoryObj() throws Exception {
         leagueFactory = new LeagueMock();
     }
 
@@ -73,6 +73,49 @@ public class LeagueTest {
     }
 
     @Test
+    public void removeManagerFromManagerListByIdTest() throws Exception {
+        League league = new League(1, leagueFactory);
+        List<Manager> managerList = league.getManagerList();
+        assertEquals(managerList.size(), league.removeManagerFromManagerListById(managerList,0).size()+1);
+        assertNotEquals(league.removeManagerFromManagerListById(managerList,0),null);
+        assertNotEquals(managerList.size(),league.removeManagerFromManagerListById(managerList,0).size());
+    }
+
+    @Test
+    public void removeCoachFromManagerListByIdTest() throws Exception {
+        League league = new League(1, leagueFactory);
+        List<Coach> coachList = league.getCoachList();
+        assertEquals(coachList.size(), league.removeCoachFromCoachListById(coachList,0).size()+1);
+        assertNotEquals(league.removeCoachFromCoachListById(coachList,0),null);
+        assertNotEquals(coachList.size(),league.removeCoachFromCoachListById(coachList,0).size());
+    }
+
+    @Test
+    public void createConferenceNameListTest() throws Exception {
+        League league = new League(4,leagueFactory);
+        assertEquals(league.createConferenceNameList().size(),league.getConferenceList().size());
+        assertFalse(league.createConferenceNameList().size()>league.getConferenceList().size());
+        assertFalse(league.createConferenceNameList().size()<league.getConferenceList().size());
+
+    }
+
+    @Test
+    public void getConferenceFromListByNameTest() throws Exception {
+        League league = new League(4,leagueFactory);
+        Conference conference = league.getConferenceFromListByName("Conference4");
+        assertEquals(conference.getName(),"Conference4");
+        assertNotEquals(conference.getName(),null);
+    }
+
+    @Test
+    public void getTeamByTeamNameTest() throws Exception{
+        League league = new League(4,leagueFactory);
+        Team team = league.getTeamByTeamName("Team1");
+        assertEquals(team.getName(),"Team1");
+        assertNotEquals(team.getName(),null);
+    }
+
+    @Test
     public void getFreeAgentTest() throws Exception {
         League league = new League(1, leagueFactory);
         assertEquals(league.getFreeAgent().getId(), 0);
@@ -100,7 +143,6 @@ public class LeagueTest {
 
         assertTrue(league.getFreeAgent().getId() == 1);
         assertTrue(league.getFreeAgent().getPlayerList().get(0).getId() == 1);
-
     }
 
     @Test
