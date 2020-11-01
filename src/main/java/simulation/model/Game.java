@@ -83,4 +83,13 @@ public class Game {
             return true;
         }
     }
+
+    public static Result fromString(String text) {
+        for (Result b : Result.values()) {
+            if (b.name().equalsIgnoreCase(text)) {
+                return b;
+            }
+        }
+        return null;
+    }
 }

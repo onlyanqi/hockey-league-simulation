@@ -67,13 +67,15 @@ public class EventDao implements IEventFactory {
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
             if(rs!=null){
-                nhlEvents.setId(rs.getInt(1));
-                nhlEvents.setRegularSeasonStartDate(rs.getDate(2).toLocalDate());
-                nhlEvents.setTradeDeadlineDate(rs.getDate(3).toLocalDate());
-                nhlEvents.setEndOfRegularSeason(rs.getDate(4).toLocalDate());
-                nhlEvents.setPlayOffStartDate(rs.getDate(5).toLocalDate());
-                nhlEvents.setLastDayStanleyCupFinals(rs.getDate(6).toLocalDate());
-                nhlEvents.setNextSeasonDate(rs.getDate(7).toLocalDate());
+                while(rs.next()){
+                    nhlEvents.setId(rs.getInt(1));
+                    nhlEvents.setRegularSeasonStartDate(rs.getDate(2).toLocalDate());
+                    nhlEvents.setTradeDeadlineDate(rs.getDate(3).toLocalDate());
+                    nhlEvents.setEndOfRegularSeason(rs.getDate(4).toLocalDate());
+                    nhlEvents.setPlayOffStartDate(rs.getDate(5).toLocalDate());
+                    nhlEvents.setLastDayStanleyCupFinals(rs.getDate(6).toLocalDate());
+                    nhlEvents.setNextSeasonDate(rs.getDate(7).toLocalDate());
+                }
             }
         } catch (SQLException sqlException) {
             throw sqlException;

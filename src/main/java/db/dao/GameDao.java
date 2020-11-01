@@ -77,7 +77,7 @@ public class GameDao implements IGameFactory {
                     game.setTeam1(rs.getString(3));
                     game.setTeam2(rs.getString(4));
                     game.setPlayed(rs.getBoolean(5));
-                    game.setWinner(Game.Result.valueOf(rs.getString(6)));
+                    game.setWinner(Game.fromString(rs.getString(6)));
                     gameList.add(game);
                 }
             }

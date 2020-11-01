@@ -62,7 +62,7 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
         ICallDB callDB = null;
         List<Manager> managers = null;
         try {
-            callDB = new CallDB("LoadManagerListByLeagueIdd(?)");
+            callDB = new CallDB("LoadManagerListByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
             if(rs!=null){
