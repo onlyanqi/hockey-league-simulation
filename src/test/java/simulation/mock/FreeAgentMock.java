@@ -16,12 +16,25 @@ public class FreeAgentMock implements IFreeAgentFactory {
         List<Player> playerList = new ArrayList<>();
 
         IPlayerFactory playerFactory = new PlayerMock();
-        Player player = new Player(1, playerFactory);
-        playerList.add(player);
+        for(int i=1;i<22;i++){
+            Player player = new Player(i, playerFactory);
+            playerList.add(player);
+        }
 
-        player = new Player(5, playerFactory);
-        playerList.add(player);
+        return playerList;
+    }
 
+    public List formFreeAgentListForCreateTeam() throws Exception {
+        List<Player> playerList = new ArrayList<>();
+        IPlayerFactory playerFactory = new PlayerMock();
+        for(int i=1;i<22;i++){
+            Player player = new Player(1, playerFactory);
+            playerList.add(player);
+        }
+        playerList.get(1).setPosition(Player.Position.goalie);
+        playerList.get(1).setSaving(10);
+        playerList.get(2).setPosition(Player.Position.goalie);
+        playerList.get(2).setSaving(10);
         return playerList;
     }
 
@@ -66,7 +79,30 @@ public class FreeAgentMock implements IFreeAgentFactory {
                 freeAgent.setLeagueId(1);
                 freeAgent.setPlayerList(formPlayerList());
                 break;
+
+            case 5:
+                freeAgent.setName("NotEnoughPlayers");
+                freeAgent.setSeasonId(1);
+                freeAgent.setLeagueId(1);
+                freeAgent.setPlayerList(formInsufficientPlayerList());
+
+            case 6:
+                freeAgent.setName("EnoughPlayersForCreateTeam");
+                freeAgent.setSeasonId(1);
+                freeAgent.setLeagueId(1);
+                freeAgent.setPlayerList(formFreeAgentListForCreateTeam());
         }
+    }
+
+    private List<Player> formInsufficientPlayerList() throws Exception {
+        List<Player> playerList = new ArrayList<>();
+        IPlayerFactory playerFactory = new PlayerMock();
+        for(int i=1;i<5;i++){
+            Player player = new Player(i, playerFactory);
+            playerList.add(player);
+        }
+
+        return playerList;
     }
 
     @Override

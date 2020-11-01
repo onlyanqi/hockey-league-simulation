@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import factory.HockeyContextConcrete;
 import org.junit.Test;
 import simulation.state.HockeyContext;
 

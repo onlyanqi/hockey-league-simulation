@@ -151,35 +151,35 @@ public class TeamTest {
         team.loadPlayerListByTeamId(playerFactory);
 
         assertEquals(team.getPlayerList().get(0).getId(), (1));
-        assertEquals(team.getPlayerList().get(1).getId(), (5));
+        assertEquals(team.getPlayerList().get(1).getId(), (2));
         assertEquals(team.getPlayerList().get(0).getName(), ("Player1"));
-        assertEquals(team.getPlayerList().get(1).getName(), ("Player5"));
+        assertEquals(team.getPlayerList().get(1).getName(), ("Player2"));
     }
 
     @Test
     public void getPendingTradeOfferCount() throws Exception {
         Team team = new Team(1, loadTeamFactory);
-        assertEquals(team.getPendingTradeOfferCount(), 0);
-        assertNotEquals(team.getPendingTradeOfferCount(), 2);
+        assertEquals(team.getTradeOfferCountOfSeason(), 0);
+        assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
         team = new Team(2, loadTeamFactory);
-        assertEquals(team.getPendingTradeOfferCount(), 2);
-        assertNotEquals(team.getPendingTradeOfferCount(), 1);
+        assertEquals(team.getTradeOfferCountOfSeason(), 2);
+        assertNotEquals(team.getTradeOfferCountOfSeason(), 1);
     }
 
     @Test
     public void setPendingTradeOfferCountTest() {
         Team team = new Team();
         int pendingTradeOfferCount = 1;
-        team.setPendingTradeOfferCount(pendingTradeOfferCount);
-        assertEquals(team.getPendingTradeOfferCount(), pendingTradeOfferCount);
-        assertNotEquals(team.getPendingTradeOfferCount(), 2);
+        team.setTradeOfferCountOfSeason(pendingTradeOfferCount);
+        assertEquals(team.getTradeOfferCountOfSeason(), pendingTradeOfferCount);
+        assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
     }
 
     @Test
     public void getLossPointTest() throws Exception {
         Team team = new Team(1, loadTeamFactory);
         assertEquals(team.getLossPoint(), 0);
-        assertNotEquals(team.getPendingTradeOfferCount(), 2);
+        assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
         team = new Team(2, loadTeamFactory);
         assertEquals(team.getLossPoint(), 2);
         assertNotEquals(team.getLossPoint(), 1);

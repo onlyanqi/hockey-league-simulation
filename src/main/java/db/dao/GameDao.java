@@ -28,8 +28,6 @@ public class GameDao implements IGameFactory {
                 callDB.setInputParameterString(6,game.getWinner().toString());
             }
 
-
-
             callDB.setOutputParameterInt(7);
             callDB.execute();
             game.setId(callDB.returnOutputParameterInt(7));

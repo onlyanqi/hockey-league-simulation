@@ -1,4 +1,5 @@
 package simulation.factory;
+
 import db.dao.TradingDao;
 import db.data.ITradingFactory;
 import simulation.model.Trading;

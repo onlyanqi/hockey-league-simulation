@@ -14,28 +14,45 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class LeagueDataSerializerDeSerializer {
+
     public static final String FILENAME = "JsonOutput.txt";
     public static final String JSONCREATIONERROR = "Json could not be created";
     public static final String DESERIALIZATIONERROR = "Could not deserialize";
+    private ConsoleOutput consoleOutput=null;
+
     public void serialize(League league) {
+        if(consoleOutput == null) {
+            consoleOutput = ConsoleOutput.getInstance();
+        }
+
         if (league == null){
             return;
         }
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting().create();
 
-        FileWriter fileWriter;
+        FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(FILENAME);
             gson.toJson(league, fileWriter);
-            fileWriter.flush();
-            fileWriter.close();
+
         } catch (Exception e) {
-            ConsoleOutput.printToConsole(JSONCREATIONERROR);
+            consoleOutput.printMsgToConsole(JSONCREATIONERROR);
+        }finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                consoleOutput.printMsgToConsole(JSONCREATIONERROR);
+            }
+
         }
     }
 
     public League deSerialize(){
+        if(consoleOutput == null) {
+            consoleOutput = ConsoleOutput.getInstance();
+        }
         FileReader fileReader;
         JSONParser jsonParser = new JSONParser();
         League league = null;
@@ -45,13 +62,13 @@ public class LeagueDataSerializerDeSerializer {
             league = gson.fromJson(jsonParser.parse(fileReader).toString(),League.class);
             fileReader.close();
         } catch (FileNotFoundException e) {
-            ConsoleOutput.printToConsole(DESERIALIZATIONERROR);
+            consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
         } catch (ParseException e) {
-            ConsoleOutput.printToConsole(DESERIALIZATIONERROR);
+            consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
         } catch (IOException e) {
-            ConsoleOutput.printToConsole(DESERIALIZATIONERROR);
+            consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
         } catch (Exception e){
-            ConsoleOutput.printToConsole(DESERIALIZATIONERROR);
+            consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
         }
         return league;
     }

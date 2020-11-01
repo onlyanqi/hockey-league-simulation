@@ -3,13 +3,12 @@ package db.dao;
 import db.data.ILeagueFactory;
 import simulation.model.League;
 import util.DateUtil;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeagueDao implements ILeagueFactory {
+public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
 
     @Override
     public int addLeague(League league) throws Exception {
@@ -36,6 +35,7 @@ public class LeagueDao implements ILeagueFactory {
             league.setId(callDB.returnOutputParameterInt(15));
 
         } catch (SQLException sqlException) {
+            printLog("LeagueDao: addLeague: SQLException: "+sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -60,8 +60,8 @@ public class LeagueDao implements ILeagueFactory {
             league.setCreatedBy(callDB.returnOutputParameterInt(4));
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            printLog("LeagueDao: loadLeagueById: SQLException: "+e);
             throw e;
         } finally {
             callDB.closeConnection();
@@ -83,7 +83,8 @@ public class LeagueDao implements ILeagueFactory {
                     league.setCreatedBy(rs.getInt(3));
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            printLog("LeagueDao: loadLeagueByName: SQLException: "+e);
             throw e;
         } finally {
             callDB.closeConnection();
@@ -93,7 +94,7 @@ public class LeagueDao implements ILeagueFactory {
     @Override
     public List<League> loadLeagueListByUserId(int userId) throws Exception {
         List<League> leagueList = null;
-        ICallDB callDB = null;
+        ICallDB callDB;
         try {
             callDB = new CallDB("LoadLeagueListByUserId(?)");
             callDB.setInputParameterInt(1, userId);
@@ -108,7 +109,8 @@ public class LeagueDao implements ILeagueFactory {
                     leagueList.add(league);
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            printLog("LeagueDao: loadLeagueListByUserId: SQLException: "+e);
             throw e;
         }
 

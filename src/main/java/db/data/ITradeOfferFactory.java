@@ -8,7 +8,6 @@ public interface ITradeOfferFactory {
 
     int addTradeOfferDetails(TradeOffer tradeOffer) throws Exception;
     List loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception;
-    void loadTradeOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception;
     void loadTradeOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception;
 
 }
