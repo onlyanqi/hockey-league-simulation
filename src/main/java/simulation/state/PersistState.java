@@ -3,6 +3,7 @@ package simulation.state;
 import db.data.*;
 import simulation.factory.*;
 import simulation.model.*;
+import validator.Validation;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -13,10 +14,12 @@ public class PersistState implements ISimulateState{
 
     private HockeyContext hockeyContext;
     private League league;
+    private Validation validation;
 
     public PersistState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
+        validation = new Validation();
     }
 
     @Override
@@ -38,6 +41,9 @@ public class PersistState implements ISimulateState{
     }
 
     private void updateDataBaseWithSimulatedDate() {
+
+        
+
     }
 
     private void persistLeagueToDB() {
@@ -53,6 +59,18 @@ public class PersistState implements ISimulateState{
                 int leagueId = league.getId();
 
                 System.out.println("League done....");
+
+                List<TradeOffer> tradeOfferList = league.getTradingOfferList();
+                if(validation.isListNotEmpty(tradeOfferList)){
+                    addTradeOfferList(tradeOfferList);
+                }
+
+                Trading trading = league.getGamePlayConfig().getTrading();
+                trading.setLeagueId(leagueId);
+                int tradingId;
+                if(validation.isNotNull(trading)){
+                    tradingId = addTrading(trading);
+                }
 
                 SeasonConcrete seasonConcrete = new SeasonConcrete();
                 ISeasonFactory addSeasonDao = seasonConcrete.newAddSeasonFactory();
@@ -125,6 +143,20 @@ public class PersistState implements ISimulateState{
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public int addTrading(Trading trading) throws Exception {
+        TradingConcrete tradingConcrete = new TradingConcrete();
+        ITradingFactory tradingFactory = tradingConcrete.newTradingFactory();
+        return tradingFactory.addTradingDetails(trading);
+    }
+
+    public void addTradeOfferList(List<TradeOffer> tradeOfferList) throws Exception {
+        TradeOfferConcrete tradeOfferConcrete = new TradeOfferConcrete();
+        ITradeOfferFactory tradeOfferFactory = tradeOfferConcrete.newTradeOfferFactory();
+        for(TradeOffer tradeOffer : tradeOfferList){
+            tradeOfferFactory.addTradeOfferDetails(tradeOffer);
         }
     }
 
