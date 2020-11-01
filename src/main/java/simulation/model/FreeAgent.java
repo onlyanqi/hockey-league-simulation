@@ -2,7 +2,6 @@ package simulation.model;
 
 import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,7 @@ public class FreeAgent extends SharedAttributes {
     private int leagueId;
     private List<Player> playerList;
 
-    public FreeAgent() {
-    }
+    public FreeAgent() {}
 
     public FreeAgent(int id) {
         setId(id);

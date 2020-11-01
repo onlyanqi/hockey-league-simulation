@@ -6,7 +6,7 @@ import simulation.model.Trading;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TradingDao implements ITradingFactory {
+public class TradingDao extends DBExceptionLog implements ITradingFactory {
 
     @Override
     public int addTradingDetails(Trading trading) throws Exception {
@@ -23,6 +23,7 @@ public class TradingDao implements ITradingFactory {
             trading.setId(callDB.returnOutputParameterInt(6));
 
         } catch (SQLException sqlException){
+            printLog("TradingDao: addTradingDetails: SQLException: "+sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -50,7 +51,8 @@ public class TradingDao implements ITradingFactory {
                     trading.setRandomAcceptanceChance(rs.getInt(6));
                 }
             }
-        }catch (Exception e){
+        }catch (SQLException e){
+            printLog("TradingDao: loadTradingDetailsByTradingId: SQLException: "+e);
             throw e;
         } finally {
             callDB.closeConnection();
@@ -59,8 +61,8 @@ public class TradingDao implements ITradingFactory {
 
     @Override
     public Trading loadTradingDetailsByLeagueId(int leagueId) throws Exception {
-        ICallDB callDB = null;
-        Trading trading = null;
+        ICallDB callDB;
+        Trading trading;
         try{
             callDB = new CallDB("LoadTradingDetailsByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
@@ -78,7 +80,8 @@ public class TradingDao implements ITradingFactory {
                     trading.setRandomAcceptanceChance(rs.getInt(6));
                 }
             }
-        } catch (Exception e){
+        } catch (SQLException e){
+            printLog("TradingDao: loadTradingDetailsByLeagueId: SQLException: "+e);
             throw e;
         }
         return trading;

@@ -14,21 +14,24 @@ public class TrainingState implements ISimulateState, ITrainingState {
     private League league;
     private static final String TRAININGINFORMATION = "Training Players and Team!";
     private static final String STATCHECKINFORMATION = "Performing stat increase check";
+    private ConsoleOutput consoleOutput;
+
     public TrainingState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
+        consoleOutput = ConsoleOutput.getInstance();
     }
 
     @Override
     public ISimulateState action() {
 
-        ConsoleOutput.printToConsole(TRAININGINFORMATION);
+        consoleOutput.printMsgToConsole(TRAININGINFORMATION);
         LocalDate currentDate = league.getCurrentDate();
         LocalDate seasonStartDate = league.getNHLRegularSeasonEvents().getRegularSeasonStartDate();
         Integer daysUntilStatIncreaseCheck  =league.getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck();
         Long diffDays = DateUtil.diffDays(seasonStartDate,currentDate);
         if(diffDays % daysUntilStatIncreaseCheck == 1){
-            ConsoleOutput.printToConsole(STATCHECKINFORMATION);
+            consoleOutput.printMsgToConsole(STATCHECKINFORMATION);
             statIncreaseCheck(league);
         }
 

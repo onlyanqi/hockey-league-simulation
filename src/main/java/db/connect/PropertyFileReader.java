@@ -1,4 +1,4 @@
-package util;
+package db.connect;
 
 import java.io.FileInputStream;
 import java.util.Properties;

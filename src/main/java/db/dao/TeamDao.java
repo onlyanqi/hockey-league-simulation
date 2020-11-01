@@ -17,7 +17,7 @@ public class TeamDao implements ITeamFactory {
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
             callDB.setInputParameterBoolean(3, team.isAiTeam());
-            callDB.setInputParameterInt(4, team.getPendingTradeOfferCount());
+            callDB.setInputParameterInt(4, team.getTradeOfferCountOfSeason());
             callDB.setInputParameterInt(5, team.getLossPoint());
             callDB.setOutputParameterInt(6);
             callDB.execute();
@@ -47,7 +47,7 @@ public class TeamDao implements ITeamFactory {
             team.setId(callDB.returnOutputParameterInt(2));
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));
-            team.setPendingTradeOfferCount(callDB.returnOutputParameterInt(5));
+            team.setTradeOfferCountOfSeason(callDB.returnOutputParameterInt(5));
             team.setLossPoint(callDB.returnOutputParameterInt(6));
 
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class TeamDao implements ITeamFactory {
             team.setId(callDB.returnOutputParameterInt(2));
             team.setName(callDB.returnOutputParameterString(3));
             team.setDivisionId(callDB.returnOutputParameterInt(4));
-            team.setPendingTradeOfferCount(callDB.returnOutputParameterInt(5));
+            team.setTradeOfferCountOfSeason(callDB.returnOutputParameterInt(5));
             team.setLossPoint(callDB.returnOutputParameterInt(6));
 
         } catch (Exception e) {
@@ -99,7 +99,7 @@ public class TeamDao implements ITeamFactory {
                     team.setName(rs.getString(2));
                     team.setDivisionId(divisionId);
                     team.setAiTeam(rs.getBoolean(4));
-                    team.setPendingTradeOfferCount(rs.getInt(5));
+                    team.setTradeOfferCountOfSeason(rs.getInt(5));
                     team.setLossPoint(rs.getInt(6));
                     teamList.add(team);
                 }

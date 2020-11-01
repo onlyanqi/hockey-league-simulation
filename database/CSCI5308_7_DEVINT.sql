@@ -1114,7 +1114,7 @@ BEGIN
 	select * from Trading where idTrading = tradingId;
 END
 
-CREATE TABLE `TradingOffer` (
+CREATE TABLE `TradeOffer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `leagueId` int(11) DEFAULT NULL,
   `tradingId` int(11) DEFAULT NULL,
@@ -1362,3 +1362,16 @@ END
 alter table Team add column pendingTradeOfferCount int(4);
 alter table Team add column lossPoint int(4);
 
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTradeOfferListByLeagueId`(IN leagueId INT)
+BEGIN
+	select * from TradeOffer where leagueId = leagueId;
+END
+
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `AddTradeOffer`(IN leagueId INT, IN seasonId INT, IN fromTeamId INT, IN toTeamId INT, IN fromPlayerId INT, IN toPlayerId INT, IN tradingId INT, IN status varchar(30), OUT tradeOfferId INT)
+BEGIN
+	Insert into Trading(leagueId, tradingId, fromTeamId, toTeamId, fromPlayerId, toPlayerId, seasonId, status)
+    VALUES (leagueId, tradingId, fromTeamId, toTeamId, fromPlayerId, toPlayerId, seasonId, status);
+
+    SET tradingId := LAST_INSERT_ID();
+
+END

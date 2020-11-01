@@ -33,12 +33,12 @@ public class TeamConcreteTest {
 
     @Test
     public void newLoadTeamFactoryTest() {
-        assertTrue(teamConcrete.newLoadTeamFactory() instanceof TeamDao);
+        assertTrue(teamConcrete.newTeamFactory() instanceof TeamDao);
     }
 
     @Test
     public void newAddTeamFactoryTest() {
-        assertTrue(teamConcrete.newAddTeamFactory() instanceof TeamDao);
+        assertTrue(teamConcrete.newTeamFactory() instanceof TeamDao);
     }
 
 }
