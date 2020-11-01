@@ -35,4 +35,6 @@ public interface IConsoleOutputForTeamCreation {
     void showBelowAverageFreeAgentList(List<Player> freeAgentList, List<Integer> goodFreeAgentsIdList);
 
     void printPlayer(int i, Player player);
+
+    void showNotEnoughMembersError();
 }

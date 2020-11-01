@@ -7,45 +7,47 @@ import java.util.List;
 public class UseInputForTeamCreation implements IUserInputForTeamCreation {
 
     private ConsoleOutput consoleOutput;
+    private ReadUserInput readUserInput;
 
     public UseInputForTeamCreation(){
         consoleOutput = ConsoleOutput.getInstance();
+        readUserInput = ReadUserInput.getInstance();
     }
 
     @Override
     public String getConferenceName(List<String> conferenceNameList) {
-        String conferenceName = ReadUserInput.getUserInput("Please enter conference name the team belongs to");
+        String conferenceName = readUserInput.getInput("Please enter conference name the team belongs to");
         while (!conferenceNameList.contains(conferenceName.toLowerCase())) {
-            conferenceName = ReadUserInput.getUserInput("Please enter conference name from the existing ones");
+            conferenceName = readUserInput.getInput("Please enter conference name from the existing ones");
         }
         return conferenceName;
     }
 
     @Override
     public String getDivisionName(List<String> divisionNameList) {
-        String divisionName = ReadUserInput.getUserInput("Please enter division name the team belongs to");
+        String divisionName = readUserInput.getInput("Please enter division name the team belongs to");
         while (!divisionNameList.contains(divisionName.toLowerCase())) {
-            divisionName = ReadUserInput.getUserInput("Please enter division name from the existing ones");
+            divisionName = readUserInput.getInput("Please enter division name from the existing ones");
         }
         return divisionName;
     }
 
     @Override
     public String getUserChoiceForSerialization() {
-        String userChoice = ReadUserInput.getUserInput("Do you want to serialize league object to JSON?");
+        String userChoice = readUserInput.getInput("Do you want to serialize league object to JSON?");
         return userChoice;
     }
 
     @Override
     public String getTeamName(List<String> teamNameList) {
-        String teamName = ReadUserInput.getUserInput("Please enter a team name to create a team ");
+        String teamName = readUserInput.getInput("Please enter a team name to create a team ");
 
         while (teamNameList.contains(teamName.toLowerCase()) || teamName.isEmpty() || teamName == null) {
 
             if (teamNameList.contains(teamName.toLowerCase())) {
-                teamName = ReadUserInput.getUserInput("Provided team name  already exists. Please enter a new one!");
+                teamName = readUserInput.getInput("Provided team name  already exists. Please enter a new one!");
             } else if (teamName.isEmpty() || teamName == null || teamNameList.contains(teamName.toLowerCase())) {
-                teamName = ReadUserInput.getUserInput("Please enter valid team name! Make sure there is no existing team with provided name");
+                teamName = readUserInput.getInput("Please enter valid team name! Make sure there is no existing team with provided name");
             }
         }
         return teamName;
@@ -53,14 +55,14 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
 
     @Override
     public int getPlayerId(int upperBound) {
-        String playerIdStr = ReadUserInput.getUserInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)");
+        String playerIdStr = readUserInput.getInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)");
         int playerId=-1;
         while(playerId==-1){
             if(isDigit(playerIdStr)){
                 playerId = Integer.parseInt(playerIdStr);
             }else{
                 consoleOutput.printMsgToConsole("Please enter valid digits.");
-                playerIdStr = ReadUserInput.getUserInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)");
+                playerIdStr = readUserInput.getInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)");
             }
         }
         return playerId;
@@ -76,7 +78,7 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
 
     @Override
     public int getGeneralManagerId(List<Manager> managerList) {
-        String generalManagerIdStr = ReadUserInput.getUserInput("Please enter id of general manager");
+        String generalManagerIdStr = readUserInput.getInput("Please enter id of general manager");
         int generalManagerId = -1;
 
         while(generalManagerId==-1){
@@ -85,11 +87,11 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
                 if(generalManagerId < 0 || (generalManagerId > managerList.size() - 1)){
                     generalManagerId = -1;
                     consoleOutput.printMsgToConsole("Please enter valid digits.");
-                    generalManagerIdStr = ReadUserInput.getUserInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
+                    generalManagerIdStr = readUserInput.getInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
                 }
             }else{
                 consoleOutput.printMsgToConsole("Please enter valid digits.");
-                generalManagerIdStr = ReadUserInput.getUserInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
+                generalManagerIdStr = readUserInput.getInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
             }
         }
         return generalManagerId;
@@ -97,7 +99,7 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
 
     @Override
     public int getHeadCoachId(List<Coach> coachList) {
-        String headCoachIdStr = ReadUserInput.getUserInput("Please enter the id of head coach");
+        String headCoachIdStr = readUserInput.getInput("Please enter the id of head coach");
         int headCoachId = -1;
 
         while(headCoachId==-1){
@@ -106,11 +108,11 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
                 if(headCoachId < 0 || (headCoachId > coachList.size() - 1)){
                     headCoachId = -1;
                     consoleOutput.printMsgToConsole("Please enter valid digits.");
-                    headCoachIdStr = ReadUserInput.getUserInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
+                    headCoachIdStr = readUserInput.getInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
                 }
             }else{
                 consoleOutput.printMsgToConsole("Please enter valid digits.");
-                headCoachIdStr = ReadUserInput.getUserInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
+                headCoachIdStr = readUserInput.getInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
             }
         }
         return headCoachId;

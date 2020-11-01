@@ -17,12 +17,6 @@ public class ReadUserInput {
         return readUserInput;
     }
 
-    public static String getUserInput(String input) {
-        consoleOutput.printMsgToConsole(input);
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
-
     public String getInput(String input){
         consoleOutput.printMsgToConsole(input);
         Scanner scanner = new Scanner(System.in);

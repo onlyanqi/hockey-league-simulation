@@ -12,20 +12,21 @@ public class LoadTeamState implements IHockeyState {
     private HockeyContext hockeyContext;
     private String teamName;
     private League league;
-
+    private ReadUserInput readUserInput;
 
     public LoadTeamState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
+        readUserInput = ReadUserInput.getInstance();
     }
 
     @Override
     public void entry() throws Exception {
         //prompt team name
 
-        teamName = ReadUserInput.getUserInput("Please enter team name");
+        teamName = readUserInput.getInput("Please enter team name");
 
         while ((teamName.isEmpty() || teamName == null || isTeamNotPresent(teamName))) {
-            teamName = ReadUserInput.getUserInput("Please enter valid and existing team name");
+            teamName = readUserInput.getInput("Please enter valid and existing team name");
         }
 
     }

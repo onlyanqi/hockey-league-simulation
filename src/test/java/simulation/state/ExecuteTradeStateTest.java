@@ -191,8 +191,6 @@ public class ExecuteTradeStateTest {
             swap.put(TRADEOFFER, tradeOffer);
             swap.put(TRADING, trading);
 
-            User user = new User(1, userFactory);
-            hockeyContext.setUser(user);
             ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
 
             byteArrayInputStream = new ByteArrayInputStream(userInput.getBytes());

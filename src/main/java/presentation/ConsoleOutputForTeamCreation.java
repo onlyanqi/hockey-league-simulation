@@ -15,6 +15,11 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
     }
 
     @Override
+    public void showNotEnoughMembersError(){
+        consoleOutput.printMsgToConsole("There is insufficient managers or coaches or free agents, thus you will not be able to create a new team.");
+    }
+
+    @Override
     public void showLeagueAlreadyExistsError() {
         consoleOutput.printMsgToConsole("League already exists. Please enter a new one");
     }
