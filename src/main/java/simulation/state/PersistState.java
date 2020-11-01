@@ -105,11 +105,6 @@ public class PersistState implements ISimulateState{
 
 
 
-                List<TradeOffer> tradeOfferList = league.getTradingOfferList();
-                if(validation.isListNotEmpty(tradeOfferList)){
-                    addTradeOfferList(tradeOfferList, tradingId);
-                }
-
                 SeasonConcrete seasonConcrete = new SeasonConcrete();
                 ISeasonFactory addSeasonDao = seasonConcrete.newAddSeasonFactory();
                 season.addSeason(addSeasonDao);
@@ -228,7 +223,7 @@ public class PersistState implements ISimulateState{
         return tradingFactory.addTradingDetails(trading);
     }
 
-    public void addTradeOfferList(List<TradeOffer> tradeOfferList, int tradingId) throws Exception {
+    public void addTradeOfferList(List<TradeOffer> tradeOfferList) throws Exception {
         TradeOfferConcrete tradeOfferConcrete = new TradeOfferConcrete();
         ITradeOfferFactory tradeOfferFactory = tradeOfferConcrete.newTradeOfferFactory();
         for(TradeOffer tradeOffer : tradeOfferList){
