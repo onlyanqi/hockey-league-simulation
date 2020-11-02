@@ -162,7 +162,7 @@ public class ExecuteTradeStateTest {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         state.performTrade(swap);
 
-        List<TradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradingOfferList();
+        List<TradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradeOfferList();
 
         assertEquals(tradeOfferList.get(3).getStatus(), ACCEPTED);
     }
@@ -235,7 +235,9 @@ public class ExecuteTradeStateTest {
         Team fromTeam = new Team(1, teamFactory);
         Team toTeam = new Team(2, teamFactory);
         Player fromPlayer = new Player(30, playerFactory);
+        fromPlayer.setPosition(Player.Position.valueOf("goalie"));
         Player toPlayer = new Player(31, playerFactory);
+        toPlayer.setPosition(Player.Position.valueOf("goalie"));
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
 
         fromTeam.getPlayerList().add(fromPlayer);
