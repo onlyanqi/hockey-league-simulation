@@ -165,7 +165,7 @@ public class PersistState implements ISimulateState{
                         int freeAgentId = addFreeAgent(leagueId, seasonId);
                         addPlayerList(0, freeAgentId, league.getFreeAgent().getPlayerList());
                     }
-                    if (league.getConferenceList() != null && !league.getConferenceList().isEmpty()) {
+                    if (league.getConferenceList() != null && league.getConferenceList().size()!=0) {
                         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
                         IConferenceFactory addConferenceDao = conferenceConcrete.newAddConferenceFactory();
                         for (Conference conference : league.getConferenceList()) {
@@ -335,7 +335,7 @@ public class PersistState implements ISimulateState{
     }
 
     private void addGameList(int leagueId,List<Game> gameList) throws Exception {
-        if(gameList != null && !gameList.isEmpty()) {
+        if(gameList != null && gameList.size()!=0) {
             GameConcrete gameConcrete = new GameConcrete();
             IGameFactory addGamesFactory = gameConcrete.newAddGamesFactory();
             for (Game game : gameList) {
@@ -355,7 +355,7 @@ public class PersistState implements ISimulateState{
     }
 
     private void addPlayerList(int teamId, int freeAgentId, List<Player> playerList) throws Exception {
-        if(playerList != null && !playerList.isEmpty()) {
+        if(playerList != null && playerList.size()!=0) {
             PlayerConcrete playerConcrete = new PlayerConcrete();
             IPlayerFactory addPlayerDao = playerConcrete.newPlayerFactory();
             for (Player player : playerList) {
