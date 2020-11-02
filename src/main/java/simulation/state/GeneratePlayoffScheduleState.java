@@ -2,7 +2,7 @@ package simulation.state;
 
 import simulation.model.NHLEvents;
 import simulation.model.*;
-import util.DateUtil;
+import simulation.model.DateTime;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -83,8 +83,8 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
             List<String> teams = playOffTeams.get(conference.getName());
             scheduleGameBetweenTeams(teams.get(0),teams.get(7),games,playOffStartDate);
             scheduleGameBetweenTeams(teams.get(1),teams.get(2),games,playOffStartDate);
-            scheduleGameBetweenTeams(teams.get(3),teams.get(6),games, DateUtil.addDays(playOffStartDate,1));
-            scheduleGameBetweenTeams(teams.get(4),teams.get(5),games,DateUtil.addDays(playOffStartDate,1));
+            scheduleGameBetweenTeams(teams.get(3),teams.get(6),games, DateTime.addDays(playOffStartDate,1));
+            scheduleGameBetweenTeams(teams.get(4),teams.get(5),games, DateTime.addDays(playOffStartDate,1));
         }
     }
 
@@ -96,7 +96,7 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
             game.setTeam2(team2);
             game.setDate(currentDate);
             games.add(game);
-            currentDate = DateUtil.addDays(currentDate,2);
+            currentDate = DateTime.addDays(currentDate,2);
         }
     }
 

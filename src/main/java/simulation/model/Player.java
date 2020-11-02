@@ -1,7 +1,6 @@
 package simulation.model;
 
 import db.data.IPlayerFactory;
-import util.DateUtil;
 
 import java.time.LocalDate;
 import java.util.Random;
@@ -242,7 +241,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         if (league == null) {
             return;
         }
-        if (this.getInjured() && DateUtil.diffDays(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
+        if (this.getInjured() && DateTime.diffDays(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
             this.setInjured(false);
             this.setInjuryStartDate(null);
         }

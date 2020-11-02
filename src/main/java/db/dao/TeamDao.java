@@ -1,9 +1,7 @@
 package db.dao;
 
 import db.data.ITeamFactory;
-import simulation.model.Game;
 import simulation.model.Team;
-import util.DateUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

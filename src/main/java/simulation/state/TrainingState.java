@@ -1,7 +1,7 @@
 package simulation.state;
 import simulation.model.*;
 import presentation.ConsoleOutput;
-import util.DateUtil;
+import simulation.model.DateTime;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
@@ -26,7 +26,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
         LocalDate currentDate = league.getCurrentDate();
         LocalDate seasonStartDate = league.getNHLRegularSeasonEvents().getRegularSeasonStartDate();
         Integer daysUntilStatIncreaseCheck  =league.getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck();
-        Long diffDays = DateUtil.diffDays(seasonStartDate,currentDate);
+        Long diffDays = DateTime.diffDays(seasonStartDate,currentDate);
         if(diffDays % daysUntilStatIncreaseCheck == 1){
             consoleOutput.printMsgToConsole(STATCHECKINFORMATION);
             statIncreaseCheck(league);
