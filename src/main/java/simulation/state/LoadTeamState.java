@@ -79,7 +79,7 @@ public class LoadTeamState implements IHockeyState {
                         div = division;
                     }
                     PlayerConcrete playerConcrete = new PlayerConcrete();
-                    IPlayerFactory iLoadPlayerFactory = playerConcrete.newLoadPlayerFactory();
+                    IPlayerFactory iLoadPlayerFactory = playerConcrete.newPlayerFactory();
                     team.loadPlayerListByTeamId(iLoadPlayerFactory);
                     team.getPlayerList();
                 }
