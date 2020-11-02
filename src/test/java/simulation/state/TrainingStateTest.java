@@ -8,10 +8,6 @@ import simulation.model.Coach;
 import simulation.model.League;
 import simulation.model.Player;
 import simulation.model.User;
-
-import java.time.LocalDate;
-import java.time.Month;
-
 import static org.junit.Assert.*;
 
 public class TrainingStateTest {

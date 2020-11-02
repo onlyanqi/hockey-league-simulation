@@ -95,4 +95,10 @@ public class TeamScoreTest {
         assertTrue(teamScore.getNumberOfLoss().equals(3));
     }
 
+    @Test
+    public void getNumberOfTiesTest(){
+        TeamScore teamScore = new TeamScore();
+        teamScore.setNumberOfTies(3);
+        assertTrue(teamScore.getNumberOfTies().equals(3));
+    }
 }

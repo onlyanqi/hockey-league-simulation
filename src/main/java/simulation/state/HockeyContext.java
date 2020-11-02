@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import simulation.model.User;
+import validator.Validation;
 
 public class HockeyContext {
 
@@ -27,8 +28,8 @@ public class HockeyContext {
     }
 
     public void startAction(JSONObject jsonFromInput) throws Exception {
-
-        if (jsonFromInput != null) {
+        Validation validation = new Validation();
+        if (validation.isNotNull(jsonFromInput) ) {
             hockeyState = new ImportState(this, jsonFromInput);
             hockeyState.entry();
             hockeyState.process();
@@ -47,7 +48,7 @@ public class HockeyContext {
             hockeyState.entry();
             hockeyState.process();
             hockeyState = hockeyState.exit();
-        } while (hockeyState != null);
+        } while (validation.isNotNull(hockeyState));
 
     }
 

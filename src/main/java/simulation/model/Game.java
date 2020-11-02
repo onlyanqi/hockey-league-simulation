@@ -29,8 +29,6 @@ public class Game {
         return null;
     }
 
-    ;
-
     public int getId() {
         return id;
     }

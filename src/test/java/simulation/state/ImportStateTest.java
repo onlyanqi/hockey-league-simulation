@@ -7,7 +7,6 @@ import org.junit.Test;
 import simulation.mock.JSONControllerMock;
 import simulation.mock.LeagueMock;
 import simulation.model.User;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 

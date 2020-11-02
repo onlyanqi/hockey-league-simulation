@@ -6,7 +6,6 @@ import org.junit.Test;
 import simulation.mock.*;
 import simulation.model.Game;
 import simulation.model.User;
-
 import static org.junit.Assert.*;
 
 public class SimulateGameStateTest {
@@ -38,6 +37,7 @@ public class SimulateGameStateTest {
         assertNull(g.getWinner());
         SimulateGameState state = new SimulateGameState(hockeyContext);
         state.simulateGame(g);
+        assertTrue(g.getPlayed());
     }
 
 

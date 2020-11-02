@@ -53,8 +53,8 @@ public class GameMock implements IGameFactory {
                 game.setId(id);
                 game.setWinner(null);
                 game.setPlayed(false);
-                game.setTeam1("team11");
-                game.setTeam2("team12");
+                game.setTeam1("Team11");
+                game.setTeam2("Team12");
                 game.setDate(LocalDate.of(2020, Month.NOVEMBER,03));
                 break;
         }

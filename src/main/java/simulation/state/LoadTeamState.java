@@ -54,10 +54,6 @@ public class LoadTeamState implements IHockeyState {
         }
         league = hockeyContext.getUser().getLeagueList().get(0);
 
-//        TradingConcrete tradingConcrete = new TradingConcrete();
-//        ITradingFactory tradingFactory = tradingConcrete.newTradingFactory();
-//        updateTradingDetailsToLeague(tradingFactory);
-
         Division div = null;
         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
         IConferenceFactory iLoadConferenceFactory = conferenceConcrete.newLoadConferenceFactory();
@@ -97,9 +93,7 @@ public class LoadTeamState implements IHockeyState {
         freeAgent.loadPlayerListByFreeAgentId(iLoadPlayerFactory);
 
         setGames();
-        //setNHLEvents();
         setCoaches();
-        //setManagers();
         Conference conf = null;
         if (league.getConferenceList() != null && !league.getConferenceList().isEmpty()) {
             for (Conference conference : league.getConferenceList()) {
@@ -121,7 +115,7 @@ public class LoadTeamState implements IHockeyState {
 
     }
 
-    public void setGames() throws Exception {
+    private void setGames() throws Exception {
         GameConcrete gameConcrete = new GameConcrete();
         IGameFactory gameFactory = gameConcrete.newAddGamesFactory();
         GameSchedule games = new GameSchedule();
@@ -129,24 +123,11 @@ public class LoadTeamState implements IHockeyState {
         league.setGames(games);
     }
 
-    public void setCoaches() throws Exception {
+    private void setCoaches() throws Exception {
         CoachConcrete coachConcrete = new CoachConcrete();
         ICoachFactory iCoachFactory = coachConcrete.newCoachFactory();
         List<Coach> coachList = iCoachFactory.loadFreeCoachListByLeagueId(league.getId());
         league.setCoachList(coachList);
-    }
-
-    public void setManagers() throws Exception {
-        ManagerConcrete managerConcrete = new ManagerConcrete();
-        IManagerFactory iManagerFactory = managerConcrete.newManagerFactory();
-        List<Manager> managerList = iManagerFactory.loadFreeManagersByLeagueId(league.getId());
-        league.setManagerList(managerList);
-    }
-
-    public void setNHLEvents() throws Exception {
-        EventConcrete eventConcrete = new EventConcrete();
-        IEventFactory eventFactory = eventConcrete.newAddEventsFactory();
-        eventFactory.loadEventByLeagueId(league.getId(), league.getNHLRegularSeasonEvents());
     }
 
     public void updateTradingDetailsToLeague(ITradingFactory tradingFactory) throws Exception {

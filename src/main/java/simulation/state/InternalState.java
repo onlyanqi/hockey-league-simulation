@@ -1,5 +1,7 @@
 package simulation.state;
 
+import validator.Validation;
+
 public class InternalState implements IHockeyState {
 
     private HockeyContext hockeyContext;
@@ -17,9 +19,10 @@ public class InternalState implements IHockeyState {
 
     @Override
     public void process() {
+        Validation validation = new Validation();
         do {
             simulateState = simulateState.action();
-        } while (simulateState != null);
+        } while (validation.isNotNull(simulateState));
     }
 
     @Override
