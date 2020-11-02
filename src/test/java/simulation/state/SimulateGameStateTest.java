@@ -38,8 +38,6 @@ public class SimulateGameStateTest {
         assertNull(g.getWinner());
         SimulateGameState state = new SimulateGameState(hockeyContext);
         state.simulateGame(g);
-        //assertTrue(g.getPlayed());
-        //assertNotNull(g.getWinner());
     }
 
 

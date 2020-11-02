@@ -226,6 +226,7 @@ public class LeagueMock implements ILeagueFactory {
                 league.setManagerList(formManagerList());
                 league.setTradingOfferList(getTradeOfferList(1));
                 league.setNhlRegularSeasonEvents(formNHLEvents(0));
+                league.setGames(formGames());
                 league.setGamePlayConfig(formGamePlayConfig());
                 league.setCurrentDate(LocalDate.now());
                 break;
