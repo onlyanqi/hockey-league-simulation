@@ -4,6 +4,7 @@ import db.data.ITeamScoreFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.TeamScoreMock;
+
 import static org.junit.Assert.*;
 
 public class TeamScoreTest {
@@ -31,39 +32,39 @@ public class TeamScoreTest {
     }
 
     @Test
-    public void getTeamNameTest() throws Exception{
-        TeamScore teamScore = new TeamScore(1,iTeamScoreFactory);
-        assertEquals(teamScore.getTeamName(),"Team1");
+    public void getTeamNameTest() throws Exception {
+        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        assertEquals(teamScore.getTeamName(), "Team1");
 
-        TeamScore teamScore2 = new TeamScore(3,iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
         assertNull(teamScore2.getTeamName());
     }
 
     @Test
-    public void getPointsTest() throws Exception{
-        TeamScore teamScore = new TeamScore(1,iTeamScoreFactory);
-        assertTrue(teamScore.getPoints()==12);
+    public void getPointsTest() throws Exception {
+        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        assertTrue(teamScore.getPoints() == 12);
 
-        TeamScore teamScore2 = new TeamScore(3,iTeamScoreFactory);
-        assertFalse(teamScore2.getPoints()!=0);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        assertFalse(teamScore2.getPoints() != 0);
     }
 
     @Test
-    public void getNumberOfWinsTest() throws Exception{
-        TeamScore teamScore = new TeamScore(1,iTeamScoreFactory);
-        assertTrue(teamScore.getNumberOfWins()==6);
+    public void getNumberOfWinsTest() throws Exception {
+        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        assertTrue(teamScore.getNumberOfWins() == 6);
 
-        TeamScore teamScore2 = new TeamScore(3,iTeamScoreFactory);
-        assertFalse(teamScore2.getNumberOfWins()!=0);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        assertFalse(teamScore2.getNumberOfWins() != 0);
     }
 
     @Test
-    public void getNumberOfLossTest() throws Exception{
-        TeamScore teamScore = new TeamScore(1,iTeamScoreFactory);
-        assertTrue(teamScore.getNumberOfLoss()==5);
+    public void getNumberOfLossTest() throws Exception {
+        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        assertTrue(teamScore.getNumberOfLoss() == 5);
 
-        TeamScore teamScore2 = new TeamScore(3,iTeamScoreFactory);
-        assertFalse(teamScore2.getNumberOfLoss()!=0);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        assertFalse(teamScore2.getNumberOfLoss() != 0);
     }
 
     @Test

@@ -13,7 +13,7 @@ public class InjuryMock implements IInjuryFactory {
     @Override
     public Injury loadInjuryByLeagueId(int leagueId) throws Exception {
         Injury injury = new Injury();
-        switch (leagueId){
+        switch (leagueId) {
             case 1:
                 injury.setRandomInjuryChance(0.05);
                 injury.setInjuryDaysHigh(200);

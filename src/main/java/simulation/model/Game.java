@@ -6,27 +6,30 @@ import java.time.LocalDate;
 
 public class Game {
 
-    public Game() {
-        this.played = false;
-    }
-
-    public Game(int id,IGameFactory factory) throws Exception{
-        setId(id);
-        factory.loadGameById(id,this);
-    }
-
     private int id;
     private String team1;
     private String team2;
     private LocalDate date;
     private Boolean played;
     private Result winner;
-    public enum Result{
-        TEAM1,
-        TEAM2,
-        TIE
-    };
+    public Game() {
+        this.played = false;
+    }
+    public Game(int id, IGameFactory factory) throws Exception {
+        setId(id);
+        factory.loadGameById(id, this);
+    }
 
+    public static Result fromString(String text) {
+        for (Result b : Result.values()) {
+            if (b.name().equalsIgnoreCase(text)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    ;
 
     public int getId() {
         return id;
@@ -76,20 +79,17 @@ public class Game {
         this.played = played;
     }
 
-    public Boolean isGameUnPlayed(){
-        if(this.played){
+    public Boolean isGameUnPlayed() {
+        if (this.played) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    public static Result fromString(String text) {
-        for (Result b : Result.values()) {
-            if (b.name().equalsIgnoreCase(text)) {
-                return b;
-            }
-        }
-        return null;
+    public enum Result {
+        TEAM1,
+        TEAM2,
+        TIE
     }
 }

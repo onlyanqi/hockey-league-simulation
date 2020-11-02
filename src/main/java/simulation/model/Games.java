@@ -6,11 +6,10 @@ import java.util.List;
 
 public class Games {
 
-    public Games() {
-    }
-
     List<Game> gameList = new ArrayList<>();
     int id;
+    public Games() {
+    }
 
     public int getId() {
         return id;
@@ -30,12 +29,12 @@ public class Games {
 
     public List<Game> getUnPlayedGamesOnDate(LocalDate date) {
         List<Game> gameListOnGivenDate = new ArrayList<>();
-        for(Game game: gameList){
-            if(game.getDate().equals(date) && game.isGameUnPlayed()){
+        for (Game game : gameList) {
+            if (game.getDate().equals(date) && game.isGameUnPlayed()) {
                 gameListOnGivenDate.add(game);
             }
         }
-        return  gameListOnGivenDate;
+        return gameListOnGivenDate;
     }
 
     public List<Game> getGamesOnDate(LocalDate date) {
@@ -49,8 +48,8 @@ public class Games {
     }
 
     public Boolean doGamesDoesNotExistOnOrAfterDate(LocalDate date) {
-        for(Game game: gameList){
-            if(game.getDate().compareTo(date) >=0){
+        for (Game game : gameList) {
+            if (game.getDate().compareTo(date) >= 0) {
                 return false;
             }
         }
@@ -58,8 +57,8 @@ public class Games {
     }
 
     public Boolean doGamesDoesNotExistAfterDate(LocalDate date) {
-        for(Game game: gameList){
-            if(game.getDate().compareTo(date) >0){
+        for (Game game : gameList) {
+            if (game.getDate().compareTo(date) > 0) {
                 return false;
             }
         }

@@ -7,5 +7,5 @@ public interface IAgingFactory {
 
     Aging loadAgingByLeagueId(int leagueId) throws Exception;
 
-    void loadAgingById(int id,Aging aging) throws Exception;
+    void loadAgingById(int id, Aging aging) throws Exception;
 }

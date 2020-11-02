@@ -13,7 +13,7 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
     @Override
     public int addTradeOfferDetails(TradeOffer tradeOffer) throws Exception {
         ICallDB callDB = null;
-        try{
+        try {
             callDB = new CallDB("AddTradeOffer(?,?,?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, tradeOffer.getLeagueId());
             callDB.setInputParameterInt(2, tradeOffer.getSeasonId());
@@ -27,8 +27,8 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
             callDB.execute();
             tradeOffer.setId(callDB.returnOutputParameterInt(9));
 
-        } catch (SQLException sqlException){
-            printLog("TradeOfferDao: addTradeOfferDetails: SQLException: "+sqlException);
+        } catch (SQLException sqlException) {
+            printLog("TradeOfferDao: addTradeOfferDetails: SQLException: " + sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -40,7 +40,7 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
     public List loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
         ICallDB callDB = null;
         List<TradeOffer> tradeOfferList = null;
-        try{
+        try {
             callDB = new CallDB("LoadTradeOfferListByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
@@ -62,8 +62,8 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
                     tradeOfferList.add(tradeOffer);
                 }
             }
-        } catch (SQLException e){
-            printLog("TradeOfferDao: loadTradeOfferDetailsByLeagueId: Exception: "+e);
+        } catch (SQLException e) {
+            printLog("TradeOfferDao: loadTradeOfferDetailsByLeagueId: Exception: " + e);
             throw e;
         }
         return tradeOfferList;
@@ -72,7 +72,7 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
     @Override
     public void loadTradeOfferDetailsById(int tradeOfferId, TradeOffer tradeOffer) throws Exception {
         ICallDB callDB;
-        try{
+        try {
             callDB = new CallDB("LoadTradeOfferListByLeagueId(?)");
             callDB.setInputParameterInt(1, tradeOfferId);
             ResultSet rs = callDB.executeLoad();
@@ -91,8 +91,8 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
                     tradeOffer.setStatus(rs.getString(9));
                 }
             }
-        } catch (SQLException e){
-            printLog("TradeOfferDao: loadTradeOfferDetailsById: Exception: "+e);
+        } catch (SQLException e) {
+            printLog("TradeOfferDao: loadTradeOfferDetailsById: Exception: " + e);
             throw e;
         }
     }

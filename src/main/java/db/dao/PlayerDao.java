@@ -1,8 +1,8 @@
 package db.dao;
 
 import db.data.IPlayerFactory;
-import simulation.model.Player;
 import simulation.model.DateTime;
+import simulation.model.Player;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +36,7 @@ public class PlayerDao implements IPlayerFactory {
 
         } catch (SQLException sqlException) {
             throw sqlException;
-        } catch(Exception exception) {
+        } catch (Exception exception) {
             throw exception;
         } finally {
             assert callDB != null;

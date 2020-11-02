@@ -1,16 +1,18 @@
 package simulation.state;
 
-import simulation.model.NHLEvents;
 import simulation.model.*;
-import simulation.model.DateTime;
+
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class InitializeSeasonState implements ISimulateState {
 
+    private final Integer TotalGamesPerTeam = 82;
     private League league;
     private HockeyContext hockeyContext;
-    private final Integer TotalGamesPerTeam = 82;
+
     public InitializeSeasonState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
@@ -18,9 +20,9 @@ public class InitializeSeasonState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-        if(isMinimumTeamCountSatisfiedForPlayoffs(league)){
+        if (isMinimumTeamCountSatisfiedForPlayoffs(league)) {
             InitializeRegularSeason();
-        }else{
+        } else {
             System.out.println("Please make sure minimum number of teams(5) for each division are provided for the league");
             return null;
         }
@@ -31,7 +33,7 @@ public class InitializeSeasonState implements ISimulateState {
         return new AdvanceTimeState(hockeyContext);
     }
 
-    private void InitializeRegularSeason(){
+    private void InitializeRegularSeason() {
 
         NHLEvents nhlEvents = new NHLEvents();
 
@@ -39,19 +41,19 @@ public class InitializeSeasonState implements ISimulateState {
         LocalDate previousDateOfRegularSeasonStart = DateTime.minusDays(nhlEvents.getRegularSeasonStartDate(), 1);
         LocalDate endDate = nhlEvents.getEndOfRegularSeason();
 
-        int diffInDays = (int) DateTime.diffDays(previousDateOfRegularSeasonStart,endDate);
+        int diffInDays = (int) DateTime.diffDays(previousDateOfRegularSeasonStart, endDate);
 
         league.setCurrentDate(previousDateOfRegularSeasonStart);
 
         List<Game> tempGameList = new ArrayList<>();
 
-        for(Conference conf: league.getConferenceList()){
-            for(Division division : conf.getDivisionList()){
-                for(Team team : division.getTeamList()) {
+        for (Conference conf : league.getConferenceList()) {
+            for (Division division : conf.getDivisionList()) {
+                for (Team team : division.getTeamList()) {
                     while (checkMaxGamesNotReachedForTeam(tempGameList, team)) {
-                        addGamesWithinDivision(tempGameList,team,division);
-                        addGamesOutsideDivision(tempGameList,team,division,conf);
-                        addGamesOutsideConference(tempGameList,team,division,conf);
+                        addGamesWithinDivision(tempGameList, team, division);
+                        addGamesOutsideDivision(tempGameList, team, division, conf);
+                        addGamesOutsideConference(tempGameList, team, division, conf);
                     }
                 }
             }
@@ -64,7 +66,7 @@ public class InitializeSeasonState implements ISimulateState {
 
         Integer totalGamesAdded = tempGameList.size();
 
-        scheduleGamesForGeneratedOnes(gameList,tempGameList,currentDate,totalGamesAdded,diffInDays);
+        scheduleGamesForGeneratedOnes(gameList, tempGameList, currentDate, totalGamesAdded, diffInDays);
 
         TeamStanding regularSeasonTeamStanding = new TeamStanding();
         regularSeasonTeamStanding.initializeTeamStandingsRegularSeason(league);
@@ -79,7 +81,7 @@ public class InitializeSeasonState implements ISimulateState {
     private Boolean isMinimumTeamCountSatisfiedForPlayoffs(League league) {
         for (Conference conference : league.getConferenceList()) {
             for (Division division : conference.getDivisionList()) {
-                if(division.getTeamList().size() <=4){
+                if (division.getTeamList().size() <= 4) {
                     return false;
                 }
             }
@@ -87,7 +89,7 @@ public class InitializeSeasonState implements ISimulateState {
         return true;
     }
 
-    private void addGamesOutsideConference(List<Game> tempGameList, Team team,Division division,Conference conf) {
+    private void addGamesOutsideConference(List<Game> tempGameList, Team team, Division division, Conference conf) {
         for (Conference otherConference : league.getConferenceList()) {
             if ((otherConference.getName().equals(conf.getName()))) continue;
             for (Division division3 : otherConference.getDivisionList()) {
@@ -107,7 +109,7 @@ public class InitializeSeasonState implements ISimulateState {
         }
     }
 
-    private void addGamesOutsideDivision(List<Game> tempGameList, Team team,Division division,Conference conf) {
+    private void addGamesOutsideDivision(List<Game> tempGameList, Team team, Division division, Conference conf) {
         for (Division OtherDivision : conf.getDivisionList()) {
             if ((OtherDivision.getName().equals(division.getName()))) continue;
             for (Team teamOutsideDivision : OtherDivision.getTeamList()) {
@@ -125,7 +127,7 @@ public class InitializeSeasonState implements ISimulateState {
         }
     }
 
-    private void addGamesWithinDivision(List<Game> tempGameList, Team team,Division division) {
+    private void addGamesWithinDivision(List<Game> tempGameList, Team team, Division division) {
         for (Team teamInsideDivision : division.getTeamList()) {
             if ((team.getName().equals(teamInsideDivision.getName()))) continue;
             if (checkMaxGamesReached(tempGameList, team)) {
@@ -142,33 +144,31 @@ public class InitializeSeasonState implements ISimulateState {
     }
 
     private boolean checkMaxGamesReached(List<Game> gameList, Team team) {
-        int teamCount =0;
+        int teamCount = 0;
 
-        for(Game g: gameList){
-            if(g.getTeam1().equals(team.getName()) ||g.getTeam2().equals(team.getName())){
+        for (Game g : gameList) {
+            if (g.getTeam1().equals(team.getName()) || g.getTeam2().equals(team.getName())) {
                 teamCount++;
             }
         }
 
-        if(teamCount == TotalGamesPerTeam ){
+        if (teamCount == TotalGamesPerTeam) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     private boolean checkMaxGamesNotReachedForTeam(List<Game> gameList, Team team) {
-        int teamCount =0;
-        for(Game g: gameList){
-            if(g.getTeam1().equals(team.getName()) ||g.getTeam2().equals(team.getName())){
+        int teamCount = 0;
+        for (Game g : gameList) {
+            if (g.getTeam1().equals(team.getName()) || g.getTeam2().equals(team.getName())) {
                 teamCount++;
             }
         }
-        if(teamCount == TotalGamesPerTeam ){
+        if (teamCount == TotalGamesPerTeam) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
@@ -176,17 +176,17 @@ public class InitializeSeasonState implements ISimulateState {
 
     private void scheduleGamesForGeneratedOnes(List<Game> gameList, List<Game> tempGameList, LocalDate currentDate, Integer totalGamesAdded, int diffInDays) {
         Random rand = new Random();
-        for(int i=0;i<diffInDays;i++){
-            for(int j=0;j<totalGamesAdded/diffInDays;j++){
+        for (int i = 0; i < diffInDays; i++) {
+            for (int j = 0; j < totalGamesAdded / diffInDays; j++) {
                 int randomNumber = rand.nextInt(tempGameList.size());
                 Game game = tempGameList.get(randomNumber);
                 game.setDate(currentDate);
                 tempGameList.remove(randomNumber);
                 gameList.add(game);
             }
-            currentDate = DateTime.addDays(currentDate,1);
+            currentDate = DateTime.addDays(currentDate, 1);
         }
-        for(int j=0;j<totalGamesAdded%diffInDays;j++){
+        for (int j = 0; j < totalGamesAdded % diffInDays; j++) {
             int randomNumber = rand.nextInt(tempGameList.size());
             Game game = tempGameList.get(randomNumber);
             game.setDate(currentDate);
@@ -197,7 +197,7 @@ public class InitializeSeasonState implements ISimulateState {
 
     private Integer getTotalTeamsCount() {
         int teamsCount = 0;
-        for(Conference conference2: league.getConferenceList()) {
+        for (Conference conference2 : league.getConferenceList()) {
             for (Division division : conference2.getDivisionList()) {
                 for (Team team : division.getTeamList()) {
                     teamsCount = teamsCount + 1;

@@ -1,10 +1,5 @@
 package simulation.state;
 
-import simulation.model.NHLEvents;
-import simulation.model.Games;
-import simulation.model.League;
-import simulation.model.TeamStanding;
-
 import simulation.model.*;
 
 import java.util.List;
@@ -47,18 +42,18 @@ public class AgingState implements ISimulateState {
     }
 
     private ISimulateState exit() {
-        if(stanleyCupWinnerDetermined()){
+        if (stanleyCupWinnerDetermined()) {
             return new AdvanceNextSeasonState(hockeyContext);
         } else {
             return new PersistState(hockeyContext);
         }
     }
 
-    public Boolean stanleyCupWinnerDetermined(){
+    public Boolean stanleyCupWinnerDetermined() {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         Games games = league.getGames();
         TeamStanding teamStanding = league.getActiveTeamStanding();
-        if(nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2 ){
+        if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2) {
             return true;
         }
         return false;

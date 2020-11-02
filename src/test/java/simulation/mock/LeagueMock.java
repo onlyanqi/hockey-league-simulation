@@ -55,44 +55,44 @@ public class LeagueMock implements ILeagueFactory {
 
         IManagerFactory managerFactory = new ManagerMock();
 
-        for(int i =1; i<6; i++){
-            Manager manager = new Manager(i,managerFactory);
+        for (int i = 1; i < 6; i++) {
+            Manager manager = new Manager(i, managerFactory);
             managerList.add(manager);
         }
         return managerList;
     }
 
-    public Games formGames() throws Exception{
+    public Games formGames() throws Exception {
         Games games = new Games();
         List<Game> gameList = new ArrayList<>();
 
         IGameFactory gameFactory = new GameMock();
 
-        for(int i =0; i<4; i++){
-            Game game = new Game(i,gameFactory);
+        for (int i = 0; i < 4; i++) {
+            Game game = new Game(i, gameFactory);
             gameList.add(game);
         }
         games.setGameList(gameList);
         return games;
     }
 
-    public TeamStanding formTeamStanding() throws Exception{
+    public TeamStanding formTeamStanding() throws Exception {
         TeamStanding teamStanding = new TeamStanding();
         List<TeamScore> teamScoreList = new ArrayList<>();
 
         ITeamScoreFactory teamScoreFactory = new TeamScoreMock();
 
-        for(int i =1;i<4;i++){
-            TeamScore teamScore = new TeamScore(i,teamScoreFactory);
+        for (int i = 1; i < 4; i++) {
+            TeamScore teamScore = new TeamScore(i, teamScoreFactory);
             teamScoreList.add(teamScore);
         }
         teamStanding.setTeamsScoreList(teamScoreList);
         return teamStanding;
     }
 
-    public NHLEvents formNHLEvents(int id) throws Exception{
+    public NHLEvents formNHLEvents(int id) throws Exception {
         IEventFactory eventFactory = new NHLEventMock();
-        NHLEvents nhlEvents = new NHLEvents(id,eventFactory);
+        NHLEvents nhlEvents = new NHLEvents(id, eventFactory);
         return nhlEvents;
     }
 
@@ -104,7 +104,7 @@ public class LeagueMock implements ILeagueFactory {
 
     private FreeAgent formFreeAgent() throws Exception {
         IFreeAgentFactory freeAgentFactory = new FreeAgentMock();
-        FreeAgent freeAgent = new FreeAgent(6,freeAgentFactory);
+        FreeAgent freeAgent = new FreeAgent(6, freeAgentFactory);
         return freeAgent;
     }
 
@@ -112,7 +112,7 @@ public class LeagueMock implements ILeagueFactory {
         List<Player> playerList = new ArrayList<>();
 
         IPlayerFactory playerFactory = new PlayerMock();
-        for(int i=1;i<22;i++){
+        for (int i = 1; i < 22; i++) {
             Player player = new Player(i, playerFactory);
             playerList.add(player);
         }
@@ -134,13 +134,13 @@ public class LeagueMock implements ILeagueFactory {
 
     public Aging getAging() throws Exception {
         IAgingFactory agingFactory = new AgingMock();
-        Aging aging = new Aging(1,agingFactory);
+        Aging aging = new Aging(1, agingFactory);
         return aging;
     }
 
     public Training getTraining() throws Exception {
         ITrainingFactory trainingFactory = new TrainingMock();
-        Training training = new Training(1,trainingFactory);
+        Training training = new Training(1, trainingFactory);
         return training;
     }
 

@@ -43,7 +43,7 @@ public class LoadTeamStateTest {
     }
 
     @Test
-    public void setLeagueTest(){
+    public void setLeagueTest() {
         League league = new League();
         league.setId(1);
         league.setCreatedBy(1);

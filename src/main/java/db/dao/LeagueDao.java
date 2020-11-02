@@ -1,9 +1,8 @@
 package db.dao;
 
 import db.data.ILeagueFactory;
-import simulation.model.League;
-import simulation.model.DateTime;
 import simulation.model.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
             league.setId(callDB.returnOutputParameterInt(15));
 
         } catch (SQLException sqlException) {
-            printLog("LeagueDao: addLeague: SQLException: "+sqlException);
+            printLog("LeagueDao: addLeague: SQLException: " + sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -62,7 +61,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
 
 
         } catch (SQLException e) {
-            printLog("LeagueDao: loadLeagueById: SQLException: "+e);
+            printLog("LeagueDao: loadLeagueById: SQLException: " + e);
             throw e;
         } finally {
             callDB.closeConnection();
@@ -85,7 +84,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
                 }
             }
         } catch (SQLException e) {
-            printLog("LeagueDao: loadLeagueByName: SQLException: "+e);
+            printLog("LeagueDao: loadLeagueByName: SQLException: " + e);
             throw e;
         } finally {
             callDB.closeConnection();
@@ -136,7 +135,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
                 }
             }
         } catch (SQLException e) {
-            printLog("LeagueDao: loadLeagueListByUserId: SQLException: "+e);
+            printLog("LeagueDao: loadLeagueListByUserId: SQLException: " + e);
             throw e;
         }
 

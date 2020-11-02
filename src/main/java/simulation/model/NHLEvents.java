@@ -10,6 +10,13 @@ import java.time.temporal.TemporalAdjusters;
 
 public class NHLEvents {
 
+    public int id;
+    public LocalDate regularSeasonStartDate;
+    public LocalDate tradeDeadlineDate;
+    public LocalDate endOfRegularSeason;
+    public LocalDate playOffStartDate;
+    public LocalDate lastDayStanleyCupFinals;
+    public LocalDate nextSeasonDate;
     public NHLEvents() {
         initializeEndOfRegularSeason();
         initializeTradeDeadlineDate();
@@ -18,19 +25,9 @@ public class NHLEvents {
         initializeLastDayStanleyCupFinals();
         initializeNextSeasonDate();
     }
-
-    public NHLEvents(int leagueId, IEventFactory iEventFactory) throws Exception{
+    public NHLEvents(int leagueId, IEventFactory iEventFactory) throws Exception {
         iEventFactory.loadEventByLeagueId(leagueId, this);
     }
-
-    public int id;
-
-    public LocalDate regularSeasonStartDate;
-    public LocalDate tradeDeadlineDate;
-    public LocalDate endOfRegularSeason;
-    public LocalDate playOffStartDate;
-    public LocalDate lastDayStanleyCupFinals;
-    public LocalDate nextSeasonDate;
 
     public int getId() {
         return id;
@@ -44,16 +41,16 @@ public class NHLEvents {
         return nextSeasonDate;
     }
 
+    public void setNextSeasonDate(LocalDate nextSeasonDate) {
+        this.nextSeasonDate = nextSeasonDate;
+    }
+
     public LocalDate getRegularSeasonStartDate() {
         return regularSeasonStartDate;
     }
 
     public void setRegularSeasonStartDate(LocalDate regularSeasonStartDate) {
         this.regularSeasonStartDate = regularSeasonStartDate;
-    }
-
-    public void setTradeDeadlineDate(LocalDate tradeDeadlineDate) {
-        this.tradeDeadlineDate = tradeDeadlineDate;
     }
 
     public LocalDate getEndOfRegularSeason() {
@@ -72,41 +69,40 @@ public class NHLEvents {
         this.playOffStartDate = playOffStartDate;
     }
 
-
-    public void setLastDayStanleyCupFinals(LocalDate lastDayStanleyCupFinals) {
-        this.lastDayStanleyCupFinals = lastDayStanleyCupFinals;
-    }
-
-    public void setNextSeasonDate(LocalDate nextSeasonDate) {
-        this.nextSeasonDate = nextSeasonDate;
-    }
-
     public LocalDate getTradeDeadlineDate() {
         return tradeDeadlineDate;
+    }
+
+    public void setTradeDeadlineDate(LocalDate tradeDeadlineDate) {
+        this.tradeDeadlineDate = tradeDeadlineDate;
     }
 
     public LocalDate getLastDayStanleyCupFinals() {
         return lastDayStanleyCupFinals;
     }
 
+    public void setLastDayStanleyCupFinals(LocalDate lastDayStanleyCupFinals) {
+        this.lastDayStanleyCupFinals = lastDayStanleyCupFinals;
+    }
+
     public boolean checkTradeDeadlinePassed(LocalDate currentDate) {
-        if(currentDate.compareTo(tradeDeadlineDate) > 0){
+        if (currentDate.compareTo(tradeDeadlineDate) > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     public boolean checkEndOfRegularSeason(LocalDate currentDate) {
-        if(currentDate.equals(endOfRegularSeason)){
+        if (currentDate.equals(endOfRegularSeason)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     public boolean checkRegularSeasonPassed(LocalDate currentDate) {
-        if(currentDate.compareTo(endOfRegularSeason) > 0){
+        if (currentDate.compareTo(endOfRegularSeason) > 0) {
             return true;
         } else {
             return false;
@@ -119,30 +115,30 @@ public class NHLEvents {
     }
 
     public void initializeTradeDeadlineDate() {
-        LocalDate  endOfMonth = LocalDate.of(LocalDate.now().getYear()+1, Month.FEBRUARY,1);
-        LocalDate tradeDeadlineDate = endOfMonth.with( TemporalAdjusters.previousOrSame( DayOfWeek.MONDAY ) );
+        LocalDate endOfMonth = LocalDate.of(LocalDate.now().getYear() + 1, Month.FEBRUARY, 1);
+        LocalDate tradeDeadlineDate = endOfMonth.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         setTradeDeadlineDate(tradeDeadlineDate);
     }
 
     public void initializeEndOfRegularSeason() {
-        LocalDate  nextYearDate= LocalDate.of(LocalDate.now().getYear()+1, Month.APRIL,1);
+        LocalDate nextYearDate = LocalDate.of(LocalDate.now().getYear() + 1, Month.APRIL, 1);
         LocalDate endOfRegularSeason = nextYearDate.with(TemporalAdjusters.dayOfWeekInMonth(1, DayOfWeek.SATURDAY));
         setEndOfRegularSeason(endOfRegularSeason);
     }
 
     public void initializePlayOffStartDate() {
-        LocalDate  nextYearDate = LocalDate.of(LocalDate.now().getYear()+1, Month.APRIL,1);
+        LocalDate nextYearDate = LocalDate.of(LocalDate.now().getYear() + 1, Month.APRIL, 1);
         LocalDate playOffStartDate = nextYearDate.with(TemporalAdjusters.dayOfWeekInMonth(2, DayOfWeek.WEDNESDAY));
         setPlayOffStartDate(playOffStartDate);
     }
 
     public void initializeLastDayStanleyCupFinals() {
-        LocalDate  stanleyCupLastDay = LocalDate.of(LocalDate.now().getYear()+1, Month.JUNE,1);
+        LocalDate stanleyCupLastDay = LocalDate.of(LocalDate.now().getYear() + 1, Month.JUNE, 1);
         setLastDayStanleyCupFinals(stanleyCupLastDay);
     }
 
     public void initializeNextSeasonDate() {
-        LocalDate  nextSeasonStartDate = LocalDate.of(LocalDate.now().getYear()+1, Month.SEPTEMBER,29);
+        LocalDate nextSeasonStartDate = LocalDate.of(LocalDate.now().getYear() + 1, Month.SEPTEMBER, 29);
         setNextSeasonDate(nextSeasonStartDate);
     }
 

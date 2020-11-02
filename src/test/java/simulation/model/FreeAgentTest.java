@@ -128,12 +128,11 @@ public class FreeAgentTest {
         FreeAgent freeAgent = new FreeAgent(1, loadFreeAgentFactory);
         List<Player> playerList = freeAgent.getPlayerList();
         ITeamFactory teamFactory = new TeamMock();
-        Team team = new Team(1,teamFactory);
+        Team team = new Team(1, teamFactory);
         List<Double> strengthList = team.createStrengthList(playerList);
-        assertTrue(freeAgent.getGoodFreeAgentsList(strengthList).size()<=playerList.size());
-        assertFalse(freeAgent.getGoodFreeAgentsList(strengthList).size()>playerList.size());
+        assertTrue(freeAgent.getGoodFreeAgentsList(strengthList).size() <= playerList.size());
+        assertFalse(freeAgent.getGoodFreeAgentsList(strengthList).size() > playerList.size());
     }
-
 
 
 }

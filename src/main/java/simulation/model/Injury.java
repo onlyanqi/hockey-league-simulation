@@ -1,6 +1,5 @@
 package simulation.model;
 
-import db.data.IAgingFactory;
 import db.data.IInjuryFactory;
 
 public class Injury extends SharedAttributes {
@@ -55,7 +54,7 @@ public class Injury extends SharedAttributes {
         if (injuryDaysHigh < 0) {
             throw new IllegalArgumentException("injuryDaysHigh must be greater than 0!");
         }
-        if(this.getInjuryDaysLow() > injuryDaysHigh) {
+        if (this.getInjuryDaysLow() > injuryDaysHigh) {
             throw new IllegalArgumentException("InjuryDaysHigh age must be greater than InjuryDaysLow!");
         }
         this.injuryDaysHigh = injuryDaysHigh;

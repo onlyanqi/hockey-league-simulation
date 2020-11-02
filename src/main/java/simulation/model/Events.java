@@ -2,11 +2,7 @@ package simulation.model;
 
 import java.time.LocalDate;
 
-public abstract class Events{
-
-    public Events() {
-
-    }
+public abstract class Events {
 
     public LocalDate regularSeasonStartDate;
     public LocalDate tradeDeadlineDate;
@@ -14,9 +10,16 @@ public abstract class Events{
     public LocalDate playOffStartDate;
     public LocalDate lastDayStanleyCupFinals;
     public LocalDate nextSeasonDate;
+    public Events() {
+
+    }
 
     public LocalDate getNextSeasonDate() {
         return nextSeasonDate;
+    }
+
+    public void setNextSeasonDate(LocalDate nextSeasonDate) {
+        this.nextSeasonDate = nextSeasonDate;
     }
 
     public LocalDate getRegularSeasonStartDate() {
@@ -47,33 +50,28 @@ public abstract class Events{
         this.playOffStartDate = playOffStartDate;
     }
 
-
     public void setLastDayStanleyCupFinals(LocalDate lastDayStanleyCupFinals) {
         this.lastDayStanleyCupFinals = lastDayStanleyCupFinals;
     }
 
-    public void setNextSeasonDate(LocalDate nextSeasonDate) {
-        this.nextSeasonDate = nextSeasonDate;
-    }
-
     public boolean checkTradeDeadlinePassed(LocalDate currentDate) {
-        if(currentDate.compareTo(tradeDeadlineDate) > 0){
+        if (currentDate.compareTo(tradeDeadlineDate) > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     public boolean checkEndOfRegularSeason(LocalDate currentDate) {
-        if(currentDate.equals(endOfRegularSeason)){
+        if (currentDate.equals(endOfRegularSeason)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     public boolean checkRegularSeasonPassed(LocalDate currentDate) {
-        if(currentDate.compareTo(endOfRegularSeason) > 0){
+        if (currentDate.compareTo(endOfRegularSeason) > 0) {
             return true;
         } else {
             return false;

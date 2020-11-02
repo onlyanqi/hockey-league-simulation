@@ -13,12 +13,12 @@ public class TradeOfferTest {
     private static ITradeOfferFactory tradeOfferFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         tradeOfferFactory = new TradeOfferMock();
     }
 
     @Test
-    public void defaultConstructorTest(){
+    public void defaultConstructorTest() {
         TradeOffer tradeOffer = new TradeOffer();
         assertEquals(tradeOffer.getId(), 0);
         assertNotEquals(tradeOffer.getId(), 1);

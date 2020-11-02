@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.IManagerFactory;
 import simulation.model.Manager;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,7 +11,7 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
 
     @Override
     public int addManager(Manager manager) throws Exception {
-        if(manager == null){
+        if (manager == null) {
             return -1;
         }
         ICallDB callDB = null;
@@ -24,7 +25,7 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             manager.setId(callDB.returnOutputParameterInt(4));
 
         } catch (SQLException sqlException) {
-            printLog("ManagerDao: addManager: SQLException: "+sqlException);
+            printLog("ManagerDao: addManager: SQLException: " + sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -34,7 +35,7 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
 
     @Override
     public void loadManagerById(int managerId, Manager manager) throws Exception {
-        if(manager == null){
+        if (manager == null) {
             return;
         }
         ICallDB callDB = null;
@@ -42,15 +43,15 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             callDB = new CallDB("LoadManagerById(?)");
             callDB.setInputParameterInt(1, managerId);
             ResultSet rs = callDB.executeLoad();
-            if(rs!=null){
+            if (rs != null) {
                 manager = new Manager();
                 manager.setId(rs.getInt(1));
                 manager.setTeamId(rs.getInt(2));
                 manager.setName(rs.getString(3));
                 manager.setLeagueId(rs.getInt(4));
             }
-        }catch (SQLException sqlException) {
-            printLog("ManagerDao: loadManagerById: SQLException: "+sqlException);
+        } catch (SQLException sqlException) {
+            printLog("ManagerDao: loadManagerById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -65,7 +66,7 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             callDB = new CallDB("LoadManagerListByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if(rs!=null){
+            if (rs != null) {
                 while (rs.next()) {
                     Manager manager = new Manager();
                     manager = new Manager();
@@ -76,8 +77,8 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
                     managers.add(manager);
                 }
             }
-        }catch (SQLException sqlException) {
-            printLog("ManagerDao: loadFreeManagersByLeagueId: SQLException: "+sqlException);
+        } catch (SQLException sqlException) {
+            printLog("ManagerDao: loadFreeManagersByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();
@@ -93,15 +94,15 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             callDB = new CallDB("LoadManagerByTeamId(?)");
             callDB.setInputParameterInt(1, teamId);
             ResultSet rs = callDB.executeLoad();
-            if(rs!=null){
+            if (rs != null) {
                 manager = new Manager();
                 manager.setId(rs.getInt(1));
                 manager.setTeamId(rs.getInt(2));
                 manager.setName(rs.getString(3));
                 manager.setLeagueId(rs.getInt(4));
             }
-        }catch (SQLException sqlException) {
-            printLog("ManagerDao: loadManagerByTeamId: SQLException: "+sqlException);
+        } catch (SQLException sqlException) {
+            printLog("ManagerDao: loadManagerByTeamId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
             callDB.closeConnection();

@@ -1,6 +1,5 @@
 package simulation.state;
 
-import simulation.model.NHLEvents;
 import simulation.model.*;
 
 import java.util.Comparator;

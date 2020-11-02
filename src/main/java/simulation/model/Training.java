@@ -12,8 +12,8 @@ public class Training {
     public Training() {
     }
 
-    public Training(int LeagueId, ITrainingFactory trainingFactory) throws Exception{
-        if(trainingFactory == null){
+    public Training(int LeagueId, ITrainingFactory trainingFactory) throws Exception {
+        if (trainingFactory == null) {
             return;
         }
         setId(id);

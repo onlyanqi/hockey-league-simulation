@@ -5,8 +5,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import simulation.model.League;
 import presentation.ConsoleOutput;
+import simulation.model.League;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,14 +18,14 @@ public class LeagueDataSerializerDeSerializer {
     public static final String FILENAME = "JsonOutput.txt";
     public static final String JSONCREATIONERROR = "Json could not be created";
     public static final String DESERIALIZATIONERROR = "Could not deserialize";
-    private ConsoleOutput consoleOutput=null;
+    private ConsoleOutput consoleOutput = null;
 
     public void serialize(League league) {
-        if(consoleOutput == null) {
+        if (consoleOutput == null) {
             consoleOutput = ConsoleOutput.getInstance();
         }
 
-        if (league == null){
+        if (league == null) {
             return;
         }
         Gson gson = new GsonBuilder()
@@ -38,7 +38,7 @@ public class LeagueDataSerializerDeSerializer {
 
         } catch (Exception e) {
             consoleOutput.printMsgToConsole(JSONCREATIONERROR);
-        }finally {
+        } finally {
             try {
                 fileWriter.flush();
                 fileWriter.close();
@@ -49,17 +49,17 @@ public class LeagueDataSerializerDeSerializer {
         }
     }
 
-    public League deSerialize(){
-        if(consoleOutput == null) {
+    public League deSerialize() {
+        if (consoleOutput == null) {
             consoleOutput = ConsoleOutput.getInstance();
         }
         FileReader fileReader;
         JSONParser jsonParser = new JSONParser();
         League league = null;
-        try{
+        try {
             fileReader = new FileReader(FILENAME);
             Gson gson = new Gson();
-            league = gson.fromJson(jsonParser.parse(fileReader).toString(),League.class);
+            league = gson.fromJson(jsonParser.parse(fileReader).toString(), League.class);
             fileReader.close();
         } catch (FileNotFoundException e) {
             consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
@@ -67,7 +67,7 @@ public class LeagueDataSerializerDeSerializer {
             consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
         } catch (IOException e) {
             consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
-        } catch (Exception e){
+        } catch (Exception e) {
             consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
         }
         return league;
