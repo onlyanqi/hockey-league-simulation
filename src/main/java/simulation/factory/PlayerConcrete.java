@@ -10,11 +10,7 @@ public class PlayerConcrete {
         return new Player();
     }
 
-    public IPlayerFactory newLoadPlayerFactory() {
-        return new PlayerDao();
-    }
-
-    public IPlayerFactory newAddPlayerFactory() {
+    public IPlayerFactory newPlayerFactory() {
         return new PlayerDao();
     }
 

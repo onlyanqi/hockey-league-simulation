@@ -97,7 +97,7 @@ public class LoadTeamState implements IHockeyState {
         FreeAgent freeAgent = league.getFreeAgent();
 
         PlayerConcrete playerConcrete = new PlayerConcrete();
-        IPlayerFactory iLoadPlayerFactory = playerConcrete.newLoadPlayerFactory();
+        IPlayerFactory iLoadPlayerFactory = playerConcrete.newPlayerFactory();
         freeAgent.loadPlayerListByFreeAgentId(iLoadPlayerFactory);
 
         setGames();

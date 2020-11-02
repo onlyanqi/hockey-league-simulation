@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.ITradeOfferFactory;
 import simulation.model.TradeOffer;
+import validator.Validation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory {
+
+    private Validation validation;
+
+    public TradeOfferDao(){
+        validation = new Validation();
+    }
 
     @Override
     public int addTradeOfferDetails(TradeOffer tradeOffer) throws Exception {
@@ -31,7 +38,9 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
             printLog("TradeOfferDao: addTradeOfferDetails: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(validation.isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return tradeOffer.getId();
     }
@@ -65,13 +74,17 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
         } catch (SQLException e){
             printLog("TradeOfferDao: loadTradeOfferDetailsByLeagueId: Exception: "+e);
             throw e;
+        } finally {
+            if(validation.isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return tradeOfferList;
     }
 
     @Override
     public void loadTradeOfferDetailsById(int tradeOfferId, TradeOffer tradeOffer) throws Exception {
-        ICallDB callDB;
+        ICallDB callDB = null;
         try{
             callDB = new CallDB("LoadTradeOfferListByLeagueId(?)");
             callDB.setInputParameterInt(1, tradeOfferId);
@@ -94,6 +107,10 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
         } catch (SQLException e){
             printLog("TradeOfferDao: loadTradeOfferDetailsById: Exception: "+e);
             throw e;
+        }finally {
+            if(validation.isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 

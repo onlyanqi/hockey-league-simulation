@@ -45,9 +45,9 @@ public class PersistState implements ISimulateState{
     private void updateDataBaseWithSimulatedDate() {
         if (league != null) {
             try {
+                updateTeam();
                 updatePlayers();
                 updateGames();
-                addNewTradeOffers();
                 if(league.getCurrentDate().equals(nhlEvents.getEndOfRegularSeason().plusDays(1))){
                     addPlayOffTeamStanding(league.getId(),league.getActiveTeamStanding().getTeamsScoreList());
                 }else if(league.getCurrentDate().isBefore(nhlEvents.getEndOfRegularSeason().plusDays(1))) {
@@ -55,6 +55,13 @@ public class PersistState implements ISimulateState{
                 }else if(league.getCurrentDate().isAfter(nhlEvents.getPlayOffStartDate().minusDays(1))){
                     updatePlayOffStanding(league.getActiveTeamStanding().getTeamsScoreList());
                 }
+
+                List<TradeOffer> tradeOfferList = league.getTradingOfferList();
+                if(validation.isListNotEmpty(tradeOfferList)){
+                    addTradeOfferList(tradeOfferList);
+                }
+                System.out.println("Trade Offer done....");
+
             }catch(SQLException sqlException){
                 ConsoleOutput.getInstance().printMsgToConsole("Unable to save the league! Please try again" + sqlException.getMessage());
                 System.exit(1);
@@ -62,6 +69,8 @@ public class PersistState implements ISimulateState{
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
+            } finally {
+                clearTradeOffers();
             }
         }
     }
@@ -86,28 +95,12 @@ public class PersistState implements ISimulateState{
 
     }
 
-    private void addNewTradeOffers() throws Exception {
+    private void clearTradeOffers() {
 
-        List<TradeOffer> tradeOffers = getNewTradeOffers();
-        addTradeOfferList(tradeOffers);
-    }
-
-    private List<TradeOffer> getNewTradeOffers() throws Exception {
-
-        TradeOfferConcrete tradeOfferConcrete = new TradeOfferConcrete();
-        ITradeOfferFactory tradeOfferFactory = tradeOfferConcrete.newTradeOfferFactory();
-        List<TradeOffer> tradeOffersFromPersistence = tradeOfferFactory.loadTradeOfferDetailsByLeagueId(league.getId());
-
-        List<TradeOffer> tradeOffersFromModel = league.getTradingOfferList();
-
-        Set<Integer> ids = tradeOffersFromPersistence.stream()
-                .map(TradeOffer::getId)
-                .collect(Collectors.toSet());
-        List<TradeOffer> tradeOffers = tradeOffersFromModel.stream()
-                .filter(tradeOffer -> !ids.contains(tradeOffer.getId()))
-                .collect(Collectors.toList());
-
-        return tradeOffers;
+        List<TradeOffer> tradeOffers = league.getTradingOfferList();
+        if(validation.isListNotEmpty(tradeOffers)) {
+            tradeOffers.clear();
+        }
     }
 
     private void addNewGames() throws Exception {
@@ -170,7 +163,7 @@ public class PersistState implements ISimulateState{
                 if (leagueId != 0 && seasonId != 0) {
                     if (league.getFreeAgent() != null) {
                         int freeAgentId = addFreeAgent(leagueId, seasonId);
-                        addPlayerList(0, freeAgentId, seasonId, league.getFreeAgent().getPlayerList());
+                        addPlayerList(0, freeAgentId, league.getFreeAgent().getPlayerList());
                     }
                     if (league.getConferenceList() != null && !league.getConferenceList().isEmpty()) {
                         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
@@ -208,18 +201,22 @@ public class PersistState implements ISimulateState{
                                     manager.setTeamId(teamId);
                                     addManagerFactory.addManager(manager);
 
-                                    addPlayerList(teamId, 0, seasonId, team.getPlayerList());
+                                    addPlayerList(teamId, 0, team.getPlayerList());
                                 }
                             }
+
                         }
                     }
                 }
+
             }catch(SQLException sqlException){
                 ConsoleOutput.getInstance().printMsgToConsole("Unable to save the league! Please try again" + sqlException.getMessage());
                 System.exit(1);
                 sqlException.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                clearTradeOffers();
             }
         }
     }
@@ -292,15 +289,29 @@ public class PersistState implements ISimulateState{
 
     private void updatePlayers() throws Exception {
         PlayerConcrete playerConcrete = new PlayerConcrete();
-        IPlayerFactory addPlayerFactory = playerConcrete.newAddPlayerFactory();
+        IPlayerFactory addPlayerFactory = playerConcrete.newPlayerFactory();
         for(Conference conference: league.getConferenceList()){
             for(Division division: conference.getDivisionList()){
                 for(Team team: division.getTeamList()){
-                    for(Player player: team.getPlayerList()){
-                        addPlayerFactory.updatePlayerById(player.getId(),player);
+                    if(team.isTraded()){
+                        updatePlayersAfterTrading(team);
+                    } else {
+                        for (Player player : team.getPlayerList()) {
+                            addPlayerFactory.updatePlayerById(player.getId(), player);
+                        }
                     }
+                    team.setTraded(false);
                 }
             }
+        }
+    }
+
+    private void updatePlayersAfterTrading(Team team) throws Exception {
+        PlayerConcrete playerConcrete = new PlayerConcrete();
+        IPlayerFactory playerFactory = playerConcrete.newPlayerFactory();
+        playerFactory.deletePlayerListOfTeam(team.getId());
+        for(Player player: team.getPlayerList()){
+            playerFactory.addPlayer(player);
         }
     }
 
@@ -343,10 +354,10 @@ public class PersistState implements ISimulateState{
         return freeAgent.getId();
     }
 
-    private void addPlayerList(int teamId, int freeAgentId, int seasonId, List<Player> playerList) throws Exception {
+    private void addPlayerList(int teamId, int freeAgentId, List<Player> playerList) throws Exception {
         if(playerList != null && !playerList.isEmpty()) {
             PlayerConcrete playerConcrete = new PlayerConcrete();
-            IPlayerFactory addPlayerDao = playerConcrete.newAddPlayerFactory();
+            IPlayerFactory addPlayerDao = playerConcrete.newPlayerFactory();
             for (Player player : playerList) {
                 player.setTeamId(teamId);
                 player.setFreeAgentId(freeAgentId);
