@@ -1,5 +1,6 @@
 package simulation.state;
 
+import presentation.ConsoleOutput;
 import simulation.model.NHLEvents;
 import simulation.model.*;
 
@@ -8,6 +9,8 @@ import java.util.List;
 
 public class AdvanceNextSeasonState implements ISimulateState {
 
+    public static final String SEASON_CURRENT_DATE = "Advanced to next season! Current date is ";
+    public static final String AGING_TO_NEXT_SEASON = "Aging all players to the start of next season!";
     private League league;
     private HockeyContext hockeyContext;
 
@@ -21,8 +24,10 @@ public class AdvanceNextSeasonState implements ISimulateState {
 
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         league.setCurrentDate(nhlEvents.getNextSeasonDate());
+        ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + nhlEvents.getNextSeasonDate());
 
         agingPlayerSeason(league);
+        ConsoleOutput.getInstance().printMsgToConsole(AGING_TO_NEXT_SEASON);
 
         return exit();
     }
