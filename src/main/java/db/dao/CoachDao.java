@@ -8,12 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoachDao implements ICoachFactory {
+public class CoachDao extends DBExceptionLog implements ICoachFactory {
     @Override
     public int addCoach(Coach coach) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddCoach(?,?,?,?,?,?,?,?)");
+            String procedureName = "AddCoach(?,?,?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, coach.getTeamId());
             callDB.setInputParameterString(2, coach.getName());
             callDB.setInputParameterDouble(3, coach.getSkating());
@@ -22,16 +23,17 @@ public class CoachDao implements ICoachFactory {
             callDB.setInputParameterDouble(6, coach.getSaving());
             callDB.setInputParameterInt(7, coach.getLeagueId());
 
-
             callDB.setOutputParameterInt(8);
             callDB.execute();
             coach.setId(callDB.returnOutputParameterInt(8));
 
         } catch (SQLException sqlException) {
+            printLog("CoachDao: addCoach: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return coach.getId();
     }
@@ -40,11 +42,12 @@ public class CoachDao implements ICoachFactory {
     public void loadCoachById(int id, Coach coach) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadCoachById(?)");
+            String procedureName = "LoadCoachById(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 coach = new Coach();
                 coach.setId(rs.getInt(1));
                 coach.setTeamId(rs.getInt(2));
@@ -56,11 +59,13 @@ public class CoachDao implements ICoachFactory {
                 coach.setLeagueId(rs.getInt(8));
             }
 
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("CoachDao: loadCoachById: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
@@ -69,11 +74,12 @@ public class CoachDao implements ICoachFactory {
         Coach coach = null;
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadCoachByTeamId(?)");
+            String procedureName = "LoadCoachByTeamId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, teamId);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 coach = new Coach();
                 coach.setId(rs.getInt(1));
                 coach.setTeamId(rs.getInt(2));
@@ -85,11 +91,13 @@ public class CoachDao implements ICoachFactory {
                 coach.setLeagueId(rs.getInt(8));
             }
 
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("CoachDao: loadCoachByTeamId: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return coach;
     }
@@ -100,11 +108,12 @@ public class CoachDao implements ICoachFactory {
         List<Coach> freeCoachList = null;
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadCoachListByLeagueId(?)");
+            String procedureName = "LoadCoachListByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 freeCoachList = new ArrayList<>();
                 while (rs.next()) {
                     Coach coach = new Coach();
@@ -121,11 +130,13 @@ public class CoachDao implements ICoachFactory {
 
             }
 
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("CoachDao: loadFreeCoachListByLeagueId: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return freeCoachList;
     }

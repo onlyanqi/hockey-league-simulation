@@ -1,6 +1,8 @@
 package db.dao;
 
 import db.connect.DBConnection;
+import simulation.factory.ValidationConcrete;
+import validator.IValidation;
 
 import java.sql.*;
 
@@ -78,11 +80,13 @@ public class CallDB implements ICallDB {
 
     @Override
     public void closeConnection() throws Exception {
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation validation = validationConcrete.newValidation();
         try {
-            if (stmt != null) {
+            if (validation.isNotNull(stmt)) {
                 stmt.close();
             }
-            if (connection != null) {
+            if (validation.isNotNull(connection)) {
                 connection.close();
             }
         } catch (Exception e) {

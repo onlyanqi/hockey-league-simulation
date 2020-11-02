@@ -176,7 +176,24 @@ public class TeamMock implements ITeamFactory {
 
     @Override
     public void updateTeamById(Team team) throws Exception {
-
+        team.setName("Team1");
+        team.setDivisionId(1);
+        team.setMascot("Tiger1");
+        Manager Manager1 = new Manager();
+        Manager1.setName("Manager1");
+        team.setManager(Manager1);
+        Coach Coach1 = new Coach();
+        Coach1.setName("Coach1");
+        Coach1.setSkating(0.8);
+        Coach1.setShooting(0.5);
+        Coach1.setChecking(0.3);
+        Coach1.setSaving(0.5);
+        team.setCoach(Coach1);
+        team.setPlayerList(formPlayerList());
+        team.setLossPoint(0);
+        team.setStrength();
+        team.setAiTeam(true);
+        team.setTradeOfferCountOfSeason(0);
     }
 
 }

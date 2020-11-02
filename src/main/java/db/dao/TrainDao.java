@@ -6,7 +6,7 @@ import simulation.model.Training;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TrainDao implements ITrainingFactory {
+public class TrainDao extends DBExceptionLog implements ITrainingFactory {
 
     @Override
     public int addTraining(Training training) throws Exception {
@@ -25,9 +25,12 @@ public class TrainDao implements ITrainingFactory {
             training.setId(callDB.returnOutputParameterInt(3));
 
         } catch (SQLException sqlException) {
+            printLog("TrainDao: addTraining: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return training.getId();
     }
@@ -52,9 +55,12 @@ public class TrainDao implements ITrainingFactory {
                 training.setLeagueId(rs.getInt(3));
             }
         } catch (SQLException sqlException) {
+            printLog("TrainDao: loadTrainingByLeagueId: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 }

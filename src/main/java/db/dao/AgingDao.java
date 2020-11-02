@@ -6,13 +6,14 @@ import simulation.model.Aging;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AgingDao implements IAgingFactory {
+public class AgingDao extends DBExceptionLog implements IAgingFactory {
 
     @Override
     public int addAging(Aging aging) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddAging(?,?,?,?)");
+            String procedureName = "AddAging(?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, aging.getAverageRetirementAge());
             callDB.setInputParameterInt(2, aging.getMaximumAge());
             callDB.setInputParameterInt(3, aging.getLeagueId());
@@ -21,10 +22,12 @@ public class AgingDao implements IAgingFactory {
             aging.setId(callDB.returnOutputParameterInt(4));
 
         } catch (SQLException sqlException) {
+            printLog("AgingDao: addAging: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return aging.getId();
     }
@@ -34,11 +37,12 @@ public class AgingDao implements IAgingFactory {
         ICallDB callDB = null;
         Aging aging = null;
         try {
-            callDB = new CallDB("LoadAgingByLeagueId(?)");
+            String procedureName = "LoadAgingByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 aging = new Aging();
                 aging.setId(rs.getInt(1));
                 aging.setAverageRetirementAge(rs.getInt(2));
@@ -47,10 +51,12 @@ public class AgingDao implements IAgingFactory {
             }
 
         } catch (SQLException sqlException) {
+            printLog("AgingDao: loadAgingByLeagueId: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return aging;
     }
@@ -59,7 +65,8 @@ public class AgingDao implements IAgingFactory {
     public void loadAgingById(int id, Aging aging) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadAgingById(?)");
+            String procedureName = "LoadAgingById(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
@@ -71,10 +78,12 @@ public class AgingDao implements IAgingFactory {
             }
 
         } catch (SQLException sqlException) {
+            printLog("AgingDao: loadAgingById: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 }

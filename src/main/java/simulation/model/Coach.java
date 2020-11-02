@@ -1,6 +1,7 @@
 package simulation.model;
 
 import db.data.ICoachFactory;
+import validator.Validation;
 
 public class Coach extends SharedAttributes {
     private int teamId;
@@ -22,7 +23,7 @@ public class Coach extends SharedAttributes {
             return;
         }
         this.setId(coach.getId());
-        if (coach.getName() != null) {
+        if (isNotNull(coach.getName())) {
             this.setName(coach.getName());
         }
         this.setTeamId(coach.getTeamId());

@@ -1,20 +1,23 @@
 package db.dao;
 
 import db.data.IConferenceFactory;
+import simulation.factory.ValidationConcrete;
 import simulation.model.Conference;
+import validator.IValidation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConferenceDao implements IConferenceFactory {
+public class ConferenceDao extends DBExceptionLog implements IConferenceFactory {
 
     @Override
     public int addConference(Conference conference) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddConference(?,?,?)");
+            String procedureName = "AddConference(?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterString(1, conference.getName());
             callDB.setInputParameterInt(2, conference.getLeagueId());
             callDB.setOutputParameterInt(3);
@@ -22,18 +25,22 @@ public class ConferenceDao implements IConferenceFactory {
             conference.setId(callDB.returnOutputParameterInt(3));
 
         } catch (SQLException sqlException) {
+            printLog("ConferenceDao: addConference: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return conference.getId();
     }
 
     @Override
-    public void loadConferenceByName(int id, Conference conference) throws Exception {
+    public void loadConferenceById(int id, Conference conference) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadConferenceByName(?,?,?,?)");
+            String procedureName = "LoadConferenceByName(?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -43,10 +50,13 @@ public class ConferenceDao implements IConferenceFactory {
             conference.setId(callDB.returnOutputParameterInt(2));
             conference.setName(callDB.returnOutputParameterString(3));
             conference.setLeagueId(callDB.returnOutputParameterInt(4));
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("ConferenceDao: loadConferenceById: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
@@ -55,7 +65,8 @@ public class ConferenceDao implements IConferenceFactory {
         ICallDB callDB = null;
         Conference conference = null;
         try {
-            callDB = new CallDB("LoadConferenceByName(?,?,?,?)");
+            String procedureName = "LoadConferenceByName(?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterString(1, conferenceName);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -65,10 +76,13 @@ public class ConferenceDao implements IConferenceFactory {
             conference.setId(callDB.returnOutputParameterInt(2));
             conference.setName(callDB.returnOutputParameterString(3));
             conference.setLeagueId(callDB.returnOutputParameterInt(4));
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("ConferenceDao: loadConferenceByName: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return conference;
     }
@@ -77,11 +91,14 @@ public class ConferenceDao implements IConferenceFactory {
     public List<Conference> loadConferenceListByLeagueId(int leagueId) throws Exception {
         List<Conference> conferenceList = null;
         ICallDB callDB = null;
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation validation = validationConcrete.newValidation();
         try {
-            callDB = new CallDB("LoadConferenceListByLeagueId(?)");
+            String procedureName = "LoadConferenceListByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (validation.isNotNull(rs)) {
                 conferenceList = new ArrayList<>();
                 while (rs.next()) {
                     Conference conference = new Conference();
@@ -91,8 +108,13 @@ public class ConferenceDao implements IConferenceFactory {
                     conferenceList.add(conference);
                 }
             }
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("ConferenceDao: loadConferenceByName: SQLException: "+sqlException);
+            throw sqlException;
+        } finally {
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
 
         return conferenceList;

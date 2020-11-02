@@ -16,6 +16,12 @@ public class PlayerMock implements IPlayerFactory {
     }
 
     @Override
+    public int addRetiredPlayer(int leagueId, Player player) throws Exception {
+        player = new Player(1);
+        return player.getId();
+    }
+
+    @Override
     public void loadPlayerById(int id, Player player) {
 
         switch (id) {
@@ -110,9 +116,9 @@ public class PlayerMock implements IPlayerFactory {
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
                 player.setAge(27);
-                player.setSkating(15);
-                player.setShooting(18);
-                player.setChecking(12);
+                player.setSkating(20);
+                player.setShooting(20);
+                player.setChecking(20);
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
@@ -219,7 +225,7 @@ public class PlayerMock implements IPlayerFactory {
 
             case 13:
                 player.setName("Player13");
-                player.setPosition(Player.Position.valueOf("goalie"));
+                player.setPosition(Player.Position.valueOf("defense"));
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
@@ -391,14 +397,14 @@ public class PlayerMock implements IPlayerFactory {
 
     @Override
     public List<Player> loadPlayerListByFreeAgentId(int teamId) throws Exception {
-        TeamMock loadTeamMock = new TeamMock();
-        return loadTeamMock.formPlayerList();
+        FreeAgentMock loadFreeAgentMock = new FreeAgentMock();
+        return loadFreeAgentMock.formPlayerList();
     }
 
     @Override
     public List<Player> loadPlayerListByTeamId(int teamId) throws Exception {
-        FreeAgentMock loadFreeAgentMock = new FreeAgentMock();
-        return loadFreeAgentMock.formPlayerList();
+        TeamMock loadTeamMock = new TeamMock();
+        return loadTeamMock.formPlayerList();
     }
 
     @Override

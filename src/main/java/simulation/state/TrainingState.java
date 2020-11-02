@@ -32,7 +32,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
             System.out.println("Days Until Stat Increase Check is 0. So Exiting");
             return null;
         }
-        if (diffDays % daysUntilStatIncreaseCheck == 1) {
+        if (diffDays > daysUntilStatIncreaseCheck && (diffDays % daysUntilStatIncreaseCheck == 1)) {
             consoleOutput.printMsgToConsole(STATCHECKINFORMATION);
             statIncreaseCheck(league);
         }

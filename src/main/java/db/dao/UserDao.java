@@ -4,7 +4,7 @@ import db.data.IUserFactory;
 import simulation.model.User;
 import java.sql.SQLException;
 
-public class UserDao implements IUserFactory {
+public class UserDao extends DBExceptionLog implements IUserFactory {
 
     @Override
     public long addUser(User user) throws Exception {
@@ -18,9 +18,12 @@ public class UserDao implements IUserFactory {
             callDB.execute();
             user.setId(callDB.returnOutputParameterInt(3));
         } catch (SQLException sqlException) {
+            printLog("UserDao: addUser: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return user.getId();
     }
@@ -38,15 +41,14 @@ public class UserDao implements IUserFactory {
             user.setId(callDB.returnOutputParameterInt(2));
             user.setPassword(callDB.returnOutputParameterString(3));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-
+        } catch (SQLException sqlException) {
+            printLog("UserDao: addUser: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
-
-
     }
 
     @Override
@@ -61,12 +63,13 @@ public class UserDao implements IUserFactory {
             callDB.executeLoad();
             user.setId(callDB.returnOutputParameterInt(2));
             user.setPassword(callDB.returnOutputParameterString(3));
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-
+        } catch (SQLException sqlException) {
+            printLog("UserDao: addUser: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
