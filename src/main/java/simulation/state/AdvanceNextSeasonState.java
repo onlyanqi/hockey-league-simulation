@@ -1,28 +1,32 @@
 package simulation.state;
 
+import presentation.ConsoleOutput;
 import simulation.model.NHLEvents;
 import simulation.model.*;
-
 import java.util.Comparator;
 import java.util.List;
 
 public class AdvanceNextSeasonState implements ISimulateState {
 
+    public static final String SEASON_CURRENT_DATE = "Advanced to next season! Current date is ";
+    public static final String AGING_TO_NEXT_SEASON = "Aging all players to the start of next season!";
     private League league;
     private HockeyContext hockeyContext;
+    private NHLEvents nhlEvents;
 
     public AdvanceNextSeasonState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
+        this.nhlEvents = league.getNHLRegularSeasonEvents();
     }
 
     @Override
     public ISimulateState action() {
-
-        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         league.setCurrentDate(nhlEvents.getNextSeasonDate());
 
+        ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + nhlEvents.getNextSeasonDate());
         agingPlayerSeason(league);
+        ConsoleOutput.getInstance().printMsgToConsole(AGING_TO_NEXT_SEASON);
 
         return exit();
     }
@@ -42,12 +46,10 @@ public class AdvanceNextSeasonState implements ISimulateState {
                         Player teamPlayer = playerList.get(i);
                         teamPlayer.getOlder();
                         if (teamPlayer.retirementCheck(aging)) {
+                            teamPlayer.setRetired(true);
                             Player.Position position = teamPlayer.getPosition();
                             playerList.remove(i);
                             this.findReplacement(playerList, position, i);
-                            /*
-                            save historical player stats (retired);
-                             */
                         }
                         teamPlayer.agingInjuryRecovery(league);
                     }
@@ -59,6 +61,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
             for (int i = freeAgentList.size() - 1; i >= 0; i--) {
                 freeAgentPlayer.getOlder();
                 if (freeAgentPlayer.retirementCheck(aging)) {
+                    freeAgentPlayer.setRetired(true);
                     freeAgentList.remove(i);
                 }
                 freeAgentPlayer.agingInjuryRecovery(league);
@@ -85,7 +88,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
         playerList.add(index, replacePlayer);
     }
 
-    private ISimulateState exit() {
+    public ISimulateState exit() {
         return new PersistState(hockeyContext);
     }
 }

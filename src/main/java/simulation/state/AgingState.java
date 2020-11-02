@@ -1,7 +1,7 @@
 package simulation.state;
 
+import presentation.ConsoleOutput;
 import simulation.model.NHLEvents;
-import simulation.model.Games;
 import simulation.model.League;
 import simulation.model.TeamStanding;
 
@@ -11,6 +11,7 @@ import java.util.List;
 
 public class AgingState implements ISimulateState {
 
+    public static final String AGING_DAY = "Aging all players by one day!";
     private HockeyContext hockeyContext;
     private League league;
 
@@ -21,8 +22,10 @@ public class AgingState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-        System.out.println("Aging players!");
+
+        ConsoleOutput.getInstance().printMsgToConsole(AGING_DAY);
         agingPlayerDay(league);
+
         return exit();
     }
 
@@ -47,18 +50,18 @@ public class AgingState implements ISimulateState {
     }
 
     private ISimulateState exit() {
-        if(stanleyCupWinnerDetermined()){
+        if (stanleyCupWinnerDetermined()) {
             return new AdvanceNextSeasonState(hockeyContext);
         } else {
             return new PersistState(hockeyContext);
         }
     }
 
-    public Boolean stanleyCupWinnerDetermined(){
+    public Boolean stanleyCupWinnerDetermined() {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
-        Games games = league.getGames();
+        GameSchedule games = league.getGames();
         TeamStanding teamStanding = league.getActiveTeamStanding();
-        if(nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2 ){
+        if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2) {
             return true;
         }
         return false;

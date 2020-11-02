@@ -1,8 +1,9 @@
 package db.dao;
 
 import db.data.ILeagueFactory;
+import simulation.model.League;
+import simulation.model.DateTime;
 import simulation.model.*;
-import util.DateUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
             callDB.setInputParameterDouble(11, league.getGamePlayConfig().getTrading().getRandomTradeOfferChance());
             callDB.setInputParameterInt(12, league.getGamePlayConfig().getTrading().getMaxPlayersPerTrade());
             callDB.setInputParameterInt(13, league.getGamePlayConfig().getTrading().getMaxPlayersPerTrade());
-            callDB.setInputParameterDate(14, DateUtil.convertLocalDateToSQLDate(league.getCurrentDate()));
+            callDB.setInputParameterDate(14, DateTime.convertLocalDateToSQLDate(league.getCurrentDate()));
 
             callDB.setOutputParameterInt(15);
             callDB.execute();

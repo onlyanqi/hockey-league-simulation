@@ -76,9 +76,13 @@ public class TeamStanding {
         }
     }
 
-    public List<TeamScore> getTeamsRankAcrossLeague(){
-        List<TeamScore> teamsScoreListLocal =  this.teamsScoreList;
-        return sortTeamsScoreList(teamsScoreListLocal);
+    public void setTeamTies(String teamName){
+        for(TeamScore teamScore: teamsScoreList){
+            if(teamScore.getTeamName().equals(teamName)){
+                int previousNumberOfTies = teamScore.getNumberOfTies();
+                teamScore.setNumberOfTies(previousNumberOfTies + 1);
+            }
+        }
     }
 
     public List<TeamScore> getTeamsRankAcrossConference(League league, String conferenceName){

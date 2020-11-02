@@ -1,11 +1,11 @@
-package util;
+package simulation.model;
 
 import java.time.LocalDate;
 import java.sql.Date;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class DateUtil{
+public class DateTime {
 
     public static LocalDate addDays(LocalDate date, int days)
     {
@@ -19,10 +19,6 @@ public class DateUtil{
 
     public static long diffDays(LocalDate beforeDate, LocalDate afterDate){
         return DAYS.between(beforeDate, afterDate);
-    }
-
-    public static boolean isDateNotPassed(LocalDate date1,LocalDate date2){
-        return date1.isBefore(date2);
     }
 
     public static Date convertLocalDateToSQLDate(LocalDate date){
