@@ -4,8 +4,7 @@ import db.data.*;
 import presentation.ConsoleOutput;
 import simulation.factory.*;
 import simulation.model.*;
-import validator.Validation;
-
+import validator.IValidation;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,17 +13,17 @@ import java.util.stream.Collectors;
 
 public class PersistState implements ISimulateState{
 
-    private HockeyContext hockeyContext;
-    private League league;
-    private Validation validation;
-    private NHLEvents nhlEvents;
-
+    private final HockeyContext hockeyContext;
+    private final League league;
+    private final NHLEvents nhlEvents;
+    private final IValidation validation;
 
     public PersistState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
         this.nhlEvents = league.getNHLRegularSeasonEvents();
-        validation = new Validation();
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        validation = validationConcrete.newValidation();
     }
 
     @Override
@@ -56,7 +55,7 @@ public class PersistState implements ISimulateState{
                     updatePlayOffStanding(league.getActiveTeamStanding().getTeamsScoreList());
                 }
 
-                List<TradeOffer> tradeOfferList = league.getTradingOfferList();
+                List<TradeOffer> tradeOfferList = league.getTradeOfferList();
                 if(validation.isListNotEmpty(tradeOfferList)){
                     addTradeOfferList(tradeOfferList);
                 }
@@ -97,7 +96,7 @@ public class PersistState implements ISimulateState{
 
     private void clearTradeOffers() {
 
-        List<TradeOffer> tradeOffers = league.getTradingOfferList();
+        List<TradeOffer> tradeOffers = league.getTradeOfferList();
         if(validation.isListNotEmpty(tradeOffers)) {
             tradeOffers.clear();
         }
@@ -140,12 +139,11 @@ public class PersistState implements ISimulateState{
 
                 Trading trading = league.getGamePlayConfig().getTrading();
                 trading.setLeagueId(leagueId);
-                int tradingId = 0;
                 if(validation.isNotNull(trading)){
-                    tradingId = addTrading(trading);
+                    addTrading(trading);
                 }
 
-                List<TradeOffer> tradeOfferList = league.getTradingOfferList();
+                List<TradeOffer> tradeOfferList = league.getTradeOfferList();
                 if(validation.isListNotEmpty(tradeOfferList)){
                     addTradeOfferList(tradeOfferList);
                 }
@@ -239,10 +237,10 @@ public class PersistState implements ISimulateState{
         }
     }
 
-    public int addTrading(Trading trading) throws Exception {
+    public void addTrading(Trading trading) throws Exception {
         TradingConcrete tradingConcrete = new TradingConcrete();
         ITradingFactory tradingFactory = tradingConcrete.newTradingFactory();
-        return tradingFactory.addTradingDetails(trading);
+        tradingFactory.addTradingDetails(trading);
     }
 
     public void addTradeOfferList(List<TradeOffer> tradeOfferList) throws Exception {
@@ -293,25 +291,11 @@ public class PersistState implements ISimulateState{
         for(Conference conference: league.getConferenceList()){
             for(Division division: conference.getDivisionList()){
                 for(Team team: division.getTeamList()){
-                    if(team.isTraded()){
-                        updatePlayersAfterTrading(team);
-                    } else {
-                        for (Player player : team.getPlayerList()) {
-                            addPlayerFactory.updatePlayerById(player.getId(), player);
-                        }
+                    for (Player player : team.getPlayerList()) {
+                        addPlayerFactory.updatePlayerById(player.getId(), player);
                     }
-                    team.setTraded(false);
                 }
             }
-        }
-    }
-
-    private void updatePlayersAfterTrading(Team team) throws Exception {
-        PlayerConcrete playerConcrete = new PlayerConcrete();
-        IPlayerFactory playerFactory = playerConcrete.newPlayerFactory();
-        playerFactory.deletePlayerListOfTeam(team.getId());
-        for(Player player: team.getPlayerList()){
-            playerFactory.addPlayer(player);
         }
     }
 

@@ -1,8 +1,8 @@
 package simulation.model;
 
 import db.data.ITradingFactory;
-import validator.Validation;
-
+import simulation.factory.ValidationConcrete;
+import validator.IValidation;
 import java.util.*;
 
 public class Trading extends SharedAttributes {
@@ -13,7 +13,7 @@ public class Trading extends SharedAttributes {
     private List<Integer> nextYearSeasonMonths = new ArrayList<>
             (Arrays.asList(0, 1));
 
-    private Validation validation;
+
     private Date tradeStartDate;
     private Date tradeEndDate;
     private int leagueId;
@@ -23,14 +23,12 @@ public class Trading extends SharedAttributes {
     private double randomAcceptanceChance;
     private boolean isTradingPeriod;
 
-    public Trading() {
-        validation = new Validation();
+    public Trading(){
     }
 
     public Trading(int tradingId, ITradingFactory factory) throws Exception {
         setId(tradingId);
         factory.loadTradingDetailsByTradingId(tradingId, this);
-        validation = new Validation();
     }
 
     public List<Integer> getCurrentYearSeasonMonths() {
@@ -50,6 +48,8 @@ public class Trading extends SharedAttributes {
     }
 
     public void isLeagueInTradingPeriod(Date leagueDate) {
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation validation = validationConcrete.newValidation();
         if (validation.isNotNull(leagueDate)) {
             calTradeEndDateFromLeagueDate(leagueDate);
             int compare = leagueDate.compareTo(tradeEndDate);

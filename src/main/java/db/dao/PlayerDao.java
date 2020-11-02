@@ -1,7 +1,9 @@
 package db.dao;
 
 import db.data.IPlayerFactory;
+import simulation.factory.ValidationConcrete;
 import simulation.model.Player;
+import validator.IValidation;
 import validator.Validation;
 import simulation.model.DateTime;
 import java.sql.ResultSet;
@@ -11,10 +13,11 @@ import java.util.List;
 
 public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
 
-    private Validation validation;
+    private IValidation validation;
 
     public PlayerDao(){
-        validation = new Validation();
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        validation = validationConcrete.newValidation();
     }
 
     @Override
@@ -177,6 +180,7 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
         ICallDB callDB=null;
         try {
             callDB = new CallDB("DeletePlayerListOfTeam(?)");
+            callDB.setInputParameterInt(1, teamId);
             callDB.execute();
         } catch (SQLException sqlException){
             printLog("PlayerDao: deletePlayerListOfTeam: SQLException: "+ sqlException);

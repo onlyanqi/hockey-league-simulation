@@ -1,9 +1,9 @@
 package db.dao;
 
 import db.data.ITradeOfferFactory;
+import simulation.factory.ValidationConcrete;
 import simulation.model.TradeOffer;
-import validator.Validation;
-
+import validator.IValidation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,14 +11,15 @@ import java.util.List;
 
 public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory {
 
-    private Validation validation;
+    private final IValidation validation;
 
     public TradeOfferDao(){
-        validation = new Validation();
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        validation = validationConcrete.newValidation();
     }
 
     @Override
-    public int addTradeOfferDetails(TradeOffer tradeOffer) throws Exception {
+    public void addTradeOfferDetails(TradeOffer tradeOffer) throws Exception {
         ICallDB callDB = null;
         try{
             callDB = new CallDB("AddTradeOffer(?,?,?,?,?,?,?,?,?)");
@@ -42,13 +43,12 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
                 callDB.closeConnection();
             }
         }
-        return tradeOffer.getId();
     }
 
     @Override
-    public List loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
+    public List<TradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
         ICallDB callDB = null;
-        List<TradeOffer> tradeOfferList = null;
+        List<TradeOffer> tradeOfferList;
         try{
             callDB = new CallDB("LoadTradeOfferListByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
@@ -89,9 +89,7 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
             callDB = new CallDB("LoadTradeOfferListByLeagueId(?)");
             callDB.setInputParameterInt(1, tradeOfferId);
             ResultSet rs = callDB.executeLoad();
-            if (rs == null) {
-                return;
-            } else {
+            if (validation.isNotNull(rs)) {
                 while (rs.next()) {
                     tradeOffer.setId(rs.getInt(1));
                     tradeOffer.setLeagueId(rs.getInt(2));
