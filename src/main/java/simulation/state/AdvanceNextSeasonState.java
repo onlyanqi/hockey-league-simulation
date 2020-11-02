@@ -4,8 +4,7 @@ import presentation.ConsoleOutput;
 import simulation.model.NHLEvents;
 import simulation.model.*;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class AdvanceNextSeasonState implements ISimulateState {
 
@@ -33,33 +32,38 @@ public class AdvanceNextSeasonState implements ISimulateState {
     }
 
     private void agingPlayerSeason(League league) {
-        List<Conference> conferenceList = league.getConferenceList();
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
-        Aging aging = league.getGamePlayConfig().getAging();
+        try {
+            List<Conference> conferenceList = league.getConferenceList();
+            List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
+            List<Player> retiredPlayerList = league.getRetiredPlayerList();
+            Aging aging = league.getGamePlayConfig().getAging();
+            Collections.sort(freeAgentList, Collections.reverseOrder());
 
-        for (Conference conference : conferenceList) {
-            List<Division> divisionList = conference.getDivisionList();
-            for (Division division : divisionList) {
-                List<Team> teamList = division.getTeamList();
-                for (Team team : teamList) {
-                    List<Player> playerList = team.getPlayerList();
-                    for (int i = playerList.size() - 1; i >= 0; i--) {
-                        Player teamPlayer = playerList.get(i);
-                        teamPlayer.getOlder();
-                        if (teamPlayer.retirementCheck(aging)) {
-                            teamPlayer.setRetired(true);
-                            Player.Position position = teamPlayer.getPosition();
-                            playerList.remove(i);
-                            this.findReplacement(playerList, position, i);
+            for (Conference conference : conferenceList) {
+                List<Division> divisionList = conference.getDivisionList();
+                for (Division division : divisionList) {
+                    List<Team> teamList = division.getTeamList();
+                    for (Team team : teamList) {
+                        List<Player> playerList = team.getPlayerList();
+                        int size = playerList.size();
+                        for (int i = size - 1; i >= 0; i--) {
+                            Player teamPlayer = playerList.get(i);
+                            teamPlayer.getOlder();
+                            if (teamPlayer.retirementCheck(aging)) {
+                                teamPlayer.setRetired(true);
+                                retiredPlayerList.add(teamPlayer);
+                                Player.Position position = teamPlayer.getPosition();
+                                this.findReplacement(playerList, position, i);
+                                playerList.remove(i);
+                            }
+                            teamPlayer.agingInjuryRecovery(league);
                         }
-                        teamPlayer.agingInjuryRecovery(league);
                     }
                 }
             }
-        }
-
-        for (Player freeAgentPlayer : freeAgentList) {
-            for (int i = freeAgentList.size() - 1; i >= 0; i--) {
+            int size = freeAgentList.size();
+            for (int i = size - 1; i >= 0; i--) {
+                Player freeAgentPlayer = freeAgentList.get(i);
                 freeAgentPlayer.getOlder();
                 if (freeAgentPlayer.retirementCheck(aging)) {
                     freeAgentPlayer.setRetired(true);
@@ -67,26 +71,30 @@ public class AdvanceNextSeasonState implements ISimulateState {
                 }
                 freeAgentPlayer.agingInjuryRecovery(league);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private void findReplacement(List<Player> playerList, Player.Position position, int index) {
+    public void findReplacement(List<Player> playerList, Player.Position position, int index) {
         List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
-
-        freeAgentList.sort(new Comparator<Player>() {
-            public int compare(Player p1, Player p2) {
-                return Double.compare(p2.getStrength(), p1.getStrength());
-            }
-        });
         Player replacePlayer = new Player();
-        for (int i = 0; i < freeAgentList.size(); i++) {
+        int size = freeAgentList.size();
+        for (int i = 0; i < size; i++) {
             if (freeAgentList.get(i).getPosition().equals(position)) {
+                freeAgentList.get(i).setTeamId(playerList.get(index).getTeamId());
                 replacePlayer = new Player(freeAgentList.get(i));
                 freeAgentList.remove(i);
                 break;
             }
         }
-        playerList.add(index, replacePlayer);
+//        if(replacePlayer.getName()==null){
+//            ConsoleOutput.getInstance().printMsgToConsole("No replacement for retired player.");
+//            System.exit(1);
+//        }else{
+        playerList.add(replacePlayer);
+//        }
+
     }
 
     private ISimulateState exit() {

@@ -12,7 +12,8 @@ public class AgingDao implements IAgingFactory {
     public int addAging(Aging aging) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddAging(?,?,?,?)");
+            String procedureName = "AddAging(?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, aging.getAverageRetirementAge());
             callDB.setInputParameterInt(2, aging.getMaximumAge());
             callDB.setInputParameterInt(3, aging.getLeagueId());
@@ -34,7 +35,8 @@ public class AgingDao implements IAgingFactory {
         ICallDB callDB = null;
         Aging aging = null;
         try {
-            callDB = new CallDB("LoadAgingByLeagueId(?)");
+            String procedureName = "LoadAgingByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
 
@@ -59,7 +61,8 @@ public class AgingDao implements IAgingFactory {
     public void loadAgingById(int id, Aging aging) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadAgingById(?)");
+            String procedureName = "LoadAgingById(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
