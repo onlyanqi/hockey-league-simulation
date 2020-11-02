@@ -23,7 +23,7 @@ public class GameMock implements IGameFactory {
                 game.setPlayed(true);
                 game.setTeam1("Ottawa High Rollers");
                 game.setTeam2("Atlanta Milk Cartons");
-                game.setDate(LocalDate.of(2020, Month.OCTOBER,29));
+                game.setDate(LocalDate.of(2020, Month.OCTOBER, 29));
                 break;
             case 1:
                 game.setId(id);
@@ -31,7 +31,7 @@ public class GameMock implements IGameFactory {
                 game.setPlayed(true);
                 game.setTeam1("Gander Milk Cartons");
                 game.setTeam2("Shanghai Mutineers");
-                game.setDate(LocalDate.of(2020, Month.OCTOBER,30));
+                game.setDate(LocalDate.of(2020, Month.OCTOBER, 30));
                 break;
             case 2:
                 game.setId(id);
@@ -39,7 +39,7 @@ public class GameMock implements IGameFactory {
                 game.setPlayed(false);
                 game.setTeam1("Atlanta Wild Cats");
                 game.setTeam2("Jakarta High Rollers");
-                game.setDate(LocalDate.of(2020, Month.NOVEMBER,02));
+                game.setDate(LocalDate.of(2020, Month.NOVEMBER, 02));
                 break;
             case 3:
                 game.setId(id);
@@ -47,7 +47,7 @@ public class GameMock implements IGameFactory {
                 game.setPlayed(false);
                 game.setTeam1("Saint John Lazy Dogs");
                 game.setTeam2("Atlanta Wild Cats");
-                game.setDate(LocalDate.of(2020, Month.NOVEMBER,03));
+                game.setDate(LocalDate.of(2020, Month.NOVEMBER, 03));
                 break;
             case 4:
                 game.setId(id);
@@ -61,7 +61,7 @@ public class GameMock implements IGameFactory {
     }
 
     @Override
-    public List<Game> loadGamesByLeagueId(int leagueId){
+    public List<Game> loadGamesByLeagueId(int leagueId) {
         List<Game> gameList = null;
         switch (leagueId) {
             case 0:

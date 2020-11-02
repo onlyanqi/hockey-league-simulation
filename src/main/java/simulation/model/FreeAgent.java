@@ -2,6 +2,7 @@ package simulation.model;
 
 import db.data.IFreeAgentFactory;
 import db.data.IPlayerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +12,15 @@ public class FreeAgent extends SharedAttributes {
     private int leagueId;
     private List<Player> playerList;
 
-    public FreeAgent() {}
+    public FreeAgent() {
+    }
 
     public FreeAgent(int id) {
         setId(id);
     }
 
     public FreeAgent(int id, IFreeAgentFactory loadFreeAgentFactory) throws Exception {
-        if(loadFreeAgentFactory == null){
+        if (loadFreeAgentFactory == null) {
             return;
         }
         loadFreeAgentFactory.loadFreeAgentById(id, this);
@@ -45,28 +47,28 @@ public class FreeAgent extends SharedAttributes {
     }
 
     public void setPlayerList(List<Player> playerList) {
-        if(playerList == null){
+        if (playerList == null) {
             return;
         }
         this.playerList = playerList;
     }
 
     public void addFreeAgent(IFreeAgentFactory addFreeAgentFactory) throws Exception {
-        if(addFreeAgentFactory == null){
+        if (addFreeAgentFactory == null) {
             return;
         }
         addFreeAgentFactory.addFreeAgent(this);
     }
 
     public void loadPlayerListByFreeAgentId(IPlayerFactory loadPlayerFactory) throws Exception {
-        if(loadPlayerFactory == null){
+        if (loadPlayerFactory == null) {
             return;
         }
         this.playerList = loadPlayerFactory.loadPlayerListByFreeAgentId(getId());
     }
 
     public List<Integer> getGoodFreeAgentsList(List<Double> strengthList) {
-        if(strengthList == null){
+        if (strengthList == null) {
             return null;
         }
         Double thresholdPointForGoodPlayer = calculateStrengthAverage(strengthList);
@@ -80,7 +82,7 @@ public class FreeAgent extends SharedAttributes {
     }
 
     public Double calculateStrengthAverage(List<Double> strengthList) {
-        if(strengthList == null){
+        if (strengthList == null) {
             return null;
         }
         Double average = 0.0;

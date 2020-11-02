@@ -6,10 +6,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.GamePlayConfigMock;
 import simulation.mock.TradingMock;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class GamePlayConfigTest {
 
@@ -17,7 +15,7 @@ public class GamePlayConfigTest {
     private static IGamePlayConfigFactory gamePlayConfigFactory;
 
     @BeforeClass
-    public static void init(){
+    public static void init() {
         tradingFactory = new TradingMock();
         gamePlayConfigFactory = new GamePlayConfigMock();
     }

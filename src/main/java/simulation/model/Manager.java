@@ -6,14 +6,15 @@ public class Manager extends SharedAttributes {
     private int leagueId;
     private int teamId;
 
-    public Manager() {}
+    public Manager() {
+    }
 
     public Manager(int id) {
         setId(id);
     }
 
     public Manager(Manager manager) {
-        if(manager == null){
+        if (manager == null) {
             return;
         }
         this.setId(manager.getId());
@@ -24,12 +25,12 @@ public class Manager extends SharedAttributes {
         this.setTeamId(manager.teamId);
     }
 
-    public Manager(int id, IManagerFactory managerFactory) throws Exception{
-        if(managerFactory == null){
+    public Manager(int id, IManagerFactory managerFactory) throws Exception {
+        if (managerFactory == null) {
             return;
         }
         setId(id);
-        managerFactory.loadManagerById(id,this);
+        managerFactory.loadManagerById(id, this);
     }
 
     public int getLeagueId() {

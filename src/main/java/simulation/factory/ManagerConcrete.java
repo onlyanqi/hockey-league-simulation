@@ -1,8 +1,6 @@
 package simulation.factory;
 
-import db.dao.CoachDao;
 import db.dao.ManagerDao;
-import db.data.ICoachFactory;
 import db.data.IManagerFactory;
 import simulation.model.Manager;
 

@@ -43,7 +43,7 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
 
         } catch (SQLException sqlException) {
             throw sqlException;
-        } catch(Exception exception) {
+        } catch (Exception exception) {
             throw exception;
         } finally {
             assert callDB != null;

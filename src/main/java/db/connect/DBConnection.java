@@ -8,8 +8,8 @@ public class DBConnection {
 
     private static DBConnection dbConnection;
 
-    public static DBConnection getInstance(){
-        if(null == dbConnection){
+    public static DBConnection getInstance() {
+        if (null == dbConnection) {
             dbConnection = new DBConnection();
         }
         return dbConnection;

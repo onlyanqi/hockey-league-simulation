@@ -19,19 +19,19 @@ public class GamePlayConfigMock implements IGamePlayConfigFactory {
 
     public Aging getAging() throws Exception {
         IAgingFactory agingFactory = new AgingMock();
-        Aging aging = new Aging(1,agingFactory);
+        Aging aging = new Aging(1, agingFactory);
         return aging;
     }
 
     public Training getTraining() throws Exception {
         ITrainingFactory trainingFactory = new TrainingMock();
-        Training training = new Training(1,trainingFactory);
+        Training training = new Training(1, trainingFactory);
         return training;
     }
 
     @Override
     public void loadGamePlayConfigByLeagueId(int leagueId, GamePlayConfig gamePlayConfig) throws Exception {
-        switch (leagueId){
+        switch (leagueId) {
             case 1:
                 gamePlayConfig.setTrading(getTrading());
                 gamePlayConfig.setTraining(getTraining());

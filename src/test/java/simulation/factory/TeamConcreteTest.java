@@ -4,8 +4,8 @@ import db.dao.TeamDao;
 import db.data.ITeamFactory;
 import org.junit.Before;
 import org.junit.Test;
-import simulation.model.Team;
 import simulation.mock.TeamMock;
+import simulation.model.Team;
 
 import static org.junit.Assert.assertTrue;
 

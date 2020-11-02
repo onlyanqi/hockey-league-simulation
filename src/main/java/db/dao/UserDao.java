@@ -2,7 +2,6 @@ package db.dao;
 
 import db.data.IUserFactory;
 import simulation.model.User;
-
 import java.sql.SQLException;
 
 public class UserDao implements IUserFactory {
@@ -18,7 +17,6 @@ public class UserDao implements IUserFactory {
             callDB.setOutputParameterInt(3);
             callDB.execute();
             user.setId(callDB.returnOutputParameterInt(3));
-
         } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
@@ -37,8 +35,6 @@ public class UserDao implements IUserFactory {
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.executeLoad();
-
-
             user.setId(callDB.returnOutputParameterInt(2));
             user.setPassword(callDB.returnOutputParameterString(3));
 

@@ -1,17 +1,18 @@
 package simulation.state;
-import simulation.model.*;
+
 import presentation.ConsoleOutput;
-import simulation.model.DateTime;
+import simulation.model.*;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
 public class TrainingState implements ISimulateState, ITrainingState {
 
-    private HockeyContext hockeyContext;
-    private League league;
     private static final String TRAININGINFORMATION = "Training Players and Team!";
     private static final String STATCHECKINFORMATION = "Performing stat increase check";
+    private HockeyContext hockeyContext;
+    private League league;
     private ConsoleOutput consoleOutput;
 
     public TrainingState(HockeyContext hockeyContext) {
@@ -25,9 +26,9 @@ public class TrainingState implements ISimulateState, ITrainingState {
         consoleOutput.printMsgToConsole(TRAININGINFORMATION);
         LocalDate currentDate = league.getCurrentDate();
         LocalDate seasonStartDate = league.getNHLRegularSeasonEvents().getRegularSeasonStartDate();
-        Integer daysUntilStatIncreaseCheck  =league.getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck();
-        Long diffDays = DateTime.diffDays(seasonStartDate,currentDate);
-        if(diffDays % daysUntilStatIncreaseCheck == 1){
+        Integer daysUntilStatIncreaseCheck = league.getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck();
+        Long diffDays = DateTime.diffDays(seasonStartDate, currentDate);
+        if (diffDays % daysUntilStatIncreaseCheck == 1) {
             consoleOutput.printMsgToConsole(STATCHECKINFORMATION);
             statIncreaseCheck(league);
         }
@@ -36,7 +37,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     @Override
     public void statIncreaseCheck(League league) {
-        if(league==null){
+        if (league == null) {
             return;
         }
         List<Conference> conferenceList = league.getConferenceList();
@@ -56,7 +57,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     @Override
     public void statIncreaseCheckForPlayer(Player player, Coach headCoach) {
-        if(player==null || headCoach ==null){
+        if (player == null || headCoach == null) {
             return;
         }
         double coachShootingStrength = headCoach.getShooting();
@@ -120,13 +121,13 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
         GameSchedule games = league.getGames();
         List<Game> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
-        if(gamesOnCurrentDay.size()== 0){
+        if (gamesOnCurrentDay.size() == 0) {
             if (nhlEvents.checkTradeDeadlinePassed(league.getCurrentDate())) {
                 return new AgingState(hockeyContext);
             } else {
                 return new ExecuteTradeState(hockeyContext);
             }
-        }else{
+        } else {
             return new SimulateGameState(hockeyContext);
         }
     }

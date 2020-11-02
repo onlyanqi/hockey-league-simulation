@@ -12,7 +12,7 @@ public class CoachTest {
     private static ICoachFactory loadCoachFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadCoachFactory = new CoachMock();
     }
 
@@ -37,31 +37,31 @@ public class CoachTest {
     @Test
     public void coachFactoryTest() throws Exception {
         Coach coach = new Coach(1, loadCoachFactory);
-        assertEquals(coach.getId(),1);
+        assertEquals(coach.getId(), 1);
     }
 
     @Test
     public void coachFactoryNullTest() throws Exception {
         Coach coach = new Coach(1, null);
-        assertEquals(coach.getId(),0);
+        assertEquals(coach.getId(), 0);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenSavingNotInRange() throws Exception {
         Coach coach = new Coach(5, loadCoachFactory);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenCheckingNotInRange() throws Exception {
         Coach coach = new Coach(6, loadCoachFactory);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenSkatingNotInRange() throws Exception {
         Coach coach = new Coach(7, loadCoachFactory);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenShootingNotInRange() throws Exception {
         Coach coach = new Coach(8, loadCoachFactory);
     }
@@ -69,40 +69,40 @@ public class CoachTest {
     @Test
     public void getLeagueIdTest() throws Exception {
         Coach coach = new Coach(1, loadCoachFactory);
-        assertEquals(coach.getLeagueId(),1);
+        assertEquals(coach.getLeagueId(), 1);
     }
 
     @Test
     public void setLeagueIdTest() {
         Coach coach = new Coach();
         coach.setLeagueId(2);
-        assertEquals(coach.getLeagueId(),2);
+        assertEquals(coach.getLeagueId(), 2);
     }
 
     @Test
     public void getTeamIdTest() throws Exception {
         Coach coach = new Coach(1, loadCoachFactory);
-        assertEquals(coach.getLeagueId(),1);
+        assertEquals(coach.getLeagueId(), 1);
     }
 
     @Test
     public void setTeamIdTest() {
         Coach coach = new Coach();
         coach.setTeamId(3);
-        assertEquals(coach.getTeamId(),3);
+        assertEquals(coach.getTeamId(), 3);
     }
 
     @Test
     public void getNameTest() throws Exception {
         Coach coach = new Coach(2, loadCoachFactory);
-        assertEquals(coach.getName(),"Sam Smith");
+        assertEquals(coach.getName(), "Sam Smith");
     }
 
     @Test
     public void setNameTest() {
         Coach coach = new Coach();
         coach.setName("Wang");
-        assertEquals(coach.getName(),"Wang");
+        assertEquals(coach.getName(), "Wang");
     }
 
     @Test

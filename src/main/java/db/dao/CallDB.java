@@ -1,8 +1,8 @@
 package db.dao;
 
 import db.connect.DBConnection;
+
 import java.sql.*;
-import java.time.LocalDate;
 
 public class CallDB implements ICallDB {
 
@@ -12,7 +12,6 @@ public class CallDB implements ICallDB {
 
     public CallDB(String procedureName) throws Exception {
         this.procedureName = procedureName;
-        //IDBConnection dbConnection = new DBConnection();
         connection = DBConnection.getInstance().getConnection();
 
         String query = "call ".concat(procedureName);
@@ -41,7 +40,7 @@ public class CallDB implements ICallDB {
 
     @Override
     public void setInputParameterDate(int index, Date input) throws Exception {
-        stmt.setDate(index,input);
+        stmt.setDate(index, input);
     }
 
     @Override

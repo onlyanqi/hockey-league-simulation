@@ -4,7 +4,7 @@ import presentation.ConsoleOutput;
 
 public class DBExceptionLog {
 
-    public void printLog(String output){
+    public void printLog(String output) {
         ConsoleOutput consoleOutput = ConsoleOutput.getInstance();
         consoleOutput.printMsgToConsole(output);
     }

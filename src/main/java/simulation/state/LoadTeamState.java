@@ -4,6 +4,7 @@ import db.data.*;
 import presentation.ReadUserInput;
 import simulation.factory.*;
 import simulation.model.*;
+
 import java.util.List;
 
 
@@ -133,21 +134,21 @@ public class LoadTeamState implements IHockeyState {
         league.setGames(games);
     }
 
-    public void setCoaches() throws Exception{
+    public void setCoaches() throws Exception {
         CoachConcrete coachConcrete = new CoachConcrete();
         ICoachFactory iCoachFactory = coachConcrete.newCoachFactory();
         List<Coach> coachList = iCoachFactory.loadFreeCoachListByLeagueId(league.getId());
         league.setCoachList(coachList);
     }
 
-    public void setManagers() throws Exception{
+    public void setManagers() throws Exception {
         ManagerConcrete managerConcrete = new ManagerConcrete();
         IManagerFactory iManagerFactory = managerConcrete.newManagerFactory();
         List<Manager> managerList = iManagerFactory.loadFreeManagersByLeagueId(league.getId());
         league.setManagerList(managerList);
     }
 
-    public void setNHLEvents() throws Exception{
+    public void setNHLEvents() throws Exception {
         EventConcrete eventConcrete = new EventConcrete();
         IEventFactory eventFactory = eventConcrete.newAddEventsFactory();
         eventFactory.loadEventByLeagueId(league.getId(), league.getNHLRegularSeasonEvents());

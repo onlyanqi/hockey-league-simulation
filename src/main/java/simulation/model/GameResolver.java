@@ -2,7 +2,7 @@ package simulation.model;
 
 import db.data.IGameResolverFactory;
 
-public class GameResolver extends SharedAttributes{
+public class GameResolver extends SharedAttributes {
     private Double randomWinChance;
 
     public GameResolver() {

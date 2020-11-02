@@ -4,30 +4,30 @@ import java.util.List;
 
 public class Validation {
 
-    public boolean isListNotEmpty(List list){
+    public boolean isListNotEmpty(List list) {
         boolean isNotEmpty = true;
 
-        if(list == null || list.isEmpty()){
+        if (list == null || list.isEmpty()) {
             isNotEmpty = false;
         }
 
         return isNotEmpty;
     }
 
-    public boolean isNotNull(Object input){
+    public boolean isNotNull(Object input) {
         boolean isNotNull = true;
 
-        if(input == null){
+        if (input == null) {
             isNotNull = false;
         }
 
         return isNotNull;
     }
 
-    public boolean isNotEmpty(String input){
+    public boolean isNotEmpty(String input) {
         boolean isNotEmpty = true;
 
-        if(input == null || input.isEmpty()){
+        if (input == null || input.isEmpty()) {
             isNotEmpty = false;
         }
 

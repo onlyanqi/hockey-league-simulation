@@ -1,7 +1,6 @@
 package db.dao;
 
 import db.data.IGameResolverFactory;
-import simulation.model.Game;
 import simulation.model.GameResolver;
 
 import java.sql.ResultSet;
@@ -9,7 +8,7 @@ import java.sql.SQLException;
 
 public class GameResolverDao implements IGameResolverFactory {
     @Override
-    public long addGameResolver(int leagueId,GameResolver gameResolver) throws Exception {
+    public long addGameResolver(int leagueId, GameResolver gameResolver) throws Exception {
         ICallDB callDB = null;
         try {
             callDB = new CallDB("AddGameResolver(?,?,?)");
@@ -36,7 +35,7 @@ public class GameResolverDao implements IGameResolverFactory {
             callDB = new CallDB("LoadGameResolverById(?)");
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if(rs!=null){
+            if (rs != null) {
                 gameResolver.setId(rs.getInt(1));
                 gameResolver.setRandomWinChance(rs.getDouble(3));
             }
@@ -54,7 +53,7 @@ public class GameResolverDao implements IGameResolverFactory {
             callDB = new CallDB("LoadGameResolverByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if(rs!=null){
+            if (rs != null) {
                 gameResolver.setId(rs.getInt(1));
                 gameResolver.setRandomWinChance(rs.getDouble(3));
             }

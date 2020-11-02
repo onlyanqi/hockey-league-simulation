@@ -1,20 +1,18 @@
 package simulation.model;
 
 import db.data.ISharedAttributesFactory;
-import org.junit.Test;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import simulation.mock.SharedAttributesMock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class SharedAttributesTest {
 
     private static ISharedAttributesFactory factory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         factory = new SharedAttributesMock();
     }
 
@@ -41,13 +39,13 @@ public class SharedAttributesTest {
     }
 
     @Test
-    public void getIdTest(){
+    public void getIdTest() {
         SharedAttributes sharedAttributes = new SharedAttributes(1);
         assertEquals(sharedAttributes.getId(), 1);
     }
 
     @Test
-    public void setIdTest(){
+    public void setIdTest() {
         SharedAttributes sharedAttributes = new SharedAttributes();
         int id = 1;
         sharedAttributes.setId(id);
@@ -61,7 +59,7 @@ public class SharedAttributesTest {
     }
 
     @Test
-    public void setNameTest(){
+    public void setNameTest() {
         SharedAttributes sharedAttributes = new SharedAttributes();
         String name = "name";
         sharedAttributes.setName(name);
@@ -69,25 +67,25 @@ public class SharedAttributesTest {
     }
 
     @Test
-    public void isNullTest(){
+    public void isNullTest() {
         SharedAttributes sharedAttributes = new SharedAttributes();
         assertTrue(sharedAttributes.isNull(null));
     }
 
     @Test
-    public void isNotNullTest(){
+    public void isNotNullTest() {
         SharedAttributes sharedAttributes = new SharedAttributes();
         assertTrue(sharedAttributes.isNotNull(""));
     }
 
     @Test
-    public void isNotEmptyTest(){
+    public void isNotEmptyTest() {
         SharedAttributes sharedAttributes = new SharedAttributes();
         assertTrue(sharedAttributes.isNotEmpty("name"));
     }
 
     @Test
-    public void validNameTest(){
+    public void validNameTest() {
         SharedAttributes sharedAttributes = new SharedAttributes();
         assertTrue(sharedAttributes.isNotEmpty("name"));
     }
