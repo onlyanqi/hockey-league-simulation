@@ -108,8 +108,8 @@ public class ExecuteTradeStateTest {
         for(int i = 0; i < 50 ; i++) {
             state.tradingLogic(team, league);
             double beforeTradeStrength = team.getStrength();
-            if(validation.isNotNull(league.getTradingOfferList()) && league.getTradingOfferList().size() > 0){
-                assertNotNull(league.getTradingOfferList().get(0).getStatus());
+            if(validation.isNotNull(league.getTradeOfferList()) && league.getTradeOfferList().size() > 0){
+                assertNotNull(league.getTradeOfferList().get(0).getStatus());
                 double afterTradeStrength = team.getStrength();
                 assertTrue(afterTradeStrength >= beforeTradeStrength);
             }
@@ -162,7 +162,7 @@ public class ExecuteTradeStateTest {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         state.performTrade(swap);
 
-        List<TradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradingOfferList();
+        List<TradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradeOfferList();
 
         assertEquals(tradeOfferList.get(3).getStatus(), ACCEPTED);
     }
@@ -170,41 +170,41 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void performUserTradeTest() throws Exception {
-//        ByteArrayInputStream byteArrayInputStream;
-//        Map<String, Object> swap;
-//        List<String> userInputs = new ArrayList<>(Arrays.asList("A\n", "a\n", "R\n", "r\n", "A \n", "  r\n"));
-//
-//        for(String userInput : userInputs){
-//            swap = new HashMap<>();
-//
-//            Player player1 = new Player(1, playerFactory);
-//            Player player2 = new Player(3, playerFactory);
-//            Team team1 = new Team(1, teamFactory);
-//            Team team2 = new Team(3, teamFactory);
-//            TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
-//            Trading trading = new Trading(1, tradingFactory);
-//
-//            swap.put(FROMPLAYER, player1);
-//            swap.put(TOPLAYER, player2);
-//            swap.put(FROMTEAM, team1);
-//            swap.put(TOTEAM, team2);
-//            swap.put(TRADEOFFER, tradeOffer);
-//            swap.put(TRADING, trading);
-//
-//            ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-//
-//            byteArrayInputStream = new ByteArrayInputStream(userInput.getBytes());
-//            System.setIn(byteArrayInputStream);
-//            state.performUserTrade(swap);
-//
-//            TradeOffer tradeOffer1 = (TradeOffer) swap.get(TRADEOFFER);
-//
-//            if(userInput.toLowerCase().contains("a")) {
-//                assertEquals(tradeOffer1.getStatus(), (ACCEPTED));
-//            } else {
-//                assertEquals(tradeOffer1.getStatus(), (REJECTED));
-//            }
-//        }
+        ByteArrayInputStream byteArrayInputStream;
+        Map<String, Object> swap;
+        List<String> userInputs = new ArrayList<>(Arrays.asList("A\n", "a\n", "R\n", "r\n"));
+
+        for(String userInput : userInputs){
+            swap = new HashMap<>();
+
+            Player player1 = new Player(1, playerFactory);
+            Player player2 = new Player(3, playerFactory);
+            Team team1 = new Team(1, teamFactory);
+            Team team2 = new Team(3, teamFactory);
+            TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
+            Trading trading = new Trading(1, tradingFactory);
+
+            swap.put(FROMPLAYER, player1);
+            swap.put(TOPLAYER, player2);
+            swap.put(FROMTEAM, team1);
+            swap.put(TOTEAM, team2);
+            swap.put(TRADEOFFER, tradeOffer);
+            swap.put(TRADING, trading);
+
+            ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+
+            byteArrayInputStream = new ByteArrayInputStream(userInput.getBytes());
+            System.setIn(byteArrayInputStream);
+            state.performUserTrade(swap);
+
+            TradeOffer tradeOffer1 = (TradeOffer) swap.get(TRADEOFFER);
+
+            if(userInput.toLowerCase().contains("a")) {
+                assertEquals(tradeOffer1.getStatus(), (ACCEPTED));
+            } else {
+                assertEquals(tradeOffer1.getStatus(), (REJECTED));
+            }
+        }
     }
 
     @Test

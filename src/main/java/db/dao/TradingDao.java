@@ -1,18 +1,20 @@
 package db.dao;
 
 import db.data.ITradingFactory;
+import simulation.factory.ValidationConcrete;
 import simulation.model.Trading;
-import validator.Validation;
+import validator.IValidation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TradingDao extends DBExceptionLog implements ITradingFactory {
 
-    private Validation validation;
+    private IValidation validation;
 
     public TradingDao(){
-        validation = new Validation();
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        validation = validationConcrete.newValidation();
     }
 
     @Override

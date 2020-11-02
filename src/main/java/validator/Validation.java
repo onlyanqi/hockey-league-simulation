@@ -2,7 +2,7 @@ package validator;
 
 import java.util.List;
 
-public class Validation {
+public class Validation implements IValidation {
 
     public boolean isListNotEmpty(List list){
         boolean isNotEmpty = true;

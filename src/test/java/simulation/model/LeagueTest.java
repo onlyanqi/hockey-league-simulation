@@ -184,8 +184,8 @@ public class LeagueTest {
         League league = new League(1, leagueFactory);
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
-        assertEquals(league.getTradingOfferList().get(0).getId(), tradeOffer.getId());
-        assertEquals(league.getTradingOfferList().get(0).getFromTeamId(), tradeOffer.getFromTeamId());
+        assertEquals(league.getTradeOfferList().get(0).getId(), tradeOffer.getId());
+        assertEquals(league.getTradeOfferList().get(0).getFromTeamId(), tradeOffer.getFromTeamId());
     }
 
     @Test
@@ -197,11 +197,11 @@ public class LeagueTest {
         tradeOfferList.add(tradeOffer);
         tradeOfferList.add(tradeOffer1);
         League league = new League(1, leagueFactory);
-        league.setTradingOfferList(tradeOfferList);
-        assertEquals(league.getTradingOfferList().get(0).getId(), tradeOffer.getId());
-        assertEquals(league.getTradingOfferList().get(1).getId(), tradeOffer1.getId());
-        assertNotEquals(league.getTradingOfferList().get(1).getId(), tradeOffer.getId());
-        assertNotEquals(league.getTradingOfferList().get(0).getId(), tradeOffer1.getId());
+        league.setTradeOfferList(tradeOfferList);
+        assertEquals(league.getTradeOfferList().get(0).getId(), tradeOffer.getId());
+        assertEquals(league.getTradeOfferList().get(1).getId(), tradeOffer1.getId());
+        assertNotEquals(league.getTradeOfferList().get(1).getId(), tradeOffer.getId());
+        assertNotEquals(league.getTradeOfferList().get(0).getId(), tradeOffer1.getId());
     }
 
     @Test
@@ -210,8 +210,8 @@ public class LeagueTest {
         league.setId(1);
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
         league.loadTradingOfferDetailsByLeagueId(tradeOfferFactory);
-        assertEquals(league.getTradingOfferList().get(0).getId(), 1);
-        assertNotEquals(league.getTradingOfferList().get(1).getId(), 1);
+        assertEquals(league.getTradeOfferList().get(0).getId(), 1);
+        assertNotEquals(league.getTradeOfferList().get(1).getId(), 1);
     }
 
 }

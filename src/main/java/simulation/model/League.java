@@ -253,11 +253,11 @@ public class League extends SharedAttributes {
 
     private transient List<TradeOffer> tradeOfferList;
 
-    public List<TradeOffer> getTradingOfferList() {
+    public List<TradeOffer> getTradeOfferList() {
         return this.tradeOfferList;
     }
 
-    public void setTradingOfferList(List<TradeOffer> tradeOfferList) {
+    public void setTradeOfferList(List<TradeOffer> tradeOfferList) {
         this.tradeOfferList = tradeOfferList;
     }
 

@@ -1,8 +1,8 @@
 package simulation.model;
 
 import db.data.ITradingFactory;
-import validator.Validation;
-
+import simulation.factory.ValidationConcrete;
+import validator.IValidation;
 import java.util.*;
 
 public class Trading extends SharedAttributes {
@@ -13,16 +13,18 @@ public class Trading extends SharedAttributes {
     private List<Integer> nextYearSeasonMonths = new ArrayList<>
             (Arrays.asList(0, 1));
 
-    private Validation validation;
+    private IValidation validation;
 
     public Trading(){
-        validation = new Validation();
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        validation = validationConcrete.newValidation();
     }
 
     public Trading(int tradingId, ITradingFactory factory) throws Exception {
         setId(tradingId);
         factory.loadTradingDetailsByTradingId(tradingId, this);
-        validation = new Validation();
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        validation = validationConcrete.newValidation();
     }
 
     public List<Integer> getCurrentYearSeasonMonths() {

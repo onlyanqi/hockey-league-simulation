@@ -5,6 +5,8 @@ import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
+import simulation.factory.ValidationConcrete;
+import validator.IValidation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,15 @@ public class Team extends SharedAttributes {
     private Manager manager;
     private String generalManagerName;
     private List<Player> playerList;
+    private IValidation validation;
+
+    public void setValidation(){
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        validation = validationConcrete.newValidation();
+    }
 
     public Team() {
+        setValidation();
     }
 
     public Team(int id) {
@@ -34,10 +43,12 @@ public class Team extends SharedAttributes {
     public Team(int id, ITeamFactory factory) throws Exception {
         setId(id);
         factory.loadTeamById(id, this);
+        setValidation();
     }
 
     public Team(String name, ITeamFactory factory) throws Exception {
         factory.loadTeamByName(name, this);
+        setValidation();
     }
 
     public List<Player> getPlayerList() {
@@ -164,6 +175,28 @@ public class Team extends SharedAttributes {
         }
     }
 
+    public boolean validTeam(){
+        boolean isValid = false;
+        int noOfGoalies = 0;
+        int noOfSkaters = 0;
+        if(validation.isListNotEmpty(playerList)){
+            for(Player player : playerList){
+                String position = player.getPosition().toString();
+                if(validation.isNotEmpty(position) && position.equalsIgnoreCase(GOALIE)){
+                    noOfGoalies = noOfGoalies + 1;
+                } else {
+                    noOfSkaters = noOfSkaters + 1;
+                }
+            }
+        }
+
+        if(noOfGoalies == 2 && noOfSkaters == 18){
+            isValid = true;
+        }
+
+        return isValid;
+    }
+
 
     private int tradeOfferCountOfSeason;
 
@@ -185,13 +218,4 @@ public class Team extends SharedAttributes {
         this.lossPoint = lossPoint;
     }
 
-    private boolean isTraded;
-
-    public boolean isTraded() {
-        return isTraded;
-    }
-
-    public void setTraded(boolean traded) {
-        isTraded = traded;
-    }
 }
