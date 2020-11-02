@@ -66,8 +66,8 @@ public class Coach extends SharedAttributes {
         if (skating == null) {
             return;
         }
-        if(skating < 0 || skating > 1) {
-            throw new IllegalArgumentException ("Coach statistics must between 0 and 1!");
+        if (skating < 0 || skating > 1) {
+            throw new IllegalArgumentException("Coach statistics must between 0 and 1!");
         }
         this.skating = skating;
     }
@@ -80,8 +80,8 @@ public class Coach extends SharedAttributes {
         if (shooting == null) {
             return;
         }
-        if(shooting < 0 || shooting > 1) {
-            throw new IllegalArgumentException ("Coach statistics must between 0 and 1!");
+        if (shooting < 0 || shooting > 1) {
+            throw new IllegalArgumentException("Coach statistics must between 0 and 1!");
         }
         this.shooting = shooting;
     }
@@ -94,8 +94,8 @@ public class Coach extends SharedAttributes {
         if (checking == null) {
             return;
         }
-        if(checking < 0 || checking > 1) {
-            throw new IllegalArgumentException ("Coach statistics must between 0 and 1!");
+        if (checking < 0 || checking > 1) {
+            throw new IllegalArgumentException("Coach statistics must between 0 and 1!");
         }
         this.checking = checking;
     }
@@ -108,8 +108,8 @@ public class Coach extends SharedAttributes {
         if (saving == null) {
             return;
         }
-        if(saving < 0 || saving > 1) {
-            throw new IllegalArgumentException ("Coach statistics must between 0 and 1!");
+        if (saving < 0 || saving > 1) {
+            throw new IllegalArgumentException("Coach statistics must between 0 and 1!");
         }
         this.saving = saving;
     }

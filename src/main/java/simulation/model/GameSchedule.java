@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Games {
+public class GameSchedule {
 
-    public Games() {
+    public GameSchedule() {
     }
 
     List<Game> gameList = new ArrayList<>();

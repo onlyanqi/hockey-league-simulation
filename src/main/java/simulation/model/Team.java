@@ -5,6 +5,8 @@ import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
+import simulation.factory.ValidationConcrete;
+import validator.IValidation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ public class Team extends SharedAttributes {
     private Manager manager;
     private String generalManagerName;
     private List<Player> playerList;
+    private int tradeOfferCountOfSeason;
+    private int lossPoint;
 
     public Team() {
     }
@@ -164,8 +168,29 @@ public class Team extends SharedAttributes {
         }
     }
 
+    public boolean validTeam(){
+        boolean isValid = false;
+        int noOfGoalies = 0;
+        int noOfSkaters = 0;
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation validation = validationConcrete.newValidation();
+        if(validation.isListNotEmpty(playerList)){
+            for(Player player : playerList){
+                String position = player.getPosition().toString();
+                if(validation.isNotEmpty(position) && position.equalsIgnoreCase(GOALIE)){
+                    noOfGoalies = noOfGoalies + 1;
+                } else {
+                    noOfSkaters = noOfSkaters + 1;
+                }
+            }
+        }
 
-    private int tradeOfferCountOfSeason;
+        if(noOfGoalies == 2 && noOfSkaters == 18){
+            isValid = true;
+        }
+
+        return isValid;
+    }
 
     public int getTradeOfferCountOfSeason() {
         return tradeOfferCountOfSeason;
@@ -175,8 +200,6 @@ public class Team extends SharedAttributes {
         this.tradeOfferCountOfSeason = tradeOfferCountOfSeason;
     }
 
-    private int lossPoint;
-
     public int getLossPoint() {
         return lossPoint;
     }
@@ -184,4 +207,5 @@ public class Team extends SharedAttributes {
     public void setLossPoint(int lossPoint) {
         this.lossPoint = lossPoint;
     }
+
 }

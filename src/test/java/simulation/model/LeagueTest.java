@@ -76,43 +76,43 @@ public class LeagueTest {
     public void removeManagerFromManagerListByIdTest() throws Exception {
         League league = new League(1, leagueFactory);
         List<Manager> managerList = league.getManagerList();
-        assertEquals(managerList.size(), league.removeManagerFromManagerListById(managerList,0).size()+1);
-        assertNotEquals(league.removeManagerFromManagerListById(managerList,0),null);
-        assertNotEquals(managerList.size(),league.removeManagerFromManagerListById(managerList,0).size());
+        assertEquals(managerList.size(), league.removeManagerFromManagerListById(managerList, 0).size() + 1);
+        assertNotEquals(league.removeManagerFromManagerListById(managerList, 0), null);
+        assertNotEquals(managerList.size(), league.removeManagerFromManagerListById(managerList, 0).size());
     }
 
     @Test
     public void removeCoachFromManagerListByIdTest() throws Exception {
         League league = new League(1, leagueFactory);
         List<Coach> coachList = league.getCoachList();
-        assertEquals(coachList.size(), league.removeCoachFromCoachListById(coachList,0).size()+1);
-        assertNotEquals(league.removeCoachFromCoachListById(coachList,0),null);
-        assertNotEquals(coachList.size(),league.removeCoachFromCoachListById(coachList,0).size());
+        assertEquals(coachList.size(), league.removeCoachFromCoachListById(coachList, 0).size() + 1);
+        assertNotEquals(league.removeCoachFromCoachListById(coachList, 0), null);
+        assertNotEquals(coachList.size(), league.removeCoachFromCoachListById(coachList, 0).size());
     }
 
     @Test
     public void createConferenceNameListTest() throws Exception {
-        League league = new League(4,leagueFactory);
-        assertEquals(league.createConferenceNameList().size(),league.getConferenceList().size());
-        assertFalse(league.createConferenceNameList().size()>league.getConferenceList().size());
-        assertFalse(league.createConferenceNameList().size()<league.getConferenceList().size());
+        League league = new League(4, leagueFactory);
+        assertEquals(league.createConferenceNameList().size(), league.getConferenceList().size());
+        assertFalse(league.createConferenceNameList().size() > league.getConferenceList().size());
+        assertFalse(league.createConferenceNameList().size() < league.getConferenceList().size());
 
     }
 
     @Test
     public void getConferenceFromListByNameTest() throws Exception {
-        League league = new League(4,leagueFactory);
+        League league = new League(4, leagueFactory);
         Conference conference = league.getConferenceFromListByName("Conference4");
-        assertEquals(conference.getName(),"Conference4");
-        assertNotEquals(conference.getName(),null);
+        assertEquals(conference.getName(), "Conference4");
+        assertNotEquals(conference.getName(), null);
     }
 
     @Test
-    public void getTeamByTeamNameTest() throws Exception{
-        League league = new League(4,leagueFactory);
+    public void getTeamByTeamNameTest() throws Exception {
+        League league = new League(4, leagueFactory);
         Team team = league.getTeamByTeamName("Team1");
-        assertEquals(team.getName(),"Team1");
-        assertNotEquals(team.getName(),null);
+        assertEquals(team.getName(), "Team1");
+        assertNotEquals(team.getName(), null);
     }
 
     @Test
@@ -177,15 +177,15 @@ public class LeagueTest {
 
     /*
 
-*/
+     */
 
     @Test
     public void getTradingOfferListTest() throws Exception {
         League league = new League(1, leagueFactory);
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
-        assertEquals(league.getTradingOfferList().get(0).getId(), tradeOffer.getId());
-        assertEquals(league.getTradingOfferList().get(0).getFromTeamId(), tradeOffer.getFromTeamId());
+        assertEquals(league.getTradeOfferList().get(0).getId(), tradeOffer.getId());
+        assertEquals(league.getTradeOfferList().get(0).getFromTeamId(), tradeOffer.getFromTeamId());
     }
 
     @Test
@@ -197,11 +197,11 @@ public class LeagueTest {
         tradeOfferList.add(tradeOffer);
         tradeOfferList.add(tradeOffer1);
         League league = new League(1, leagueFactory);
-        league.setTradingOfferList(tradeOfferList);
-        assertEquals(league.getTradingOfferList().get(0).getId(), tradeOffer.getId());
-        assertEquals(league.getTradingOfferList().get(1).getId(), tradeOffer1.getId());
-        assertNotEquals(league.getTradingOfferList().get(1).getId(), tradeOffer.getId());
-        assertNotEquals(league.getTradingOfferList().get(0).getId(), tradeOffer1.getId());
+        league.setTradeOfferList(tradeOfferList);
+        assertEquals(league.getTradeOfferList().get(0).getId(), tradeOffer.getId());
+        assertEquals(league.getTradeOfferList().get(1).getId(), tradeOffer1.getId());
+        assertNotEquals(league.getTradeOfferList().get(1).getId(), tradeOffer.getId());
+        assertNotEquals(league.getTradeOfferList().get(0).getId(), tradeOffer1.getId());
     }
 
     @Test
@@ -210,8 +210,8 @@ public class LeagueTest {
         league.setId(1);
         ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
         league.loadTradingOfferDetailsByLeagueId(tradeOfferFactory);
-        assertEquals(league.getTradingOfferList().get(0).getId(), 1);
-        assertNotEquals(league.getTradingOfferList().get(1).getId(), 1);
+        assertEquals(league.getTradeOfferList().get(0).getId(), 1);
+        assertNotEquals(league.getTradeOfferList().get(1).getId(), 1);
     }
 
 }

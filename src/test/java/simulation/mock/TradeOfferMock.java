@@ -9,13 +9,14 @@ import java.util.List;
 public class TradeOfferMock implements ITradeOfferFactory {
 
     @Override
-    public int addTradeOfferDetails(TradeOffer tradeOffer) throws Exception {
+    public void addTradeOfferDetails(TradeOffer tradeOffer) {
         tradeOffer = new TradeOffer();
         tradeOffer.setId(1);
-        return tradeOffer.getId();
+        tradeOffer.setSeasonId(1);
+        tradeOffer.setTradingId(1);
     }
 
-    public void getTradeOffer(TradeOffer tradeOffer, int from, int to){
+    public void getTradeOffer(TradeOffer tradeOffer, int from, int to) {
         tradeOffer.setId(from);
         tradeOffer.setLeagueId(from);
         tradeOffer.setTradingId(from);
@@ -28,7 +29,7 @@ public class TradeOfferMock implements ITradeOfferFactory {
     }
 
     @Override
-    public List<TradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
+    public List<TradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) {
         List<TradeOffer> tradeOfferList = new ArrayList<>();
         TradeOffer tradeOffer = new TradeOffer();
         getTradeOffer(tradeOffer, 1, 2);
@@ -45,16 +46,8 @@ public class TradeOfferMock implements ITradeOfferFactory {
         return tradeOfferList;
     }
 
-    /*
     @Override
-    public void loadTradeOfferDetailsByTradingId(int tradingId, TradeOffer tradeOffer) throws Exception {
-        tradeOffer = new TradeOffer();
-        getTradeOffer(tradeOffer, tradingId, 3);
-    }
-*/
-
-    @Override
-    public void loadTradeOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) throws Exception {
+    public void loadTradeOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) {
         getTradeOffer(tradeOffer, tradingOfferId, 3);
     }
 

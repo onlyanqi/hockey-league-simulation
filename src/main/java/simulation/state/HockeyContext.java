@@ -2,9 +2,9 @@ package simulation.state;
 
 import config.AppConfig;
 import org.json.simple.JSONObject;
-import simulation.model.User;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
+import simulation.model.User;
 
 public class HockeyContext {
 
@@ -13,7 +13,6 @@ public class HockeyContext {
 
     public HockeyContext() {
     }
-
 
     public HockeyContext(User user) {
         this.user = user;
@@ -54,9 +53,5 @@ public class HockeyContext {
 
     public IHockeyState getHockeyState() {
         return hockeyState;
-    }
-
-    public void setHockeyState(IHockeyState hockeyState) {
-        this.hockeyState = hockeyState;
     }
 }

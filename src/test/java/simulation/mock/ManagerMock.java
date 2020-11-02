@@ -17,7 +17,7 @@ public class ManagerMock implements IManagerFactory {
 
     @Override
     public void loadManagerById(int managerId, Manager manager) throws Exception {
-        switch (managerId){
+        switch (managerId) {
             case 1:
                 manager.setName("Sam Mathew");
                 manager.setLeagueId(1);
@@ -55,8 +55,8 @@ public class ManagerMock implements IManagerFactory {
     public List<Manager> loadFreeManagersByLeagueId(int leagueId) throws Exception {
         List<Manager> managerList = new ArrayList<>();
         IManagerFactory managerFactory = new ManagerMock();
-        for(int i=1;i<=5; i++){
-            Manager manager = new Manager(i,managerFactory);
+        for (int i = 1; i <= 5; i++) {
+            Manager manager = new Manager(i, managerFactory);
             managerList.add(manager);
         }
         return managerList;

@@ -12,7 +12,7 @@ public class AgingTest {
     private static IAgingFactory loadAgingFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadAgingFactory = new AgingMock();
     }
 
@@ -31,13 +31,13 @@ public class AgingTest {
     @Test
     public void agingFactoryTest() throws Exception {
         Aging aging = new Aging(1, loadAgingFactory);
-        assertEquals(aging.getId(),1);
-        assertEquals(aging.getAverageRetirementAge(),35);
-        assertEquals(aging.getMaximumAge(),50);
+        assertEquals(aging.getId(), 1);
+        assertEquals(aging.getAverageRetirementAge(), 35);
+        assertEquals(aging.getMaximumAge(), 50);
         assertTrue("Maximum age (" + aging.getMaximumAge() + ") should be greater than average retirement age (" + aging.getAverageRetirementAge() + ")", aging.getMaximumAge() > aging.getAverageRetirementAge());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenAverageAboveMaximum() {
         Aging aging = new Aging();
         int averageRetirementAge = 59;
@@ -46,15 +46,15 @@ public class AgingTest {
         aging.setMaximumAge(maximumRetirementAge);
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void throwsExceptionWhenAverageAgeIsNegativeNumber(){
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsExceptionWhenAverageAgeIsNegativeNumber() {
         Aging aging = new Aging();
         int averageRetirementAge = -3;
         aging.setAverageRetirementAge(averageRetirementAge);
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void throwsExceptionWhenMaximumAgeIsNegativeNumber(){
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsExceptionWhenMaximumAgeIsNegativeNumber() {
         Aging aging = new Aging();
         int maximumRetirementAge = -50;
         aging.setMaximumAge(maximumRetirementAge);
@@ -67,7 +67,7 @@ public class AgingTest {
     }
 
     @Test
-    public void setAverageRetirementAgeTest(){
+    public void setAverageRetirementAgeTest() {
         Aging aging = new Aging();
         int averageRetirementAge = 29;
         aging.setAverageRetirementAge(averageRetirementAge);
@@ -82,7 +82,7 @@ public class AgingTest {
     }
 
     @Test
-    public void setMaximumAgeTest(){
+    public void setMaximumAgeTest() {
         Aging aging = new Aging();
         int maximumAge = 52;
         aging.setMaximumAge(maximumAge);
@@ -92,14 +92,14 @@ public class AgingTest {
     @Test
     public void getLeagueIdTest() throws Exception {
         Aging aging = new Aging(1, loadAgingFactory);
-        assertEquals(aging.getLeagueId(),1);
+        assertEquals(aging.getLeagueId(), 1);
     }
 
     @Test
     public void setLeagueIdTest() {
         Aging aging = new Aging();
         aging.setLeagueId(2);
-        assertEquals(aging.getLeagueId(),2);
+        assertEquals(aging.getLeagueId(), 2);
     }
 
 

@@ -29,11 +29,11 @@ public class SimulateGameState implements ISimulateState {
         return exit();
     }
 
-    private ISimulateState exit() {
+    public ISimulateState exit() {
         return new InjuryCheckState(hockeyContext);
     }
 
-    private void simulateGame(Game game) {
+    public void simulateGame(Game game) {
         double upset = league.getGamePlayConfig().getGameResolver().getRandomWinChance();
         Team team1 = league.getTeamByTeamName(game.getTeam1());
         Team team2 = league.getTeamByTeamName(game.getTeam2());
@@ -59,7 +59,7 @@ public class SimulateGameState implements ISimulateState {
         }
     }
 
-    private void updateTeamStandings(Game game){
+    public void updateTeamStandings(Game game){
         TeamStanding teamStanding = league.getActiveTeamStanding();
 
         if(game.getWinner().equals(Game.Result.TEAM1)){
@@ -70,6 +70,9 @@ public class SimulateGameState implements ISimulateState {
             teamStanding.setTeamPoints(game.getTeam2());
             teamStanding.setTeamWins(game.getTeam2());
             teamStanding.setTeamLoss(game.getTeam1());
+        }else{
+            teamStanding.setTeamTies(game.getTeam2());
+            teamStanding.setTeamTies(game.getTeam1());
         }
     }
 }

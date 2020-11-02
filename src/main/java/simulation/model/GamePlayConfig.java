@@ -3,8 +3,15 @@ package simulation.model;
 import db.data.IGamePlayConfigFactory;
 import db.data.ITradingFactory;
 
-public class GamePlayConfig extends SharedAttributes{
+public class GamePlayConfig{
 
+    public GamePlayConfig(){}
+
+    public GamePlayConfig(int leagueId, IGamePlayConfigFactory gamePlayConfigFactory) throws Exception {
+        gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
+    }
+
+    private int id;
     private int leagueId;
     private Aging aging;
     private Injury injury;
@@ -12,10 +19,12 @@ public class GamePlayConfig extends SharedAttributes{
     private Trading trading;
     private Training training;
 
-    public GamePlayConfig(){}
+    public int getId() {
+        return id;
+    }
 
-    public GamePlayConfig(int leagueId, IGamePlayConfigFactory gamePlayConfigFactory) throws Exception {
-        gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getLeagueId() {
@@ -31,7 +40,7 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setAging(Aging aging) {
-        if(aging == null){
+        if (aging == null) {
             return;
         }
         this.aging = aging;
@@ -42,7 +51,7 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setInjury(Injury injury) {
-        if(injury == null){
+        if (injury == null) {
             return;
         }
         this.injury = injury;
@@ -53,7 +62,7 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setGameResolver(GameResolver gameResolver) {
-        if(gameResolver == null){
+        if (gameResolver == null) {
             return;
         }
         this.gameResolver = gameResolver;
@@ -64,7 +73,7 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setTrading(Trading trading) {
-        if(trading == null){
+        if (trading == null) {
             return;
         }
         this.trading = trading;
@@ -79,7 +88,7 @@ public class GamePlayConfig extends SharedAttributes{
     }
 
     public void setTraining(Training training) {
-        if(training == null){
+        if (training == null) {
             return;
         }
         this.training = training;

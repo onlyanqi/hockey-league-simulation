@@ -2,7 +2,6 @@ package db.dao;
 
 import db.data.ICoachFactory;
 import simulation.model.Coach;
-import simulation.model.Division;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

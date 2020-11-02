@@ -2,29 +2,20 @@ package simulation.state;
 
 import config.AppConfig;
 import db.data.ILeagueFactory;
-import presentation.ReadUserInput;
-import simulation.factory.LeagueConcrete;
-import simulation.model.*;
 import presentation.ConsoleOutput;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
+import presentation.ReadUserInput;
+import simulation.factory.LeagueConcrete;
+import simulation.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class CreateTeamState implements IHockeyState {
 
-    private HockeyContext hockeyContext;
-    private League league;
-
-    private String conferenceName;
-    private String divisionName;
-    private Team team;
-    private List<Manager> managerList;
-    private List<Coach> coachList;
-    private FreeAgent freeAgent;
-    private IUserInputForTeamCreation teamCreationInput;
-    private IConsoleOutputForTeamCreation teamCreationOutput;
     private static final String UNABLETOLOADLEAGUE = "Unable to load league, please try again.";
     private static final String WAITMESSAGE = "Please wait while we are saving your league information...";
     private static final String CREATEANOTHERTEAMQUESTION = "Do you want to create another team? Yes/Y or No/N";
@@ -35,6 +26,17 @@ public class CreateTeamState implements IHockeyState {
     private static final String CREATEORLOADTEAM = "createOrLoadTeam";
     private static final String HOWMANYSEASONS = "How many seasons do you want to simulate";
     private static final String RIGHTCHOICEREQUEST = "Please enter the right choice. Yes/Y or No/N";
+    private static final String GOALIE = "goalie";
+    private HockeyContext hockeyContext;
+    private League league;
+    private String conferenceName;
+    private String divisionName;
+    private Team team;
+    private List<Manager> managerList;
+    private List<Coach> coachList;
+    private FreeAgent freeAgent;
+    private IUserInputForTeamCreation teamCreationInput;
+    private IConsoleOutputForTeamCreation teamCreationOutput;
     private ConsoleOutput consoleOutput = null;
     private ReadUserInput readUserInput = null;
 
@@ -119,7 +121,7 @@ public class CreateTeamState implements IHockeyState {
         int countOfGoalie = 0;
         int countOfSkaters = 0;
         for (int i = 0; i < freeAgentList.size(); i++) {
-            if (freeAgentList.get(i).getPosition().toString().equals("goalie")) {
+            if (freeAgentList.get(i).getPosition().toString().equals(GOALIE)) {
                 countOfGoalie++;
             } else {
                 countOfSkaters++;

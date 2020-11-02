@@ -2,7 +2,6 @@ package simulation.state;
 
 import presentation.ConsoleOutput;
 import simulation.model.NHLEvents;
-import simulation.model.Games;
 import simulation.model.League;
 import simulation.model.TeamStanding;
 
@@ -23,10 +22,8 @@ public class AgingState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-
         ConsoleOutput.getInstance().printMsgToConsole(AGING_DAY);
         agingPlayerDay(league);
-
         return exit();
     }
 
@@ -60,7 +57,7 @@ public class AgingState implements ISimulateState {
 
     public Boolean stanleyCupWinnerDetermined() {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
-        Games games = league.getGames();
+        GameSchedule games = league.getGames();
         TeamStanding teamStanding = league.getActiveTeamStanding();
         if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2) {
             return true;

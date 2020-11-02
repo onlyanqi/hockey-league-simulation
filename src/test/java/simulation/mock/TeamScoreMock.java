@@ -1,11 +1,8 @@
 package simulation.mock;
 
 import db.data.ITeamScoreFactory;
-import simulation.model.Game;
 import simulation.model.TeamScore;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 public class TeamScoreMock implements ITeamScoreFactory {
@@ -22,7 +19,7 @@ public class TeamScoreMock implements ITeamScoreFactory {
 
     @Override
     public void loadTeamScoreById(int id, TeamScore teamScore) throws Exception {
-        switch (id){
+        switch (id) {
             case 1:
                 teamScore.setId(id);
                 teamScore.setTeamName("Team1");
