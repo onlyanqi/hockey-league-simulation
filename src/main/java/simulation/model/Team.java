@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Team extends SharedAttributes {
+
     public static final String GOALIE = "goalie";
     public static final String DEFENSE = "defense";
     public static final String FORWARD = "forward";

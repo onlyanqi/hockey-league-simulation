@@ -7,12 +7,13 @@ import simulation.model.NHLEvents;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EventDao implements IEventFactory {
+public class EventDao extends DBExceptionLog implements IEventFactory {
     @Override
     public long addEvent(int leagueId, NHLEvents events) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddEvent(?,?,?,?,?,?,?,?)");
+            String procedureName = "AddEvent(?,?,?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             callDB.setInputParameterDate(2, DateTime.convertLocalDateToSQLDate(events.getRegularSeasonStartDate()));
             callDB.setInputParameterDate(3, DateTime.convertLocalDateToSQLDate(events.getTradeDeadlineDate()));
@@ -25,9 +26,12 @@ public class EventDao implements IEventFactory {
             events.setId(callDB.returnOutputParameterInt(8));
 
         } catch (SQLException sqlException) {
+            printLog("EventDao: addEvent: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return events.getId();
     }
@@ -40,7 +44,7 @@ public class EventDao implements IEventFactory {
             callDB = new CallDB("LoadEventById(?)");
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 nhlEvents.setId(rs.getInt(1));
                 nhlEvents.setRegularSeasonStartDate(rs.getDate(2).toLocalDate());
                 nhlEvents.setTradeDeadlineDate(rs.getDate(3).toLocalDate());
@@ -50,9 +54,12 @@ public class EventDao implements IEventFactory {
                 nhlEvents.setNextSeasonDate(rs.getDate(7).toLocalDate());
             }
         } catch (SQLException sqlException) {
+            printLog("EventDao: addEvent: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
@@ -60,10 +67,12 @@ public class EventDao implements IEventFactory {
     public void loadEventByLeagueId(int leagueId, NHLEvents nhlEvents) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadEventByLeagueId(?)");
+            String procedureName = "LoadEventByLeagueId(?)";
+            callDB = new CallDB(procedureName);
+
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 while (rs.next()) {
                     nhlEvents.setId(rs.getInt(1));
                     nhlEvents.setRegularSeasonStartDate(rs.getDate(2).toLocalDate());
@@ -75,9 +84,12 @@ public class EventDao implements IEventFactory {
                 }
             }
         } catch (SQLException sqlException) {
+            printLog("EventDao: addEvent: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 }

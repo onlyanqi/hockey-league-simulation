@@ -4,7 +4,7 @@ import db.data.ISeasonFactory;
 import simulation.model.Season;
 import java.sql.SQLException;
 
-public class SeasonDao implements ISeasonFactory {
+public class SeasonDao extends DBExceptionLog implements ISeasonFactory {
     @Override
     public int addSeason(Season season) throws Exception {
         String addSeasonProcedureName = "AddSeason(?,?)";
@@ -17,9 +17,12 @@ public class SeasonDao implements ISeasonFactory {
             season.setId(callDB.returnOutputParameterInt(2));
 
         } catch (SQLException sqlException) {
+            printLog("SeasonDao: addSeason: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return season.getId();
     }
@@ -37,10 +40,13 @@ public class SeasonDao implements ISeasonFactory {
 
             season.setId(callDB.returnOutputParameterInt(2));
             season.setName(callDB.returnOutputParameterString(3));
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("SeasonDao: loadSeasonById: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 }

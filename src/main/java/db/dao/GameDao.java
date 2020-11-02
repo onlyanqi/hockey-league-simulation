@@ -9,12 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameDao implements IGameFactory {
+public class GameDao extends DBExceptionLog implements IGameFactory {
     @Override
     public long addGame(int leagueId, Game game) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddGame(?,?,?,?,?,?,?)");
+            String procedureName = "AddGame(?,?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             callDB.setInputParameterDate(2, DateTime.convertLocalDateToSQLDate(game.getDate()));
             callDB.setInputParameterString(3, game.getTeam1());
@@ -31,11 +32,12 @@ public class GameDao implements IGameFactory {
             game.setId(callDB.returnOutputParameterInt(7));
 
         } catch (SQLException sqlException) {
+            printLog("GameDao: addGame: SQLException: "+sqlException);
             throw sqlException;
-        } catch (Exception exception) {
-            throw exception;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return game.getId();
     }
@@ -44,10 +46,11 @@ public class GameDao implements IGameFactory {
     public void loadGameById(int id, Game game) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadGameById(?)");
+            String procedureName = "LoadGameById(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 game.setId(rs.getInt(1));
                 game.setDate(rs.getDate(2).toLocalDate());
                 game.setTeam1(rs.getString(3));
@@ -56,9 +59,12 @@ public class GameDao implements IGameFactory {
                 game.setWinner(Game.Result.TEAM1);
             }
         } catch (SQLException sqlException) {
+            printLog("GameDao: loadGameById: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
@@ -67,10 +73,11 @@ public class GameDao implements IGameFactory {
         List<Game> gameList = null;
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadGameByLeagueId(?)");
+            String procedureName = "LoadGameByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 gameList = new ArrayList<>();
                 while (rs.next()) {
                     Game game = new Game();
@@ -84,9 +91,12 @@ public class GameDao implements IGameFactory {
                 }
             }
         } catch (SQLException sqlException) {
+            printLog("GameDao: loadGamesByLeagueId: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return gameList;
     }
@@ -95,7 +105,8 @@ public class GameDao implements IGameFactory {
     public void updateGameById(Game game) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("UpdateGameById(?,?,?,?,?,?)");
+            String procedureName = "UpdateGameById(?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterDate(1, DateTime.convertLocalDateToSQLDate(game.getDate()));
             callDB.setInputParameterString(2, game.getTeam1());
             callDB.setInputParameterString(3, game.getTeam2());
@@ -108,11 +119,13 @@ public class GameDao implements IGameFactory {
             callDB.setInputParameterInt(6, game.getId());
             callDB.execute();
 
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("GameDao: addGame: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 }

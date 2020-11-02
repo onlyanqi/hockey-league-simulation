@@ -16,7 +16,8 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
         }
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddManager(?,?,?,?)");
+            String procedureName = "AddManager(?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, manager.getTeamId());
             callDB.setInputParameterString(2, manager.getName());
             callDB.setInputParameterInt(3, manager.getLeagueId());
@@ -28,7 +29,9 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             printLog("ManagerDao: addManager: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return manager.getId();
     }
@@ -40,10 +43,11 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
         }
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadManagerById(?)");
+            String procedureName = "LoadManagerById(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, managerId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 manager = new Manager();
                 manager.setId(rs.getInt(1));
                 manager.setTeamId(rs.getInt(2));
@@ -54,7 +58,9 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             printLog("ManagerDao: loadManagerById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
@@ -63,10 +69,11 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
         ICallDB callDB = null;
         List<Manager> managers = null;
         try {
-            callDB = new CallDB("LoadManagerListByLeagueId(?)");
+            String procedureName = "LoadManagerListByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 while (rs.next()) {
                     Manager manager = new Manager();
                     manager = new Manager();
@@ -81,7 +88,9 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             printLog("ManagerDao: loadFreeManagersByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return managers;
     }
@@ -91,10 +100,11 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
         ICallDB callDB = null;
         Manager manager = null;
         try {
-            callDB = new CallDB("LoadManagerByTeamId(?)");
+            String procedureName = "LoadManagerByTeamId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, teamId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 manager = new Manager();
                 manager.setId(rs.getInt(1));
                 manager.setTeamId(rs.getInt(2));
@@ -105,7 +115,9 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             printLog("ManagerDao: loadManagerByTeamId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return manager;
     }

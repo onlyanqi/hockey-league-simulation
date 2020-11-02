@@ -1,19 +1,23 @@
 package db.dao;
 
 import db.data.IDivisionFactory;
+import simulation.factory.ValidationConcrete;
 import simulation.model.Division;
+import validator.IValidation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DivisionDao implements IDivisionFactory {
+public class DivisionDao extends DBExceptionLog implements IDivisionFactory {
+
     @Override
     public int addDivision(Division division) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddDivision(?,?,?)");
+            String procedureName = "AddDivision(?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterString(1, division.getName());
             callDB.setInputParameterInt(2, division.getConferenceId());
             callDB.setOutputParameterInt(3);
@@ -21,9 +25,12 @@ public class DivisionDao implements IDivisionFactory {
             division.setId(callDB.returnOutputParameterInt(3));
 
         } catch (SQLException sqlException) {
+            printLog("DivisionDao: addDivision: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return division.getId();
     }
@@ -32,46 +39,52 @@ public class DivisionDao implements IDivisionFactory {
     public void loadDivisionById(int id, Division division) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadDivisionByName(?,?,?,?)");
+            String procedureName = "LoadDivisionByName(?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
             callDB.executeLoad();
 
-
             division.setId(callDB.returnOutputParameterInt(2));
             division.setName(callDB.returnOutputParameterString(3));
             division.setConferenceId(callDB.returnOutputParameterInt(4));
 
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("DivisionDao: loadDivisionById: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
     @Override
     public Division loadDivisionByName(String divisionName) throws Exception {
         ICallDB callDB = null;
-        Division division = null;
+        Division division;
         try {
-            callDB = new CallDB("LoadDivisionByName(?,?,?,?)");
+            String procedureName = "LoadDivisionByName(?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterString(1, divisionName);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
             callDB.setOutputParameterInt(4);
             callDB.executeLoad();
 
-
             division = new Division();
             division.setId(callDB.returnOutputParameterInt(2));
             division.setName(callDB.returnOutputParameterString(3));
             division.setConferenceId(callDB.returnOutputParameterInt(4));
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("DivisionDao: loadDivisionByName: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return division;
     }
@@ -81,10 +94,11 @@ public class DivisionDao implements IDivisionFactory {
         List<Division> divisionList = null;
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadDivisionListByConferenceId(?)");
+            String procedureName = "LoadDivisionListByConferenceId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, conferenceId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 divisionList = new ArrayList<>();
                 while (rs.next()) {
                     Division division = new Division();
@@ -94,8 +108,13 @@ public class DivisionDao implements IDivisionFactory {
                     divisionList.add(division);
                 }
             }
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("DivisionDao: loadDivisionListByConferenceId: SQLException: "+sqlException);
+            throw sqlException;
+        } finally {
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
 
         return divisionList;
