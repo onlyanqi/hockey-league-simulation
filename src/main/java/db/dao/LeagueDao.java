@@ -1,7 +1,9 @@
 package db.dao;
 
 import db.data.ILeagueFactory;
+import simulation.factory.ValidationConcrete;
 import simulation.model.*;
+import validator.IValidation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +16,8 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
     public int addLeague(League league) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddLeague(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            String procedureName = "AddLeague(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterString(1, league.getName());
             callDB.setInputParameterInt(2, league.getCreatedBy());
             callDB.setInputParameterInt(3, league.getGamePlayConfig().getAging().getAverageRetirementAge());
@@ -38,7 +41,9 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
             printLog("LeagueDao: addLeague: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return league.getId();
     }
@@ -47,7 +52,8 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
     public void loadLeagueById(int id, League league) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadLeagueByName(?,?,?,?)");
+            String procedureName = "LoadLeagueByName(?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -64,19 +70,24 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
             printLog("LeagueDao: loadLeagueById: SQLException: " + e);
             throw e;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
     @Override
     public void loadLeagueByName(String leagueName, int userId, League league) throws Exception {
         ICallDB callDB = null;
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation validation = validationConcrete.newValidation();
         try {
-            callDB = new CallDB("loadLeagueByNameUserId(?,?)");
+            String procedureName = "loadLeagueByNameUserId(?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterString(1, leagueName);
             callDB.setInputParameterInt(2, userId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (validation.isNotNull(rs)) {
                 while (rs.next()) {
                     league.setId(rs.getInt(1));
                     league.setName(rs.getString(2));
@@ -87,19 +98,24 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
             printLog("LeagueDao: loadLeagueByName: SQLException: " + e);
             throw e;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
     @Override
     public List<League> loadLeagueListByUserId(int userId) throws Exception {
         List<League> leagueList = null;
-        ICallDB callDB;
+        ICallDB callDB = null;
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation validation = validationConcrete.newValidation();
         try {
-            callDB = new CallDB("LoadLeagueListByUserId(?)");
+            String procedureName = "LoadLeagueListByUserId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, userId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (validation.isNotNull(rs)) {
                 leagueList = new ArrayList<>();
                 while (rs.next()) {
                     League league = new League();
@@ -137,6 +153,10 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
         } catch (SQLException e) {
             printLog("LeagueDao: loadLeagueListByUserId: SQLException: " + e);
             throw e;
+        } finally {
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
 
         return leagueList;

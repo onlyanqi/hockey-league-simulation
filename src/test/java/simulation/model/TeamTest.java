@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
 
 public class TeamTest {
 
-    private static ITeamFactory loadTeamFactory;
+    private static ITeamFactory teamFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
-        loadTeamFactory = new TeamMock();
+        teamFactory = new TeamMock();
     }
 
     @Test
@@ -35,17 +35,17 @@ public class TeamTest {
 
     @Test
     public void teamFactoryTest() throws Exception {
-        Team team = new Team(1, loadTeamFactory);
+        Team team = new Team(1, teamFactory);
         assertEquals(team.getId(), 1);
         assertEquals(team.getName(), "Team1");
 
-        team = new Team(2, loadTeamFactory);
+        team = new Team(2, teamFactory);
         assertNull(team.getName());
     }
 
     @Test
     public void getMascotTest() throws Exception {
-        Team team = new Team(1, loadTeamFactory);
+        Team team = new Team(1, teamFactory);
         assertEquals(team.getMascot(), ("Tiger1"));
     }
 
@@ -59,7 +59,7 @@ public class TeamTest {
 
     @Test
     public void getGeneralManagerTest() throws Exception {
-        Team team = new Team(1, loadTeamFactory);
+        Team team = new Team(1, teamFactory);
         assertEquals(team.getManager().getName(), ("Manager1"));
     }
 
@@ -74,7 +74,7 @@ public class TeamTest {
 
     @Test
     public void getHeadCoachTest() throws Exception {
-        Team team = new Team(1, loadTeamFactory);
+        Team team = new Team(1, teamFactory);
         assertEquals(team.getCoach().getName(), ("Coach1"));
     }
 
@@ -93,7 +93,7 @@ public class TeamTest {
 
     @Test
     public void getDivisionIdTest() throws Exception {
-        Team team = new Team(1, loadTeamFactory);
+        Team team = new Team(1, teamFactory);
         assertEquals(team.getDivisionId(), (1));
     }
 
@@ -107,7 +107,7 @@ public class TeamTest {
 
     @Test
     public void getPlayerListTest() throws Exception {
-        Team team = new Team(1, loadTeamFactory);
+        Team team = new Team(1, teamFactory);
         List<Player> playerList = team.getPlayerList();
         assertNotNull(playerList);
         assertEquals(1, playerList.get(0).getId());
@@ -139,7 +139,7 @@ public class TeamTest {
         Team team = new Team();
         team.setId(1);
         team.setName("Team1");
-        team.addTeam(loadTeamFactory);
+        team.addTeam(teamFactory);
         assertEquals(1, team.getId());
         assertEquals("Team1", (team.getName()));
     }
@@ -157,11 +157,19 @@ public class TeamTest {
     }
 
     @Test
+    public void validTeamTest() throws Exception {
+        Team team = new Team(1, teamFactory);
+        assertTrue(team.validTeam());
+        team.getPlayerList().remove(0);
+        assertFalse(team.validTeam());
+    }
+
+    @Test
     public void getTradeOfferCountOfSeasonTest() throws Exception {
-        Team team = new Team(1, loadTeamFactory);
+        Team team = new Team(1, teamFactory);
         assertEquals(team.getTradeOfferCountOfSeason(), 0);
         assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
-        team = new Team(2, loadTeamFactory);
+        team = new Team(2, teamFactory);
         assertEquals(team.getTradeOfferCountOfSeason(), 2);
         assertNotEquals(team.getTradeOfferCountOfSeason(), 1);
     }
@@ -177,10 +185,10 @@ public class TeamTest {
 
     @Test
     public void getLossPointTest() throws Exception {
-        Team team = new Team(1, loadTeamFactory);
+        Team team = new Team(1, teamFactory);
         assertEquals(team.getLossPoint(), 0);
         assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
-        team = new Team(2, loadTeamFactory);
+        team = new Team(2, teamFactory);
         assertEquals(team.getLossPoint(), 2);
         assertNotEquals(team.getLossPoint(), 1);
     }

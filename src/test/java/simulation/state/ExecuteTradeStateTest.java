@@ -107,11 +107,8 @@ public class ExecuteTradeStateTest {
 
         for(int i = 0; i < 50 ; i++) {
             state.tradingLogic(team, league);
-            double beforeTradeStrength = team.getStrength();
             if(validation.isNotNull(league.getTradeOfferList()) && league.getTradeOfferList().size() > 0){
                 assertNotNull(league.getTradeOfferList().get(0).getStatus());
-                double afterTradeStrength = team.getStrength();
-                assertTrue(afterTradeStrength >= beforeTradeStrength);
             }
         }
     }
@@ -123,7 +120,6 @@ public class ExecuteTradeStateTest {
         League league = new League(1, leagueFactory);
         Player player1 = new Player(1, playerFactory);
         Player player2 = new Player(3, playerFactory);
-        Trading trading1 = league.getGamePlayConfig().getTrading();
 
         swap.put(FROMPLAYER, player1);
         swap.put(TOPLAYER, player2);
@@ -268,6 +264,8 @@ public class ExecuteTradeStateTest {
         assertTrue(isPlayerSwapped);
         assertFalse(isPlayerNotSwapped);
 
+        isPlayerSwapped = false;
+
         for (Player boughtPlayer : fromTeam.getPlayerList()) {
             if (toPlayer.getId() == boughtPlayer.getId()) {
                 isPlayerSwapped = true;
@@ -330,6 +328,15 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
+    public void checkDayOneTest(){
+        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+        assertTrue(state.checkDayOne());
+        League league = hockeyContext.getUser().getLeague();
+        league.setCurrentDate(LocalDate.of(LocalDate.now().getYear(),10,1));
+        assertFalse(state.checkDayOne());
+    }
+
+    @Test
     public void findBestSwapPlayerTest() throws Exception {
         Team team = new Team(1, teamFactory);
         League league = new League(1, leagueFactory);
@@ -380,7 +387,7 @@ public class ExecuteTradeStateTest {
         tradeOffer.setFromPlayerId(12);
         newPlayer = state.algorithmToFindSwapPlayer(team, weakestPlayer, swapPlayer, swap);
 
-        assertTrue(weakestPlayer.getId() == newPlayer.getId());
+        assertEquals(weakestPlayer.getId(), newPlayer.getId());
     }
 
     @Test
@@ -463,6 +470,7 @@ public class ExecuteTradeStateTest {
         for(Player player1 : list){
             if(player1.getId() == 5){
                 isPlayerExist = true;
+                break;
             }
         }
         assertTrue(isPlayerExist);
@@ -475,6 +483,7 @@ public class ExecuteTradeStateTest {
         for(Player player1 : list){
             if(player1.getId() == 5){
                 isPlayerExist = true;
+                break;
             }
         }
         assertFalse(isPlayerExist);
@@ -484,7 +493,7 @@ public class ExecuteTradeStateTest {
     public void exitTest(){
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         assertTrue(state.exit() instanceof AgingState);
-        assertTrue(state.exit() instanceof ISimulateState);
+        assertNotNull(state.exit());
     }
 
 }

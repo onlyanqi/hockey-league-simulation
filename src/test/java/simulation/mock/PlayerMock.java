@@ -225,7 +225,7 @@ public class PlayerMock implements IPlayerFactory {
 
             case 13:
                 player.setName("Player13");
-                player.setPosition(Player.Position.valueOf("goalie"));
+                player.setPosition(Player.Position.valueOf("defense"));
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);

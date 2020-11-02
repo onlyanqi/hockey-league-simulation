@@ -10,18 +10,12 @@ import java.sql.SQLException;
 
 public class TradingDao extends DBExceptionLog implements ITradingFactory {
 
-    private IValidation validation;
-
-    public TradingDao(){
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        validation = validationConcrete.newValidation();
-    }
-
     @Override
     public int addTradingDetails(Trading trading) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddTrading(?,?,?,?,?,?)");
+            String procedureName = "AddTrading(?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, trading.getLeagueId());
             callDB.setInputParameterInt(2, trading.getLossPoint());
             callDB.setInputParameterInt(3, trading.getMaxPlayersPerTrade());
@@ -35,7 +29,7 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
             printLog("TradingDao: addTradingDetails: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(validation.isNotNull(callDB)) {
+            if(getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -46,7 +40,8 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
     public void loadTradingDetailsByTradingId(int tradingId, Trading trading) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadTradingDetailsByTradingId(?)");
+            String procedureName = "LoadTradingDetailsByTradingId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, tradingId);
             ResultSet rs = callDB.executeLoad();
             if (rs == null) {
@@ -66,7 +61,7 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
             printLog("TradingDao: loadTradingDetailsByTradingId: SQLException: " + e);
             throw e;
         } finally {
-            if(validation.isNotNull(callDB)) {
+            if(getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -77,7 +72,8 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
         ICallDB callDB = null;
         Trading trading;
         try {
-            callDB = new CallDB("LoadTradingDetailsByLeagueId(?)");
+            String procedureName = "LoadTradingDetailsByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
             if (rs == null) {
@@ -97,7 +93,7 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
             printLog("TradingDao: loadTradingDetailsByLeagueId: SQLException: " + e);
             throw e;
         } finally {
-            if(validation.isNotNull(callDB)) {
+            if(getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

@@ -6,24 +6,27 @@ import simulation.model.GameResolver;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GameResolverDao implements IGameResolverFactory {
+public class GameResolverDao extends DBExceptionLog implements IGameResolverFactory {
     @Override
     public long addGameResolver(int leagueId, GameResolver gameResolver) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddGameResolver(?,?,?)");
+            String procedureName = "AddGameResolver(?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             callDB.setInputParameterDouble(2, gameResolver.getRandomWinChance());
-
 
             callDB.setOutputParameterInt(3);
             callDB.execute();
             gameResolver.setId(callDB.returnOutputParameterInt(3));
 
         } catch (SQLException sqlException) {
+            printLog("GameResolverDao: addGameResolver: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return gameResolver.getId();
     }
@@ -32,17 +35,21 @@ public class GameResolverDao implements IGameResolverFactory {
     public void loadGameResolverById(int id, GameResolver gameResolver) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadGameResolverById(?)");
+            String procedureName = "LoadGameResolverById(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 gameResolver.setId(rs.getInt(1));
                 gameResolver.setRandomWinChance(rs.getDouble(3));
             }
         } catch (SQLException sqlException) {
+            printLog("GameResolverDao: loadGameResolverById: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
@@ -50,17 +57,21 @@ public class GameResolverDao implements IGameResolverFactory {
     public void loadResolverByLeagueId(int leagueId, GameResolver gameResolver) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadGameResolverByLeagueId(?)");
+            String procedureName = "LoadGameResolverByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 gameResolver.setId(rs.getInt(1));
                 gameResolver.setRandomWinChance(rs.getDouble(3));
             }
         } catch (SQLException sqlException) {
+            printLog("GameResolverDao: loadResolverByLeagueId: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 }

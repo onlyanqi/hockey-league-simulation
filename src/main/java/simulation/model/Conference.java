@@ -23,7 +23,7 @@ public class Conference extends SharedAttributes {
             return;
         }
         setId(id);
-        factory.loadConferenceByName(id, this);
+        factory.loadConferenceById(id, this);
     }
 
 
