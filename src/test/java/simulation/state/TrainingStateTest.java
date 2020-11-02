@@ -47,6 +47,9 @@ public class TrainingStateTest {
         trainingState.statIncreaseCheck(league);
         assertEquals(league, oldLeague);
         assertNotEquals(league, null);
+        League nullLeague = null;
+        trainingState.statIncreaseCheck(nullLeague);
+        assertEquals(nullLeague,null);
     }
 
     @Test
@@ -63,6 +66,11 @@ public class TrainingStateTest {
         assertEquals(oldHeadCoach, headCoach);
         assertNotEquals(player, null);
         assertNotEquals(headCoach, null);
+        player = null;
+        headCoach = null;
+        trainingState.statIncreaseCheckForPlayer(player, headCoach);
+        assertEquals(player, null);
+        assertEquals(headCoach, null);
     }
 
     @Test

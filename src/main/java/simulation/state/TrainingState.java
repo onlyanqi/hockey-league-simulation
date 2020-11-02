@@ -72,6 +72,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (isRandomLess(coachShootingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getShooting() + 1)) {
                 player.setShooting(player.getShooting() + 1);
+                consoleOutput.printMsgToConsole("Shooting strength of "+player.getName()+" was"+(player.getShooting()-1)+" and increased to "+player.getShooting());
             }
         } else {
             player.injuryCheck(league);
@@ -79,6 +80,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (isRandomLess(coachSkatingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getSkating() + 1)) {
                 player.setSkating(player.getSkating() + 1);
+                consoleOutput.printMsgToConsole("Skating strength of "+player.getName()+" was"+(player.getSkating()-1)+" and increased to "+player.getSkating());
             }
 
         } else {
@@ -87,6 +89,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (isRandomLess(coachCheckingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getChecking() + 1)) {
                 player.setChecking(player.getChecking() + 1);
+                consoleOutput.printMsgToConsole("Checking strength of "+player.getName()+" was"+(player.getChecking()-1)+" and increased to "+player.getChecking());
             }
 
         } else {
@@ -95,6 +98,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (isRandomLess(coachSavingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getSaving() + 1)) {
                 player.setSaving(player.getSaving() + 1);
+                consoleOutput.printMsgToConsole("Saving strength of "+player.getName()+" was"+(player.getSaving()-1)+" and increased to "+player.getSaving());
             }
         } else {
             player.injuryCheck(league);

@@ -43,7 +43,9 @@ public class TrainDao implements ITrainingFactory {
             callDB = new CallDB(loadTrainingByLeagueId);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if(rs == null){
+                return;
+            }else{
                 training = new Training();
                 training.setId(rs.getInt(1));
                 training.setDaysUntilStatIncreaseCheck(rs.getInt(2));
