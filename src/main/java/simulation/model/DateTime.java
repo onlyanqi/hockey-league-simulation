@@ -1,11 +1,11 @@
-package util;
+package simulation.model;
 
 import java.time.LocalDate;
 import java.sql.Date;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class DateUtil{
+public class DateTime {
 
     public static LocalDate addDays(LocalDate date, int days)
     {

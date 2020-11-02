@@ -2,7 +2,7 @@ package simulation.state;
 
 import simulation.model.NHLEvents;
 import simulation.model.*;
-import util.DateUtil;
+import simulation.model.DateTime;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -36,10 +36,10 @@ public class InitializeSeasonState implements ISimulateState {
         NHLEvents nhlEvents = new NHLEvents();
 
         LocalDate regularSeasonStartDate = nhlEvents.getRegularSeasonStartDate();
-        LocalDate previousDateOfRegularSeasonStart = DateUtil.minusDays(nhlEvents.getRegularSeasonStartDate(), 1);
+        LocalDate previousDateOfRegularSeasonStart = DateTime.minusDays(nhlEvents.getRegularSeasonStartDate(), 1);
         LocalDate endDate = nhlEvents.getEndOfRegularSeason();
 
-        int diffInDays = (int) DateUtil.diffDays(previousDateOfRegularSeasonStart,endDate);
+        int diffInDays = (int) DateTime.diffDays(previousDateOfRegularSeasonStart,endDate);
 
         league.setCurrentDate(previousDateOfRegularSeasonStart);
 
@@ -184,7 +184,7 @@ public class InitializeSeasonState implements ISimulateState {
                 tempGameList.remove(randomNumber);
                 gameList.add(game);
             }
-            currentDate = DateUtil.addDays(currentDate,1);
+            currentDate = DateTime.addDays(currentDate,1);
         }
         for(int j=0;j<totalGamesAdded%diffInDays;j++){
             int randomNumber = rand.nextInt(tempGameList.size());

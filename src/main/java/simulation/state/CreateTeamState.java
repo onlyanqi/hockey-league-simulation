@@ -16,6 +16,7 @@ public class CreateTeamState implements IHockeyState {
 
     private HockeyContext hockeyContext;
     private League league;
+
     private String conferenceName;
     private String divisionName;
     private Team team;
@@ -51,6 +52,21 @@ public class CreateTeamState implements IHockeyState {
 
     }
 
+    public String getConferenceName() {
+        return conferenceName;
+    }
+
+    public void setConferenceName(String conferenceName) {
+        this.conferenceName = conferenceName;
+    }
+
+    public String getDivisionName() {
+        return divisionName;
+    }
+
+    public void setDivisionName(String divisionName) {
+        this.divisionName = divisionName;
+    }
 
     @Override
     public void entry() {
@@ -215,7 +231,6 @@ public class CreateTeamState implements IHockeyState {
         }
         return null != league && league.getId() > 0;
     }
-
 
     @Override
     public void process() {

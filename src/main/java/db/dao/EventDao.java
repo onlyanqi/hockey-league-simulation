@@ -1,12 +1,9 @@
 package db.dao;
 
 import db.data.IEventFactory;
-import simulation.model.Game;
 import simulation.model.NHLEvents;
-import util.DateUtil;
+import simulation.model.DateTime;
 
-import java.awt.*;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,12 +14,12 @@ public class EventDao implements IEventFactory {
         try {
             callDB = new CallDB("AddEvent(?,?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, leagueId);
-            callDB.setInputParameterDate(2, DateUtil.convertLocalDateToSQLDate(events.getRegularSeasonStartDate()));
-            callDB.setInputParameterDate(3, DateUtil.convertLocalDateToSQLDate(events.getTradeDeadlineDate()));
-            callDB.setInputParameterDate(4, DateUtil.convertLocalDateToSQLDate(events.getEndOfRegularSeason()));
-            callDB.setInputParameterDate(5, DateUtil.convertLocalDateToSQLDate(events.getPlayOffStartDate()));
-            callDB.setInputParameterDate(6, DateUtil.convertLocalDateToSQLDate(events.getLastDayStanleyCupFinals()));
-            callDB.setInputParameterDate(7, DateUtil.convertLocalDateToSQLDate(events.getNextSeasonDate()));
+            callDB.setInputParameterDate(2, DateTime.convertLocalDateToSQLDate(events.getRegularSeasonStartDate()));
+            callDB.setInputParameterDate(3, DateTime.convertLocalDateToSQLDate(events.getTradeDeadlineDate()));
+            callDB.setInputParameterDate(4, DateTime.convertLocalDateToSQLDate(events.getEndOfRegularSeason()));
+            callDB.setInputParameterDate(5, DateTime.convertLocalDateToSQLDate(events.getPlayOffStartDate()));
+            callDB.setInputParameterDate(6, DateTime.convertLocalDateToSQLDate(events.getLastDayStanleyCupFinals()));
+            callDB.setInputParameterDate(7, DateTime.convertLocalDateToSQLDate(events.getNextSeasonDate()));
             callDB.setOutputParameterInt(8);
             callDB.execute();
             events.setId(callDB.returnOutputParameterInt(8));
