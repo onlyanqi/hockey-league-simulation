@@ -1,9 +1,9 @@
 package simulation.model;
 
-import db.data.*;
 import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
+import db.data.ITradeOfferFactory;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ public class League extends SharedAttributes {
     private TeamStanding playOffStanding;
     private TeamStanding activeTeamStanding;
     private NHLEvents nhlEvents;
+    private transient List<TradeOffer> tradeOfferList;
 
     public League() {}
 
@@ -154,7 +155,7 @@ public class League extends SharedAttributes {
     }
 
     public List<Manager> removeManagerFromManagerListById(List<Manager> managerList, int indexOfManagerObject) {
-        if(null == managerList) {
+        if (null == managerList) {
             return null;
         }
         int managerListSize = managerList.size();
@@ -165,7 +166,7 @@ public class League extends SharedAttributes {
     }
 
     public List<Coach> removeCoachFromCoachListById(List<Coach> coachList, int indexOfCoachObject) {
-        if(null == coachList) {
+        if (null == coachList) {
             return null;
         }
         int coachListSize = coachList.size();
@@ -251,7 +252,6 @@ public class League extends SharedAttributes {
         return null;
     }
 
-    private transient List<TradeOffer> tradeOfferList;
 
     public List<TradeOffer> getTradeOfferList() {
         return this.tradeOfferList;

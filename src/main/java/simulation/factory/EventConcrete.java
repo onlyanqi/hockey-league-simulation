@@ -9,6 +9,7 @@ public class EventConcrete {
     public NHLEvents newEvents() {
         return new NHLEvents();
     }
+
     public IEventFactory newAddEventsFactory() {
         return new EventDao();
     }

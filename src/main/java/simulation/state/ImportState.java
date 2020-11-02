@@ -52,12 +52,11 @@ public class ImportState implements IHockeyState {
     private static final String RANDOM_TRADE_OFFER_CHANCE = "randomTradeOfferChance";
     private static final String MAX_PLAYERS_PER_TRADE = "maxPlayersPerTrade";
     private static final String RANDOM_ACCEPTANCE_CHANCE = "randomAcceptanceChance";
-
+    private final Set<String> appearedName = new HashSet<>();
     private HockeyContext hockeyContext;
     private String filePath;
     private JSONObject jsonFromInput;
     private League league;
-    private final Set<String> appearedName = new HashSet<>();
 
 
     public ImportState(HockeyContext hockeyContext, JSONObject jsonFromInput) {

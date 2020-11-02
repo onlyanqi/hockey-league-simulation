@@ -5,7 +5,7 @@ import simulation.model.Training;
 
 public class TrainingMock implements ITrainingFactory {
 
-    public Training getTraining(Training training){
+    public Training getTraining(Training training) {
         training.setId(1);
         training.setLeagueId(1);
         training.setDaysUntilStatIncreaseCheck(50);
@@ -14,9 +14,9 @@ public class TrainingMock implements ITrainingFactory {
 
     @Override
     public int addTraining(Training training) throws Exception {
-        if(training == null){
+        if (training == null) {
             return -1;
-        }else {
+        } else {
             training = getTraining(training);
             return training.getId();
         }
@@ -24,8 +24,8 @@ public class TrainingMock implements ITrainingFactory {
 
     @Override
     public void loadTrainingByLeagueId(int leagueId, Training training) throws Exception {
-        switch (leagueId){
-            case 1 :
+        switch (leagueId) {
+            case 1:
                 training.setDaysUntilStatIncreaseCheck(50);
                 training.setId(1);
                 training.setLeagueId(1);

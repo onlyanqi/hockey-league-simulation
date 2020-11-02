@@ -8,14 +8,14 @@ import java.util.Scanner;
 
 public class PlayerChoiceState implements IHockeyState {
 
+    private static final String ONE = "1";
+    private static final String TWO = "2";
+    private static final String IMPORTSTATE = "importState";
+    private static final String CREATEORLOADTEAM = "createOrLoadTeam";
     private String input;
     private String stateName;
     private HockeyContext hockeyContext;
     private String userInput;
-    private static final String ONE="1";
-    private static final String TWO="2";
-    private static final String IMPORTSTATE="importState";
-    private static final String CREATEORLOADTEAM="createOrLoadTeam";
 
     public PlayerChoiceState(HockeyContext hockeyContext, String input, String stateName) {
         this.input = input;

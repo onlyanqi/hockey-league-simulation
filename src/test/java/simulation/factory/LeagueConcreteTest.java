@@ -5,8 +5,8 @@ import db.dao.LeagueDao;
 import db.data.ILeagueFactory;
 import org.junit.Before;
 import org.junit.Test;
-import simulation.model.League;
 import simulation.mock.LeagueMock;
+import simulation.model.League;
 
 import static org.junit.Assert.assertTrue;
 

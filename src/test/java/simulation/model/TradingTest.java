@@ -17,12 +17,12 @@ public class TradingTest {
     private static ITradingFactory tradingFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         tradingFactory = new TradingMock();
     }
 
     @Test
-    public void defaultConstructorTest(){
+    public void defaultConstructorTest() {
         Trading trading = new Trading();
         assertEquals(trading.getId(), 0);
     }
@@ -67,7 +67,7 @@ public class TradingTest {
     }
 
     @Test
-    public void isLeagueInTradingPeriodTest(){
+    public void isLeagueInTradingPeriodTest() {
         Trading trading = new Trading();
         trading.isLeagueInTradingPeriod(new Date());
         assertTrue(trading.isTradingPeriod());
@@ -76,7 +76,7 @@ public class TradingTest {
     @Test
     public void getTradeStartDateTest() throws Exception {
         Trading trading = new Trading(1, tradingFactory);
-        Date tradeStartDate = new Date((2020-1900), 9, 1);
+        Date tradeStartDate = new Date((2020 - 1900), 9, 1);
         int compare = tradeStartDate.compareTo(trading.getTradeStartDate());
         assertEquals(compare, 0);
         assertNotEquals(compare, 1);
@@ -85,7 +85,7 @@ public class TradingTest {
     @Test
     public void setTradeStartDateTest() throws Exception {
         Trading trading = new Trading(1, tradingFactory);
-        Date startDate = new Date((2020-1900), 9, 1);
+        Date startDate = new Date((2020 - 1900), 9, 1);
         int compare = trading.getTradeStartDate().compareTo(startDate);
         assertEquals(compare, 0);
         assertNotEquals(compare, 1);
@@ -94,7 +94,7 @@ public class TradingTest {
     @Test
     public void getTradeEndDateTest() throws Exception {
         Trading trading = new Trading(1, tradingFactory);
-        Date endDate = new Date((2021-1900), 1, 22);
+        Date endDate = new Date((2021 - 1900), 1, 22);
         int compare = trading.getTradeEndDate().compareTo(endDate);
         assertEquals(compare, 0);
         assertNotEquals(compare, 1);
@@ -103,30 +103,30 @@ public class TradingTest {
     @Test
     public void setTradeEndDateTest() throws Exception {
         Trading trading = new Trading(1, tradingFactory);
-        Date endDate = new Date((2021-1900), 1, 22);
+        Date endDate = new Date((2021 - 1900), 1, 22);
         int compare = trading.getTradeEndDate().compareTo(endDate);
         assertEquals(compare, 0);
         assertNotEquals(compare, 1);
     }
 
     @Test
-    public void calTradeEndDateFromLeagueDateTest(){
+    public void calTradeEndDateFromLeagueDateTest() {
         Trading trading = new Trading();
         trading.calTradeEndDateFromLeagueDate(new Date(System.currentTimeMillis()));
-        Date endDate = new Date((2021-1900),1,22, 23, 59,59);
+        Date endDate = new Date((2021 - 1900), 1, 22, 23, 59, 59);
         int compare = trading.getTradeEndDate().compareTo(endDate);
         assertEquals(compare, 0);
         assertNotEquals(compare, 1);
     }
 
     @Test
-    public void calTradeStartDateFromLeagueDateTest(){
+    public void calTradeStartDateFromLeagueDateTest() {
         Trading trading = new Trading();
         trading.calTradeStartDateFromLeagueDate(new Date(System.currentTimeMillis()));
-        Date tradeStartDate = new Date((2020-1900),9,1);
+        Date tradeStartDate = new Date((2020 - 1900), 9, 1);
         int compare = trading.getTradeStartDate().compareTo(tradeStartDate);
-        assertEquals(compare,0);
-        assertNotEquals(compare,1);
+        assertEquals(compare, 0);
+        assertNotEquals(compare, 1);
     }
 
     @Test

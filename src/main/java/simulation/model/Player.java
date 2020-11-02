@@ -1,13 +1,12 @@
 package simulation.model;
 
 import db.data.IPlayerFactory;
-
 import java.time.LocalDate;
 import java.util.Random;
 
-
 public class Player extends SharedAttributes implements Comparable<Player> {
 
+    private static final String GOALIE = "goalie";
     private int age;
     private String hometown;
     private Position position;
@@ -25,7 +24,6 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     private int checking;
     private int saving;
     private double strength;
-    private static final String GOALIE = "goalie";
 
     public Player() {
     }

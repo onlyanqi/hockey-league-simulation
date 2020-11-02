@@ -26,6 +26,8 @@ public class Team extends SharedAttributes {
     private String generalManagerName;
     private List<Player> playerList;
     private IValidation validation;
+    private int tradeOfferCountOfSeason;
+    private int lossPoint;
 
     public void setValidation(){
         ValidationConcrete validationConcrete = new ValidationConcrete();
@@ -197,9 +199,6 @@ public class Team extends SharedAttributes {
         return isValid;
     }
 
-
-    private int tradeOfferCountOfSeason;
-
     public int getTradeOfferCountOfSeason() {
         return tradeOfferCountOfSeason;
     }
@@ -207,8 +206,6 @@ public class Team extends SharedAttributes {
     public void setTradeOfferCountOfSeason(int tradeOfferCountOfSeason) {
         this.tradeOfferCountOfSeason = tradeOfferCountOfSeason;
     }
-
-    private int lossPoint;
 
     public int getLossPoint() {
         return lossPoint;

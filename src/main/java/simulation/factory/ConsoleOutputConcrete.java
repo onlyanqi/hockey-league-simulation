@@ -4,7 +4,7 @@ import presentation.ConsoleOutput;
 
 public class ConsoleOutputConcrete {
 
-    public ConsoleOutput newConsoleOutput(){
+    public ConsoleOutput newConsoleOutput() {
         return new ConsoleOutput();
     }
 

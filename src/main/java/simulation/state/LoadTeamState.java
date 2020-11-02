@@ -1,9 +1,11 @@
 package simulation.state;
 
 import db.data.*;
+import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.*;
 import simulation.model.*;
+
 import java.util.List;
 
 
@@ -30,27 +32,24 @@ public class LoadTeamState implements IHockeyState {
     @Override
     public void entry() throws Exception {
         teamName = readUserInput.getInput("Please enter team name");
-
         while ((teamName.isEmpty() || teamName == null || isTeamNotPresent(teamName))) {
             teamName = readUserInput.getInput("Please enter valid and existing team name");
         }
-
     }
 
 
     @Override
     public void process() throws Exception {
 
-        System.out.println("We are loading the league data. Please wait..");
+        ConsoleOutput.getInstance().printMsgToConsole("We are loading the league data. Please wait..");
 
-        //Load League from userid
         LeagueConcrete leagueConcrete = new LeagueConcrete();
         ILeagueFactory iLoadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
 
         hockeyContext.getUser().loadLeagueByUserId(iLoadLeagueFactory);
 
         if (hockeyContext.getUser().getLeagueList().size() == 0) {
-            System.out.println("You do not have any league, Please create it.");
+            ConsoleOutput.getInstance().printMsgToConsole("You do not have any league, Please create it.");
             System.exit(1);
         }
         league = hockeyContext.getUser().getLeagueList().get(0);
@@ -60,35 +59,32 @@ public class LoadTeamState implements IHockeyState {
 //        updateTradingDetailsToLeague(tradingFactory);
 
         Division div = null;
-
         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
         IConferenceFactory iLoadConferenceFactory = conferenceConcrete.newLoadConferenceFactory();
         league.loadConferenceListByLeagueId(iLoadConferenceFactory);
         List<Conference> conferenceList = league.getConferenceList();
-//        for (Conference conference : conferenceList) {
-//            DivisionConcrete divisionConcrete = new DivisionConcrete();
-//            IDivisionFactory iLoadDivisionFactory = divisionConcrete.newLoadDivisionFactory();
-//            conference.loadDivisionListByConferenceId(iLoadDivisionFactory);
-//            List<Division> divisionList = conference.getDivisionList();
-//            for (Division division : divisionList) {
-//                TeamConcrete teamConcrete = new TeamConcrete();
-//                ITeamFactory iLoadTeamFactory = teamConcrete.newTeamFactory();
-//                division.loadTeamListByDivisionId(iLoadTeamFactory);
-//
-//                List<Team> teamArrayList = division.getTeamList();
-//                for (Team team : teamArrayList) {
-//
-//                    if (teamName != null && team.getName() != null && team.getName().equals(teamName)) {
-//                        div = division;
-//                    }
-//
-//                    PlayerConcrete playerConcrete = new PlayerConcrete();
-//                    IPlayerFactory iLoadPlayerFactory = playerConcrete.newLoadPlayerFactory();
-//                    team.loadPlayerListByTeamId(iLoadPlayerFactory);
-//                    team.getPlayerList();
-//                }
-//            }
-//        }
+        for (Conference conference : conferenceList) {
+            DivisionConcrete divisionConcrete = new DivisionConcrete();
+            IDivisionFactory iLoadDivisionFactory = divisionConcrete.newLoadDivisionFactory();
+            conference.loadDivisionListByConferenceId(iLoadDivisionFactory);
+            List<Division> divisionList = conference.getDivisionList();
+            for (Division division : divisionList) {
+                TeamConcrete teamConcrete = new TeamConcrete();
+                ITeamFactory iLoadTeamFactory = teamConcrete.newTeamFactory();
+                division.loadTeamListByDivisionId(iLoadTeamFactory);
+
+                List<Team> teamArrayList = division.getTeamList();
+                for (Team team : teamArrayList) {
+                    if (teamName != null && team.getName() != null && team.getName().equals(teamName)) {
+                        div = division;
+                    }
+                    PlayerConcrete playerConcrete = new PlayerConcrete();
+                    IPlayerFactory iLoadPlayerFactory = playerConcrete.newPlayerFactory();
+                    team.loadPlayerListByTeamId(iLoadPlayerFactory);
+                    team.getPlayerList();
+                }
+            }
+        }
 
         FreeAgentConcrete freeAgentConcrete = new FreeAgentConcrete();
 
@@ -119,9 +115,9 @@ public class LoadTeamState implements IHockeyState {
             }
         }
 
-        System.out.println("The team belongs to \"" + league.getName() + "\" league.");
-        System.out.println("The team belongs to \"" + conf.getName() + "\" conference.");
-        System.out.println("The team belongs to \"" + div.getName() + "\" division.");
+        ConsoleOutput.getInstance().printMsgToConsole("The team belongs to \"" + league.getName() + "\" league.");
+        ConsoleOutput.getInstance().printMsgToConsole("The team belongs to \"" + conf.getName() + "\" conference.");
+        ConsoleOutput.getInstance().printMsgToConsole("The team belongs to \"" + div.getName() + "\" division.");
 
     }
 
@@ -133,21 +129,21 @@ public class LoadTeamState implements IHockeyState {
         league.setGames(games);
     }
 
-    public void setCoaches() throws Exception{
+    public void setCoaches() throws Exception {
         CoachConcrete coachConcrete = new CoachConcrete();
         ICoachFactory iCoachFactory = coachConcrete.newCoachFactory();
         List<Coach> coachList = iCoachFactory.loadFreeCoachListByLeagueId(league.getId());
         league.setCoachList(coachList);
     }
 
-    public void setManagers() throws Exception{
+    public void setManagers() throws Exception {
         ManagerConcrete managerConcrete = new ManagerConcrete();
         IManagerFactory iManagerFactory = managerConcrete.newManagerFactory();
         List<Manager> managerList = iManagerFactory.loadFreeManagersByLeagueId(league.getId());
         league.setManagerList(managerList);
     }
 
-    public void setNHLEvents() throws Exception{
+    public void setNHLEvents() throws Exception {
         EventConcrete eventConcrete = new EventConcrete();
         IEventFactory eventFactory = eventConcrete.newAddEventsFactory();
         eventFactory.loadEventByLeagueId(league.getId(), league.getNHLRegularSeasonEvents());
@@ -159,8 +155,6 @@ public class LoadTeamState implements IHockeyState {
 
     @Override
     public IHockeyState exit() {
-        //Instantiate Model Objects and transition state
-
         PlayerChoiceState playerChoiceState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
         return playerChoiceState;
     }
@@ -172,12 +166,16 @@ public class LoadTeamState implements IHockeyState {
         try {
             team = teamConcrete.newTeamByName(teamName, factory);
         } catch (Exception e) {
-            System.out.println("Unable to load team, please try again.");
+            ConsoleOutput.getInstance().printMsgToConsole("Unable to load team, please try again.");
             System.exit(1);
             e.printStackTrace();
         }
-        if (team != null && team.getId() > 0) return false;
-        else return true;
+        if (team != null && team.getId() > 0){
+            return false;
+        }
+        else{
+            return true;
+        }
 
     }
 }

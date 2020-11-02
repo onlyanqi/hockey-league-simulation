@@ -162,7 +162,7 @@ public class ExecuteTradeStateTest {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         state.performTrade(swap);
 
-        List<TradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradeOfferList();
+        List<TradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradingOfferList();
 
         assertEquals(tradeOfferList.get(3).getStatus(), ACCEPTED);
     }

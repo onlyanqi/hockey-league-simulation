@@ -15,7 +15,7 @@ public class CoachMock implements ICoachFactory {
     @Override
     public void loadCoachById(int id, Coach coach) throws Exception {
 
-        switch (id){
+        switch (id) {
             case 0:
                 coach.setId(id);
                 coach.setName("Joe Smith");

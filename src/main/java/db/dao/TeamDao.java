@@ -2,7 +2,6 @@ package db.dao;
 
 import db.data.ITeamFactory;
 import simulation.model.Team;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,19 +10,19 @@ import java.util.List;
 public class TeamDao implements ITeamFactory {
     @Override
     public int addTeam(Team team) throws Exception {
+        String addTeamProcedureName = "AddTeam(?,?,?,?,?,?,?";
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddTeam(?,?,?,?,?,?,?)");
+            callDB = new CallDB(addTeamProcedureName);
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
             callDB.setInputParameterBoolean(3, team.isAiTeam());
             callDB.setInputParameterInt(4, team.getTradeOfferCountOfSeason());
             callDB.setInputParameterInt(5, team.getLossPoint());
-            callDB.setInputParameterDouble(6,team.getStrength());
+            callDB.setInputParameterDouble(6, team.getStrength());
             callDB.setOutputParameterInt(7);
             callDB.execute();
             team.setId(callDB.returnOutputParameterInt(7));
-
         } catch (SQLException sqlException) {
             throw sqlException;
         } finally {
@@ -34,9 +33,10 @@ public class TeamDao implements ITeamFactory {
 
     @Override
     public void loadTeamById(int id, Team team) throws Exception {
+        String loadTeamByIdProcedureName = "LoadTeamById(?,?,?,?,?,?)";
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadTeamById(?,?,?,?,?,?)");
+            callDB = new CallDB(loadTeamByIdProcedureName);
             callDB.setInputParameterInt(1, id);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -60,9 +60,10 @@ public class TeamDao implements ITeamFactory {
 
     @Override
     public void loadTeamByName(String teamName, Team team) throws Exception {
+        String loadTeamByNameProcedureName = "LoadTeamByName(?,?,?,?,?,?)";
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadTeamByName(?,?,?,?,?,?)");
+            callDB = new CallDB(loadTeamByNameProcedureName);
             callDB.setInputParameterString(1, teamName);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterString(3);
@@ -86,13 +87,16 @@ public class TeamDao implements ITeamFactory {
 
     @Override
     public List<Team> loadTeamListByDivisionId(int divisionId) throws Exception {
+        String loadTeamListByDivisionIdProcedureName = "LoadTeamListByDivisionId(?)";
         List<Team> teamList = null;
         ICallDB callDB;
         try {
-            callDB = new CallDB("LoadTeamListByDivisionId(?)");
+            callDB = new CallDB(loadTeamListByDivisionIdProcedureName);
             callDB.setInputParameterInt(1, divisionId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if(rs == null){
+                return null;
+            }else{
                 teamList = new ArrayList<>();
                 while (rs.next()) {
                     Team team = new Team();
@@ -108,22 +112,22 @@ public class TeamDao implements ITeamFactory {
         } catch (Exception e) {
             throw e;
         }
-
         return teamList;
     }
 
     @Override
     public void updateTeamById(Team team) throws Exception {
+        String updateTeamByIdProcedureName = "UpdateTeamById(?,?,?,?,?,?,?)";
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("UpdateTeamById(?,?,?,?,?,?,?)");
+            callDB = new CallDB(updateTeamByIdProcedureName);
             callDB.setInputParameterString(1, team.getName());
             callDB.setInputParameterInt(2, team.getDivisionId());
             callDB.setInputParameterBoolean(3, team.isAiTeam());
             callDB.setInputParameterInt(4, team.getTradeOfferCountOfSeason());
             callDB.setInputParameterInt(5, team.getLossPoint());
-            callDB.setInputParameterDouble(6,team.getStrength());
-            callDB.setInputParameterInt(7,team.getId());
+            callDB.setInputParameterDouble(6, team.getStrength());
+            callDB.setInputParameterInt(7, team.getId());
             callDB.execute();
         } catch (Exception e) {
             throw e;

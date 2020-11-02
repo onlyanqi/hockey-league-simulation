@@ -7,9 +7,9 @@ import simulation.model.SharedAttributes;
 public class SharedAttributesMock implements ISharedAttributesFactory {
 
     @Override
-    public void loadParentObj(int id, SharedAttributes sharedAttributes){
+    public void loadParentObj(int id, SharedAttributes sharedAttributes) {
 
-        switch (new Long(id).intValue()){
+        switch (new Long(id).intValue()) {
             case 1:
                 //all valid data
                 sharedAttributes.setName("Parent");

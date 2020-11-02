@@ -12,7 +12,7 @@ public class Season extends SharedAttributes {
     }
 
     public Season(int id, ISeasonFactory factory) throws Exception {
-        if(factory == null){
+        if (factory == null) {
             return;
         }
         setId(id);
@@ -20,7 +20,7 @@ public class Season extends SharedAttributes {
     }
 
     public void addSeason(ISeasonFactory addSeasonFactory) throws Exception {
-        if(addSeasonFactory == null){
+        if (addSeasonFactory == null) {
             return;
         }
         addSeasonFactory.addSeason(this);

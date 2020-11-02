@@ -11,14 +11,14 @@ import static org.junit.Assert.assertTrue;
 public class TradingConcreteTest {
 
     @Test
-    public void newTradingTest(){
+    public void newTradingTest() {
         TradingConcrete tradingConcrete = new TradingConcrete();
         assertTrue(tradingConcrete.newTrading() instanceof Trading);
         assertTrue(tradingConcrete.newTrading() instanceof SharedAttributes);
     }
 
     @Test
-    public void newTradingFactoryTest(){
+    public void newTradingFactoryTest() {
         TradingConcrete tradingConcrete = new TradingConcrete();
         assertTrue(tradingConcrete.newTradingFactory() instanceof TradingDao);
         assertTrue(tradingConcrete.newTradingFactory() instanceof ITradingFactory);

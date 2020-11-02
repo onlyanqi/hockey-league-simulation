@@ -34,7 +34,7 @@ public class Aging extends SharedAttributes {
         return averageRetirementAge;
     }
 
-    public void setAverageRetirementAge(int averageRetirementAge) throws IllegalArgumentException{
+    public void setAverageRetirementAge(int averageRetirementAge) throws IllegalArgumentException {
         if (averageRetirementAge < 0) {
             throw new IllegalArgumentException("averageRetirementAge must be greater than 0!");
         }
@@ -45,7 +45,7 @@ public class Aging extends SharedAttributes {
         return maximumAge;
     }
 
-    public void setMaximumAge(int maximumAge) throws IllegalArgumentException{
+    public void setMaximumAge(int maximumAge) throws IllegalArgumentException {
         if (maximumAge < 0) {
             throw new IllegalArgumentException("maximumAge must be greater than 0!");
         }
