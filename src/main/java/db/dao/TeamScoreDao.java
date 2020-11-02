@@ -8,12 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamScoreDao implements ITeamScoreFactory {
+public class TeamScoreDao extends DBExceptionLog implements ITeamScoreFactory {
     @Override
     public long addTeamScore(int leagueId, int regularSeason, TeamScore teamScore) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddTeamStanding(?,?,?,?,?,?,?,?)");
+            String procedureName = "AddTeamStanding(?,?,?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             callDB.setInputParameterDouble(2, teamScore.getPoints());
             callDB.setInputParameterString(3, teamScore.getTeamName());
@@ -26,9 +27,12 @@ public class TeamScoreDao implements ITeamScoreFactory {
             teamScore.setId(callDB.returnOutputParameterInt(8));
 
         } catch (SQLException sqlException) {
+            printLog("TeamScoreDao: addTeamScore: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return teamScore.getId();
     }
@@ -37,10 +41,11 @@ public class TeamScoreDao implements ITeamScoreFactory {
     public void loadTeamScoreById(int id, TeamScore teamScore) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadTeamStandingById(?)");
+            String procedureName = "LoadTeamStandingById(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 teamScore.setId(rs.getInt(1));
                 teamScore.setPoints(rs.getInt(2));
                 teamScore.setTeamName(rs.getString(3));
@@ -49,9 +54,12 @@ public class TeamScoreDao implements ITeamScoreFactory {
                 teamScore.setNumberOfTies(rs.getInt(6));
             }
         } catch (SQLException sqlException) {
+            printLog("TeamScoreDao: loadTeamScoreById: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
@@ -60,10 +68,11 @@ public class TeamScoreDao implements ITeamScoreFactory {
         List<TeamScore> teamScoreList = null;
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadRegularTeamStandingByLeagueId(?)");
+            String procedureName = "LoadRegularTeamStandingByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 teamScoreList = new ArrayList<>();
                 while (rs.next()) {
                     TeamScore teamScore = new TeamScore();
@@ -77,9 +86,12 @@ public class TeamScoreDao implements ITeamScoreFactory {
                 }
             }
         } catch (SQLException sqlException) {
+            printLog("TeamScoreDao: loadRegularTeamScoreListByLeagueId: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return teamScoreList;
     }
@@ -89,10 +101,11 @@ public class TeamScoreDao implements ITeamScoreFactory {
         List<TeamScore> teamScoreList = null;
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadPlayOffTeamStandingByLeagueId(?)");
+            String procedureName = "LoadPlayOffTeamStandingByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 teamScoreList = new ArrayList<>();
                 while (rs.next()) {
                     TeamScore teamScore = new TeamScore();
@@ -106,9 +119,12 @@ public class TeamScoreDao implements ITeamScoreFactory {
                 }
             }
         } catch (SQLException sqlException) {
+            printLog("TeamScoreDao: loadPlayoffTeamScoreListByLeagueId: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return teamScoreList;
     }
@@ -117,7 +133,8 @@ public class TeamScoreDao implements ITeamScoreFactory {
     public void updateTeamScoreById(TeamScore teamScore) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("UpdateTeamStanding(?,?,?,?,?,?)");
+            String procedureName = "UpdateTeamStanding(?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterDouble(1, teamScore.getPoints());
             callDB.setInputParameterString(2, teamScore.getTeamName());
             callDB.setInputParameterInt(3, teamScore.getNumberOfWins());
@@ -125,11 +142,13 @@ public class TeamScoreDao implements ITeamScoreFactory {
             callDB.setInputParameterInt(5, teamScore.getNumberOfTies());
             callDB.setInputParameterInt(6, teamScore.getId());
             callDB.execute();
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("TeamScoreDao: updateTeamScoreById: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 

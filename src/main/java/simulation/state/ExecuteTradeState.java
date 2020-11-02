@@ -50,7 +50,6 @@ public class ExecuteTradeState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-        System.out.println("Trading Players");
         loopAllTeamsForTradeInitiation(league);
         return exit();
     }
@@ -156,9 +155,10 @@ public class ExecuteTradeState implements ISimulateState {
     public void performUserTrade(Map<String, Object> swap){
         consoleOutput.printUserTradeDetailsToUser(swap);
         String userResponse = readUserInput.getUserTradeResponse();
-
-        if(userResponse.equalsIgnoreCase("A".trim())){
+        String a = "A";
+        if(userResponse.equalsIgnoreCase(a.trim())){
             updateTradingDetails(swap);
+            consoleOutput.printMsgToConsole("Trade offer is accepted successfully.");
         } else {
             TradeOffer tradeOffer = (TradeOffer) swap.get(TRADEOFFER);
             if(validation.isNotNull(tradeOffer)) {
@@ -247,7 +247,7 @@ public class ExecuteTradeState implements ISimulateState {
     }
 
     public Boolean checkDayOne(){
-        if(league.getCurrentDate().equals(LocalDate.of(LocalDate.now().getYear(),10,01))){
+        if(league.getCurrentDate().equals(LocalDate.of(LocalDate.now().getYear(),10,1))){
             return false;
         }else{
             return true;

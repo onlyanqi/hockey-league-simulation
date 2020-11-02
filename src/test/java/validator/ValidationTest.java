@@ -28,4 +28,13 @@ public class ValidationTest {
         assertTrue(validation.isNotNull(a));
     }
 
+    @Test
+    public void isNotEmptyTest(){
+        String a = null;
+        Validation validation = new Validation();
+        assertFalse(validation.isNotNull(a));
+        a = "a";
+        assertTrue(validation.isNotNull(a));
+    }
+
 }

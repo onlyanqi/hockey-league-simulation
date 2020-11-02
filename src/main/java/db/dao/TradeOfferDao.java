@@ -11,18 +11,12 @@ import java.util.List;
 
 public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory {
 
-    private final IValidation validation;
-
-    public TradeOfferDao(){
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        validation = validationConcrete.newValidation();
-    }
-
     @Override
     public void addTradeOfferDetails(TradeOffer tradeOffer) throws Exception {
         ICallDB callDB = null;
         try{
-            callDB = new CallDB("AddTradeOffer(?,?,?,?,?,?,?,?,?)");
+            String procedureName = "AddTradeOffer(?,?,?,?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, tradeOffer.getLeagueId());
             callDB.setInputParameterInt(2, tradeOffer.getSeasonId());
             callDB.setInputParameterInt(3, tradeOffer.getFromTeamId());
@@ -39,7 +33,7 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
             printLog("TradeOfferDao: addTradeOfferDetails: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            if(validation.isNotNull(callDB)) {
+            if(getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -50,7 +44,8 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
         ICallDB callDB = null;
         List<TradeOffer> tradeOfferList;
         try{
-            callDB = new CallDB("LoadTradeOfferListByLeagueId(?)");
+            String procedureName = "LoadTradeOfferListByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
             if (rs == null) {
@@ -72,10 +67,10 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
                 }
             }
         } catch (SQLException e){
-            printLog("TradeOfferDao: loadTradeOfferDetailsByLeagueId: Exception: "+e);
+            printLog("TradeOfferDao: loadTradeOfferDetailsByLeagueId: SQLException: "+e);
             throw e;
         } finally {
-            if(validation.isNotNull(callDB)) {
+            if(getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -86,10 +81,11 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
     public void loadTradeOfferDetailsById(int tradeOfferId, TradeOffer tradeOffer) throws Exception {
         ICallDB callDB = null;
         try{
-            callDB = new CallDB("LoadTradeOfferListByLeagueId(?)");
+            String procedureName = "LoadTradeOfferListByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, tradeOfferId);
             ResultSet rs = callDB.executeLoad();
-            if (validation.isNotNull(rs)) {
+            if (getValidation().isNotNull(rs)) {
                 while (rs.next()) {
                     tradeOffer.setId(rs.getInt(1));
                     tradeOffer.setLeagueId(rs.getInt(2));
@@ -103,10 +99,10 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
                 }
             }
         } catch (SQLException e){
-            printLog("TradeOfferDao: loadTradeOfferDetailsById: Exception: "+e);
+            printLog("TradeOfferDao: loadTradeOfferDetailsById: SQLException: "+e);
             throw e;
         }finally {
-            if(validation.isNotNull(callDB)) {
+            if(getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
