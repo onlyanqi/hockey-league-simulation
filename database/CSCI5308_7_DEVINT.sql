@@ -349,7 +349,7 @@ CREATE TABLE `Training` (
 -- -----------------------------------------------------
 -- Table `CSCI5308_7_DEVINT`.`TradingOffer`
 -- -----------------------------------------------------
-CREATE TABLE `TradingOffer` (
+CREATE TABLE `TradeOffer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `leagueId` int(11) DEFAULT NULL,
   `tradingId` int(11) DEFAULT NULL,
@@ -372,8 +372,7 @@ CREATE TABLE `TradingOffer` (
   CONSTRAINT `TradingOffer_ibfk_3` FOREIGN KEY (`fromTeamId`) REFERENCES `Team` (`idTeam`),
   CONSTRAINT `TradingOffer_ibfk_4` FOREIGN KEY (`toTeamId`) REFERENCES `Team` (`idTeam`),
   CONSTRAINT `TradingOffer_ibfk_5` FOREIGN KEY (`fromPlayerId`) REFERENCES `Player` (`idPlayer`),
-  CONSTRAINT `TradingOffer_ibfk_6` FOREIGN KEY (`toPlayerId`) REFERENCES `Player` (`idPlayer`),
-  CONSTRAINT `TradingOffer_ibfk_7` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`idSeason`)
+  CONSTRAINT `TradingOffer_ibfk_6` FOREIGN KEY (`toPlayerId`) REFERENCES `Player` (`idPlayer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- -----------------------------------------------------
@@ -1373,5 +1372,12 @@ BEGIN
     VALUES (leagueId, tradingId, fromTeamId, toTeamId, fromPlayerId, toPlayerId, seasonId, status);
 
     SET tradingId := LAST_INSERT_ID();
+
+END
+
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `DeletePlayerListOfTeam`(IN teamId INT)
+BEGIN
+
+	delete from Player where teamId = teamId;
 
 END

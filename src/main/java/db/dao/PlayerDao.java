@@ -3,6 +3,7 @@ package db.dao;
 import db.data.IPlayerFactory;
 import simulation.model.Player;
 import util.DateUtil;
+import validator.Validation;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -11,7 +12,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerDao implements IPlayerFactory {
+public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
+
+    private Validation validation;
+
+    public PlayerDao(){
+        validation = new Validation();
+    }
+
     @Override
     public int addPlayer(Player player) throws Exception {
         ICallDB callDB = null;
@@ -164,6 +172,22 @@ public class PlayerDao implements IPlayerFactory {
         } finally {
             assert callDB != null;
             callDB.closeConnection();
+        }
+    }
+
+    @Override
+    public void deletePlayerListOfTeam(int teamId) throws Exception {
+        ICallDB callDB=null;
+        try {
+            callDB = new CallDB("DeletePlayerListOfTeam(?)");
+            callDB.execute();
+        } catch (SQLException sqlException){
+            printLog("PlayerDao: deletePlayerListOfTeam: SQLException: "+ sqlException);
+            throw sqlException;
+        } finally {
+            if(validation.isNotNull(callDB)){
+                callDB.closeConnection();
+            }
         }
     }
 }

@@ -2,11 +2,18 @@ package db.dao;
 
 import db.data.ITradingFactory;
 import simulation.model.Trading;
+import validator.Validation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TradingDao extends DBExceptionLog implements ITradingFactory {
+
+    private Validation validation;
+
+    public TradingDao(){
+        validation = new Validation();
+    }
 
     @Override
     public int addTradingDetails(Trading trading) throws Exception {
@@ -26,7 +33,9 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
             printLog("TradingDao: addTradingDetails: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            callDB.closeConnection();
+            if(validation.isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return trading.getId();
     }
@@ -55,13 +64,15 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
             printLog("TradingDao: loadTradingDetailsByTradingId: SQLException: "+e);
             throw e;
         } finally {
-            callDB.closeConnection();
+            if(validation.isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
     @Override
     public Trading loadTradingDetailsByLeagueId(int leagueId) throws Exception {
-        ICallDB callDB;
+        ICallDB callDB = null;
         Trading trading;
         try{
             callDB = new CallDB("LoadTradingDetailsByLeagueId(?)");
@@ -83,6 +94,10 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
         } catch (SQLException e){
             printLog("TradingDao: loadTradingDetailsByLeagueId: SQLException: "+e);
             throw e;
+        } finally {
+            if(validation.isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return trading;
     }

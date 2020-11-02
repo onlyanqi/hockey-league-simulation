@@ -1,7 +1,8 @@
 package simulation.mock;
 
+import db.data.ILeagueFactory;
 import db.data.IPlayerFactory;
-import simulation.model.Player;
+import simulation.model.*;
 
 import java.util.List;
 
@@ -345,7 +346,7 @@ public class PlayerMock implements IPlayerFactory {
     }
 
     @Override
-    public void updatePlayerById(int id, Player player) throws Exception {
+    public void updatePlayerById(int id, Player player)  {
 
         player.setId(id);
         player.setName("Player");
@@ -360,6 +361,21 @@ public class PlayerMock implements IPlayerFactory {
         player.setSaving(1);
         player.setStrength();
 
+    }
+
+    @Override
+    public void deletePlayerListOfTeam(int teamId) throws Exception {
+        ILeagueFactory leagueFactory = new LeagueMock();
+        League league = new League(1, leagueFactory);
+        for(Conference conference : league.getConferenceList()){
+            for(Division division : conference.getDivisionList()){
+                for(Team team : division.getTeamList()){
+                    if(team.getId() == teamId){
+                        team.getPlayerList().clear();
+                    }
+                }
+            }
+        }
     }
 
 }
