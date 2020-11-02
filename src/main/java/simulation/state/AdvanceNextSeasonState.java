@@ -3,7 +3,6 @@ package simulation.state;
 import presentation.ConsoleOutput;
 import simulation.model.NHLEvents;
 import simulation.model.*;
-
 import java.util.Comparator;
 import java.util.List;
 

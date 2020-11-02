@@ -5,18 +5,17 @@ import simulation.model.Game;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameMock implements IGameFactory {
     @Override
-    public long addGame(int leagueId, Game game) throws Exception {
+    public long addGame(int leagueId, Game game){
         game.setId(1);
         return game.getId();
     }
 
     @Override
-    public void loadGameById(int id, Game game) throws Exception {
+    public void loadGameById(int id, Game game) {
         switch (id){
             case 0:
                 game.setId(id);
@@ -54,15 +53,15 @@ public class GameMock implements IGameFactory {
                 game.setId(id);
                 game.setWinner(null);
                 game.setPlayed(false);
-                game.setTeam1("team1");
-                game.setTeam2("Invalid Date");
+                game.setTeam1("team11");
+                game.setTeam2("team12");
                 game.setDate(LocalDate.of(2020, Month.NOVEMBER,03));
                 break;
         }
     }
 
     @Override
-    public List<Game> loadGamesByLeagueId(int leagueId) throws Exception {
+    public List<Game> loadGamesByLeagueId(int leagueId){
         List<Game> gameList = null;
         switch (leagueId) {
             case 0:

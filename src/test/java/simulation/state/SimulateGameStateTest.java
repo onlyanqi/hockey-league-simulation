@@ -11,25 +11,15 @@ import static org.junit.Assert.*;
 
 public class SimulateGameStateTest {
     private static HockeyContext hockeyContext;
-    private static ILeagueFactory leagueFactory;
-    private static ITeamFactory teamFactory;
-    private static IPlayerFactory playerFactory;
-    private static ITradeOfferFactory tradeOfferFactory;
-    private static ITradingFactory tradingFactory;
     private static IUserFactory userFactory;
     private static IGameFactory gameFactory;
 
     @BeforeClass
     public static void init() throws Exception {
-        leagueFactory = new LeagueMock();
-        teamFactory = new TeamMock();
-        playerFactory = new PlayerMock();
-        tradeOfferFactory = new TradeOfferMock();
-        tradingFactory = new TradingMock();
         userFactory = new UserMock();
         hockeyContext = new HockeyContext();
         gameFactory = new GameMock();
-        User user = new User(1, userFactory);
+        User user = new User(4, userFactory);
         hockeyContext.setUser(user);
     }
 
@@ -43,11 +33,13 @@ public class SimulateGameStateTest {
 
     @Test
     public void simulateGame() throws Exception {
-        Game g = new Game(2,gameFactory);
+        Game g = new Game(4,gameFactory);
         assertFalse(g.getPlayed());
         assertNull(g.getWinner());
         SimulateGameState state = new SimulateGameState(hockeyContext);
         state.simulateGame(g);
+        //assertTrue(g.getPlayed());
+        //assertNotNull(g.getWinner());
     }
 
 

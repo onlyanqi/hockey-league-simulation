@@ -3,31 +3,30 @@ package simulation.state;
 import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.mock.NHLEventMock;
 import simulation.mock.UserMock;
 import simulation.model.User;
-import validator.Validation;
+
+import java.time.LocalDate;
+import java.time.Month;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class AdvanceTimeStateTest {
 
-    private static ILeagueFactory leagueFactory;
-    private static ITeamFactory teamFactory;
-    private static IPlayerFactory playerFactory;
-    private static ITradeOfferFactory tradeOfferFactory;
-    private static ITradingFactory tradingFactory;
     private static IUserFactory userFactory;
-    private static Validation validation;
     private static HockeyContext hockeyContext;
+    private static IEventFactory eventFactory;
 
 
     @BeforeClass
     public static void init() throws Exception {
         userFactory = new UserMock();
         hockeyContext = new HockeyContext();
-        User user = new User(1, userFactory);
+        User user = new User(4, userFactory);
         hockeyContext.setUser(user);
+        eventFactory = new NHLEventMock();
     }
 
     @Test
@@ -35,6 +34,13 @@ public class AdvanceTimeStateTest {
         AdvanceTimeState state = new AdvanceTimeState(hockeyContext);
         assertTrue(state.action() instanceof ISimulateState);
         assertFalse(state.action() instanceof AdvanceTimeState);
+
+        LocalDate date = LocalDate.of(2020, Month.OCTOBER,19);
+        LocalDate advancedDate = LocalDate.of(2020, Month.OCTOBER,20);
+        hockeyContext.getUser().getLeague().setCurrentDate(date);
+        state.action();
+        assertTrue(advancedDate.equals(hockeyContext.getUser().getLeague().getCurrentDate()));
+
     }
 
     @Test
