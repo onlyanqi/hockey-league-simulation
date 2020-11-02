@@ -50,6 +50,14 @@ public class GameMock implements IGameFactory {
                 game.setTeam2("Atlanta Wild Cats");
                 game.setDate(LocalDate.of(2020, Month.NOVEMBER,03));
                 break;
+            case 4:
+                game.setId(id);
+                game.setWinner(null);
+                game.setPlayed(false);
+                game.setTeam1("team1");
+                game.setTeam2("Invalid Date");
+                game.setDate(LocalDate.of(2020, Month.NOVEMBER,03));
+                break;
         }
     }
 

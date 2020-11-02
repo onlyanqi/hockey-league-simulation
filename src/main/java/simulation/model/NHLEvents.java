@@ -24,7 +24,6 @@ public class NHLEvents {
     }
 
     public int id;
-
     public LocalDate regularSeasonStartDate;
     public LocalDate tradeDeadlineDate;
     public LocalDate endOfRegularSeason;

@@ -41,7 +41,7 @@ public class InjuryCheckState implements ISimulateState {
     private ISimulateState exit() {
         NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
-        Games games = league.getGames();
+        GameSchedule games = league.getGames();
         List<Game> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
         if (gamesOnCurrentDay.size() != 0) {
             return new SimulateGameState(hockeyContext);
