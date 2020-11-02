@@ -1,7 +1,7 @@
 package db.dao;
 import db.data.IGameFactory;
 import simulation.model.Game;
-import util.DateUtil;
+import simulation.model.DateTime;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class GameDao implements IGameFactory {
         try {
             callDB = new CallDB("AddGame(?,?,?,?,?,?,?)");
             callDB.setInputParameterInt(1, leagueId);
-            callDB.setInputParameterDate(2, DateUtil.convertLocalDateToSQLDate(game.getDate()));
+            callDB.setInputParameterDate(2, DateTime.convertLocalDateToSQLDate(game.getDate()));
             callDB.setInputParameterString(3, game.getTeam1());
             callDB.setInputParameterString(4, game.getTeam2());
             callDB.setInputParameterBoolean(5,game.getPlayed());
@@ -94,7 +94,7 @@ public class GameDao implements IGameFactory {
         ICallDB callDB = null;
         try {
             callDB = new CallDB("UpdateGameById(?,?,?,?,?,?)");
-            callDB.setInputParameterDate(1, DateUtil.convertLocalDateToSQLDate(game.getDate()));
+            callDB.setInputParameterDate(1, DateTime.convertLocalDateToSQLDate(game.getDate()));
             callDB.setInputParameterString(2, game.getTeam1());
             callDB.setInputParameterString(3, game.getTeam2());
             callDB.setInputParameterBoolean(4,game.getPlayed());
