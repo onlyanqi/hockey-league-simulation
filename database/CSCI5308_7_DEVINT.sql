@@ -370,9 +370,7 @@ CREATE TABLE `TradeOffer` (
   CONSTRAINT `TradingOffer_ibfk_1` FOREIGN KEY (`leagueId`) REFERENCES `League` (`idLeague`),
   CONSTRAINT `TradingOffer_ibfk_2` FOREIGN KEY (`tradingId`) REFERENCES `Trading` (`idTrading`),
   CONSTRAINT `TradingOffer_ibfk_3` FOREIGN KEY (`fromTeamId`) REFERENCES `Team` (`idTeam`),
-  CONSTRAINT `TradingOffer_ibfk_4` FOREIGN KEY (`toTeamId`) REFERENCES `Team` (`idTeam`),
-  CONSTRAINT `TradingOffer_ibfk_5` FOREIGN KEY (`fromPlayerId`) REFERENCES `Player` (`idPlayer`),
-  CONSTRAINT `TradingOffer_ibfk_6` FOREIGN KEY (`toPlayerId`) REFERENCES `Player` (`idPlayer`)
+  CONSTRAINT `TradingOffer_ibfk_4` FOREIGN KEY (`toTeamId`) REFERENCES `Team` (`idTeam`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- -----------------------------------------------------
@@ -809,9 +807,9 @@ DELIMITER ;
 
 DELIMITER $$
 USE `CSCI5308_7_DEVINT`$$
-CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamById`(IN tId INT, OUT teamId INT, OUT teamName varchar(45), OUT divisionId INT, OUT pendingTradeOfferCount INT, OUT lossPoint INT)
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamById`(IN tId INT, OUT teamId INT, OUT teamName varchar(45), OUT divisionId INT, OUT tradeOfferCountOfSeason INT, OUT lossPoint INT)
 BEGIN
-	select Team.idTeam, Team.teamName, Team.division, Team.pendingTradeOfferCount, Team.lossPoint from Team
+	select Team.idTeam, Team.teamName, Team.division, Team.tradeOfferCountOfSeason, Team.lossPoint from Team
     where Team.idTeam = tId
     limit 1;
 END$$
@@ -824,10 +822,10 @@ DELIMITER ;
 
 DELIMITER $$
 USE `CSCI5308_7_DEVINT`$$
-CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamByName`(IN tName VARCHAR(45), OUT teamId INT, OUT teamName varchar(45), OUT divisionId INT, OUT pendingTradeOfferCount INT, OUT lossPoint INT)
+CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTeamByName`(IN tName VARCHAR(45), OUT teamId INT, OUT teamName varchar(45), OUT divisionId INT, OUT tradeOfferCountOfSeason INT, OUT lossPoint INT)
 BEGIN
-	select Team.idTeam, Team.teamName, Team.division, Team.pendingTradeOfferCount,
-    Team.lossPoint into teamId,teamName,divisionId,pendingTradeOfferCount,lossPoint from Team
+	select Team.idTeam, Team.teamName, Team.division, Team.tradeOfferCountOfSeason,
+    Team.lossPoint into teamId,teamName,divisionId,tradeOfferCountOfSeason,lossPoint from Team
     where Team.teamName = tName
     Limit 1;
 END$$
@@ -1358,7 +1356,7 @@ END
 
 /*Altered tables - 30th Oct*/
 
-alter table Team add column pendingTradeOfferCount int(4);
+alter table Team add column tradeOfferCountOfSeason int(4);
 alter table Team add column lossPoint int(4);
 
 CREATE DEFINER=`CSCI5308_7_DEVINT_USER`@`%` PROCEDURE `LoadTradeOfferListByLeagueId`(IN leagueId INT)

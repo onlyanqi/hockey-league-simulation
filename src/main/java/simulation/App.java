@@ -4,9 +4,10 @@ import db.data.IUserFactory;
 import org.json.simple.JSONObject;
 import presentation.ReadUserInput;
 import simulation.factory.UserConcrete;
+import simulation.factory.ValidationConcrete;
 import simulation.model.User;
 import simulation.state.HockeyContext;
-import validator.Validation;
+import validator.IValidation;
 
 import java.io.FileNotFoundException;
 
@@ -21,7 +22,8 @@ public class App {
 
         String userName = readUserInput.getInput("Please enter username");
 
-        Validation validation = new Validation();
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation validation = validationConcrete.newValidation();
 
         try {
             if (userName != null && validation.isNotEmpty(userName)) {
@@ -37,7 +39,7 @@ public class App {
                     addUser(user);
                 }
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
-
+                
                 if (filePath != null && filePath.length() != 0) {
 
                     if (JSONController.invalidJSON(filePath)) {

@@ -4,7 +4,6 @@ import db.data.IConferenceFactory;
 import db.data.IFreeAgentFactory;
 import db.data.ILeagueFactory;
 import db.data.ITradeOfferFactory;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +24,7 @@ public class League extends SharedAttributes {
     private NHLEvents nhlEvents;
     private transient List<TradeOffer> tradeOfferList;
 
-    public League() {
-    }
+    public League() {}
 
     public League(int id) {
         setId(id);
@@ -254,11 +252,12 @@ public class League extends SharedAttributes {
         return null;
     }
 
-    public List<TradeOffer> getTradingOfferList() {
+
+    public List<TradeOffer> getTradeOfferList() {
         return this.tradeOfferList;
     }
 
-    public void setTradingOfferList(List<TradeOffer> tradeOfferList) {
+    public void setTradeOfferList(List<TradeOffer> tradeOfferList) {
         this.tradeOfferList = tradeOfferList;
     }
 

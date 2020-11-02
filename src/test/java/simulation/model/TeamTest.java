@@ -128,9 +128,9 @@ public class TeamTest {
         Team team = new Team();
         team.setPlayerList(playerList);
 
-        assertTrue(team.getPlayerList().get(0).getId() == (1));
-        assertTrue(team.getPlayerList().get(1).getId() == (5));
-        assertTrue(team.getPlayerList().get(0).getName().equals("Player1"));
+        assertEquals(team.getPlayerList().get(0).getId(), (1));
+        assertEquals(team.getPlayerList().get(1).getId(), (5));
+        assertEquals(team.getPlayerList().get(0).getName(), ("Player1"));
         assertTrue(team.getPlayerList().get(1).getName().equals("Player5"));
     }
 
@@ -157,7 +157,7 @@ public class TeamTest {
     }
 
     @Test
-    public void getPendingTradeOfferCount() throws Exception {
+    public void getTradeOfferCountOfSeasonTest() throws Exception {
         Team team = new Team(1, loadTeamFactory);
         assertEquals(team.getTradeOfferCountOfSeason(), 0);
         assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
@@ -167,11 +167,11 @@ public class TeamTest {
     }
 
     @Test
-    public void setPendingTradeOfferCountTest() {
+    public void setTradeOfferCountOfSeasonTest() {
         Team team = new Team();
-        int pendingTradeOfferCount = 1;
-        team.setTradeOfferCountOfSeason(pendingTradeOfferCount);
-        assertEquals(team.getTradeOfferCountOfSeason(), pendingTradeOfferCount);
+        int tradeOfferCountOfSeason = 1;
+        team.setTradeOfferCountOfSeason(tradeOfferCountOfSeason);
+        assertEquals(team.getTradeOfferCountOfSeason(), tradeOfferCountOfSeason);
         assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
     }
 
