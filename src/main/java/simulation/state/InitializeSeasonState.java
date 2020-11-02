@@ -172,23 +172,45 @@ public class InitializeSeasonState implements ISimulateState {
     private void scheduleGamesForGeneratedOnes(List<Game> gameList, List<Game> tempGameList, LocalDate currentDate, Integer totalGamesAdded, int diffInDays) {
         Random rand = new Random();
         for(int i=0;i<diffInDays;i++){
+            List<Game> gameListOnDay = new ArrayList<>();
             for(int j=0;j<totalGamesAdded/diffInDays;j++){
                 int randomNumber = rand.nextInt(tempGameList.size());
                 Game game = tempGameList.get(randomNumber);
+                while(teamExistsOnDay(gameListOnDay,game,currentDate)){
+                    randomNumber = rand.nextInt(tempGameList.size());
+                    game = tempGameList.get(randomNumber);
+                }
                 game.setDate(currentDate);
                 tempGameList.remove(randomNumber);
                 gameList.add(game);
+                gameListOnDay.add(game);
             }
+            gameListOnDay.clear();
             currentDate = DateTime.addDays(currentDate,1);
         }
+        List<Game> gameListOnDay = new ArrayList<>();
         for(int j=0;j<totalGamesAdded%diffInDays;j++){
             int randomNumber = rand.nextInt(tempGameList.size());
             Game game = tempGameList.get(randomNumber);
+            while(teamExistsOnDay(gameListOnDay,game,currentDate)){
+                randomNumber = rand.nextInt(tempGameList.size());
+                game = tempGameList.get(randomNumber);
+            }
             game.setDate(currentDate);
             tempGameList.remove(randomNumber);
             gameList.add(game);
         }
     }
+
+    private boolean teamExistsOnDay(List<Game> gameList,Game game, LocalDate currentDate) {
+        for(Game gameFromList: gameList){
+            if(gameFromList.getTeam1().equals(game.getTeam1()) || gameFromList.getTeam1().equals(game.getTeam2()) || gameFromList.getTeam2().equals(game.getTeam1()) || gameFromList.getTeam2().equals(game.getTeam2())){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public League getLeague() {
         return league;
