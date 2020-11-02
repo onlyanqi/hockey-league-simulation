@@ -45,6 +45,8 @@ public class PersistState implements ISimulateState{
     private void updateDataBaseWithSimulatedDate() {
         if (league != null) {
             try {
+                updateGames();
+                addNewTradeOffers();
                 if(league.getCurrentDate().equals(nhlEvents.getEndOfRegularSeason().plusDays(1))){
                     addPlayOffTeamStanding(league.getId(),league.getActiveTeamStanding().getTeamsScoreList());
                 }else if(league.getCurrentDate().isBefore(nhlEvents.getEndOfRegularSeason().plusDays(1))) {
@@ -52,8 +54,6 @@ public class PersistState implements ISimulateState{
                 }else if(league.getCurrentDate().isAfter(nhlEvents.getPlayOffStartDate().minusDays(1))){
                     updatePlayOffStanding(league.getId(), league.getActiveTeamStanding().getTeamsScoreList());
                 }
-                updateGames();
-                addNewTradeOffers();
                 updatePlayers();
             }catch(SQLException sqlException){
                 System.out.println("Unable to save the league! Please try again" + sqlException.getMessage());
@@ -61,6 +61,7 @@ public class PersistState implements ISimulateState{
                 sqlException.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
+                System.exit(1);
             }
         }
     }
@@ -126,11 +127,11 @@ public class PersistState implements ISimulateState{
         Set<Integer> ids = gameListFromPersistence.stream()
                 .map(Game::getId)
                 .collect(Collectors.toSet());
-        List<Game> tradeOffers = gamesFromModel.stream()
+        List<Game> gameList = gamesFromModel.stream()
                 .filter(game -> !ids.contains(game.getId()))
                 .collect(Collectors.toList());
 
-        return tradeOffers;
+        return gameList;
     }
 
     private void persistLeagueToDB() {
@@ -174,7 +175,7 @@ public class PersistState implements ISimulateState{
 
                 System.out.println("Events done....");
 
-//                addGameList(league.getId(),league.getGames().getGameList());
+                addGameList(league.getId(),league.getGames().getGameList());
 
                 System.out.println("Game done....");
 

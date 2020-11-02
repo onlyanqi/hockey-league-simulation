@@ -41,8 +41,9 @@ public class InjuryMock implements IInjuryFactory {
     public void loadInjuryById(int id, Injury injury) throws Exception {
         switch (id) {
             case 1:
+                //RandomInjuryChance is 100%
                 injury.setId(id);
-                injury.setRandomInjuryChance(0.05);
+                injury.setRandomInjuryChance(1.00);
                 injury.setInjuryDaysLow(20);
                 injury.setInjuryDaysHigh(200);
                 injury.setLeagueId(1);
@@ -77,6 +78,13 @@ public class InjuryMock implements IInjuryFactory {
                 injury.setInjuryDaysLow(200);
                 injury.setInjuryDaysHigh(10);
                 injury.setLeagueId(5);
+                break;
+            case 6:
+                injury.setId(id);
+                injury.setRandomInjuryChance(0.05);
+                injury.setInjuryDaysLow(20);
+                injury.setInjuryDaysHigh(200);
+                injury.setLeagueId(1);
                 break;
         }
     }
