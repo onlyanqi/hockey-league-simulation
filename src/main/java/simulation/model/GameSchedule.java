@@ -4,12 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Games {
+public class GameSchedule {
+
+    public GameSchedule() {
+    }
 
     List<Game> gameList = new ArrayList<>();
     int id;
-    public Games() {
-    }
 
     public int getId() {
         return id;
@@ -35,6 +36,15 @@ public class Games {
             }
         }
         return gameListOnGivenDate;
+    }
+
+    public Game getLastPlayedGame() {
+        for (int i = 0; i < gameList.size(); i++) {
+            if (gameList.get(i).isGameUnPlayed()) {
+                return gameList.get(i - 1);
+            }
+        }
+        return gameList.get(gameList.size() - 1);
     }
 
     public List<Game> getGamesOnDate(LocalDate date) {

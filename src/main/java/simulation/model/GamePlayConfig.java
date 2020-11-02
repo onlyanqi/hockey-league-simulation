@@ -3,8 +3,15 @@ package simulation.model;
 import db.data.IGamePlayConfigFactory;
 import db.data.ITradingFactory;
 
-public class GamePlayConfig extends SharedAttributes {
+public class GamePlayConfig{
 
+    public GamePlayConfig(){}
+
+    public GamePlayConfig(int leagueId, IGamePlayConfigFactory gamePlayConfigFactory) throws Exception {
+        gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
+    }
+
+    private int id;
     private int leagueId;
     private Aging aging;
     private Injury injury;
@@ -12,11 +19,12 @@ public class GamePlayConfig extends SharedAttributes {
     private Trading trading;
     private Training training;
 
-    public GamePlayConfig() {
+    public int getId() {
+        return id;
     }
 
-    public GamePlayConfig(int leagueId, IGamePlayConfigFactory gamePlayConfigFactory) throws Exception {
-        gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getLeagueId() {

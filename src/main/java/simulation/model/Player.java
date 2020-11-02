@@ -18,6 +18,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     private int injuryDatesRange;
     private int seasonId;
     private boolean isFreeAgent = false;
+    private boolean isRetired = false;
     private int skating;
     private int shooting;
     private int checking;
@@ -225,7 +226,10 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         }
         Random randomInjuryChance = new Random();
         double chanceOfInjury = randomInjuryChance.nextDouble();
-        if (!this.getInjured() && chanceOfInjury < league.getGamePlayConfig().getInjury().getRandomInjuryChance()) {
+        if(this.getInjured()){
+            return;
+        }
+        if (chanceOfInjury < league.getGamePlayConfig().getInjury().getRandomInjuryChance()) {
             this.setInjuryStartDate(league.getCurrentDate());
             Random randomInjuryDays = new Random();
             int injuryDaysHigh = league.getGamePlayConfig().getInjury().getInjuryDaysHigh();
@@ -242,7 +246,22 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         if (this.getInjured() && DateTime.diffDays(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
             this.setInjured(false);
             this.setInjuryStartDate(null);
+            this.setInjuryDatesRange(0);
         }
+    }
+
+    public enum Position {
+        forward,
+        defense,
+        goalie
+    }
+
+    public boolean isRetired() {
+        return isRetired;
+    }
+
+    public void setRetired(boolean retired) {
+        this.isRetired = retired;
     }
 
     @Override
@@ -258,11 +277,5 @@ public class Player extends SharedAttributes implements Comparable<Player> {
             returnValue = -1;
         }
         return returnValue;
-    }
-
-    public enum Position {
-        forward,
-        defense,
-        goalie
     }
 }

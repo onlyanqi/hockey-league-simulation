@@ -14,7 +14,6 @@ public class HockeyContext {
     public HockeyContext() {
     }
 
-
     public HockeyContext(User user) {
         this.user = user;
     }
@@ -54,9 +53,5 @@ public class HockeyContext {
 
     public IHockeyState getHockeyState() {
         return hockeyState;
-    }
-
-    public void setHockeyState(IHockeyState hockeyState) {
-        this.hockeyState = hockeyState;
     }
 }

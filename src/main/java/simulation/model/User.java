@@ -6,10 +6,6 @@ import java.util.List;
 
 public class User extends SharedAttributes {
 
-    private String password;
-    private List<League> leagueList;
-    private League league;
-
     public User() {
     }
 
@@ -28,6 +24,10 @@ public class User extends SharedAttributes {
         }
         factory.loadUserByName(name, this);
     }
+
+    private String password;
+    private List<League> leagueList;
+    private League league;
 
     public List<League> getLeagueList() {
         return leagueList;

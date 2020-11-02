@@ -30,8 +30,6 @@ public class LoadTeamState implements IHockeyState {
 
     @Override
     public void entry() throws Exception {
-        //prompt team name
-
         teamName = readUserInput.getInput("Please enter team name");
 
         while ((teamName.isEmpty() || teamName == null || isTeamNotPresent(teamName))) {
@@ -131,7 +129,7 @@ public class LoadTeamState implements IHockeyState {
     public void setGames() throws Exception {
         GameConcrete gameConcrete = new GameConcrete();
         IGameFactory gameFactory = gameConcrete.newAddGamesFactory();
-        Games games = new Games();
+        GameSchedule games = new GameSchedule();
         games.setGameList(gameFactory.loadGamesByLeagueId(league.getId()));
         league.setGames(games);
     }

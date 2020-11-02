@@ -6,6 +6,7 @@ import simulation.model.Team;
 import simulation.model.TeamStanding;
 
 import java.util.List;
+import java.lang.Math;
 
 public class SimulateGameState implements ISimulateState {
 
@@ -28,47 +29,50 @@ public class SimulateGameState implements ISimulateState {
         return exit();
     }
 
-    private ISimulateState exit() {
+    public ISimulateState exit() {
         return new InjuryCheckState(hockeyContext);
     }
 
-    private void simulateGame(Game game) {
+    public void simulateGame(Game game) {
         double upset = league.getGamePlayConfig().getGameResolver().getRandomWinChance();
         Team team1 = league.getTeamByTeamName(game.getTeam1());
         Team team2 = league.getTeamByTeamName(game.getTeam2());
 
-        if (team1 != null && team2 != null) {
-            if (team1.getStrength() > team2.getStrength()) {
+        if(team1!=null && team2!=null){
+            if(team1.getStrength()>team2.getStrength()){
                 game.setWinner(Game.Result.TEAM1);
-                team2.setLossPoint(team2.getLossPoint() + 1);
-            } else {
+                team2.setLossPoint(team2.getLossPoint()+1);
+            }else{
                 game.setWinner(Game.Result.TEAM2);
-                team1.setLossPoint(team1.getLossPoint() + 1);
+                team1.setLossPoint(team1.getLossPoint()+1);
             }
-            if (Math.random() <= upset) {
-                if (game.getWinner().equals(Game.Result.TEAM1)) {
+            if(Math.random() <= upset){
+                if(game.getWinner().equals(Game.Result.TEAM1)){
                     game.setWinner(Game.Result.TEAM2);
-                    team1.setLossPoint(team1.getLossPoint() + 1);
-                } else {
+                    team1.setLossPoint(team1.getLossPoint()+1);
+                }else{
                     game.setWinner(Game.Result.TEAM1);
-                    team2.setLossPoint(team2.getLossPoint() + 1);
+                    team2.setLossPoint(team2.getLossPoint()+1);
                 }
             }
             game.setPlayed(true);
         }
     }
 
-    private void updateTeamStandings(Game game) {
+    public void updateTeamStandings(Game game){
         TeamStanding teamStanding = league.getActiveTeamStanding();
 
-        if (game.getWinner().equals(Game.Result.TEAM1)) {
+        if(game.getWinner().equals(Game.Result.TEAM1)){
             teamStanding.setTeamPoints(game.getTeam1());
             teamStanding.setTeamWins(game.getTeam1());
             teamStanding.setTeamLoss(game.getTeam2());
-        } else if (game.getWinner().equals(Game.Result.TEAM2)) {
+        }else if(game.getWinner().equals(Game.Result.TEAM2)){
             teamStanding.setTeamPoints(game.getTeam2());
             teamStanding.setTeamWins(game.getTeam2());
             teamStanding.setTeamLoss(game.getTeam1());
+        }else{
+            teamStanding.setTeamTies(game.getTeam2());
+            teamStanding.setTeamTies(game.getTeam1());
         }
     }
 }

@@ -125,7 +125,6 @@ public class TeamScoreDao implements ITeamScoreFactory {
             callDB.setInputParameterInt(5, teamScore.getNumberOfTies());
             callDB.setInputParameterInt(6, teamScore.getId());
             callDB.execute();
-
         } catch (Exception e) {
             throw e;
         } finally {

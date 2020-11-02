@@ -11,7 +11,7 @@ import java.util.List;
 public class UserMock implements IUserFactory {
 
     @Override
-    public long addUser(User user) throws Exception {
+    public long addUser(User user) {
         user = new User(1);
         return user.getId();
     }
@@ -62,16 +62,30 @@ public class UserMock implements IUserFactory {
                 user.setLeague(formLeague());
                 user.setLeagueList(formLeagueList());
                 break;
+            case 4:
+                //password null
+                user.setId(4);
+                user.setName("Player4");
+                user.setPassword("Pass");
+                user.setLeague(formLeagueForGames());
+                user.setLeagueList(formLeagueList());
+                break;
         }
 
     }
 
     @Override
-    public void loadUserByName(String userName, User user) throws Exception {
+    public void loadUserByName(String userName, User user) {
         user = new User();
         user.setId(1);
         user.setName("User1");
         user.setPassword("Password1");
+    }
+
+    private League formLeagueForGames() throws Exception {
+        ILeagueFactory leagueFactory = new LeagueMock();
+        League league = new League(5, leagueFactory);
+        return league;
     }
 
 }

@@ -18,7 +18,7 @@ public class League extends SharedAttributes {
     private FreeAgent freeAgent;
     private LocalDate currentDate;
     private GamePlayConfig gamePlayConfig;
-    private Games games;
+    private GameSchedule games;
     private TeamStanding regularSeasonStanding;
     private TeamStanding playOffStanding;
     private TeamStanding activeTeamStanding;
@@ -57,11 +57,11 @@ public class League extends SharedAttributes {
         this.nhlEvents = nhlEvents;
     }
 
-    public Games getGames() {
+    public GameSchedule getGames() {
         return games;
     }
 
-    public void setGames(Games games) {
+    public void setGames(GameSchedule games) {
         if (games == null) {
             return;
         }
