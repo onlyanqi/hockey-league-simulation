@@ -1,12 +1,13 @@
 package simulation.state;
 
-import db.data.*;
+import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.UserMock;
 import simulation.model.User;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class InitializeSeasonStateTest {
 
@@ -23,19 +24,19 @@ public class InitializeSeasonStateTest {
     }
 
     @Test
-    public void actionTest(){
+    public void actionTest() {
         InitializeSeasonState state = new InitializeSeasonState(hockeyContext);
         assertTrue(state.action() instanceof ISimulateState);
         assertFalse(state.action() instanceof InitializeSeasonState);
     }
 
     @Test
-    public void InitializeRegularSeasonTest(){
+    public void InitializeRegularSeasonTest() {
         InitializeSeasonState state = new InitializeSeasonState(hockeyContext);
     }
 
     @Test
-    public void exitTest(){
+    public void exitTest() {
         InitializeSeasonState state = new InitializeSeasonState(hockeyContext);
         assertTrue(state.exit() instanceof AdvanceTimeState);
         assertTrue(state.exit() instanceof ISimulateState);

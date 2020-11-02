@@ -26,10 +26,10 @@ public class EventDao extends DBExceptionLog implements IEventFactory {
             events.setId(callDB.returnOutputParameterInt(8));
 
         } catch (SQLException sqlException) {
-            printLog("EventDao: addEvent: SQLException: "+sqlException);
+            printLog("EventDao: addEvent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -54,10 +54,10 @@ public class EventDao extends DBExceptionLog implements IEventFactory {
                 nhlEvents.setNextSeasonDate(rs.getDate(7).toLocalDate());
             }
         } catch (SQLException sqlException) {
-            printLog("EventDao: addEvent: SQLException: "+sqlException);
+            printLog("EventDao: addEvent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -84,10 +84,10 @@ public class EventDao extends DBExceptionLog implements IEventFactory {
                 }
             }
         } catch (SQLException sqlException) {
-            printLog("EventDao: addEvent: SQLException: "+sqlException);
+            printLog("EventDao: addEvent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

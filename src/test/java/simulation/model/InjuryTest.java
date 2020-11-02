@@ -12,7 +12,7 @@ public class InjuryTest {
     private static IInjuryFactory loadInjuryFactory;
 
     @BeforeClass
-    public static void setFactoryObj(){
+    public static void setFactoryObj() {
         loadInjuryFactory = new InjuryMock();
     }
 
@@ -30,29 +30,29 @@ public class InjuryTest {
 
     @Test
     public void injuryFactoryTest() throws Exception {
-       Injury injury = new Injury(1, loadInjuryFactory);
-        assertEquals(injury.getId(),1);
-        assertEquals(injury.getInjuryDaysLow(),20);
-        assertEquals(injury.getInjuryDaysHigh(),200);
+        Injury injury = new Injury(1, loadInjuryFactory);
+        assertEquals(injury.getId(), 1);
+        assertEquals(injury.getInjuryDaysLow(), 20);
+        assertEquals(injury.getInjuryDaysHigh(), 200);
         assertTrue("InjuryDaysHigh (" + injury.getInjuryDaysHigh() + ") should be greater than InjuryDaysLow (" + injury.getInjuryDaysLow() + ")", injury.getInjuryDaysHigh() > injury.getInjuryDaysLow());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenRandomInjuryChanceMoreThanOne() throws Exception {
         Injury injury = new Injury(2, loadInjuryFactory);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenInjuryDaysLowBelowZero() throws Exception {
         Injury injury = new Injury(3, loadInjuryFactory);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenInjuryDaysHighBelowZero() throws Exception {
         Injury injury = new Injury(4, loadInjuryFactory);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenInjuryDaysHighLowerThanInjuryDaysLow() throws Exception {
         Injury injury = new Injury(5, loadInjuryFactory);
     }
@@ -60,14 +60,14 @@ public class InjuryTest {
     @Test
     public void getRandomInjuryChanceTest() throws Exception {
         Injury injury = new Injury(6, loadInjuryFactory);
-        assertEquals(injury.getRandomInjuryChance(), (Double)0.05);
+        assertEquals(injury.getRandomInjuryChance(), (Double) 0.05);
     }
 
     @Test
     public void setRandomInjuryChanceTest() {
         Injury injury = new Injury();
         injury.setRandomInjuryChance(0.06);
-        assertEquals(injury.getRandomInjuryChance(), (Double)0.06);
+        assertEquals(injury.getRandomInjuryChance(), (Double) 0.06);
     }
 
     @Test
@@ -77,10 +77,10 @@ public class InjuryTest {
     }
 
     @Test
-    public void setInjuryDaysLowTest(){
+    public void setInjuryDaysLowTest() {
         Injury injury = new Injury();
         injury.setInjuryDaysLow(30);
-        assertEquals(injury.getInjuryDaysLow(),30);
+        assertEquals(injury.getInjuryDaysLow(), 30);
     }
 
     @Test
@@ -90,10 +90,10 @@ public class InjuryTest {
     }
 
     @Test
-    public void setInjuryDaysHighTest(){
+    public void setInjuryDaysHighTest() {
         Injury injury = new Injury();
         injury.setInjuryDaysHigh(60);
-        assertEquals(injury.getInjuryDaysHigh(),60);
+        assertEquals(injury.getInjuryDaysHigh(), 60);
     }
 
     @Test
@@ -103,9 +103,9 @@ public class InjuryTest {
     }
 
     @Test
-    public void setLeagueIdTest(){
+    public void setLeagueIdTest() {
         Injury injury = new Injury();
         injury.setLeagueId(3);
-        assertEquals(injury.getLeagueId(),3);
+        assertEquals(injury.getLeagueId(), 3);
     }
 }

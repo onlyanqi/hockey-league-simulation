@@ -27,7 +27,6 @@ public class InjuryMock implements IInjuryFactory {
                 injury.setLeagueId(leagueId);
                 break;
             case 3:
-                //InjuryDaysHigh is lower than InjuryDaysLow
                 injury.setRandomInjuryChance(0.01);
                 injury.setInjuryDaysHigh(10);
                 injury.setInjuryDaysLow(200);
@@ -41,7 +40,6 @@ public class InjuryMock implements IInjuryFactory {
     public void loadInjuryById(int id, Injury injury) throws Exception {
         switch (id) {
             case 1:
-                //RandomInjuryChance is 100%
                 injury.setId(id);
                 injury.setRandomInjuryChance(1.00);
                 injury.setInjuryDaysLow(20);
@@ -49,7 +47,6 @@ public class InjuryMock implements IInjuryFactory {
                 injury.setLeagueId(1);
                 break;
             case 2:
-                //RandomInjuryChance is above 1
                 injury.setId(id);
                 injury.setRandomInjuryChance(1.22);
                 injury.setInjuryDaysLow(9);
@@ -57,7 +54,6 @@ public class InjuryMock implements IInjuryFactory {
                 injury.setLeagueId(2);
                 break;
             case 3:
-                //InjuryDaysLow is below 0
                 injury.setId(id);
                 injury.setRandomInjuryChance(0.01);
                 injury.setInjuryDaysLow(-9);
@@ -65,7 +61,6 @@ public class InjuryMock implements IInjuryFactory {
                 injury.setLeagueId(3);
                 break;
             case 4:
-                //InjuryDaysLow is below 0
                 injury.setId(id);
                 injury.setRandomInjuryChance(0.01);
                 injury.setInjuryDaysLow(9);
@@ -73,7 +68,6 @@ public class InjuryMock implements IInjuryFactory {
                 injury.setLeagueId(4);
                 break;
             case 5:
-                //InjuryDaysHigh is lower than InjuryDaysLow
                 injury.setRandomInjuryChance(0.01);
                 injury.setInjuryDaysLow(200);
                 injury.setInjuryDaysHigh(10);

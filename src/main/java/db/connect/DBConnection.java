@@ -2,6 +2,7 @@ package db.connect;
 
 import simulation.factory.ValidationConcrete;
 import validator.IValidation;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;

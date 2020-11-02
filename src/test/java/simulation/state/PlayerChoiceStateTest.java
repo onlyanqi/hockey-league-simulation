@@ -2,6 +2,7 @@ package simulation.state;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import validator.Validation;
 
 import static org.junit.Assert.assertTrue;
 
@@ -21,7 +22,8 @@ public class PlayerChoiceStateTest {
 
     @Test
     public void exitTest() {
-        assertTrue(hockeyState != null);
-        assertTrue(hockeyState2 != null);
+        Validation validation = new Validation();
+        assertTrue(validation.isNotNull(hockeyState));
+        assertTrue(validation.isNotNull(hockeyState2));
     }
 }

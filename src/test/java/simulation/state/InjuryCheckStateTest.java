@@ -6,6 +6,7 @@ import org.junit.Test;
 import simulation.mock.UserMock;
 import simulation.model.Training;
 import simulation.model.User;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -24,7 +25,7 @@ public class InjuryCheckStateTest {
 
 
     @Test
-    public void exitTest(){
+    public void exitTest() {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         assertTrue(state.exit() instanceof ISimulateState);
         assertFalse(state.exit() instanceof Training);

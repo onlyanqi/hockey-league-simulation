@@ -28,10 +28,10 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             coach.setId(callDB.returnOutputParameterInt(8));
 
         } catch (SQLException sqlException) {
-            printLog("CoachDao: addCoach: SQLException: "+sqlException);
+            printLog("CoachDao: addCoach: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -60,10 +60,10 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("CoachDao: loadCoachById: SQLException: "+sqlException);
+            printLog("CoachDao: loadCoachById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -92,10 +92,10 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("CoachDao: loadCoachByTeamId: SQLException: "+sqlException);
+            printLog("CoachDao: loadCoachByTeamId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -131,10 +131,10 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("CoachDao: loadFreeCoachListByLeagueId: SQLException: "+sqlException);
+            printLog("CoachDao: loadFreeCoachListByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

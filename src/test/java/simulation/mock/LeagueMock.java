@@ -64,7 +64,7 @@ public class LeagueMock implements ILeagueFactory {
         return managerList;
     }
 
-    public GameSchedule formGames() throws Exception{
+    public GameSchedule formGames() throws Exception {
         GameSchedule games = new GameSchedule();
         List<Game> gameList = new ArrayList<>();
 
@@ -146,9 +146,9 @@ public class LeagueMock implements ILeagueFactory {
         return training;
     }
 
-    public GameResolver getGameResolver() throws Exception{
+    public GameResolver getGameResolver() throws Exception {
         IGameResolverFactory resolverFactory = new GameResolverMock();
-        GameResolver gameResolver = new GameResolver(1,resolverFactory);
+        GameResolver gameResolver = new GameResolver(1, resolverFactory);
         return gameResolver;
     }
 
@@ -173,7 +173,6 @@ public class LeagueMock implements ILeagueFactory {
 
         switch (new Long(id).intValue()) {
             case 1:
-                //all correct data
                 league.setName("League1");
                 league.setConferenceList(formConferenceList());
                 league.setFreeAgent(formFreeAgent());
@@ -190,7 +189,6 @@ public class LeagueMock implements ILeagueFactory {
                 break;
 
             case 2:
-                //name null
                 league.setName(null);
                 league.setConferenceList(formConferenceList());
                 league.setManagerList(formManagerList());
@@ -204,7 +202,6 @@ public class LeagueMock implements ILeagueFactory {
                 break;
 
             case 3:
-                //end date less than start date
                 league.setName("Invalid Date");
                 league.setConferenceList(formConferenceList());
                 league.setCoachList(formCoachList());
@@ -218,7 +215,6 @@ public class LeagueMock implements ILeagueFactory {
                 break;
 
             case 4:
-                //all correct data
                 league.setName("League4");
                 league.setConferenceList(formCreateTeamConferenceList());
                 league.setFreeAgent(formFreeAgent());
@@ -231,7 +227,6 @@ public class LeagueMock implements ILeagueFactory {
                 league.setCurrentDate(LocalDate.now());
                 break;
             case 5:
-                //all correct data
                 league.setName("League5");
                 league.setConferenceList(formConferenceListForGames());
                 league.setFreeAgent(formFreeAgent());
@@ -272,7 +267,7 @@ public class LeagueMock implements ILeagueFactory {
         return formLeagueList();
     }
 
-    public List<Conference> formConferenceListForGames() throws Exception{
+    public List<Conference> formConferenceListForGames() throws Exception {
         League league = new League(1);
         league.setName("League1");
 
@@ -281,16 +276,15 @@ public class LeagueMock implements ILeagueFactory {
         List<Division> divisionList2 = new ArrayList<>();
         List<Team> teamList = new ArrayList<>();
 
-        Conference conference1= new Conference();
+        Conference conference1 = new Conference();
         conference1.setId(1);
         conference1.setName("Eastern Conference");
         conference1.setId(league.getId());
 
-        Conference conference2= new Conference();
+        Conference conference2 = new Conference();
         conference2.setId(2);
         conference2.setName("Western Conference");
         conference2.setId(league.getId());
-
 
 
         Division div1 = new Division();
@@ -333,29 +327,29 @@ public class LeagueMock implements ILeagueFactory {
 
         List<Team> teamList = new ArrayList<>();
 
-        Team team11  = new Team();
+        Team team11 = new Team();
         team11.setId(11);
         team11.setName("Team11");
         team11.setDivisionId(1);
         team11.setPlayerList(addPlayerInList());
 
 
-        Team team12  = new Team();
+        Team team12 = new Team();
         team12.setId(12);
         team12.setName("Team12");
         team12.setPlayerList(addPlayerInList());
 
-        Team team13  = new Team();
+        Team team13 = new Team();
         team13.setId(13);
         team13.setName("Team13");
         team13.setPlayerList(addPlayerInList());
 
-        Team team14  = new Team();
+        Team team14 = new Team();
         team14.setId(14);
         team14.setName("Team14");
         team14.setPlayerList(addPlayerInList());
 
-        Team team15  = new Team();
+        Team team15 = new Team();
         team15.setId(15);
         team15.setName("Team15");
         team15.setPlayerList(addPlayerInList());
@@ -370,27 +364,27 @@ public class LeagueMock implements ILeagueFactory {
 
     public List<Team> formTeamListDivision2ForGames() throws Exception {
         List<Team> teamList = new ArrayList<>();
-        Team team21  = new Team();
+        Team team21 = new Team();
         team21.setId(21);
         team21.setName("Team21");
         team21.setPlayerList(addPlayerInList());
 
-        Team team22  = new Team();
+        Team team22 = new Team();
         team22.setId(22);
         team22.setName("Team22");
         team22.setPlayerList(addPlayerInList());
 
-        Team team23  = new Team();
+        Team team23 = new Team();
         team23.setId(23);
         team23.setName("Team23");
         team23.setPlayerList(addPlayerInList());
 
-        Team team24  = new Team();
+        Team team24 = new Team();
         team24.setId(24);
         team24.setName("Team24");
         team24.setPlayerList(addPlayerInList());
 
-        Team team25  = new Team();
+        Team team25 = new Team();
         team25.setId(25);
         team25.setName("Team25");
         team25.setPlayerList(addPlayerInList());
@@ -405,25 +399,25 @@ public class LeagueMock implements ILeagueFactory {
 
     public List<Team> formTeamListDivision3ForGames() throws Exception {
         List<Team> teamList = new ArrayList<>();
-        Team team31  = new Team();
+        Team team31 = new Team();
         team31.setId(31);
         team31.setName("Team31");
         team31.setPlayerList(addPlayerInList());
 
-        Team team32  = new Team();
+        Team team32 = new Team();
         team32.setId(22);
         team32.setName("Team32");
         team32.setPlayerList(addPlayerInList());
 
-        Team team33  = new Team();
+        Team team33 = new Team();
         team33.setId(23);
         team33.setName("Team33");
         team33.setPlayerList(addPlayerInList());
-        Team team34  = new Team();
+        Team team34 = new Team();
         team34.setId(24);
         team34.setName("Team34");
         team34.setPlayerList(addPlayerInList());
-        Team team35  = new Team();
+        Team team35 = new Team();
         team35.setId(35);
         team35.setName("Team35");
         team35.setPlayerList(addPlayerInList());
@@ -437,23 +431,23 @@ public class LeagueMock implements ILeagueFactory {
 
     public List<Team> formTeamListDivision4ForGames() throws Exception {
         List<Team> teamList = new ArrayList<>();
-        Team team41  = new Team();
+        Team team41 = new Team();
         team41.setId(41);
         team41.setName("Team41");
         team41.setPlayerList(addPlayerInList());
-        Team team42  = new Team();
+        Team team42 = new Team();
         team42.setId(42);
         team42.setName("Team42");
         team42.setPlayerList(addPlayerInList());
-        Team team43  = new Team();
+        Team team43 = new Team();
         team43.setId(43);
         team43.setName("Team43");
         team43.setPlayerList(addPlayerInList());
-        Team team44  = new Team();
+        Team team44 = new Team();
         team44.setId(44);
         team44.setName("Team44");
         team44.setPlayerList(addPlayerInList());
-        Team team45  = new Team();
+        Team team45 = new Team();
         team45.setId(45);
         team45.setName("Team45");
         team45.setPlayerList(addPlayerInList());
@@ -469,14 +463,13 @@ public class LeagueMock implements ILeagueFactory {
 
         List<Player> playerList = new ArrayList<>();
         Player player;
-        for (int i = 1; i <21; i++) {
+        for (int i = 1; i < 21; i++) {
             player = new Player(i, playerFactory);
             playerList.add(player);
         }
 
         return playerList;
     }
-
 
 
 }

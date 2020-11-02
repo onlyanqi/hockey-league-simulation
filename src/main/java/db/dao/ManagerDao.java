@@ -29,7 +29,7 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             printLog("ManagerDao: addManager: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -58,7 +58,7 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             printLog("ManagerDao: loadManagerById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -88,7 +88,7 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             printLog("ManagerDao: loadFreeManagersByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -115,7 +115,7 @@ public class ManagerDao extends DBExceptionLog implements IManagerFactory {
             printLog("ManagerDao: loadManagerByTeamId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

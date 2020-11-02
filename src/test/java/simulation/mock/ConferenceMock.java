@@ -47,21 +47,18 @@ public class ConferenceMock implements IConferenceFactory {
 
         switch (new Long(id).intValue()) {
             case 1:
-                //all correct data
                 conference.setName("Conference1");
                 conference.setLeagueId(1);
                 conference.setDivisionList(formDivisionList());
                 break;
 
             case 2:
-                //name null
                 conference.setName(null);
                 conference.setLeagueId(1);
                 conference.setDivisionList(formDivisionList());
                 break;
 
             case 3:
-                //end date less than start date
                 conference.setName("Invalid Date");
                 conference.setLeagueId(1);
                 conference.setDivisionList(formDivisionList());

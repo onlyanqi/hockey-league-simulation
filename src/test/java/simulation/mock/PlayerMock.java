@@ -26,7 +26,6 @@ public class PlayerMock implements IPlayerFactory {
 
         switch (id) {
             case 1:
-                //all correct data
                 player.setName("Player1");
                 player.setPosition(Player.Position.valueOf("forward"));
                 player.setCaptain(true);
@@ -93,7 +92,6 @@ public class PlayerMock implements IPlayerFactory {
                 break;
 
             case 5:
-                //forward with saving set not 1
                 player.setName("Player5");
                 player.setPosition(Player.Position.valueOf("forward"));
                 player.setCaptain(false);
@@ -218,7 +216,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setSaving(5);
                 player.setStrength();
                 player.setInjured(true);
-                player.setInjuryStartDate(LocalDate.of(2020,1,1));
+                player.setInjuryStartDate(LocalDate.of(2020, 1, 1));
                 player.setInjuryDatesRange(80);
                 player.setRetired(false);
                 break;
@@ -342,7 +340,6 @@ public class PlayerMock implements IPlayerFactory {
                 break;
 
             case 20:
-                //will retire when maximum retirement age is 50
                 player.setName("Player20");
                 player.setPosition(Player.Position.valueOf("forward"));
                 player.setCaptain(false);
@@ -359,7 +356,6 @@ public class PlayerMock implements IPlayerFactory {
                 break;
 
             case 21:
-                //name is null
                 player.setName(null);
                 player.setPosition(Player.Position.valueOf("forward"));
                 player.setCaptain(false);
@@ -376,7 +372,6 @@ public class PlayerMock implements IPlayerFactory {
                 break;
 
             case 22:
-                //invalid position
                 player.setName("Invalid Position");
                 player.setPosition(Player.Position.valueOf("referee"));
                 player.setCaptain(false);
@@ -408,7 +403,7 @@ public class PlayerMock implements IPlayerFactory {
     }
 
     @Override
-    public void updatePlayerById(int id, Player player)  {
+    public void updatePlayerById(int id, Player player) {
 
         player.setId(id);
         player.setName("Player");
@@ -429,10 +424,10 @@ public class PlayerMock implements IPlayerFactory {
     public void deletePlayerListOfTeam(int teamId) throws Exception {
         ILeagueFactory leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
-        for(Conference conference : league.getConferenceList()){
-            for(Division division : conference.getDivisionList()){
-                for(Team team : division.getTeamList()){
-                    if(team.getId() == teamId){
+        for (Conference conference : league.getConferenceList()) {
+            for (Division division : conference.getDivisionList()) {
+                for (Team team : division.getTeamList()) {
+                    if (team.getId() == teamId) {
                         team.getPlayerList().clear();
                     }
                 }

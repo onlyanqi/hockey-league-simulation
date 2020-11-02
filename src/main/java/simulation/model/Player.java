@@ -1,6 +1,7 @@
 package simulation.model;
 
 import db.data.IPlayerFactory;
+
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -206,14 +207,14 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         if (this.age < aging.getAverageRetirementAge()) {
             Random randomRetire1 = new Random();
             double chance1 = 0.5 - ((aging.getAverageRetirementAge() - this.age) * increaseRate);
-            if(chance1 < 0.0){
+            if (chance1 < 0.0) {
                 chance1 = 0.0;
             }
             return randomRetire1.nextDouble() < chance1;
         } else if (this.age < aging.getMaximumAge()) {
             Random randomRetire2 = new Random();
             double chance2 = (this.age - aging.getAverageRetirementAge()) * increaseRate + 0.5;
-            if(chance2 > 1.0){
+            if (chance2 > 1.0) {
                 chance2 = 1.0;
             }
             return randomRetire2.nextDouble() < chance2;
@@ -254,12 +255,6 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         }
     }
 
-    public enum Position {
-        forward,
-        defense,
-        goalie
-    }
-
     public boolean isRetired() {
         return isRetired;
     }
@@ -281,5 +276,11 @@ public class Player extends SharedAttributes implements Comparable<Player> {
             returnValue = -1;
         }
         return returnValue;
+    }
+
+    public enum Position {
+        forward,
+        defense,
+        goalie
     }
 }

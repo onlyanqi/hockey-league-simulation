@@ -5,6 +5,7 @@ import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.*;
 import simulation.model.*;
+import validator.IValidation;
 
 import java.util.List;
 
@@ -15,10 +16,13 @@ public class LoadTeamState implements IHockeyState {
     private String teamName;
     private League league;
     private ReadUserInput readUserInput;
+    private IValidation iValidation;
 
     public LoadTeamState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         readUserInput = ReadUserInput.getInstance();
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        iValidation = validationConcrete.newValidation();
     }
 
     public League getLeague() {
@@ -40,7 +44,6 @@ public class LoadTeamState implements IHockeyState {
 
     @Override
     public void process() throws Exception {
-
         ConsoleOutput.getInstance().printMsgToConsole("We are loading the league data. Please wait..");
 
         LeagueConcrete leagueConcrete = new LeagueConcrete();
@@ -53,10 +56,6 @@ public class LoadTeamState implements IHockeyState {
             System.exit(1);
         }
         league = hockeyContext.getUser().getLeagueList().get(0);
-
-//        TradingConcrete tradingConcrete = new TradingConcrete();
-//        ITradingFactory tradingFactory = tradingConcrete.newTradingFactory();
-//        updateTradingDetailsToLeague(tradingFactory);
 
         Division div = null;
         ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
@@ -75,7 +74,7 @@ public class LoadTeamState implements IHockeyState {
 
                 List<Team> teamArrayList = division.getTeamList();
                 for (Team team : teamArrayList) {
-                    if (teamName != null && team.getName() != null && team.getName().equals(teamName)) {
+                    if (iValidation.isNotNull(teamName) && iValidation.isNotNull(team.getName()) && team.getName().equals(teamName)) {
                         div = division;
                     }
                     PlayerConcrete playerConcrete = new PlayerConcrete();
@@ -97,15 +96,13 @@ public class LoadTeamState implements IHockeyState {
         freeAgent.loadPlayerListByFreeAgentId(iLoadPlayerFactory);
 
         setGames();
-        //setNHLEvents();
         setCoaches();
-        //setManagers();
         Conference conf = null;
-        if (league.getConferenceList() != null && !league.getConferenceList().isEmpty()) {
+        if (iValidation.isNotNull(league.getConferenceList()) && !league.getConferenceList().isEmpty()) {
             for (Conference conference : league.getConferenceList()) {
-                if (conference.getDivisionList() != null && !conference.getDivisionList().isEmpty()) {
+                if (iValidation.isNotNull(conference.getDivisionList()) && !conference.getDivisionList().isEmpty()) {
                     for (Division division : conference.getDivisionList()) {
-                        if (division.getName() != null && div.getName() != null &&
+                        if (iValidation.isNotNull(division.getName()) && iValidation.isNotNull(div.getName()) &&
                                 division.getName().equals(div.getName())) {
                             conf = conference;
                             break;
@@ -121,7 +118,7 @@ public class LoadTeamState implements IHockeyState {
 
     }
 
-    public void setGames() throws Exception {
+    private void setGames() throws Exception {
         GameConcrete gameConcrete = new GameConcrete();
         IGameFactory gameFactory = gameConcrete.newAddGamesFactory();
         GameSchedule games = new GameSchedule();
@@ -129,24 +126,11 @@ public class LoadTeamState implements IHockeyState {
         league.setGames(games);
     }
 
-    public void setCoaches() throws Exception {
+    private void setCoaches() throws Exception {
         CoachConcrete coachConcrete = new CoachConcrete();
         ICoachFactory iCoachFactory = coachConcrete.newCoachFactory();
         List<Coach> coachList = iCoachFactory.loadFreeCoachListByLeagueId(league.getId());
         league.setCoachList(coachList);
-    }
-
-    public void setManagers() throws Exception {
-        ManagerConcrete managerConcrete = new ManagerConcrete();
-        IManagerFactory iManagerFactory = managerConcrete.newManagerFactory();
-        List<Manager> managerList = iManagerFactory.loadFreeManagersByLeagueId(league.getId());
-        league.setManagerList(managerList);
-    }
-
-    public void setNHLEvents() throws Exception {
-        EventConcrete eventConcrete = new EventConcrete();
-        IEventFactory eventFactory = eventConcrete.newAddEventsFactory();
-        eventFactory.loadEventByLeagueId(league.getId(), league.getNHLRegularSeasonEvents());
     }
 
     public void updateTradingDetailsToLeague(ITradingFactory tradingFactory) throws Exception {
@@ -170,10 +154,9 @@ public class LoadTeamState implements IHockeyState {
             System.exit(1);
             e.printStackTrace();
         }
-        if (team != null && team.getId() > 0){
+        if (iValidation.isNotNull(team) && team.getId() > 0) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
 

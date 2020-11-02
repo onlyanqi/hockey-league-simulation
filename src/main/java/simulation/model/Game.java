@@ -12,9 +12,11 @@ public class Game {
     private LocalDate date;
     private Boolean played;
     private Result winner;
+
     public Game() {
         this.played = false;
     }
+
     public Game(int id, IGameFactory factory) throws Exception {
         setId(id);
         factory.loadGameById(id, this);
@@ -28,8 +30,6 @@ public class Game {
         }
         return null;
     }
-
-    ;
 
     public int getId() {
         return id;

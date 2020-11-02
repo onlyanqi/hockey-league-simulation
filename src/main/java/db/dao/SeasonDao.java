@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.ISeasonFactory;
 import simulation.model.Season;
+
 import java.sql.SQLException;
 
 public class SeasonDao extends DBExceptionLog implements ISeasonFactory {
@@ -17,10 +18,10 @@ public class SeasonDao extends DBExceptionLog implements ISeasonFactory {
             season.setId(callDB.returnOutputParameterInt(2));
 
         } catch (SQLException sqlException) {
-            printLog("SeasonDao: addSeason: SQLException: "+sqlException);
+            printLog("SeasonDao: addSeason: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -41,10 +42,10 @@ public class SeasonDao extends DBExceptionLog implements ISeasonFactory {
             season.setId(callDB.returnOutputParameterInt(2));
             season.setName(callDB.returnOutputParameterString(3));
         } catch (SQLException sqlException) {
-            printLog("SeasonDao: loadSeasonById: SQLException: "+sqlException);
+            printLog("SeasonDao: loadSeasonById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

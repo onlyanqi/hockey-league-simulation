@@ -39,8 +39,8 @@ public class App {
                     addUser(user);
                 }
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
-                
-                if (filePath != null && filePath.length() != 0) {
+
+                if (validation.isNotNull(filePath) && filePath.length() > 0) {
 
                     if (JSONController.invalidJSON(filePath)) {
                         System.out.println("Invalid JSON file Provided.Exiting the app!");

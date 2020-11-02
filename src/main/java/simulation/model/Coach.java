@@ -1,7 +1,6 @@
 package simulation.model;
 
 import db.data.ICoachFactory;
-import validator.Validation;
 
 public class Coach extends SharedAttributes {
     private int teamId;

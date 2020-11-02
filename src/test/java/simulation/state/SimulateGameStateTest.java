@@ -1,9 +1,11 @@
 package simulation.state;
 
-import db.data.*;
+import db.data.IGameFactory;
+import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.mock.*;
+import simulation.mock.GameMock;
+import simulation.mock.UserMock;
 import simulation.model.Game;
 import simulation.model.User;
 
@@ -24,7 +26,7 @@ public class SimulateGameStateTest {
     }
 
     @Test
-    public void initConstructorTest(){
+    public void initConstructorTest() {
         SimulateGameState state = new SimulateGameState(hockeyContext);
         assertTrue(state instanceof SimulateGameState);
         assertTrue(state instanceof ISimulateState);
@@ -33,16 +35,17 @@ public class SimulateGameStateTest {
 
     @Test
     public void simulateGame() throws Exception {
-        Game g = new Game(4,gameFactory);
+        Game g = new Game(4, gameFactory);
         assertFalse(g.getPlayed());
         assertNull(g.getWinner());
         SimulateGameState state = new SimulateGameState(hockeyContext);
         state.simulateGame(g);
+        assertTrue(g.getPlayed());
     }
 
 
     @Test
-    public void exitTest(){
+    public void exitTest() {
         SimulateGameState state = new SimulateGameState(hockeyContext);
         assertTrue(state.exit() instanceof InjuryCheckState);
         assertTrue(state.exit() instanceof ISimulateState);

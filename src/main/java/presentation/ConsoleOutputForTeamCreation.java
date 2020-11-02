@@ -3,6 +3,7 @@ package presentation;
 import simulation.model.Coach;
 import simulation.model.Manager;
 import simulation.model.Player;
+
 import java.util.List;
 
 public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreation {

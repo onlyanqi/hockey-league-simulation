@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.ITeamFactory;
 import simulation.model.Team;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             callDB.execute();
             team.setId(callDB.returnOutputParameterInt(7));
         } catch (SQLException sqlException) {
-            printLog("TeamDao: addTeam: SQLException: "+sqlException);
+            printLog("TeamDao: addTeam: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -55,10 +56,10 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             team.setLossPoint(callDB.returnOutputParameterInt(6));
 
         } catch (SQLException sqlException) {
-            printLog("TeamDao: loadTeamById: SQLException: "+sqlException);
+            printLog("TeamDao: loadTeamById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -85,10 +86,10 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             team.setLossPoint(callDB.returnOutputParameterInt(6));
 
         } catch (SQLException sqlException) {
-            printLog("TeamDao: loadTeamByName: SQLException: "+sqlException);
+            printLog("TeamDao: loadTeamByName: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -103,9 +104,9 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             callDB = new CallDB(loadTeamListByDivisionIdProcedureName);
             callDB.setInputParameterInt(1, divisionId);
             ResultSet rs = callDB.executeLoad();
-            if(rs == null){
+            if (rs == null) {
                 return null;
-            }else{
+            } else {
                 teamList = new ArrayList<>();
                 while (rs.next()) {
                     Team team = new Team();
@@ -119,10 +120,10 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
                 }
             }
         } catch (SQLException sqlException) {
-            printLog("TeamDao: loadTeamListByDivisionId: SQLException: "+sqlException);
+            printLog("TeamDao: loadTeamListByDivisionId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -144,10 +145,10 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             callDB.setInputParameterInt(7, team.getId());
             callDB.execute();
         } catch (SQLException sqlException) {
-            printLog("TeamDao: updateTeamById: SQLException: "+sqlException);
+            printLog("TeamDao: updateTeamById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

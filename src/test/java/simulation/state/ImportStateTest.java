@@ -63,10 +63,4 @@ public class ImportStateTest {
 
 
     }
-
-    @Test
-    public void exitTest() {
-        //assertEquals(hockeyState.exit(),null);
-    }
-
 }

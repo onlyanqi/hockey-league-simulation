@@ -4,7 +4,7 @@ import validator.Validation;
 
 public class ValidationConcrete {
 
-    public Validation newValidation(){
+    public Validation newValidation() {
         return new Validation();
     }
 

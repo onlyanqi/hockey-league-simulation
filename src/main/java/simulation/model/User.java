@@ -2,9 +2,14 @@ package simulation.model;
 
 import db.data.ILeagueFactory;
 import db.data.IUserFactory;
+
 import java.util.List;
 
 public class User extends SharedAttributes {
+
+    private String password;
+    private List<League> leagueList;
+    private League league;
 
     public User() {
     }
@@ -12,22 +17,16 @@ public class User extends SharedAttributes {
     public User(int id) {
         setId(id);
     }
-
     public User(int id, IUserFactory factory) throws Exception {
         setId(id);
         factory.loadUserById(id, this);
     }
-
     public User(String name, IUserFactory factory) throws Exception {
         if (factory == null) {
             return;
         }
         factory.loadUserByName(name, this);
     }
-
-    private String password;
-    private List<League> leagueList;
-    private League league;
 
     public List<League> getLeagueList() {
         return leagueList;

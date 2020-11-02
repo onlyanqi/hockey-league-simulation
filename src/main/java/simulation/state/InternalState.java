@@ -1,12 +1,18 @@
 package simulation.state;
 
+import simulation.factory.ValidationConcrete;
+import validator.IValidation;
+
 public class InternalState implements IHockeyState {
 
     private HockeyContext hockeyContext;
     private ISimulateState simulateState;
+    private IValidation iValidation;
 
     public InternalState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        iValidation = validationConcrete.newValidation();
     }
 
     @Override
@@ -19,7 +25,7 @@ public class InternalState implements IHockeyState {
     public void process() {
         do {
             simulateState = simulateState.action();
-        } while (simulateState != null);
+        } while (iValidation.isNotNull(simulateState));
     }
 
     @Override

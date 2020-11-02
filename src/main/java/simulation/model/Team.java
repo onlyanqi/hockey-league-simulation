@@ -169,16 +169,16 @@ public class Team extends SharedAttributes {
         }
     }
 
-    public boolean validTeam(){
+    public boolean validTeam() {
         boolean isValid = false;
         int noOfGoalies = 0;
         int noOfSkaters = 0;
         ValidationConcrete validationConcrete = new ValidationConcrete();
         IValidation validation = validationConcrete.newValidation();
-        if(validation.isListNotEmpty(playerList)){
-            for(Player player : playerList){
+        if (validation.isListNotEmpty(playerList)) {
+            for (Player player : playerList) {
                 String position = player.getPosition().toString();
-                if(validation.isNotEmpty(position) && position.equalsIgnoreCase(GOALIE)){
+                if (validation.isNotEmpty(position) && position.equalsIgnoreCase(GOALIE)) {
                     noOfGoalies = noOfGoalies + 1;
                 } else {
                     noOfSkaters = noOfSkaters + 1;
@@ -186,7 +186,7 @@ public class Team extends SharedAttributes {
             }
         }
 
-        if(noOfGoalies == 2 && noOfSkaters == 18){
+        if (noOfGoalies == 2 && noOfSkaters == 18) {
             isValid = true;
         }
 

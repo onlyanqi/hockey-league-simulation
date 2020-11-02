@@ -22,10 +22,10 @@ public class InjuryDao extends DBExceptionLog implements IInjuryFactory {
             injury.setId(callDB.returnOutputParameterInt(5));
 
         } catch (SQLException sqlException) {
-            printLog("InjuryDao: addInjury: SQLException: "+sqlException);
+            printLog("InjuryDao: addInjury: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -52,10 +52,10 @@ public class InjuryDao extends DBExceptionLog implements IInjuryFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("InjuryDao: loadInjuryByLeagueId: SQLException: "+sqlException);
+            printLog("InjuryDao: loadInjuryByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -81,10 +81,10 @@ public class InjuryDao extends DBExceptionLog implements IInjuryFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("InjuryDao: loadInjuryById: SQLException: "+sqlException);
+            printLog("InjuryDao: loadInjuryById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

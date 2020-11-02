@@ -25,10 +25,10 @@ public class TrainDao extends DBExceptionLog implements ITrainingFactory {
             training.setId(callDB.returnOutputParameterInt(3));
 
         } catch (SQLException sqlException) {
-            printLog("TrainDao: addTraining: SQLException: "+sqlException);
+            printLog("TrainDao: addTraining: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -46,19 +46,19 @@ public class TrainDao extends DBExceptionLog implements ITrainingFactory {
             callDB = new CallDB(loadTrainingByLeagueId);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if(rs == null){
+            if (rs == null) {
                 return;
-            }else{
+            } else {
                 training = new Training();
                 training.setId(rs.getInt(1));
                 training.setDaysUntilStatIncreaseCheck(rs.getInt(2));
                 training.setLeagueId(rs.getInt(3));
             }
         } catch (SQLException sqlException) {
-            printLog("TrainDao: loadTrainingByLeagueId: SQLException: "+sqlException);
+            printLog("TrainDao: loadTrainingByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

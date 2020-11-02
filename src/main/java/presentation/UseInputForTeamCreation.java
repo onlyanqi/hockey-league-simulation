@@ -2,6 +2,7 @@ package presentation;
 
 import simulation.model.Coach;
 import simulation.model.Manager;
+
 import java.util.List;
 
 public class UseInputForTeamCreation implements IUserInputForTeamCreation {

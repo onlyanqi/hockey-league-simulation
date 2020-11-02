@@ -1,6 +1,7 @@
 package simulation.state;
 
-import db.data.*;
+import db.data.IEventFactory;
+import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.NHLEventMock;
@@ -30,13 +31,13 @@ public class AdvanceTimeStateTest {
     }
 
     @Test
-    public void actionTest(){
+    public void actionTest() {
         AdvanceTimeState state = new AdvanceTimeState(hockeyContext);
         assertTrue(state.action() instanceof ISimulateState);
         assertFalse(state.action() instanceof AdvanceTimeState);
 
-        LocalDate date = LocalDate.of(2020, Month.OCTOBER,19);
-        LocalDate advancedDate = LocalDate.of(2020, Month.OCTOBER,20);
+        LocalDate date = LocalDate.of(2020, Month.OCTOBER, 19);
+        LocalDate advancedDate = LocalDate.of(2020, Month.OCTOBER, 20);
         hockeyContext.getUser().getLeague().setCurrentDate(date);
         state.action();
         assertTrue(advancedDate.equals(hockeyContext.getUser().getLeague().getCurrentDate()));
@@ -44,7 +45,7 @@ public class AdvanceTimeStateTest {
     }
 
     @Test
-    public void exitTest(){
+    public void exitTest() {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         assertTrue(state.exit() instanceof AgingState);
         assertTrue(state.exit() instanceof ISimulateState);

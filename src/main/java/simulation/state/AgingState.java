@@ -1,10 +1,6 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
-import simulation.model.NHLEvents;
-import simulation.model.League;
-import simulation.model.TeamStanding;
-
 import simulation.model.*;
 
 import java.util.List;

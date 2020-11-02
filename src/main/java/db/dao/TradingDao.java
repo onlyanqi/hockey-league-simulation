@@ -1,9 +1,7 @@
 package db.dao;
 
 import db.data.ITradingFactory;
-import simulation.factory.ValidationConcrete;
 import simulation.model.Trading;
-import validator.IValidation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +27,7 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
             printLog("TradingDao: addTradingDetails: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -61,7 +59,7 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
             printLog("TradingDao: loadTradingDetailsByTradingId: SQLException: " + e);
             throw e;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -93,7 +91,7 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
             printLog("TradingDao: loadTradingDetailsByLeagueId: SQLException: " + e);
             throw e;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

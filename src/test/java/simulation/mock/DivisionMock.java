@@ -44,21 +44,18 @@ public class DivisionMock implements IDivisionFactory {
 
         switch (new Long(id).intValue()) {
             case 1:
-                //all correct data
                 division.setName("Division1");
                 division.setConferenceId(1);
                 division.setTeamList(formTeamList());
                 break;
 
             case 2:
-                //name null
                 division.setName(null);
                 division.setConferenceId(1);
                 division.setTeamList(formTeamList());
                 break;
 
             case 3:
-                //end date less than start date
                 division.setName("Invalid Date");
                 division.setConferenceId(1);
                 division.setTeamList(formTeamList());

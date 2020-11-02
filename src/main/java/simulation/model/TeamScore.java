@@ -9,8 +9,10 @@ public class TeamScore extends SharedAttributes {
     Integer numberOfWins;
     Integer numberOfLoss;
     Integer numberOfTies;
+
     public TeamScore() {
     }
+
     public TeamScore(String teamName) {
         this.teamName = teamName;
         this.numberOfLoss = 0;
@@ -18,6 +20,7 @@ public class TeamScore extends SharedAttributes {
         this.numberOfTies = 0;
         this.points = 0;
     }
+
     public TeamScore(int id, ITeamScoreFactory iTeamScoreFactory) throws Exception {
         iTeamScoreFactory.loadTeamScoreById(id, this);
     }

@@ -104,4 +104,10 @@ public class GameTest {
         assertFalse(game2.isGameUnPlayed());
     }
 
+    @Test
+    public void fromStringTest() {
+        assertTrue(Game.fromString("TEAM1").equals(Game.Result.TEAM1));
+        assertFalse(Game.fromString("TEAM1").equals(Game.Result.TEAM2));
+    }
+
 }
