@@ -16,18 +16,25 @@ public class CreateTeamStateTest {
 
     static User user;
     static League league;
-    private static Team team;
 
     private static ILeagueFactory factory = new LeagueMock();
     private static ITeamFactory factoryTeam = new TeamMock();
     private static IUserFactory factoryUser = new UserMock();
-
+    private static HockeyContext hockeyContext = new HockeyContext();
+    private List<Manager> managerList = null;
+    private List<Coach> coachList = null;
+    private FreeAgent freeAgent = null;
+    private String conferenceName = null;
+    private String divisionName = null;
+    private Team team = null;
 
     @BeforeClass
     public static void setState() throws Exception {
         factory = new LeagueMock();
-        league = new League(1,factory);
+        league = new League(4,factory);
         user = new User(1,factoryUser);
+        user.setId(1);
+        hockeyContext.setUser(user);
     }
 
     @Test
@@ -47,6 +54,11 @@ public class CreateTeamStateTest {
         managerList = managerFactory.loadFreeManagersByLeagueId(1);
         assertTrue(createTeamState.hasEnoughManagers(managerList));
         assertFalse(createTeamState.hasEnoughManagers(null));
+        int managerListSize = managerList.size();
+        for (int i=managerListSize-1;i>=0;i--){
+            managerList.remove(i);
+        }
+        assertFalse(createTeamState.hasEnoughManagers(managerList));
     }
 
     @Test
@@ -57,6 +69,12 @@ public class CreateTeamStateTest {
         coachList = coachFactory.loadFreeCoachListByLeagueId(1);
         assertTrue(createTeamState.hasEnoughCoaches(coachList));
         assertFalse(createTeamState.hasEnoughCoaches(null));
+        int coachListSize = coachList.size();
+        for (int i=coachListSize-1;i>=0;i--){
+            coachList.remove(i);
+        }
+        assertFalse(createTeamState.hasEnoughCoaches(coachList));
+
     }
 
     @Test
@@ -68,6 +86,12 @@ public class CreateTeamStateTest {
         freeAgent = new FreeAgent(5,freeAgentFactory);
         assertTrue(createTeamState.hasEnoughFreeAgent(freeAgent));
         assertFalse(createTeamState.hasEnoughFreeAgent(null));
+        List<Player> freeAgentList = freeAgent.getPlayerList();
+        int freeAgentListSize = freeAgentList.size();
+        for (int i=freeAgentListSize-1;i>=0;i--){
+            freeAgentList.remove(i);
+        }
+        assertFalse(createTeamState.hasEnoughFreeAgent(freeAgent));
     }
 
     @Test
@@ -166,6 +190,11 @@ public class CreateTeamStateTest {
         assertNotEquals(teamPlayers.size(),15);
         assertNotEquals(teamPlayers.size(),0);
         assertNotEquals(teamPlayers.size(),22);
+
+        teamPlayers = createTeamState.createPlayerListByChosenPlayerId(null,null);
+        assertEquals(teamPlayers,null);
+
+
     }
 
     @Test
@@ -184,6 +213,10 @@ public class CreateTeamStateTest {
         assertEquals(freeAgentList.size(),freeAgentListSize-20);
         assertNotEquals(freeAgentList.size(),-1);
         assertNotEquals(freeAgentList.size(),freeAgentListSize+1);
+
+        freeAgentList = createTeamState.removeChosenPlayersFromFreeAgentList(null,null);
+        assertEquals(freeAgentList,null);
+
     }
 
     @Test
@@ -197,10 +230,48 @@ public class CreateTeamStateTest {
 
     @Test
     public void processTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
-        League league = new League(1,leagueFactory);
+        hockeyContext.setUser(user);
+        managerList=league.getManagerList();
+        coachList=league.getCoachList();
+        freeAgent=league.getFreeAgent();
+        conferenceName="Conference1";
+        divisionName="Division1";
+        List<Conference> conferenceList = league.getConferenceList();
+        conferenceList.remove(1);
+        league.setConferenceList(conferenceList);
+        List<Division> divisionList = league.getConferenceList().get(0).getDivisionList();
+        divisionList.remove(1);
+        league.getConferenceList().get(0).setDivisionList(divisionList);
+        hockeyContext.getUser().setLeague(league);
+        ITeamFactory teamFactory = new TeamMock();
+        team = new Team(1,teamFactory);
+        CreateTeamState createTeamState = new CreateTeamState(hockeyContext,null,null);
+        createTeamState.setConferenceName(conferenceName);
+        createTeamState.setDivisionName(divisionName);
+        createTeamState.process();
         assertFalse(null==league.getFreeAgent() || null == league.getManagerList() || null == league.getCoachList() || null == league.getConferenceList() );
         assertTrue(league.getConferenceList().size()>0);
+    }
+
+    @Test
+    public void getConferenceNameTest(){
+        CreateTeamState createTeamState = new CreateTeamState(hockeyContext,null,null);
+        createTeamState.setConferenceName("conf1");
+        assertEquals(createTeamState.getConferenceName(),"conf1");
+    }
+
+    @Test
+    public void setConferenceNameTest(){
+        CreateTeamState createTeamState = new CreateTeamState(hockeyContext,null,null);
+        createTeamState.setConferenceName("conf1");
+        assertEquals(createTeamState.getConferenceName(),"conf1");
+    }
+
+    @Test
+    public void setDivisionNameTest(){
+        CreateTeamState createTeamState = new CreateTeamState(hockeyContext,null,null);
+        createTeamState.setDivisionName("div1");
+        assertEquals(createTeamState.getDivisionName(),"div1");
     }
 
     @Test
