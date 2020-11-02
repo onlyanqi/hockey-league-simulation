@@ -85,7 +85,6 @@ public class ExecuteTradeState implements ISimulateState {
         Map<String, Object> swap = new HashMap<>();
         Trading trading = league.getGamePlayConfig().getTrading();
         if(checkTradingPeriod(trading, league.getCurrentDate())){
-            System.out.println("team name: "+team.getName()+" loss point: "+team.getLossPoint());
             if(checkLossPoint(team, trading)){
                 if(checkCurrentTradeOffer(team, league)) {
                     double tradeOfferChance = getRandomDouble();

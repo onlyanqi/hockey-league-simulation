@@ -25,17 +25,10 @@ public class Team extends SharedAttributes {
     private Manager manager;
     private String generalManagerName;
     private List<Player> playerList;
-    private IValidation validation;
     private int tradeOfferCountOfSeason;
     private int lossPoint;
 
-    public void setValidation(){
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        validation = validationConcrete.newValidation();
-    }
-
     public Team() {
-        setValidation();
     }
 
     public Team(int id) {
@@ -45,12 +38,10 @@ public class Team extends SharedAttributes {
     public Team(int id, ITeamFactory factory) throws Exception {
         setId(id);
         factory.loadTeamById(id, this);
-        setValidation();
     }
 
     public Team(String name, ITeamFactory factory) throws Exception {
         factory.loadTeamByName(name, this);
-        setValidation();
     }
 
     public List<Player> getPlayerList() {
@@ -181,6 +172,8 @@ public class Team extends SharedAttributes {
         boolean isValid = false;
         int noOfGoalies = 0;
         int noOfSkaters = 0;
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation validation = validationConcrete.newValidation();
         if(validation.isListNotEmpty(playerList)){
             for(Player player : playerList){
                 String position = player.getPosition().toString();
