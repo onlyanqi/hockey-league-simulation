@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import simulation.factory.*;
 import simulation.model.*;
+import validator.Validation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -120,7 +121,7 @@ public class ImportState implements IHockeyState {
 
         List<Player> retiredPlayerList = new ArrayList<>();
 
-        setLeagueVariables(leagueName, gamePlayConfig, conferenceList, freeAgent, coachList, managerList,retiredPlayerList);
+        setLeagueVariables(leagueName, gamePlayConfig, conferenceList, freeAgent, coachList, managerList, retiredPlayerList);
 
     }
 
@@ -243,7 +244,7 @@ public class ImportState implements IHockeyState {
             if (isTeamExists(teamList, teamName)) {
                 throw new IllegalArgumentException("Please make sure team name is unique in one division");
             }
-            if (!appearedName.add(teamName)) {
+            if (appearedName.contains(teamName)) {
                 throw new IllegalArgumentException("Please make sure team name is unique in one league");
             }
 
@@ -734,7 +735,8 @@ public class ImportState implements IHockeyState {
     }
 
     private boolean notValidKeyInObject(JSONObject object, String key) {
-        if (object.containsKey(key) && object.get(key) != null) {
+        ValidationConcrete validation = new ValidationConcrete();
+        if (object.containsKey(key) && validation.newValidation().isNotNull(object.get(key))) {
             return false;
         } else {
             return true;
@@ -752,8 +754,6 @@ public class ImportState implements IHockeyState {
     }
 
     private boolean isConferenceExists(ArrayList<Conference> list, String name) {
-
-
         boolean isExist = false;
         for (Conference conference : list) {
             if (conference.getName().equals(name)) {

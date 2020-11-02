@@ -10,7 +10,7 @@ import java.util.List;
 public class TeamDao implements ITeamFactory {
     @Override
     public int addTeam(Team team) throws Exception {
-        String addTeamProcedureName = "AddTeam(?,?,?,?,?,?,?";
+        String addTeamProcedureName = "AddTeam(?,?,?,?,?,?,?)";
         ICallDB callDB = null;
         try {
             callDB = new CallDB(addTeamProcedureName);

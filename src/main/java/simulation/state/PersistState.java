@@ -369,7 +369,7 @@ public class PersistState implements ISimulateState{
     private void addRetiredPlayerList(List<Player> playerList) throws Exception {
         if (playerList != null && !playerList.isEmpty()) {
             PlayerConcrete playerConcrete = new PlayerConcrete();
-            IPlayerFactory addPlayerDao = playerConcrete.newAddPlayerFactory();
+            IPlayerFactory addPlayerDao = playerConcrete.newPlayerFactory();
             for (Player player : playerList) {
                 addPlayerDao.addRetiredPlayer(league.getId(), player);
                 System.out.println("One Retired Player Added to DB...");
