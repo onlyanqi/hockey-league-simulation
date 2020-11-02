@@ -29,7 +29,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void isNotEmptyTest(){
+    public void isNotEmptyTest() {
         String a = null;
         Validation validation = new Validation();
         assertFalse(validation.isNotNull(a));

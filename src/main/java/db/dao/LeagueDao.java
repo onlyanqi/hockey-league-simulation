@@ -41,7 +41,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
             printLog("LeagueDao: addLeague: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -70,7 +70,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
             printLog("LeagueDao: loadLeagueById: SQLException: " + e);
             throw e;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -98,7 +98,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
             printLog("LeagueDao: loadLeagueByName: SQLException: " + e);
             throw e;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -154,7 +154,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
             printLog("LeagueDao: loadLeagueListByUserId: SQLException: " + e);
             throw e;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

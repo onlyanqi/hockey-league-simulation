@@ -47,7 +47,6 @@ public class FreeAgentMock implements IFreeAgentFactory {
 
         switch (new Long(id).intValue()) {
             case 1:
-                //all correct data
                 freeAgent.setName("freeAgent1");
                 freeAgent.setSeasonId(1);
                 freeAgent.setLeagueId(1);
@@ -55,7 +54,6 @@ public class FreeAgentMock implements IFreeAgentFactory {
                 break;
 
             case 2:
-                //name null
                 freeAgent.setName(null);
                 freeAgent.setSeasonId(1);
                 freeAgent.setLeagueId(1);
@@ -63,7 +61,6 @@ public class FreeAgentMock implements IFreeAgentFactory {
                 break;
 
             case 3:
-                //end date less than start date
                 freeAgent.setName("Invalid Date");
                 freeAgent.setSeasonId(1);
                 freeAgent.setLeagueId(1);
@@ -71,7 +68,6 @@ public class FreeAgentMock implements IFreeAgentFactory {
                 break;
 
             case 4:
-                //invalid position
                 freeAgent.setName("Invalid Postion");
                 freeAgent.setSeasonId(1);
                 freeAgent.setLeagueId(1);

@@ -4,19 +4,23 @@ import config.AppConfig;
 import org.json.simple.JSONObject;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
+import simulation.factory.ValidationConcrete;
 import simulation.model.User;
-import validator.Validation;
+import validator.IValidation;
 
 public class HockeyContext {
 
     private IHockeyState hockeyState;
     private User user;
+    private IValidation iValidation;
 
     public HockeyContext() {
     }
 
     public HockeyContext(User user) {
         this.user = user;
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        iValidation = validationConcrete.newValidation();
     }
 
     public User getUser() {
@@ -28,8 +32,7 @@ public class HockeyContext {
     }
 
     public void startAction(JSONObject jsonFromInput) throws Exception {
-        Validation validation = new Validation();
-        if (validation.isNotNull(jsonFromInput) ) {
+        if (iValidation.isNotNull(jsonFromInput)) {
             hockeyState = new ImportState(this, jsonFromInput);
             hockeyState.entry();
             hockeyState.process();
@@ -48,7 +51,7 @@ public class HockeyContext {
             hockeyState.entry();
             hockeyState.process();
             hockeyState = hockeyState.exit();
-        } while (validation.isNotNull(hockeyState));
+        } while (iValidation.isNotNull(hockeyState));
 
     }
 

@@ -22,10 +22,10 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
             aging.setId(callDB.returnOutputParameterInt(4));
 
         } catch (SQLException sqlException) {
-            printLog("AgingDao: addAging: SQLException: "+sqlException);
+            printLog("AgingDao: addAging: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -51,10 +51,10 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("AgingDao: loadAgingByLeagueId: SQLException: "+sqlException);
+            printLog("AgingDao: loadAgingByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -70,7 +70,7 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 aging.setId(rs.getInt(1));
                 aging.setAverageRetirementAge(rs.getInt(2));
                 aging.setMaximumAge(rs.getInt(3));
@@ -78,10 +78,10 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("AgingDao: loadAgingById: SQLException: "+sqlException);
+            printLog("AgingDao: loadAgingById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

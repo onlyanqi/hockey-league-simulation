@@ -68,7 +68,6 @@ public class CoachMock implements ICoachFactory {
                 coach.setTeamId(1);
                 break;
             case 5:
-                // saving above 1
                 coach.setId(id);
                 coach.setName("Samantha Smith");
                 coach.setSkating(0.6);
@@ -79,7 +78,6 @@ public class CoachMock implements ICoachFactory {
                 coach.setTeamId(0);
                 break;
             case 6:
-                // checking below 0
                 coach.setId(id);
                 coach.setName("Samantha Smith");
                 coach.setSkating(0.2);
@@ -90,7 +88,6 @@ public class CoachMock implements ICoachFactory {
                 coach.setTeamId(0);
                 break;
             case 7:
-                // skating below 0
                 coach.setId(id);
                 coach.setName("Samantha Smith");
                 coach.setSkating(-0.2);
@@ -101,7 +98,6 @@ public class CoachMock implements ICoachFactory {
                 coach.setTeamId(0);
                 break;
             case 8:
-                // shooting above 1
                 coach.setId(id);
                 coach.setName("Samantha Smith");
                 coach.setSkating(0.2);

@@ -35,30 +35,21 @@ public class TradingMock implements ITradingFactory {
         trading = getTrading(leagueId, 1, trading);
 
         switch (leagueId) {
-
-            //case 1 normal obj
-            //case 2 trading false
             case 2:
                 trading.setId(2);
                 trading.setTradingPeriod(false);
                 break;
-
-            //case 3 accept all offers
             case 3:
                 trading.setId(3);
                 trading.setRandomAcceptanceChance(1.0f);
                 trading.setRandomTradeOfferChance(1.0f);
                 break;
-
-            //case 4 accept all offers but trading false
             case 4:
                 trading.setId(4);
                 trading.setRandomAcceptanceChance(1.0f);
                 trading.setRandomTradeOfferChance(1.0f);
                 trading.setTradingPeriod(false);
                 break;
-
-            //case 5 0 chance of accepting
             case 5:
                 trading.setId(5);
                 trading.setRandomAcceptanceChance(0.0f);
@@ -74,30 +65,21 @@ public class TradingMock implements ITradingFactory {
         trading = getTrading(1, tradingId, trading);
 
         switch (tradingId) {
-
-            //case 1 normal obj
-            //case 2 trading false
             case 2:
                 trading.setLeagueId(2);
                 trading.setTradingPeriod(false);
                 break;
-
-            //case 3 accept all offers
             case 3:
                 trading.setLeagueId(3);
                 trading.setRandomAcceptanceChance(1.0f);
                 trading.setRandomTradeOfferChance(1.0f);
                 break;
-
-            //case 4 accept all offers but trading false
             case 4:
                 trading.setLeagueId(4);
                 trading.setRandomAcceptanceChance(1.0f);
                 trading.setRandomTradeOfferChance(1.0f);
                 trading.setTradingPeriod(false);
                 break;
-
-            //case 5 no chance of accepting
             case 5:
                 trading.setLeagueId(5);
                 trading.setRandomAcceptanceChance(0.0f);

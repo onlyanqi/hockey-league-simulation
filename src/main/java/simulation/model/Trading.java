@@ -3,6 +3,7 @@ package simulation.model;
 import db.data.ITradingFactory;
 import simulation.factory.ValidationConcrete;
 import validator.IValidation;
+
 import java.util.*;
 
 public class Trading extends SharedAttributes {
@@ -23,7 +24,7 @@ public class Trading extends SharedAttributes {
     private double randomAcceptanceChance;
     private boolean isTradingPeriod;
 
-    public Trading(){
+    public Trading() {
     }
 
     public Trading(int tradingId, ITradingFactory factory) throws Exception {

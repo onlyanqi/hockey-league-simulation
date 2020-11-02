@@ -4,6 +4,7 @@ import db.data.IGameFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.GameMock;
+
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -104,7 +105,7 @@ public class GameTest {
     }
 
     @Test
-    public void fromStringTest(){
+    public void fromStringTest() {
         assertTrue(Game.fromString("TEAM1").equals(Game.Result.TEAM1));
         assertFalse(Game.fromString("TEAM1").equals(Game.Result.TEAM2));
     }

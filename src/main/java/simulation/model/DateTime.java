@@ -1,7 +1,10 @@
 package simulation.model;
 
-import java.time.LocalDate;
+import simulation.factory.ValidationConcrete;
+import validator.IValidation;
+
 import java.sql.Date;
+import java.time.LocalDate;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -19,10 +22,13 @@ public class DateTime {
         return DAYS.between(beforeDate, afterDate);
     }
 
-    public static Date convertLocalDateToSQLDate(LocalDate date){
-        if(date != null){
+    public static Date convertLocalDateToSQLDate(LocalDate date) {
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation iValidation = validationConcrete.newValidation();
+
+        if (iValidation.isNotNull(date)) {
             return java.sql.Date.valueOf(date);
-        }else{
+        } else {
             return null;
         }
     }

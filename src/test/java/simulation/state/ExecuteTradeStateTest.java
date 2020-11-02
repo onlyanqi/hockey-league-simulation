@@ -10,6 +10,7 @@ import validator.Validation;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.*;
+
 import static org.junit.Assert.*;
 
 public class ExecuteTradeStateTest {
@@ -46,14 +47,14 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void defaultConstructorTest(){
+    public void defaultConstructorTest() {
         ExecuteTradeState state = new ExecuteTradeState();
         assertTrue(state instanceof ExecuteTradeState);
         assertTrue(state instanceof ISimulateState);
     }
 
     @Test
-    public void initConstructorTest(){
+    public void initConstructorTest() {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         assertNotNull(state.getLeague());
         assertEquals(state.getLeague().getId(), 1);
@@ -70,7 +71,7 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void setLeagueTest(){
+    public void setLeagueTest() {
         League league = new League();
         league.setId(1);
         league.setCreatedBy(1);
@@ -83,7 +84,7 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void actionTest(){
+    public void actionTest() {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         assertTrue(state.action() instanceof ISimulateState);
         assertFalse(state.action() instanceof ExecuteTradeState);
@@ -105,9 +106,9 @@ public class ExecuteTradeStateTest {
         Team team = new Team(5, teamFactory);
         League league = new League(1, leagueFactory);
 
-        for(int i = 0; i < 50 ; i++) {
+        for (int i = 0; i < 50; i++) {
             state.tradingLogic(team, league);
-            if(validation.isNotNull(league.getTradeOfferList()) && league.getTradeOfferList().size() > 0){
+            if (validation.isNotNull(league.getTradeOfferList()) && league.getTradeOfferList().size() > 0) {
                 assertNotNull(league.getTradeOfferList().get(0).getStatus());
             }
         }
@@ -170,7 +171,7 @@ public class ExecuteTradeStateTest {
         Map<String, Object> swap;
         List<String> userInputs = new ArrayList<>(Arrays.asList("A\n", "a\n", "R\n", "r\n"));
 
-        for(String userInput : userInputs){
+        for (String userInput : userInputs) {
             swap = new HashMap<>();
 
             Player player1 = new Player(1, playerFactory);
@@ -195,7 +196,7 @@ public class ExecuteTradeStateTest {
 
             TradeOffer tradeOffer1 = (TradeOffer) swap.get(TRADEOFFER);
 
-            if(userInput.toLowerCase().contains("a")) {
+            if (userInput.toLowerCase().contains("a")) {
                 assertEquals(tradeOffer1.getStatus(), (ACCEPTED));
             } else {
                 assertEquals(tradeOffer1.getStatus(), (REJECTED));
@@ -328,11 +329,11 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void checkDayOneTest(){
+    public void checkDayOneTest() {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         assertTrue(state.checkDayOne());
         League league = hockeyContext.getUser().getLeague();
-        league.setCurrentDate(LocalDate.of(LocalDate.now().getYear(),10,1));
+        league.setCurrentDate(LocalDate.of(LocalDate.now().getYear(), 10, 1));
         assertFalse(state.checkDayOne());
     }
 
@@ -450,7 +451,7 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void getRandomDoubleTest(){
+    public void getRandomDoubleTest() {
         ExecuteTradeState state = new ExecuteTradeState();
         double randomDouble = state.getRandomDouble();
         assertTrue(0 < randomDouble);
@@ -467,8 +468,8 @@ public class ExecuteTradeStateTest {
         player = new Player(5, playerFactory);
         list.add(player);
         boolean isPlayerExist = false;
-        for(Player player1 : list){
-            if(player1.getId() == 5){
+        for (Player player1 : list) {
+            if (player1.getId() == 5) {
                 isPlayerExist = true;
                 break;
             }
@@ -480,8 +481,8 @@ public class ExecuteTradeStateTest {
 
         isPlayerExist = false;
 
-        for(Player player1 : list){
-            if(player1.getId() == 5){
+        for (Player player1 : list) {
+            if (player1.getId() == 5) {
                 isPlayerExist = true;
                 break;
             }
@@ -490,7 +491,7 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void exitTest(){
+    public void exitTest() {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         assertTrue(state.exit() instanceof AgingState);
         assertNotNull(state.exit());

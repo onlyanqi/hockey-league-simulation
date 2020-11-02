@@ -30,14 +30,14 @@ public class GeneratePlayoffScheduleDateTest {
     }
 
     @Test
-    public void actionTest(){
+    public void actionTest() {
         GeneratePlayoffScheduleState state = new GeneratePlayoffScheduleState(hockeyContext);
         assertTrue(state.action() instanceof ISimulateState);
         assertFalse(state.action() instanceof GeneratePlayoffScheduleState);
     }
 
     @Test
-    public void exitTest(){
+    public void exitTest() {
         GeneratePlayoffScheduleState state = new GeneratePlayoffScheduleState(hockeyContext);
         assertTrue(state.exit() instanceof TrainingState);
         assertTrue(state.exit() instanceof ISimulateState);

@@ -8,6 +8,7 @@ import org.junit.Test;
 import simulation.mock.GamePlayConfigMock;
 import simulation.mock.LeagueMock;
 import simulation.mock.TradingMock;
+
 import static org.junit.Assert.*;
 
 public class GamePlayConfigTest {

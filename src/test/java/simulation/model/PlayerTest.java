@@ -234,9 +234,9 @@ public class PlayerTest {
     @Test
     public void getOlderTest() throws Exception {
         Player player = new Player(1, loadPlayerFactory);
-        assertEquals(player.getAge(),27);
+        assertEquals(player.getAge(), 27);
         player.getOlder();
-        assertEquals(player.getAge(),28);
+        assertEquals(player.getAge(), 28);
     }
 
     @Test
@@ -272,11 +272,11 @@ public class PlayerTest {
         League league = new League(1, leagueFactory);
         assertTrue(player.getInjured());
         assertNotNull(player.getInjuryStartDate());
-        assertEquals(player.getInjuryDatesRange(),80);
+        assertEquals(player.getInjuryDatesRange(), 80);
         player.agingInjuryRecovery(league);
         assertFalse(player.getInjured());
         assertNull(player.getInjuryStartDate());
-        assertEquals(player.getInjuryDatesRange(),0);
+        assertEquals(player.getInjuryDatesRange(), 0);
     }
 
     @Test
@@ -285,6 +285,6 @@ public class PlayerTest {
         player.agingInjuryRecovery(null);
         assertTrue(player.getInjured());
         assertNotNull(player.getInjuryStartDate());
-        assertEquals(player.getInjuryDatesRange(),80);
+        assertEquals(player.getInjuryDatesRange(), 80);
     }
 }

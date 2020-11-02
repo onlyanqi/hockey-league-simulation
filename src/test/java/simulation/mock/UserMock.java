@@ -37,7 +37,6 @@ public class UserMock implements IUserFactory {
 
         switch (new Long(id).intValue()) {
             case 1:
-                //all correct data
                 user.setId(1);
                 user.setName("User1");
                 user.setPassword("Password1");
@@ -46,7 +45,6 @@ public class UserMock implements IUserFactory {
                 break;
 
             case 2:
-                //name null
                 user.setId(2);
                 user.setName(null);
                 user.setPassword("Password2");
@@ -55,7 +53,6 @@ public class UserMock implements IUserFactory {
                 break;
 
             case 3:
-                //password null
                 user.setId(3);
                 user.setName("Player3");
                 user.setPassword(null);
@@ -63,7 +60,6 @@ public class UserMock implements IUserFactory {
                 user.setLeagueList(formLeagueList());
                 break;
             case 4:
-                //password null
                 user.setId(4);
                 user.setName("Player4");
                 user.setPassword("Pass");

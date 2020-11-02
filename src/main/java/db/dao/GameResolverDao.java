@@ -21,10 +21,10 @@ public class GameResolverDao extends DBExceptionLog implements IGameResolverFact
             gameResolver.setId(callDB.returnOutputParameterInt(3));
 
         } catch (SQLException sqlException) {
-            printLog("GameResolverDao: addGameResolver: SQLException: "+sqlException);
+            printLog("GameResolverDao: addGameResolver: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -44,10 +44,10 @@ public class GameResolverDao extends DBExceptionLog implements IGameResolverFact
                 gameResolver.setRandomWinChance(rs.getDouble(3));
             }
         } catch (SQLException sqlException) {
-            printLog("GameResolverDao: loadGameResolverById: SQLException: "+sqlException);
+            printLog("GameResolverDao: loadGameResolverById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -66,10 +66,10 @@ public class GameResolverDao extends DBExceptionLog implements IGameResolverFact
                 gameResolver.setRandomWinChance(rs.getDouble(3));
             }
         } catch (SQLException sqlException) {
-            printLog("GameResolverDao: loadResolverByLeagueId: SQLException: "+sqlException);
+            printLog("GameResolverDao: loadResolverByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

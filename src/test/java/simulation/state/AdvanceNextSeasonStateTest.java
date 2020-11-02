@@ -3,7 +3,10 @@ package simulation.state;
 import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.mock.*;
+import simulation.mock.LeagueMock;
+import simulation.mock.PlayerMock;
+import simulation.mock.TeamMock;
+import simulation.mock.UserMock;
 import simulation.model.League;
 import simulation.model.Player;
 import simulation.model.User;
@@ -12,7 +15,7 @@ import validator.Validation;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class AdvanceNextSeasonStateTest {
@@ -48,9 +51,9 @@ public class AdvanceNextSeasonStateTest {
             Player player = new Player(i, playerFactory);
             playerList.add(player);
         }
-        assertEquals(playerList.get(19).getName(),"Player20");
+        assertEquals(playerList.get(19).getName(), "Player20");
         state.findReplacement(playerList, Player.Position.forward, 0);
-        assertNotEquals(playerList.get(20).getName(),"Player20");
-        assertEquals(playerList.get(20).getName(),"Player6");
+        assertNotEquals(playerList.get(20).getName(), "Player20");
+        assertEquals(playerList.get(20).getName(), "Player6");
     }
 }

@@ -233,7 +233,7 @@ public class CreateTeamState implements IHockeyState {
             System.exit(1);
             e.printStackTrace();
         }
-        return validation.newValidation().isNotNull(league) && league.getId()>0;
+        return validation.newValidation().isNotNull(league) && league.getId() > 0;
     }
 
     @Override

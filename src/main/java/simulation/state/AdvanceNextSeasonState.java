@@ -1,9 +1,10 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
-import simulation.model.NHLEvents;
 import simulation.model.*;
-import java.util.*;
+
+import java.util.Collections;
+import java.util.List;
 
 public class AdvanceNextSeasonState implements ISimulateState {
 

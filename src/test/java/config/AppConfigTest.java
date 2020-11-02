@@ -2,39 +2,36 @@ package config;
 
 import org.junit.Test;
 import presentation.ConsoleOutputForTeamCreation;
-import presentation.IConsoleOutputForTeamCreation;
-import presentation.IUserInputForTeamCreation;
 import presentation.UseInputForTeamCreation;
-import simulation.App;
 import simulation.factory.LeagueConcrete;
-import simulation.serializers.LeagueDataSerializerDeSerializer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AppConfigTest {
     @Test
-    public void getInstanceTest(){
+    public void getInstanceTest() {
         assertTrue(AppConfig.getInstance() instanceof AppConfig);
-        assertNotEquals(AppConfig.getInstance() instanceof AppConfig,false);
+        assertNotEquals(AppConfig.getInstance() instanceof AppConfig, false);
     }
 
 
     @Test
-    public void getInputForTeamCreationTest(){
+    public void getInputForTeamCreationTest() {
         AppConfig appConfig = AppConfig.getInstance();
         assertTrue(appConfig.getInputForTeamCreation() instanceof UseInputForTeamCreation);
-        assertNotEquals(appConfig.getInputForTeamCreation() instanceof UseInputForTeamCreation,false);
+        assertNotEquals(appConfig.getInputForTeamCreation() instanceof UseInputForTeamCreation, false);
     }
 
     @Test
-    public void getOutputForTeamCreationTest(){
+    public void getOutputForTeamCreationTest() {
         AppConfig appConfig = AppConfig.getInstance();
         assertTrue(appConfig.getOutputForTeamCreation() instanceof ConsoleOutputForTeamCreation);
-        assertNotEquals(appConfig.getOutputForTeamCreation() instanceof ConsoleOutputForTeamCreation,false);
+        assertNotEquals(appConfig.getOutputForTeamCreation() instanceof ConsoleOutputForTeamCreation, false);
     }
 
     @Test
-    public void getLeagueConcreteTest(){
+    public void getLeagueConcreteTest() {
         AppConfig appConfig = AppConfig.getInstance();
         assertTrue(appConfig.getLeagueConcrete() instanceof LeagueConcrete);
         assertNotEquals(appConfig.getLeagueConcrete(), null);

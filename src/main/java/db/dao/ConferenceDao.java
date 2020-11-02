@@ -25,10 +25,10 @@ public class ConferenceDao extends DBExceptionLog implements IConferenceFactory 
             conference.setId(callDB.returnOutputParameterInt(3));
 
         } catch (SQLException sqlException) {
-            printLog("ConferenceDao: addConference: SQLException: "+sqlException);
+            printLog("ConferenceDao: addConference: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -51,10 +51,10 @@ public class ConferenceDao extends DBExceptionLog implements IConferenceFactory 
             conference.setName(callDB.returnOutputParameterString(3));
             conference.setLeagueId(callDB.returnOutputParameterInt(4));
         } catch (SQLException sqlException) {
-            printLog("ConferenceDao: loadConferenceById: SQLException: "+sqlException);
+            printLog("ConferenceDao: loadConferenceById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -77,10 +77,10 @@ public class ConferenceDao extends DBExceptionLog implements IConferenceFactory 
             conference.setName(callDB.returnOutputParameterString(3));
             conference.setLeagueId(callDB.returnOutputParameterInt(4));
         } catch (SQLException sqlException) {
-            printLog("ConferenceDao: loadConferenceByName: SQLException: "+sqlException);
+            printLog("ConferenceDao: loadConferenceByName: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -109,10 +109,10 @@ public class ConferenceDao extends DBExceptionLog implements IConferenceFactory 
                 }
             }
         } catch (SQLException sqlException) {
-            printLog("ConferenceDao: loadConferenceByName: SQLException: "+sqlException);
+            printLog("ConferenceDao: loadConferenceByName: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

@@ -12,8 +12,10 @@ public class TradeOffer extends SharedAttributes {
     private int toPlayerId;
     private int seasonId;
     private String status;
+
     public TradeOffer() {
     }
+
     public TradeOffer(int tradingOfferId, ITradeOfferFactory factory) throws Exception {
         setId(tradingOfferId);
         factory.loadTradeOfferDetailsById(tradingOfferId, this);

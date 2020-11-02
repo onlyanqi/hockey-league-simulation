@@ -2,6 +2,7 @@ package db.dao;
 
 import db.data.IUserFactory;
 import simulation.model.User;
+
 import java.sql.SQLException;
 
 public class UserDao extends DBExceptionLog implements IUserFactory {
@@ -18,10 +19,10 @@ public class UserDao extends DBExceptionLog implements IUserFactory {
             callDB.execute();
             user.setId(callDB.returnOutputParameterInt(3));
         } catch (SQLException sqlException) {
-            printLog("UserDao: addUser: SQLException: "+sqlException);
+            printLog("UserDao: addUser: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -42,10 +43,10 @@ public class UserDao extends DBExceptionLog implements IUserFactory {
             user.setPassword(callDB.returnOutputParameterString(3));
 
         } catch (SQLException sqlException) {
-            printLog("UserDao: addUser: SQLException: "+sqlException);
+            printLog("UserDao: addUser: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -64,10 +65,10 @@ public class UserDao extends DBExceptionLog implements IUserFactory {
             user.setId(callDB.returnOutputParameterInt(2));
             user.setPassword(callDB.returnOutputParameterString(3));
         } catch (SQLException sqlException) {
-            printLog("UserDao: addUser: SQLException: "+sqlException);
+            printLog("UserDao: addUser: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

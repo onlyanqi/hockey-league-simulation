@@ -38,7 +38,6 @@ public class TeamMock implements ITeamFactory {
 
         switch (new Long(id).intValue()) {
             case 1:
-                //all correct data
                 team.setName("Team1");
                 team.setDivisionId(1);
                 team.setMascot("Tiger1");
@@ -60,7 +59,6 @@ public class TeamMock implements ITeamFactory {
                 break;
 
             case 2:
-                //name null
                 team.setName(null);
                 team.setDivisionId(1);
                 team.setMascot("Tiger2");
@@ -82,7 +80,6 @@ public class TeamMock implements ITeamFactory {
                 break;
 
             case 3:
-                //end date less than start date
                 team.setName("Invalid Date");
                 team.setDivisionId(1);
                 team.setMascot("Tiger3");
@@ -103,7 +100,6 @@ public class TeamMock implements ITeamFactory {
                 break;
 
             case 4:
-                //invalid position
                 team.setName("Invalid Postion");
                 team.setDivisionId(1);
                 team.setMascot("Tiger4");
@@ -124,7 +120,6 @@ public class TeamMock implements ITeamFactory {
                 break;
 
             case 5:
-                //invalid position
                 team.setName("TeamName");
                 team.setDivisionId(1);
                 team.setMascot("Tiger5");

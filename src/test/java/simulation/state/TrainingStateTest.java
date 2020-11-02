@@ -8,6 +8,7 @@ import simulation.model.Coach;
 import simulation.model.League;
 import simulation.model.Player;
 import simulation.model.User;
+
 import static org.junit.Assert.*;
 
 public class TrainingStateTest {
@@ -45,7 +46,7 @@ public class TrainingStateTest {
         assertNotEquals(league, null);
         League nullLeague = null;
         trainingState.statIncreaseCheck(nullLeague);
-        assertEquals(nullLeague,null);
+        assertEquals(nullLeague, null);
     }
 
     @Test
@@ -78,10 +79,4 @@ public class TrainingStateTest {
         assertTrue(trainingState.isStrengthInRangeAfterIncrease(15));
     }
 
-    @Test
-    public void exitTest() throws Exception {
-
-        //   assertTrue(trainingState.exit().getClass())
-
-    }
 }

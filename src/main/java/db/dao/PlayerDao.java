@@ -1,8 +1,9 @@
 package db.dao;
 
 import db.data.IPlayerFactory;
-import simulation.model.Player;
 import simulation.model.DateTime;
+import simulation.model.Player;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,12 +37,12 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             player.setId(callDB.returnOutputParameterInt(15));
 
         } catch (SQLException sqlException) {
-            printLog("PlayerDao: addPlayer: SQLException: "+sqlException);
+            printLog("PlayerDao: addPlayer: SQLException: " + sqlException);
             throw sqlException;
         } catch (Exception exception) {
             throw exception;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -74,7 +75,7 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
 
         } catch (SQLException sqlException) {
             throw sqlException;
-        } catch(Exception exception) {
+        } catch (Exception exception) {
             throw exception;
         } finally {
             assert callDB != null;
@@ -98,10 +99,10 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("PlayerDao: loadPlayerById: SQLException: "+sqlException);
+            printLog("PlayerDao: loadPlayerById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -144,10 +145,10 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("PlayerDao: loadPlayerListByFreeAgentId: SQLException: "+sqlException);
+            printLog("PlayerDao: loadPlayerListByFreeAgentId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -174,10 +175,10 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             }
 
         } catch (SQLException sqlException) {
-            printLog("PlayerDao: loadPlayerListByTeamId: SQLException: "+sqlException);
+            printLog("PlayerDao: loadPlayerListByTeamId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -205,10 +206,10 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             callDB.execute();
 
         } catch (SQLException sqlException) {
-            printLog("PlayerDao: updatePlayerById: SQLException: "+sqlException);
+            printLog("PlayerDao: updatePlayerById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -216,17 +217,17 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
 
     @Override
     public void deletePlayerListOfTeam(int teamId) throws Exception {
-        ICallDB callDB=null;
+        ICallDB callDB = null;
         try {
             String procedureName = "DeletePlayerListOfTeam(?)";
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, teamId);
             callDB.execute();
-        } catch (SQLException sqlException){
-            printLog("PlayerDao: deletePlayerListOfTeam: SQLException: "+ sqlException);
+        } catch (SQLException sqlException) {
+            printLog("PlayerDao: deletePlayerListOfTeam: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

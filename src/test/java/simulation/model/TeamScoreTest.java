@@ -46,7 +46,7 @@ public class TeamScoreTest {
         assertTrue(teamScore.getPoints() == 12);
 
         TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
-        assertFalse(teamScore2.getPoints() != 0);
+        assertFalse(teamScore2.getPoints() > 0);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class TeamScoreTest {
         assertTrue(teamScore.getNumberOfWins() == 6);
 
         TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
-        assertFalse(teamScore2.getNumberOfWins() != 0);
+        assertFalse(teamScore2.getNumberOfWins() > 0);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class TeamScoreTest {
         assertTrue(teamScore.getNumberOfLoss() == 5);
 
         TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
-        assertFalse(teamScore2.getNumberOfLoss() != 0);
+        assertFalse(teamScore2.getNumberOfLoss() > 0);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class TeamScoreTest {
     }
 
     @Test
-    public void getNumberOfTiesTest(){
+    public void getNumberOfTiesTest() {
         TeamScore teamScore = new TeamScore();
         teamScore.setNumberOfTies(3);
         assertTrue(teamScore.getNumberOfTies().equals(3));

@@ -8,9 +8,11 @@ import org.junit.Test;
 import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
 import simulation.mock.UserMock;
-import simulation.model.*;
+import simulation.model.League;
+import simulation.model.Player;
+import simulation.model.User;
+
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class AgingStateTest {
 
@@ -34,16 +36,16 @@ public class AgingStateTest {
         Player player = new Player(12, playerFactory);
         assertTrue(player.getInjured());
         assertNotNull(player.getInjuryStartDate());
-        assertEquals(player.getInjuryDatesRange(),80);
+        assertEquals(player.getInjuryDatesRange(), 80);
         player.agingInjuryRecovery(league);
         assertFalse(player.getInjured());
         assertNull(player.getInjuryStartDate());
-        assertEquals(player.getInjuryDatesRange(),0);
+        assertEquals(player.getInjuryDatesRange(), 0);
 
     }
 
     @Test
-    public void actionTest(){
+    public void actionTest() {
         AgingState state = new AgingState(hockeyContext);
         assertTrue(state.action() instanceof ISimulateState);
         assertFalse(state.action() instanceof AgingState);

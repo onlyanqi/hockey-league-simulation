@@ -42,7 +42,8 @@ public class GameScheduleTest {
     }
 
     @Test
-    public void getGamesOnDateTest() throws Exception{
+    public void getGamesOnDateTest() throws Exception {
+
         Game game = new Game(2, iGameFactory);
         Game game2 = new Game(1, iGameFactory);
         List<Game> gameList = new ArrayList<>();
@@ -52,11 +53,11 @@ public class GameScheduleTest {
         GameSchedule gameSchedule = new GameSchedule();
         gameSchedule.setId(3);
         gameSchedule.setGameList(gameList);
-        assertTrue(gameSchedule.getGamesOnDate(game.getDate()).size()!=0);
+        assertNotEquals(gameSchedule.getGamesOnDate(game.getDate()).size(), 0);
     }
 
     @Test
-    public void doGamesExistAfterDateTest() throws Exception{
+    public void doGamesExistAfterDateTest() throws Exception {
         Game game = new Game(2, iGameFactory);
         Game game2 = new Game(1, iGameFactory);
         List<Game> gameList = new ArrayList<>();

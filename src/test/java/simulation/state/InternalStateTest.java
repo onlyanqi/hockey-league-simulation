@@ -1,11 +1,13 @@
 package simulation.state;
 
-import db.data.*;
+import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.mock.*;
-import simulation.model.*;
-import static org.junit.Assert.*;
+import simulation.mock.UserMock;
+import simulation.model.User;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 
 public class InternalStateTest {

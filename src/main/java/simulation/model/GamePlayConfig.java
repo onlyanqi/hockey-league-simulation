@@ -3,13 +3,7 @@ package simulation.model;
 import db.data.IGamePlayConfigFactory;
 import db.data.ITradingFactory;
 
-public class GamePlayConfig{
-
-    public GamePlayConfig(){}
-
-    public GamePlayConfig(int leagueId, IGamePlayConfigFactory gamePlayConfigFactory) throws Exception {
-        gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
-    }
+public class GamePlayConfig {
 
     private int id;
     private int leagueId;
@@ -18,6 +12,11 @@ public class GamePlayConfig{
     private GameResolver gameResolver;
     private Trading trading;
     private Training training;
+    public GamePlayConfig() {
+    }
+    public GamePlayConfig(int leagueId, IGamePlayConfigFactory gamePlayConfigFactory) throws Exception {
+        gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
+    }
 
     public int getId() {
         return id;

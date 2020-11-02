@@ -1,9 +1,7 @@
 package db.dao;
 
 import db.data.IDivisionFactory;
-import simulation.factory.ValidationConcrete;
 import simulation.model.Division;
-import validator.IValidation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,10 +23,10 @@ public class DivisionDao extends DBExceptionLog implements IDivisionFactory {
             division.setId(callDB.returnOutputParameterInt(3));
 
         } catch (SQLException sqlException) {
-            printLog("DivisionDao: addDivision: SQLException: "+sqlException);
+            printLog("DivisionDao: addDivision: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -52,10 +50,10 @@ public class DivisionDao extends DBExceptionLog implements IDivisionFactory {
             division.setConferenceId(callDB.returnOutputParameterInt(4));
 
         } catch (SQLException sqlException) {
-            printLog("DivisionDao: loadDivisionById: SQLException: "+sqlException);
+            printLog("DivisionDao: loadDivisionById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -79,10 +77,10 @@ public class DivisionDao extends DBExceptionLog implements IDivisionFactory {
             division.setName(callDB.returnOutputParameterString(3));
             division.setConferenceId(callDB.returnOutputParameterInt(4));
         } catch (SQLException sqlException) {
-            printLog("DivisionDao: loadDivisionByName: SQLException: "+sqlException);
+            printLog("DivisionDao: loadDivisionByName: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -109,10 +107,10 @@ public class DivisionDao extends DBExceptionLog implements IDivisionFactory {
                 }
             }
         } catch (SQLException sqlException) {
-            printLog("DivisionDao: loadDivisionListByConferenceId: SQLException: "+sqlException);
+            printLog("DivisionDao: loadDivisionListByConferenceId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

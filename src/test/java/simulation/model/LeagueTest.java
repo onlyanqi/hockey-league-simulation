@@ -175,9 +175,6 @@ public class LeagueTest {
         assertTrue(league.getFreeAgent().getLeagueId() == league.getId());
     }
 
-    /*
-
-     */
 
     @Test
     public void getTradingOfferListTest() throws Exception {

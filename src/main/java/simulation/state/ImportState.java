@@ -4,7 +4,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import simulation.factory.*;
 import simulation.model.*;
-import validator.Validation;
 
 import java.util.ArrayList;
 import java.util.HashSet;

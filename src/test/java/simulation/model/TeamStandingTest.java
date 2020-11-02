@@ -7,15 +7,17 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.LeagueMock;
 import simulation.mock.TeamScoreMock;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertTrue;
 
 public class TeamStandingTest {
 
     private static ITeamScoreFactory iTeamScoreFactory;
     private static ILeagueFactory iLeagueFactory;
+
     @BeforeClass
     public static void setFactoryObj() {
         iTeamScoreFactory = new TeamScoreMock();
@@ -38,7 +40,7 @@ public class TeamStandingTest {
         List<String> teamList = new ArrayList<>();
         teamList.add("Team1");
         teamStanding.initializeTeamStandings(teamList);
-        assertTrue(teamStanding.getTeamsScoreList().size()!=0);
+        assertTrue(teamStanding.getTeamsScoreList().size() != 0);
     }
 
 }

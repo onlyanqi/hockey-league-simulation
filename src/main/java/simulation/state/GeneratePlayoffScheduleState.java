@@ -1,8 +1,6 @@
 package simulation.state;
 
-import simulation.model.NHLEvents;
 import simulation.model.*;
-import simulation.model.DateTime;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,13 +9,13 @@ import java.util.List;
 
 public class GeneratePlayoffScheduleState implements ISimulateState {
 
+    private final Integer numberOfGamesPerTeam = 7;
+    private final Integer numberOfTeamStandingBeforeStanleyCup = 4;
     private HockeyContext hockeyContext;
     private League league;
     private NHLEvents nhlEvents;
     private GameSchedule games;
     private TeamStanding teamStanding;
-    private final Integer numberOfGamesPerTeam = 7;
-    private final Integer numberOfTeamStandingBeforeStanleyCup = 4;
 
     public GeneratePlayoffScheduleState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -29,12 +27,12 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-        if(nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())){
+        if (nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())) {
             generatePlayOffFirstRoundSchedule();
-        }else if(games.doGamesDoesNotExistOnOrAfterDate(league.getCurrentDate())){
-            if(teamStanding.getTeamsScoreList().size() == numberOfTeamStandingBeforeStanleyCup){
+        } else if (games.doGamesDoesNotExistOnOrAfterDate(league.getCurrentDate())) {
+            if (teamStanding.getTeamsScoreList().size() == numberOfTeamStandingBeforeStanleyCup) {
                 generateStanleyCupSchedule();
-            }else{
+            } else {
                 generatePlayOffSecondAndThirdRoundSchedule();
             }
         }
@@ -88,7 +86,7 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
 
     private void scheduleGameBetweenTeams(String team1, String team2, List<Game> games, LocalDate startDate) {
         LocalDate currentDate = startDate;
-        for(Integer i = 0; i< numberOfGamesPerTeam; i++){
+        for (Integer i = 0; i < numberOfGamesPerTeam; i++) {
             Game game = new Game();
             game.setTeam1(team1);
             game.setTeam2(team2);
@@ -117,8 +115,8 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
     }
 
     private void initializeGamesPlayOff(List<String> qualifiedTeams) {
-        for(Integer i = 0 ;i< qualifiedTeams.size();i=i+2){
-            scheduleGameBetweenTeams(qualifiedTeams.get(i),qualifiedTeams.get(i+1),games.getGameList(),league.getCurrentDate());
+        for (Integer i = 0; i < qualifiedTeams.size(); i = i + 2) {
+            scheduleGameBetweenTeams(qualifiedTeams.get(i), qualifiedTeams.get(i + 1), games.getGameList(), league.getCurrentDate());
         }
     }
 

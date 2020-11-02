@@ -6,11 +6,10 @@ import java.util.List;
 
 public class GameSchedule {
 
-    public GameSchedule() {
-    }
-
     List<Game> gameList = new ArrayList<>();
     int id;
+    public GameSchedule() {
+    }
 
     public int getId() {
         return id;

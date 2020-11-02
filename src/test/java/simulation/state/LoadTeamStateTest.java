@@ -12,6 +12,7 @@ import simulation.model.GamePlayConfig;
 import simulation.model.League;
 import simulation.model.Trading;
 import simulation.model.User;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 

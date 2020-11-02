@@ -18,10 +18,10 @@ public class FreeAgentDao extends DBExceptionLog implements IFreeAgentFactory {
             freeAgent.setId(callDB.returnOutputParameterInt(2));
 
         } catch (SQLException sqlException) {
-            printLog("FreeAgentDao: addFreeAgent: SQLException: "+ sqlException);
+            printLog("FreeAgentDao: addFreeAgent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -45,10 +45,10 @@ public class FreeAgentDao extends DBExceptionLog implements IFreeAgentFactory {
             freeAgent.setSeasonId(callDB.returnOutputParameterInt(4));
 
         } catch (SQLException sqlException) {
-            printLog("FreeAgentDao: addFreeAgent: SQLException: "+ sqlException);
+            printLog("FreeAgentDao: addFreeAgent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
@@ -71,10 +71,10 @@ public class FreeAgentDao extends DBExceptionLog implements IFreeAgentFactory {
             freeAgent.setLeagueId(callDB.returnOutputParameterInt(3));
 
         } catch (SQLException sqlException) {
-            printLog("FreeAgentDao: addFreeAgent: SQLException: "+ sqlException);
+            printLog("FreeAgentDao: addFreeAgent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if(getValidation().isNotNull(callDB)) {
+            if (getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }

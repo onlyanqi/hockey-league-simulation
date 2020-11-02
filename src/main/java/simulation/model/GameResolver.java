@@ -9,7 +9,7 @@ public class GameResolver extends SharedAttributes {
     }
 
     public GameResolver(int leagueId, IGameResolverFactory gameResolverFactory) throws Exception {
-        if(gameResolverFactory == null){
+        if (gameResolverFactory == null) {
             return;
         }
         gameResolverFactory.loadResolverByLeagueId(leagueId, this);
