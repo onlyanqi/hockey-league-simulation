@@ -42,10 +42,6 @@ public class AppConfig {
         return outputForTeamCreation;
     }
 
-    public LeagueDataSerializerDeSerializer getDataSerializer() {
-        return dataSerializer;
-    }
-
     public LeagueConcrete getLeagueConcrete() {
         return leagueConcrete;
     }
