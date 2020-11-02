@@ -37,7 +37,6 @@ public class AdvanceNextSeasonState implements ISimulateState {
             List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
             List<Player> retiredPlayerList = league.getRetiredPlayerList();
             Aging aging = league.getGamePlayConfig().getAging();
-            Collections.sort(freeAgentList, Collections.reverseOrder());
 
             for (Conference conference : conferenceList) {
                 List<Division> divisionList = conference.getDivisionList();
@@ -78,6 +77,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
 
     public void findReplacement(List<Player> playerList, Player.Position position, int index) {
         List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
+        Collections.sort(freeAgentList, Collections.reverseOrder());
         Player replacePlayer = new Player();
         int size = freeAgentList.size();
         for (int i = 0; i < size; i++) {
@@ -88,13 +88,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
                 break;
             }
         }
-//        if(replacePlayer.getName()==null){
-//            ConsoleOutput.getInstance().printMsgToConsole("No replacement for retired player.");
-//            System.exit(1);
-//        }else{
         playerList.add(replacePlayer);
-//        }
-
     }
 
     private ISimulateState exit() {
