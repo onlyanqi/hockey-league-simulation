@@ -205,11 +205,17 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         double increaseRate = 0.5 / (aging.getMaximumAge() - aging.getAverageRetirementAge());
         if (this.age < aging.getAverageRetirementAge()) {
             Random randomRetire1 = new Random();
-            double chance1 = (aging.getAverageRetirementAge() - this.age) * (1 - increaseRate) * 0.5;
+            double chance1 = 0.5 - ((aging.getAverageRetirementAge() - this.age) * increaseRate);
+            if(chance1 < 0.0){
+                chance1 = 0.0;
+            }
             return randomRetire1.nextDouble() < chance1;
         } else if (this.age < aging.getMaximumAge()) {
             Random randomRetire2 = new Random();
-            double chance2 = (this.age - aging.getAverageRetirementAge()) * (1 + increaseRate) * 0.5;
+            double chance2 = (this.age - aging.getAverageRetirementAge()) * increaseRate + 0.5;
+            if(chance2 > 1.0){
+                chance2 = 1.0;
+            }
             return randomRetire2.nextDouble() < chance2;
         } else return this.age >= aging.getMaximumAge();
     }
@@ -224,7 +230,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         }
         Random randomInjuryChance = new Random();
         double chanceOfInjury = randomInjuryChance.nextDouble();
-        if(this.getInjured()){
+        if (this.getInjured()) {
             return;
         }
         if (chanceOfInjury < league.getGamePlayConfig().getInjury().getRandomInjuryChance()) {

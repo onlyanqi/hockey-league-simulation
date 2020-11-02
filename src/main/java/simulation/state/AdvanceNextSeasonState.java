@@ -3,8 +3,7 @@ package simulation.state;
 import presentation.ConsoleOutput;
 import simulation.model.NHLEvents;
 import simulation.model.*;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class AdvanceNextSeasonState implements ISimulateState {
 
@@ -69,23 +68,20 @@ public class AdvanceNextSeasonState implements ISimulateState {
         }
     }
 
-    private void findReplacement(List<Player> playerList, Player.Position position, int index) {
+    public void findReplacement(List<Player> playerList, Player.Position position, int index) {
         List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
-
-        freeAgentList.sort(new Comparator<Player>() {
-            public int compare(Player p1, Player p2) {
-                return Double.compare(p2.getStrength(), p1.getStrength());
-            }
-        });
+        Collections.sort(freeAgentList, Collections.reverseOrder());
         Player replacePlayer = new Player();
-        for (int i = 0; i < freeAgentList.size(); i++) {
+        int size = freeAgentList.size();
+        for (int i = 0; i < size; i++) {
             if (freeAgentList.get(i).getPosition().equals(position)) {
+                freeAgentList.get(i).setTeamId(playerList.get(index).getTeamId());
                 replacePlayer = new Player(freeAgentList.get(i));
                 freeAgentList.remove(i);
                 break;
             }
         }
-        playerList.add(index, replacePlayer);
+        playerList.add(replacePlayer);
     }
 
     public ISimulateState exit() {

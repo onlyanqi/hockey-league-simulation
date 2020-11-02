@@ -49,6 +49,41 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
     }
 
     @Override
+    public int addRetiredPlayer(int leagueId, Player player) throws Exception {
+        ICallDB callDB = null;
+        try {
+            String procedureName = "AddRetiredPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
+            callDB.setInputParameterString(1, player.getName());
+            callDB.setInputParameterString(2, player.getPosition().toString());
+            callDB.setInputParameterBoolean(3, player.isCaptain());
+            callDB.setInputParameterInt(4, player.getAge());
+            callDB.setInputParameterInt(5, player.getSkating());
+            callDB.setInputParameterInt(6, player.getShooting());
+            callDB.setInputParameterInt(7, player.getChecking());
+            callDB.setInputParameterInt(8, player.getSaving());
+            callDB.setInputParameterBoolean(9, player.getInjured());
+            callDB.setInputParameterDate(10, DateTime.convertLocalDateToSQLDate(player.getInjuryStartDate()));
+            callDB.setInputParameterInt(11, player.getInjuryDatesRange());
+            callDB.setInputParameterDouble(12, player.getStrength());
+            callDB.setInputParameterInt(13, leagueId);
+
+            callDB.setOutputParameterInt(14);
+            callDB.execute();
+            player.setId(callDB.returnOutputParameterInt(14));
+
+        } catch (SQLException sqlException) {
+            throw sqlException;
+        } catch(Exception exception) {
+            throw exception;
+        } finally {
+            assert callDB != null;
+            callDB.closeConnection();
+        }
+        return player.getId();
+    }
+
+    @Override
     public void loadPlayerById(int id, Player player) throws Exception {
 
         ICallDB callDB = null;

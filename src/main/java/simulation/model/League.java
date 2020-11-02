@@ -14,6 +14,7 @@ public class League extends SharedAttributes {
     private List<Conference> conferenceList;
     private List<Coach> coachList;
     private List<Manager> managerList;
+    private List<Player> retiredPlayerList;
     private FreeAgent freeAgent;
     private LocalDate currentDate;
     private GamePlayConfig gamePlayConfig;
@@ -119,6 +120,14 @@ public class League extends SharedAttributes {
             return;
         }
         this.managerList = managerList;
+    }
+
+    public List<Player> getRetiredPlayerList() {
+        return retiredPlayerList;
+    }
+
+    public void setRetiredPlayerList(List<Player> retiredPlayerList) {
+        this.retiredPlayerList = retiredPlayerList;
     }
 
     public TeamStanding getRegularSeasonStanding() {

@@ -105,8 +105,8 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     private FreeAgent formFreeAgent() throws Exception {
-        IFreeAgentFactory freeAgentFactory = new FreeAgentMock();
-        FreeAgent freeAgent = new FreeAgent(6, freeAgentFactory);
+        FreeAgent freeAgent = new FreeAgent();
+        freeAgent.setPlayerList(formPlayerList());
         return freeAgent;
     }
 

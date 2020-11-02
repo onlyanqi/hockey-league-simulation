@@ -43,14 +43,14 @@ public class InjuryCheckState implements ISimulateState {
 
         GameSchedule games = league.getGames();
         List<Game> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
-        if (gamesOnCurrentDay.size() != 0) {
-            return new SimulateGameState(hockeyContext);
-        } else {
+        if (gamesOnCurrentDay.size() == 0) {
             if (nhlEvents.checkTradeDeadlinePassed(league.getCurrentDate())) {
                 return new AgingState(hockeyContext);
             } else {
                 return new ExecuteTradeState(hockeyContext);
             }
+        } else {
+            return new SimulateGameState(hockeyContext);
         }
     }
 

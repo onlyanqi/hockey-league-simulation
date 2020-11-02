@@ -34,10 +34,26 @@ public class PersistState implements ISimulateState{
     }
 
     private void saveToPersistence() {
-        if(todayIsStartOfSeason()){
-           persistLeagueToDB();
-        }else{
+        if (todayIsStartOfSeason()) {
+            persistLeagueToDB();
+        } else {
+            if (stanleyCupWinnerDetermined()) {
+                persistRetiredPlayers();
+            }
             updateDataBaseWithSimulatedDate();
+        }
+    }
+
+    private void persistRetiredPlayers() {
+
+        try {
+            addRetiredPlayerList(league.getRetiredPlayerList());
+        } catch (SQLException sqlException) {
+            System.out.println("Unable to save the retired players! Please try again" + sqlException.getMessage());
+            System.exit(1);
+            sqlException.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -222,7 +238,7 @@ public class PersistState implements ISimulateState{
     private void addManagers(List<Manager> managerList) throws Exception {
         ManagerConcrete managerConcrete = new ManagerConcrete();
         IManagerFactory managerFactory = managerConcrete.newManagerFactory();
-        for(Manager manager : managerList){
+        for (Manager manager : managerList) {
             manager.setLeagueId(league.getId());
             managerFactory.addManager(manager);
         }
@@ -231,7 +247,7 @@ public class PersistState implements ISimulateState{
     private void addCoaches(List<Coach> coachList) throws Exception {
         CoachConcrete coachConcrete = new CoachConcrete();
         ICoachFactory coachFactory = coachConcrete.newCoachFactory();
-        for(Coach coach : coachList){
+        for (Coach coach : coachList) {
             coach.setLeagueId(league.getId());
             coachFactory.addCoach(coach);
         }
@@ -246,7 +262,7 @@ public class PersistState implements ISimulateState{
     public void addTradeOfferList(List<TradeOffer> tradeOfferList) throws Exception {
         TradeOfferConcrete tradeOfferConcrete = new TradeOfferConcrete();
         ITradeOfferFactory tradeOfferFactory = tradeOfferConcrete.newTradeOfferFactory();
-        for(TradeOffer tradeOffer : tradeOfferList){
+        for (TradeOffer tradeOffer : tradeOfferList) {
             tradeOffer.setLeagueId(league.getId());
             tradeOffer.setTradingId(league.getGamePlayConfig().getTrading().getId());
             tradeOfferFactory.addTradeOfferDetails(tradeOffer);
@@ -350,16 +366,27 @@ public class PersistState implements ISimulateState{
         }
     }
 
-    private Boolean todayIsStartOfSeason(){
-        if(league.getCurrentDate().equals(LocalDate.of(LocalDate.now().getYear(),10,01))){
+    private void addRetiredPlayerList(List<Player> playerList) throws Exception {
+        if (playerList != null && !playerList.isEmpty()) {
+            PlayerConcrete playerConcrete = new PlayerConcrete();
+            IPlayerFactory addPlayerDao = playerConcrete.newPlayerFactory();
+            for (Player player : playerList) {
+                addPlayerDao.addRetiredPlayer(league.getId(), player);
+                System.out.println("One Retired Player Added to DB...");
+            }
+        }
+    }
+
+    private Boolean todayIsStartOfSeason() {
+        if (league.getCurrentDate().equals(LocalDate.of(LocalDate.now().getYear(), 10, 01))) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     private ISimulateState exit() {
-        if(stanleyCupWinnerDetermined()){
+        if (stanleyCupWinnerDetermined()) {
             List<TeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
             if(teamScoreList.get(0).getNumberOfWins() > teamScoreList.get(1).getNumberOfWins()){
                 ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(0).getTeamName() +" won the stanley cup!");
@@ -368,14 +395,14 @@ public class PersistState implements ISimulateState{
             }
 
             return null;
-        }else{
+        } else {
             return new AdvanceTimeState(hockeyContext);
         }
     }
     public Boolean stanleyCupWinnerDetermined(){
         GameSchedule games = league.getGames();
         TeamStanding teamStanding = league.getActiveTeamStanding();
-        if(nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2 ){
+        if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2) {
             return true;
         }
         return false;
