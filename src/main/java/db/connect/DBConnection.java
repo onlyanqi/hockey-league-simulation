@@ -1,5 +1,7 @@
 package db.connect;
 
+import simulation.factory.ValidationConcrete;
+import validator.IValidation;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -17,8 +19,9 @@ public class DBConnection {
 
     public String formDBURL(Properties prop) {
         String dbURL = "";
-
-        if (prop != null) {
+        ValidationConcrete validationConcrete = new ValidationConcrete();
+        IValidation validation = validationConcrete.newValidation();
+        if (validation.isNotNull(prop)) {
             String dbHost = prop.getProperty("db.url");
             String dbName = prop.getProperty("db.Name");
             String dbPort = prop.getProperty("db.Port");

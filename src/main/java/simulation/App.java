@@ -26,7 +26,7 @@ public class App {
         IValidation validation = validationConcrete.newValidation();
 
         try {
-            if (userName != null && validation.isNotEmpty(userName)) {
+            if (validation.isNotEmpty(userName)) {
                 UserConcrete userConcrete = new UserConcrete();
                 IUserFactory factory = userConcrete.newUserFactory();
                 User user = userConcrete.newUserByName(userName, factory);

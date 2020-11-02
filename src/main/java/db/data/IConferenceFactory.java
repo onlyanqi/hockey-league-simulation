@@ -8,7 +8,7 @@ public interface IConferenceFactory {
 
     int addConference(Conference conference) throws Exception;
 
-    void loadConferenceByName(int id, Conference conference) throws Exception;
+    void loadConferenceById(int id, Conference conference) throws Exception;
 
     Conference loadConferenceByName(String conferenceName) throws Exception;
 

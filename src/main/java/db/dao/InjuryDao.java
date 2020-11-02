@@ -6,12 +6,13 @@ import simulation.model.Injury;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class InjuryDao implements IInjuryFactory {
+public class InjuryDao extends DBExceptionLog implements IInjuryFactory {
     @Override
     public int addInjury(Injury injury) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddInjury(?,?,?,?,?)");
+            String procedureName = "AddInjury(?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterDouble(1, injury.getRandomInjuryChance());
             callDB.setInputParameterInt(2, injury.getInjuryDaysLow());
             callDB.setInputParameterInt(3, injury.getInjuryDaysHigh());
@@ -21,10 +22,12 @@ public class InjuryDao implements IInjuryFactory {
             injury.setId(callDB.returnOutputParameterInt(5));
 
         } catch (SQLException sqlException) {
+            printLog("InjuryDao: addInjury: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return injury.getId();
     }
@@ -34,11 +37,12 @@ public class InjuryDao implements IInjuryFactory {
         ICallDB callDB = null;
         Injury injury = new Injury();
         try {
-            callDB = new CallDB("LoadInjuryByLeagueId(?)");
+            String procedureName = "LoadInjuryByLeagueId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 injury = new Injury();
                 injury.setId(rs.getInt(1));
                 injury.setRandomInjuryChance(rs.getDouble(2));
@@ -48,10 +52,12 @@ public class InjuryDao implements IInjuryFactory {
             }
 
         } catch (SQLException sqlException) {
+            printLog("InjuryDao: loadInjuryByLeagueId: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return injury;
     }
@@ -60,11 +66,12 @@ public class InjuryDao implements IInjuryFactory {
     public void loadInjuryById(int id, Injury injury) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadInjuryById(?)");
+            String procedureName = "LoadInjuryById(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 injury = new Injury();
                 injury.setId(rs.getInt(1));
                 injury.setRandomInjuryChance(rs.getDouble(2));
@@ -74,10 +81,12 @@ public class InjuryDao implements IInjuryFactory {
             }
 
         } catch (SQLException sqlException) {
+            printLog("InjuryDao: loadInjuryById: SQLException: "+sqlException);
             throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 }

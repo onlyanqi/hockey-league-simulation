@@ -1,10 +1,7 @@
 package db.dao;
 
 import db.data.IPlayerFactory;
-import simulation.factory.ValidationConcrete;
 import simulation.model.Player;
-import validator.IValidation;
-import validator.Validation;
 import simulation.model.DateTime;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,18 +10,12 @@ import java.util.List;
 
 public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
 
-    private IValidation validation;
-
-    public PlayerDao(){
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        validation = validationConcrete.newValidation();
-    }
-
     @Override
     public int addPlayer(Player player) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("AddPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            String procedureName = "AddPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterString(1, player.getName());
             callDB.setInputParameterString(2, player.getPosition().toString());
             callDB.setInputParameterBoolean(3, player.isCaptain());
@@ -45,12 +36,14 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             player.setId(callDB.returnOutputParameterInt(15));
 
         } catch (SQLException sqlException) {
+            printLog("PlayerDao: addPlayer: SQLException: "+sqlException);
             throw sqlException;
         } catch (Exception exception) {
             throw exception;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return player.getId();
     }
@@ -60,20 +53,22 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
 
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadPlayerById(?)");
+            String procedureName = "LoadPlayerById(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 setPlayerFromDB(player, rs);
-
             }
 
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("PlayerDao: loadPlayerById: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
@@ -99,11 +94,12 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
         List<Player> playerList = null;
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadPlayerListByFreeAgentId(?)");
+            String procedureName = "LoadPlayerListByFreeAgentId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, freeAgentId);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 playerList = new ArrayList<>();
                 while (rs.next()) {
                     Player player = new Player();
@@ -112,11 +108,13 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
                 }
             }
 
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("PlayerDao: loadPlayerListByFreeAgentId: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return playerList;
     }
@@ -126,11 +124,12 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
         List<Player> playerList = null;
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadPlayerListByTeamId(?)");
+            String procedureName = "LoadPlayerListByTeamId(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, teamId);
             ResultSet rs = callDB.executeLoad();
 
-            if (rs != null) {
+            if (getValidation().isNotNull(rs)) {
                 playerList = new ArrayList<>();
                 while (rs.next()) {
                     Player player = new Player();
@@ -139,11 +138,13 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
                 }
             }
 
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("PlayerDao: loadPlayerListByTeamId: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
         return playerList;
     }
@@ -152,7 +153,8 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
     public void updatePlayerById(int id, Player player) throws Exception {
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("UpdatePlayerById(?,?,?,?,?,?,?,?,?,?,?,?)");
+            String procedureName = "UpdatePlayerById(?,?,?,?,?,?,?,?,?,?,?,?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, player.getId());
             callDB.setInputParameterInt(2, player.getTeamId());
             callDB.setInputParameterInt(3, player.getFreeAgentId());
@@ -167,11 +169,13 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             callDB.setInputParameterDouble(12, player.getStrength());
             callDB.execute();
 
-        } catch (Exception e) {
-            throw e;
+        } catch (SQLException sqlException) {
+            printLog("PlayerDao: updatePlayerById: SQLException: "+sqlException);
+            throw sqlException;
         } finally {
-            assert callDB != null;
-            callDB.closeConnection();
+            if(getValidation().isNotNull(callDB)) {
+                callDB.closeConnection();
+            }
         }
     }
 
@@ -179,14 +183,15 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
     public void deletePlayerListOfTeam(int teamId) throws Exception {
         ICallDB callDB=null;
         try {
-            callDB = new CallDB("DeletePlayerListOfTeam(?)");
+            String procedureName = "DeletePlayerListOfTeam(?)";
+            callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, teamId);
             callDB.execute();
         } catch (SQLException sqlException){
             printLog("PlayerDao: deletePlayerListOfTeam: SQLException: "+ sqlException);
             throw sqlException;
         } finally {
-            if(validation.isNotNull(callDB)){
+            if(getValidation().isNotNull(callDB)) {
                 callDB.closeConnection();
             }
         }
