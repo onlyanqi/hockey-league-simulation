@@ -46,9 +46,9 @@ public class SharedAttributes {
     }
 
     public boolean isNotNull(String input) {
-        boolean isNotNull = false;
-        if (input != null) {
-            isNotNull = true;
+        boolean isNotNull = true;
+        if (input == null) {
+            isNotNull = false;
         }
         return isNotNull;
     }

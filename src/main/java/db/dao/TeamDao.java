@@ -94,7 +94,9 @@ public class TeamDao implements ITeamFactory {
             callDB = new CallDB(loadTeamListByDivisionIdProcedureName);
             callDB.setInputParameterInt(1, divisionId);
             ResultSet rs = callDB.executeLoad();
-            if (rs != null) {
+            if(rs == null){
+                return null;
+            }else{
                 teamList = new ArrayList<>();
                 while (rs.next()) {
                     Team team = new Team();
