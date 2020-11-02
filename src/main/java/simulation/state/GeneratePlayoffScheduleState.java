@@ -14,9 +14,10 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
     private HockeyContext hockeyContext;
     private League league;
     private NHLEvents nhlEvents;
-    private Games games;
+    private GameSchedule games;
     private TeamStanding teamStanding;
-    private final Integer numberOfGames = 7;
+    private final Integer numberOfGamesPerTeam = 7;
+    private final Integer numberOfTeamStandingBeforeStanleyCup = 4;
 
     public GeneratePlayoffScheduleState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -28,17 +29,15 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
 
     @Override
     public ISimulateState action() {
-
         if(nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())){
             generatePlayOffFirstRoundSchedule();
         }else if(games.doGamesDoesNotExistOnOrAfterDate(league.getCurrentDate())){
-            if(teamStanding.getTeamsScoreList().size() == 4){
+            if(teamStanding.getTeamsScoreList().size() == numberOfTeamStandingBeforeStanleyCup){
                 generateStanleyCupSchedule();
             }else{
-                generatePlayOffOtherRoundSchedule();
+                generatePlayOffSecondAndThirdRoundSchedule();
             }
         }
-
         return exit();
     }
 
@@ -72,7 +71,6 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
             List<String> teams = playOffTeams.get(conference.getName());
             teamsAcrossConferences.addAll(teams);
         }
-
         league.getActiveTeamStanding().initializeTeamStandings(teamsAcrossConferences);
     }
 
@@ -90,7 +88,7 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
 
     private void scheduleGameBetweenTeams(String team1, String team2,List<Game> games,LocalDate startDate){
         LocalDate currentDate = startDate;
-        for(Integer i =0;i<numberOfGames;i++){
+        for(Integer i = 0; i< numberOfGamesPerTeam; i++){
             Game game = new Game();
             game.setTeam1(team1);
             game.setTeam2(team2);
@@ -100,7 +98,7 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
         }
     }
 
-    private void generatePlayOffOtherRoundSchedule() {
+    private void generatePlayOffSecondAndThirdRoundSchedule() {
         List<TeamScore> teamScoreList = teamStanding.getTeamsScoreList();
         updateTeamStanding(teamStanding,teamScoreList);
     }
@@ -119,11 +117,9 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
     }
 
     private void initializeGamesPlayOff(List<String> qualifiedTeams) {
-
         for(Integer i = 0 ;i< qualifiedTeams.size();i=i+2){
             scheduleGameBetweenTeams(qualifiedTeams.get(i),qualifiedTeams.get(i+1),games.getGameList(),league.getCurrentDate());
         }
-
     }
 
     private Boolean declareTeam1Winner(TeamScore teamScore1, TeamScore teamScore2){
@@ -149,7 +145,7 @@ public class GeneratePlayoffScheduleState implements  ISimulateState{
         teamStanding.initializeTeamStandings(qualifiedTeams);
     }
 
-    private ISimulateState exit() {
+    public ISimulateState exit() {
         return new TrainingState(hockeyContext);
     }
 }

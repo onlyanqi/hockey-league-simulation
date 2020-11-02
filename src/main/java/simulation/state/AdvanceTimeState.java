@@ -1,5 +1,6 @@
 package simulation.state;
 
+import presentation.ConsoleOutput;
 import simulation.model.NHLEvents;
 import simulation.model.League;
 import simulation.model.DateTime;
@@ -20,7 +21,7 @@ public class AdvanceTimeState implements ISimulateState {
     public ISimulateState action() {
         LocalDate advancedDate = DateTime.addDays(league.getCurrentDate(),1);
         league.setCurrentDate(advancedDate);
-        System.out.println("Advanced day! Current date is" + advancedDate);
+        ConsoleOutput.getInstance().printMsgToConsole("Advanced Day. Current date is "+ advancedDate);
         return exit();
     }
 

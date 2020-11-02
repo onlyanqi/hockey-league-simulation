@@ -3,7 +3,6 @@ package simulation.state;
 import presentation.ConsoleOutput;
 import simulation.model.NHLEvents;
 import simulation.model.*;
-
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,19 +12,19 @@ public class AdvanceNextSeasonState implements ISimulateState {
     public static final String AGING_TO_NEXT_SEASON = "Aging all players to the start of next season!";
     private League league;
     private HockeyContext hockeyContext;
+    private NHLEvents nhlEvents;
 
     public AdvanceNextSeasonState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
+        this.nhlEvents = league.getNHLRegularSeasonEvents();
     }
 
     @Override
     public ISimulateState action() {
-
-        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         league.setCurrentDate(nhlEvents.getNextSeasonDate());
-        ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + nhlEvents.getNextSeasonDate());
 
+        ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + nhlEvents.getNextSeasonDate());
         agingPlayerSeason(league);
         ConsoleOutput.getInstance().printMsgToConsole(AGING_TO_NEXT_SEASON);
 
@@ -89,7 +88,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
         playerList.add(index, replacePlayer);
     }
 
-    private ISimulateState exit() {
+    public ISimulateState exit() {
         return new PersistState(hockeyContext);
     }
 }

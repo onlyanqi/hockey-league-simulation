@@ -21,10 +21,6 @@ public class DateTime {
         return DAYS.between(beforeDate, afterDate);
     }
 
-    public static boolean isDateNotPassed(LocalDate date1,LocalDate date2){
-        return date1.isBefore(date2);
-    }
-
     public static Date convertLocalDateToSQLDate(LocalDate date){
         if(date != null){
             return java.sql.Date.valueOf(date);

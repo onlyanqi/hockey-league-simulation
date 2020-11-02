@@ -1,7 +1,6 @@
 package simulation.mock;
 
 import db.data.IEventFactory;
-import simulation.model.Game;
 import simulation.model.NHLEvents;
 
 import java.time.LocalDate;
@@ -10,19 +9,19 @@ import java.time.Month;
 public class NHLEventMock implements IEventFactory {
 
     @Override
-    public long addEvent(int leagueId, NHLEvents event) throws Exception {
+    public long addEvent(int leagueId, NHLEvents event){
         event.setId(1);
         return event.getId();
     }
 
     @Override
-    public void loadEventById(int id, NHLEvents event) throws Exception {
+    public void loadEventById(int id, NHLEvents event){
         switch (id){
             case 0:
                 event.setId(0);
                 event.setRegularSeasonStartDate(LocalDate.of(2020,Month.SEPTEMBER,30));
                 event.setTradeDeadlineDate(LocalDate.of(2021,Month.FEBRUARY,03));
-                event.setNextSeasonDate(LocalDate.of(2021,Month.OCTOBER,01));
+                event.setNextSeasonDate(LocalDate.of(2021,Month.SEPTEMBER,29));
                 event.setLastDayStanleyCupFinals(LocalDate.of(2021,Month.JUNE,01));
                 event.setPlayOffStartDate(LocalDate.of(2021,Month.APRIL,05));
                 event.setEndOfRegularSeason(LocalDate.of(2021,Month.APRIL,06));
@@ -48,7 +47,7 @@ public class NHLEventMock implements IEventFactory {
     }
 
     @Override
-    public void loadEventByLeagueId(int leagueId, NHLEvents event) throws Exception {
+    public void loadEventByLeagueId(int leagueId, NHLEvents event) {
         switch (leagueId){
             case 0:
                 event.setId(3);
