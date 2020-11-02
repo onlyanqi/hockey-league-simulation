@@ -28,10 +28,12 @@ public class TrainingMock implements ITrainingFactory {
             case 1 :
                 training.setDaysUntilStatIncreaseCheck(50);
                 training.setId(1);
+                training.setLeagueId(1);
                 break;
             case 2:
                 training.setDaysUntilStatIncreaseCheck(20);
                 training.setId(1);
+                training.setLeagueId(1);
         }
     }
 }

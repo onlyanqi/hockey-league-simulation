@@ -101,7 +101,7 @@ public class CoachDao implements ICoachFactory {
         List<Coach> freeCoachList = null;
         ICallDB callDB = null;
         try {
-            callDB = new CallDB("LoadCoachByLeagueId(?)");
+            callDB = new CallDB("LoadCoachListByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
 

@@ -10,6 +10,4 @@ public interface ITrainingState {
     void statIncreaseCheckForPlayer(Player player, Coach headCoach);
 
     boolean isStrengthInRangeAfterIncrease(int strengthAfterIncrease);
-
-    boolean isRandomLess(double coachStrength);
 }

@@ -128,7 +128,7 @@ public class Team extends SharedAttributes {
         return chosenPlayersIdList;
     }
 
-    private List<Double> createStrengthList(List<Player> freeAgentList) {
+    public List<Double> createStrengthList(List<Player> freeAgentList) {
         List<Double> strengthList = new ArrayList<>();
         for (int i = 0; i < freeAgentList.size(); i++) {
             Player freeAgentPlayer = freeAgentList.get(i);
