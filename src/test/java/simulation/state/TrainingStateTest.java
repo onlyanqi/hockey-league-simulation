@@ -9,6 +9,9 @@ import simulation.model.League;
 import simulation.model.Player;
 import simulation.model.User;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 import static org.junit.Assert.*;
 
 public class TrainingStateTest {
@@ -19,9 +22,21 @@ public class TrainingStateTest {
     @BeforeClass
     public static void setFactoryObject() throws Exception {
         hockeyContext = new HockeyContext(new User(1));
-
         trainingState = new TrainingState(hockeyContext);
         leagueFactory = new LeagueMock();
+    }
+
+    @Test
+    public void actionTest() throws Exception {
+        League league = new League(4, leagueFactory);
+        hockeyContext.getUser().setLeague(league);
+        TrainingState state = new TrainingState(hockeyContext);
+        assertNull(state.action());
+
+        league.getGamePlayConfig().getTraining().setDaysUntilStatIncreaseCheck(102);
+
+        assertTrue(state.action() instanceof ISimulateState);
+
     }
 
     @Test

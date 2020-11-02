@@ -28,6 +28,10 @@ public class TrainingState implements ISimulateState, ITrainingState {
         LocalDate seasonStartDate = league.getNHLRegularSeasonEvents().getRegularSeasonStartDate();
         Integer daysUntilStatIncreaseCheck = league.getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck();
         Long diffDays = DateTime.diffDays(seasonStartDate, currentDate);
+        if(daysUntilStatIncreaseCheck ==0){
+            System.out.println("Days Until Stat Increase Check is 0. So Exiting");
+            return null;
+        }
         if (diffDays % daysUntilStatIncreaseCheck == 1) {
             consoleOutput.printMsgToConsole(STATCHECKINFORMATION);
             statIncreaseCheck(league);
