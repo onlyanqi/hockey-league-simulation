@@ -8,7 +8,6 @@ public class Player extends SharedAttributes implements Comparable<Player> {
 
     private static final String GOALIE = "goalie";
     private int age;
-    private String hometown;
     private Position position;
     private int teamId;
     private int freeAgentId;
@@ -16,7 +15,6 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     private boolean isInjured;
     private LocalDate injuryStartDate;
     private int injuryDatesRange;
-    private int seasonId;
     private boolean isFreeAgent = false;
     private boolean isRetired = false;
     private int skating;
