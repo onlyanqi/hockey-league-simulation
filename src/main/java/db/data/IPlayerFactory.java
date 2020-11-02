@@ -16,4 +16,6 @@ public interface IPlayerFactory {
 
     void updatePlayerById(int id, Player player) throws Exception;
 
+    void deletePlayerListOfTeam(int teamId) throws Exception;
+
 }

@@ -181,4 +181,14 @@ public class Team extends SharedAttributes {
     public void setLossPoint(int lossPoint) {
         this.lossPoint = lossPoint;
     }
+
+    private boolean isTraded;
+
+    public boolean isTraded() {
+        return isTraded;
+    }
+
+    public void setTraded(boolean traded) {
+        isTraded = traded;
+    }
 }
