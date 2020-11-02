@@ -15,7 +15,7 @@ public class TradeOfferMock implements ITradeOfferFactory {
         return tradeOffer.getId();
     }
 
-    public void getTradeOffer(TradeOffer tradeOffer, int from, int to){
+    public void getTradeOffer(TradeOffer tradeOffer, int from, int to) {
         tradeOffer.setId(from);
         tradeOffer.setLeagueId(from);
         tradeOffer.setTradingId(from);

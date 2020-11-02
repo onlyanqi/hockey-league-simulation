@@ -4,8 +4,8 @@ import db.dao.UserDao;
 import db.data.IUserFactory;
 import org.junit.Before;
 import org.junit.Test;
-import simulation.model.User;
 import simulation.mock.UserMock;
+import simulation.model.User;
 
 import static org.junit.Assert.assertTrue;
 

@@ -23,6 +23,8 @@ public class Team extends SharedAttributes {
     private Manager manager;
     private String generalManagerName;
     private List<Player> playerList;
+    private int tradeOfferCountOfSeason;
+    private int lossPoint;
 
     public Team() {
     }
@@ -164,9 +166,6 @@ public class Team extends SharedAttributes {
         }
     }
 
-
-    private int tradeOfferCountOfSeason;
-
     public int getTradeOfferCountOfSeason() {
         return tradeOfferCountOfSeason;
     }
@@ -175,13 +174,21 @@ public class Team extends SharedAttributes {
         this.tradeOfferCountOfSeason = tradeOfferCountOfSeason;
     }
 
-    private int lossPoint;
-
     public int getLossPoint() {
         return lossPoint;
     }
 
     public void setLossPoint(int lossPoint) {
         this.lossPoint = lossPoint;
+    }
+
+    private boolean isTraded;
+
+    public boolean isTraded() {
+        return isTraded;
+    }
+
+    public void setTraded(boolean traded) {
+        isTraded = traded;
     }
 }

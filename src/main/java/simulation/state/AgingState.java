@@ -22,10 +22,8 @@ public class AgingState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-
         ConsoleOutput.getInstance().printMsgToConsole(AGING_DAY);
         agingPlayerDay(league);
-
         return exit();
     }
 

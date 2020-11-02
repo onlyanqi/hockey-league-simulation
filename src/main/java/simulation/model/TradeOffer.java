@@ -4,13 +4,6 @@ import db.data.ITradeOfferFactory;
 
 public class TradeOffer extends SharedAttributes {
 
-    public TradeOffer(){}
-
-    public TradeOffer(int tradingOfferId, ITradeOfferFactory factory) throws Exception {
-        setId(tradingOfferId);
-        factory.loadTradeOfferDetailsById(tradingOfferId, this);
-    }
-
     private int leagueId;
     private int tradingId;
     private int fromTeamId;
@@ -19,6 +12,12 @@ public class TradeOffer extends SharedAttributes {
     private int toPlayerId;
     private int seasonId;
     private String status;
+    public TradeOffer() {
+    }
+    public TradeOffer(int tradingOfferId, ITradeOfferFactory factory) throws Exception {
+        setId(tradingOfferId);
+        factory.loadTradeOfferDetailsById(tradingOfferId, this);
+    }
 
     public int getLeagueId() {
         return leagueId;

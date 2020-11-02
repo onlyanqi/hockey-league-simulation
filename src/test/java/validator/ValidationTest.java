@@ -1,7 +1,6 @@
 package validator;
 
 import org.junit.Test;
-import simulation.state.ExecuteTradeState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +20,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void isNotNullTest(){
+    public void isNotNullTest() {
         String a = null;
         Validation validation = new Validation();
         assertFalse(validation.isNotNull(a));

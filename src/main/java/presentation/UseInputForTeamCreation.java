@@ -9,7 +9,7 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
     private ConsoleOutput consoleOutput;
     private ReadUserInput readUserInput;
 
-    public UseInputForTeamCreation(){
+    public UseInputForTeamCreation() {
         consoleOutput = ConsoleOutput.getInstance();
         readUserInput = ReadUserInput.getInstance();
     }
@@ -56,11 +56,11 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
     @Override
     public int getPlayerId(int upperBound) {
         String playerIdStr = readUserInput.getInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)");
-        int playerId=-1;
-        while(playerId==-1){
-            if(isDigit(playerIdStr)){
+        int playerId = -1;
+        while (playerId == -1) {
+            if (isDigit(playerIdStr)) {
                 playerId = Integer.parseInt(playerIdStr);
-            }else{
+            } else {
                 consoleOutput.printMsgToConsole("Please enter valid digits.");
                 playerIdStr = readUserInput.getInput("Please enter id between 0 to " + upperBound + ". (boundaries inclusive)");
             }
@@ -68,10 +68,10 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
         return playerId;
     }
 
-    public boolean isDigit(String str){
-        if(str.matches("[0-9]+") && str.length() > 0){
+    public boolean isDigit(String str) {
+        if (str.matches("[0-9]+") && str.length() > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -81,15 +81,15 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
         String generalManagerIdStr = readUserInput.getInput("Please enter id of general manager");
         int generalManagerId = -1;
 
-        while(generalManagerId==-1){
-            if(isDigit(generalManagerIdStr)){
+        while (generalManagerId == -1) {
+            if (isDigit(generalManagerIdStr)) {
                 generalManagerId = Integer.parseInt(generalManagerIdStr);
-                if(generalManagerId < 0 || (generalManagerId > managerList.size() - 1)){
+                if (generalManagerId < 0 || (generalManagerId > managerList.size() - 1)) {
                     generalManagerId = -1;
                     consoleOutput.printMsgToConsole("Please enter valid digits.");
                     generalManagerIdStr = readUserInput.getInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
                 }
-            }else{
+            } else {
                 consoleOutput.printMsgToConsole("Please enter valid digits.");
                 generalManagerIdStr = readUserInput.getInput("Please enter GeneralManager id between 0 to " + (managerList.size() - 1) + ". (boundaries inclusive)");
             }
@@ -102,20 +102,19 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
         String headCoachIdStr = readUserInput.getInput("Please enter the id of head coach");
         int headCoachId = -1;
 
-        while(headCoachId==-1){
-            if(isDigit(headCoachIdStr)){
+        while (headCoachId == -1) {
+            if (isDigit(headCoachIdStr)) {
                 headCoachId = Integer.parseInt(headCoachIdStr);
-                if(headCoachId < 0 || (headCoachId > coachList.size() - 1)){
+                if (headCoachId < 0 || (headCoachId > coachList.size() - 1)) {
                     headCoachId = -1;
                     consoleOutput.printMsgToConsole("Please enter valid digits.");
                     headCoachIdStr = readUserInput.getInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
                 }
-            }else{
+            } else {
                 consoleOutput.printMsgToConsole("Please enter valid digits.");
                 headCoachIdStr = readUserInput.getInput("Please enter HeadCoach id between 0 to " + (coachList.size() - 1) + ". (boundaries inclusive)");
             }
         }
         return headCoachId;
     }
-
 }

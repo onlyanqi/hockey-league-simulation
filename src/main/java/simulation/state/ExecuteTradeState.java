@@ -120,6 +120,7 @@ public class ExecuteTradeState implements ISimulateState {
         tradeOffer.setFromTeamId(weakestPlayer.getTeamId());
         tradeOffer.setToTeamId(swapPlayer.getTeamId());
         tradeOffer.setToPlayerId(swapPlayer.getId());
+        tradeOffer.setSeasonId(LocalDate.now().getYear());
         if(league.getTradingOfferList() == null || league.getTradingOfferList().isEmpty()){
             league.setTradingOfferList(new ArrayList<>());
         }
@@ -133,14 +134,15 @@ public class ExecuteTradeState implements ISimulateState {
         swap.put(TRADING, trading);
         Team fromTeam = (Team) swap.get(FROMTEAM);
         fromTeam.setTradeOfferCountOfSeason(fromTeam.getTradeOfferCountOfSeason()+1);
+        createTradeOffer(swap);
         if(toTeam.isAiTeam()) {
             if (acceptRejectTradeOffer(swap)) {
-                createTradeOffer(swap);
+                fromTeam.setTraded(true);
+                toTeam.setTraded(true);
                 updateTradingDetails(swap);
                 consoleOutput.printMsgToConsole("Below trade is accepted successfully.");
                 consoleOutput.printAITradeDetailsToUser(swap);
             } else {
-                createTradeOffer(swap);
                 TradeOffer tradeOffer = (TradeOffer) swap.get(TRADEOFFER);
                 if(validation.isNotNull(tradeOffer)) {
                     tradeOffer.setStatus(REJECTED);
@@ -156,11 +158,14 @@ public class ExecuteTradeState implements ISimulateState {
     public void performUserTrade(Map<String, Object> swap){
         consoleOutput.printUserTradeDetailsToUser(swap);
         String userResponse = readUserInput.getUserTradeResponse();
+
         if(userResponse.equalsIgnoreCase("A".trim())){
-            createTradeOffer(swap);
+            Team fromTeam = (Team) swap.get(FROMTEAM);
+            Team toTeam = (Team) swap.get(TOTEAM);
+            fromTeam.setTraded(true);
+            toTeam.setTraded(true);
             updateTradingDetails(swap);
         } else {
-            createTradeOffer(swap);
             TradeOffer tradeOffer = (TradeOffer) swap.get(TRADEOFFER);
             if(validation.isNotNull(tradeOffer)) {
                 tradeOffer.setStatus(REJECTED);
@@ -206,6 +211,9 @@ public class ExecuteTradeState implements ISimulateState {
         List<Player> toPlayerList = toTeam.getPlayerList();
         toPlayerList.remove(toPlayer);
         toPlayerList.add(fromPlayer);
+
+        fromPlayer.setTeamId(toTeam.getId());
+        toPlayer.setTeamId(fromTeam.getId());
 
         if(fromPlayer.isCaptain()){
             Collections.sort(fromPlayerList, Collections.reverseOrder());
@@ -357,6 +365,5 @@ public class ExecuteTradeState implements ISimulateState {
         hockeyContext.getUser().setLeague(league);
         return new AgingState(hockeyContext);
     }
-
 
 }

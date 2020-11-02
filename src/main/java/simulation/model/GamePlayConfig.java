@@ -40,7 +40,7 @@ public class GamePlayConfig{
     }
 
     public void setAging(Aging aging) {
-        if(aging == null){
+        if (aging == null) {
             return;
         }
         this.aging = aging;
@@ -51,7 +51,7 @@ public class GamePlayConfig{
     }
 
     public void setInjury(Injury injury) {
-        if(injury == null){
+        if (injury == null) {
             return;
         }
         this.injury = injury;
@@ -62,7 +62,7 @@ public class GamePlayConfig{
     }
 
     public void setGameResolver(GameResolver gameResolver) {
-        if(gameResolver == null){
+        if (gameResolver == null) {
             return;
         }
         this.gameResolver = gameResolver;
@@ -73,7 +73,7 @@ public class GamePlayConfig{
     }
 
     public void setTrading(Trading trading) {
-        if(trading == null){
+        if (trading == null) {
             return;
         }
         this.trading = trading;
@@ -88,7 +88,7 @@ public class GamePlayConfig{
     }
 
     public void setTraining(Training training) {
-        if(training == null){
+        if (training == null) {
             return;
         }
         this.training = training;

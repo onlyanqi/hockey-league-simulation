@@ -1,8 +1,8 @@
 package db.dao;
 
 import db.data.IEventFactory;
-import simulation.model.NHLEvents;
 import simulation.model.DateTime;
+import simulation.model.NHLEvents;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,7 +40,7 @@ public class EventDao implements IEventFactory {
             callDB = new CallDB("LoadEventById(?)");
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if(rs!=null){
+            if (rs != null) {
                 nhlEvents.setId(rs.getInt(1));
                 nhlEvents.setRegularSeasonStartDate(rs.getDate(2).toLocalDate());
                 nhlEvents.setTradeDeadlineDate(rs.getDate(3).toLocalDate());
@@ -63,8 +63,8 @@ public class EventDao implements IEventFactory {
             callDB = new CallDB("LoadEventByLeagueId(?)");
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if(rs!=null){
-                while(rs.next()){
+            if (rs != null) {
+                while (rs.next()) {
                     nhlEvents.setId(rs.getInt(1));
                     nhlEvents.setRegularSeasonStartDate(rs.getDate(2).toLocalDate());
                     nhlEvents.setTradeDeadlineDate(rs.getDate(3).toLocalDate());
