@@ -59,7 +59,7 @@ public class InjuryTest {
 
     @Test
     public void getRandomInjuryChanceTest() throws Exception {
-        Injury injury = new Injury(1, loadInjuryFactory);
+        Injury injury = new Injury(6, loadInjuryFactory);
         assertEquals(injury.getRandomInjuryChance(), (Double)0.05);
     }
 

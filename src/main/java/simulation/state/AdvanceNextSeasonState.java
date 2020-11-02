@@ -42,12 +42,10 @@ public class AdvanceNextSeasonState implements ISimulateState {
                         Player teamPlayer = playerList.get(i);
                         teamPlayer.getOlder();
                         if (teamPlayer.retirementCheck(aging)) {
+                            teamPlayer.setRetired(true);
                             Player.Position position = teamPlayer.getPosition();
                             playerList.remove(i);
                             this.findReplacement(playerList, position, i);
-                            /*
-                            save historical player stats (retired);
-                             */
                         }
                         teamPlayer.agingInjuryRecovery(league);
                     }
@@ -59,6 +57,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
             for (int i = freeAgentList.size() - 1; i >= 0; i--) {
                 freeAgentPlayer.getOlder();
                 if (freeAgentPlayer.retirementCheck(aging)) {
+                    freeAgentPlayer.setRetired(true);
                     freeAgentList.remove(i);
                 }
                 freeAgentPlayer.agingInjuryRecovery(league);

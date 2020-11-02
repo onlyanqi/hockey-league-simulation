@@ -773,16 +773,5 @@ public class ImportState implements IHockeyState {
         }
         return isExist;
     }
-
-    private boolean isPlayerExists(ArrayList<Player> list, String name) {
-
-        boolean isExist = false;
-        for (Player player : list) {
-            if (player.getName().equals(name)) {
-                isExist = true;
-            }
-        }
-        return isExist;
-    }
 }
 
