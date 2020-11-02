@@ -3,6 +3,7 @@ package db.dao;
 import db.data.ILeagueFactory;
 import simulation.model.League;
 import simulation.model.DateTime;
+import simulation.model.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -103,9 +104,34 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
                 leagueList = new ArrayList<>();
                 while (rs.next()) {
                     League league = new League();
+                    Aging aging = new Aging();
+                    GameResolver gameResolver = new GameResolver();
+                    Injury injuries = new Injury();
+                    Training training = new Training();
+                    Trading trading = new Trading();
+                    GamePlayConfig gamePlayConfig = new GamePlayConfig();
+
                     league.setId(rs.getInt(1));
                     league.setName(rs.getString(2));
                     league.setCreatedBy(rs.getInt(3));
+                    aging.setAverageRetirementAge(rs.getInt(4));
+                    aging.setMaximumAge(rs.getInt(5));
+                    gameResolver.setRandomWinChance(rs.getInt(6));
+                    injuries.setRandomInjuryChance(rs.getDouble(7));
+                    injuries.setInjuryDaysLow(rs.getInt(8));
+                    injuries.setInjuryDaysHigh(rs.getInt(9));
+                    training.setDaysUntilStatIncreaseCheck(rs.getInt(10));
+                    trading.setLossPoint(rs.getInt(11));
+                    trading.setRandomTradeOfferChance(rs.getInt(12));
+                    trading.setMaxPlayersPerTrade(rs.getInt(13));
+                    trading.setRandomAcceptanceChance(rs.getInt(14));
+                    gamePlayConfig.setAging(aging);
+                    gamePlayConfig.setGameResolver(gameResolver);
+                    gamePlayConfig.setInjury(injuries);
+                    gamePlayConfig.setTrading(trading);
+                    gamePlayConfig.setTraining(training);
+                    league.setGamePlayConfig(gamePlayConfig);
+                    league.setCurrentDate(rs.getDate(15).toLocalDate());
                     leagueList.add(league);
                 }
             }

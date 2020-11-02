@@ -50,17 +50,15 @@ public class FreeAgentDao implements IFreeAgentFactory {
         ICallDB callDB = null;
         FreeAgent freeAgent = null;
         try {
-            callDB = new CallDB("LoadFreeAgentByLeagueId(?,?,?,?)");
+            callDB = new CallDB("LoadFreeAgentByLeagueId(?,?,?)");
             callDB.setInputParameterInt(1, leagueId);
             callDB.setOutputParameterInt(2);
             callDB.setOutputParameterInt(3);
-            callDB.setOutputParameterInt(4);
             callDB.executeLoad();
 
             freeAgent = new FreeAgent();
             freeAgent.setId(callDB.returnOutputParameterInt(2));
             freeAgent.setLeagueId(callDB.returnOutputParameterInt(3));
-            freeAgent.setSeasonId(callDB.returnOutputParameterInt(4));
 
         } catch (Exception e) {
             throw e;

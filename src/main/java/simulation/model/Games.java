@@ -4,12 +4,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Games extends SharedAttributes{
+public class Games {
 
     public Games() {
     }
 
     List<Game> gameList = new ArrayList<>();
+    int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public List<Game> getGameList() {
         return gameList;
