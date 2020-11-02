@@ -12,14 +12,6 @@ import simulation.serializers.LeagueDataSerializerDeSerializer;
 import static org.junit.Assert.*;
 
 public class AppConfigTest {
-    private static AppConfig appConfig = null;
-
-    private static IUserInputForTeamCreation inputForTeamCreation;
-    private static IConsoleOutputForTeamCreation outputForTeamCreation;
-    private static LeagueDataSerializerDeSerializer dataSerializer;
-    private static LeagueConcrete leagueConcrete;
-
-
     @Test
     public void getInstanceTest(){
         assertTrue(AppConfig.getInstance() instanceof AppConfig);
