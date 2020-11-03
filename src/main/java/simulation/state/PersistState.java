@@ -35,6 +35,9 @@ public class PersistState implements ISimulateState {
     }
 
     private void saveToPersistence() {
+        if(todayIsStartOfSeason()){
+            persistLeagueToDB();
+        }
         if(stanleyCupWinnerDetermined()){
 
             List<TeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
@@ -44,7 +47,7 @@ public class PersistState implements ISimulateState {
                 ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(1).getTeamName() + " won the stanley cup!");
             }
 
-            persistLeagueToDB();
+            updateDataBaseWithSimulatedDate();
             persistRetiredPlayers();
         }
     }
@@ -124,7 +127,6 @@ public class PersistState implements ISimulateState {
     }
 
     private void addNewGames() throws Exception {
-
         List<Game> games = getNewGames();
         addGameList(league.getId(), games);
     }
@@ -210,9 +212,6 @@ public class PersistState implements ISimulateState {
                                     addManagerFactory.addManager(manager);
 
                                     addPlayerList(teamId, 0, team.getPlayerList());
-
-                                    team.setLossPoint(0);
-                                    team.setTradeOfferCountOfSeason(0);
                                 }
                             }
                         }
@@ -327,6 +326,8 @@ public class PersistState implements ISimulateState {
         for (Conference conference : league.getConferenceList()) {
             for (Division division : conference.getDivisionList()) {
                 for (Team team : division.getTeamList()) {
+                    team.setLossPoint(0);
+                    team.setTradeOfferCountOfSeason(0);
                     teamFactory.updateTeamById(team);
                 }
             }
