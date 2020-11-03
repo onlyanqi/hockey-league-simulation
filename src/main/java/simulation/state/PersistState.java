@@ -35,13 +35,9 @@ public class PersistState implements ISimulateState {
     }
 
     private void saveToPersistence() {
-        if (todayIsStartOfSeason()) {
+        if(stanleyCupWinnerDetermined()){
             persistLeagueToDB();
-        } else {
-            if (stanleyCupWinnerDetermined()) {
-                persistRetiredPlayers();
-            }
-            updateDataBaseWithSimulatedDate();
+            persistRetiredPlayers();
         }
     }
 
