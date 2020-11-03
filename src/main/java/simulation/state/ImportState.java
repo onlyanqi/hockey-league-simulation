@@ -240,10 +240,11 @@ public class ImportState implements IHockeyState {
                 throw new IllegalArgumentException("Please make sure team name is valid");
             }
 
-            if (isTeamExists(teamList, teamName)) {
+            if (isTeamExistsInDivision(teamList, teamName)) {
                 throw new IllegalArgumentException("Please make sure team name is unique in one division");
             }
-            if (appearedName.contains(teamName)) {
+
+            if (isTeamExistsInLeague(teamName)) {
                 throw new IllegalArgumentException("Please make sure team name is unique in one league");
             }
 
@@ -762,7 +763,7 @@ public class ImportState implements IHockeyState {
         return isExist;
     }
 
-    private boolean isTeamExists(ArrayList<Team> list, String name) {
+    private boolean isTeamExistsInDivision(ArrayList<Team> list, String name) {
         boolean isExist = false;
         for (Team team : list) {
             if (team.getName().equals(name)) {
@@ -770,6 +771,14 @@ public class ImportState implements IHockeyState {
             }
         }
         return isExist;
+    }
+
+    private boolean isTeamExistsInLeague(String teamName) {
+        if (appearedName.add(teamName)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 
