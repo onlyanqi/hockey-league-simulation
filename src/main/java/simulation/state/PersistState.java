@@ -35,8 +35,19 @@ public class PersistState implements ISimulateState {
     }
 
     private void saveToPersistence() {
-        if(stanleyCupWinnerDetermined()){
+        if(todayIsStartOfSeason()){
             persistLeagueToDB();
+        }
+        if(stanleyCupWinnerDetermined()){
+
+            List<TeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
+            if (teamScoreList.get(0).getNumberOfWins() > teamScoreList.get(1).getNumberOfWins()) {
+                ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(0).getTeamName() + " won the stanley cup!");
+            } else {
+                ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(1).getTeamName() + " won the stanley cup!");
+            }
+
+            updateDataBaseWithSimulatedDate();
             persistRetiredPlayers();
         }
     }
@@ -116,7 +127,6 @@ public class PersistState implements ISimulateState {
     }
 
     private void addNewGames() throws Exception {
-
         List<Game> games = getNewGames();
         addGameList(league.getId(), games);
     }
@@ -202,9 +212,6 @@ public class PersistState implements ISimulateState {
                                     addManagerFactory.addManager(manager);
 
                                     addPlayerList(teamId, 0, team.getPlayerList());
-
-                                    team.setLossPoint(0);
-                                    team.setTradeOfferCountOfSeason(0);
                                 }
                             }
                         }
@@ -319,6 +326,8 @@ public class PersistState implements ISimulateState {
         for (Conference conference : league.getConferenceList()) {
             for (Division division : conference.getDivisionList()) {
                 for (Team team : division.getTeamList()) {
+                    team.setLossPoint(0);
+                    team.setTradeOfferCountOfSeason(0);
                     teamFactory.updateTeamById(team);
                 }
             }
@@ -388,13 +397,6 @@ public class PersistState implements ISimulateState {
 
     private ISimulateState exit() {
         if (stanleyCupWinnerDetermined()) {
-            List<TeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
-            if (teamScoreList.get(0).getNumberOfWins() > teamScoreList.get(1).getNumberOfWins()) {
-                ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(0).getTeamName() + " won the stanley cup!");
-            } else {
-                ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(1).getTeamName() + " won the stanley cup!");
-            }
-
             return null;
         } else {
             return new AdvanceTimeState(hockeyContext);
