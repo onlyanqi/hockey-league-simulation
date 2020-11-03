@@ -53,7 +53,7 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
     public int addRetiredPlayer(int leagueId, Player player) throws Exception {
         ICallDB callDB = null;
         try {
-            String procedureName = "AddRetiredPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String procedureName = "AddRetiredPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             callDB = new CallDB(procedureName);
             callDB.setInputParameterString(1, player.getName());
             callDB.setInputParameterString(2, player.getPosition().toString());
