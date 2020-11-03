@@ -150,17 +150,6 @@ public class PersistState implements ISimulateState {
                 league.addLeague(addLeagueFactory);
                 int leagueId = league.getId();
 
-                Trading trading = league.getGamePlayConfig().getTrading();
-                trading.setLeagueId(leagueId);
-                if (validation.isNotNull(trading)) {
-                    addTrading(trading);
-                }
-
-                List<TradeOffer> tradeOfferList = league.getTradeOfferList();
-                if (validation.isListNotEmpty(tradeOfferList)) {
-                    addTradeOfferList(tradeOfferList);
-                }
-
                 SeasonConcrete seasonConcrete = new SeasonConcrete();
                 ISeasonFactory addSeasonDao = seasonConcrete.newAddSeasonFactory();
                 season.addSeason(addSeasonDao);
@@ -213,10 +202,22 @@ public class PersistState implements ISimulateState {
                                     addManagerFactory.addManager(manager);
 
                                     addPlayerList(teamId, 0, team.getPlayerList());
+
+                                    team.setLossPoint(0);
+                                    team.setTradeOfferCountOfSeason(0);
                                 }
                             }
-
                         }
+                    }
+                    Trading trading = league.getGamePlayConfig().getTrading();
+                    trading.setLeagueId(leagueId);
+                    if (validation.isNotNull(trading)) {
+                        addTrading(trading);
+                    }
+
+                    List<TradeOffer> tradeOfferList = league.getTradeOfferList();
+                    if (validation.isListNotEmpty(tradeOfferList)) {
+                        addTradeOfferList(tradeOfferList);
                     }
                 }
 
