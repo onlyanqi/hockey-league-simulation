@@ -2,3 +2,10 @@
 .idea/
 target/
 .properties
+*.iml
+inputJson.txt
+input2.txt
+JsonOutput.txt
+a.json
+league1.json
+LeagueTeamUnique.json
