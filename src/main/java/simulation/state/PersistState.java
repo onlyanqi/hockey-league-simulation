@@ -36,6 +36,14 @@ public class PersistState implements ISimulateState {
 
     private void saveToPersistence() {
         if(stanleyCupWinnerDetermined()){
+
+            List<TeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
+            if (teamScoreList.get(0).getNumberOfWins() > teamScoreList.get(1).getNumberOfWins()) {
+                ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(0).getTeamName() + " won the stanley cup!");
+            } else {
+                ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(1).getTeamName() + " won the stanley cup!");
+            }
+
             persistLeagueToDB();
             persistRetiredPlayers();
         }
@@ -388,13 +396,6 @@ public class PersistState implements ISimulateState {
 
     private ISimulateState exit() {
         if (stanleyCupWinnerDetermined()) {
-            List<TeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
-            if (teamScoreList.get(0).getNumberOfWins() > teamScoreList.get(1).getNumberOfWins()) {
-                ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(0).getTeamName() + " won the stanley cup!");
-            } else {
-                ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(1).getTeamName() + " won the stanley cup!");
-            }
-
             return null;
         } else {
             return new AdvanceTimeState(hockeyContext);
