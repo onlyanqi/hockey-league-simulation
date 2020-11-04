@@ -5,11 +5,6 @@ stages:
   - deploy_prod
   - deploy_release
 
-cache:
-  paths:
-    - .m2/repository/
-    - target/
-
 build:
   stage: build
   image: maven
