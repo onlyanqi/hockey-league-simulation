@@ -14,7 +14,7 @@ build:
   stage: build
   image: maven
   tags:
-    - ugrad
+    - grad
   script:
     - touch .properties
     - echo "db.url="${DB_URL} >> .properties
@@ -31,7 +31,7 @@ test:
   stage: test
   image: maven
   tags:
-    - ugrad
+    - grad
   script:
     - touch .properties
     - echo "db.url="${DB_URL} >> .properties
@@ -51,7 +51,7 @@ deploy_test:
   stage: deploy_test
   image: maven
   tags:
-    - ugrad
+    - grad
   only:
     - develop
   artifacts:
@@ -74,7 +74,7 @@ deploy_release:
   stage: deploy_release
   image: maven
   tags:
-    - ugrad
+    - grad
   only:
     - release
   artifacts:
@@ -97,7 +97,7 @@ deploy_prod:
   stage: deploy_prod
   image: maven
   tags:
-    - ugrad
+    - grad
   only:
     - release
     - master
