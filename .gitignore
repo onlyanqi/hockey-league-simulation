@@ -3,6 +3,7 @@
 target/
 .properties
 *.iml
+logs/
 inputJson.txt
 input2.txt
 JsonOutput.txt

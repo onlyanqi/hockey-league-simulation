@@ -25,7 +25,7 @@ public class GeneratePlayoffScheduleDateTest {
     public static void init() throws Exception {
         userFactory = new UserMock();
         hockeyContext = new HockeyContext();
-        User user = new User(1, userFactory);
+        User user = new User(4, userFactory);
         hockeyContext.setUser(user);
     }
 
