@@ -7,6 +7,8 @@ public class ReadUserInput {
     private static ReadUserInput readUserInput;
     private static ConsoleOutput consoleOutput;
 
+    private ReadUserInput(){}
+
     public static ReadUserInput getInstance() {
         if (null == readUserInput) {
             readUserInput = new ReadUserInput();
