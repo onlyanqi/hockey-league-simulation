@@ -42,7 +42,9 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
         } catch (Exception exception) {
             throw exception;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -94,7 +96,9 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 setPlayerFromDB(player, rs);
             }
 
@@ -102,7 +106,9 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             printLog("PlayerDao: loadPlayerById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else {
                 callDB.closeConnection();
             }
         }
@@ -135,7 +141,9 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             callDB.setInputParameterInt(1, freeAgentId);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return playerList;
+            } else{
                 playerList = new ArrayList<>();
                 while (rs.next()) {
                     Player player = new Player();
@@ -148,7 +156,9 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             printLog("PlayerDao: loadPlayerListByFreeAgentId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return playerList;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -165,7 +175,9 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             callDB.setInputParameterInt(1, teamId);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return playerList;
+            } else{
                 playerList = new ArrayList<>();
                 while (rs.next()) {
                     Player player = new Player();
@@ -178,7 +190,9 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             printLog("PlayerDao: loadPlayerListByTeamId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return playerList;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -209,7 +223,9 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             printLog("PlayerDao: updatePlayerById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -227,7 +243,9 @@ public class PlayerDao extends DBExceptionLog implements IPlayerFactory {
             printLog("PlayerDao: deletePlayerListOfTeam: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

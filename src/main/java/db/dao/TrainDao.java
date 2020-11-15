@@ -28,7 +28,9 @@ public class TrainDao extends DBExceptionLog implements ITrainingFactory {
             printLog("TrainDao: addTraining: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -58,7 +60,9 @@ public class TrainDao extends DBExceptionLog implements ITrainingFactory {
             printLog("TrainDao: loadTrainingByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

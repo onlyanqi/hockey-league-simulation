@@ -5,8 +5,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.UserMock;
 import simulation.model.User;
-import validator.Validation;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -17,7 +15,6 @@ public class GeneratePlayoffScheduleDateTest {
     private static ITradeOfferFactory tradeOfferFactory;
     private static ITradingFactory tradingFactory;
     private static IUserFactory userFactory;
-    private static Validation validation;
     private static HockeyContext hockeyContext;
 
 

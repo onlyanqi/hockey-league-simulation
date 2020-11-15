@@ -21,7 +21,9 @@ public class SeasonDao extends DBExceptionLog implements ISeasonFactory {
             printLog("SeasonDao: addSeason: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -45,7 +47,9 @@ public class SeasonDao extends DBExceptionLog implements ISeasonFactory {
             printLog("SeasonDao: loadSeasonById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

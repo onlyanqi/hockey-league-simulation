@@ -735,8 +735,7 @@ public class ImportState implements IHockeyState {
     }
 
     private boolean notValidKeyInObject(JSONObject object, String key) {
-        ValidationConcrete validation = new ValidationConcrete();
-        if (object.containsKey(key) && validation.newValidation().isNotNull(object.get(key))) {
+        if (object.containsKey(key)) {
             return false;
         } else {
             return true;

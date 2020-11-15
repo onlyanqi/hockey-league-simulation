@@ -24,7 +24,9 @@ public class GameResolverDao extends DBExceptionLog implements IGameResolverFact
             printLog("GameResolverDao: addGameResolver: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -39,7 +41,9 @@ public class GameResolverDao extends DBExceptionLog implements IGameResolverFact
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 gameResolver.setId(rs.getInt(1));
                 gameResolver.setRandomWinChance(rs.getDouble(3));
             }
@@ -47,7 +51,9 @@ public class GameResolverDao extends DBExceptionLog implements IGameResolverFact
             printLog("GameResolverDao: loadGameResolverById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -61,7 +67,9 @@ public class GameResolverDao extends DBExceptionLog implements IGameResolverFact
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else {
                 gameResolver.setId(rs.getInt(1));
                 gameResolver.setRandomWinChance(rs.getDouble(3));
             }
@@ -69,7 +77,9 @@ public class GameResolverDao extends DBExceptionLog implements IGameResolverFact
             printLog("GameResolverDao: loadResolverByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

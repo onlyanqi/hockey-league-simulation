@@ -10,8 +10,6 @@ import simulation.mock.UserMock;
 import simulation.model.League;
 import simulation.model.Player;
 import simulation.model.User;
-import validator.Validation;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,6 @@ public class AdvanceNextSeasonStateTest {
     private static ITradeOfferFactory tradeOfferFactory;
     private static ITradingFactory tradingFactory;
     private static IUserFactory userFactory;
-    private static Validation validation;
     private static HockeyContext hockeyContext;
 
     @BeforeClass
@@ -35,7 +32,6 @@ public class AdvanceNextSeasonStateTest {
         teamFactory = new TeamMock();
         playerFactory = new PlayerMock();
         userFactory = new UserMock();
-        validation = new Validation();
         hockeyContext = new HockeyContext();
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);

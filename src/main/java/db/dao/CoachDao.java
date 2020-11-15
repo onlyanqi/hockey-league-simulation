@@ -31,7 +31,9 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             printLog("CoachDao: addCoach: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -47,7 +49,9 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 coach = new Coach();
                 coach.setId(rs.getInt(1));
                 coach.setTeamId(rs.getInt(2));
@@ -63,7 +67,9 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             printLog("CoachDao: loadCoachById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -79,7 +85,9 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             callDB.setInputParameterInt(1, teamId);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return coach;
+            } else{
                 coach = new Coach();
                 coach.setId(rs.getInt(1));
                 coach.setTeamId(rs.getInt(2));
@@ -95,7 +103,9 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             printLog("CoachDao: loadCoachByTeamId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return coach;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -113,7 +123,9 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return freeCoachList;
+            } else{
                 freeCoachList = new ArrayList<>();
                 while (rs.next()) {
                     Coach coach = new Coach();
@@ -134,7 +146,9 @@ public class CoachDao extends DBExceptionLog implements ICoachFactory {
             printLog("CoachDao: loadFreeCoachListByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return freeCoachList;
+            } else{
                 callDB.closeConnection();
             }
         }

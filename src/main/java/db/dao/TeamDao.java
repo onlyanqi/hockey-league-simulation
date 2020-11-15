@@ -28,7 +28,9 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             printLog("TeamDao: addTeam: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -59,7 +61,9 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             printLog("TeamDao: loadTeamById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -89,7 +93,9 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             printLog("TeamDao: loadTeamByName: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -98,7 +104,7 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
     @Override
     public List<Team> loadTeamListByDivisionId(int divisionId) throws Exception {
         String loadTeamListByDivisionIdProcedureName = "LoadTeamListByDivisionId(?)";
-        List<Team> teamList;
+        List<Team> teamList = null;
         ICallDB callDB = null;
         try {
             callDB = new CallDB(loadTeamListByDivisionIdProcedureName);
@@ -123,7 +129,9 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             printLog("TeamDao: loadTeamListByDivisionId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return teamList;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -148,7 +156,9 @@ public class TeamDao extends DBExceptionLog implements ITeamFactory {
             printLog("TeamDao: updateTeamById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

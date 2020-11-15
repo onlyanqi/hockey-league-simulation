@@ -25,7 +25,9 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
             printLog("AgingDao: addAging: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -42,7 +44,9 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return aging;
+            } else{
                 aging = new Aging();
                 aging.setId(rs.getInt(1));
                 aging.setAverageRetirementAge(rs.getInt(2));
@@ -54,7 +58,9 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
             printLog("AgingDao: loadAgingByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return aging;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -70,7 +76,9 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 aging.setId(rs.getInt(1));
                 aging.setAverageRetirementAge(rs.getInt(2));
                 aging.setMaximumAge(rs.getInt(3));
@@ -81,7 +89,9 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
             printLog("AgingDao: loadAgingById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

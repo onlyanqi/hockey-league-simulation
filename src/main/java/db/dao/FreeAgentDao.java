@@ -21,7 +21,9 @@ public class FreeAgentDao extends DBExceptionLog implements IFreeAgentFactory {
             printLog("FreeAgentDao: addFreeAgent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -48,7 +50,9 @@ public class FreeAgentDao extends DBExceptionLog implements IFreeAgentFactory {
             printLog("FreeAgentDao: addFreeAgent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -74,7 +78,9 @@ public class FreeAgentDao extends DBExceptionLog implements IFreeAgentFactory {
             printLog("FreeAgentDao: addFreeAgent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return freeAgent;
+            } else{
                 callDB.closeConnection();
             }
         }

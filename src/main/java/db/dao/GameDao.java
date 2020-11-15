@@ -35,7 +35,9 @@ public class GameDao extends DBExceptionLog implements IGameFactory {
             printLog("GameDao: addGame: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -50,7 +52,9 @@ public class GameDao extends DBExceptionLog implements IGameFactory {
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 game.setId(rs.getInt(1));
                 game.setDate(rs.getDate(2).toLocalDate());
                 game.setTeam1(rs.getString(3));
@@ -62,7 +66,9 @@ public class GameDao extends DBExceptionLog implements IGameFactory {
             printLog("GameDao: loadGameById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -77,7 +83,9 @@ public class GameDao extends DBExceptionLog implements IGameFactory {
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return gameList;
+            } else{
                 gameList = new ArrayList<>();
                 while (rs.next()) {
                     Game game = new Game();
@@ -94,7 +102,9 @@ public class GameDao extends DBExceptionLog implements IGameFactory {
             printLog("GameDao: loadGamesByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return gameList;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -123,7 +133,9 @@ public class GameDao extends DBExceptionLog implements IGameFactory {
             printLog("GameDao: addGame: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

@@ -5,8 +5,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.*;
 import simulation.model.*;
-import validator.Validation;
-
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.*;
@@ -29,7 +27,6 @@ public class ExecuteTradeStateTest {
     private static ITradeOfferFactory tradeOfferFactory;
     private static ITradingFactory tradingFactory;
     private static IUserFactory userFactory;
-    private static Validation validation;
     private static HockeyContext hockeyContext;
 
     @BeforeClass
@@ -40,7 +37,6 @@ public class ExecuteTradeStateTest {
         tradeOfferFactory = new TradeOfferMock();
         tradingFactory = new TradingMock();
         userFactory = new UserMock();
-        validation = new Validation();
         hockeyContext = new HockeyContext();
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);
@@ -96,6 +92,8 @@ public class ExecuteTradeStateTest {
         League league = new League(1, leagueFactory);
         assertTrue(state.loopAllTeamsForTradeInitiation(league));
         league = new League();
+        List<Conference> conferences = new ArrayList<>();
+        league.setConferenceList(conferences);
         assertFalse(state.loopAllTeamsForTradeInitiation(league));
     }
 
@@ -108,7 +106,9 @@ public class ExecuteTradeStateTest {
 
         for (int i = 0; i < 50; i++) {
             state.tradingLogic(team, league);
-            if (validation.isNotNull(league.getTradeOfferList()) && league.getTradeOfferList().size() > 0) {
+            if (league.getTradeOfferList() == null || league.getTradeOfferList().isEmpty()) {
+                continue;
+            } else{
                 assertNotNull(league.getTradeOfferList().get(0).getStatus());
             }
         }
@@ -394,17 +394,18 @@ public class ExecuteTradeStateTest {
     @Test
     public void getWeakestPlayerListTest() throws Exception {
         Team team = new Team();
-        League league = new League(1, leagueFactory);
+        List<Player> playerList = new ArrayList<>();
+        team.setPlayerList(playerList);
 
+        League league = new League(1, leagueFactory);
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         List<Player> weakPlayerList = state.getWeakestPlayerList(team, league);
 
-        assertNull(weakPlayerList);
+        assertTrue(weakPlayerList.isEmpty());
 
         Player strongPlayer1 = new Player(10, playerFactory);
         Player strongPlayer2 = new Player(11, playerFactory);
 
-        List<Player> playerList = new ArrayList<>();
         playerList.add(strongPlayer1);
         playerList.add(strongPlayer2);
         team.setPlayerList(playerList);

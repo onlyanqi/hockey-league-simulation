@@ -1,9 +1,6 @@
 package db.dao;
 
 import db.connect.DBConnection;
-import simulation.factory.ValidationConcrete;
-import validator.IValidation;
-
 import java.sql.*;
 
 public class CallDB implements ICallDB {
@@ -11,6 +8,8 @@ public class CallDB implements ICallDB {
     private String procedureName;
     private Connection connection;
     private CallableStatement stmt;
+    private Connection nullConnection;
+    private CallableStatement nullStatement;
 
     public CallDB(String procedureName) throws Exception {
         this.procedureName = procedureName;
@@ -18,6 +17,9 @@ public class CallDB implements ICallDB {
 
         String query = "call ".concat(procedureName);
         stmt = connection.prepareCall(query);
+
+        nullConnection = new NullConnection();
+        nullStatement = new NullStatement();
     }
 
     @Override
@@ -80,18 +82,30 @@ public class CallDB implements ICallDB {
 
     @Override
     public void closeConnection() throws Exception {
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        IValidation validation = validationConcrete.newValidation();
         try {
-            if (validation.isNotNull(stmt)) {
-                stmt.close();
-            }
-            if (validation.isNotNull(connection)) {
+            stmt = getSafeCallableStatement(stmt);
+            stmt.close();
+            connection = getSafeConnection(connection);
+            if (connection.isClosed() == false) {
                 connection.close();
             }
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    public CallableStatement getSafeCallableStatement(CallableStatement statement){
+        if (statement == null){
+            return nullStatement;
+        }
+        return statement;
+    }
+
+    public Connection getSafeConnection(Connection connection){
+        if (connection == null){
+            return nullConnection;
+        }
+        return connection;
     }
 
 }

@@ -29,7 +29,9 @@ public class EventDao extends DBExceptionLog implements IEventFactory {
             printLog("EventDao: addEvent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -44,7 +46,9 @@ public class EventDao extends DBExceptionLog implements IEventFactory {
             callDB = new CallDB("LoadEventById(?)");
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 nhlEvents.setId(rs.getInt(1));
                 nhlEvents.setRegularSeasonStartDate(rs.getDate(2).toLocalDate());
                 nhlEvents.setTradeDeadlineDate(rs.getDate(3).toLocalDate());
@@ -57,7 +61,9 @@ public class EventDao extends DBExceptionLog implements IEventFactory {
             printLog("EventDao: addEvent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -72,7 +78,9 @@ public class EventDao extends DBExceptionLog implements IEventFactory {
 
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 while (rs.next()) {
                     nhlEvents.setId(rs.getInt(1));
                     nhlEvents.setRegularSeasonStartDate(rs.getDate(2).toLocalDate());
@@ -87,7 +95,9 @@ public class EventDao extends DBExceptionLog implements IEventFactory {
             printLog("EventDao: addEvent: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

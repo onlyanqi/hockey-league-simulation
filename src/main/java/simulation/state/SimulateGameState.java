@@ -1,25 +1,19 @@
 package simulation.state;
 
-import simulation.factory.ValidationConcrete;
 import simulation.model.Game;
 import simulation.model.League;
 import simulation.model.Team;
 import simulation.model.TeamStanding;
-import validator.IValidation;
-
 import java.util.List;
 
 public class SimulateGameState implements ISimulateState {
 
     private HockeyContext hockeyContext;
     private League league;
-    private IValidation validation;
 
     public SimulateGameState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        validation = validationConcrete.newValidation();
     }
 
     @Override
@@ -42,25 +36,23 @@ public class SimulateGameState implements ISimulateState {
         Team team1 = league.getTeamByTeamName(game.getTeam1());
         Team team2 = league.getTeamByTeamName(game.getTeam2());
 
-        if (validation.isNotNull(team1) && validation.isNotNull(team2)) {
-            if (team1.getStrength() > team2.getStrength()) {
-                game.setWinner(Game.Result.TEAM1);
-                team2.setLossPoint(team2.getLossPoint() + 1);
-            } else {
+        if (team1.getStrength() > team2.getStrength()) {
+            game.setWinner(Game.Result.TEAM1);
+            team2.setLossPoint(team2.getLossPoint() + 1);
+        } else {
+            game.setWinner(Game.Result.TEAM2);
+            team1.setLossPoint(team1.getLossPoint() + 1);
+        }
+        if (Math.random() <= upset) {
+            if (game.getWinner().equals(Game.Result.TEAM1)) {
                 game.setWinner(Game.Result.TEAM2);
                 team1.setLossPoint(team1.getLossPoint() + 1);
+            } else {
+                game.setWinner(Game.Result.TEAM1);
+                team2.setLossPoint(team2.getLossPoint() + 1);
             }
-            if (Math.random() <= upset) {
-                if (game.getWinner().equals(Game.Result.TEAM1)) {
-                    game.setWinner(Game.Result.TEAM2);
-                    team1.setLossPoint(team1.getLossPoint() + 1);
-                } else {
-                    game.setWinner(Game.Result.TEAM1);
-                    team2.setLossPoint(team2.getLossPoint() + 1);
-                }
-            }
-            game.setPlayed(true);
         }
+        game.setPlayed(true);
     }
 
     public void updateTeamStandings(Game game) {

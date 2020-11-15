@@ -1,8 +1,5 @@
 package db.connect;
 
-import simulation.factory.ValidationConcrete;
-import validator.IValidation;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -10,6 +7,8 @@ import java.util.Properties;
 public class DBConnection {
 
     private static DBConnection dbConnection;
+
+    private DBConnection(){}
 
     public static DBConnection getInstance() {
         if (null == dbConnection) {
@@ -20,9 +19,9 @@ public class DBConnection {
 
     public String formDBURL(Properties prop) {
         String dbURL = "";
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        IValidation validation = validationConcrete.newValidation();
-        if (validation.isNotNull(prop)) {
+        if (prop == null || prop.isEmpty()) {
+            return null;
+        } else {
             String dbHost = prop.getProperty("db.url");
             String dbName = prop.getProperty("db.Name");
             String dbPort = prop.getProperty("db.Port");
@@ -35,7 +34,7 @@ public class DBConnection {
     }
 
     public Connection getConnection() throws Exception {
-        Connection con = null;
+        Connection con;
 
         try {
 
@@ -48,7 +47,8 @@ public class DBConnection {
         } catch (Exception ex) {
             throw ex;
         }
-
     }
+
+
 
 }

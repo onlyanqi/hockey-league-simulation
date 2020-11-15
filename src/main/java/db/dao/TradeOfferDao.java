@@ -32,7 +32,9 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
             printLog("TradeOfferDao: addTradeOfferDetails: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -41,7 +43,7 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
     @Override
     public List<TradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
         ICallDB callDB = null;
-        List<TradeOffer> tradeOfferList;
+        List<TradeOffer> tradeOfferList = null;
         try {
             String procedureName = "LoadTradeOfferListByLeagueId(?)";
             callDB = new CallDB(procedureName);
@@ -69,7 +71,9 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
             printLog("TradeOfferDao: loadTradeOfferDetailsByLeagueId: SQLException: " + e);
             throw e;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return tradeOfferList;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -84,7 +88,9 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, tradeOfferId);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 while (rs.next()) {
                     tradeOffer.setId(rs.getInt(1));
                     tradeOffer.setLeagueId(rs.getInt(2));
@@ -101,7 +107,9 @@ public class TradeOfferDao extends DBExceptionLog implements ITradeOfferFactory 
             printLog("TradeOfferDao: loadTradeOfferDetailsById: SQLException: " + e);
             throw e;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

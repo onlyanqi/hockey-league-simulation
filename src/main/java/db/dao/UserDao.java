@@ -22,7 +22,9 @@ public class UserDao extends DBExceptionLog implements IUserFactory {
             printLog("UserDao: addUser: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -46,7 +48,9 @@ public class UserDao extends DBExceptionLog implements IUserFactory {
             printLog("UserDao: addUser: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -68,7 +72,9 @@ public class UserDao extends DBExceptionLog implements IUserFactory {
             printLog("UserDao: addUser: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

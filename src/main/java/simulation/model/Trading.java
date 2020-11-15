@@ -1,9 +1,6 @@
 package simulation.model;
 
 import db.data.ITradingFactory;
-import simulation.factory.ValidationConcrete;
-import validator.IValidation;
-
 import java.util.*;
 
 public class Trading extends SharedAttributes {
@@ -49,9 +46,9 @@ public class Trading extends SharedAttributes {
     }
 
     public void isLeagueInTradingPeriod(Date leagueDate) {
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        IValidation validation = validationConcrete.newValidation();
-        if (validation.isNotNull(leagueDate)) {
+        if (leagueDate == null){
+            this.isTradingPeriod = false;
+        } else {
             calTradeEndDateFromLeagueDate(leagueDate);
             int compare = leagueDate.compareTo(tradeEndDate);
             if (compare <= 0) {

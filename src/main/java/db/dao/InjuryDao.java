@@ -25,7 +25,9 @@ public class InjuryDao extends DBExceptionLog implements IInjuryFactory {
             printLog("InjuryDao: addInjury: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -35,14 +37,16 @@ public class InjuryDao extends DBExceptionLog implements IInjuryFactory {
     @Override
     public Injury loadInjuryByLeagueId(int leagueId) throws Exception {
         ICallDB callDB = null;
-        Injury injury = new Injury();
+        Injury injury = null;
         try {
             String procedureName = "LoadInjuryByLeagueId(?)";
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return injury;
+            } else{
                 injury = new Injury();
                 injury.setId(rs.getInt(1));
                 injury.setRandomInjuryChance(rs.getDouble(2));
@@ -55,7 +59,9 @@ public class InjuryDao extends DBExceptionLog implements IInjuryFactory {
             printLog("InjuryDao: loadInjuryByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return injury;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -71,7 +77,9 @@ public class InjuryDao extends DBExceptionLog implements IInjuryFactory {
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 injury = new Injury();
                 injury.setId(rs.getInt(1));
                 injury.setRandomInjuryChance(rs.getDouble(2));
@@ -84,7 +92,9 @@ public class InjuryDao extends DBExceptionLog implements IInjuryFactory {
             printLog("InjuryDao: loadInjuryById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }

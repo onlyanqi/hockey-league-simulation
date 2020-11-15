@@ -5,8 +5,6 @@ import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.*;
 import simulation.model.*;
-import validator.IValidation;
-
 import java.util.List;
 
 
@@ -16,13 +14,10 @@ public class LoadTeamState implements IHockeyState {
     private String teamName;
     private League league;
     private ReadUserInput readUserInput;
-    private IValidation iValidation;
 
     public LoadTeamState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         readUserInput = ReadUserInput.getInstance();
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        iValidation = validationConcrete.newValidation();
     }
 
     public League getLeague() {
@@ -74,7 +69,7 @@ public class LoadTeamState implements IHockeyState {
 
                 List<Team> teamArrayList = division.getTeamList();
                 for (Team team : teamArrayList) {
-                    if (iValidation.isNotNull(teamName) && iValidation.isNotNull(team.getName()) && team.getName().equals(teamName)) {
+                    if (team.getName().equals(teamName)) {
                         div = division;
                     }
                     PlayerConcrete playerConcrete = new PlayerConcrete();
@@ -98,16 +93,12 @@ public class LoadTeamState implements IHockeyState {
         setGames();
         setCoaches();
         Conference conf = null;
-        if (iValidation.isNotNull(league.getConferenceList()) && !league.getConferenceList().isEmpty()) {
-            for (Conference conference : league.getConferenceList()) {
-                if (iValidation.isNotNull(conference.getDivisionList()) && !conference.getDivisionList().isEmpty()) {
-                    for (Division division : conference.getDivisionList()) {
-                        if (iValidation.isNotNull(division.getName()) && iValidation.isNotNull(div.getName()) &&
-                                division.getName().equals(div.getName())) {
-                            conf = conference;
-                            break;
-                        }
-                    }
+
+        for (Conference conference : league.getConferenceList()) {
+            for (Division division : conference.getDivisionList()) {
+                if (division.getName().equals(div.getName())) {
+                    conf = conference;
+                    break;
                 }
             }
         }
@@ -154,10 +145,10 @@ public class LoadTeamState implements IHockeyState {
             System.exit(1);
             e.printStackTrace();
         }
-        if (iValidation.isNotNull(team) && team.getId() > 0) {
-            return false;
-        } else {
+        if (team == null || team.getId() == 0) {
             return true;
+        } else {
+            return false;
         }
 
     }

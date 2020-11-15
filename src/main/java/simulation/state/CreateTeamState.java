@@ -7,9 +7,7 @@ import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import presentation.ReadUserInput;
 import simulation.factory.LeagueConcrete;
-import simulation.factory.ValidationConcrete;
 import simulation.model.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -221,7 +219,6 @@ public class CreateTeamState implements IHockeyState {
     }
 
     private boolean isLeaguePresent(String leagueName) {
-        ValidationConcrete validation = new ValidationConcrete();
         LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
         ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
         League league = null;
@@ -231,9 +228,16 @@ public class CreateTeamState implements IHockeyState {
         } catch (Exception e) {
             consoleOutput.printMsgToConsole(UNABLETOLOADLEAGUE);
             System.exit(1);
-            e.printStackTrace();
         }
-        return validation.newValidation().isNotNull(league) && league.getId() > 0;
+
+        boolean isPresent = false;
+
+        if(league == null){
+            isPresent = false;
+        } else if (league.getId() > 0){
+            isPresent = true;
+        }
+        return isPresent;
     }
 
     @Override

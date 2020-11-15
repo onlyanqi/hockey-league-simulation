@@ -4,8 +4,6 @@ import db.data.*;
 import presentation.ConsoleOutput;
 import simulation.factory.*;
 import simulation.model.*;
-import validator.IValidation;
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,24 +15,21 @@ public class PersistState implements ISimulateState {
     private final HockeyContext hockeyContext;
     private final League league;
     private final NHLEvents nhlEvents;
-    private final IValidation validation;
 
     public PersistState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
         this.nhlEvents = league.getNHLRegularSeasonEvents();
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        validation = validationConcrete.newValidation();
     }
 
     @Override
-    public ISimulateState action() {
+    public ISimulateState action() throws Exception {
         ConsoleOutput.getInstance().printMsgToConsole("Saving to DB... Please wait");
         saveToPersistence();
         return exit();
     }
 
-    private void saveToPersistence() {
+    private void saveToPersistence() throws Exception {
         if(todayIsStartOfSeason()){
             persistLeagueToDB();
         }
@@ -66,7 +61,9 @@ public class PersistState implements ISimulateState {
     }
 
     private void updateDataBaseWithSimulatedDate() {
-        if (validation.isNotNull(league)) {
+        if (league == null) {
+            return;
+        } else{
             try {
                 updateTeam();
                 updatePlayers();
@@ -80,17 +77,16 @@ public class PersistState implements ISimulateState {
                 }
 
                 List<TradeOffer> tradeOfferList = league.getTradeOfferList();
-                if (validation.isListNotEmpty(tradeOfferList)) {
+                if (tradeOfferList == null || tradeOfferList.isEmpty()) {
+                    return;
+                } else{
                     addTradeOfferList(tradeOfferList);
                 }
-                System.out.println("Trade Offer done....");
 
             } catch (SQLException sqlException) {
                 ConsoleOutput.getInstance().printMsgToConsole("Unable to save the league! Please try again" + sqlException.getMessage());
                 System.exit(1);
-                sqlException.printStackTrace();
             } catch (Exception e) {
-                e.printStackTrace();
                 System.exit(1);
             } finally {
                 clearTradeOffers();
@@ -121,7 +117,9 @@ public class PersistState implements ISimulateState {
     private void clearTradeOffers() {
 
         List<TradeOffer> tradeOffers = league.getTradeOfferList();
-        if (validation.isListNotEmpty(tradeOffers)) {
+        if (tradeOffers == null || tradeOffers.isEmpty()) {
+            return;
+        } else{
             tradeOffers.clear();
         }
     }
@@ -148,8 +146,10 @@ public class PersistState implements ISimulateState {
         return gameList;
     }
 
-    private void persistLeagueToDB() {
-        if (validation.isNotNull(league)) {
+    private void persistLeagueToDB() throws Exception {
+        if (league == null ) {
+            return;
+        } else{
             league.setCreatedBy(hockeyContext.getUser().getId());
             Season season = new Season();
             season.setName(String.valueOf(LocalDate.now().getYear()));
@@ -171,69 +171,68 @@ public class PersistState implements ISimulateState {
                 addCoaches(league.getCoachList());
                 addManagers(league.getManagerList());
                 if (leagueId > 0 && seasonId > 0) {
-                    if (validation.isNotNull(league.getFreeAgent())) {
-                        int freeAgentId = addFreeAgent(leagueId, seasonId);
-                        addPlayerList(0, freeAgentId, league.getFreeAgent().getPlayerList());
-                    }
-                    if (validation.isNotNull(league.getConferenceList()) && league.getConferenceList().size() > 0) {
-                        ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
-                        IConferenceFactory addConferenceDao = conferenceConcrete.newAddConferenceFactory();
-                        for (Conference conference : league.getConferenceList()) {
-                            conference.setLeagueId(leagueId);
-                            conference.addConference(addConferenceDao);
-                            int conferenceId = conference.getId();
-                            for (Division division : conference.getDivisionList()) {
-                                DivisionConcrete divisionConcrete = new DivisionConcrete();
-                                IDivisionFactory addDivisionDao = divisionConcrete.newAddDivisionFactory();
+                    int freeAgentId = addFreeAgent(leagueId, seasonId);
+                    addPlayerList(0, freeAgentId, league.getFreeAgent().getPlayerList());
 
-                                division.setConferenceId(conferenceId);
-                                division.addDivision(addDivisionDao);
-                                int divisionId = division.getId();
-                                for (Team team : division.getTeamList()) {
-                                    TeamConcrete teamConcrete = new TeamConcrete();
-                                    ITeamFactory addTeamDao = teamConcrete.newTeamFactory();
+                    ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
+                    IConferenceFactory addConferenceDao = conferenceConcrete.newAddConferenceFactory();
+                    for (Conference conference : league.getConferenceList()) {
+                        conference.setLeagueId(leagueId);
+                        conference.addConference(addConferenceDao);
+                        int conferenceId = conference.getId();
+                        for (Division division : conference.getDivisionList()) {
+                            DivisionConcrete divisionConcrete = new DivisionConcrete();
+                            IDivisionFactory addDivisionDao = divisionConcrete.newAddDivisionFactory();
 
-                                    team.setDivisionId(divisionId);
-                                    team.addTeam(addTeamDao);
-                                    int teamId = team.getId();
+                            division.setConferenceId(conferenceId);
+                            division.addDivision(addDivisionDao);
+                            int divisionId = division.getId();
+                            for (Team team : division.getTeamList()) {
+                                TeamConcrete teamConcrete = new TeamConcrete();
+                                ITeamFactory addTeamDao = teamConcrete.newTeamFactory();
 
-                                    CoachConcrete coachConcrete = new CoachConcrete();
-                                    ICoachFactory addCoachFactory = coachConcrete.newCoachFactory();
-                                    Coach coach = team.getCoach();
-                                    coach.setLeagueId(leagueId);
-                                    coach.setTeamId(teamId);
-                                    addCoachFactory.addCoach(coach);
+                                team.setDivisionId(divisionId);
+                                team.addTeam(addTeamDao);
+                                int teamId = team.getId();
 
-                                    ManagerConcrete managerConcrete = new ManagerConcrete();
-                                    IManagerFactory addManagerFactory = managerConcrete.newManagerFactory();
-                                    Manager manager = team.getManager();
-                                    manager.setLeagueId(leagueId);
-                                    manager.setTeamId(teamId);
-                                    addManagerFactory.addManager(manager);
+                                CoachConcrete coachConcrete = new CoachConcrete();
+                                ICoachFactory addCoachFactory = coachConcrete.newCoachFactory();
+                                Coach coach = team.getCoach();
+                                coach.setLeagueId(leagueId);
+                                coach.setTeamId(teamId);
+                                addCoachFactory.addCoach(coach);
 
-                                    addPlayerList(teamId, 0, team.getPlayerList());
-                                }
+                                ManagerConcrete managerConcrete = new ManagerConcrete();
+                                IManagerFactory addManagerFactory = managerConcrete.newManagerFactory();
+                                Manager manager = team.getManager();
+                                manager.setLeagueId(leagueId);
+                                manager.setTeamId(teamId);
+                                addManagerFactory.addManager(manager);
+
+                                addPlayerList(teamId, 0, team.getPlayerList());
                             }
                         }
                     }
+
                     Trading trading = league.getGamePlayConfig().getTrading();
                     trading.setLeagueId(leagueId);
-                    if (validation.isNotNull(trading)) {
-                        addTrading(trading);
-                    }
+
+                    addTrading(trading);
+
 
                     List<TradeOffer> tradeOfferList = league.getTradeOfferList();
-                    if (validation.isListNotEmpty(tradeOfferList)) {
+                    if (tradeOfferList == null || tradeOfferList.isEmpty()) {
+                        return;
+                    } else{
                         addTradeOfferList(tradeOfferList);
                     }
                 }
 
             } catch (SQLException sqlException) {
                 ConsoleOutput.getInstance().printMsgToConsole("Unable to save the league! Please try again" + sqlException.getMessage());
-                System.exit(1);
-                sqlException.printStackTrace();
+                throw sqlException;
             } catch (Exception e) {
-                e.printStackTrace();
+                throw e;
             } finally {
                 clearTradeOffers();
             }
@@ -342,7 +341,9 @@ public class PersistState implements ISimulateState {
     }
 
     private void addGameList(int leagueId, List<Game> gameList) throws Exception {
-        if (validation.isNotNull(gameList) && gameList.size() > 0) {
+        if (gameList == null || gameList.isEmpty()) {
+            return;
+        } else{
             GameConcrete gameConcrete = new GameConcrete();
             IGameFactory addGamesFactory = gameConcrete.newAddGamesFactory();
             for (Game game : gameList) {
@@ -362,7 +363,9 @@ public class PersistState implements ISimulateState {
     }
 
     private void addPlayerList(int teamId, int freeAgentId, List<Player> playerList) throws Exception {
-        if (validation.isNotNull(playerList) && playerList.size() > 0) {
+        if (playerList == null || playerList.isEmpty()) {
+            return;
+        } else{
             PlayerConcrete playerConcrete = new PlayerConcrete();
             IPlayerFactory addPlayerDao = playerConcrete.newPlayerFactory();
             for (Player player : playerList) {
@@ -377,7 +380,9 @@ public class PersistState implements ISimulateState {
     }
 
     private void addRetiredPlayerList(List<Player> playerList) throws Exception {
-        if (validation.isNotNull(playerList) && playerList.size() > 0) {
+        if (playerList == null || playerList.isEmpty()) {
+            return;
+        } else{
             PlayerConcrete playerConcrete = new PlayerConcrete();
             IPlayerFactory addPlayerDao = playerConcrete.newPlayerFactory();
             for (Player player : playerList) {

@@ -30,7 +30,9 @@ public class TeamScoreDao extends DBExceptionLog implements ITeamScoreFactory {
             printLog("TeamScoreDao: addTeamScore: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return 0;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -45,7 +47,9 @@ public class TeamScoreDao extends DBExceptionLog implements ITeamScoreFactory {
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return;
+            } else{
                 teamScore.setId(rs.getInt(1));
                 teamScore.setPoints(rs.getInt(2));
                 teamScore.setTeamName(rs.getString(3));
@@ -57,7 +61,9 @@ public class TeamScoreDao extends DBExceptionLog implements ITeamScoreFactory {
             printLog("TeamScoreDao: loadTeamScoreById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -72,7 +78,9 @@ public class TeamScoreDao extends DBExceptionLog implements ITeamScoreFactory {
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return teamScoreList;
+            } else{
                 teamScoreList = new ArrayList<>();
                 while (rs.next()) {
                     TeamScore teamScore = new TeamScore();
@@ -89,7 +97,9 @@ public class TeamScoreDao extends DBExceptionLog implements ITeamScoreFactory {
             printLog("TeamScoreDao: loadRegularTeamScoreListByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return teamScoreList;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -105,7 +115,9 @@ public class TeamScoreDao extends DBExceptionLog implements ITeamScoreFactory {
             callDB = new CallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
-            if (getValidation().isNotNull(rs)) {
+            if (rs == null) {
+                return teamScoreList;
+            } else{
                 teamScoreList = new ArrayList<>();
                 while (rs.next()) {
                     TeamScore teamScore = new TeamScore();
@@ -122,7 +134,9 @@ public class TeamScoreDao extends DBExceptionLog implements ITeamScoreFactory {
             printLog("TeamScoreDao: loadPlayoffTeamScoreListByLeagueId: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return teamScoreList;
+            } else{
                 callDB.closeConnection();
             }
         }
@@ -146,7 +160,9 @@ public class TeamScoreDao extends DBExceptionLog implements ITeamScoreFactory {
             printLog("TeamScoreDao: updateTeamScoreById: SQLException: " + sqlException);
             throw sqlException;
         } finally {
-            if (getValidation().isNotNull(callDB)) {
+            if (callDB == null) {
+                return;
+            } else{
                 callDB.closeConnection();
             }
         }
