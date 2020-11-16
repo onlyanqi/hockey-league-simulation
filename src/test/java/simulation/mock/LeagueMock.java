@@ -84,7 +84,7 @@ public class LeagueMock implements ILeagueFactory {
 
         ITeamScoreFactory teamScoreFactory = new TeamScoreMock();
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             TeamScore teamScore = new TeamScore(i, teamScoreFactory);
             teamScoreList.add(teamScore);
         }
@@ -234,8 +234,10 @@ public class LeagueMock implements ILeagueFactory {
                 league.setManagerList(formManagerList());
                 league.setTradeOfferList(getTradeOfferList(1));
                 league.setNhlRegularSeasonEvents(formNHLEvents(0));
+                league.setActiveTeamStanding(formTeamStanding());
+                league.setGames(formGames());
                 league.setGamePlayConfig(formGamePlayConfig());
-                league.setCurrentDate(LocalDate.now());
+                league.setCurrentDate(LocalDate.of(2021,05,06));
                 break;
         }
 

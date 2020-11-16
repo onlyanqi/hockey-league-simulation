@@ -10,10 +10,22 @@ import simulation.state.HockeyContext;
 import validator.IValidation;
 
 import java.io.FileNotFoundException;
+import org.apache.log4j.Logger;
 
 
 public class App {
+
+    private static Logger log = Logger.getLogger(App.class);
+
     public static void main(String[] args) {
+
+
+        log.debug("DEBUG Message");
+        log.info("INFO Message");
+        log.warn("WARN Message");
+        log.error("ERROR Message");
+        log.fatal("Fatal Message");
+
 
         String filePath = "";
         JSONObject jsonFromInput = null;

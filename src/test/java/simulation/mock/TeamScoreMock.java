@@ -20,6 +20,14 @@ public class TeamScoreMock implements ITeamScoreFactory {
     @Override
     public void loadTeamScoreById(int id, TeamScore teamScore) throws Exception {
         switch (id) {
+            case 0:
+                teamScore.setId(id);
+                teamScore.setTeamName("Team1");
+                teamScore.setNumberOfTies(1);
+                teamScore.setNumberOfLoss(5);
+                teamScore.setNumberOfWins(6);
+                teamScore.setPoints(14);
+                break;
             case 1:
                 teamScore.setId(id);
                 teamScore.setTeamName("Team1");
