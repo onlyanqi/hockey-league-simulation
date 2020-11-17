@@ -631,8 +631,8 @@ public class ImportState implements IHockeyState {
             throw new IllegalArgumentException("Please make sure maximumAge is provided in JSON");
         }
         int maximumAge = (int) (long) agingJSONObject.get(MAXIMUM_AGE);
-        AgingConcrete agingConcrete = new AgingConcrete();
-        Aging aging = agingConcrete.newAging();
+        IAgingFactory agingFactory = hockeyContext.getAgingFactory();
+        Aging aging = agingFactory.newAging();
         aging.setAverageRetirementAge(averageRetirementAge);
         aging.setMaximumAge(maximumAge);
         return aging;

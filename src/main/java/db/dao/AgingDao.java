@@ -1,19 +1,19 @@
 package db.dao;
 
-import db.data.IAgingFactory;
+import db.data.IAgingDao;
 import simulation.model.Aging;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AgingDao extends DBExceptionLog implements IAgingFactory {
+public class AgingDao extends DBExceptionLog implements IAgingDao {
 
     @Override
     public int addAging(Aging aging) throws Exception {
         ICallDB callDB = null;
         try {
             String procedureName = "AddAging(?,?,?,?)";
-            callDB = new CallDB(procedureName);
+            callDB = callDBFactory.newCallDB(procedureName);
             callDB.setInputParameterInt(1, aging.getAverageRetirementAge());
             callDB.setInputParameterInt(2, aging.getMaximumAge());
             callDB.setInputParameterInt(3, aging.getLeagueId());
@@ -40,7 +40,7 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
         Aging aging = null;
         try {
             String procedureName = "LoadAgingByLeagueId(?)";
-            callDB = new CallDB(procedureName);
+            callDB = callDBFactory.newCallDB(procedureName);
             callDB.setInputParameterInt(1, leagueId);
             ResultSet rs = callDB.executeLoad();
 
@@ -72,7 +72,7 @@ public class AgingDao extends DBExceptionLog implements IAgingFactory {
         ICallDB callDB = null;
         try {
             String procedureName = "LoadAgingById(?)";
-            callDB = new CallDB(procedureName);
+            callDB = callDBFactory.newCallDB(procedureName);
             callDB.setInputParameterInt(1, id);
             ResultSet rs = callDB.executeLoad();
 

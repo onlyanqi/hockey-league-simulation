@@ -4,11 +4,11 @@ import db.data.IUserFactory;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
-import simulation.factory.UserConcrete;
+import simulation.factory.*;
 import simulation.model.User;
-import simulation.state.HockeyContext;
 import java.io.FileNotFoundException;
 import org.apache.log4j.Logger;
+import simulation.state.IHockeyContext;
 
 
 public class App {
@@ -59,7 +59,7 @@ public class App {
                     }
                     jsonFromInput = JSONController.readJSON(filePath);
                 }
-                HockeyContext context = new HockeyContext(user);
+                IHockeyContext context = createHockeyContext(user);
                 context.startAction(jsonFromInput);
 
             }
@@ -74,6 +74,17 @@ public class App {
         UserConcrete userConcrete = new UserConcrete();
         IUserFactory addUserFactory = userConcrete.newUserFactory();
         user.addUser(addUserFactory);
+    }
+
+    private static IHockeyContext createHockeyContext(User user){
+        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+        IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
+        hockeyContext.setUser(user);
+
+        IAgingFactory agingFactory = new AgingConcrete();
+        hockeyContext.setAgingFactory(agingFactory);
+
+        return hockeyContext;
     }
 
 

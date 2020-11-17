@@ -47,7 +47,6 @@ public class TradingDao extends DBExceptionLog implements ITradingFactory {
             if (rs == null) {
                 return;
             } else {
-                trading = new Trading();
                 while (rs.next()) {
                     trading.setId(rs.getInt(1));
                     trading.setLeagueId(rs.getInt(2));

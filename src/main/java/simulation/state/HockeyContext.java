@@ -4,12 +4,14 @@ import config.AppConfig;
 import org.json.simple.JSONObject;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
+import simulation.factory.IAgingFactory;
 import simulation.model.User;
 
-public class HockeyContext {
+public class HockeyContext implements IHockeyContext{
 
     private IHockeyState hockeyState;
     private User user;
+    private IAgingFactory agingFactory;
 
     public HockeyContext() {
     }
@@ -18,14 +20,17 @@ public class HockeyContext {
         this.user = user;
     }
 
+    @Override
     public User getUser() {
         return user;
     }
 
+    @Override
     public void setUser(User user) {
         this.user = user;
     }
 
+    @Override
     public void startAction(JSONObject jsonFromInput) throws Exception {
         if (jsonFromInput == null || jsonFromInput.isEmpty()) {
             hockeyState = new LoadTeamState(this);
@@ -50,7 +55,19 @@ public class HockeyContext {
 
     }
 
+    @Override
     public IHockeyState getHockeyState() {
         return hockeyState;
     }
+
+    @Override
+    public void setAgingFactory(IAgingFactory agingFactory) {
+        this.agingFactory = agingFactory;
+    }
+
+    @Override
+    public IAgingFactory getAgingFactory(){
+        return this.agingFactory;
+    }
+
 }

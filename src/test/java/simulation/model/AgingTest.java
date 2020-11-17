@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IAgingFactory;
+import db.data.IAgingDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.AgingMock;
@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AgingTest {
-    private static IAgingFactory loadAgingFactory;
+    private static IAgingDao loadAgingFactory;
 
     @BeforeClass
     public static void setFactoryObj() {

@@ -22,9 +22,7 @@ public class Coach extends SharedAttributes {
             return;
         }
         this.setId(coach.getId());
-        if (isNotNull(coach.getName())) {
-            this.setName(coach.getName());
-        }
+        this.setName(coach.getName());
         this.setTeamId(coach.getTeamId());
         this.setChecking(coach.getChecking());
         this.setLeagueId(coach.getLeagueId());

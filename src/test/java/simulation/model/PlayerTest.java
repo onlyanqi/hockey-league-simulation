@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IAgingFactory;
+import db.data.IAgingDao;
 import db.data.ILeagueFactory;
 import db.data.IPlayerFactory;
 import org.junit.BeforeClass;
@@ -212,7 +212,7 @@ public class PlayerTest {
 
     @Test
     public void retirementCheckTest() throws Exception {
-        IAgingFactory agingFactory = new AgingMock();
+        IAgingDao agingFactory = new AgingMock();
         Aging aging = new Aging(1, agingFactory);
         Player player = new Player(20, loadPlayerFactory);
         boolean retired = player.retirementCheck(aging);

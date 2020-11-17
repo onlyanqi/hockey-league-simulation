@@ -19,9 +19,7 @@ public class Manager extends SharedAttributes {
         }
         this.setId(manager.getId());
         this.setLeagueId(manager.getLeagueId());
-        if (isNotNull(manager.getName())) {
-            this.setName(manager.getName());
-        }
+        this.setName(manager.getName());
         this.setTeamId(manager.teamId);
     }
 

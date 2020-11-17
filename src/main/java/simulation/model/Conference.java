@@ -55,19 +55,14 @@ public class Conference extends SharedAttributes {
     }
 
     public Division getDivisionFromListByName(String divisionName) {
-        if (isNotEmpty(divisionName)) {
-            Division foundDivision = null;
-            for (Division division : divisionList) {
-                if (division.getName().toLowerCase().equals(divisionName.toLowerCase())) {
-                    foundDivision = division;
-                    break;
-                }
+        Division foundDivision = null;
+        for (Division division : divisionList) {
+            if (division.getName().toLowerCase().equals(divisionName.toLowerCase())) {
+                foundDivision = division;
+                break;
             }
-            return foundDivision;
-        } else {
-            return null;
         }
-
+        return foundDivision;
     }
 
     public void addConference(IConferenceFactory addConferenceFactory) throws Exception {

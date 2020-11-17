@@ -67,27 +67,10 @@ public class SharedAttributesTest {
     }
 
     @Test
-    public void isNullTest() {
-        SharedAttributes sharedAttributes = new SharedAttributes();
-        assertTrue(sharedAttributes.isNull(null));
-    }
-
-    @Test
-    public void isNotNullTest() {
-        SharedAttributes sharedAttributes = new SharedAttributes();
-        assertTrue(sharedAttributes.isNotNull(""));
-    }
-
-    @Test
-    public void isNotEmptyTest() {
-        SharedAttributes sharedAttributes = new SharedAttributes();
-        assertTrue(sharedAttributes.isNotEmpty("name"));
-    }
-
-    @Test
     public void validNameTest() {
         SharedAttributes sharedAttributes = new SharedAttributes();
-        assertTrue(sharedAttributes.isNotEmpty("name"));
+        sharedAttributes.setName("name");
+        assertTrue(sharedAttributes.validName());
     }
 
 }

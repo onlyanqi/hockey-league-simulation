@@ -18,7 +18,7 @@ public class GamePlayConfigMock implements IGamePlayConfigFactory {
     }
 
     public Aging getAging() throws Exception {
-        IAgingFactory agingFactory = new AgingMock();
+        IAgingDao agingFactory = new AgingMock();
         Aging aging = new Aging(1, agingFactory);
         return aging;
     }

@@ -37,30 +37,12 @@ public class SharedAttributes {
         this.name = name;
     }
 
-    public boolean isNull(String input) {
-        boolean isNull = false;
-        if (input == null) {
-            isNull = true;
-        }
-        return isNull;
-    }
-
-    public boolean isNotNull(String input) {
-        boolean isNotNull = true;
-        if (input == null) {
-            isNotNull = false;
-        }
-        return isNotNull;
-    }
-
-    public boolean isNotEmpty(String input) {
-        return StringUtils.isNotEmpty(input);
-    }
-
     public boolean validName() {
         boolean isValid = false;
 
-        if (isNotNull(getName()) && isNotEmpty(getName())) {
+        if (name == null || name.isEmpty()) {
+            isValid = false;
+        } else {
             isValid = true;
         }
 

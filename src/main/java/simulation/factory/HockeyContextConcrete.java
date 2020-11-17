@@ -1,10 +1,11 @@
 package simulation.factory;
 
 import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
-public class HockeyContextConcrete {
+public class HockeyContextConcrete implements IHockeyContextFactory{
 
-    public HockeyContext newHockeyContext() {
+    public IHockeyContext newHockeyContext() {
         return new HockeyContext();
     }
 

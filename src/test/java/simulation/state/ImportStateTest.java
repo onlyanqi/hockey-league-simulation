@@ -4,6 +4,8 @@ import db.data.ILeagueFactory;
 import org.json.simple.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.AgingConcrete;
+import simulation.factory.IAgingFactory;
 import simulation.mock.JSONControllerMock;
 import simulation.mock.LeagueMock;
 import simulation.model.User;
@@ -32,7 +34,8 @@ public class ImportStateTest {
     public void processTest() throws Exception {
         HockeyContext hockeyContext = new HockeyContext();
         hockeyContext.setUser(user);
-
+        IAgingFactory agingFactory = new AgingConcrete();
+        hockeyContext.setAgingFactory(agingFactory);
         assertEquals(hockeyContext.getUser().getId(), user.getId());
         assertEquals(hockeyContext.getUser().getName(), user.getName());
 

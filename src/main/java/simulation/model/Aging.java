@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IAgingFactory;
+import db.data.IAgingDao;
 
 public class Aging extends SharedAttributes {
 
@@ -17,7 +17,7 @@ public class Aging extends SharedAttributes {
         setId(id);
     }
 
-    public Aging(int id, IAgingFactory loadAgingFactory) throws Exception {
+    public Aging(int id, IAgingDao loadAgingFactory) throws Exception {
         setId(id);
         loadAgingFactory.loadAgingById(id, this);
     }
