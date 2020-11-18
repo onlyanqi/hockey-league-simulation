@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.dao.ManagerDao;
 import db.data.IManagerFactory;
 import simulation.model.Manager;
 
@@ -10,7 +9,4 @@ public class ManagerConcrete {
         return new Manager();
     }
 
-    public IManagerFactory newManagerFactory() {
-        return new ManagerDao();
-    }
 }

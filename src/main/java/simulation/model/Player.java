@@ -24,6 +24,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     private double strength;
 
     public Player() {
+        setId(System.identityHashCode(this));
     }
 
     public Player(int id) {

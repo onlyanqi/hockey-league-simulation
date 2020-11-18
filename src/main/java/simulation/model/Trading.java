@@ -25,6 +25,7 @@ public class Trading extends SharedAttributes {
     private boolean isTradingPeriod;
 
     public Trading() {
+        setId(System.identityHashCode(this));
     }
 
     public Trading(int tradingId, ITradingFactory factory) throws Exception {

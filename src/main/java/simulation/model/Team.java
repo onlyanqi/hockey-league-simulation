@@ -27,6 +27,7 @@ public class Team extends SharedAttributes {
     private int lossPoint;
 
     public Team() {
+        setId(System.identityHashCode(this));
     }
 
     public Team(int id) {

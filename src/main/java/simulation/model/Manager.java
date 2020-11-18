@@ -8,6 +8,7 @@ public class Manager extends SharedAttributes {
     private String personality;
 
     public Manager() {
+        setId(System.identityHashCode(this));
     }
 
     public Manager(int id) {

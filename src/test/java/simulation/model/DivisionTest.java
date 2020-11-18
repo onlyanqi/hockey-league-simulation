@@ -24,7 +24,7 @@ public class DivisionTest {
     @Test
     public void defaultConstructorTest() {
         Division division = new Division();
-        assertEquals(division.getId(), 0);
+        assertNotEquals(division.getId(), 0);
     }
 
     @Test

@@ -26,7 +26,7 @@ public class FreeAgentTest {
     @Test
     public void defaultConstructorTest() {
         FreeAgent freeAgent = new FreeAgent();
-        assertEquals(freeAgent.getId(), 0);
+        assertNotEquals(freeAgent.getId(), 0);
     }
 
     @Test

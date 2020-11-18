@@ -13,6 +13,7 @@ public class FreeAgent extends SharedAttributes {
     private List<Player> playerList;
 
     public FreeAgent() {
+        setId(System.identityHashCode(this));
     }
 
     public FreeAgent(int id) {

@@ -58,6 +58,8 @@ public class ImportState implements IHockeyState {
     private HockeyContext hockeyContext;
     private JSONObject jsonFromInput;
     private League league;
+    private int leagueId;
+    private int teamId;
 
 
     public ImportState(HockeyContext hockeyContext, JSONObject jsonFromInput) {
@@ -68,6 +70,7 @@ public class ImportState implements IHockeyState {
             LeagueConcrete leagueConcrete = new LeagueConcrete();
             league = leagueConcrete.newLeague();
         }
+        leagueId = league.getId();
     }
 
     @Override
@@ -195,6 +198,7 @@ public class ImportState implements IHockeyState {
         }
         JSONObject agingJSONObject = (JSONObject) gameplayConfigJSONObject.get(AGING);
         Aging aging = loadAgingJson(agingJSONObject);
+        aging.setLeagueId(leagueId);
         gamePlayConfig.setAging(aging);
 
         if (emptyKeyInObject(gameplayConfigJSONObject, GAME_RESOLVER)) {
@@ -209,6 +213,7 @@ public class ImportState implements IHockeyState {
         }
         JSONObject injuriesJSONObject = (JSONObject) gameplayConfigJSONObject.get(INJURIES);
         Injury injury = loadInjuryJson(injuriesJSONObject);
+        injury.setLeagueId(leagueId);
         gamePlayConfig.setInjury(injury);
 
         if (emptyKeyInObject(gameplayConfigJSONObject, TRAINING)) {
@@ -216,6 +221,7 @@ public class ImportState implements IHockeyState {
         }
         JSONObject trainingJSONObject = (JSONObject) gameplayConfigJSONObject.get(TRAINING);
         Training training = loadTrainingJson(trainingJSONObject);
+        training.setLeagueId(leagueId);
         gamePlayConfig.setTraining(training);
 
         if (emptyKeyInObject(gameplayConfigJSONObject, TRADING)) {
@@ -224,6 +230,7 @@ public class ImportState implements IHockeyState {
         JSONObject tradingJSONObject = (JSONObject) gameplayConfigJSONObject.get(TRADING);
         Trading trading = loadTradingJson(tradingJSONObject);
         gamePlayConfig.setTrading(trading);
+        gamePlayConfig.setLeagueId(leagueId);
         return gamePlayConfig;
     }
 
@@ -257,6 +264,7 @@ public class ImportState implements IHockeyState {
 
             Team team = setTeamVariables(teamName, manager, coach, playerList);
 
+            teamId = team.getId();
             teamList.add(team);
         }
         return teamList;
@@ -383,7 +391,7 @@ public class ImportState implements IHockeyState {
                 int saving = getPlayerSaving(playerJsonObject);
 
                 Player player = setTeamPlayerVariables(playerName, position, captain, age, skating, shooting, checking, saving);
-
+                player.setTeamId(teamId);
                 playerList.add(player);
 
             }

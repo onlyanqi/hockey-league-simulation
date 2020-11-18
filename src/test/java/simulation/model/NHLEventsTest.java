@@ -22,7 +22,7 @@ public class NHLEventsTest {
     @Test
     public void defaultConstructorTest() {
         NHLEvents nhlEvents = new NHLEvents();
-        assertEquals(nhlEvents.getId(), 0);
+        assertNotEquals(nhlEvents.getId(), 0);
     }
 
     @Test

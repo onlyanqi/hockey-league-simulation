@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.dao.PlayerDao;
 import db.data.IPlayerFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,10 +23,5 @@ public class PlayerConcreteTest {
         assertTrue(playerConcrete.newPlayer() instanceof SharedAttributes);
     }
 
-    @Test
-    public void newPlayerFactoryTest() {
-        assertTrue(playerConcrete.newPlayerFactory() instanceof PlayerDao);
-        assertTrue(playerConcrete.newPlayerFactory() instanceof IPlayerFactory);
-    }
 
 }

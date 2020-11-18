@@ -18,6 +18,7 @@ public class NHLEvents {
     public LocalDate lastDayStanleyCupFinals;
     public LocalDate nextSeasonDate;
     public NHLEvents() {
+        setId(System.identityHashCode(this));
         initializeEndOfRegularSeason();
         initializeTradeDeadlineDate();
         initializeRegularSeasonStartDate();

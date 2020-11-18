@@ -24,7 +24,7 @@ public class ConferenceTest {
     @Test
     public void defaultConstructorTest() {
         Conference conference = new Conference();
-        assertEquals(conference.getId(), 0);
+        assertNotEquals(conference.getId(), 0);
     }
 
     @Test

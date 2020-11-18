@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.dao.UserDao;
 import db.data.IUserFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,16 +28,6 @@ public class UserConcreteTest {
         IUserFactory loadUserFactory = new UserMock();
         User user = userConcrete.newUserByName(name, loadUserFactory);
         assertTrue(user instanceof User);
-    }
-
-    @Test
-    public void newLoadUserFactoryTest() {
-        assertTrue(userConcrete.newUserFactory() instanceof UserDao);
-    }
-
-    @Test
-    public void newAddUserFactoryTest() {
-        assertTrue(userConcrete.newUserFactory() instanceof UserDao);
     }
 
 }

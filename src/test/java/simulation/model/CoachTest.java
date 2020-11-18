@@ -5,8 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.CoachMock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class CoachTest {
     private static ICoachFactory loadCoachFactory;
@@ -19,7 +18,7 @@ public class CoachTest {
     @Test
     public void defaultConstructorTest() {
         Coach coach = new Coach();
-        assertEquals(coach.getId(), 0);
+        assertNotEquals(coach.getId(), 0);
     }
 
     @Test

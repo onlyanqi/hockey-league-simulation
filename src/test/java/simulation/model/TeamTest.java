@@ -24,7 +24,7 @@ public class TeamTest {
     @Test
     public void defaultConstructorTest() {
         Team team = new Team();
-        assertEquals(team.getId(), 0);
+        assertNotEquals(team.getId(), 0);
     }
 
     @Test
