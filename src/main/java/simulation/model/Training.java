@@ -10,6 +10,7 @@ public class Training {
     private int leagueId;
 
     public Training() {
+        setId(System.identityHashCode(this));
     }
 
     public Training(int LeagueId, ITrainingFactory trainingFactory) throws Exception {

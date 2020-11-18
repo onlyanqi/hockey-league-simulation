@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.dao.SeasonDao;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.model.Season;
@@ -21,14 +20,5 @@ public class SeasonConcreteTest {
         assertTrue(seasonConcrete.newSeason() instanceof Season);
     }
 
-    @Test
-    public void newLoadSeasonFactoryTest() {
-        assertTrue(seasonConcrete.newLoadSeasonFactory() instanceof SeasonDao);
-    }
-
-    @Test
-    public void newAddSeasonFactoryTest() {
-        assertTrue(seasonConcrete.newAddSeasonFactory() instanceof SeasonDao);
-    }
 
 }

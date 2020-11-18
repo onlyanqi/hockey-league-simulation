@@ -7,6 +7,7 @@ public class Manager extends SharedAttributes {
     private int teamId;
 
     public Manager() {
+        setId(System.identityHashCode(this));
     }
 
     public Manager(int id) {

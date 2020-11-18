@@ -9,6 +9,7 @@ public class GameSchedule {
     List<Game> gameList = new ArrayList<>();
     int id;
     public GameSchedule() {
+        setId(System.identityHashCode(this));
     }
 
     public int getId() {

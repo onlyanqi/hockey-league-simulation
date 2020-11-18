@@ -40,15 +40,16 @@ public class App {
         try {
             if (validation.isNotEmpty(userName)) {
                 UserConcrete userConcrete = new UserConcrete();
-                IUserFactory factory = userConcrete.newUserFactory();
-                User user = userConcrete.newUserByName(userName, factory);
+            //    IUserFactory factory = userConcrete.newUserFactory();
+            //    User user = userConcrete.newUserByName(userName, factory);\
+                User user = userConcrete.newUser();
 
                 user.setName(userName);
                 if (user.getId() == 0) {
                     String password = readUserInput.getInput("Please enter password to register yourself");
 
                     user.setPassword(password);
-                    addUser(user);
+                //    addUser(user);
                 }
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
 
@@ -70,12 +71,13 @@ public class App {
             System.out.println("System faced unexpected exception. Please contact team. " + e);
         }
     }
-
-    private static void addUser(User user) throws Exception {
-        UserConcrete userConcrete = new UserConcrete();
-        IUserFactory addUserFactory = userConcrete.newUserFactory();
-        user.addUser(addUserFactory);
-    }
+//
+//    private static void addUser(User user) throws Exception {
+////        UserConcrete userConcrete = new UserConcrete();
+////        IUserFactory addUserFactory = userConcrete.newUserFactory();
+////        user.addUser(addUserFactory);
+//
+//    }
 
 
 }

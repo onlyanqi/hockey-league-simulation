@@ -9,6 +9,7 @@ public class TeamStanding {
     private List<TeamScore> teamsScoreList;
     public TeamStanding() {
         teamsScoreList = new ArrayList<>();
+        setId(System.identityHashCode(this));
     }
 
     public int getId() {

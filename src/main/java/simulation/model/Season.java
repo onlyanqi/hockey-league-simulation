@@ -5,6 +5,7 @@ import db.data.ISeasonFactory;
 public class Season extends SharedAttributes {
 
     public Season() {
+        setId(System.identityHashCode(this));
     }
 
     public Season(int id) {

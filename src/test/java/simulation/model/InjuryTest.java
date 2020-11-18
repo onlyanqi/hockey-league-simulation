@@ -5,8 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.InjuryMock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class InjuryTest {
     private static IInjuryFactory loadInjuryFactory;
@@ -19,7 +18,7 @@ public class InjuryTest {
     @Test
     public void defaultConstructorTest() {
         Injury injury = new Injury();
-        assertEquals(injury.getId(), 0);
+        assertNotEquals(injury.getId(), 0);
     }
 
     @Test

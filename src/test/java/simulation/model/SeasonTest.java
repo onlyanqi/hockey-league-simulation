@@ -19,7 +19,7 @@ public class SeasonTest {
     @Test
     public void defaultConstructorTest() {
         Season season = new Season();
-        assertEquals(season.getId(), 0);
+        assertNotEquals(season.getId(), 0);
     }
 
     @Test

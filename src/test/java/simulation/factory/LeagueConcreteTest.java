@@ -1,7 +1,6 @@
 package simulation.factory;
 
 
-import db.dao.LeagueDao;
 import db.data.ILeagueFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,10 +23,6 @@ public class LeagueConcreteTest {
         assertTrue(leagueConcrete.newLeague() instanceof League);
     }
 
-    @Test
-    public void newLoadLeagueFactoryTest() {
-        assertTrue(leagueConcrete.newLoadLeagueFactory() instanceof LeagueDao);
-    }
 
     @Test
     public void newLeagueNameUserIdTest() throws Exception {
@@ -36,11 +31,6 @@ public class LeagueConcreteTest {
         ILeagueFactory loadLeagueFactory = new LeagueMock();
         League league = leagueConcrete.createLeagueFromNameAndUserId(leagueName, userId, loadLeagueFactory);
         assertTrue(league instanceof League);
-    }
-
-    @Test
-    public void newAddLeagueFactory() {
-        assertTrue(leagueConcrete.newAddLeagueFactory() instanceof LeagueDao);
     }
 
 }

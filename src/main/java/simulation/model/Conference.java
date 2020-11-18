@@ -12,6 +12,7 @@ public class Conference extends SharedAttributes {
     private List<Division> divisionList;
 
     public Conference() {
+        setId(System.identityHashCode(this));
     }
 
     public Conference(int id) {

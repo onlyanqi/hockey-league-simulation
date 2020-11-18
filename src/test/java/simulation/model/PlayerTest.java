@@ -25,7 +25,7 @@ public class PlayerTest {
     @Test
     public void defaultConstructorTest() {
         Player player = new Player();
-        assertEquals(player.getId(), 0);
+        assertNotEquals(player.getId(), 0);
     }
 
     @Test

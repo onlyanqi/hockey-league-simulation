@@ -18,7 +18,7 @@ public class TeamScoreTest {
     @Test
     public void defaultConstructorTest() {
         TeamScore teamScore = new TeamScore();
-        assertEquals(teamScore.getId(), 0);
+        assertNotEquals(teamScore.getId(), 0);
     }
 
     @Test
