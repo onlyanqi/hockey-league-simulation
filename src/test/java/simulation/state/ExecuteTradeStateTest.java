@@ -231,10 +231,10 @@ public class ExecuteTradeStateTest {
 
         Team fromTeam = new Team(1, teamFactory);
         Team toTeam = new Team(2, teamFactory);
-        Player fromPlayer = new Player(30, playerFactory);
-        fromPlayer.setPosition(Player.Position.valueOf("goalie"));
-        Player toPlayer = new Player(31, playerFactory);
-        toPlayer.setPosition(Player.Position.valueOf("goalie"));
+        Player fromPlayer = new Player(40, playerFactory);
+        fromPlayer.setPosition(Player.Position.GOALIE);
+        Player toPlayer = new Player(41, playerFactory);
+        toPlayer.setPosition(Player.Position.GOALIE);
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
 
         fromTeam.getPlayerList().add(fromPlayer);
@@ -357,7 +357,7 @@ public class ExecuteTradeStateTest {
         assertTrue(fromPlayer.getStrength() <= toPlayer.getStrength());
         assertNotEquals(toPlayer.getId(), player.getId());
 
-        player = new Player(4, playerFactory);
+        player = new Player(6, playerFactory);
         state.findBestSwapPlayer(team, league, player, players);
 
         assertNotNull(players);
@@ -384,7 +384,7 @@ public class ExecuteTradeStateTest {
         assertTrue(newPlayer.getStrength() >= swapPlayer.getStrength());
 
         swapPlayer = null;
-        weakestPlayer = new Player(4, playerFactory);
+        weakestPlayer = new Player(6, playerFactory);
         tradeOffer.setFromPlayerId(12);
         newPlayer = state.algorithmToFindSwapPlayer(team, weakestPlayer, swapPlayer, swap);
 
@@ -401,13 +401,7 @@ public class ExecuteTradeStateTest {
 
         assertNull(weakPlayerList);
 
-        Player strongPlayer1 = new Player(10, playerFactory);
-        Player strongPlayer2 = new Player(11, playerFactory);
-
-        List<Player> playerList = new ArrayList<>();
-        playerList.add(strongPlayer1);
-        playerList.add(strongPlayer2);
-        team.setPlayerList(playerList);
+        team = new Team(2, teamFactory);
 
         weakPlayerList = state.getWeakestPlayerList(team, league);
 

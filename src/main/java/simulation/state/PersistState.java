@@ -369,7 +369,7 @@ public class PersistState implements ISimulateState {
                 player.setTeamId(teamId);
                 player.setFreeAgentId(freeAgentId);
                 if(player.getPosition() == null){
-                    player.setPosition(Player.Position.forward);
+                    player.setPosition(Player.Position.FORWARD);
                 }
                 addPlayerDao.addPlayer(player);
             }

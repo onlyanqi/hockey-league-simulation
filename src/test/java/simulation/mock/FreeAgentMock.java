@@ -14,7 +14,7 @@ public class FreeAgentMock implements IFreeAgentFactory {
         List<Player> playerList = new ArrayList<>();
 
         IPlayerFactory playerFactory = new PlayerMock();
-        for (int i = 1; i < 22; i++) {
+        for (int i = 1; i < 32; i++) {
             Player player = new Player(i, playerFactory);
             playerList.add(player);
         }
@@ -25,13 +25,13 @@ public class FreeAgentMock implements IFreeAgentFactory {
     public List formFreeAgentListForCreateTeam() throws Exception {
         List<Player> playerList = new ArrayList<>();
         IPlayerFactory playerFactory = new PlayerMock();
-        for (int i = 1; i < 22; i++) {
+        for (int i = 1; i < 32; i++) {
             Player player = new Player(1, playerFactory);
             playerList.add(player);
         }
-        playerList.get(1).setPosition(Player.Position.goalie);
+        playerList.get(1).setPosition(Player.Position.GOALIE);
         playerList.get(1).setSaving(10);
-        playerList.get(2).setPosition(Player.Position.goalie);
+        playerList.get(2).setPosition(Player.Position.GOALIE);
         playerList.get(2).setSaving(10);
         return playerList;
     }

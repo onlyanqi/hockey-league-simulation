@@ -27,7 +27,6 @@ public class CreateTeamState implements IHockeyState {
     private static final String CREATEORLOADTEAM = "createOrLoadTeam";
     private static final String HOWMANYSEASONS = "How many seasons do you want to simulate";
     private static final String RIGHTCHOICEREQUEST = "Please enter the right choice. Yes/Y or No/N";
-    private static final String GOALIE = "goalie";
     private HockeyContext hockeyContext;
     private League league;
     private String conferenceName;
@@ -120,15 +119,18 @@ public class CreateTeamState implements IHockeyState {
         }
         List<Player> freeAgentList = freeAgent.getPlayerList();
         int countOfGoalie = 0;
-        int countOfSkaters = 0;
-        for (int i = 0; i < freeAgentList.size(); i++) {
-            if (freeAgentList.get(i).getPosition().toString().equals(GOALIE)) {
+        int countOfForward = 0;
+        int countOfDefense = 0;
+        for (Player player : freeAgentList) {
+            if (player.getPosition() == Player.Position.GOALIE) {
                 countOfGoalie++;
+            } else if (player.getPosition() == Player.Position.FORWARD) {
+                countOfForward++;
             } else {
-                countOfSkaters++;
+                countOfDefense++;
             }
         }
-        if (countOfGoalie >= 2 && countOfSkaters >= 18) {
+        if (countOfGoalie >= 4 && countOfForward >= 16 && countOfDefense >= 10) {
             return true;
         } else {
             return false;
@@ -161,7 +163,7 @@ public class CreateTeamState implements IHockeyState {
         return league.getConferenceFromListByName(conferenceName);
     }
 
-    private void choosePlayers() {
+    private void choosePlayers() throws IllegalArgumentException {
         freeAgent = league.getFreeAgent();
         List<Player> freeAgentList = freeAgent.getPlayerList();
         List<Integer> chosenPlayersIdList = team.createChosenPlayerIdList(freeAgent);
