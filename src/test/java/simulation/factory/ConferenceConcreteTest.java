@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.dao.ConferenceDao;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.model.Conference;
@@ -21,14 +20,5 @@ public class ConferenceConcreteTest {
         assertTrue(conferenceConcrete.newConference() instanceof Conference);
     }
 
-    @Test
-    public void newLoadConferenceFactoryTest() {
-        assertTrue(conferenceConcrete.newLoadConferenceFactory() instanceof ConferenceDao);
-    }
-
-    @Test
-    public void newAddConferenceFactoryTest() {
-        assertTrue(conferenceConcrete.newAddConferenceFactory() instanceof ConferenceDao);
-    }
 
 }

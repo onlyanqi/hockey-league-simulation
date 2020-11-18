@@ -55,18 +55,4 @@ public class LoadTeamStateTest {
         assertEquals(1, state.getLeague().getCreatedBy());
     }
 
-    @Test
-    public void updateTradingDetailsToLeagueTest() throws Exception {
-        GamePlayConfig gamePlayConfig = new GamePlayConfig();
-        League league = new League();
-        league.setGamePlayConfig(gamePlayConfig);
-        LoadTeamState loadTeamState = new LoadTeamState(hockeyContext);
-        loadTeamState.setLeague(league);
-        loadTeamState.updateTradingDetailsToLeague(tradingFactory);
-        Trading trading = loadTeamState.getLeague().getGamePlayConfig().getTrading();
-        assertNotNull(trading);
-        assertEquals(trading.getId(), 1);
-        assertEquals(trading.getMaxPlayersPerTrade(), 3);
-    }
-
 }

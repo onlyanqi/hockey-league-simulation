@@ -13,6 +13,7 @@ public class Injury extends SharedAttributes {
     private int leagueId;
 
     public Injury() {
+        setId(System.identityHashCode(this));
     }
 
     public Injury(int id) {

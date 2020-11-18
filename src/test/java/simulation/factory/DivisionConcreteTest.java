@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.dao.DivisionDao;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.model.Division;
@@ -19,16 +18,6 @@ public class DivisionConcreteTest {
     @Test
     public void newDivisionTest() {
         assertTrue(divisionConcrete.newDivision() instanceof Division);
-    }
-
-    @Test
-    public void newLoadDivisionFactory() {
-        assertTrue(divisionConcrete.newLoadDivisionFactory() instanceof DivisionDao);
-    }
-
-    @Test
-    public void newAddDivisionFactory() {
-        assertTrue(divisionConcrete.newAddDivisionFactory() instanceof DivisionDao);
     }
 
 }

@@ -21,7 +21,7 @@ public class GameTest {
     @Test
     public void defaultConstructorTest() {
         Game game = new Game();
-        assertEquals(game.getId(), 0);
+        assertNotEquals(game.getId(), 0);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class GameTest {
         assertTrue(game.getId() == 1);
 
         Game game2 = new Game();
-        assertTrue(game2.getId() == 0);
+        assertFalse(game2.getId() == 0);
     }
 
     @Test

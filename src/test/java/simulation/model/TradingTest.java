@@ -24,7 +24,7 @@ public class TradingTest {
     @Test
     public void defaultConstructorTest() {
         Trading trading = new Trading();
-        assertEquals(trading.getId(), 0);
+        assertNotEquals(trading.getId(), 0);
     }
 
     @Test

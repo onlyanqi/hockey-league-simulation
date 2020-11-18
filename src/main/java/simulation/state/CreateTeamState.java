@@ -221,19 +221,20 @@ public class CreateTeamState implements IHockeyState {
     }
 
     private boolean isLeaguePresent(String leagueName) {
-        ValidationConcrete validation = new ValidationConcrete();
-        LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
-        ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
-        League league = null;
-        try {
-            int userId = hockeyContext.getUser().getId();
-            league = leagueConcrete.createLeagueFromNameAndUserId(leagueName, userId, loadLeagueFactory);
-        } catch (Exception e) {
-            consoleOutput.printMsgToConsole(UNABLETOLOADLEAGUE);
-            System.exit(1);
-            e.printStackTrace();
-        }
-        return validation.newValidation().isNotNull(league) && league.getId() > 0;
+//        ValidationConcrete validation = new ValidationConcrete();
+////        LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
+////        ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
+////        League league = null;
+////        try {
+////            int userId = hockeyContext.getUser().getId();
+////            league = leagueConcrete.createLeagueFromNameAndUserId(leagueName, userId, loadLeagueFactory);
+////        } catch (Exception e) {
+////            consoleOutput.printMsgToConsole(UNABLETOLOADLEAGUE);
+////            System.exit(1);
+////            e.printStackTrace();
+////        }
+////        return validation.newValidation().isNotNull(league) && league.getId() > 0;
+        return false;
     }
 
     @Override

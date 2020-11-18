@@ -5,8 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.AgingMock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class AgingTest {
     private static IAgingFactory loadAgingFactory;
@@ -19,7 +18,7 @@ public class AgingTest {
     @Test
     public void defaultConstructorTest() {
         Aging aging = new Aging();
-        assertEquals(aging.getId(), 0);
+        assertNotEquals(aging.getId(), 0);
     }
 
     @Test

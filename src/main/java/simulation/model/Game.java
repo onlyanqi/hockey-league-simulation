@@ -15,6 +15,7 @@ public class Game {
 
     public Game() {
         this.played = false;
+        setId(System.identityHashCode(this));
     }
 
     public Game(int id, IGameFactory factory) throws Exception {
