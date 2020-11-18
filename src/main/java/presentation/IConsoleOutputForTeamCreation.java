@@ -28,7 +28,7 @@ public interface IConsoleOutputForTeamCreation {
 
     void playerIdAlreadyChosenMessage(List<Integer> chosenPlayersIdList);
 
-    void showCountOfNeededPlayers(int numberOfGoalies, int numberOfSkaters);
+    void showCountOfNeededPlayers(int numberOfGoalies, int numberOfForward, int numberOfDefense);
 
     void showTeamCreationWaitMessage();
 

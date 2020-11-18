@@ -10,6 +10,7 @@ import simulation.state.HockeyContext;
 import validator.IValidation;
 
 import java.io.FileNotFoundException;
+
 import org.apache.log4j.Logger;
 
 
@@ -67,8 +68,10 @@ public class App {
             }
         } catch (FileNotFoundException e) {
             System.out.println("File Not found. " + e);
-        } catch (Exception e) {
-            System.out.println("System faced unexpected exception. Please contact team. " + e);
+        }
+        catch (Exception e) {
+            System.out.println("System faced unexpected exception. Please contact team. \n" + e);
+
         }
     }
 //

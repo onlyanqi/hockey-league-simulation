@@ -109,8 +109,8 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
     }
 
     @Override
-    public void showCountOfNeededPlayers(int numberOfGoalies, int numberOfSkaters) {
-        consoleOutput.printMsgToConsole("Team needs more " + numberOfGoalies + " goalies and " + numberOfSkaters + " skaters");
+    public void showCountOfNeededPlayers(int numberOfGoalie, int numberOfForward, int numberOfDefense) {
+        consoleOutput.printMsgToConsole("Team needs " + numberOfGoalie + " more goalies, " + numberOfForward + " more forwards and " + numberOfDefense + " more defenses.");
     }
 
     @Override

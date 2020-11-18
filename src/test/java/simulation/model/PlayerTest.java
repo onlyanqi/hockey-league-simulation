@@ -46,7 +46,7 @@ public class PlayerTest {
         assertEquals(player.getId(), 1);
         assertEquals(player.getName(), "Player1");
 
-        player = new Player(21, loadPlayerFactory);
+        player = new Player(33, loadPlayerFactory);
         assertNull(player.getName());
     }
 
@@ -67,13 +67,13 @@ public class PlayerTest {
     @Test
     public void getPositionTest() throws Exception {
         Player player = new Player(1, loadPlayerFactory);
-        assertEquals(player.getPosition(), Player.Position.valueOf("forward"));
+        assertEquals(player.getPosition(), Player.Position.FORWARD);
     }
 
     @Test
     public void setPositionTest() {
         Player player = new Player();
-        Player.Position position = Player.Position.valueOf("goalie");
+        Player.Position position = Player.Position.GOALIE;
         player.setPosition(position);
         assertEquals(player.getPosition(), position);
     }
@@ -207,7 +207,7 @@ public class PlayerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void setInvalidPositionTest() throws Exception {
-        Player player = new Player(22, loadPlayerFactory);
+        Player player = new Player(32, loadPlayerFactory);
     }
 
     @Test

@@ -5,6 +5,7 @@ import db.data.IManagerFactory;
 public class Manager extends SharedAttributes {
     private int leagueId;
     private int teamId;
+    private String personality;
 
     public Manager() {
         setId(System.identityHashCode(this));
@@ -48,6 +49,14 @@ public class Manager extends SharedAttributes {
 
     public void setTeamId(int teamId) {
         this.teamId = teamId;
+    }
+
+    public String getPersonality() {
+        return personality;
+    }
+
+    public void setPersonality(String personality) {
+        this.personality = personality;
     }
 
 }
