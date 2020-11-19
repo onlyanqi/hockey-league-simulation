@@ -169,7 +169,7 @@ public class TeamTest {
         Team team = new Team(1, teamFactory);
         assertTrue(team.checkNumPlayer(team.getPlayerList()));
         team.getPlayerList().remove(0);
-        assertFalse(team.validTeam());
+        assertFalse(team.checkNumPlayer(team.getPlayerList()));
     }
 
     @Test

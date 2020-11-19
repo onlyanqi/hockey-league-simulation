@@ -194,7 +194,8 @@ public class Team extends SharedAttributes {
 
     private void selectPlayers(IUserInputForTeamCreation teamCreationInput,
                                IConsoleOutputForTeamCreation teamCreationOutput, int numberOfForward,
-                               int numberOfGoalie, int numberOfDefense, List<Player> freeAgentList, List<Integer> chosenPlayersIdList) {
+                               int numberOfGoalie, int numberOfDefense, List<Player> freeAgentList,
+                               List<Integer> chosenPlayersIdList) {
         int playerId;
         while (numberOfGoalie < 4 || numberOfForward < 16 || numberOfDefense < 10) {
             playerId = teamCreationInput.getPlayerId(freeAgentList.size() - 1);
@@ -221,35 +222,17 @@ public class Team extends SharedAttributes {
         }
     }
 
-    public boolean validTeam() {
-        boolean isValid = false;
-        int noOfGoalies = 0;
-        int noOfSkaters = 0;
-        if (playerList == null || playerList.isEmpty()){
-            return false;
-        } else {
-            for (Player player : playerList) {
-                if (player.getPosition() == Player.Position.GOALIE) {
-                    noOfGoalies = noOfGoalies + 1;
-                } else {
-                    noOfSkaters = noOfSkaters + 1;
-                }
-            }
-        }
-
-        if (noOfGoalies == 2 && noOfSkaters == 18) {
-            isValid = true;
-        }
-
-        return isValid;
-    }
-
     public boolean checkNumPlayer(List<Player> playerList) {
         boolean isValid = false;
         int goalieNum = 0;
         int forwardNum = 0;
         int defenseNum = 0;
         int playerNum = 0;
+        int maxPlayers = 30;
+        int maxGoalies = 4;
+        int maxForwards = 16;
+        int maxDefences = 10;
+
         for (Player player : playerList) {
             if (player.getPosition() == Player.Position.GOALIE) {
                 goalieNum++;
@@ -260,7 +243,9 @@ public class Team extends SharedAttributes {
             }
             playerNum++;
         }
-        if (playerNum == 30 && goalieNum == 4 && forwardNum == 16 && defenseNum == 10) {
+        if (playerNum == maxPlayers && goalieNum == maxGoalies
+                && forwardNum == maxForwards && defenseNum == maxDefences) {
+
             isValid = true;
         }
         return isValid;
@@ -280,6 +265,67 @@ public class Team extends SharedAttributes {
 
     public void setLossPoint(int lossPoint) {
         this.lossPoint = lossPoint;
+    }
+
+    public void fixTeamAfterTrading(List<Player> freeAgentList){
+        int goalieNum = 0;
+        int forwardNum = 0;
+        int defenseNum = 0;
+        int maxGoalies = 4;
+        int maxForwards = 16;
+        int maxDefences = 10;
+
+        for (Player player : playerList) {
+            if (player.getPosition() == Player.Position.GOALIE) {
+                goalieNum++;
+            } else if (player.getPosition() == Player.Position.FORWARD) {
+                forwardNum++;
+            } else {
+                defenseNum++;
+            }
+        }
+
+        Collections.sort(freeAgentList, Collections.reverseOrder());
+
+        if (goalieNum < maxGoalies) {
+            addPlayer(freeAgentList, Player.Position.GOALIE.toString(), goalieNum, maxGoalies);
+        } else if(goalieNum > maxGoalies){
+            dropPlayer(freeAgentList, Player.Position.GOALIE.toString(), goalieNum, maxGoalies);
+        }
+
+        if (forwardNum < maxForwards) {
+            addPlayer(freeAgentList, Player.Position.FORWARD.toString(), forwardNum, maxForwards);
+        } else if(forwardNum > maxForwards){
+            dropPlayer(freeAgentList, Player.Position.FORWARD.toString(), forwardNum, maxForwards);
+        }
+
+        if (defenseNum < maxDefences) {
+            addPlayer(freeAgentList, Player.Position.DEFENSE.toString(), defenseNum, maxDefences);
+        } else if(defenseNum > maxDefences){
+            dropPlayer(freeAgentList, Player.Position.DEFENSE.toString(), defenseNum, maxDefences);
+        }
+    }
+
+    private void addPlayer(List<Player> freeAgentList, String position, int noOfPlayers, int maxPlayers){
+        for(Player player : freeAgentList){
+            if(player.getPosition().equals(position) && noOfPlayers < maxPlayers){
+                freeAgentList.remove(player);
+                getPlayerList().add(player);
+                noOfPlayers++;
+            }
+        }
+    }
+
+    private void dropPlayer(List<Player> freeAgentList, String position, int noOfPlayers, int maxPlayers){
+        Collections.sort(getPlayerList());
+        for(int i = 0; noOfPlayers > maxPlayers; i++){
+            Player player = getPlayerList().get(i);
+            if(player.getPosition().toString().equals(position) && maxPlayers < noOfPlayers){
+                freeAgentList.add(player);
+                getPlayerList().remove(player);
+                noOfPlayers--;
+            }
+        }
     }
 
 }

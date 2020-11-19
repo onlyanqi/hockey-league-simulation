@@ -218,10 +218,10 @@ public class ExecuteTradeState implements ISimulateState {
         List<Player> fromTeamPlayerList = fromTeam.getPlayerList();
         fromTeamPlayerList.add(toPlayer);
         toPlayer.setTeamId(fromTeam.getId());
-        toTeamPlayerList.remove(toPlayer);
+        removeObjectFromList(toTeamPlayerList, toPlayer);
 
         for(Player player : fromPlayerList) {
-            fromTeamPlayerList.remove(player);
+            removeObjectFromList(fromTeamPlayerList, player);
             toTeamPlayerList.add(player);
             player.setTeamId(toTeam.getId());
             if (player.isCaptain()) {
@@ -238,10 +238,6 @@ public class ExecuteTradeState implements ISimulateState {
         }
     }
 
-    private void checkMakeTeamValidAfterTrading(Team team){
-        
-    }
-
     public void updateTradingDetails(Map<String, Object> tradeDetails) {
         String ACCEPTED = "accepted";
         Team fromTeam = (Team) tradeDetails.get(FROMTEAM);
@@ -249,24 +245,8 @@ public class ExecuteTradeState implements ISimulateState {
         TradeOffer tradeOffer = (TradeOffer) tradeDetails.get(TRADEOFFER);
 
         updateTradingDetailsInTeams(tradeDetails);
-        checkMakeTeamValidAfterTrading(fromTeam);
-        checkMakeTeamValidAfterTrading(toTeam);
-
-        boolean valid = fromTeam.validTeam();
-        if (valid) {
-            consoleOutput.printMsgToConsole("Seller team is valid after trading.");
-        } else{
-            consoleOutput.printMsgToConsole("Seller team is invalid after trading.");
-            return;
-        }
-
-        valid = toTeam.validTeam();
-        if (valid) {
-            consoleOutput.printMsgToConsole("Buyer team is valid after trading.");
-        } else{
-            consoleOutput.printMsgToConsole("Buyer team is invalid after trading.");
-            return;
-        }
+        fromTeam.fixTeamAfterTrading(league.getFreeAgent().getPlayerList());
+        toTeam.fixTeamAfterTrading(league.getFreeAgent().getPlayerList());
 
         tradeOffer.setStatus(ACCEPTED);
 

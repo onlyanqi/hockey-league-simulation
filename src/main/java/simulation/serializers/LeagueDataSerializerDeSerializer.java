@@ -62,12 +62,11 @@ public class LeagueDataSerializerDeSerializer {
         League league = null;
         try {
             fileReader = new FileReader(FILENAME);
-            //Gson gson = new Gson();
+            Gson gson = new Gson();
 
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            AgingCreator agingCreator = new AgingCreator();
+            /*GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeHierarchyAdapter(IAging.class, new AgingCreator());
-            Gson gson = gsonBuilder.create();
+            Gson gson = gsonBuilder.create();*/
 
             league = gson.fromJson(jsonParser.parse(fileReader).toString(), League.class);
             fileReader.close();
@@ -87,6 +86,7 @@ public class LeagueDataSerializerDeSerializer {
 }
 
 
+/*
 class AgingCreator implements InstanceCreator {
 
     @Override
@@ -94,4 +94,4 @@ class AgingCreator implements InstanceCreator {
         return new Aging();
     }
 
-}
+}*/

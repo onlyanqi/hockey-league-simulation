@@ -157,21 +157,24 @@ public class ExecuteTradeStateTest {
         Team team1 = new Team(1, teamFactory);
         Team team2 = new Team(3, teamFactory);
         Trading trading = new Trading(1, tradingFactory);
+        List<Player> fromPlayerListAfterTrade = new ArrayList<>();
+        fromPlayerListAfterTrade.add(player1);
 
         swap.put(FROMPLAYER, player1);
         swap.put(TOPLAYER, player2);
         swap.put(FROMTEAM, team1);
         swap.put(TOTEAM, team2);
         swap.put(TRADING, trading);
+        swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
 
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        //state.performTrade(swap);
+        state.performTrade(swap);
 
         List<TradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradeOfferList();
 
-        //assertEquals(tradeOfferList.get(3).getStatus(), ACCEPTED);
+        assertEquals(tradeOfferList.get(3).getStatus(), ACCEPTED);
     }
 
 
@@ -209,11 +212,11 @@ public class ExecuteTradeStateTest {
 
             TradeOffer tradeOffer1 = (TradeOffer) swap.get(TRADEOFFER);
 
-            /*if (userInput.toLowerCase().contains("a")) {
+            if (userInput.toLowerCase().contains("a")) {
                 assertEquals(tradeOffer1.getStatus(), (ACCEPTED));
             } else {
                 assertEquals(tradeOffer1.getStatus(), (REJECTED));
-            }*/
+            }
         }
     }
 
@@ -241,13 +244,18 @@ public class ExecuteTradeStateTest {
     @Test
     public void updateTradingDetailsTest() throws Exception {
         Map<String, Object> tradeDetails = new HashMap<>();
+        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+        IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
+        User user = new User(1, userFactory);
+        hockeyContext.setUser(user);
+        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
 
         Team fromTeam = new Team(1, teamFactory);
         Team toTeam = new Team(2, teamFactory);
-        Player fromPlayer = new Player(40, playerFactory);
-        fromPlayer.setPosition(Player.Position.GOALIE);
-        Player toPlayer = new Player(41, playerFactory);
-        toPlayer.setPosition(Player.Position.GOALIE);
+        Player fromPlayer = new Player(27, playerFactory);
+        state.removeObjectFromList(fromTeam.getPlayerList(), fromPlayer);
+        Player toPlayer = new Player(28, playerFactory);
+        state.removeObjectFromList(toTeam.getPlayerList(), toPlayer);
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
 
         fromTeam.getPlayerList().add(fromPlayer);
@@ -263,14 +271,9 @@ public class ExecuteTradeStateTest {
         tradeDetails.put(TRADEOFFER, tradeOffer);
         tradeDetails.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
 
-        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
-        IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
-        User user = new User(1, userFactory);
-        hockeyContext.setUser(user);
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         state.updateTradingDetails(tradeDetails);
 
-        //assertEquals(tradeOffer.getStatus(), ACCEPTED);
+        assertEquals(tradeOffer.getStatus(), ACCEPTED);
 
         boolean isPlayerSwapped = false;
         boolean isPlayerNotSwapped = false;
@@ -379,7 +382,7 @@ public class ExecuteTradeStateTest {
         assertTrue(fromPlayer.getStrength() <= toPlayer.getStrength());
         assertNotEquals(toPlayer.getId(), player.getId());
 
-        player = new Player(4, playerFactory);
+        player = new Player(6, playerFactory);
         state.findBestSwapPlayer(team, league, player, players);
 
         assertNotNull(players);
@@ -389,7 +392,7 @@ public class ExecuteTradeStateTest {
 
         toPlayer = (Player) players.get(TOPLAYER);
 
-        //assertEquals(toPlayer.getId(), player.getId());
+        assertEquals(toPlayer.getId(), player.getId());
     }
 
     @Test
