@@ -4,9 +4,11 @@ target/
 .properties
 *.iml
 logs/
+logs\\myLog.log
 inputJson.txt
 input2.txt
 JsonOutput.txt
 a.json
 league1.json
 LeagueTeamUnique.json
+test.json

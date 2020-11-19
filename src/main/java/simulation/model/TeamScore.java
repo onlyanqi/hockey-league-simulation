@@ -11,6 +11,7 @@ public class TeamScore extends SharedAttributes {
     Integer numberOfTies;
 
     public TeamScore() {
+        setId(System.identityHashCode(this));
     }
 
     public TeamScore(String teamName) {

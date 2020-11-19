@@ -11,6 +11,7 @@ public class Coach extends SharedAttributes {
     private Double saving;
 
     public Coach() {
+        setId(System.identityHashCode(this));
     }
 
     public Coach(int id) {

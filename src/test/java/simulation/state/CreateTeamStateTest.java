@@ -87,14 +87,13 @@ public class CreateTeamStateTest {
         IFreeAgentFactory freeAgentFactory = new FreeAgentMock();
         FreeAgent freeAgent = new FreeAgent(1, freeAgentFactory);
         assertTrue(createTeamState.hasEnoughFreeAgent(freeAgent));
-        freeAgent = new FreeAgent(5, freeAgentFactory);
-        assertTrue(createTeamState.hasEnoughFreeAgent(freeAgent));
-        assertFalse(createTeamState.hasEnoughFreeAgent(null));
         List<Player> freeAgentList = freeAgent.getPlayerList();
         int freeAgentListSize = freeAgentList.size();
         for (int i = freeAgentListSize - 1; i >= 0; i--) {
             freeAgentList.remove(i);
         }
+        assertFalse(createTeamState.hasEnoughFreeAgent(freeAgent));
+        freeAgent = new FreeAgent(5, freeAgentFactory);
         assertFalse(createTeamState.hasEnoughFreeAgent(freeAgent));
     }
 

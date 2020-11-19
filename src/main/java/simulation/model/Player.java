@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class Player extends SharedAttributes implements Comparable<Player> {
 
-    private static final String GOALIE = "goalie";
     private int age;
     private Position position;
     private int teamId;
@@ -26,6 +25,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     private double relativeStrength;
 
     public Player() {
+        setId(System.identityHashCode(this));
     }
 
     public Player(int id) {
@@ -52,6 +52,24 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         this.setSkating(player.getSkating());
         this.setStrength();
         this.setRelativeStrength();
+    }
+
+    public enum Position {
+        FORWARD {
+            public String toString() {
+                return "forward";
+            }
+        },
+        DEFENSE {
+            public String toString() {
+                return "defense";
+            }
+        },
+        GOALIE {
+            public String toString() {
+                return "goalie";
+            }
+        }
     }
 
     public boolean isFreeAgent() {
@@ -137,7 +155,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     public void setSaving(int saving) throws IllegalArgumentException {
         if (saving < 1 || saving > 20) {
             throw new IllegalArgumentException("Player saving is out of range (1-20)");
-        } else if (this.position.toString().equals(GOALIE)) {
+        } else if (this.position == Position.GOALIE) {
             this.saving = saving;
         } else {
             this.saving = 1;
@@ -146,13 +164,13 @@ public class Player extends SharedAttributes implements Comparable<Player> {
 
     public void setStrength() {
         switch (position) {
-            case forward:
+            case FORWARD:
                 this.strength = this.getSkating() + this.getShooting() + (double) (this.getChecking() / 2);
                 break;
-            case defense:
+            case DEFENSE:
                 this.strength = this.getSkating() + this.getChecking() + (double) (this.getShooting() / 2);
                 break;
-            case goalie:
+            case GOALIE:
                 this.strength = this.getSkating() + this.getSaving();
                 break;
         }
@@ -281,21 +299,15 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         return returnValue;
     }
 
-    public enum Position {
-        forward,
-        defense,
-        goalie
-    }
-
     public void setRelativeStrength(){
         switch (position) {
-            case forward:
+            case FORWARD:
                 this.relativeStrength = this.strength/5;
                 break;
-            case defense:
+            case DEFENSE:
                 this.relativeStrength = this.strength/5;
                 break;
-            case goalie:
+            case GOALIE:
                 this.relativeStrength = this.strength/4;
                 break;
         }

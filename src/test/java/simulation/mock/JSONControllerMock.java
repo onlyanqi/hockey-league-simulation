@@ -1,5 +1,6 @@
 package simulation.mock;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -55,71 +56,8 @@ public class JSONControllerMock {
         gameplayConfig.put("training", training);
         gameplayConfig.put("trading", trading);
 
-        JSONObject freeAgentplayer1 = new JSONObject();
-        freeAgentplayer1.put("playerName", "Agent One");
-        freeAgentplayer1.put("position", "forward");
-        freeAgentplayer1.put("age", (long) 25);
-        freeAgentplayer1.put("skating", (long) 10);
-        freeAgentplayer1.put("shooting", (long) 10);
-        freeAgentplayer1.put("checking", (long) 10);
-        freeAgentplayer1.put("saving", (long) 1);
-
-        JSONObject freeAgentPlayer2 = new JSONObject();
-        freeAgentPlayer2.put("playerName", "Agent Two");
-        freeAgentPlayer2.put("position", "defense");
-        freeAgentPlayer2.put("age", (long) 25);
-        freeAgentPlayer2.put("skating", (long) 10);
-        freeAgentPlayer2.put("shooting", (long) 10);
-        freeAgentPlayer2.put("checking", (long) 10);
-        freeAgentPlayer2.put("saving", (long) 1);
-
-        JSONObject freeAgentPlayer3 = new JSONObject();
-        freeAgentPlayer3.put("playerName", "Agent Three");
-        freeAgentPlayer3.put("position", "goalie");
-        freeAgentPlayer3.put("age", (long) 25);
-        freeAgentPlayer3.put("skating", (long) 10);
-        freeAgentPlayer3.put("shooting", (long) 5);
-        freeAgentPlayer3.put("checking", (long) 5);
-        freeAgentPlayer3.put("saving", (long) 10);
-
-        freeAgents.add(freeAgentplayer1);
-        freeAgents.add(freeAgentPlayer2);
-        freeAgents.add(freeAgentPlayer3);
-
-        JSONObject player1 = new JSONObject();
-        player1.put("playerName", "Player One");
-        player1.put("position", "forward");
-        player1.put("captain", true);
-        player1.put("age", (long) 27);
-        player1.put("skating", (long) 15);
-        player1.put("shooting", (long) 18);
-        player1.put("checking", (long) 12);
-        player1.put("saving", (long) 1);
-
-
-        JSONObject player2 = new JSONObject();
-        player2.put("playerName", "Player Two");
-        player2.put("position", "defense");
-        player2.put("captain", false);
-        player2.put("age", (long) 20);
-        player2.put("skating", (long) 10);
-        player2.put("shooting", (long) 10);
-        player2.put("checking", (long) 10);
-        player2.put("saving", (long) 1);
-
-        JSONObject player3 = new JSONObject();
-        player3.put("playerName", "Player Three");
-        player3.put("position", "goalie");
-        player3.put("captain", false);
-        player3.put("age", (long) 33);
-        player3.put("skating", (long) 10);
-        player3.put("shooting", (long) 4);
-        player3.put("checking", (long) 9);
-        player3.put("saving", (long) 18);
-
-        players.add(player1);
-        players.add(player2);
-        players.add(player3);
+        addFreePlayers(freeAgents);
+        addPlayers(players);
 
         JSONObject teamCoach = new JSONObject();
         teamCoach.put("name", "Mary Smith");
@@ -186,6 +124,84 @@ public class JSONControllerMock {
         league.put("daysUntilStatIncreaseCheck", 100);
 
         return league;
+    }
+
+    private static void addFreePlayers(JSONArray freeAgents) {
+        for (int i = 0; i < 30; i++) {
+            JSONObject forward = new JSONObject();
+            forward.put("playerName", "Agent " + i);
+            forward.put("position", "forward");
+            forward.put("captain", false);
+            forward.put("age", (long) 27);
+            forward.put("skating", (long) 12);
+            forward.put("shooting", (long) 18);
+            forward.put("checking", (long) 11);
+            forward.put("saving", (long) 1);
+            freeAgents.add(forward);
+        }
+        for (int i = 30; i < 55; i++) {
+            JSONObject defense = new JSONObject();
+            defense.put("playerName", "Agent " + i);
+            defense.put("position", "defense");
+            defense.put("captain", false);
+            defense.put("age", (long) 24);
+            defense.put("skating", (long) 13);
+            defense.put("shooting", (long) 18);
+            defense.put("checking", (long) 19);
+            defense.put("saving", (long) 1);
+            freeAgents.add(defense);
+        }
+        for (int i = 55; i < 64; i++) {
+            JSONObject goalie = new JSONObject();
+            goalie.put("playerName", "Agent " + i);
+            goalie.put("position", "goalie");
+            goalie.put("captain", false);
+            goalie.put("age", (long) 27);
+            goalie.put("skating", (long) 10);
+            goalie.put("shooting", (long) 9);
+            goalie.put("checking", (long) 12);
+            goalie.put("saving", (long) 13);
+            freeAgents.add(goalie);
+        }
+    }
+
+    private static void addPlayers(JSONArray players) {
+        for (int i = 0; i < 16; i++) {
+            JSONObject forward = new JSONObject();
+            forward.put("playerName", "Player " + i);
+            forward.put("position", "forward");
+            forward.put("captain", false);
+            forward.put("age", (long) 27);
+            forward.put("skating", (long) 12);
+            forward.put("shooting", (long) 18);
+            forward.put("checking", (long) 11);
+            forward.put("saving", (long) 1);
+            players.add(forward);
+        }
+        for (int i = 16; i < 26; i++) {
+            JSONObject defense = new JSONObject();
+            defense.put("playerName", "Player " + i);
+            defense.put("position", "defense");
+            defense.put("captain", false);
+            defense.put("age", (long) 24);
+            defense.put("skating", (long) 13);
+            defense.put("shooting", (long) 18);
+            defense.put("checking", (long) 19);
+            defense.put("saving", (long) 1);
+            players.add(defense);
+        }
+        for (int i = 26; i < 30; i++) {
+            JSONObject goalie = new JSONObject();
+            goalie.put("playerName", "Player " + i);
+            goalie.put("position", "goalie");
+            goalie.put("captain", false);
+            goalie.put("age", (long) 27);
+            goalie.put("skating", (long) 10);
+            goalie.put("shooting", (long) 9);
+            goalie.put("checking", (long) 12);
+            goalie.put("saving", (long) 13);
+            players.add(goalie);
+        }
     }
 
 

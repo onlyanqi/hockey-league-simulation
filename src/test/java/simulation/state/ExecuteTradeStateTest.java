@@ -244,10 +244,10 @@ public class ExecuteTradeStateTest {
 
         Team fromTeam = new Team(1, teamFactory);
         Team toTeam = new Team(2, teamFactory);
-        Player fromPlayer = new Player(30, playerFactory);
-        fromPlayer.setPosition(Player.Position.valueOf("goalie"));
-        Player toPlayer = new Player(31, playerFactory);
-        toPlayer.setPosition(Player.Position.valueOf("goalie"));
+        Player fromPlayer = new Player(40, playerFactory);
+        fromPlayer.setPosition(Player.Position.GOALIE);
+        Player toPlayer = new Player(41, playerFactory);
+        toPlayer.setPosition(Player.Position.GOALIE);
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
 
         fromTeam.getPlayerList().add(fromPlayer);
@@ -415,22 +415,11 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void getWeakestPlayerListTest() throws Exception {
-        Team team = new Team();
-        List<Player> playerList = new ArrayList<>();
-        team.setPlayerList(playerList);
-
+        Team team = new Team(1, teamFactory);
         League league = new League(1, leagueFactory);
+
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        List<Player> weakPlayerList = state.getWeakestPlayerList(team, league);
-
-        assertTrue(weakPlayerList.isEmpty());
-
-        Player strongPlayer1 = new Player(10, playerFactory);
-        Player strongPlayer2 = new Player(11, playerFactory);
-
-        playerList.add(strongPlayer1);
-        playerList.add(strongPlayer2);
-        team.setPlayerList(playerList);
+        List<Player> weakPlayerList;
 
         weakPlayerList = state.getWeakestPlayerList(team, league);
 

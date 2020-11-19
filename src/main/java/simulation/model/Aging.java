@@ -13,6 +13,7 @@ public class Aging extends SharedAttributes
     private int leagueId;
 
     public Aging() {
+        setId(System.identityHashCode(this));
     }
 
     public Aging(int id) {

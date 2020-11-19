@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.dao.UserDao;
 import db.data.IUserFactory;
 import simulation.model.User;
 
@@ -14,8 +13,5 @@ public class UserConcrete {
         return new User(name, loadUserFactory);
     }
 
-    public IUserFactory newUserFactory() {
-        return new UserDao();
-    }
 
 }

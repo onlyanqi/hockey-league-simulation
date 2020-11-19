@@ -24,9 +24,10 @@ public class League extends SharedAttributes {
     private TeamStanding playOffStanding;
     private TeamStanding activeTeamStanding;
     private NHLEvents nhlEvents;
-    private transient List<TradeOffer> tradeOfferList;
+    private List<TradeOffer> tradeOfferList;
 
     public League() {
+        setId(System.identityHashCode(this));
     }
 
     public League(int id) {

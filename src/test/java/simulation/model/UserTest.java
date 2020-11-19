@@ -7,8 +7,7 @@ import org.junit.Test;
 import simulation.mock.LeagueMock;
 import simulation.mock.UserMock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class UserTest {
 
@@ -22,7 +21,7 @@ public class UserTest {
     @Test
     public void defaultConstructorTest() {
         User user = new User();
-        assertEquals(user.getId(), 0);
+        assertNotEquals(user.getId(), 0);
     }
 
     @Test

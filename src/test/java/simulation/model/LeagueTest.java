@@ -23,7 +23,7 @@ public class LeagueTest {
     @Test
     public void defaultConstructorTest() {
         League league = new League();
-        assertEquals(league.getId(), 0);
+        assertNotEquals(league.getId(), 0);
     }
 
     @Test
@@ -118,7 +118,7 @@ public class LeagueTest {
     @Test
     public void getFreeAgentTest() throws Exception {
         League league = new League(1, leagueFactory);
-        assertEquals(league.getFreeAgent().getId(), 0);
+        assertNotEquals(league.getFreeAgent().getId(), 0);
         List<Player> playerList = league.getFreeAgent().getPlayerList();
         assertTrue(playerList.get(0).getName().equals("Player1"));
     }

@@ -19,6 +19,7 @@ public class TradeOffer extends SharedAttributes {
     private String status;
 
     public TradeOffer() {
+        setId(System.identityHashCode(this));
     }
 
     public TradeOffer(int tradingOfferId, ITradeOfferFactory factory) throws Exception {

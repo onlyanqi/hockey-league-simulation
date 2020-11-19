@@ -23,6 +23,7 @@ public class Trading extends SharedAttributes {
     private Map<String, Double> gmTable;
 
     public Trading() {
+        setId(System.identityHashCode(this));
     }
 
     public Trading(int tradingId, ITradingFactory factory) throws Exception {

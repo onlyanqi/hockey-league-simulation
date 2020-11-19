@@ -6,6 +6,7 @@ public class GameResolver extends SharedAttributes {
     private Double randomWinChance;
 
     public GameResolver() {
+        setId(System.identityHashCode(this));
     }
 
     public GameResolver(int leagueId, IGameResolverFactory gameResolverFactory) throws Exception {

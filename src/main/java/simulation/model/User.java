@@ -12,6 +12,7 @@ public class User extends SharedAttributes {
     private League league;
 
     public User() {
+        setId(System.identityHashCode(this));
     }
 
     public User(int id) {

@@ -31,6 +31,7 @@ public class AgingState implements ISimulateState {
             for (Division division : divisionList) {
                 List<Team> teamList = division.getTeamList();
                 for (Team team : teamList) {
+                    team.setActivePlayerList();
                     List<Player> playerList = team.getPlayerList();
                     for (Player teamPlayer : playerList) {
                         teamPlayer.agingInjuryRecovery(league);

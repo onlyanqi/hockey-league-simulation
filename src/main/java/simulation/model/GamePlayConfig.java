@@ -15,6 +15,7 @@ public class GamePlayConfig {
     private Training training;
 
     public GamePlayConfig() {
+        setId(System.identityHashCode(this));
     }
 
     public GamePlayConfig(int leagueId, IGamePlayConfigFactory gamePlayConfigFactory) throws Exception {

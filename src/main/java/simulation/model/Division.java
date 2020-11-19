@@ -12,6 +12,7 @@ public class Division extends SharedAttributes {
     private List<Team> teamList;
 
     public Division() {
+        setId(System.identityHashCode(this));
     }
 
     public Division(int id) {

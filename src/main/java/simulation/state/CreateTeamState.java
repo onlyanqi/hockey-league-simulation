@@ -8,6 +8,7 @@ import presentation.IUserInputForTeamCreation;
 import presentation.ReadUserInput;
 import simulation.factory.LeagueConcrete;
 import simulation.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,15 +119,18 @@ public class CreateTeamState implements IHockeyState {
         }
         List<Player> freeAgentList = freeAgent.getPlayerList();
         int countOfGoalie = 0;
-        int countOfSkaters = 0;
-        for (int i = 0; i < freeAgentList.size(); i++) {
-            if (freeAgentList.get(i).getPosition().toString().equals(GOALIE)) {
+        int countOfForward = 0;
+        int countOfDefense = 0;
+        for (Player player : freeAgentList) {
+            if (player.getPosition() == Player.Position.GOALIE) {
                 countOfGoalie++;
+            } else if (player.getPosition() == Player.Position.FORWARD) {
+                countOfForward++;
             } else {
-                countOfSkaters++;
+                countOfDefense++;
             }
         }
-        if (countOfGoalie >= 2 && countOfSkaters >= 18) {
+        if (countOfGoalie >= 4 && countOfForward >= 16 && countOfDefense >= 10) {
             return true;
         } else {
             return false;
@@ -159,7 +163,7 @@ public class CreateTeamState implements IHockeyState {
         return league.getConferenceFromListByName(conferenceName);
     }
 
-    private void choosePlayers() {
+    private void choosePlayers() throws IllegalArgumentException {
         freeAgent = league.getFreeAgent();
         List<Player> freeAgentList = freeAgent.getPlayerList();
         List<Integer> chosenPlayersIdList = team.createChosenPlayerIdList(freeAgent);
@@ -219,7 +223,7 @@ public class CreateTeamState implements IHockeyState {
     }
 
     private boolean isLeaguePresent(String leagueName) {
-        LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
+        /*LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
         ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
         League league = null;
         try {
@@ -236,8 +240,8 @@ public class CreateTeamState implements IHockeyState {
             isPresent = false;
         } else if (league.getId() > 0){
             isPresent = true;
-        }
-        return isPresent;
+        }*/
+        return false;
     }
 
     @Override

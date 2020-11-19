@@ -21,7 +21,7 @@ public class TeamMock implements ITeamFactory {
 
     private void addPlayerInList(List<Player> playerList, IPlayerFactory playerFactory) throws Exception {
         Player player;
-        for (int i = 1; i < 21; i++) {
+        for (int i = 1; i < 31; i++) {
             player = new Player(i, playerFactory);
             playerList.add(player);
         }
@@ -56,6 +56,7 @@ public class TeamMock implements ITeamFactory {
                 team.setStrength();
                 team.setAiTeam(true);
                 team.setTradeOfferCountOfSeason(0);
+                team.setActivePlayerList();
                 break;
 
             case 2:
@@ -97,6 +98,7 @@ public class TeamMock implements ITeamFactory {
                 team.setStrength();
                 team.setAiTeam(true);
                 team.setTradeOfferCountOfSeason(0);
+                team.setActivePlayerList();
                 break;
 
             case 4:
@@ -117,6 +119,7 @@ public class TeamMock implements ITeamFactory {
                 team.setStrength();
                 team.setAiTeam(false);
                 team.setTradeOfferCountOfSeason(1);
+                team.setActivePlayerList();
                 break;
 
             case 5:
@@ -161,6 +164,7 @@ public class TeamMock implements ITeamFactory {
         Coach1.setSaving(0.8);
         team.setCoach(Coach1);
         team.setPlayerList(formPlayerList());
+        team.setActivePlayerList();
     }
 
     @Override

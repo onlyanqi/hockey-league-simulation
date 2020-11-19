@@ -23,7 +23,7 @@ public class GameScheduleTest {
     @Test
     public void defaultConstructorTest() {
         Game game = new Game();
-        assertEquals(game.getId(), 0);
+        assertNotEquals(game.getId(), 0);
     }
 
     @Test

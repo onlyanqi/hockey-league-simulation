@@ -2,6 +2,7 @@ package simulation.state;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import presentation.ConsoleOutput;
 import simulation.factory.*;
 import simulation.model.*;
 
@@ -50,11 +51,14 @@ public class ImportState implements IHockeyState {
     private static final String MAX_PLAYERS_PER_TRADE = "maxPlayersPerTrade";
     private static final String RANDOM_ACCEPTANCE_CHANCE = "randomAcceptanceChance";
     private static final String GM_TABLE = "gmTable";
+    public static final String INITIALIZE_INFO = "Validating JSON input and initializing the league model object...";
     private final Set<String> appearedName = new HashSet<>();
     private IHockeyContext hockeyContext;
     private String filePath;
     private JSONObject jsonFromInput;
     private League league;
+    private int leagueId;
+    private int teamId;
 
 
     public ImportState(IHockeyContext hockeyContext, JSONObject jsonFromInput) {
@@ -65,11 +69,12 @@ public class ImportState implements IHockeyState {
             LeagueConcrete leagueConcrete = new LeagueConcrete();
             league = leagueConcrete.newLeague();
         }
+        leagueId = league.getId();
     }
 
     @Override
     public void entry() {
-
+        ConsoleOutput.getInstance().printMsgToConsole(INITIALIZE_INFO);
     }
 
     @Override
@@ -193,6 +198,7 @@ public class ImportState implements IHockeyState {
         JSONObject agingJSONObject = (JSONObject) gameplayConfigJSONObject.get(AGING);
         //IAging aging = loadAgingJson(agingJSONObject);
         Aging aging = loadAgingJson(agingJSONObject);
+        aging.setLeagueId(leagueId);
         gamePlayConfig.setAging(aging);
 
         if (validateKeyInObject(gameplayConfigJSONObject, GAME_RESOLVER)) {
@@ -207,6 +213,7 @@ public class ImportState implements IHockeyState {
         }
         JSONObject injuriesJSONObject = (JSONObject) gameplayConfigJSONObject.get(INJURIES);
         Injury injury = loadInjuryJson(injuriesJSONObject);
+        injury.setLeagueId(leagueId);
         gamePlayConfig.setInjury(injury);
 
         if (validateKeyInObject(gameplayConfigJSONObject, TRAINING)) {
@@ -214,6 +221,7 @@ public class ImportState implements IHockeyState {
         }
         JSONObject trainingJSONObject = (JSONObject) gameplayConfigJSONObject.get(TRAINING);
         Training training = loadTrainingJson(trainingJSONObject);
+        training.setLeagueId(leagueId);
         gamePlayConfig.setTraining(training);
 
         if (validateKeyInObject(gameplayConfigJSONObject, TRADING)) {
@@ -222,6 +230,7 @@ public class ImportState implements IHockeyState {
         JSONObject tradingJSONObject = (JSONObject) gameplayConfigJSONObject.get(TRADING);
         Trading trading = loadTradingJson(tradingJSONObject);
         gamePlayConfig.setTrading(trading);
+        gamePlayConfig.setLeagueId(leagueId);
         return gamePlayConfig;
     }
 
@@ -255,6 +264,7 @@ public class ImportState implements IHockeyState {
 
             Team team = setTeamVariables(teamName, manager, coach, playerList);
 
+            teamId = team.getId();
             teamList.add(team);
         }
         return teamList;
@@ -325,7 +335,7 @@ public class ImportState implements IHockeyState {
         return coach;
     }
 
-    private Team setTeamVariables(String teamName, Manager manager, Coach coach, List<Player> playerList) {
+    private Team setTeamVariables(String teamName, Manager manager, Coach coach, List<Player> playerList) throws IllegalArgumentException {
         TeamConcrete teamConcrete = new TeamConcrete();
         Team team = teamConcrete.newTeam();
         team.setName(teamName);
@@ -334,7 +344,7 @@ public class ImportState implements IHockeyState {
         team.setAiTeam(true);
         team.setPlayerList(playerList);
         team.setStrength();
-
+        team.setActivePlayerList();
         return team;
     }
 
@@ -381,7 +391,7 @@ public class ImportState implements IHockeyState {
                 int saving = getPlayerSaving(playerJsonObject);
 
                 Player player = setTeamPlayerVariables(playerName, position, captain, age, skating, shooting, checking, saving);
-
+                player.setTeamId(teamId);
                 playerList.add(player);
 
             }
@@ -433,8 +443,15 @@ public class ImportState implements IHockeyState {
             throw new IllegalArgumentException("Please make sure player position is provided");
         }
         String positionString = (String) playerJsonObject.get(POSITION);
-
-        return Player.Position.valueOf(positionString);
+        Player.Position positionEnum = null;
+        if (positionString.equalsIgnoreCase(Player.Position.GOALIE.toString())) {
+            positionEnum = Player.Position.GOALIE;
+        } else if (positionString.equalsIgnoreCase(Player.Position.FORWARD.toString())) {
+            positionEnum = Player.Position.FORWARD;
+        } else if (positionString.equalsIgnoreCase(Player.Position.DEFENSE.toString())) {
+            positionEnum = Player.Position.DEFENSE;
+        }
+        return positionEnum;
     }
 
     private Player setTeamPlayerVariables(String playerName, Player.Position position, boolean captain, int age, int skating, int shooting, int checking, int saving) {

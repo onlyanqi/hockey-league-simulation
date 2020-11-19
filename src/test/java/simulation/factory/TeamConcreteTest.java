@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.dao.TeamDao;
 import db.data.ITeamFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,14 +30,5 @@ public class TeamConcreteTest {
         assertTrue(team instanceof Team);
     }
 
-    @Test
-    public void newLoadTeamFactoryTest() {
-        assertTrue(teamConcrete.newTeamFactory() instanceof TeamDao);
-    }
-
-    @Test
-    public void newAddTeamFactoryTest() {
-        assertTrue(teamConcrete.newTeamFactory() instanceof TeamDao);
-    }
 
 }
