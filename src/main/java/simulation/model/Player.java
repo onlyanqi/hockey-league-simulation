@@ -22,6 +22,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     private int checking;
     private int saving;
     private double strength;
+    private double relativeStrength;
 
     public Player() {
         setId(System.identityHashCode(this));
@@ -50,6 +51,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         this.setShooting(player.getShooting());
         this.setSkating(player.getSkating());
         this.setStrength();
+        this.setRelativeStrength();
     }
 
     public enum Position {
@@ -217,7 +219,8 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         addPlayerFactory.addPlayer(this);
     }
 
-    public boolean retirementCheck(Aging aging) {
+    public boolean retirementCheck(IAging aging) {
+    //public boolean retirementCheck(Aging aging) {
         if (aging == null) {
             return false;
         }
@@ -294,5 +297,23 @@ public class Player extends SharedAttributes implements Comparable<Player> {
             returnValue = -1;
         }
         return returnValue;
+    }
+
+    public void setRelativeStrength(){
+        switch (position) {
+            case FORWARD:
+                this.relativeStrength = this.strength/5;
+                break;
+            case DEFENSE:
+                this.relativeStrength = this.strength/5;
+                break;
+            case GOALIE:
+                this.relativeStrength = this.strength/4;
+                break;
+        }
+    }
+
+    public double getRelativeStrength(){
+        return this.relativeStrength;
     }
 }

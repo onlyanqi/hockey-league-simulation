@@ -5,9 +5,6 @@ import db.data.IPlayerFactory;
 import db.data.ITeamFactory;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
-import simulation.factory.ValidationConcrete;
-import validator.IValidation;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -228,9 +225,9 @@ public class Team extends SharedAttributes {
         boolean isValid = false;
         int noOfGoalies = 0;
         int noOfSkaters = 0;
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        IValidation validation = validationConcrete.newValidation();
-        if (validation.isListNotEmpty(playerList)) {
+        if (playerList == null || playerList.isEmpty()){
+            return false;
+        } else {
             for (Player player : playerList) {
                 if (player.getPosition() == Player.Position.GOALIE) {
                     noOfGoalies = noOfGoalies + 1;

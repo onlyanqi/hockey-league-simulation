@@ -43,6 +43,13 @@ public class JSONControllerMock {
         trading.put("maxPlayersPerTrade", (long) 2);
         trading.put("randomAcceptanceChance", 0.05);
 
+        JSONObject gmTable = new JSONObject();
+        gmTable.put("shrewd", -0.1);
+        gmTable.put("gambler", 0.1);
+        gmTable.put("normal", 0.0);
+
+        trading.put("gmTable", gmTable);
+
         gameplayConfig.put("aging", aging);
         gameplayConfig.put("gameResolver", gameResolver);
         gameplayConfig.put("injuries", injuries);

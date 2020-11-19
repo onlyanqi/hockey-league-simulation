@@ -11,11 +11,11 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     private static final String TRAININGINFORMATION = "Training Players and Team!";
     private static final String STATCHECKINFORMATION = "Performing stat increase check";
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private League league;
     private ConsoleOutput consoleOutput;
 
-    public TrainingState(HockeyContext hockeyContext) {
+    public TrainingState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
         consoleOutput = ConsoleOutput.getInstance();

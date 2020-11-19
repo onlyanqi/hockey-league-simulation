@@ -1,9 +1,9 @@
 package simulation.mock;
 
-import db.data.IAgingFactory;
+import db.data.IAgingDao;
 import simulation.model.Aging;
 
-public class AgingMock implements IAgingFactory {
+public class AgingMock implements IAgingDao {
 
     @Override
     public int addAging(Aging aging) {

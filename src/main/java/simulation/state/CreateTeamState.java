@@ -7,7 +7,6 @@ import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import presentation.ReadUserInput;
 import simulation.factory.LeagueConcrete;
-import simulation.factory.ValidationConcrete;
 import simulation.model.*;
 
 import java.util.ArrayList;
@@ -27,7 +26,8 @@ public class CreateTeamState implements IHockeyState {
     private static final String CREATEORLOADTEAM = "createOrLoadTeam";
     private static final String HOWMANYSEASONS = "How many seasons do you want to simulate";
     private static final String RIGHTCHOICEREQUEST = "Please enter the right choice. Yes/Y or No/N";
-    private HockeyContext hockeyContext;
+    private static final String GOALIE = "goalie";
+    private IHockeyContext hockeyContext;
     private League league;
     private String conferenceName;
     private String divisionName;
@@ -40,7 +40,7 @@ public class CreateTeamState implements IHockeyState {
     private ConsoleOutput consoleOutput = null;
     private ReadUserInput readUserInput = null;
 
-    public CreateTeamState(HockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
+    public CreateTeamState(IHockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
                            IConsoleOutputForTeamCreation teamCreationOutput) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
@@ -223,19 +223,24 @@ public class CreateTeamState implements IHockeyState {
     }
 
     private boolean isLeaguePresent(String leagueName) {
-//        ValidationConcrete validation = new ValidationConcrete();
-////        LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
-////        ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
-////        League league = null;
-////        try {
-////            int userId = hockeyContext.getUser().getId();
-////            league = leagueConcrete.createLeagueFromNameAndUserId(leagueName, userId, loadLeagueFactory);
-////        } catch (Exception e) {
-////            consoleOutput.printMsgToConsole(UNABLETOLOADLEAGUE);
-////            System.exit(1);
-////            e.printStackTrace();
-////        }
-////        return validation.newValidation().isNotNull(league) && league.getId() > 0;
+        /*LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
+        ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
+        League league = null;
+        try {
+            int userId = hockeyContext.getUser().getId();
+            league = leagueConcrete.createLeagueFromNameAndUserId(leagueName, userId, loadLeagueFactory);
+        } catch (Exception e) {
+            consoleOutput.printMsgToConsole(UNABLETOLOADLEAGUE);
+            System.exit(1);
+        }
+
+        boolean isPresent = false;
+
+        if(league == null){
+            isPresent = false;
+        } else if (league.getId() > 0){
+            isPresent = true;
+        }*/
         return false;
     }
 

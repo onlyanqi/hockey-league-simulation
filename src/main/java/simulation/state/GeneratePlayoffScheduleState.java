@@ -11,13 +11,13 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
 
     private final Integer numberOfGamesPerTeam = 7;
     private final Integer numberOfTeamStandingBeforeStanleyCup = 4;
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private League league;
     private NHLEvents nhlEvents;
     private GameSchedule games;
     private TeamStanding teamStanding;
 
-    public GeneratePlayoffScheduleState(HockeyContext hockeyContext) {
+    public GeneratePlayoffScheduleState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
         this.nhlEvents = league.getNHLRegularSeasonEvents();

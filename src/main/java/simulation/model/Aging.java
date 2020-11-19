@@ -1,8 +1,10 @@
 package simulation.model;
 
-import db.data.IAgingFactory;
+import db.data.IAgingDao;
 
-public class Aging extends SharedAttributes {
+public class Aging extends SharedAttributes
+        implements IAging
+        {
 
     private int averageRetirementAge;
 
@@ -18,23 +20,27 @@ public class Aging extends SharedAttributes {
         setId(id);
     }
 
-    public Aging(int id, IAgingFactory loadAgingFactory) throws Exception {
+    public Aging(int id, IAgingDao loadAgingFactory) throws Exception {
         setId(id);
         loadAgingFactory.loadAgingById(id, this);
     }
 
+    //@Override
     public int getLeagueId() {
         return leagueId;
     }
 
+    //@Override
     public void setLeagueId(int leagueId) {
         this.leagueId = leagueId;
     }
 
+    //@Override
     public int getAverageRetirementAge() {
         return averageRetirementAge;
     }
 
+    //@Override
     public void setAverageRetirementAge(int averageRetirementAge) throws IllegalArgumentException {
         if (averageRetirementAge < 0) {
             throw new IllegalArgumentException("averageRetirementAge must be greater than 0!");
@@ -42,10 +48,12 @@ public class Aging extends SharedAttributes {
         this.averageRetirementAge = averageRetirementAge;
     }
 
+    //@Override
     public int getMaximumAge() {
         return maximumAge;
     }
 
+    //@Override
     public void setMaximumAge(int maximumAge) throws IllegalArgumentException {
         if (maximumAge < 0) {
             throw new IllegalArgumentException("maximumAge must be greater than 0!");

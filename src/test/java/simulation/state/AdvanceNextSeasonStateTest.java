@@ -3,6 +3,8 @@ package simulation.state;
 import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
 import simulation.mock.TeamMock;
@@ -10,8 +12,6 @@ import simulation.mock.UserMock;
 import simulation.model.League;
 import simulation.model.Player;
 import simulation.model.User;
-import validator.Validation;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,23 +20,16 @@ import static org.junit.Assert.assertNotEquals;
 
 public class AdvanceNextSeasonStateTest {
 
-    private static ILeagueFactory leagueFactory;
-    private static ITeamFactory teamFactory;
     private static IPlayerFactory playerFactory;
-    private static ITradeOfferFactory tradeOfferFactory;
-    private static ITradingFactory tradingFactory;
     private static IUserFactory userFactory;
-    private static Validation validation;
-    private static HockeyContext hockeyContext;
+    private static IHockeyContext hockeyContext;
 
     @BeforeClass
     public static void init() throws Exception {
-        leagueFactory = new LeagueMock();
-        teamFactory = new TeamMock();
         playerFactory = new PlayerMock();
         userFactory = new UserMock();
-        validation = new Validation();
-        hockeyContext = new HockeyContext();
+        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);
     }

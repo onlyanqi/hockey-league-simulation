@@ -3,6 +3,8 @@ package simulation.state;
 import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.*;
 import simulation.model.*;
 
@@ -19,7 +21,8 @@ public class CreateTeamStateTest {
     private static ILeagueFactory factory = new LeagueMock();
     private static ITeamFactory factoryTeam = new TeamMock();
     private static IUserFactory factoryUser = new UserMock();
-    private static HockeyContext hockeyContext = new HockeyContext();
+    private static IHockeyContext hockeyContext;
+    private static IHockeyContextFactory hockeyContextFactory;
     private List<Manager> managerList = null;
     private List<Coach> coachList = null;
     private FreeAgent freeAgent = null;
@@ -33,6 +36,8 @@ public class CreateTeamStateTest {
         league = new League(4, factory);
         user = new User(1, factoryUser);
         user.setId(1);
+        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
         hockeyContext.setUser(user);
     }
 

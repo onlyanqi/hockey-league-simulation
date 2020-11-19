@@ -3,10 +3,7 @@ package simulation.state;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.TradeOfferConcrete;
-import simulation.factory.ValidationConcrete;
 import simulation.model.*;
-import validator.IValidation;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -14,27 +11,25 @@ import java.util.*;
 public class ExecuteTradeState implements ISimulateState {
 
     private final String FROMPLAYER = "fromPlayer";
+    private final String FROMPLAYERLISTBEFORETRADE = "fromPlayerListBeforeTrade";
+    private final String FROMPLAYERLISTAFTERTRADE = "fromPlayerListAfterTrade";
     private final String TOPLAYER = "toPlayer";
     private final String FROMTEAM = "fromTeam";
     private final String TOTEAM = "toTeam";
     private final String TRADEOFFER = "tradeOffer";
-    private final String TRADING = "trading";
     private final Random random = new Random();
     private final String REJECTED = "rejected";
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private League league;
     private ConsoleOutput consoleOutput;
     private ReadUserInput readUserInput;
-    private IValidation validation;
     public ExecuteTradeState() {
     }
-    public ExecuteTradeState(HockeyContext hockeyContext) {
+    public ExecuteTradeState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
         consoleOutput = ConsoleOutput.getInstance();
         readUserInput = ReadUserInput.getInstance();
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        validation = validationConcrete.newValidation();
     }
 
     public League getLeague() {
@@ -53,23 +48,15 @@ public class ExecuteTradeState implements ISimulateState {
 
     public boolean loopAllTeamsForTradeInitiation(League league) {
         boolean isValidLeague = false;
-        if (validation.isNotNull(league) && checkDayOne()) {
-            List<Conference> conferenceList = league.getConferenceList();
-            if (validation.isListNotEmpty(conferenceList)) {
-                for (Conference conference : conferenceList) {
-                    List<Division> divisionList = conference.getDivisionList();
-                    if (validation.isListNotEmpty(divisionList)) {
-                        for (Division division : divisionList) {
-                            List<Team> teamList = division.getTeamList();
-                            if (validation.isListNotEmpty(teamList)) {
-                                for (Team team : teamList) {
-                                    if (team.isAiTeam()) {
-                                        tradingLogic(team, league);
-                                        isValidLeague = true;
-                                    }
-                                }
-                            }
-                        }
+        List<Conference> conferenceList = league.getConferenceList();
+        for (Conference conference : conferenceList) {
+            List<Division> divisionList = conference.getDivisionList();
+            for (Division division : divisionList) {
+                List<Team> teamList = division.getTeamList();
+                for (Team team : teamList) {
+                    if (team.isAiTeam()) {
+                        tradingLogic(team, league);
+                        isValidLeague = true;
                     }
                 }
             }
@@ -86,14 +73,15 @@ public class ExecuteTradeState implements ISimulateState {
                     double tradeOfferChance = getRandomDouble();
                     if (tradeOfferChance < trading.getRandomTradeOfferChance()) {
                         List<Player> tradingPlayerList = getWeakestPlayerList(team, league);
-                        if (validation.isListNotEmpty(tradingPlayerList)) {
-                            for (Player weakestPlayer : tradingPlayerList) {
-                                swap.put(FROMTEAM, team);
-                                findBestSwapPlayer(team, league, weakestPlayer, swap);
-                                Player swapPlayer = (Player) swap.get(TOPLAYER);
-                                if (validation.isNotNull(swapPlayer)) {
-                                    performTrade(swap);
-                                }
+                        swap.put(FROMPLAYERLISTBEFORETRADE, tradingPlayerList);
+                        for (Player weakestPlayer : tradingPlayerList) {
+                            swap.put(FROMTEAM, team);
+                            findBestSwapPlayer(team, league, weakestPlayer, swap);
+                            Player swapPlayer = (Player) swap.get(TOPLAYER);
+                            if (swapPlayer == null) {
+                                continue;
+                            } else {
+                                performTrade(swap);
                             }
                         }
                     }
@@ -104,18 +92,17 @@ public class ExecuteTradeState implements ISimulateState {
 
     public void createTradeOffer(Map<String, Object> swap) {
         String PENDING = "pending";
+        Team fromTeam = (Team) swap.get(FROMTEAM);
+        Team toTeam = (Team) swap.get(TOTEAM);
         Trading trading = league.getGamePlayConfig().getTrading();
-        Player weakestPlayer = (Player) swap.get(FROMPLAYER);
-        Player swapPlayer = (Player) swap.get(TOPLAYER);
         TradeOfferConcrete tradeOfferConcrete = new TradeOfferConcrete();
         TradeOffer tradeOffer = tradeOfferConcrete.newTradeOffer();
         tradeOffer.setLeagueId(league.getId());
         tradeOffer.setTradingId(trading.getId());
         tradeOffer.setStatus(PENDING);
-        tradeOffer.setFromPlayerId(weakestPlayer.getId());
-        tradeOffer.setFromTeamId(weakestPlayer.getTeamId());
-        tradeOffer.setToTeamId(swapPlayer.getTeamId());
-        tradeOffer.setToPlayerId(swapPlayer.getId());
+        tradeOffer.setFromTeamId(fromTeam.getId());
+        tradeOffer.setToTeamId(toTeam.getId());
+        createSwap(swap);
         tradeOffer.setSeasonId(LocalDate.now().getYear());
         if (league.getTradeOfferList() == null || league.getTradeOfferList().isEmpty()) {
             league.setTradeOfferList(new ArrayList<>());
@@ -124,10 +111,39 @@ public class ExecuteTradeState implements ISimulateState {
         swap.put(TRADEOFFER, tradeOffer);
     }
 
+    private void createSwap(Map<String, Object> swap){
+        List<Player> fromPlayerListBeforeTrade = (List<Player>) swap.get(FROMPLAYERLISTBEFORETRADE);
+        Player toPlayer = (Player) swap.get(TOPLAYER);
+        TradeOffer tradeOffer = (TradeOffer) swap.get(TRADEOFFER);
+        List<Player> fromPlayerListAfterTrade;
+        double zero = 0;
+
+
+        if(fromPlayerListBeforeTrade == null || fromPlayerListBeforeTrade.isEmpty()){
+            return;
+        } else {
+            List<Integer> fromPlayerIdList = new ArrayList<>();
+            List<Integer> toPlayerList = new ArrayList<>(Arrays.asList(toPlayer.getId()));
+            tradeOffer.setToPlayerIdList(toPlayerList);
+            fromPlayerListAfterTrade = new ArrayList<>();
+            double fromPlayerListStrength = zero;
+            for(Player player : fromPlayerListBeforeTrade){
+                fromPlayerListStrength = fromPlayerListStrength + player.getRelativeStrength();
+                if(fromPlayerListStrength < toPlayer.getRelativeStrength()){
+                    fromPlayerListAfterTrade.add(player);
+                    fromPlayerIdList.add(player.getId());
+                    continue;
+                } else {
+                    tradeOffer.setFromPlayerIdList(fromPlayerIdList);
+                    break;
+                }
+            }
+            swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
+        }
+    }
+
     public void performTrade(Map<String, Object> swap) {
         Team toTeam = (Team) swap.get(TOTEAM);
-        Trading trading = league.getGamePlayConfig().getTrading();
-        swap.put(TRADING, trading);
         Team fromTeam = (Team) swap.get(FROMTEAM);
         fromTeam.setTradeOfferCountOfSeason(fromTeam.getTradeOfferCountOfSeason() + 1);
         fromTeam.setLossPoint(0);
@@ -138,9 +154,7 @@ public class ExecuteTradeState implements ISimulateState {
                 consoleOutput.printMsgToConsole("Below trade is accepted successfully.");
             } else {
                 TradeOffer tradeOffer = (TradeOffer) swap.get(TRADEOFFER);
-                if (validation.isNotNull(tradeOffer)) {
-                    tradeOffer.setStatus(REJECTED);
-                }
+                tradeOffer.setStatus(REJECTED);
                 consoleOutput.printMsgToConsole("Below trade is rejected.");
             }
             consoleOutput.printAITradeDetailsToUser(swap);
@@ -158,32 +172,74 @@ public class ExecuteTradeState implements ISimulateState {
             consoleOutput.printMsgToConsole("Trade offer is accepted successfully.");
         } else {
             TradeOffer tradeOffer = (TradeOffer) swap.get(TRADEOFFER);
-            if (validation.isNotNull(tradeOffer)) {
-                tradeOffer.setStatus(REJECTED);
-            }
+            tradeOffer.setStatus(REJECTED);
+
             consoleOutput.printMsgToConsole("Trade offer rejected successfully.");
         }
     }
 
     public boolean acceptRejectTradeOffer(Map<String, Object> tradeDetails) {
         boolean isTraded = false;
-        if (validation.isNotNull(tradeDetails)) {
-            Trading trading = (Trading) tradeDetails.get(TRADING);
-            if (validation.isNotNull(trading)) {
-                Team toTeam = (Team) tradeDetails.get(TOTEAM);
-                Player fromPlayer = (Player) tradeDetails.get(FROMPLAYER);
-                Player toPlayer = (Player) tradeDetails.get(TOPLAYER);
-                if (checkTeamStrength(toTeam, fromPlayer, toPlayer)) {
-                    isTraded = true;
-                } else {
-                    double tradeAcceptChance = getRandomDouble();
-                    if (validation.isNotNull(trading) && tradeAcceptChance < trading.getRandomAcceptanceChance()) {
-                        isTraded = true;
-                    }
-                }
+        int zero = 0;
+        Trading trading = league.getGamePlayConfig().getTrading();
+        Team toTeam = (Team) tradeDetails.get(TOTEAM);
+        Player fromPlayer = (Player) tradeDetails.get(FROMPLAYER);
+        Player toPlayer = (Player) tradeDetails.get(TOPLAYER);
+        
+        if (checkTeamStrength(toTeam, fromPlayer, toPlayer)) {
+            isTraded = true;
+        } else {
+
+            int count = zero;
+            double characterTotal = zero;
+            for(String key : trading.getGmTable().keySet()){
+                double keyValue = trading.getGmTable().get(key);
+                characterTotal = characterTotal + keyValue;
+                count = count + 1;
+            }
+
+            double characterTradeInfluence = characterTotal/count;
+
+            double tradeAcceptChance = getRandomDouble();
+            if (tradeAcceptChance < (trading.getRandomAcceptanceChance() + characterTradeInfluence)) {
+                isTraded = true;
             }
         }
         return isTraded;
+    }
+
+    private void updateTradingDetailsInTeams(Map<String, Object> tradeDetails){
+        Team fromTeam = (Team) tradeDetails.get(FROMTEAM);
+        Player toPlayer = (Player) tradeDetails.get(TOPLAYER);
+        List<Player> fromPlayerList = (List<Player>) tradeDetails.get(FROMPLAYERLISTAFTERTRADE);
+        Team toTeam = (Team) tradeDetails.get(TOTEAM);
+        List<Player> toTeamPlayerList = toTeam.getPlayerList();
+
+        List<Player> fromTeamPlayerList = fromTeam.getPlayerList();
+        fromTeamPlayerList.add(toPlayer);
+        toPlayer.setTeamId(fromTeam.getId());
+        toTeamPlayerList.remove(toPlayer);
+
+        for(Player player : fromPlayerList) {
+            fromTeamPlayerList.remove(player);
+            toTeamPlayerList.add(player);
+            player.setTeamId(toTeam.getId());
+            if (player.isCaptain()) {
+                player.setCaptain(false);
+                Collections.sort(fromTeamPlayerList, Collections.reverseOrder());
+                fromTeamPlayerList.get(0).setCaptain(true);
+            }
+        }
+
+        if (toPlayer.isCaptain()) {
+            toPlayer.setCaptain(false);
+            Collections.sort(toTeamPlayerList, Collections.reverseOrder());
+            toTeamPlayerList.get(0).setCaptain(true);
+        }
+    }
+
+    private void checkMakeTeamValidAfterTrading(Team team){
+        
     }
 
     public void updateTradingDetails(Map<String, Object> tradeDetails) {
@@ -191,55 +247,41 @@ public class ExecuteTradeState implements ISimulateState {
         Team fromTeam = (Team) tradeDetails.get(FROMTEAM);
         Team toTeam = (Team) tradeDetails.get(TOTEAM);
         TradeOffer tradeOffer = (TradeOffer) tradeDetails.get(TRADEOFFER);
-        Player fromPlayer = (Player) tradeDetails.get(FROMPLAYER);
-        Player toPlayer = (Player) tradeDetails.get(TOPLAYER);
 
-        tradeOffer.setStatus(ACCEPTED);
-        List<Player> fromPlayerList = fromTeam.getPlayerList();
-        fromPlayerList.remove(fromPlayer);
-        fromPlayerList.add(toPlayer);
-
-        List<Player> toPlayerList = toTeam.getPlayerList();
-        toPlayerList.remove(toPlayer);
-        toPlayerList.add(fromPlayer);
-
-        fromPlayer.setTeamId(toTeam.getId());
-        toPlayer.setTeamId(fromTeam.getId());
+        updateTradingDetailsInTeams(tradeDetails);
+        checkMakeTeamValidAfterTrading(fromTeam);
+        checkMakeTeamValidAfterTrading(toTeam);
 
         boolean valid = fromTeam.validTeam();
         if (valid) {
-            consoleOutput.printMsgToConsole("Validated seller team after trading.");
+            consoleOutput.printMsgToConsole("Seller team is valid after trading.");
+        } else{
+            consoleOutput.printMsgToConsole("Seller team is invalid after trading.");
+            return;
         }
 
         valid = toTeam.validTeam();
         if (valid) {
-            consoleOutput.printMsgToConsole("Validated buyer team after trading.");
+            consoleOutput.printMsgToConsole("Buyer team is valid after trading.");
+        } else{
+            consoleOutput.printMsgToConsole("Buyer team is invalid after trading.");
+            return;
         }
 
-        if (fromPlayer.isCaptain()) {
-            Collections.sort(fromPlayerList, Collections.reverseOrder());
-            fromPlayerList.get(0).setCaptain(true);
-        }
-        if (toPlayer.isCaptain()) {
-            Collections.sort(toPlayerList, Collections.reverseOrder());
-            toPlayerList.get(0).setCaptain(true);
-        }
+        tradeOffer.setStatus(ACCEPTED);
+
     }
 
     public boolean checkTeamStrength(Team team, Player newPlayer, Player existPlayer) {
         double beforeStrength = team.getStrength();
         double afterStrength = 0;
         List<Player> playerList = team.getPlayerList();
-
-        if (validation.isListNotEmpty(playerList)) {
-            List<Player> tempPlayerList = new ArrayList<>(playerList);
-            removeObjectFromList(tempPlayerList, existPlayer);
-            tempPlayerList.add(newPlayer);
-            for (Player player : tempPlayerList) {
-                afterStrength += player.getStrength();
-            }
+        List<Player> tempPlayerList = new ArrayList<>(playerList);
+        removeObjectFromList(tempPlayerList, existPlayer);
+        tempPlayerList.add(newPlayer);
+        for (Player player : tempPlayerList) {
+            afterStrength += player.getStrength();
         }
-
         return afterStrength >= beforeStrength;
     }
 
@@ -254,26 +296,18 @@ public class ExecuteTradeState implements ISimulateState {
     public void findBestSwapPlayer(Team team, League league,
                                    Player weakestPlayer, Map<String, Object> swap) {
         Player swapPlayer = null;
-        if (validation.isNotNull(league)) {
-            List<Conference> conferenceList = league.getConferenceList();
-            if (validation.isListNotEmpty(conferenceList)) {
-                for (Conference conference : conferenceList) {
-                    List<Division> divisionList = conference.getDivisionList();
-                    if (validation.isListNotEmpty(divisionList)) {
-                        for (Division division : divisionList) {
-                            List<Team> teamList = division.getTeamList();
-                            if (validation.isListNotEmpty(teamList)) {
-                                for (Team otherTeam : teamList) {
-                                    if (team.getName().equals(otherTeam.getName())) {
-                                        continue;
-                                    } else {
-                                        if (checkCurrentTradeOffer(otherTeam, league)) {
-                                            swapPlayer = algorithmToFindSwapPlayer(otherTeam,
-                                                    weakestPlayer, swapPlayer, swap);
-                                        }
-                                    }
-                                }
-                            }
+        List<Conference> conferenceList = league.getConferenceList();
+        for (Conference conference : conferenceList) {
+            List<Division> divisionList = conference.getDivisionList();
+            for (Division division : divisionList) {
+                List<Team> teamList = division.getTeamList();
+                for (Team otherTeam : teamList) {
+                    if (team.getName().equals(otherTeam.getName())) {
+                        continue;
+                    } else {
+                        if (checkCurrentTradeOffer(otherTeam, league)) {
+                            swapPlayer = algorithmToFindSwapPlayer(otherTeam,
+                                    weakestPlayer, swapPlayer, swap);
                         }
                     }
                 }
@@ -285,17 +319,14 @@ public class ExecuteTradeState implements ISimulateState {
                                             Player swapPlayer, Map<String, Object> swap) {
 
         List<Player> playerList = otherTeam.getPlayerList();
-        if (validation.isListNotEmpty(playerList)) {
-            for (Player player : playerList) {
-                if (validation.isNotNull(weakestPlayer.getPosition()) && validation.isNotNull(player.getPosition()) &&
-                        (weakestPlayer.getPosition().equals(player.getPosition()))
-                        && ((swapPlayer == null) || (swapPlayer.getStrength() < player.getStrength()))) {
+        for (Player player : playerList) {
+            if ((weakestPlayer.getRelativeStrength() < player.getRelativeStrength()) &&
+                    ((swapPlayer == null) || (swapPlayer.getRelativeStrength() < player.getRelativeStrength()))) {
 
-                    swapPlayer = player;
-                    swap.put(TOPLAYER, player);
-                    swap.put(TOTEAM, otherTeam);
-                    swap.put(FROMPLAYER, weakestPlayer);
-                }
+                swapPlayer = player;
+                swap.put(TOPLAYER, player);
+                swap.put(TOTEAM, otherTeam);
+                swap.put(FROMPLAYER, weakestPlayer);
             }
         }
         return swapPlayer;
@@ -303,18 +334,13 @@ public class ExecuteTradeState implements ISimulateState {
 
     public List<Player> getWeakestPlayerList(Team team, League league) {
         List<Player> playerList = team.getPlayerList();
-        List<Player> returnPlayerList = null;
-        if (validation.isListNotEmpty(playerList)) {
-            Collections.sort(playerList);
-            returnPlayerList = new ArrayList<>();
-            if (validation.isListNotEmpty(playerList)) {
-                for (Player player : playerList) {
-                    if (returnPlayerList.size() < league.getGamePlayConfig().getTrading().getMaxPlayersPerTrade()) {
-                        returnPlayerList.add(player);
-                    } else {
-                        break;
-                    }
-                }
+        List<Player> returnPlayerList = new ArrayList<>();
+        Collections.sort(playerList);
+        for (Player player : playerList) {
+            if (returnPlayerList.size() < league.getGamePlayConfig().getTrading().getMaxPlayersPerTrade()) {
+                returnPlayerList.add(player);
+            } else {
+                break;
             }
         }
         return returnPlayerList;

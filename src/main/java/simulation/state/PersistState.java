@@ -5,8 +5,6 @@ import presentation.ConsoleOutput;
 import simulation.factory.*;
 import simulation.model.*;
 import simulation.serializers.LeagueDataSerializerDeSerializer;
-import validator.IValidation;
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,21 +13,18 @@ import java.util.stream.Collectors;
 
 public class PersistState implements ISimulateState {
 
-    private final HockeyContext hockeyContext;
+    private final IHockeyContext hockeyContext;
     private final League league;
     private final NHLEvents nhlEvents;
-    private final IValidation validation;
 
-    public PersistState(HockeyContext hockeyContext) {
+    public PersistState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
         this.nhlEvents = league.getNHLRegularSeasonEvents();
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        validation = validationConcrete.newValidation();
     }
 
     @Override
-    public ISimulateState action() {
+    public ISimulateState action() throws Exception {
         ConsoleOutput.getInstance().printMsgToConsole("Saving to DB... Please wait");
         saveToPersistence();
         return exit();

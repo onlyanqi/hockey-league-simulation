@@ -8,10 +8,10 @@ import java.util.List;
 public class InjuryCheckState implements ISimulateState {
 
     public static final String INJURY_CHECK = "Injury Check!";
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private League league;
 
-    public InjuryCheckState(HockeyContext hockeyContext) {
+    public InjuryCheckState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
     }

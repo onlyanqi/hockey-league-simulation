@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class ConsoleOutput {
 
+    private ConsoleOutput(){}
+
     private static ConsoleOutput consoleOutput;
 
     public static ConsoleOutput getInstance() {
