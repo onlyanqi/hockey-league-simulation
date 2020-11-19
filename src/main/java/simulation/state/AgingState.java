@@ -8,10 +8,10 @@ import java.util.List;
 public class AgingState implements ISimulateState {
 
     public static final String AGING_DAY = "Aging all players by one day!";
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private League league;
 
-    public AgingState(HockeyContext hockeyContext) {
+    public AgingState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
     }

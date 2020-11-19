@@ -47,7 +47,6 @@ public class Coach extends SharedAttributes {
         this.teamId = teamId;
     }
 
-
     public int getLeagueId() {
         return leagueId;
     }

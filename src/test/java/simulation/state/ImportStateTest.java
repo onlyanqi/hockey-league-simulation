@@ -5,7 +5,9 @@ import org.json.simple.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.AgingConcrete;
+import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IAgingFactory;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.JSONControllerMock;
 import simulation.mock.LeagueMock;
 import simulation.model.User;
@@ -16,9 +18,10 @@ import static org.junit.Assert.assertNotNull;
 
 public class ImportStateTest {
 
-    static User user;
+    private static User user;
     private static ILeagueFactory factory;
-    IHockeyState state;
+    private IHockeyState state;
+    private static IHockeyContextFactory hockeyContextFactory;
 
     @BeforeClass
     public static void setAll() {
@@ -26,13 +29,13 @@ public class ImportStateTest {
         user = new User();
         user.setName("user1");
         user.setId(1);
-
+        hockeyContextFactory = new HockeyContextConcrete();
     }
 
 
     @Test
     public void processTest() throws Exception {
-        HockeyContext hockeyContext = new HockeyContext();
+        IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
         hockeyContext.setUser(user);
         IAgingFactory agingFactory = new AgingConcrete();
         hockeyContext.setAgingFactory(agingFactory);

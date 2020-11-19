@@ -13,9 +13,9 @@ public class InitializeSeasonState implements ISimulateState {
     private final Integer TotalGamesPerTeam = 82;
     private final Integer minimumTeamCountForPlayOffs = 5;
     private League league;
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
 
-    public InitializeSeasonState(HockeyContext hockeyContext) {
+    public InitializeSeasonState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
     }

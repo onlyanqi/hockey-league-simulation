@@ -10,12 +10,12 @@ import java.util.List;
 
 public class LoadTeamState implements IHockeyState {
 
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private String teamName;
     private League league;
     private ReadUserInput readUserInput;
 
-    public LoadTeamState(HockeyContext hockeyContext) {
+    public LoadTeamState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         readUserInput = ReadUserInput.getInstance();
     }

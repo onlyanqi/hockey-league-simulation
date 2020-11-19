@@ -11,9 +11,9 @@ public class AdvanceNextSeasonState implements ISimulateState {
     public static final String SEASON_CURRENT_DATE = "Advanced to next season! Current date is ";
     public static final String AGING_TO_NEXT_SEASON = "Aging all players to the start of next season!";
     private League league;
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
 
-    public AdvanceNextSeasonState(HockeyContext hockeyContext) {
+    public AdvanceNextSeasonState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
     }
@@ -35,7 +35,8 @@ public class AdvanceNextSeasonState implements ISimulateState {
         List<Conference> conferenceList = league.getConferenceList();
         List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
         List<Player> retiredPlayerList = league.getRetiredPlayerList();
-        Aging aging = league.getGamePlayConfig().getAging();
+        IAging aging = league.getGamePlayConfig().getAging();
+        //Aging aging = league.getGamePlayConfig().getAging();
 
         for (Conference conference : conferenceList) {
             List<Division> divisionList = conference.getDivisionList();

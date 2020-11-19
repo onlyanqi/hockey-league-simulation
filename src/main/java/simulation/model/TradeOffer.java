@@ -2,6 +2,8 @@ package simulation.model;
 
 import db.data.ITradeOfferFactory;
 
+import java.util.List;
+
 public class TradeOffer extends SharedAttributes {
 
     private int leagueId;
@@ -10,6 +12,9 @@ public class TradeOffer extends SharedAttributes {
     private int toTeamId;
     private int fromPlayerId;
     private int toPlayerId;
+    private List<Integer> fromPlayerIdList;
+    private List<Integer> toPlayerIdList;
+
     private int seasonId;
     private String status;
 
@@ -89,5 +94,19 @@ public class TradeOffer extends SharedAttributes {
         tradeOfferFactory.addTradeOfferDetails(this);
     }
 
+    public List<Integer> getFromPlayerIdList() {
+        return fromPlayerIdList;
+    }
 
+    public void setFromPlayerIdList(List<Integer> fromPlayerIdList) {
+        this.fromPlayerIdList = fromPlayerIdList;
+    }
+
+    public List<Integer> getToPlayerIdList() {
+        return toPlayerIdList;
+    }
+
+    public void setToPlayerIdList(List<Integer> toPlayerIdList) {
+        this.toPlayerIdList = toPlayerIdList;
+    }
 }

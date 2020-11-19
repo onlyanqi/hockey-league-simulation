@@ -122,7 +122,7 @@ public class LeagueDao extends DBExceptionLog implements ILeagueFactory {
                 leagueList = new ArrayList<>();
                 while (rs.next()) {
                     League league = new League();
-                    Aging aging = new Aging();
+                    IAging aging = new Aging();
                     GameResolver gameResolver = new GameResolver();
                     Injury injuries = new Injury();
                     Training training = new Training();

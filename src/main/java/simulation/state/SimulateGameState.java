@@ -8,10 +8,10 @@ import java.util.List;
 
 public class SimulateGameState implements ISimulateState {
 
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private League league;
 
-    public SimulateGameState(HockeyContext hockeyContext) {
+    public SimulateGameState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
     }

@@ -6,7 +6,18 @@ import simulation.state.IHockeyContext;
 public class HockeyContextConcrete implements IHockeyContextFactory{
 
     public IHockeyContext newHockeyContext() {
-        return new HockeyContext();
+        return createHockeyContext();
+    }
+
+    private IHockeyContext createHockeyContext(){
+        IHockeyContext hockeyContext = HockeyContext.getInstance();
+
+        IAgingFactory agingFactory = new AgingConcrete();
+        hockeyContext.setAgingFactory(agingFactory);
+
+
+
+        return hockeyContext;
     }
 
 }

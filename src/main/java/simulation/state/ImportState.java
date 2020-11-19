@@ -5,10 +5,7 @@ import org.json.simple.JSONObject;
 import simulation.factory.*;
 import simulation.model.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class ImportState implements IHockeyState {
@@ -52,14 +49,15 @@ public class ImportState implements IHockeyState {
     private static final String RANDOM_TRADE_OFFER_CHANCE = "randomTradeOfferChance";
     private static final String MAX_PLAYERS_PER_TRADE = "maxPlayersPerTrade";
     private static final String RANDOM_ACCEPTANCE_CHANCE = "randomAcceptanceChance";
+    private static final String GM_TABLE = "gmTable";
     private final Set<String> appearedName = new HashSet<>();
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private String filePath;
     private JSONObject jsonFromInput;
     private League league;
 
 
-    public ImportState(HockeyContext hockeyContext, JSONObject jsonFromInput) {
+    public ImportState(IHockeyContext hockeyContext, JSONObject jsonFromInput) {
         this.jsonFromInput = jsonFromInput;
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
@@ -87,11 +85,11 @@ public class ImportState implements IHockeyState {
 
     private void parseJSONAndInstantiateLeague(JSONObject leagueJSON) throws IllegalArgumentException {
 
-        if (notValidKeyInObject(leagueJSON, LEAGUE_NAME)) {
+        if (validateKeyInObject(leagueJSON, LEAGUE_NAME)) {
             throw new IllegalArgumentException("Please make sure league name is provided in JSON");
         }
         String leagueName = (String) leagueJSON.get(LEAGUE_NAME);
-        if (notValidString(leagueName)) {
+        if (validateString(leagueName)) {
             throw new IllegalArgumentException("Please make sure league name " + leagueName + " is valid");
         }
 
@@ -135,51 +133,51 @@ public class ImportState implements IHockeyState {
     }
 
     private JSONArray validateManagers(JSONObject leagueJSON) throws IllegalArgumentException {
-        if (notValidKeyInObject(leagueJSON, MANAGERS)) {
+        if (validateKeyInObject(leagueJSON, MANAGERS)) {
             throw new IllegalArgumentException("Please make sure generalManagers are provided in JSON");
         }
         JSONArray managers = (JSONArray) leagueJSON.get(MANAGERS);
-        if (notValidArray(managers)) {
+        if (validateArray(managers)) {
             throw new IllegalArgumentException("Please make sure at least one Manager is free");
         }
         return managers;
     }
 
     private JSONArray validateCoaches(JSONObject leagueJSON) throws IllegalArgumentException {
-        if (notValidKeyInObject(leagueJSON, COACHES)) {
+        if (validateKeyInObject(leagueJSON, COACHES)) {
             throw new IllegalArgumentException("Please make sure coaches are provided in JSON");
         }
         JSONArray coaches = (JSONArray) leagueJSON.get(COACHES);
-        if (notValidArray(coaches)) {
+        if (validateArray(coaches)) {
             throw new IllegalArgumentException("Please make sure at least one Coach is free");
         }
         return coaches;
     }
 
     private JSONArray validateFreeAgents(JSONObject leagueJSON) throws IllegalArgumentException {
-        if (notValidKeyInObject(leagueJSON, FREE_AGENTS)) {
+        if (validateKeyInObject(leagueJSON, FREE_AGENTS)) {
             throw new IllegalArgumentException("Please make sure freeAgents are provided in JSON");
         }
         JSONArray freeAgents = (JSONArray) leagueJSON.get(FREE_AGENTS);
-        if (notValidArray(freeAgents)) {
+        if (validateArray(freeAgents)) {
             throw new IllegalArgumentException("Please make sure at least one Player is in Free Agent");
         }
         return freeAgents;
     }
 
     private JSONArray validateConferences(JSONObject leagueJSON) throws IllegalArgumentException {
-        if (notValidKeyInObject(leagueJSON, CONFERENCES)) {
+        if (validateKeyInObject(leagueJSON, CONFERENCES)) {
             throw new IllegalArgumentException("Please make sure conferences are provided in JSON");
         }
         JSONArray conferences = (JSONArray) leagueJSON.get(CONFERENCES);
-        if (notValidArray(conferences)) {
+        if (validateArray(conferences)) {
             throw new IllegalArgumentException("Please make sure at least one conference is provided");
         }
         return conferences;
     }
 
     private JSONObject validateGameCofig(JSONObject leagueJSON) throws IllegalArgumentException {
-        if (notValidKeyInObject(leagueJSON, GAMEPLAY_CONFIG)) {
+        if (validateKeyInObject(leagueJSON, GAMEPLAY_CONFIG)) {
             throw new IllegalArgumentException("Please make sure gameplayConfig is provided in JSON");
         }
         return (JSONObject) leagueJSON.get(GAMEPLAY_CONFIG);
@@ -189,35 +187,36 @@ public class ImportState implements IHockeyState {
         GamePlayConfigConcrete gamePlayConfigConcrete = new GamePlayConfigConcrete();
         GamePlayConfig gamePlayConfig = gamePlayConfigConcrete.newGamePlayConfig();
 
-        if (notValidKeyInObject(gameplayConfigJSONObject, AGING)) {
+        if (validateKeyInObject(gameplayConfigJSONObject, AGING)) {
             throw new IllegalArgumentException("Please make sure aging is provided in JSON");
         }
         JSONObject agingJSONObject = (JSONObject) gameplayConfigJSONObject.get(AGING);
+        //IAging aging = loadAgingJson(agingJSONObject);
         Aging aging = loadAgingJson(agingJSONObject);
         gamePlayConfig.setAging(aging);
 
-        if (notValidKeyInObject(gameplayConfigJSONObject, GAME_RESOLVER)) {
+        if (validateKeyInObject(gameplayConfigJSONObject, GAME_RESOLVER)) {
             throw new IllegalArgumentException("Please make sure gameResolver is provided in JSON");
         }
         JSONObject gameResolverJSONObject = (JSONObject) gameplayConfigJSONObject.get(GAME_RESOLVER);
         GameResolver gameResolver = loadGameResolverJson(gameResolverJSONObject);
         gamePlayConfig.setGameResolver(gameResolver);
 
-        if (notValidKeyInObject(gameplayConfigJSONObject, INJURIES)) {
+        if (validateKeyInObject(gameplayConfigJSONObject, INJURIES)) {
             throw new IllegalArgumentException("Please make sure injuries is provided in JSON");
         }
         JSONObject injuriesJSONObject = (JSONObject) gameplayConfigJSONObject.get(INJURIES);
         Injury injury = loadInjuryJson(injuriesJSONObject);
         gamePlayConfig.setInjury(injury);
 
-        if (notValidKeyInObject(gameplayConfigJSONObject, TRAINING)) {
+        if (validateKeyInObject(gameplayConfigJSONObject, TRAINING)) {
             throw new IllegalArgumentException("Please make sure training is provided in JSON");
         }
         JSONObject trainingJSONObject = (JSONObject) gameplayConfigJSONObject.get(TRAINING);
         Training training = loadTrainingJson(trainingJSONObject);
         gamePlayConfig.setTraining(training);
 
-        if (notValidKeyInObject(gameplayConfigJSONObject, TRADING)) {
+        if (validateKeyInObject(gameplayConfigJSONObject, TRADING)) {
             throw new IllegalArgumentException("Please make sure trading is provided in JSON");
         }
         JSONObject tradingJSONObject = (JSONObject) gameplayConfigJSONObject.get(TRADING);
@@ -232,11 +231,11 @@ public class ImportState implements IHockeyState {
 
             JSONObject teamJSONObject = (JSONObject) teamObjectFromJSONArray;
 
-            if (notValidKeyInObject(teamJSONObject, TEAM_NAME)) {
+            if (validateKeyInObject(teamJSONObject, TEAM_NAME)) {
                 throw new IllegalArgumentException("Please make sure team name is provided and correct");
             }
             String teamName = (String) teamJSONObject.get(TEAM_NAME);
-            if (notValidString(teamName)) {
+            if (validateString(teamName)) {
                 throw new IllegalArgumentException("Please make sure team name is valid");
             }
 
@@ -262,11 +261,11 @@ public class ImportState implements IHockeyState {
     }
 
     private List<Player> setTeamPlayerList(JSONObject teamJSONObject) throws IllegalArgumentException {
-        if (notValidKeyInObject(teamJSONObject, PLAYERS)) {
+        if (validateKeyInObject(teamJSONObject, PLAYERS)) {
             throw new IllegalArgumentException("Please make sure team players is provided in JSON");
         }
         JSONArray players = (JSONArray) teamJSONObject.get(PLAYERS);
-        if (notValidArray(players)) {
+        if (validateArray(players)) {
             throw new IllegalArgumentException("Please make sure at least one player is provided");
         }
 
@@ -274,27 +273,27 @@ public class ImportState implements IHockeyState {
     }
 
     private Coach setTeamCoach(JSONObject teamJSONObject) throws IllegalArgumentException {
-        if (notValidKeyInObject(teamJSONObject, HEAD_COACH)) {
+        if (validateKeyInObject(teamJSONObject, HEAD_COACH)) {
             throw new IllegalArgumentException("Please make sure team headCoach is provided in JSON");
         }
         JSONObject coachJsonObject = (JSONObject) teamJSONObject.get(HEAD_COACH);
-        if (notValidKeyInObject(coachJsonObject, NAME)) {
+        if (validateKeyInObject(coachJsonObject, NAME)) {
             throw new IllegalArgumentException("Please make sure team headCoach name is provided in JSON");
         }
         String coachName = (String) coachJsonObject.get(NAME);
-        if (notValidKeyInObject(coachJsonObject, SKATING)) {
+        if (validateKeyInObject(coachJsonObject, SKATING)) {
             throw new IllegalArgumentException("Please make sure team headCoach skating is provided in JSON");
         }
         Double skating = (Double) coachJsonObject.get(SKATING);
-        if (notValidKeyInObject(coachJsonObject, SHOOTING)) {
+        if (validateKeyInObject(coachJsonObject, SHOOTING)) {
             throw new IllegalArgumentException("Please make sure team headCoach shooting is provided in JSON");
         }
         Double shooting = (Double) coachJsonObject.get(SHOOTING);
-        if (notValidKeyInObject(coachJsonObject, CHECKING)) {
+        if (validateKeyInObject(coachJsonObject, CHECKING)) {
             throw new IllegalArgumentException("Please make sure team headCoach checking is provided in JSON");
         }
         Double checking = (Double) coachJsonObject.get(CHECKING);
-        if (notValidKeyInObject(coachJsonObject, SAVING)) {
+        if (validateKeyInObject(coachJsonObject, SAVING)) {
             throw new IllegalArgumentException("Please make sure team headCoach saving is provided in JSON");
         }
         Double saving = (Double) coachJsonObject.get(SAVING);
@@ -302,11 +301,11 @@ public class ImportState implements IHockeyState {
     }
 
     private Manager setTeamManager(JSONObject teamJSONObject) throws IllegalArgumentException {
-        if (notValidKeyInObject(teamJSONObject, MANAGER)) {
+        if (validateKeyInObject(teamJSONObject, MANAGER)) {
             throw new IllegalArgumentException("Please make sure manager name is provided and correct");
         }
         String managerName = (String) teamJSONObject.get(MANAGER);
-        if (notValidString(managerName)) {
+        if (validateString(managerName)) {
             throw new IllegalArgumentException("Please make sure managerName is valid");
         }
         ManagerConcrete managerConcrete = new ManagerConcrete();
@@ -347,21 +346,21 @@ public class ImportState implements IHockeyState {
             for (Object playerObjectFromJSONArray : players) {
                 JSONObject playerJsonObject = (JSONObject) playerObjectFromJSONArray;
 
-                if (notValidKeyInObject(playerJsonObject, PLAYER_NAME)) {
+                if (validateKeyInObject(playerJsonObject, PLAYER_NAME)) {
                     throw new IllegalArgumentException("Please make sure player name is provided");
                 }
                 String playerName = (String) playerJsonObject.get(PLAYER_NAME);
-                if (notValidString(playerName)) {
+                if (validateString(playerName)) {
                     throw new IllegalArgumentException("Please make sure player name is valid ");
                 }
 
                 Player.Position position = validatePosition(playerJsonObject);
 
-                if (notValidKeyInObject(playerJsonObject, CAPTAIN)) {
+                if (validateKeyInObject(playerJsonObject, CAPTAIN)) {
                     throw new IllegalArgumentException("Please make sure player captain is provided");
                 }
                 Boolean captain = (Boolean) playerJsonObject.get(CAPTAIN);
-                if (notBoolean(captain)) {
+                if (validateBoolean(captain)) {
                     throw new IllegalArgumentException("Please make sure captain is boolean");
                 }
                 if (captain) {
@@ -394,7 +393,7 @@ public class ImportState implements IHockeyState {
     }
 
     private int getPlayerSkating(JSONObject playerJsonObject) throws IllegalArgumentException {
-        if (notValidKeyInObject(playerJsonObject, SKATING)) {
+        if (validateKeyInObject(playerJsonObject, SKATING)) {
             throw new IllegalArgumentException("Please make sure player skating is provided in JSON");
         }
 
@@ -402,35 +401,35 @@ public class ImportState implements IHockeyState {
     }
 
     private int getPlayerShooting(JSONObject playerJsonObject) {
-        if (notValidKeyInObject(playerJsonObject, SHOOTING)) {
+        if (validateKeyInObject(playerJsonObject, SHOOTING)) {
             throw new IllegalArgumentException("Please make sure player shooting is provided in JSON");
         }
         return (int) (long) playerJsonObject.get(SHOOTING);
     }
 
     private int getPlayerSaving(JSONObject playerJsonObject) {
-        if (notValidKeyInObject(playerJsonObject, SAVING)) {
+        if (validateKeyInObject(playerJsonObject, SAVING)) {
             throw new IllegalArgumentException("Please make sure player saving is provided in JSON");
         }
         return (int) (long) playerJsonObject.get(SAVING);
     }
 
     private int getPlayerChecking(JSONObject playerJsonObject) throws IllegalArgumentException {
-        if (notValidKeyInObject(playerJsonObject, CHECKING)) {
+        if (validateKeyInObject(playerJsonObject, CHECKING)) {
             throw new IllegalArgumentException("Please make sure player checking is provided in JSON");
         }
         return (int) (long) playerJsonObject.get(CHECKING);
     }
 
     private int getPlayerAge(JSONObject playerJsonObject) {
-        if (notValidKeyInObject(playerJsonObject, AGE)) {
+        if (validateKeyInObject(playerJsonObject, AGE)) {
             throw new IllegalArgumentException("Please make sure player age is provided in JSON");
         }
         return (int) (long) playerJsonObject.get(AGE);
     }
 
     private Player.Position validatePosition(JSONObject playerJsonObject) throws IllegalArgumentException {
-        if (notValidKeyInObject(playerJsonObject, POSITION)) {
+        if (validateKeyInObject(playerJsonObject, POSITION)) {
             throw new IllegalArgumentException("Please make sure player position is provided");
         }
         String positionString = (String) playerJsonObject.get(POSITION);
@@ -460,11 +459,11 @@ public class ImportState implements IHockeyState {
         for (Object divisionObjectFromJSONArray : divisions) {
             JSONObject divisionJSONObject = (JSONObject) divisionObjectFromJSONArray;
 
-            if (notValidKeyInObject(divisionJSONObject, DIVISION_NAME)) {
+            if (validateKeyInObject(divisionJSONObject, DIVISION_NAME)) {
                 throw new IllegalArgumentException("Please make sure divisionName is provided in JSON");
             }
             String divisionName = (String) divisionJSONObject.get(DIVISION_NAME);
-            if (notValidString(divisionName)) {
+            if (validateString(divisionName)) {
                 throw new IllegalArgumentException("Please make sure divisionName is valid");
             }
 
@@ -475,11 +474,11 @@ public class ImportState implements IHockeyState {
             Division division = new Division();
             division.setName(divisionName);
 
-            if (notValidKeyInObject(divisionJSONObject, TEAMS)) {
+            if (validateKeyInObject(divisionJSONObject, TEAMS)) {
                 throw new IllegalArgumentException("Please make sure teams is provided in JSON");
             }
             JSONArray teams = (JSONArray) divisionJSONObject.get(TEAMS);
-            if (notValidArray(teams)) {
+            if (validateArray(teams)) {
                 throw new IllegalArgumentException("Please make sure at least one team is provided");
             }
 
@@ -496,13 +495,13 @@ public class ImportState implements IHockeyState {
         for (Object conferenceObjectFromJSONArray : conferences) {
             JSONObject conferenceJSONObject = (JSONObject) conferenceObjectFromJSONArray;
 
-            if (notValidKeyInObject(conferenceJSONObject, CONFERENCE_NAME)) {
+            if (validateKeyInObject(conferenceJSONObject, CONFERENCE_NAME)) {
                 throw new IllegalArgumentException("Please make sure conferenceName is provided in JSON");
             }
 
             String conferenceName = (String) conferenceJSONObject.get(CONFERENCE_NAME);
 
-            if (notValidString(conferenceName)) {
+            if (validateString(conferenceName)) {
                 throw new IllegalArgumentException("Please make sure conferenceName is valid ");
             }
 
@@ -526,12 +525,12 @@ public class ImportState implements IHockeyState {
     }
 
     private JSONArray validateDivisions(JSONObject conferenceJSONObject) {
-        if (notValidKeyInObject(conferenceJSONObject, DIVISIONS)) {
+        if (validateKeyInObject(conferenceJSONObject, DIVISIONS)) {
             throw new IllegalArgumentException("Please make sure divisions is provided in JSON");
         }
         JSONArray divisions = (JSONArray) conferenceJSONObject.get(DIVISIONS);
 
-        if (notValidArray(divisions)) {
+        if (validateArray(divisions)) {
             throw new IllegalArgumentException("Please make sure atleast one division is provided");
         }
         return divisions;
@@ -544,11 +543,11 @@ public class ImportState implements IHockeyState {
 
         for (Object freeAgentObjectFromJSONArray : freeAgents) {
             JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
-            if (notValidKeyInObject(freeAgentJsonObject, PLAYER_NAME)) {
+            if (validateKeyInObject(freeAgentJsonObject, PLAYER_NAME)) {
                 throw new IllegalArgumentException("Please make sure playerName is provided in JSON");
             }
             String playerName = (String) freeAgentJsonObject.get(PLAYER_NAME);
-            if (notValidString(playerName)) {
+            if (validateString(playerName)) {
                 throw new IllegalArgumentException("Please make sure player name is valid in Free Agent");
             }
 
@@ -621,17 +620,19 @@ public class ImportState implements IHockeyState {
         return coachList;
     }
 
+    //private IAging loadAgingJson(JSONObject agingJSONObject) {
     private Aging loadAgingJson(JSONObject agingJSONObject) {
-        if (notValidKeyInObject(agingJSONObject, AVERAGE_RETIREMENT_AGE)) {
+        if (validateKeyInObject(agingJSONObject, AVERAGE_RETIREMENT_AGE)) {
             throw new IllegalArgumentException("Please make sure averageRetirementAge is provided in JSON");
         }
         int averageRetirementAge = (int) (long) agingJSONObject.get(AVERAGE_RETIREMENT_AGE);
 
-        if (notValidKeyInObject(agingJSONObject, MAXIMUM_AGE)) {
+        if (validateKeyInObject(agingJSONObject, MAXIMUM_AGE)) {
             throw new IllegalArgumentException("Please make sure maximumAge is provided in JSON");
         }
         int maximumAge = (int) (long) agingJSONObject.get(MAXIMUM_AGE);
         IAgingFactory agingFactory = hockeyContext.getAgingFactory();
+        //IAging aging = agingFactory.newAging();
         Aging aging = agingFactory.newAging();
         aging.setAverageRetirementAge(averageRetirementAge);
         aging.setMaximumAge(maximumAge);
@@ -639,7 +640,7 @@ public class ImportState implements IHockeyState {
     }
 
     private GameResolver loadGameResolverJson(JSONObject gameResolverJSONObject) {
-        if (notValidKeyInObject(gameResolverJSONObject, RANDOM_WIN_CHANCE)) {
+        if (validateKeyInObject(gameResolverJSONObject, RANDOM_WIN_CHANCE)) {
             throw new IllegalArgumentException("Please make sure randomWinChance is provided in JSON");
         }
         double randomWinChance = (Double) gameResolverJSONObject.get(RANDOM_WIN_CHANCE);
@@ -650,17 +651,17 @@ public class ImportState implements IHockeyState {
     }
 
     private Injury loadInjuryJson(JSONObject injuriesJSONObject) {
-        if (notValidKeyInObject(injuriesJSONObject, RANDOM_INJURY_CHANCE)) {
+        if (validateKeyInObject(injuriesJSONObject, RANDOM_INJURY_CHANCE)) {
             throw new IllegalArgumentException("Please make sure randomInjuryChance is provided in JSON");
         }
         double randomInjuryChance = (Double) injuriesJSONObject.get(RANDOM_INJURY_CHANCE);
 
-        if (notValidKeyInObject(injuriesJSONObject, INJURY_DAYS_LOW)) {
+        if (validateKeyInObject(injuriesJSONObject, INJURY_DAYS_LOW)) {
             throw new IllegalArgumentException("Please make sure injuryDaysLow is provided in JSON");
         }
         int injuryDaysLow = (int) (long) injuriesJSONObject.get(INJURY_DAYS_LOW);
 
-        if (notValidKeyInObject(injuriesJSONObject, INJURY_DAYS_HIGH)) {
+        if (validateKeyInObject(injuriesJSONObject, INJURY_DAYS_HIGH)) {
             throw new IllegalArgumentException("Please make sure injuryDaysHigh is provided in JSON");
         }
         int injuryDaysHigh = (int) (long) injuriesJSONObject.get(INJURY_DAYS_HIGH);
@@ -674,7 +675,7 @@ public class ImportState implements IHockeyState {
     }
 
     private Training loadTrainingJson(JSONObject trainingJSONObject) {
-        if (notValidKeyInObject(trainingJSONObject, DAYS_UNTIL_STAT_INCREASE_CHECK)) {
+        if (validateKeyInObject(trainingJSONObject, DAYS_UNTIL_STAT_INCREASE_CHECK)) {
             throw new IllegalArgumentException("Please make sure daysUntilStatIncreaseCheck is provided in JSON");
         }
         int daysUntil = (int) (long) trainingJSONObject.get(DAYS_UNTIL_STAT_INCREASE_CHECK);
@@ -685,25 +686,37 @@ public class ImportState implements IHockeyState {
     }
 
     private Trading loadTradingJson(JSONObject tradingJSONObject) {
-        if (notValidKeyInObject(tradingJSONObject, LOSS_POINT)) {
+        if (validateKeyInObject(tradingJSONObject, LOSS_POINT)) {
             throw new IllegalArgumentException("Please make sure lossPoint is provided in JSON");
         }
         int lossPoint = (int) (long) tradingJSONObject.get(LOSS_POINT);
 
-        if (notValidKeyInObject(tradingJSONObject, RANDOM_TRADE_OFFER_CHANCE)) {
+        if (validateKeyInObject(tradingJSONObject, RANDOM_TRADE_OFFER_CHANCE)) {
             throw new IllegalArgumentException("Please make sure randomTradeOfferChance is provided in JSON");
         }
         double randomTradeOfferChance = (Double) tradingJSONObject.get(RANDOM_TRADE_OFFER_CHANCE);
 
-        if (notValidKeyInObject(tradingJSONObject, MAX_PLAYERS_PER_TRADE)) {
+        if (validateKeyInObject(tradingJSONObject, MAX_PLAYERS_PER_TRADE)) {
             throw new IllegalArgumentException("Please make sure maxPlayersPerTrade is provided in JSON");
         }
         int maxPlayersPerTrade = (int) (long) tradingJSONObject.get(MAX_PLAYERS_PER_TRADE);
 
-        if (notValidKeyInObject(tradingJSONObject, RANDOM_ACCEPTANCE_CHANCE)) {
+        if (validateKeyInObject(tradingJSONObject, RANDOM_ACCEPTANCE_CHANCE)) {
             throw new IllegalArgumentException("Please make sure randomAcceptanceChance is provided in JSON");
         }
         double randomAcceptanceChance = (Double) tradingJSONObject.get(RANDOM_ACCEPTANCE_CHANCE);
+
+        if(validateKeyInObject(tradingJSONObject, GM_TABLE)){
+            throw new IllegalArgumentException("Please make sure gmTable is provided in JSON");
+        }
+
+        JSONObject gmTableJsonObject = (JSONObject) tradingJSONObject.get(GM_TABLE);
+        Map<String, Double> gmTable = new HashMap<>();
+        for(Object key : gmTableJsonObject.keySet()){
+            String attribute = (String) key;
+            double attributeValue = (Double) gmTableJsonObject.get(attribute);
+            gmTable.put(attribute, attributeValue);
+        }
 
         TradingConcrete tradingConcrete = new TradingConcrete();
         Trading trading = tradingConcrete.newTrading();
@@ -711,14 +724,15 @@ public class ImportState implements IHockeyState {
         trading.setRandomTradeOfferChance(randomTradeOfferChance);
         trading.setMaxPlayersPerTrade(maxPlayersPerTrade);
         trading.setRandomAcceptanceChance(randomAcceptanceChance);
+        trading.setGmTable(gmTable);
         return trading;
     }
 
-    private boolean notBoolean(Boolean bool) {
+    private boolean validateBoolean(Boolean bool) {
         return bool == null;
     }
 
-    private boolean notValidString(String name) {
+    private boolean validateString(String name) {
         if (name == null || name.length() == 0) {
             return true;
         } else {
@@ -726,7 +740,7 @@ public class ImportState implements IHockeyState {
         }
     }
 
-    private boolean notValidArray(JSONArray array) {
+    private boolean validateArray(JSONArray array) {
         if (array == null || array.size() == 0) {
             return true;
         } else {
@@ -734,7 +748,7 @@ public class ImportState implements IHockeyState {
         }
     }
 
-    private boolean notValidKeyInObject(JSONObject object, String key) {
+    private boolean validateKeyInObject(JSONObject object, String key) {
         if (object.containsKey(key)) {
             return false;
         } else {

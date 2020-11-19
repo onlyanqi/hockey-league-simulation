@@ -7,13 +7,16 @@ public class GamePlayConfig {
 
     private int id;
     private int leagueId;
+    //private IAging aging;
     private Aging aging;
     private Injury injury;
     private GameResolver gameResolver;
     private Trading trading;
     private Training training;
+
     public GamePlayConfig() {
     }
+
     public GamePlayConfig(int leagueId, IGamePlayConfigFactory gamePlayConfigFactory) throws Exception {
         gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
     }
@@ -34,15 +37,17 @@ public class GamePlayConfig {
         this.leagueId = leagueId;
     }
 
-    public Aging getAging() {
+    //public IAging getAging() {
+    public Aging getAging(){
         return aging;
     }
 
-    public void setAging(Aging aging) {
+    //public void setAging(IAging aging) {
+    public void setAging(IAging aging) {
         if (aging == null) {
             return;
         }
-        this.aging = aging;
+        this.aging = (Aging) aging;
     }
 
     public Injury getInjury() {

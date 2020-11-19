@@ -41,6 +41,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setInjuryStartDate(LocalDate.now());
                 player.setInjuryDatesRange(80);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 2:
@@ -57,6 +58,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 3:
@@ -73,6 +75,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 4:
@@ -89,6 +92,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 5:
@@ -105,6 +109,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 6:
@@ -121,6 +126,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 7:
@@ -137,6 +143,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 8:
@@ -153,6 +160,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 9:
@@ -169,6 +177,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 10:
@@ -185,6 +194,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 11:
@@ -201,6 +211,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 12:
@@ -219,6 +230,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setInjuryStartDate(LocalDate.of(2020, 1, 1));
                 player.setInjuryDatesRange(80);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 13:
@@ -237,6 +249,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setInjuryStartDate(LocalDate.now());
                 player.setInjuryDatesRange(80);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 14:
@@ -255,6 +268,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setInjuryStartDate(LocalDate.now());
                 player.setInjuryDatesRange(80);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 15:
@@ -271,6 +285,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 16:
@@ -289,6 +304,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setInjuryStartDate(LocalDate.now());
                 player.setInjuryDatesRange(80);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 17:
@@ -305,6 +321,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 18:
@@ -321,6 +338,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 19:
@@ -330,11 +348,12 @@ public class PlayerMock implements IPlayerFactory {
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
                 player.setAge(19);
-                player.setSkating(15);
+                player.setSkating(19);
                 player.setShooting(19);
-                player.setChecking(16);
+                player.setChecking(19);
                 player.setSaving(1);
                 player.setStrength();
+                player.setRelativeStrength();
                 player.setInjured(false);
                 player.setRetired(false);
                 break;
@@ -353,6 +372,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 21:
@@ -369,6 +389,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
 
             case 22:
@@ -385,6 +406,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setStrength();
                 player.setInjured(false);
                 player.setRetired(false);
+                player.setRelativeStrength();
                 break;
         }
 

@@ -5,6 +5,8 @@ import db.data.IPlayerFactory;
 import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
 import simulation.mock.UserMock;
@@ -17,13 +19,14 @@ import static org.junit.Assert.*;
 public class AgingStateTest {
 
     private static IUserFactory userFactory;
-    private static HockeyContext hockeyContext;
+    private static IHockeyContext hockeyContext;
 
 
     @BeforeClass
     public static void init() throws Exception {
         userFactory = new UserMock();
-        hockeyContext = new HockeyContext();
+        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(4, userFactory);
         hockeyContext.setUser(user);
     }

@@ -12,12 +12,16 @@ public class HockeyContext implements IHockeyContext{
     private IHockeyState hockeyState;
     private User user;
     private IAgingFactory agingFactory;
+    private static IHockeyContext hockeyContext;
 
-    public HockeyContext() {
+    private HockeyContext() {
     }
 
-    public HockeyContext(User user) {
-        this.user = user;
+    public static IHockeyContext getInstance(){
+        if(null == hockeyContext){
+            return new HockeyContext();
+        }
+        return hockeyContext;
     }
 
     @Override

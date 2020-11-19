@@ -5,6 +5,8 @@ import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.*;
+import simulation.model.Aging;
+import simulation.model.SharedAttributes;
 import simulation.model.User;
 import java.io.FileNotFoundException;
 import org.apache.log4j.Logger;
@@ -59,7 +61,9 @@ public class App {
                     }
                     jsonFromInput = JSONController.readJSON(filePath);
                 }
-                IHockeyContext context = createHockeyContext(user);
+                IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+                IHockeyContext context = hockeyContextFactory.newHockeyContext();
+                context.setUser(user);
                 context.startAction(jsonFromInput);
 
             }
@@ -76,16 +80,7 @@ public class App {
         user.addUser(addUserFactory);
     }
 
-    private static IHockeyContext createHockeyContext(User user){
-        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
-        IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
-        hockeyContext.setUser(user);
 
-        IAgingFactory agingFactory = new AgingConcrete();
-        hockeyContext.setAgingFactory(agingFactory);
-
-        return hockeyContext;
-    }
 
 
 }

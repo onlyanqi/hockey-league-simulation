@@ -5,6 +5,8 @@ import db.data.ITradingFactory;
 import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.mock.TradingMock;
 import simulation.mock.UserMock;
@@ -18,14 +20,16 @@ import static org.junit.Assert.assertNotNull;
 
 public class LoadTeamStateTest {
 
-    private static HockeyContext hockeyContext;
+    private static IHockeyContext hockeyContext;
     private static IUserFactory userFactory;
     private static ITradingFactory tradingFactory;
     private static ILeagueFactory leagueFactory;
+    private static IHockeyContextFactory hockeyContextFactory;
 
     @BeforeClass
     public static void init() throws Exception {
-        hockeyContext = new HockeyContext();
+        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
         userFactory = new UserMock();
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);

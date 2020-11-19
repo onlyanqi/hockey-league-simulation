@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 
 public class PersistState implements ISimulateState {
 
-    private final HockeyContext hockeyContext;
+    private final IHockeyContext hockeyContext;
     private final League league;
     private final NHLEvents nhlEvents;
 
-    public PersistState(HockeyContext hockeyContext) {
+    public PersistState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
         this.nhlEvents = league.getNHLRegularSeasonEvents();

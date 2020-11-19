@@ -20,6 +20,7 @@ public class Trading extends SharedAttributes {
     private int maxPlayersPerTrade;
     private double randomAcceptanceChance;
     private boolean isTradingPeriod;
+    private Map<String, Double> gmTable;
 
     public Trading() {
     }
@@ -178,5 +179,13 @@ public class Trading extends SharedAttributes {
 
     public void addTrading(ITradingFactory tradingFactory) throws Exception {
         tradingFactory.addTradingDetails(this);
+    }
+
+    public Map<String, Double> getGmTable() {
+        return gmTable;
+    }
+
+    public void setGmTable(Map<String, Double> gmTable) {
+        this.gmTable = gmTable;
     }
 }

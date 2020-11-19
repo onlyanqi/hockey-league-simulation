@@ -26,7 +26,7 @@ public class CreateTeamState implements IHockeyState {
     private static final String HOWMANYSEASONS = "How many seasons do you want to simulate";
     private static final String RIGHTCHOICEREQUEST = "Please enter the right choice. Yes/Y or No/N";
     private static final String GOALIE = "goalie";
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private League league;
     private String conferenceName;
     private String divisionName;
@@ -39,7 +39,7 @@ public class CreateTeamState implements IHockeyState {
     private ConsoleOutput consoleOutput = null;
     private ReadUserInput readUserInput = null;
 
-    public CreateTeamState(HockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
+    public CreateTeamState(IHockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
                            IConsoleOutputForTeamCreation teamCreationOutput) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();

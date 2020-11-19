@@ -4,22 +4,12 @@ import db.data.ISharedAttributesFactory;
 import org.apache.commons.lang3.StringUtils;
 
 
-public class SharedAttributes {
+public abstract class SharedAttributes {
 
     private int id;
     private String name;
 
-    public SharedAttributes() {
-    }
-
-    public SharedAttributes(int id) {
-        setId(id);
-    }
-
-    public SharedAttributes(int id, ISharedAttributesFactory parentObjFactory) throws Exception {
-        setId(id);
-        parentObjFactory.loadParentObj(id, this);
-    }
+    public SharedAttributes(){}
 
     public int getId() {
         return id;

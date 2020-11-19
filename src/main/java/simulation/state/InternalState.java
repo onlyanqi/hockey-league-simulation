@@ -4,10 +4,10 @@ import presentation.ConsoleOutput;
 
 public class InternalState implements IHockeyState {
 
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private ISimulateState simulateState;
 
-    public InternalState(HockeyContext hockeyContext) {
+    public InternalState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
     }
 
