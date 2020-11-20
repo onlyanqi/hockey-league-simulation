@@ -34,7 +34,6 @@ public class App {
         ReadUserInput readUserInput = ReadUserInput.getInstance();
 
         String userName = readUserInput.getInput("Please enter username");
-        
         try {
             if (userName == null || userName.isEmpty()) {
                 ConsoleOutput.getInstance().printMsgToConsole("User name is invalid. Exiting the App.");
