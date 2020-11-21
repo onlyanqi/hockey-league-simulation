@@ -30,7 +30,7 @@ public class ImportStateTest {
         user = new User();
         user.setName("user1");
         user.setId(1);
-        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
     }
 
 

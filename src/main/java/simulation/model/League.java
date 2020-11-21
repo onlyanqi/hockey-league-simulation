@@ -1,9 +1,8 @@
 package simulation.model;
 
-import db.data.IConferenceFactory;
-import db.data.IFreeAgentFactory;
-import db.data.ILeagueFactory;
-import db.data.ITradeOfferFactory;
+import db.data.*;
+import simulation.factory.CoachConcrete;
+import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -202,12 +201,13 @@ public class League extends SharedAttributes {
         return managerList;
     }
 
-    public List<Coach> removeCoachFromCoachListById(List<Coach> coachList, int indexOfCoachObject) {
+    public List<Coach> removeCoachFromCoachListById(List<Coach> coachList,
+                                                    int indexOfCoachObject, ICoachFactory coachFactory) {
         if (null == coachList) {
             return null;
         }
         int coachListSize = coachList.size();
-        Coach coach = new Coach(coachList.get(coachListSize - 1));
+        Coach coach = coachFactory.newCoachWithCoach(coachList.get(coachListSize - 1));
         coachList.set(indexOfCoachObject, coach);
         coachList.remove(coachListSize - 1);
         return coachList;

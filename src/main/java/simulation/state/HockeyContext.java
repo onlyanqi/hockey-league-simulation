@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import simulation.factory.IAgingFactory;
+import simulation.factory.ICoachFactory;
 import simulation.model.User;
 
 public class HockeyContext implements IHockeyContext{
@@ -13,6 +14,7 @@ public class HockeyContext implements IHockeyContext{
     private User user;
     private IAgingFactory agingFactory;
     private static IHockeyContext hockeyContext;
+    private ICoachFactory coachFactory;
 
     private HockeyContext() {
     }
@@ -74,4 +76,13 @@ public class HockeyContext implements IHockeyContext{
         return this.agingFactory;
     }
 
+    @Override
+    public ICoachFactory getCoachFactory() {
+        return coachFactory;
+    }
+
+    @Override
+    public void setCoachFactory(ICoachFactory coachFactory) {
+        this.coachFactory = coachFactory;
+    }
 }

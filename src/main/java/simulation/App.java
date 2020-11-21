@@ -55,7 +55,7 @@ public class App {
                     }
                     jsonFromInput = JSONController.readJSON(filePath);
                 }
-                IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+                IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
                 IHockeyContext context = hockeyContextFactory.newHockeyContext();
                 context.setUser(user);
                 context.startAction(jsonFromInput);

@@ -4,7 +4,7 @@ import simulation.model.Coach;
 
 import java.util.List;
 
-public interface ICoachFactory {
+public interface ICoachDao {
     int addCoach(Coach coach) throws Exception;
 
     void loadCoachById(int id, Coach coach) throws Exception;

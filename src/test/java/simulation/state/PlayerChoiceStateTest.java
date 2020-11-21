@@ -18,7 +18,7 @@ public class PlayerChoiceStateTest {
 
     @BeforeClass
     public static void setState() {
-        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         hockeyState = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "createOrLoadTeam");
         hockeyState2 = new PlayerChoiceState(hockeyContext, "How many seasons do you want to simulate", "1");

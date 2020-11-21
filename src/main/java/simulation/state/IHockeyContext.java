@@ -2,6 +2,7 @@ package simulation.state;
 
 import org.json.simple.JSONObject;
 import simulation.factory.IAgingFactory;
+import simulation.factory.ICoachFactory;
 import simulation.model.User;
 
 public interface IHockeyContext {
@@ -17,4 +18,8 @@ public interface IHockeyContext {
     void setAgingFactory(IAgingFactory agingFactory);
 
     IAgingFactory getAgingFactory();
+
+    ICoachFactory getCoachFactory();
+
+    void setCoachFactory(ICoachFactory coachFactory);
 }

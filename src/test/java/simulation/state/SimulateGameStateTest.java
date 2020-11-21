@@ -22,7 +22,7 @@ public class SimulateGameStateTest {
     @BeforeClass
     public static void init() throws Exception {
         userFactory = new UserMock();
-        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         gameFactory = new GameMock();
         User user = new User(4, userFactory);
