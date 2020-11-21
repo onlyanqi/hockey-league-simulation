@@ -3,11 +3,19 @@ package simulation.serializers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.InstanceCreator;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import presentation.ConsoleOutput;
+import simulation.model.Aging;
+import simulation.model.IAging;
 import simulation.model.League;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.io.*;
 
 public class LeagueDataSerializerDeSerializer {
@@ -66,8 +74,14 @@ public class LeagueDataSerializerDeSerializer {
         try {
             fileReader = new FileReader(filename);
             Gson gson = new Gson();
+
+            /*GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeHierarchyAdapter(IAging.class, new AgingCreator());
+            Gson gson = gsonBuilder.create();*/
+
             league = gson.fromJson(jsonParser.parse(fileReader).toString(), League.class);
             fileReader.close();
+
         } catch (FileNotFoundException e) {
             consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
         } catch (ParseException e) {
@@ -81,3 +95,14 @@ public class LeagueDataSerializerDeSerializer {
     }
 
 }
+
+
+/*
+class AgingCreator implements InstanceCreator {
+
+    @Override
+    public Aging createInstance(Type type) {
+        return new Aging();
+    }
+
+}*/

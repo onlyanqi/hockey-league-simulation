@@ -6,24 +6,20 @@ import presentation.ReadUserInput;
 import simulation.factory.*;
 import simulation.model.*;
 import simulation.serializers.LeagueDataSerializerDeSerializer;
-import validator.IValidation;
 
 import java.util.List;
 
 
 public class LoadTeamState implements IHockeyState {
 
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private String teamName;
     private League league;
     private ReadUserInput readUserInput;
-    private IValidation iValidation;
 
-    public LoadTeamState(HockeyContext hockeyContext) {
+    public LoadTeamState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         readUserInput = ReadUserInput.getInstance();
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        iValidation = validationConcrete.newValidation();
     }
 
     public League getLeague() {
@@ -51,7 +47,6 @@ public class LoadTeamState implements IHockeyState {
         String filename = "JsonFiles"+"/"+teamName;
         league = leagueDataSerializerDeSerializer.deSerialize(filename);
         hockeyContext.getUser().setLeague(league);
-        String a = "Simran";
 //        ConsoleOutput.getInstance().printMsgToConsole("We are loading the league data. Please wait..");
 //
 //        LeagueConcrete leagueConcrete = new LeagueConcrete();

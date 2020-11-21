@@ -14,10 +14,10 @@ public class PlayerChoiceState implements IHockeyState {
     private static final String CREATEORLOADTEAM = "createOrLoadTeam";
     private String input;
     private String stateName;
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private String userInput;
 
-    public PlayerChoiceState(HockeyContext hockeyContext, String input, String stateName) {
+    public PlayerChoiceState(IHockeyContext hockeyContext, String input, String stateName) {
         this.input = input;
         this.stateName = stateName;
         this.hockeyContext = hockeyContext;

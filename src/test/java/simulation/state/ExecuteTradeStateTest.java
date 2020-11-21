@@ -3,10 +3,10 @@ package simulation.state;
 import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.*;
 import simulation.model.*;
-import validator.Validation;
-
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.*;
@@ -23,14 +23,16 @@ public class ExecuteTradeStateTest {
     private static final String TRADING = "trading";
     private static final String ACCEPTED = "accepted";
     private static final String REJECTED = "rejected";
+    private static final String FROMPLAYERLISTBEFORETRADE = "fromPlayerListBeforeTrade";
+    private static final String FROMPLAYERLISTAFTERTRADE = "fromPlayerListAfterTrade";
     private static ILeagueFactory leagueFactory;
     private static ITeamFactory teamFactory;
     private static IPlayerFactory playerFactory;
     private static ITradeOfferFactory tradeOfferFactory;
     private static ITradingFactory tradingFactory;
     private static IUserFactory userFactory;
-    private static Validation validation;
-    private static HockeyContext hockeyContext;
+    private static IHockeyContext hockeyContext;
+    private static IHockeyContextFactory hockeyContextFactory;
 
     @BeforeClass
     public static void init() throws Exception {
@@ -40,8 +42,8 @@ public class ExecuteTradeStateTest {
         tradeOfferFactory = new TradeOfferMock();
         tradingFactory = new TradingMock();
         userFactory = new UserMock();
-        validation = new Validation();
-        hockeyContext = new HockeyContext();
+        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);
     }
@@ -96,6 +98,8 @@ public class ExecuteTradeStateTest {
         League league = new League(1, leagueFactory);
         assertTrue(state.loopAllTeamsForTradeInitiation(league));
         league = new League();
+        List<Conference> conferences = new ArrayList<>();
+        league.setConferenceList(conferences);
         assertFalse(state.loopAllTeamsForTradeInitiation(league));
     }
 
@@ -108,7 +112,9 @@ public class ExecuteTradeStateTest {
 
         for (int i = 0; i < 50; i++) {
             state.tradingLogic(team, league);
-            if (validation.isNotNull(league.getTradeOfferList()) && league.getTradeOfferList().size() > 0) {
+            if (league.getTradeOfferList() == null || league.getTradeOfferList().isEmpty()) {
+                continue;
+            } else{
                 assertNotNull(league.getTradeOfferList().get(0).getStatus());
             }
         }
@@ -121,9 +127,13 @@ public class ExecuteTradeStateTest {
         League league = new League(1, leagueFactory);
         Player player1 = new Player(1, playerFactory);
         Player player2 = new Player(3, playerFactory);
+        Team fromTeam = new Team(1, teamFactory);
+        Team toTeam = new Team(2, teamFactory);
 
         swap.put(FROMPLAYER, player1);
         swap.put(TOPLAYER, player2);
+        swap.put(FROMTEAM, fromTeam);
+        swap.put(TOTEAM, toTeam);
 
         ExecuteTradeState state = new ExecuteTradeState();
         state.setLeague(league);
@@ -134,8 +144,8 @@ public class ExecuteTradeStateTest {
 
         assertNotNull(tradeOffer);
 
-        assertEquals(tradeOffer.getFromPlayerId(), player1.getId());
-        assertEquals(tradeOffer.getToPlayerId(), player2.getId());
+        assertEquals(tradeOffer.getFromTeamId(), fromTeam.getId());
+        assertEquals(tradeOffer.getToTeamId(), toTeam.getId());
     }
 
     @Test
@@ -147,12 +157,15 @@ public class ExecuteTradeStateTest {
         Team team1 = new Team(1, teamFactory);
         Team team2 = new Team(3, teamFactory);
         Trading trading = new Trading(1, tradingFactory);
+        List<Player> fromPlayerListAfterTrade = new ArrayList<>();
+        fromPlayerListAfterTrade.add(player1);
 
         swap.put(FROMPLAYER, player1);
         swap.put(TOPLAYER, player2);
         swap.put(FROMTEAM, team1);
         swap.put(TOTEAM, team2);
         swap.put(TRADING, trading);
+        swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
 
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);
@@ -180,6 +193,8 @@ public class ExecuteTradeStateTest {
             Team team2 = new Team(3, teamFactory);
             TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
             Trading trading = new Trading(1, tradingFactory);
+            List<Player> fromPlayerListAfterTrade = new ArrayList<>();
+            fromPlayerListAfterTrade.add(player1);
 
             swap.put(FROMPLAYER, player1);
             swap.put(TOPLAYER, player2);
@@ -187,6 +202,7 @@ public class ExecuteTradeStateTest {
             swap.put(TOTEAM, team2);
             swap.put(TRADEOFFER, tradeOffer);
             swap.put(TRADING, trading);
+            swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
 
             ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
 
@@ -228,25 +244,33 @@ public class ExecuteTradeStateTest {
     @Test
     public void updateTradingDetailsTest() throws Exception {
         Map<String, Object> tradeDetails = new HashMap<>();
+        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+        IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
+        User user = new User(1, userFactory);
+        hockeyContext.setUser(user);
+        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
 
         Team fromTeam = new Team(1, teamFactory);
         Team toTeam = new Team(2, teamFactory);
-        Player fromPlayer = new Player(30, playerFactory);
-        fromPlayer.setPosition(Player.Position.valueOf("goalie"));
-        Player toPlayer = new Player(31, playerFactory);
-        toPlayer.setPosition(Player.Position.valueOf("goalie"));
+        Player fromPlayer = new Player(27, playerFactory);
+        state.removeObjectFromList(fromTeam.getPlayerList(), fromPlayer);
+        Player toPlayer = new Player(28, playerFactory);
+        state.removeObjectFromList(toTeam.getPlayerList(), toPlayer);
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
 
         fromTeam.getPlayerList().add(fromPlayer);
         toTeam.getPlayerList().add(toPlayer);
+
+        List<Player> fromPlayerListAfterTrade = new ArrayList<>();
+        fromPlayerListAfterTrade.add(fromPlayer);
 
         tradeDetails.put(FROMPLAYER, fromPlayer);
         tradeDetails.put(TOPLAYER, toPlayer);
         tradeDetails.put(FROMTEAM, fromTeam);
         tradeDetails.put(TOTEAM, toTeam);
         tradeDetails.put(TRADEOFFER, tradeOffer);
+        tradeDetails.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
 
-        ExecuteTradeState state = new ExecuteTradeState();
         state.updateTradingDetails(tradeDetails);
 
         assertEquals(tradeOffer.getStatus(), ACCEPTED);
@@ -287,6 +311,7 @@ public class ExecuteTradeStateTest {
         tradeDetails.put(FROMTEAM, fromTeam);
         tradeDetails.put(TOTEAM, toTeam);
         tradeDetails.put(TRADEOFFER, tradeOffer);
+        tradeDetails.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
 
         state.updateTradingDetails(tradeDetails);
 
@@ -357,7 +382,7 @@ public class ExecuteTradeStateTest {
         assertTrue(fromPlayer.getStrength() <= toPlayer.getStrength());
         assertNotEquals(toPlayer.getId(), player.getId());
 
-        player = new Player(4, playerFactory);
+        player = new Player(6, playerFactory);
         state.findBestSwapPlayer(team, league, player, players);
 
         assertNotNull(players);
@@ -384,30 +409,20 @@ public class ExecuteTradeStateTest {
         assertTrue(newPlayer.getStrength() >= swapPlayer.getStrength());
 
         swapPlayer = null;
-        weakestPlayer = new Player(4, playerFactory);
+        weakestPlayer = new Player(6, playerFactory);
         tradeOffer.setFromPlayerId(12);
         newPlayer = state.algorithmToFindSwapPlayer(team, weakestPlayer, swapPlayer, swap);
 
-        assertEquals(weakestPlayer.getId(), newPlayer.getId());
+        assertNull(newPlayer);
     }
 
     @Test
     public void getWeakestPlayerListTest() throws Exception {
-        Team team = new Team();
+        Team team = new Team(1, teamFactory);
         League league = new League(1, leagueFactory);
 
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        List<Player> weakPlayerList = state.getWeakestPlayerList(team, league);
-
-        assertNull(weakPlayerList);
-
-        Player strongPlayer1 = new Player(10, playerFactory);
-        Player strongPlayer2 = new Player(11, playerFactory);
-
-        List<Player> playerList = new ArrayList<>();
-        playerList.add(strongPlayer1);
-        playerList.add(strongPlayer2);
-        team.setPlayerList(playerList);
+        List<Player> weakPlayerList;
 
         weakPlayerList = state.getWeakestPlayerList(team, league);
 

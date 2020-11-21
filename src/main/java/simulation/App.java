@@ -2,15 +2,16 @@ package simulation;
 
 import db.data.IUserFactory;
 import org.json.simple.JSONObject;
+import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
-import simulation.factory.UserConcrete;
-import simulation.factory.ValidationConcrete;
+import simulation.factory.*;
+import simulation.model.Aging;
+import simulation.model.SharedAttributes;
 import simulation.model.User;
-import simulation.state.HockeyContext;
-import validator.IValidation;
-
 import java.io.FileNotFoundException;
+
 import org.apache.log4j.Logger;
+import simulation.state.IHockeyContext;
 
 
 public class App {
@@ -33,12 +34,10 @@ public class App {
         ReadUserInput readUserInput = ReadUserInput.getInstance();
 
         String userName = readUserInput.getInput("Please enter username");
-
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        IValidation validation = validationConcrete.newValidation();
-
         try {
-            if (validation.isNotEmpty(userName)) {
+            if (userName == null || userName.isEmpty()) {
+                ConsoleOutput.getInstance().printMsgToConsole("User name is invalid. Exiting the App.");
+            } else {
                 UserConcrete userConcrete = new UserConcrete();
             //    IUserFactory factory = userConcrete.newUserFactory();
             //    User user = userConcrete.newUserByName(userName, factory);
@@ -47,30 +46,25 @@ public class App {
                 user.setName(userName);
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
 
-                if (validation.isNotNull(filePath) && filePath.length() > 0) {
-
+                if (filePath == null || filePath.isEmpty()) {
+                    ConsoleOutput.getInstance().printMsgToConsole("Loading the team...");
+                } else {
                     if (JSONController.invalidJSON(filePath)) {
-                        System.out.println("Invalid JSON file Provided.Exiting the app!");
+                        ConsoleOutput.getInstance().printMsgToConsole("Invalid JSON file Provided.Exiting the app!");
                         System.exit(1);
                     }
                     jsonFromInput = JSONController.readJSON(filePath);
                 }
-                HockeyContext context = new HockeyContext(user);
+                IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+                IHockeyContext context = hockeyContextFactory.newHockeyContext();
+                context.setUser(user);
                 context.startAction(jsonFromInput);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File Not found. " + e);
+            ConsoleOutput.getInstance().printMsgToConsole("File Not found. " + e);
         } catch (Exception e) {
-            System.out.println("System faced unexpected exception. Please contact team. " + e);
+            ConsoleOutput.getInstance().printMsgToConsole("System faced unexpected exception. Please contact team. " + e);
         }
+
     }
-//
-//    private static void addUser(User user) throws Exception {
-////        UserConcrete userConcrete = new UserConcrete();
-////        IUserFactory addUserFactory = userConcrete.newUserFactory();
-////        user.addUser(addUserFactory);
-//
-//    }
-
-
 }

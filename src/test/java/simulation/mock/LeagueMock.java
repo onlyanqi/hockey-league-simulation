@@ -135,7 +135,7 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     public Aging getAging() throws Exception {
-        IAgingFactory agingFactory = new AgingMock();
+        IAgingDao agingFactory = new AgingMock();
         Aging aging = new Aging(1, agingFactory);
         return aging;
     }
@@ -467,7 +467,7 @@ public class LeagueMock implements ILeagueFactory {
 
         List<Player> playerList = new ArrayList<>();
         Player player;
-        for (int i = 1; i < 21; i++) {
+        for (int i = 1; i < 31; i++) {
             player = new Player(i, playerFactory);
             playerList.add(player);
         }

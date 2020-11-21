@@ -45,9 +45,7 @@ public class League extends SharedAttributes {
     }
 
     public League(String leagueName, int userId, ILeagueFactory loadLeagueFactory) throws Exception {
-        if (isNotEmpty(leagueName)) {
-            loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
-        }
+        loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
     }
 
 
@@ -257,19 +255,14 @@ public class League extends SharedAttributes {
     }
 
     public Conference getConferenceFromListByName(String conferenceName) {
-        if (isNotEmpty(conferenceName)) {
-            Conference foundConference = null;
-            for (Conference conference : conferenceList) {
-                if (conference.getName().toLowerCase().equals(conferenceName.toLowerCase())) {
-                    foundConference = conference;
-                    break;
-                }
+        Conference foundConference = null;
+        for (Conference conference : conferenceList) {
+            if (conference.getName().toLowerCase().equals(conferenceName.toLowerCase())) {
+                foundConference = conference;
+                break;
             }
-            return foundConference;
-        } else {
-            return null;
         }
-
+        return foundConference;
     }
 
     public void loadFreeAgentByLeagueId(IFreeAgentFactory loadFreeAgentFactory) throws Exception {
@@ -277,13 +270,11 @@ public class League extends SharedAttributes {
     }
 
     public Team getTeamByTeamName(String teamName) {
-        if (isNotEmpty(teamName)) {
-            for (Conference conference : getConferenceList()) {
-                for (Division division : conference.getDivisionList()) {
-                    for (Team team : division.getTeamList()) {
-                        if (team.getName().equals(teamName)) {
-                            return team;
-                        }
+        for (Conference conference : getConferenceList()) {
+            for (Division division : conference.getDivisionList()) {
+                for (Team team : division.getTeamList()) {
+                    if (team.getName().equals(teamName)) {
+                        return team;
                     }
                 }
             }

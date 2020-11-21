@@ -19,6 +19,7 @@ public class LeagueDataSerializerDeSerializerTest {
         League oldLeague = new League(4, leagueFactory);
         League newLeague = oldLeague;
         LeagueDataSerializerDeSerializer leagueDataSerializerDeSerializer = new LeagueDataSerializerDeSerializer();
+
         leagueDataSerializerDeSerializer.serialize(oldLeague);
         newLeague = leagueDataSerializerDeSerializer.deSerialize("JsonFiles/"+oldLeague.getUserCreatedTeamName());
 

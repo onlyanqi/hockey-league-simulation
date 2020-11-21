@@ -107,7 +107,7 @@ public class TeamTest {
 
     @Test
     public void getPlayerListTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(2, teamFactory);
         List<Player> playerList = team.getPlayerList();
         assertNotNull(playerList);
         assertEquals(1, playerList.get(0).getId());
@@ -120,18 +120,26 @@ public class TeamTest {
     public void setPlayerListTest() throws Exception {
         IPlayerFactory playerFactory = new PlayerMock();
         List<Player> playerList = new ArrayList<>();
-        Player player = new Player(1, playerFactory);
-        playerList.add(player);
-        player = new Player(5, playerFactory);
-        playerList.add(player);
+        Player player;
+        for (int i = 1; i < 31; i++) {
+            player = new Player(i, playerFactory);
+            playerList.add(player);
+        }
 
         Team team = new Team();
         team.setPlayerList(playerList);
 
         assertEquals(team.getPlayerList().get(0).getId(), (1));
-        assertEquals(team.getPlayerList().get(1).getId(), (5));
+        assertEquals(team.getPlayerList().get(1).getId(), (2));
         assertEquals(team.getPlayerList().get(0).getName(), ("Player1"));
-        assertTrue(team.getPlayerList().get(1).getName().equals("Player5"));
+        assertTrue(team.getPlayerList().get(1).getName().equals("Player2"));
+    }
+
+    @Test
+    public  void getActivePlayerListTest() throws Exception {
+        Team team = new Team(1, teamFactory);
+        assertNotEquals(team.getActivePlayerList().get(1).getId(), (1));
+        assertEquals(team.getActivePlayerList().get(1).getId(), (3));
     }
 
     @Test
@@ -157,11 +165,11 @@ public class TeamTest {
     }
 
     @Test
-    public void validTeamTest() throws Exception {
+    public void checkNumPlayerTest() throws Exception {
         Team team = new Team(1, teamFactory);
-        assertTrue(team.validTeam());
+        assertTrue(team.checkNumPlayer(team.getPlayerList()));
         team.getPlayerList().remove(0);
-        assertFalse(team.validTeam());
+        assertFalse(team.checkNumPlayer(team.getPlayerList()));
     }
 
     @Test

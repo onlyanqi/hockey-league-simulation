@@ -45,7 +45,9 @@ public class User extends SharedAttributes {
     }
 
     public void setPassword(String password) {
-        if (isNotEmpty(password)) {
+        if (password == null || password.isEmpty()) {
+            return;
+        } else {
             this.password = password;
         }
     }

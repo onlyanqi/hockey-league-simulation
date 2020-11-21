@@ -16,7 +16,7 @@ public class AppConfig {
     private LeagueDataSerializerDeSerializer dataSerializer;
     private LeagueConcrete leagueConcrete;
 
-    public AppConfig() {
+    private AppConfig() {
         inputForTeamCreation = new UseInputForTeamCreation();
         outputForTeamCreation = new ConsoleOutputForTeamCreation();
         leagueConcrete = new LeagueConcrete();

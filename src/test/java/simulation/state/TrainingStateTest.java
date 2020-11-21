@@ -1,9 +1,13 @@
 package simulation.state;
 
 import db.data.ILeagueFactory;
+import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
+import simulation.mock.UserMock;
 import simulation.model.Coach;
 import simulation.model.League;
 import simulation.model.Player;
@@ -14,11 +18,17 @@ import static org.junit.Assert.*;
 public class TrainingStateTest {
     private static ITrainingState trainingState;
     private static ILeagueFactory leagueFactory;
-    private static HockeyContext hockeyContext;
+    private static IHockeyContext hockeyContext;
+    private static IUserFactory userFactory;
+    private static IHockeyContextFactory hockeyContextFactory;
 
     @BeforeClass
     public static void setFactoryObject() throws Exception {
-        hockeyContext = new HockeyContext(new User(1));
+        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
+        userFactory = new UserMock();
+        User user = new User(1, userFactory);
+        hockeyContext.setUser(user);
         trainingState = new TrainingState(hockeyContext);
         leagueFactory = new LeagueMock();
     }

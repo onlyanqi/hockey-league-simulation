@@ -1,8 +1,5 @@
 package simulation.model;
 
-import simulation.factory.ValidationConcrete;
-import validator.IValidation;
-
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -23,13 +20,10 @@ public class DateTime {
     }
 
     public static Date convertLocalDateToSQLDate(LocalDate date) {
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        IValidation iValidation = validationConcrete.newValidation();
-
-        if (iValidation.isNotNull(date)) {
-            return java.sql.Date.valueOf(date);
-        } else {
+        if (date == null) {
             return null;
+        } else {
+            return java.sql.Date.valueOf(date);
         }
     }
 

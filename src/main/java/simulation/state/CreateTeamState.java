@@ -7,7 +7,6 @@ import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import presentation.ReadUserInput;
 import simulation.factory.LeagueConcrete;
-import simulation.factory.ValidationConcrete;
 import simulation.model.*;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class CreateTeamState implements IHockeyState {
     private static final String HOWMANYSEASONS = "How many seasons do you want to simulate";
     private static final String RIGHTCHOICEREQUEST = "Please enter the right choice. Yes/Y or No/N";
     private static final String GOALIE = "goalie";
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
     private League league;
     private String conferenceName;
     private String divisionName;
@@ -41,7 +40,7 @@ public class CreateTeamState implements IHockeyState {
     private ConsoleOutput consoleOutput = null;
     private ReadUserInput readUserInput = null;
 
-    public CreateTeamState(HockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
+    public CreateTeamState(IHockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
                            IConsoleOutputForTeamCreation teamCreationOutput) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
@@ -120,15 +119,18 @@ public class CreateTeamState implements IHockeyState {
         }
         List<Player> freeAgentList = freeAgent.getPlayerList();
         int countOfGoalie = 0;
-        int countOfSkaters = 0;
-        for (int i = 0; i < freeAgentList.size(); i++) {
-            if (freeAgentList.get(i).getPosition().toString().equals(GOALIE)) {
+        int countOfForward = 0;
+        int countOfDefense = 0;
+        for (Player player : freeAgentList) {
+            if (player.getPosition() == Player.Position.GOALIE) {
                 countOfGoalie++;
+            } else if (player.getPosition() == Player.Position.FORWARD) {
+                countOfForward++;
             } else {
-                countOfSkaters++;
+                countOfDefense++;
             }
         }
-        if (countOfGoalie >= 2 && countOfSkaters >= 18) {
+        if (countOfGoalie >= 4 && countOfForward >= 16 && countOfDefense >= 10) {
             return true;
         } else {
             return false;
@@ -161,7 +163,7 @@ public class CreateTeamState implements IHockeyState {
         return league.getConferenceFromListByName(conferenceName);
     }
 
-    private void choosePlayers() {
+    private void choosePlayers() throws IllegalArgumentException {
         freeAgent = league.getFreeAgent();
         List<Player> freeAgentList = freeAgent.getPlayerList();
         List<Integer> chosenPlayersIdList = team.createChosenPlayerIdList(freeAgent);
@@ -221,19 +223,24 @@ public class CreateTeamState implements IHockeyState {
     }
 
     private boolean isLeaguePresent(String leagueName) {
-//        ValidationConcrete validation = new ValidationConcrete();
-////        LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
-////        ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
-////        League league = null;
-////        try {
-////            int userId = hockeyContext.getUser().getId();
-////            league = leagueConcrete.createLeagueFromNameAndUserId(leagueName, userId, loadLeagueFactory);
-////        } catch (Exception e) {
-////            consoleOutput.printMsgToConsole(UNABLETOLOADLEAGUE);
-////            System.exit(1);
-////            e.printStackTrace();
-////        }
-////        return validation.newValidation().isNotNull(league) && league.getId() > 0;
+        /*LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
+        ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
+        League league = null;
+        try {
+            int userId = hockeyContext.getUser().getId();
+            league = leagueConcrete.createLeagueFromNameAndUserId(leagueName, userId, loadLeagueFactory);
+        } catch (Exception e) {
+            consoleOutput.printMsgToConsole(UNABLETOLOADLEAGUE);
+            System.exit(1);
+        }
+
+        boolean isPresent = false;
+
+        if(league == null){
+            isPresent = false;
+        } else if (league.getId() > 0){
+            isPresent = true;
+        }*/
         return false;
     }
 

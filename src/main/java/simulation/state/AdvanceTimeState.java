@@ -10,9 +10,9 @@ import java.time.LocalDate;
 public class AdvanceTimeState implements ISimulateState {
 
     private League league;
-    private HockeyContext hockeyContext;
+    private IHockeyContext hockeyContext;
 
-    public AdvanceTimeState(HockeyContext hockeyContext) {
+    public AdvanceTimeState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
     }

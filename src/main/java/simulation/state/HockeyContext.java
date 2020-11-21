@@ -4,35 +4,44 @@ import config.AppConfig;
 import org.json.simple.JSONObject;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
-import simulation.factory.ValidationConcrete;
+import simulation.factory.IAgingFactory;
 import simulation.model.User;
-import validator.IValidation;
 
-public class HockeyContext {
+public class HockeyContext implements IHockeyContext{
 
     private IHockeyState hockeyState;
     private User user;
-    private IValidation iValidation;
+    private IAgingFactory agingFactory;
+    private static IHockeyContext hockeyContext;
 
-    public HockeyContext() {
+    private HockeyContext() {
     }
 
-    public HockeyContext(User user) {
-        this.user = user;
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        iValidation = validationConcrete.newValidation();
+    public static IHockeyContext getInstance(){
+        if(null == hockeyContext){
+            return new HockeyContext();
+        }
+        return hockeyContext;
     }
 
+    @Override
     public User getUser() {
         return user;
     }
 
+    @Override
     public void setUser(User user) {
         this.user = user;
     }
 
+    @Override
     public void startAction(JSONObject jsonFromInput) throws Exception {
-        if (iValidation.isNotNull(jsonFromInput)) {
+        if (jsonFromInput == null || jsonFromInput.isEmpty()) {
+            hockeyState = new LoadTeamState(this);
+            hockeyState.entry();
+            hockeyState.process();
+            hockeyState = hockeyState.exit();
+        } else {
             hockeyState = new ImportState(this, jsonFromInput);
             hockeyState.entry();
             hockeyState.process();
@@ -40,22 +49,29 @@ public class HockeyContext {
             IConsoleOutputForTeamCreation outputForTeamCreation = AppConfig.getInstance().getOutputForTeamCreation();
             hockeyState = new CreateTeamState(this,
                     inputForTeamCreation, outputForTeamCreation);
-        } else {
-            hockeyState = new LoadTeamState(this);
-            hockeyState.entry();
-            hockeyState.process();
-            hockeyState = hockeyState.exit();
         }
 
         do {
             hockeyState.entry();
             hockeyState.process();
             hockeyState = hockeyState.exit();
-        } while (iValidation.isNotNull(hockeyState));
+        } while (hockeyState instanceof ISimulateState || hockeyState instanceof IHockeyState);
 
     }
 
+    @Override
     public IHockeyState getHockeyState() {
         return hockeyState;
     }
+
+    @Override
+    public void setAgingFactory(IAgingFactory agingFactory) {
+        this.agingFactory = agingFactory;
+    }
+
+    @Override
+    public IAgingFactory getAgingFactory(){
+        return this.agingFactory;
+    }
+
 }
