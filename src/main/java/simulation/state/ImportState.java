@@ -4,8 +4,6 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
-import scala.util.parsing.json.JSON;
-import simulation.App;
 import simulation.factory.*;
 import simulation.model.*;
 
@@ -33,19 +31,16 @@ public class ImportState implements IHockeyState {
     private static final String PLAYER_NAME = "playerName";
     private static final String CAPTAIN = "captain";
     private static final String POSITION = "position";
-    private static final String AGE = "age";
     private static final String FREE_AGENTS = "freeAgents";
     private static final String MANAGERS = "generalManagers";
     private static final String COACHES = "coaches";
     private static final String GAMEPLAY_CONFIG = "gameplayConfig";
     private static final String AGING = "aging";
-    private static final String GAME_RESOLVER = "gameResolver";
     private static final String INJURIES = "injuries";
     private static final String TRAINING = "training";
     private static final String TRADING = "trading";
     private static final String AVERAGE_RETIREMENT_AGE = "averageRetirementAge";
     private static final String MAXIMUM_AGE = "maximumAge";
-    private static final String RANDOM_WIN_CHANCE = "randomWinChance";
     private static final String RANDOM_INJURY_CHANCE = "randomInjuryChance";
     private static final String INJURY_DAYS_LOW = "injuryDaysLow";
     private static final String INJURY_DAYS_HIGH = "injuryDaysHigh";
@@ -62,7 +57,6 @@ public class ImportState implements IHockeyState {
     public static final String STAT_DECAY_CHANCE = "statDecayChance";
     private final Set<String> appearedName = new HashSet<>();
     private IHockeyContext hockeyContext;
-    private String filePath;
     private JSONObject jsonFromInput;
     private League league;
     private int leagueId;
@@ -135,8 +129,8 @@ public class ImportState implements IHockeyState {
             List<Player> retiredPlayerList = new ArrayList<>();
 
             setLeagueVariables(leagueName, gamePlayConfig, conferenceList, freeAgent, coachList, managerList, retiredPlayerList);
-        } catch (Exception e){
-            log.error("ImportState: parseJSONAndInstantiateLeague: Exception: "+e);
+        } catch (Exception e) {
+            log.error("ImportState: parseJSONAndInstantiateLeague: Exception: " + e);
             throw e;
         }
     }
@@ -214,13 +208,6 @@ public class ImportState implements IHockeyState {
         Aging aging = loadAgingJson(agingJSONObject);
         aging.setLeagueId(leagueId);
         gamePlayConfig.setAging(aging);
-
-//        if (validateKeyInObject(gameplayConfigJSONObject, GAME_RESOLVER)) {
-//            throw new IllegalArgumentException("Please make sure gameResolver is provided in JSON");
-//        }
-//        JSONObject gameResolverJSONObject = (JSONObject) gameplayConfigJSONObject.get(GAME_RESOLVER);
-//        GameResolver gameResolver = loadGameResolverJson(gameResolverJSONObject);
-//        gamePlayConfig.setGameResolver(gameResolver);
 
         if (validateKeyInObject(gameplayConfigJSONObject, INJURIES)) {
             throw new IllegalArgumentException("Please make sure injuries is provided in JSON");
@@ -336,7 +323,7 @@ public class ImportState implements IHockeyState {
         }
 
         String personality = (String) generalManager.get(PERSONALITY);
-        if(validateString(personality)){
+        if (validateString(personality)) {
             throw new IllegalArgumentException("Please make sure manager's personality is valid");
         }
 
@@ -460,15 +447,23 @@ public class ImportState implements IHockeyState {
             throw new IllegalArgumentException("Please make sure the player's birth day is provided in JSON");
         }
         int birthDay = (int) (long) playerJsonObject.get(BIRTH_DAY);
+        if (birthDay < 1 || birthDay > 31) {
+            throw new IllegalArgumentException("Please make sure the player's birth day is within 1 to 31");
+        }
         if (validateKeyInObject(playerJsonObject, BIRTH_MONTH)) {
             throw new IllegalArgumentException("Please make sure the player's birth month is provided in JSON");
         }
         int birthMonth = (int) (long) playerJsonObject.get(BIRTH_MONTH);
+        if (birthMonth < 1 || birthMonth > 12) {
+            throw new IllegalArgumentException("Please make sure the player's birth month is within 1 to 12");
+        }
         if (validateKeyInObject(playerJsonObject, BIRTH_YEAR)) {
             throw new IllegalArgumentException("Please make sure the player's birthDay is provided in JSON");
         }
         int birthYear = (int) (long) playerJsonObject.get(BIRTH_YEAR);
-
+        if (birthYear < 1920 || birthYear > 2020) {
+            throw new IllegalArgumentException("Please make sure the player's birth year is within 1920 to 2020");
+        }
         return LocalDate.of(birthYear, birthMonth, birthDay);
     }
 
@@ -582,7 +577,7 @@ public class ImportState implements IHockeyState {
         JSONArray divisions = (JSONArray) conferenceJSONObject.get(DIVISIONS);
 
         if (validateArray(divisions)) {
-            throw new IllegalArgumentException("Please make sure atleast one division is provided");
+            throw new IllegalArgumentException("Please make sure at least one division is provided");
         }
         return divisions;
     }
@@ -655,7 +650,7 @@ public class ImportState implements IHockeyState {
             }
 
             String personality = (String) generalManager.get(PERSONALITY);
-            if(validateString(personality)){
+            if (validateString(personality)) {
                 throw new IllegalArgumentException("Please make sure manager's personality is valid");
             }
 
@@ -708,17 +703,6 @@ public class ImportState implements IHockeyState {
         aging.setStatDecayChance(statDecayChance);
         return aging;
     }
-
-    /*private GameResolver loadGameResolverJson(JSONObject gameResolverJSONObject) {
-        if (validateKeyInObject(gameResolverJSONObject, RANDOM_WIN_CHANCE)) {
-            throw new IllegalArgumentException("Please make sure randomWinChance is provided in JSON");
-        }
-        double randomWinChance = (Double) gameResolverJSONObject.get(RANDOM_WIN_CHANCE);
-        GameResolverConcrete gameResolverConcrete = new GameResolverConcrete();
-        GameResolver gameResolver = gameResolverConcrete.newGameResolver();
-        gameResolver.setRandomWinChance(randomWinChance);
-        return gameResolver;
-    }*/
 
     private Injury loadInjuryJson(JSONObject injuriesJSONObject) {
         if (validateKeyInObject(injuriesJSONObject, RANDOM_INJURY_CHANCE)) {
@@ -776,13 +760,13 @@ public class ImportState implements IHockeyState {
         }
         double randomAcceptanceChance = (Double) tradingJSONObject.get(RANDOM_ACCEPTANCE_CHANCE);
 
-        if(validateKeyInObject(tradingJSONObject, GM_TABLE)){
+        if (validateKeyInObject(tradingJSONObject, GM_TABLE)) {
             throw new IllegalArgumentException("Please make sure gmTable is provided in JSON");
         }
 
         JSONObject gmTableJsonObject = (JSONObject) tradingJSONObject.get(GM_TABLE);
         Map<String, Double> gmTable = new HashMap<>();
-        for(Object key : gmTableJsonObject.keySet()){
+        for (Object key : gmTableJsonObject.keySet()) {
             String attribute = (String) key;
             double attributeValue = (Double) gmTableJsonObject.get(attribute);
             gmTable.put(attribute, attributeValue);
