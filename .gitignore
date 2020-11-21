@@ -4,7 +4,6 @@ target/
 .properties
 *.iml
 logs/
-logs\\myLog.log
 inputJson.txt
 input2.txt
 JsonOutput.txt
