@@ -27,8 +27,8 @@ public class JSONControllerMock {
         aging.put("maximumAge", (long) 50);
         aging.put("statDecayChance", 0.04);
 
-        JSONObject gameResolver = new JSONObject();
-        gameResolver.put("randomWinChance", 0.1);
+/*        JSONObject gameResolver = new JSONObject();
+        gameResolver.put("randomWinChance", 0.1);*/
 
         JSONObject injuries = new JSONObject();
         injuries.put("randomInjuryChance", 0.05);
@@ -52,7 +52,7 @@ public class JSONControllerMock {
         trading.put("gmTable", gmTable);
 
         gameplayConfig.put("aging", aging);
-        gameplayConfig.put("gameResolver", gameResolver);
+        //gameplayConfig.put("gameResolver", gameResolver);
         gameplayConfig.put("injuries", injuries);
         gameplayConfig.put("training", training);
         gameplayConfig.put("trading", trading);
@@ -71,8 +71,12 @@ public class JSONControllerMock {
         JSONObject team = new JSONObject();
         team.put("players", players);
         team.put("teamName", "Boston");
-        team.put("generalManager", "Mister Fred");
         team.put("headCoach", teamCoach);
+
+        JSONObject generalManager = new JSONObject();
+        generalManager.put("name", "MPK");
+        generalManager.put("personality", "normal");
+        team.put("generalManager", generalManager);
 
         teams.add(team);
 
@@ -112,9 +116,20 @@ public class JSONControllerMock {
         coach3.put("saving", 0.0);
         coaches.add(coach3);
 
-        managers.add("Karen Potam");
-        managers.add("Joseph Squidly");
-        managers.add("Tom Spaghetti");
+        generalManager = new JSONObject();
+        generalManager.put("name", "M");
+        generalManager.put("personality", "shrewd");
+        managers.add(generalManager);
+
+        generalManager = new JSONObject();
+        generalManager.put("name", "P");
+        generalManager.put("personality", "gambler");
+        managers.add(generalManager);
+
+        generalManager = new JSONObject();
+        generalManager.put("name", "K");
+        generalManager.put("personality", "shrewd");
+        managers.add(generalManager);
 
         league.put("leagueName", "Dalhousie Hockey League");
         league.put("gameplayConfig", gameplayConfig);

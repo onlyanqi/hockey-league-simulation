@@ -32,7 +32,7 @@ public class SimulateGameState implements ISimulateState {
     }
 
     public void simulateGame(Game game) {
-        double upset = league.getGamePlayConfig().getGameResolver().getRandomWinChance();
+        double upset = 0.2;
         Team team1 = league.getTeamByTeamName(game.getTeam1());
         Team team2 = league.getTeamByTeamName(game.getTeam2());
 
