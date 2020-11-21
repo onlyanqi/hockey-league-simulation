@@ -5,7 +5,6 @@ import db.data.IPlayerFactory;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -232,11 +231,12 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         addPlayerFactory.addPlayer(this);
     }
 
-    public boolean retirementCheck(IAging aging) {
-        //public boolean retirementCheck(Aging aging) {
-        if (aging == null) {
+    public boolean retirementCheck(League league) {
+        if (league == null) {
             return false;
         }
+        IAging aging = league.getGamePlayConfig().getAging();
+        this.calculateAge(league);
         double increaseRate = 0.5 / (aging.getMaximumAge() - aging.getAverageRetirementAge());
         if (this.age < aging.getAverageRetirementAge()) {
             Random randomRetire1 = new Random();
@@ -281,8 +281,6 @@ public class Player extends SharedAttributes implements Comparable<Player> {
             int injuryDaysLow = league.getGamePlayConfig().getInjury().getInjuryDaysLow();
             this.setInjuryDatesRange(randomInjuryDays.nextInt(injuryDaysHigh - injuryDaysLow) + injuryDaysLow);
             this.setInjured(true);
-
-            // Swap injured player to inactive
         }
     }
 

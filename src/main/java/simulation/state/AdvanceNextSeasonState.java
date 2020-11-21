@@ -47,8 +47,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
                     int size = playerList.size();
                     for (int i = size - 1; i >= 0; i--) {
                         Player teamPlayer = playerList.get(i);
-                        teamPlayer.calculateAge(league);
-                        if (teamPlayer.retirementCheck(aging)) {
+                        if (teamPlayer.retirementCheck(league)) {
                             teamPlayer.setRetired(true);
                             retiredPlayerList.add(teamPlayer);
                             Player.Position position = teamPlayer.getPosition();
@@ -62,8 +61,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
         int size = freeAgentList.size();
         for (int i = size - 1; i >= 0; i--) {
             Player freeAgentPlayer = freeAgentList.get(i);
-            freeAgentPlayer.calculateAge(league);
-            if (freeAgentPlayer.retirementCheck(aging)) {
+            if (freeAgentPlayer.retirementCheck(league)) {
                 freeAgentPlayer.setRetired(true);
                 retiredPlayerList.add(freeAgentPlayer);
                 freeAgentList.remove(i);
