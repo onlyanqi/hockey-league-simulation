@@ -178,6 +178,9 @@ public class Team extends SharedAttributes {
         IValidation validation = validationConcrete.newValidation();
         if (validation.isListNotEmpty(playerList)) {
             for (Player player : playerList) {
+                if(player.getPosition()==null){
+                    return false;
+                }
                 String position = player.getPosition().toString();
                 if (validation.isNotEmpty(position) && position.equalsIgnoreCase(GOALIE)) {
                     noOfGoalies = noOfGoalies + 1;

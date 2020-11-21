@@ -41,13 +41,17 @@ public class LoadTeamState implements IHockeyState {
         while ((teamName.isEmpty() || teamName == null)) {
             teamName = readUserInput.getInput("Please enter valid and existing team name");
         }
+
     }
 
 
     @Override
     public void process() throws Exception {
         LeagueDataSerializerDeSerializer leagueDataSerializerDeSerializer = new LeagueDataSerializerDeSerializer();
-        league = leagueDataSerializerDeSerializer.deSerialize();
+        String filename = "JsonFiles"+"/"+teamName;
+        league = leagueDataSerializerDeSerializer.deSerialize(filename);
+        hockeyContext.getUser().setLeague(league);
+        String a = "Simran";
 //        ConsoleOutput.getInstance().printMsgToConsole("We are loading the league data. Please wait..");
 //
 //        LeagueConcrete leagueConcrete = new LeagueConcrete();

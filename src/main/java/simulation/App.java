@@ -41,16 +41,10 @@ public class App {
             if (validation.isNotEmpty(userName)) {
                 UserConcrete userConcrete = new UserConcrete();
             //    IUserFactory factory = userConcrete.newUserFactory();
-            //    User user = userConcrete.newUserByName(userName, factory);\
+            //    User user = userConcrete.newUserByName(userName, factory);
                 User user = userConcrete.newUser();
 
                 user.setName(userName);
-                if (user.getId() == 0) {
-                    String password = readUserInput.getInput("Please enter password to register yourself");
-
-                    user.setPassword(password);
-                //    addUser(user);
-                }
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
 
                 if (validation.isNotNull(filePath) && filePath.length() > 0) {
@@ -63,7 +57,6 @@ public class App {
                 }
                 HockeyContext context = new HockeyContext(user);
                 context.startAction(jsonFromInput);
-
             }
         } catch (FileNotFoundException e) {
             System.out.println("File Not found. " + e);

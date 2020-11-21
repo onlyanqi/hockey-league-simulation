@@ -240,6 +240,7 @@ public class CreateTeamState implements IHockeyState {
     @Override
     public void process() {
         league.setCreatedBy(hockeyContext.getUser().getId());
+        league.setUser(hockeyContext.getUser().getName());
         league.setManagerList(managerList);
         league.setCoachList(coachList);
         league.setFreeAgent(freeAgent);
@@ -256,6 +257,10 @@ public class CreateTeamState implements IHockeyState {
             }
         }
         league.setConferenceList(conferenceList);
+        if(team == null){
+            return;
+        }
+        league.setUserCreatedTeamName(team.getName());
         consoleOutput.printMsgToConsole(WAITMESSAGE);
     }
 

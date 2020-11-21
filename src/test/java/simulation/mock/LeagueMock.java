@@ -216,6 +216,8 @@ public class LeagueMock implements ILeagueFactory {
 
             case 4:
                 league.setName("League4");
+                league.setUser("Simran");
+                league.setUserCreatedTeamName("TestJSON");
                 league.setConferenceList(formCreateTeamConferenceList());
                 league.setFreeAgent(formFreeAgent());
                 league.setCoachList(formCoachList());

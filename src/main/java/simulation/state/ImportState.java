@@ -59,6 +59,8 @@ public class ImportState implements IHockeyState {
     private League league;
     private int leagueId;
     private int teamId;
+    private int conferenceId;
+    private int divisionId;
 
 
     public ImportState(HockeyContext hockeyContext, JSONObject jsonFromInput) {
@@ -262,8 +264,12 @@ public class ImportState implements IHockeyState {
             List<Player> playerList = setTeamPlayerList(teamJSONObject);
 
             Team team = setTeamVariables(teamName, manager, coach, playerList);
-
+            team.setDivisionId(divisionId);
             teamId = team.getId();
+            manager.setTeamId(teamId);
+            manager.setLeagueId(leagueId);
+            coach.setTeamId(teamId);
+            coach.setLeagueId(leagueId);
             teamList.add(team);
         }
         return teamList;
@@ -391,6 +397,8 @@ public class ImportState implements IHockeyState {
 
                 Player player = setTeamPlayerVariables(playerName, position, captain, age, skating, shooting, checking, saving);
                 player.setTeamId(teamId);
+
+                player.setFreeAgentId(player.getId());
                 playerList.add(player);
 
             }
@@ -482,6 +490,8 @@ public class ImportState implements IHockeyState {
 
             Division division = new Division();
             division.setName(divisionName);
+            division.setConferenceId(conferenceId);
+            divisionId = division.getId();
 
             if (notValidKeyInObject(divisionJSONObject, TEAMS)) {
                 throw new IllegalArgumentException("Please make sure teams is provided in JSON");
@@ -520,8 +530,9 @@ public class ImportState implements IHockeyState {
 
             ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
             Conference conference = conferenceConcrete.newConference();
-
+            conference.setLeagueId(leagueId);
             conference.setName(conferenceName);
+            conferenceId = conference.getId();
 
             JSONArray divisions = validateDivisions(conferenceJSONObject);
 
@@ -561,7 +572,6 @@ public class ImportState implements IHockeyState {
             }
 
             Player.Position position = validatePosition(freeAgentJsonObject);
-
             int age = getPlayerAge(freeAgentJsonObject);
 
             int skating = getPlayerSkating(freeAgentJsonObject);
@@ -595,6 +605,7 @@ public class ImportState implements IHockeyState {
         player.setChecking(checking);
         player.setSaving(saving);
         player.setStrength();
+        player.setFreeAgentId(player.getId());
         player.setInjured(false);
         player.setIsFreeAgent(true);
         return player;
