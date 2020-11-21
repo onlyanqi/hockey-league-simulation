@@ -21,13 +21,13 @@
                 "shooting": 0.5,
                 "checking": 0.3,
                 "saving": 0.5,
-                "id": 1783047508,
+                "id": 9190301,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1027007693,
+                "id": 1536471117,
                 "name": "Manager1"
               },
               "playerList": [
@@ -1243,13 +1243,13 @@
                 "shooting": 0.5,
                 "checking": 0.4,
                 "saving": 0.8,
-                "id": 1381713434,
+                "id": 63390,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 2146608740,
+                "id": 1278852808,
                 "name": "Manager3"
               },
               "playerList": [
@@ -2472,13 +2472,13 @@
                 "shooting": 0.5,
                 "checking": 0.3,
                 "saving": 0.5,
-                "id": 192881625,
+                "id": 525968792,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1489092624,
+                "id": 2129144075,
                 "name": "Manager1"
               },
               "playerList": [
@@ -3694,13 +3694,13 @@
                 "shooting": 0.5,
                 "checking": 0.4,
                 "saving": 0.8,
-                "id": 1773638882,
+                "id": 422330142,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1641313620,
+                "id": 504858437,
                 "name": "Manager3"
               },
               "playerList": [
@@ -4929,13 +4929,13 @@
                 "shooting": 0.5,
                 "checking": 0.3,
                 "saving": 0.5,
-                "id": 1295226194,
+                "id": 1955920234,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1059063940,
+                "id": 649329985,
                 "name": "Manager1"
               },
               "playerList": [
@@ -6151,13 +6151,13 @@
                 "shooting": 0.5,
                 "checking": 0.4,
                 "saving": 0.8,
-                "id": 1514840818,
+                "id": 775386112,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 252651381,
+                "id": 1444635922,
                 "name": "Manager3"
               },
               "playerList": [
@@ -7380,13 +7380,13 @@
                 "shooting": 0.5,
                 "checking": 0.3,
                 "saving": 0.5,
-                "id": 878274034,
+                "id": 1146825051,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1704064279,
+                "id": 391630194,
                 "name": "Manager1"
               },
               "playerList": [
@@ -9162,7 +9162,7 @@
         "name": "Player21"
       }
     ],
-    "id": 1117509763
+    "id": 1239807799
   },
   "currentDate": {
     "year": 2020,
@@ -9170,7 +9170,7 @@
     "day": 20
   },
   "gamePlayConfig": {
-    "id": 1147258851,
+    "id": 1789718525,
     "leagueId": 0,
     "aging": {
       "averageRetirementAge": 35,
@@ -9199,8 +9199,8 @@
         0,
         1
       ],
-      "tradeStartDate": "Oct 1, 2020 12:00:00 AM",
-      "tradeEndDate": "Feb 22, 2021 12:00:00 AM",
+      "tradeStartDate": "Oct 1, 2020, 12:00:00 AM",
+      "tradeEndDate": "Feb 22, 2021, 12:00:00 AM",
       "leagueId": 1,
       "lossPoint": 2,
       "randomTradeOfferChance": 0.05000000074505806,
@@ -9264,7 +9264,7 @@
         "played": false
       }
     ],
-    "id": 1146147158
+    "id": 239372207
   },
   "nhlEvents": {
     "id": 3,
