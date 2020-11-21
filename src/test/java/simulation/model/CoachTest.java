@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ICoachFactory;
+import db.data.ICoachDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.CoachMock;
@@ -8,7 +8,7 @@ import simulation.mock.CoachMock;
 import static org.junit.Assert.*;
 
 public class CoachTest {
-    private static ICoachFactory loadCoachFactory;
+    private static ICoachDao loadCoachFactory;
 
     @BeforeClass
     public static void setFactoryObj() {

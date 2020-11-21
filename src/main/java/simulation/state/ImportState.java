@@ -343,7 +343,7 @@ public class ImportState implements IHockeyState {
     }
 
     private Coach setCoachVariables(String coachName, Double skating, Double shooting, Double checking, Double saving) {
-        CoachConcrete coachConcrete = new CoachConcrete();
+        ICoachFactory coachConcrete = hockeyContext.getCoachFactory();
         Coach coach = coachConcrete.newCoach();
         coach.setName(coachName);
         coach.setSkating(skating);

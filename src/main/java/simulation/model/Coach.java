@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ICoachFactory;
+import db.data.ICoachDao;
 
 public class Coach extends SharedAttributes {
     private int teamId;
@@ -32,7 +32,7 @@ public class Coach extends SharedAttributes {
         this.setSkating(coach.getSkating());
     }
 
-    public Coach(int id, ICoachFactory coachFactory) throws Exception {
+    public Coach(int id, ICoachDao coachFactory) throws Exception {
         if (coachFactory == null) {
             return;
         }

@@ -24,7 +24,7 @@ public class TrainingStateTest {
 
     @BeforeClass
     public static void setFactoryObject() throws Exception {
-        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         userFactory = new UserMock();
         User user = new User(1, userFactory);

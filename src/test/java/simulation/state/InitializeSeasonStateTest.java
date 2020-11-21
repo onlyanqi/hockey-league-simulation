@@ -20,7 +20,7 @@ public class InitializeSeasonStateTest {
     @BeforeClass
     public static void init() throws Exception {
         userFactory = new UserMock();
-        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(4, userFactory);
         hockeyContext.setUser(user);

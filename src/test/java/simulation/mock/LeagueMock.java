@@ -41,7 +41,7 @@ public class LeagueMock implements ILeagueFactory {
     public List<Coach> formCoachList() throws Exception {
         List<Coach> coachList = new ArrayList<>();
 
-        ICoachFactory coachFactory = new CoachMock();
+        ICoachDao coachFactory = new CoachMock();
 
         for (int i = 0; i < 5; i++) {
             Coach coach = new Coach(i, coachFactory);

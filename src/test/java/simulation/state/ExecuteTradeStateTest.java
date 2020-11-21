@@ -42,7 +42,7 @@ public class ExecuteTradeStateTest {
         tradeOfferFactory = new TradeOfferMock();
         tradingFactory = new TradingMock();
         userFactory = new UserMock();
-        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);
@@ -244,7 +244,7 @@ public class ExecuteTradeStateTest {
     @Test
     public void updateTradingDetailsTest() throws Exception {
         Map<String, Object> tradeDetails = new HashMap<>();
-        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+        IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
         IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);

@@ -28,7 +28,7 @@ public class AdvanceNextSeasonStateTest {
     public static void init() throws Exception {
         playerFactory = new PlayerMock();
         userFactory = new UserMock();
-        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+        IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);

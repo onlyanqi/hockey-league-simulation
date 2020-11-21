@@ -6,6 +6,7 @@ import presentation.ConsoleOutput;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import presentation.ReadUserInput;
+import simulation.factory.ICoachFactory;
 import simulation.factory.LeagueConcrete;
 import simulation.model.*;
 
@@ -179,9 +180,10 @@ public class CreateTeamState implements IHockeyState {
         coachList = league.getCoachList();
         teamCreationOutput.showCoachListOnScreen(coachList);
         int headCoachId = teamCreationInput.getHeadCoachId(coachList);
-        Coach headCoach = new Coach(coachList.get(headCoachId));
+        ICoachFactory coachFactory = hockeyContext.getCoachFactory();
+        Coach headCoach = coachFactory.newCoachWithCoach(coachList.get(headCoachId));
         team.setCoach(headCoach);
-        coachList = league.removeCoachFromCoachListById(coachList, headCoachId);
+        coachList = league.removeCoachFromCoachListById(coachList, headCoachId, coachFactory);
         teamCreationOutput.showSuccessfulCoachCreationMessage();
     }
 

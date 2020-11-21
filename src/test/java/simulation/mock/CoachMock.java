@@ -1,11 +1,11 @@
 package simulation.mock;
 
-import db.data.ICoachFactory;
+import db.data.ICoachDao;
 import simulation.model.Coach;
 
 import java.util.List;
 
-public class CoachMock implements ICoachFactory {
+public class CoachMock implements ICoachDao {
     @Override
     public int addCoach(Coach coach) throws Exception {
         coach = new Coach(1);
@@ -112,7 +112,7 @@ public class CoachMock implements ICoachFactory {
 
     @Override
     public Coach loadCoachByTeamId(int teamId) throws Exception {
-        ICoachFactory coachFactory = new CoachMock();
+        ICoachDao coachFactory = new CoachMock();
         return new Coach(2, coachFactory);
     }
 

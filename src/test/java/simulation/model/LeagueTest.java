@@ -3,6 +3,8 @@ package simulation.model;
 import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.CoachConcrete;
+import simulation.factory.ICoachFactory;
 import simulation.mock.*;
 
 import java.util.ArrayList;
@@ -84,10 +86,14 @@ public class LeagueTest {
     @Test
     public void removeCoachFromManagerListByIdTest() throws Exception {
         League league = new League(1, leagueFactory);
+        ICoachFactory coachFactory = new CoachConcrete();
         List<Coach> coachList = league.getCoachList();
-        assertEquals(coachList.size(), league.removeCoachFromCoachListById(coachList, 0).size() + 1);
-        assertNotEquals(league.removeCoachFromCoachListById(coachList, 0), null);
-        assertNotEquals(coachList.size(), league.removeCoachFromCoachListById(coachList, 0).size());
+        assertEquals(coachList.size(), league.removeCoachFromCoachListById(
+                coachList, 0, coachFactory).size() + 1);
+        assertNotEquals(league.removeCoachFromCoachListById(
+                coachList, 0, coachFactory), null);
+        assertNotEquals(coachList.size(), league.removeCoachFromCoachListById(
+                coachList, 0, coachFactory).size());
     }
 
     @Test

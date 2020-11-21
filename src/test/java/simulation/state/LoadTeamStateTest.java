@@ -28,7 +28,7 @@ public class LoadTeamStateTest {
 
     @BeforeClass
     public static void init() throws Exception {
-        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         userFactory = new UserMock();
         User user = new User(1, userFactory);
