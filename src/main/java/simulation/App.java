@@ -18,11 +18,13 @@ public class App {
 
     public static void main(String[] args) {
 
+
         log.debug("DEBUG Message");
         log.info("INFO Message");
         log.warn("WARN Message");
         log.error("ERROR Message");
         log.fatal("Fatal Message");
+
 
         String filePath = "";
         JSONObject jsonFromInput = null;
@@ -30,27 +32,23 @@ public class App {
         ReadUserInput readUserInput = ReadUserInput.getInstance();
 
         String userName = readUserInput.getInput("Please enter username");
-
         try {
             if (userName == null || userName.isEmpty()) {
                 ConsoleOutput.getInstance().printMsgToConsole("User name is invalid. Exiting the App.");
             } else {
                 IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
                 IHockeyContext context = hockeyContextFactory.newHockeyContext();
-                IUserFactory userConcrete = context.getUserFactory();
+
+                UserConcrete userConcrete = new UserConcrete();
+            //    IUserFactory factory = userConcrete.newUserFactory();
+            //    User user = userConcrete.newUserByName(userName, factory);
                 IUser user = userConcrete.newUser();
 
                 user.setName(userName);
-                if (user.getId() == 0) {
-                    String password = readUserInput.getInput("Please enter password to register yourself");
-
-                    user.setPassword(password);
-                }
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
 
                 if (filePath == null || filePath.isEmpty()) {
-                    ConsoleOutput.getInstance().printMsgToConsole("File path is invalid. Exiting the App.");
-                    System.exit(1);
+                    ConsoleOutput.getInstance().printMsgToConsole("Loading the team...");
                 } else {
                     if (JSONController.invalidJSON(filePath)) {
                         ConsoleOutput.getInstance().printMsgToConsole("Invalid JSON file Provided.Exiting the app!");
@@ -61,7 +59,6 @@ public class App {
 
                 context.setUser(user);
                 context.startAction(jsonFromInput);
-
             }
         } catch (FileNotFoundException e) {
             ConsoleOutput.getInstance().printMsgToConsole("File Not found. " + e);

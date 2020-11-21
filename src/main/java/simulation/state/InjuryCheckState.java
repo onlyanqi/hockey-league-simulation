@@ -23,17 +23,29 @@ public class InjuryCheckState implements ISimulateState {
         return exit();
     }
 
-    private void playerInjuryCheck(ILeague league) {
-        IGame game = league.getGames().getLastPlayedGame();
-        ITeam team1 = league.getTeamByTeamName(game.getTeam1());
-        ITeam team2 = league.getTeamByTeamName(game.getTeam2());
-        List<IPlayer> playerList1 = team1.getPlayerList();
-        List<IPlayer> playerList2 = team2.getPlayerList();
-        for (IPlayer teamPlayer : playerList1) {
+    private void playerInjuryCheck(League league) {
+        Game game = league.getGames().getLastPlayedGame();
+        Team team1 = league.getTeamByTeamName(game.getTeam1());
+        Team team2 = league.getTeamByTeamName(game.getTeam2());
+        List<Player> activePlayerList1 = team1.getActivePlayerList();
+        List<Player> inactivePlayerList1 = team1.getInactivePlayerList();
+        List<Player> activePlayerList2 = team2.getActivePlayerList();
+        List<Player> inactivePlayerList2 = team2.getInactivePlayerList();
+        int size1 = activePlayerList1.size();
+        for (int i = size1 - 1; i >= 0; i--) {
+            Player teamPlayer = activePlayerList1.get(i);
             teamPlayer.injuryCheck(league);
+            if (teamPlayer.getInjured()) {
+                teamPlayer.findBestReplacement(activePlayerList1, teamPlayer.getPosition(), i, inactivePlayerList1);
+            }
         }
-        for (IPlayer teamPlayer : playerList2) {
+        int size2 = activePlayerList2.size();
+        for (int i = size2 - 1; i >= 0; i--) {
+            Player teamPlayer = activePlayerList2.get(i);
             teamPlayer.injuryCheck(league);
+            if (teamPlayer.getInjured()) {
+                teamPlayer.findBestReplacement(activePlayerList2, teamPlayer.getPosition(), i, inactivePlayerList2);
+            }
         }
     }
 

@@ -134,7 +134,7 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
 
     @Override
     public void printPlayer(int i, IPlayer player) {
-        System.out.format("%5s %20s %10s %10s %10s %10s %10s %10s %10s", i, player.getName(), player.getPosition(), player.getStrength(), player.getAge(), player.getSkating(), player.getShooting(), player.getChecking(), player.getSaving());
+        System.out.format("%5s %20s %10s %10s %10s %10s %10s %10s %10s", i, player.getName(), player.getPosition(), player.getStrength(), player.getBirthday(), player.getSkating(), player.getShooting(), player.getChecking(), player.getSaving());
         consoleOutput.printMsgToConsole("\n");
     }
 }

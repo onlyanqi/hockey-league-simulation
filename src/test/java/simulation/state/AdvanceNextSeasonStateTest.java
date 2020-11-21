@@ -33,7 +33,7 @@ public class AdvanceNextSeasonStateTest {
     }
 
     @Test
-    public void findReplacementTest() throws Exception {
+    public void findBestReplacementTest() throws Exception {
         AdvanceNextSeasonState state = new AdvanceNextSeasonState(hockeyContext);
         ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
@@ -42,9 +42,12 @@ public class AdvanceNextSeasonStateTest {
             Player player = new Player(i, playerFactory);
             playerList.add(player);
         }
+        List<IPlayer> freePlayerList = league.getFreeAgent().getPlayerList();
         assertEquals(playerList.get(19).getName(), "Player20");
-        state.findReplacement(playerList, Position.FORWARD, 0);
-        assertNotEquals(playerList.get(20).getName(), "Player20");
-        assertEquals(playerList.get(20).getName(), "Player6");
+        IPlayer player1 = playerList.get(0);
+        assertEquals(playerList.get(0).getName(), "Player1");
+        player1.findBestReplacement(playerList, Position.FORWARD, 0, freePlayerList);
+        assertNotEquals(playerList.get(0).getName(), "Player1");
+        assertEquals(playerList.get(19).getName(), "Player6");
     }
 }

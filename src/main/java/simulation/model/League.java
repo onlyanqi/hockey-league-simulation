@@ -1,20 +1,23 @@
 package simulation.model;
 
 import db.data.*;
+import simulation.factory.CoachConcrete;
 import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class League extends SharedAttributes implements ILeague{
+public class League extends SharedAttributes {
 
     private int createdBy;
-    private List<IConference> conferenceList;
-    private List<ICoach> coachList;
-    private List<IManager> managerList;
-    private List<IPlayer> retiredPlayerList;
-    private IFreeAgent freeAgent;
+    private String user;
+    private String userCreatedTeamName;
+    private List<Conference> conferenceList;
+    private List<Coach> coachList;
+    private List<Manager> managerList;
+    private List<Player> retiredPlayerList;
+    private FreeAgent freeAgent;
     private LocalDate currentDate;
     private IGamePlayConfig gamePlayConfig;
     private IGameSchedule games;
@@ -44,7 +47,32 @@ public class League extends SharedAttributes implements ILeague{
         loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
     }
 
-    public INHLEvents getNHLRegularSeasonEvents() {
+
+    public String getUserCreatedTeamName() {
+        return userCreatedTeamName;
+    }
+
+    public void setUserCreatedTeamName(String userCreatedTeamName) {
+        this.userCreatedTeamName = userCreatedTeamName;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public NHLEvents getNhlEvents() {
+        return nhlEvents;
+    }
+
+    public void setNhlEvents(NHLEvents nhlEvents) {
+        this.nhlEvents = nhlEvents;
+    }
+
+    public NHLEvents getNHLRegularSeasonEvents() {
         return nhlEvents;
     }
 

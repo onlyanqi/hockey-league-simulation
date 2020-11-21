@@ -44,15 +44,24 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (league == null) {
             return;
         }
-        List<IConference> conferenceList = league.getConferenceList();
-        for (IConference conference : conferenceList) {
-            List<IDivision> divisionList = conference.getDivisionList();
-            for (IDivision division : divisionList) {
-                List<ITeam> teamList = division.getTeamList();
-                for (ITeam team : teamList) {
-                    List<IPlayer> playerList = team.getPlayerList();
-                    for (IPlayer player : playerList) {
-                        statIncreaseCheckForPlayer(player, team.getCoach());
+        List<Conference> conferenceList = league.getConferenceList();
+        for (Conference conference : conferenceList) {
+            List<Division> divisionList = conference.getDivisionList();
+            for (Division division : divisionList) {
+                List<Team> teamList = division.getTeamList();
+                for (Team team : teamList) {
+                    List<Player> activePlayerList = team.getActivePlayerList();
+                    List<Player> inactivePlayerList = team.getInactivePlayerList();
+                    int size = activePlayerList.size();
+                    for (int i = size - 1; i >= 0; i--) {
+                        Player activePlayer = activePlayerList.get(i);
+                        statIncreaseCheckForPlayer(activePlayer, team.getCoach());
+                        if(activePlayer.getInjured()){
+                            activePlayer.findBestReplacement(activePlayerList,activePlayer.getPosition(),i,inactivePlayerList);
+                        }
+                    }
+                    for (Player inactivePlayer : inactivePlayerList){
+                        statIncreaseCheckForPlayer(inactivePlayer, team.getCoach());
                     }
                 }
             }

@@ -24,10 +24,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.*;
 
 public class LeagueDataSerializerDeSerializer {
 
-    public static final String FILENAME = "JsonOutput.txt";
+    public static String FILENAME = "JsonOutput.txt";
     public static final String JSONCREATIONERROR = "Json could not be created";
     public static final String DESERIALIZATIONERROR = "Could not deserialize";
     private ConsoleOutput consoleOutput = null;
@@ -86,11 +87,20 @@ public class LeagueDataSerializerDeSerializer {
         if (league == null) {
             return;
         }
+
+        //Source for creating folder through java program: https://stackoverflow.com/questions/3634853/how-to-create-a-directory-in-java
+
+        File jsonDir = new File("/JsonFiles");
+        if (!jsonDir.exists()){
+            jsonDir.mkdirs();
+        }
+
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting().create();
 
         FileWriter fileWriter = null;
         try {
+            FILENAME = "JsonFiles"+"/"+league.getUserCreatedTeamName();
             fileWriter = new FileWriter(FILENAME);
             gson.toJson(league, fileWriter);
 
@@ -107,7 +117,8 @@ public class LeagueDataSerializerDeSerializer {
         }
     }
 
-    public ILeague deSerialize(IHockeyContext hockeyContext) throws IOException {
+    public League deSerialize(String filename) {
+        System.out.println(filename);
         if (consoleOutput == null) {
             consoleOutput = ConsoleOutput.getInstance();
         }
@@ -116,7 +127,7 @@ public class LeagueDataSerializerDeSerializer {
         this.hockeyContext = hockeyContext;
 
         try {
-            fileReader = new FileReader(FILENAME);
+            fileReader = new FileReader(filename);
             Gson gson = new Gson();
 
             /*GsonBuilder gsonBuilder = new GsonBuilder();
