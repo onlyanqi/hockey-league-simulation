@@ -3,7 +3,9 @@ package simulation.state;
 import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.CoachConcrete;
 import simulation.factory.HockeyContextConcrete;
+import simulation.factory.ICoachFactory;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.*;
 import simulation.model.*;
@@ -36,7 +38,7 @@ public class CreateTeamStateTest {
         league = new League(4, factory);
         user = new User(1, factoryUser);
         user.setId(1);
-        hockeyContextFactory = new HockeyContextConcrete();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         hockeyContext.setUser(user);
     }
@@ -69,7 +71,7 @@ public class CreateTeamStateTest {
     public void hasEnoughCoachTest() throws Exception {
         CreateTeamState createTeamState = new CreateTeamState();
         List<Coach> coachList;
-        ICoachFactory coachFactory = new CoachMock();
+        ICoachDao coachFactory = new CoachMock();
         coachList = coachFactory.loadFreeCoachListByLeagueId(1);
         assertTrue(createTeamState.hasEnoughCoaches(coachList));
         assertFalse(createTeamState.hasEnoughCoaches(null));
@@ -154,9 +156,10 @@ public class CreateTeamStateTest {
     public void chooseCoachTest() throws Exception {
         ILeagueFactory leagueFactory = new LeagueMock();
         League league = new League(4, leagueFactory);
+        ICoachFactory coachFactory = new CoachConcrete();
         List<Coach> coachList = league.getCoachList();
         int oldCoachListLength = coachList.size();
-        coachList = league.removeCoachFromCoachListById(coachList, 1);
+        coachList = league.removeCoachFromCoachListById(coachList, 1, coachFactory);
         int newCoachListLength = coachList.size();
         assertTrue(oldCoachListLength == newCoachListLength + 1);
         newCoachListLength = newCoachListLength + 1;

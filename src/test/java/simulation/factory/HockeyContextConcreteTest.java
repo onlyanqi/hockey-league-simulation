@@ -9,7 +9,7 @@ public class HockeyContextConcreteTest {
 
     @Test
     public void newHockeyContextTest() {
-        HockeyContextConcrete hockeyContextConcrete = new HockeyContextConcrete();
+        IHockeyContextFactory hockeyContextConcrete = HockeyContextConcrete.getInstance();
         assertTrue(hockeyContextConcrete.newHockeyContext() instanceof IHockeyContext);
     }
 

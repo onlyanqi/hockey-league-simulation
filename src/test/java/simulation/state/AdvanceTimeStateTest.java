@@ -26,7 +26,7 @@ public class AdvanceTimeStateTest {
     @BeforeClass
     public static void init() throws Exception {
         userFactory = new UserMock();
-        IHockeyContextFactory hockeyContextFactory = new HockeyContextConcrete();
+        IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(4, userFactory);
         hockeyContext.setUser(user);
