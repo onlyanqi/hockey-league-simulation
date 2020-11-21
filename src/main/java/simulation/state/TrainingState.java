@@ -50,9 +50,18 @@ public class TrainingState implements ISimulateState, ITrainingState {
             for (Division division : divisionList) {
                 List<Team> teamList = division.getTeamList();
                 for (Team team : teamList) {
-                    List<Player> playerList = team.getPlayerList();
-                    for (Player player : playerList) {
-                        statIncreaseCheckForPlayer(player, team.getCoach());
+                    List<Player> activePlayerList = team.getActivePlayerList();
+                    List<Player> inactivePlayerList = team.getInactivePlayerList();
+                    int size = activePlayerList.size();
+                    for (int i = size - 1; i >= 0; i--) {
+                        Player activePlayer = activePlayerList.get(i);
+                        statIncreaseCheckForPlayer(activePlayer, team.getCoach());
+                        if(activePlayer.getInjured()){
+                            activePlayer.findBestReplacement(activePlayerList,activePlayer.getPosition(),i,inactivePlayerList);
+                        }
+                    }
+                    for (Player inactivePlayer : inactivePlayerList){
+                        statIncreaseCheckForPlayer(inactivePlayer, team.getCoach());
                     }
                 }
             }

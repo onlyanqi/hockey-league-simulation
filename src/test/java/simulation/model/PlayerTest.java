@@ -232,11 +232,12 @@ public class PlayerTest {
     }
 
     @Test
-    public void getOlderTest() throws Exception {
-        Player player = new Player(1, loadPlayerFactory);
-        assertEquals(player.getAge(), 27);
-        player.getOlder();
-        assertEquals(player.getAge(), 28);
+    public void calculateAgeTest() throws Exception {
+        ILeagueFactory leagueFactory = new LeagueMock();
+        League league = new League(1, leagueFactory);
+        Player player = new Player(31, loadPlayerFactory);
+        player.calculateAge(league);
+        assertEquals(player.getAge(), 23);
     }
 
     @Test

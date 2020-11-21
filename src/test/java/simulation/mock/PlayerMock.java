@@ -551,7 +551,8 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+//                player.setAge(36);
+                player.setBirthday(LocalDate.of(1997,3,22));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
