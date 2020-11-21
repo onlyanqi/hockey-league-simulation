@@ -12,6 +12,8 @@ import java.util.List;
 public class League extends SharedAttributes {
 
     private int createdBy;
+    private String user;
+    private String userCreatedTeamName;
     private List<Conference> conferenceList;
     private List<Coach> coachList;
     private List<Manager> managerList;
@@ -44,6 +46,31 @@ public class League extends SharedAttributes {
 
     public League(String leagueName, int userId, ILeagueFactory loadLeagueFactory) throws Exception {
         loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
+    }
+
+
+    public String getUserCreatedTeamName() {
+        return userCreatedTeamName;
+    }
+
+    public void setUserCreatedTeamName(String userCreatedTeamName) {
+        this.userCreatedTeamName = userCreatedTeamName;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public NHLEvents getNhlEvents() {
+        return nhlEvents;
+    }
+
+    public void setNhlEvents(NHLEvents nhlEvents) {
+        this.nhlEvents = nhlEvents;
     }
 
     public NHLEvents getNHLRegularSeasonEvents() {

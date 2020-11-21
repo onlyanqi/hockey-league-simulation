@@ -21,9 +21,7 @@ public class LeagueDataSerializerDeSerializerTest {
         LeagueDataSerializerDeSerializer leagueDataSerializerDeSerializer = new LeagueDataSerializerDeSerializer();
 
         leagueDataSerializerDeSerializer.serialize(oldLeague);
-
-
-        newLeague = leagueDataSerializerDeSerializer.deSerialize();
+        newLeague = leagueDataSerializerDeSerializer.deSerialize("JsonFiles/"+oldLeague.getUserCreatedTeamName());
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting().create();
