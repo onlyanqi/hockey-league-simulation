@@ -32,6 +32,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
                 player.setAge(27);
+                player.setBirthday(LocalDate.of(1993,2,22));
                 player.setSkating(15);
                 player.setShooting(18);
                 player.setChecking(12);
@@ -50,7 +51,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(27);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(15);
                 player.setShooting(18);
                 player.setChecking(12);
@@ -67,7 +68,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(25);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(20);
                 player.setShooting(18);
                 player.setChecking(12);
@@ -84,7 +85,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(23);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(10);
                 player.setShooting(9);
                 player.setChecking(15);
@@ -101,7 +102,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(27);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(15);
                 player.setShooting(18);
                 player.setChecking(12);
@@ -118,7 +119,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(27);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(20);
                 player.setShooting(20);
                 player.setChecking(20);
@@ -135,7 +136,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(29);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(15);
                 player.setShooting(18);
                 player.setChecking(12);
@@ -152,7 +153,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(22);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(15);
                 player.setShooting(18);
                 player.setChecking(12);
@@ -169,7 +170,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(22);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(15);
                 player.setShooting(18);
                 player.setChecking(12);
@@ -186,7 +187,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(33);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(16);
                 player.setShooting(11);
                 player.setChecking(9);
@@ -203,7 +204,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(23);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(9);
                 player.setShooting(11);
                 player.setChecking(19);
@@ -220,7 +221,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(25);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(3);
                 player.setShooting(19);
                 player.setChecking(17);
@@ -239,7 +240,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(25);
+                player.setBirthday(LocalDate.of(1996,2,22));
                 player.setSkating(3);
                 player.setShooting(19);
                 player.setChecking(17);
@@ -258,7 +259,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(25);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(3);
                 player.setShooting(19);
                 player.setChecking(17);
@@ -277,7 +278,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(35);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(13);
                 player.setShooting(9);
                 player.setChecking(17);
@@ -294,7 +295,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(21);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(15);
                 player.setShooting(12);
                 player.setChecking(18);
@@ -313,7 +314,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(28);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(18);
                 player.setShooting(11);
                 player.setChecking(19);
@@ -330,7 +331,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(26);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(16);
                 player.setShooting(17);
                 player.setChecking(18);
@@ -347,7 +348,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(19);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(19);
                 player.setShooting(12);
                 player.setChecking(19);
@@ -364,7 +365,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(51);
+                player.setBirthday(LocalDate.of(1962,12,25));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(15);
@@ -381,7 +382,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -398,7 +399,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -415,7 +416,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -432,7 +433,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1992,12,25));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -449,7 +450,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1994,2,13));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -466,7 +467,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1994,2,13));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -483,7 +484,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1994,2,13));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -500,7 +501,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1994,2,13));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -517,7 +518,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1994,2,13));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -534,7 +535,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1997,6,13));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -551,7 +552,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(36);
+                player.setBirthday(LocalDate.of(1997,3,22));
                 player.setSkating(17);
                 player.setShooting(16);
                 player.setChecking(18);
@@ -568,7 +569,7 @@ public class PlayerMock implements IPlayerFactory {
                 player.setCaptain(false);
                 player.setTeamId(1);
                 player.setFreeAgentId(1);
-                player.setAge(27);
+                player.setBirthday(LocalDate.of(1997,6,13));
                 player.setSkating(15);
                 player.setShooting(18);
                 player.setChecking(12);

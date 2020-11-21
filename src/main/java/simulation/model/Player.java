@@ -3,6 +3,9 @@ package simulation.model;
 import db.data.IPlayerFactory;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Player extends SharedAttributes implements Comparable<Player> {
@@ -228,11 +231,12 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         addPlayerFactory.addPlayer(this);
     }
 
-    public boolean retirementCheck(IAging aging) {
-    //public boolean retirementCheck(Aging aging) {
-        if (aging == null) {
+    public boolean retirementCheck(League league) {
+        if (league == null) {
             return false;
         }
+        IAging aging = league.getGamePlayConfig().getAging();
+        this.calculateAge(league);
         double increaseRate = 0.5 / (aging.getMaximumAge() - aging.getAverageRetirementAge());
         if (this.age < aging.getAverageRetirementAge()) {
             Random randomRetire1 = new Random();
@@ -251,8 +255,14 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         } else return this.age >= aging.getMaximumAge();
     }
 
-    public void getOlder() {
-        this.age++;
+    public void calculateAge(League league) {
+        LocalDate birthday = this.getBirthday();
+        LocalDate currentDate = league.getCurrentDate();
+        if (birthday == null || currentDate == null) {
+            return;
+        }
+        int age = Period.between(birthday,currentDate).getYears();
+        this.setAge(age);
     }
 
     public void injuryCheck(League league) {
@@ -272,6 +282,25 @@ public class Player extends SharedAttributes implements Comparable<Player> {
             this.setInjuryDatesRange(randomInjuryDays.nextInt(injuryDaysHigh - injuryDaysLow) + injuryDaysLow);
             this.setInjured(true);
         }
+    }
+
+    public void findBestReplacement(List<Player> targetPlayerList, Position position, int index, List<Player> replacementPlayerList) {
+        Collections.sort(replacementPlayerList, Collections.reverseOrder());
+        Player replacePlayer = new Player();
+        int size = replacementPlayerList.size();
+        for (int i = 0; i < size; i++) {
+            if (replacementPlayerList.get(i).getPosition().equals(position)) {
+                replacementPlayerList.get(i).setTeamId(targetPlayerList.get(index).getTeamId());
+                replacePlayer = new Player(replacementPlayerList.get(i));
+                replacementPlayerList.remove(i);
+                break;
+            }
+        }
+        if(replacePlayer.getName() == null){
+            return;
+        }
+        targetPlayerList.add(replacePlayer);
+        targetPlayerList.remove(index);
     }
 
     public void agingInjuryRecovery(League league) {
@@ -308,21 +337,21 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         return returnValue;
     }
 
-    public void setRelativeStrength(){
+    public void setRelativeStrength() {
         switch (position) {
             case FORWARD:
-                this.relativeStrength = this.strength/5;
+                this.relativeStrength = this.strength / 5;
                 break;
             case DEFENSE:
-                this.relativeStrength = this.strength/5;
+                this.relativeStrength = this.strength / 5;
                 break;
             case GOALIE:
-                this.relativeStrength = this.strength/4;
+                this.relativeStrength = this.strength / 4;
                 break;
         }
     }
 
-    public double getRelativeStrength(){
+    public double getRelativeStrength() {
         return this.relativeStrength;
     }
 }

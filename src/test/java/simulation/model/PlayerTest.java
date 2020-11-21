@@ -1,11 +1,9 @@
 package simulation.model;
 
-import db.data.IAgingDao;
 import db.data.ILeagueFactory;
 import db.data.IPlayerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.mock.AgingMock;
 import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
 
@@ -212,10 +210,10 @@ public class PlayerTest {
 
     @Test
     public void retirementCheckTest() throws Exception {
-        IAgingDao agingFactory = new AgingMock();
-        Aging aging = new Aging(1, agingFactory);
+        ILeagueFactory leagueFactory = new LeagueMock();
+        League league = new League(1, leagueFactory);
         Player player = new Player(20, loadPlayerFactory);
-        boolean retired = player.retirementCheck(aging);
+        boolean retired = player.retirementCheck(league);
         assertTrue(retired);
     }
 
@@ -232,11 +230,12 @@ public class PlayerTest {
     }
 
     @Test
-    public void getOlderTest() throws Exception {
-        Player player = new Player(1, loadPlayerFactory);
-        assertEquals(player.getAge(), 27);
-        player.getOlder();
-        assertEquals(player.getAge(), 28);
+    public void calculateAgeTest() throws Exception {
+        ILeagueFactory leagueFactory = new LeagueMock();
+        League league = new League(1, leagueFactory);
+        Player player = new Player(31, loadPlayerFactory);
+        player.calculateAge(league);
+        assertEquals(player.getAge(), 23);
     }
 
     @Test

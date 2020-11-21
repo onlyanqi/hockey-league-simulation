@@ -9,6 +9,7 @@ import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
 import simulation.mock.TeamMock;
 import simulation.mock.UserMock;
+import simulation.model.FreeAgent;
 import simulation.model.League;
 import simulation.model.Player;
 import simulation.model.User;
@@ -35,7 +36,7 @@ public class AdvanceNextSeasonStateTest {
     }
 
     @Test
-    public void findReplacementTest() throws Exception {
+    public void findBestReplacementTest() throws Exception {
         AdvanceNextSeasonState state = new AdvanceNextSeasonState(hockeyContext);
         ILeagueFactory leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
@@ -44,9 +45,12 @@ public class AdvanceNextSeasonStateTest {
             Player player = new Player(i, playerFactory);
             playerList.add(player);
         }
+        List<Player> freePlayerList = league.getFreeAgent().getPlayerList();
         assertEquals(playerList.get(19).getName(), "Player20");
-        state.findReplacement(playerList, Player.Position.FORWARD, 0);
-        assertNotEquals(playerList.get(20).getName(), "Player20");
-        assertEquals(playerList.get(20).getName(), "Player6");
+        Player player1 = playerList.get(0);
+        assertEquals(playerList.get(0).getName(), "Player1");
+        player1.findBestReplacement(playerList, Player.Position.FORWARD, 0, freePlayerList);
+        assertNotEquals(playerList.get(0).getName(), "Player1");
+        assertEquals(playerList.get(19).getName(), "Player6");
     }
 }

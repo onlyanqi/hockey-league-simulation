@@ -34,12 +34,15 @@ public class AgingState implements ISimulateState {
                     team.setActivePlayerList();
                     List<Player> playerList = team.getPlayerList();
                     for (Player teamPlayer : playerList) {
+                        teamPlayer.calculateAge(league);
+                        // statDecay
                         teamPlayer.agingInjuryRecovery(league);
                     }
                 }
             }
         }
         for (Player freeAgentPlayer : freeAgentList) {
+            freeAgentPlayer.calculateAge(league);
             freeAgentPlayer.agingInjuryRecovery(league);
         }
     }

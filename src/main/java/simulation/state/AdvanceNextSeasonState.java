@@ -47,13 +47,11 @@ public class AdvanceNextSeasonState implements ISimulateState {
                     int size = playerList.size();
                     for (int i = size - 1; i >= 0; i--) {
                         Player teamPlayer = playerList.get(i);
-                        teamPlayer.getOlder();
-                        if (teamPlayer.retirementCheck(aging)) {
+                        if (teamPlayer.retirementCheck(league)) {
                             teamPlayer.setRetired(true);
                             retiredPlayerList.add(teamPlayer);
                             Player.Position position = teamPlayer.getPosition();
-                            this.findReplacement(playerList, position, i);
-                            playerList.remove(i);
+                            teamPlayer.findBestReplacement(playerList, position, i, freeAgentList);
                         }
                         teamPlayer.agingInjuryRecovery(league);
                     }
@@ -63,30 +61,13 @@ public class AdvanceNextSeasonState implements ISimulateState {
         int size = freeAgentList.size();
         for (int i = size - 1; i >= 0; i--) {
             Player freeAgentPlayer = freeAgentList.get(i);
-            freeAgentPlayer.getOlder();
-            if (freeAgentPlayer.retirementCheck(aging)) {
+            if (freeAgentPlayer.retirementCheck(league)) {
                 freeAgentPlayer.setRetired(true);
+                retiredPlayerList.add(freeAgentPlayer);
                 freeAgentList.remove(i);
             }
             freeAgentPlayer.agingInjuryRecovery(league);
         }
-    }
-
-
-    public void findReplacement(List<Player> playerList, Player.Position position, int index) {
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
-        Collections.sort(freeAgentList, Collections.reverseOrder());
-        Player replacePlayer = new Player();
-        int size = freeAgentList.size();
-        for (int i = 0; i < size; i++) {
-            if (freeAgentList.get(i).getPosition().equals(position)) {
-                freeAgentList.get(i).setTeamId(playerList.get(index).getTeamId());
-                replacePlayer = new Player(freeAgentList.get(i));
-                freeAgentList.remove(i);
-                break;
-            }
-        }
-        playerList.add(replacePlayer);
     }
 
     private ISimulateState exit() {
