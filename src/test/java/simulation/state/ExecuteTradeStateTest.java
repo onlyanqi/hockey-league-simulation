@@ -354,15 +354,6 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void checkDayOneTest() {
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        assertTrue(state.checkDayOne());
-        League league = hockeyContext.getUser().getLeague();
-        league.setCurrentDate(LocalDate.of(LocalDate.now().getYear(), 10, 1));
-        assertFalse(state.checkDayOne());
-    }
-
-    @Test
     public void findBestSwapPlayerTest() throws Exception {
         Team team = new Team(1, teamFactory);
         League league = new League(1, leagueFactory);

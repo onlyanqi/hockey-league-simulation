@@ -487,6 +487,7 @@ public class ImportState implements IHockeyState {
         player.setStrength();
         player.setInjured(false);
         player.setIsFreeAgent(false);
+        player.setRelativeStrength();
         return player;
     }
 
