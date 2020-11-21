@@ -1,9 +1,10 @@
 package simulation.factory;
 
-import db.data.ITeamFactory;
+import db.data.ITeamDao;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.mock.TeamMock;
+import simulation.model.ITeam;
 import simulation.model.Team;
 
 import static org.junit.Assert.assertTrue;
@@ -25,8 +26,8 @@ public class TeamConcreteTest {
     @Test
     public void newTeamByNameTest() throws Exception {
         String name = "Name";
-        ITeamFactory loadTeamFactory = new TeamMock();
-        Team team = teamConcrete.newTeamByName(name, loadTeamFactory);
+        ITeamDao loadTeamFactory = new TeamMock();
+        ITeam team = teamConcrete.newTeamByName(name, loadTeamFactory);
         assertTrue(team instanceof Team);
     }
 

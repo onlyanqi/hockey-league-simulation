@@ -1,6 +1,8 @@
 package presentation;
 
 import simulation.model.Coach;
+import simulation.model.ICoach;
+import simulation.model.IManager;
 import simulation.model.Manager;
 
 import java.util.List;
@@ -78,7 +80,7 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
     }
 
     @Override
-    public int getGeneralManagerId(List<Manager> managerList) {
+    public int getGeneralManagerId(List<IManager> managerList) {
         String generalManagerIdStr = readUserInput.getInput("Please enter id of general manager");
         int generalManagerId = -1;
 
@@ -99,7 +101,7 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
     }
 
     @Override
-    public int getHeadCoachId(List<Coach> coachList) {
+    public int getHeadCoachId(List<ICoach> coachList) {
         String headCoachIdStr = readUserInput.getInput("Please enter the id of head coach");
         int headCoachId = -1;
 

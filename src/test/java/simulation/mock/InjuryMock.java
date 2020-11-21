@@ -1,17 +1,19 @@
 package simulation.mock;
 
-import db.data.IInjuryFactory;
+import db.data.IInjuryDao;
+import simulation.model.IInjury;
 import simulation.model.Injury;
 
-public class InjuryMock implements IInjuryFactory {
+public class InjuryMock implements IInjuryDao {
+
     @Override
-    public int addInjury(Injury injury) throws Exception {
+    public int addInjury(IInjury injury) throws Exception {
         injury = new Injury(1);
         return injury.getId();
     }
 
     @Override
-    public Injury loadInjuryByLeagueId(int leagueId) throws Exception {
+    public IInjury loadInjuryByLeagueId(int leagueId) throws Exception {
         Injury injury = new Injury();
         switch (leagueId) {
             case 1:
@@ -37,7 +39,7 @@ public class InjuryMock implements IInjuryFactory {
     }
 
     @Override
-    public void loadInjuryById(int id, Injury injury) throws Exception {
+    public void loadInjuryById(int id, IInjury injury) throws Exception {
         switch (id) {
             case 1:
                 injury.setId(id);

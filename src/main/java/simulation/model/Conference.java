@@ -1,15 +1,15 @@
 package simulation.model;
 
-import db.data.IConferenceFactory;
-import db.data.IDivisionFactory;
+import db.data.IConferenceDao;
+import db.data.IDivisionDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Conference extends SharedAttributes {
+public class Conference extends SharedAttributes implements IConference {
 
     private int leagueId;
-    private List<Division> divisionList;
+    private List<IDivision> divisionList;
 
     public Conference() {
         setId(System.identityHashCode(this));
@@ -19,7 +19,7 @@ public class Conference extends SharedAttributes {
         setId(id);
     }
 
-    public Conference(int id, IConferenceFactory factory) throws Exception {
+    public Conference(int id, IConferenceDao factory) throws Exception {
         if (factory == null) {
             return;
         }
@@ -36,11 +36,11 @@ public class Conference extends SharedAttributes {
         this.leagueId = leagueId;
     }
 
-    public List<Division> getDivisionList() {
+    public List<IDivision> getDivisionList() {
         return divisionList;
     }
 
-    public void setDivisionList(List<Division> divisionList) {
+    public void setDivisionList(List<IDivision> divisionList) {
         if (divisionList == null) {
             return;
         }
@@ -49,15 +49,15 @@ public class Conference extends SharedAttributes {
 
     public List<String> getDivisionNameList() {
         List<String> divisionNameList = new ArrayList<>();
-        for (Division division : this.getDivisionList()) {
+        for (IDivision division : this.getDivisionList()) {
             divisionNameList.add(division.getName().toLowerCase());
         }
         return divisionNameList;
     }
 
-    public Division getDivisionFromListByName(String divisionName) {
-        Division foundDivision = null;
-        for (Division division : divisionList) {
+    public IDivision getDivisionFromListByName(String divisionName) {
+        IDivision foundDivision = null;
+        for (IDivision division : divisionList) {
             if (division.getName().toLowerCase().equals(divisionName.toLowerCase())) {
                 foundDivision = division;
                 break;
@@ -66,14 +66,14 @@ public class Conference extends SharedAttributes {
         return foundDivision;
     }
 
-    public void addConference(IConferenceFactory addConferenceFactory) throws Exception {
+    public void addConference(IConferenceDao addConferenceFactory) throws Exception {
         if (addConferenceFactory == null) {
             return;
         }
         addConferenceFactory.addConference(this);
     }
 
-    public void loadDivisionListByConferenceId(IDivisionFactory loadDivisionFactory) throws Exception {
+    public void loadDivisionListByConferenceId(IDivisionDao loadDivisionFactory) throws Exception {
         if (loadDivisionFactory == null) {
             return;
         }

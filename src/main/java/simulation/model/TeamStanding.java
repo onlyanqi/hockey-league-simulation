@@ -3,10 +3,11 @@ package simulation.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamStanding {
+public class TeamStanding implements ITeamStanding {
 
     private int id;
-    private List<TeamScore> teamsScoreList;
+    private List<ITeamScore> teamsScoreList;
+
     public TeamStanding() {
         teamsScoreList = new ArrayList<>();
         setId(System.identityHashCode(this));
@@ -20,11 +21,11 @@ public class TeamStanding {
         this.id = id;
     }
 
-    public List<TeamScore> getTeamsScoreList() {
+    public List<ITeamScore> getTeamsScoreList() {
         return teamsScoreList;
     }
 
-    public void setTeamsScoreList(List<TeamScore> teamsScoreList) {
+    public void setTeamsScoreList(List<ITeamScore> teamsScoreList) {
         this.teamsScoreList = teamsScoreList;
     }
 
@@ -37,10 +38,10 @@ public class TeamStanding {
         }
     }
 
-    public void initializeTeamStandingsRegularSeason(League league) {
-        for (Conference conference : league.getConferenceList()) {
-            for (Division division : conference.getDivisionList()) {
-                for (Team team : division.getTeamList()) {
+    public void initializeTeamStandingsRegularSeason(ILeague league) {
+        for (IConference conference : league.getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
                     teamsScoreList.add(new TeamScore(team.getName()));
                 }
             }
@@ -48,7 +49,7 @@ public class TeamStanding {
     }
 
     public void setTeamPoints(String teamName) {
-        for (TeamScore teamScore : teamsScoreList) {
+        for (ITeamScore teamScore : teamsScoreList) {
             if (teamScore.getTeamName().equals(teamName)) {
                 int previousScore = teamScore.getPoints();
                 int newTeamScore = previousScore + 2;
@@ -58,7 +59,7 @@ public class TeamStanding {
     }
 
     public void setTeamWins(String teamName) {
-        for (TeamScore teamScore : teamsScoreList) {
+        for (ITeamScore teamScore : teamsScoreList) {
             if (teamScore.getTeamName().equals(teamName)) {
                 int previousNumberOfWins = teamScore.getNumberOfWins();
                 teamScore.setNumberOfWins(previousNumberOfWins + 1);
@@ -68,7 +69,7 @@ public class TeamStanding {
     }
 
     public void setTeamLoss(String teamName) {
-        for (TeamScore teamScore : teamsScoreList) {
+        for (ITeamScore teamScore : teamsScoreList) {
             if (teamScore.getTeamName().equals(teamName)) {
                 int previousNumberOfLoss = teamScore.getNumberOfLoss();
                 teamScore.setNumberOfLoss(previousNumberOfLoss + 1);
@@ -77,7 +78,7 @@ public class TeamStanding {
     }
 
     public void setTeamTies(String teamName) {
-        for (TeamScore teamScore : teamsScoreList) {
+        for (ITeamScore teamScore : teamsScoreList) {
             if (teamScore.getTeamName().equals(teamName)) {
                 int previousNumberOfTies = teamScore.getNumberOfTies();
                 teamScore.setNumberOfTies(previousNumberOfTies + 1);
@@ -85,12 +86,12 @@ public class TeamStanding {
         }
     }
 
-    public List<TeamScore> getTeamsRankAcrossConference(League league, String conferenceName) {
-        List<TeamScore> teamsScoreListLocal = this.teamsScoreList;
-        List<TeamScore> teamsScoreWithinConference = new ArrayList<>();
-        for (Conference conference : league.getConferenceList()) {
-            for (Division division : conference.getDivisionList()) {
-                for (Team team : division.getTeamList()) {
+    public List<ITeamScore> getTeamsRankAcrossConference(ILeague league, String conferenceName) {
+        List<ITeamScore> teamsScoreListLocal = this.teamsScoreList;
+        List<ITeamScore> teamsScoreWithinConference = new ArrayList<>();
+        for (IConference conference : league.getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
                     if (conference.getName().equals(conferenceName)) {
                         teamsScoreWithinConference.add(getTeamScoreByTeamName(teamsScoreListLocal, team.getName()));
                     }
@@ -100,13 +101,13 @@ public class TeamStanding {
         return sortTeamsScoreList(teamsScoreWithinConference);
     }
 
-    public List<TeamScore> getTeamsRankAcrossDivision(League league, String divisionName) {
-        List<TeamScore> teamsScoreListLocal = this.teamsScoreList;
-        List<TeamScore> teamsScoreWithinDivision = new ArrayList<>();
+    public List<ITeamScore> getTeamsRankAcrossDivision(ILeague league, String divisionName) {
+        List<ITeamScore> teamsScoreListLocal = this.teamsScoreList;
+        List<ITeamScore> teamsScoreWithinDivision = new ArrayList<>();
 
-        for (Conference conference : league.getConferenceList()) {
-            for (Division division : conference.getDivisionList()) {
-                for (Team team : division.getTeamList()) {
+        for (IConference conference : league.getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
                     if (division.getName().equals(divisionName)) {
                         teamsScoreWithinDivision.add(getTeamScoreByTeamName(teamsScoreListLocal, team.getName()));
                     }
@@ -116,12 +117,12 @@ public class TeamStanding {
         return sortTeamsScoreList(teamsScoreWithinDivision);
     }
 
-    public List<TeamScore> sortTeamsScoreList(List<TeamScore> teamsScoreList) {
-        teamsScoreList.sort((TeamScore team1, TeamScore team2) -> team1.getPoints().compareTo(team2.getPoints()));
+    public List<ITeamScore> sortTeamsScoreList(List<ITeamScore> teamsScoreList) {
+        teamsScoreList.sort((ITeamScore team1, ITeamScore team2) -> team1.getPoints().compareTo(team2.getPoints()));
         return teamsScoreList;
     }
 
-    public TeamScore getTeamScoreByTeamName(List<TeamScore> teamsScoreList, String teamName) {
+    public ITeamScore getTeamScoreByTeamName(List<ITeamScore> teamsScoreList, String teamName) {
         return teamsScoreList.stream().filter(teamScore -> teamScore.getTeamName().equals(teamName)).findFirst().get();
     }
 

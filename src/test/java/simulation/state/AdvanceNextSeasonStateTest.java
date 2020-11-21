@@ -7,11 +7,9 @@ import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
-import simulation.mock.TeamMock;
 import simulation.mock.UserMock;
-import simulation.model.League;
-import simulation.model.Player;
-import simulation.model.User;
+import simulation.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +18,8 @@ import static org.junit.Assert.assertNotEquals;
 
 public class AdvanceNextSeasonStateTest {
 
-    private static IPlayerFactory playerFactory;
-    private static IUserFactory userFactory;
+    private static IPlayerDao playerFactory;
+    private static IUserDao userFactory;
     private static IHockeyContext hockeyContext;
 
     @BeforeClass
@@ -37,15 +35,15 @@ public class AdvanceNextSeasonStateTest {
     @Test
     public void findReplacementTest() throws Exception {
         AdvanceNextSeasonState state = new AdvanceNextSeasonState(hockeyContext);
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
-        List<Player> playerList = new ArrayList<>();
+        List<IPlayer> playerList = new ArrayList<>();
         for (int i = 1; i < 21; i++) {
             Player player = new Player(i, playerFactory);
             playerList.add(player);
         }
         assertEquals(playerList.get(19).getName(), "Player20");
-        state.findReplacement(playerList, Player.Position.FORWARD, 0);
+        state.findReplacement(playerList, Position.FORWARD, 0);
         assertNotEquals(playerList.get(20).getName(), "Player20");
         assertEquals(playerList.get(20).getName(), "Player6");
     }

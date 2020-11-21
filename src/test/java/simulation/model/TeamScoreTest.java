@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITeamScoreFactory;
+import db.data.ITeamScoreDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.TeamScoreMock;
@@ -8,11 +8,11 @@ import simulation.mock.TeamScoreMock;
 import static org.junit.Assert.*;
 
 public class TeamScoreTest {
-    private static ITeamScoreFactory iTeamScoreFactory;
+    private static ITeamScoreDao iTeamScoreDao;
 
     @BeforeClass
     public static void setFactoryObj() {
-        iTeamScoreFactory = new TeamScoreMock();
+        iTeamScoreDao = new TeamScoreMock();
     }
 
     @Test
@@ -23,47 +23,47 @@ public class TeamScoreTest {
 
     @Test
     public void teamScoreFactory() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertEquals(teamScore.getId(), 1);
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertEquals(teamScore2.getId(), 3);
         assertNull(teamScore2.getTeamName());
     }
 
     @Test
     public void getTeamNameTest() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertEquals(teamScore.getTeamName(), "Team1");
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertNull(teamScore2.getTeamName());
     }
 
     @Test
     public void getPointsTest() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertTrue(teamScore.getPoints() == 12);
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertFalse(teamScore2.getPoints() > 0);
     }
 
     @Test
     public void getNumberOfWinsTest() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertTrue(teamScore.getNumberOfWins() == 6);
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertFalse(teamScore2.getNumberOfWins() > 0);
     }
 
     @Test
     public void getNumberOfLossTest() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertTrue(teamScore.getNumberOfLoss() == 5);
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertFalse(teamScore2.getNumberOfLoss() > 0);
     }
 

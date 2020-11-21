@@ -1,10 +1,10 @@
 package simulation.factory;
 
-import db.data.ITradeOfferFactory;
+import simulation.model.ITradeOffer;
 import simulation.model.TradeOffer;
 
-public class TradeOfferConcrete {
-    public TradeOffer newTradeOffer() {
+public class TradeOfferConcrete implements ITradeOfferFactory {
+    public ITradeOffer newTradeOffer() {
         return new TradeOffer();
     }
 }

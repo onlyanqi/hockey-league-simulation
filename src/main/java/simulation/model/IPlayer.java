@@ -1,0 +1,92 @@
+package simulation.model;
+
+import db.data.IPlayerDao;
+
+import java.time.LocalDate;
+
+public interface IPlayer extends Comparable<IPlayer>{
+
+    boolean isFreeAgent();
+
+    void setIsFreeAgent(boolean freeAgent);
+
+    int getAge();
+
+    void setAge(int age) throws IllegalArgumentException;
+
+    Position getPosition();
+
+    void setPosition(Position position);
+
+    int getTeamId();
+
+    void setTeamId(int teamId);
+
+    int getFreeAgentId();
+
+    void setFreeAgentId(int freeAgentId);
+
+    int getSkating();
+
+    void setSkating(int skating) throws IllegalArgumentException;
+
+    int getShooting();
+
+    void setShooting(int shooting) throws IllegalArgumentException;
+
+    int getChecking();
+
+    void setChecking(int checking) throws IllegalArgumentException;
+
+    int getSaving();
+
+    void setSaving(int saving) throws IllegalArgumentException;
+
+    void setStrength();
+
+    double getStrength();
+
+    boolean isCaptain();
+
+    void setCaptain(boolean captain);
+
+    boolean getInjured();
+
+    void setInjured(boolean isInjured);
+
+    LocalDate getInjuryStartDate();
+
+    void setInjuryStartDate(LocalDate injuryStartDate);
+
+    int getInjuryDatesRange();
+
+    void setInjuryDatesRange(int injuryDatesRange);
+
+    void addPlayer(IPlayerDao addPlayerFactory) throws Exception;
+
+    boolean retirementCheck(IAging aging);
+
+    void getOlder();
+
+    void injuryCheck(ILeague league);
+
+    void agingInjuryRecovery(ILeague league);
+
+    boolean isRetired();
+
+    void setRetired(boolean retired);
+
+    void setRelativeStrength();
+
+    double getRelativeStrength();
+
+    int getId();
+
+    String getName();
+
+    boolean validName();
+
+    void setName(String name);
+
+    void setId(int id);
+}

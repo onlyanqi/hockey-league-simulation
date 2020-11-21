@@ -1,19 +1,21 @@
 package simulation.mock;
 
-import db.data.IDivisionFactory;
-import db.data.ITeamFactory;
+import db.data.IDivisionDao;
+import db.data.ITeamDao;
 import simulation.model.Division;
+import simulation.model.IDivision;
+import simulation.model.ITeam;
 import simulation.model.Team;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DivisionMock implements IDivisionFactory {
+public class DivisionMock implements IDivisionDao {
 
-    public List formTeamList() throws Exception {
-        List<Team> teamList = new ArrayList<>();
+    public List<ITeam> formTeamList() throws Exception {
+        List<ITeam> teamList = new ArrayList<>();
 
-        ITeamFactory teamFactory = new TeamMock();
+        ITeamDao teamFactory = new TeamMock();
         Team team = new Team(1, teamFactory);
         teamList.add(team);
 
@@ -23,10 +25,10 @@ public class DivisionMock implements IDivisionFactory {
         return teamList;
     }
 
-    public List formCreateTeamTeamList() throws Exception {
-        List<Team> teamList = new ArrayList<>();
+    public List<ITeam> formCreateTeamTeamList() throws Exception {
+        List<ITeam> teamList = new ArrayList<>();
 
-        ITeamFactory teamFactory = new TeamMock();
+        ITeamDao teamFactory = new TeamMock();
         Team team = new Team(1, teamFactory);
         teamList.add(team);
         return teamList;
@@ -34,13 +36,13 @@ public class DivisionMock implements IDivisionFactory {
     }
 
     @Override
-    public int addDivision(Division division) throws Exception {
+    public int addDivision(IDivision division) throws Exception {
         division = new Division(1);
         return division.getId();
     }
 
     @Override
-    public void loadDivisionById(int id, Division division) throws Exception {
+    public void loadDivisionById(int id, IDivision division) throws Exception {
 
         switch (new Long(id).intValue()) {
             case 1:
@@ -78,7 +80,7 @@ public class DivisionMock implements IDivisionFactory {
     }
 
     @Override
-    public List<Division> loadDivisionListByConferenceId(int conferenceId) throws Exception {
+    public List<IDivision> loadDivisionListByConferenceId(int conferenceId) throws Exception {
         ConferenceMock loadConferenceMock = new ConferenceMock();
         return loadConferenceMock.formDivisionList();
     }

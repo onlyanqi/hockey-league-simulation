@@ -10,7 +10,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
 
     public static final String SEASON_CURRENT_DATE = "Advanced to next season! Current date is ";
     public static final String AGING_TO_NEXT_SEASON = "Aging all players to the start of next season!";
-    private League league;
+    private ILeague league;
     private IHockeyContext hockeyContext;
 
     public AdvanceNextSeasonState(IHockeyContext hockeyContext) {
@@ -21,7 +21,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
     @Override
     public ISimulateState action() {
 
-        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
+        INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         league.setCurrentDate(nhlEvents.getNextSeasonDate());
         ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + nhlEvents.getNextSeasonDate());
 
@@ -31,27 +31,26 @@ public class AdvanceNextSeasonState implements ISimulateState {
         return exit();
     }
 
-    private void agingPlayerSeason(League league) {
-        List<Conference> conferenceList = league.getConferenceList();
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
-        List<Player> retiredPlayerList = league.getRetiredPlayerList();
+    private void agingPlayerSeason(ILeague league) {
+        List<IConference> conferenceList = league.getConferenceList();
+        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
+        List<IPlayer> retiredPlayerList = league.getRetiredPlayerList();
         IAging aging = league.getGamePlayConfig().getAging();
-        //Aging aging = league.getGamePlayConfig().getAging();
 
-        for (Conference conference : conferenceList) {
-            List<Division> divisionList = conference.getDivisionList();
-            for (Division division : divisionList) {
-                List<Team> teamList = division.getTeamList();
-                for (Team team : teamList) {
-                    List<Player> playerList = team.getPlayerList();
+        for (IConference conference : conferenceList) {
+            List<IDivision> divisionList = conference.getDivisionList();
+            for (IDivision division : divisionList) {
+                List<ITeam> teamList = division.getTeamList();
+                for (ITeam team : teamList) {
+                    List<IPlayer> playerList = team.getPlayerList();
                     int size = playerList.size();
                     for (int i = size - 1; i >= 0; i--) {
-                        Player teamPlayer = playerList.get(i);
+                        IPlayer teamPlayer = playerList.get(i);
                         teamPlayer.getOlder();
                         if (teamPlayer.retirementCheck(aging)) {
                             teamPlayer.setRetired(true);
                             retiredPlayerList.add(teamPlayer);
-                            Player.Position position = teamPlayer.getPosition();
+                            Position position = teamPlayer.getPosition();
                             this.findReplacement(playerList, position, i);
                             playerList.remove(i);
                         }
@@ -62,7 +61,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
         }
         int size = freeAgentList.size();
         for (int i = size - 1; i >= 0; i--) {
-            Player freeAgentPlayer = freeAgentList.get(i);
+            IPlayer freeAgentPlayer = freeAgentList.get(i);
             freeAgentPlayer.getOlder();
             if (freeAgentPlayer.retirementCheck(aging)) {
                 freeAgentPlayer.setRetired(true);
@@ -73,10 +72,10 @@ public class AdvanceNextSeasonState implements ISimulateState {
     }
 
 
-    public void findReplacement(List<Player> playerList, Player.Position position, int index) {
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
+    public void findReplacement(List<IPlayer> playerList, Position position, int index) {
+        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
         Collections.sort(freeAgentList, Collections.reverseOrder());
-        Player replacePlayer = new Player();
+        IPlayer replacePlayer = new Player();
         int size = freeAgentList.size();
         for (int i = 0; i < size; i++) {
             if (freeAgentList.get(i).getPosition().equals(position)) {

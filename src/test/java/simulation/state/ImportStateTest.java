@@ -1,6 +1,6 @@
 package simulation.state;
 
-import db.data.ILeagueFactory;
+import db.data.ILeagueDao;
 import org.json.simple.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 public class ImportStateTest {
 
     private static User user;
-    private static ILeagueFactory factory;
+    private static ILeagueDao factory;
     private IHockeyState state;
     private static IHockeyContextFactory hockeyContextFactory;
 

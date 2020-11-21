@@ -3,16 +3,16 @@ package simulation.mock;
 import db.data.*;
 import simulation.model.*;
 
-public class GamePlayConfigMock implements IGamePlayConfigFactory {
+public class GamePlayConfigMock implements IGamePlayConfigDao {
 
     public Trading getTrading() throws Exception {
-        ITradingFactory tradingFactory = new TradingMock();
+        ITradingDao tradingFactory = new TradingMock();
         Trading trading = new Trading(1, tradingFactory);
         return trading;
     }
 
     public Injury getInjury() throws Exception {
-        IInjuryFactory injuryFactory = new InjuryMock();
+        IInjuryDao injuryFactory = new InjuryMock();
         Injury injury = new Injury(1, injuryFactory);
         return injury;
     }
@@ -24,7 +24,7 @@ public class GamePlayConfigMock implements IGamePlayConfigFactory {
     }
 
     public Training getTraining() throws Exception {
-        ITrainingFactory trainingFactory = new TrainingMock();
+        ITrainingDao trainingFactory = new TrainingMock();
         Training training = new Training(1, trainingFactory);
         return training;
     }

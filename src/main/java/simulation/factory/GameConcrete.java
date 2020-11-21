@@ -1,8 +1,13 @@
 package simulation.factory;
 
 
-import db.data.IGameFactory;
+import simulation.model.Game;
+import simulation.model.IGame;
 
-public class GameConcrete {
+public class GameConcrete implements IGameFactory{
 
+    @Override
+    public IGame newGame() {
+        return new Game();
+    }
 }

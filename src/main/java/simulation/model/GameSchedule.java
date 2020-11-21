@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameSchedule {
+public class GameSchedule implements IGameSchedule{
 
-    List<Game> gameList = new ArrayList<>();
+    List<IGame> gameList = new ArrayList<>();
     int id;
     public GameSchedule() {
         setId(System.identityHashCode(this));
@@ -20,17 +20,17 @@ public class GameSchedule {
         this.id = id;
     }
 
-    public List<Game> getGameList() {
+    public List<IGame> getGameList() {
         return gameList;
     }
 
-    public void setGameList(List<Game> gameList) {
+    public void setGameList(List<IGame> gameList) {
         this.gameList = gameList;
     }
 
-    public List<Game> getUnPlayedGamesOnDate(LocalDate date) {
-        List<Game> gameListOnGivenDate = new ArrayList<>();
-        for (Game game : gameList) {
+    public List<IGame> getUnPlayedGamesOnDate(LocalDate date) {
+        List<IGame> gameListOnGivenDate = new ArrayList<>();
+        for (IGame game : gameList) {
             if (game.getDate().equals(date) && game.isGameUnPlayed()) {
                 gameListOnGivenDate.add(game);
             }
@@ -38,7 +38,7 @@ public class GameSchedule {
         return gameListOnGivenDate;
     }
 
-    public Game getLastPlayedGame() {
+    public IGame getLastPlayedGame() {
         for (int i = 0; i < gameList.size(); i++) {
             if (gameList.get(i).isGameUnPlayed()) {
                 return gameList.get(i - 1);
@@ -47,9 +47,9 @@ public class GameSchedule {
         return gameList.get(gameList.size() - 1);
     }
 
-    public List<Game> getGamesOnDate(LocalDate date) {
-        List<Game> gameListOnGivenDate = new ArrayList<>();
-        for (Game game : gameList) {
+    public List<IGame> getGamesOnDate(LocalDate date) {
+        List<IGame> gameListOnGivenDate = new ArrayList<>();
+        for (IGame game : gameList) {
             if (game.getDate().equals(date)) {
                 gameListOnGivenDate.add(game);
             }
@@ -58,7 +58,7 @@ public class GameSchedule {
     }
 
     public Boolean doGamesDoesNotExistOnOrAfterDate(LocalDate date) {
-        for (Game game : gameList) {
+        for (IGame game : gameList) {
             if (game.getDate().compareTo(date) >= 0) {
                 return false;
             }
@@ -67,7 +67,7 @@ public class GameSchedule {
     }
 
     public Boolean doGamesDoesNotExistAfterDate(LocalDate date) {
-        for (Game game : gameList) {
+        for (IGame game : gameList) {
             if (game.getDate().compareTo(date) > 0) {
                 return false;
             }

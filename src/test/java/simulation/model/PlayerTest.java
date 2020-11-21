@@ -1,8 +1,8 @@
 package simulation.model;
 
 import db.data.IAgingDao;
-import db.data.ILeagueFactory;
-import db.data.IPlayerFactory;
+import db.data.ILeagueDao;
+import db.data.IPlayerDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.AgingMock;
@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
 
-    private static IPlayerFactory loadPlayerFactory;
+    private static IPlayerDao loadPlayerFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
@@ -67,13 +67,13 @@ public class PlayerTest {
     @Test
     public void getPositionTest() throws Exception {
         Player player = new Player(1, loadPlayerFactory);
-        assertEquals(player.getPosition(), Player.Position.FORWARD);
+        assertEquals(player.getPosition(), Position.FORWARD);
     }
 
     @Test
     public void setPositionTest() {
         Player player = new Player();
-        Player.Position position = Player.Position.GOALIE;
+        Position position = Position.GOALIE;
         player.setPosition(position);
         assertEquals(player.getPosition(), position);
     }
@@ -241,7 +241,7 @@ public class PlayerTest {
 
     @Test
     public void injuryCheckTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
         Player player = new Player(2, loadPlayerFactory);
         assertFalse(player.getInjured());
@@ -251,7 +251,7 @@ public class PlayerTest {
 
     @Test
     public void injuryCheckInjuredTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
         Player player = new Player(1, loadPlayerFactory);
         player.injuryCheck(league);
@@ -268,7 +268,7 @@ public class PlayerTest {
     @Test
     public void agingInjuryRecoveryTest() throws Exception {
         Player player = new Player(12, loadPlayerFactory);
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
         assertTrue(player.getInjured());
         assertNotNull(player.getInjuryStartDate());

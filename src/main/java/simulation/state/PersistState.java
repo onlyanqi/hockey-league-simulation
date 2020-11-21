@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class PersistState implements ISimulateState {
 
     private final IHockeyContext hockeyContext;
-    private final League league;
-    private final NHLEvents nhlEvents;
+    private final ILeague league;
+    private final INHLEvents nhlEvents;
 
     public PersistState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -403,9 +403,11 @@ public class PersistState implements ISimulateState {
     }
 
     public Boolean stanleyCupWinnerDetermined() {
-        GameSchedule games = league.getGames();
-        TeamStanding teamStanding = league.getActiveTeamStanding();
-        if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2) {
+        IGameSchedule games = league.getGames();
+        ITeamStanding teamStanding = league.getActiveTeamStanding();
+        if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate())
+                && games.doGamesDoesNotExistAfterDate(league.getCurrentDate())
+                && teamStanding.getTeamsScoreList().size() == 2) {
             return true;
         }
         return false;

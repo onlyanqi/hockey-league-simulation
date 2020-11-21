@@ -1,11 +1,12 @@
 package simulation.model;
 
-import db.data.IPlayerFactory;
+import db.data.IPlayerDao;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.Random;
 
-public class Player extends SharedAttributes implements Comparable<Player> {
+public class Player extends SharedAttributes implements IPlayer {
 
     private int age;
     private Position position;
@@ -32,18 +33,18 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         setId(id);
     }
 
-    public Player(int id, IPlayerFactory factory) throws Exception {
+    public Player(int id, IPlayerDao factory) throws Exception {
         setId(id);
         factory.loadPlayerById(id, this);
     }
 
-    public Player(Player player) {
+    public Player(IPlayer player) {
         if (player == null) {
             return;
         }
         this.setId(player.getId());
         this.setName(player.getName());
-        this.isFreeAgent = player.isFreeAgent;
+        this.isFreeAgent = player.isFreeAgent();
         this.setAge(player.getAge());
         this.setPosition(player.getPosition());
         this.setSaving(player.getSaving());
@@ -52,24 +53,6 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         this.setSkating(player.getSkating());
         this.setStrength();
         this.setRelativeStrength();
-    }
-
-    public enum Position {
-        FORWARD {
-            public String toString() {
-                return "forward";
-            }
-        },
-        DEFENSE {
-            public String toString() {
-                return "defense";
-            }
-        },
-        GOALIE {
-            public String toString() {
-                return "goalie";
-            }
-        }
     }
 
     public boolean isFreeAgent() {
@@ -212,7 +195,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         this.injuryDatesRange = injuryDatesRange;
     }
 
-    public void addPlayer(IPlayerFactory addPlayerFactory) throws Exception {
+    public void addPlayer(IPlayerDao addPlayerFactory) throws Exception {
         if (addPlayerFactory == null) {
             return;
         }
@@ -246,7 +229,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         this.age++;
     }
 
-    public void injuryCheck(League league) {
+    public void injuryCheck(ILeague league) {
         if (league == null) {
             return;
         }
@@ -265,7 +248,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         }
     }
 
-    public void agingInjuryRecovery(League league) {
+    public void agingInjuryRecovery(ILeague league) {
         if (league == null) {
             return;
         }
@@ -285,7 +268,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     }
 
     @Override
-    public int compareTo(Player player) {
+    public int compareTo(@NotNull IPlayer player) {
         if (player == null) {
             return -2;
         }

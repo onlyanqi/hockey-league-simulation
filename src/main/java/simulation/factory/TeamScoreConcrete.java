@@ -1,11 +1,11 @@
 package simulation.factory;
 
-import db.data.ITeamScoreFactory;
+import simulation.model.ITeamScore;
 import simulation.model.TeamScore;
 
 public class TeamScoreConcrete {
 
-    public TeamScore newTeamScore() {
+    public ITeamScore newTeamScore() {
         return new TeamScore();
     }
 

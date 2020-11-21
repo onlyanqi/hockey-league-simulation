@@ -1,12 +1,10 @@
 package simulation;
 
-import db.data.IUserFactory;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.*;
-import simulation.model.Aging;
-import simulation.model.SharedAttributes;
+import simulation.model.IUser;
 import simulation.model.User;
 import java.io.FileNotFoundException;
 
@@ -20,13 +18,11 @@ public class App {
 
     public static void main(String[] args) {
 
-
         log.debug("DEBUG Message");
         log.info("INFO Message");
         log.warn("WARN Message");
         log.error("ERROR Message");
         log.fatal("Fatal Message");
-
 
         String filePath = "";
         JSONObject jsonFromInput = null;
@@ -34,12 +30,15 @@ public class App {
         ReadUserInput readUserInput = ReadUserInput.getInstance();
 
         String userName = readUserInput.getInput("Please enter username");
+
         try {
             if (userName == null || userName.isEmpty()) {
                 ConsoleOutput.getInstance().printMsgToConsole("User name is invalid. Exiting the App.");
             } else {
-                UserConcrete userConcrete = new UserConcrete();
-                User user = userConcrete.newUser();
+                IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
+                IHockeyContext context = hockeyContextFactory.newHockeyContext();
+                IUserFactory userConcrete = context.getUserFactory();
+                IUser user = userConcrete.newUser();
 
                 user.setName(userName);
                 if (user.getId() == 0) {
@@ -59,8 +58,7 @@ public class App {
                     }
                     jsonFromInput = JSONController.readJSON(filePath);
                 }
-                IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
-                IHockeyContext context = hockeyContextFactory.newHockeyContext();
+
                 context.setUser(user);
                 context.startAction(jsonFromInput);
 

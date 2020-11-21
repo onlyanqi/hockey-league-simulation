@@ -9,7 +9,7 @@ public class InjuryCheckState implements ISimulateState {
 
     public static final String INJURY_CHECK = "Injury Check!";
     private IHockeyContext hockeyContext;
-    private League league;
+    private ILeague league;
 
     public InjuryCheckState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -23,25 +23,25 @@ public class InjuryCheckState implements ISimulateState {
         return exit();
     }
 
-    private void playerInjuryCheck(League league) {
-        Game game = league.getGames().getLastPlayedGame();
-        Team team1 = league.getTeamByTeamName(game.getTeam1());
-        Team team2 = league.getTeamByTeamName(game.getTeam2());
-        List<Player> playerList1 = team1.getPlayerList();
-        List<Player> playerList2 = team2.getPlayerList();
-        for (Player teamPlayer : playerList1) {
+    private void playerInjuryCheck(ILeague league) {
+        IGame game = league.getGames().getLastPlayedGame();
+        ITeam team1 = league.getTeamByTeamName(game.getTeam1());
+        ITeam team2 = league.getTeamByTeamName(game.getTeam2());
+        List<IPlayer> playerList1 = team1.getPlayerList();
+        List<IPlayer> playerList2 = team2.getPlayerList();
+        for (IPlayer teamPlayer : playerList1) {
             teamPlayer.injuryCheck(league);
         }
-        for (Player teamPlayer : playerList2) {
+        for (IPlayer teamPlayer : playerList2) {
             teamPlayer.injuryCheck(league);
         }
     }
 
     private ISimulateState exit() {
-        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
+        INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
-        GameSchedule games = league.getGames();
-        List<Game> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
+        IGameSchedule games = league.getGames();
+        List<IGame> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
         if (gamesOnCurrentDay.size() == 0) {
             if (nhlEvents.checkTradeDeadlinePassed(league.getCurrentDate())) {
                 return new AgingState(hockeyContext);

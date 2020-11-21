@@ -1,10 +1,10 @@
 package simulation.factory;
 
-import db.data.ITradingFactory;
+import simulation.model.ITrading;
 import simulation.model.Trading;
 
-public class TradingConcrete {
-    public Trading newTrading() {
+public class TradingConcrete implements ITradingFactory{
+    public ITrading newTrading() {
         return new Trading();
     }
 }

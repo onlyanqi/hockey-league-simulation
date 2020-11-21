@@ -1,0 +1,73 @@
+package simulation.model;
+
+import db.data.IPlayerDao;
+import db.data.ITeamDao;
+
+import java.util.List;
+
+public interface ITeam {
+
+    List<IPlayer> getPlayerList();
+
+    void setPlayerList(List<IPlayer> playerList) throws IllegalArgumentException;
+
+    List<IPlayer> getActivePlayerList();
+
+    void setActivePlayerList();
+
+    List<IPlayer> getInactivePlayerList();
+
+    void setInactivePlayerList(List<IPlayer> inactivePlayerList);
+
+    String getMascot();
+
+    void setMascot(String mascot);
+
+    int getDivisionId();
+
+    void setDivisionId(int divisionId);
+
+    ICoach getCoach();
+
+    void setCoach(ICoach coach);
+
+    IManager getManager();
+
+    void setManager(IManager manager);
+
+    void addTeam(ITeamDao addTeamFactory) throws Exception;
+
+    void setStrength();
+
+    double getStrength();
+
+    boolean isAiTeam();
+
+    void setAiTeam(boolean aiTeam);
+
+    void loadPlayerListByTeamId(IPlayerDao loadPlayerFactory) throws Exception;
+
+    List<Integer> createChosenPlayerIdList(IFreeAgent freeAgent);
+
+    List<Double> createStrengthList(List<IPlayer> freeAgentList);
+
+    boolean checkNumPlayer(List<IPlayer> playerList);
+
+    int getTradeOfferCountOfSeason();
+
+    void setTradeOfferCountOfSeason(int tradeOfferCountOfSeason);
+
+    int getLossPoint();
+
+    void setLossPoint(int lossPoint);
+
+    void fixTeamAfterTrading(List<IPlayer> freeAgentList);
+
+    String getName();
+
+    void setName(String name);
+
+    int getId();
+
+    void setId(int id);
+}

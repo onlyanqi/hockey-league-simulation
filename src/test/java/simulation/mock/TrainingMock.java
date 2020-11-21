@@ -1,11 +1,12 @@
 package simulation.mock;
 
-import db.data.ITrainingFactory;
+import db.data.ITrainingDao;
+import simulation.model.ITraining;
 import simulation.model.Training;
 
-public class TrainingMock implements ITrainingFactory {
+public class TrainingMock implements ITrainingDao {
 
-    public Training getTraining(Training training) {
+    public ITraining getTraining(ITraining training) {
         training.setId(1);
         training.setLeagueId(1);
         training.setDaysUntilStatIncreaseCheck(50);
@@ -13,7 +14,7 @@ public class TrainingMock implements ITrainingFactory {
     }
 
     @Override
-    public int addTraining(Training training) throws Exception {
+    public int addTraining(ITraining training) throws Exception {
         if (training == null) {
             return -1;
         } else {
@@ -23,7 +24,7 @@ public class TrainingMock implements ITrainingFactory {
     }
 
     @Override
-    public void loadTrainingByLeagueId(int leagueId, Training training) throws Exception {
+    public void loadTrainingByLeagueId(int leagueId, ITraining training) throws Exception {
         switch (leagueId) {
             case 1:
                 training.setDaysUntilStatIncreaseCheck(50);

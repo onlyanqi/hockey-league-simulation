@@ -1,8 +1,6 @@
 package presentation;
 
-import simulation.model.Coach;
-import simulation.model.Manager;
-import simulation.model.Player;
+import simulation.model.*;
 
 import java.util.List;
 
@@ -10,7 +8,7 @@ public interface IConsoleOutputForTeamCreation {
 
     void showLeagueAlreadyExistsError();
 
-    void showManagerListOnScreen(List<Manager> managerList);
+    void showManagerListOnScreen(List<IManager> managerList);
 
     void showSuccessfulSerializationMessage();
 
@@ -18,13 +16,13 @@ public interface IConsoleOutputForTeamCreation {
 
     void showSuccessfulCoachCreationMessage();
 
-    void showCoachListOnScreen(List<Coach> coachList);
+    void showCoachListOnScreen(List<ICoach> coachList);
 
-    void printCoach(int i, Coach currentCoach);
+    void printCoach(int i, ICoach currentCoach);
 
     void showInstructionsForTeamCreation();
 
-    void showGoodFreeAgentList(List<Player> freeAgentList, List<Integer> goodFreeAgentsIdList);
+    void showGoodFreeAgentList(List<IPlayer> freeAgentList, List<Integer> goodFreeAgentsIdList);
 
     void playerIdAlreadyChosenMessage(List<Integer> chosenPlayersIdList);
 
@@ -32,9 +30,9 @@ public interface IConsoleOutputForTeamCreation {
 
     void showTeamCreationWaitMessage();
 
-    void showBelowAverageFreeAgentList(List<Player> freeAgentList, List<Integer> goodFreeAgentsIdList);
+    void showBelowAverageFreeAgentList(List<IPlayer> freeAgentList, List<Integer> goodFreeAgentsIdList);
 
-    void printPlayer(int i, Player player);
+    void printPlayer(int i, IPlayer player);
 
     void showNotEnoughMembersError();
 }

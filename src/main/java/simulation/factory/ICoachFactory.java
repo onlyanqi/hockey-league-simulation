@@ -1,8 +1,9 @@
 package simulation.factory;
 
 import simulation.model.Coach;
+import simulation.model.ICoach;
 
 public interface ICoachFactory {
-    Coach newCoach();
-    Coach newCoachWithCoach(Coach coach);
+    ICoach newCoach();
+    ICoach newCoachWithCoach(ICoach coach);
 }

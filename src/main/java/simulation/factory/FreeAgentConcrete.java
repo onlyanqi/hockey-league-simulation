@@ -1,11 +1,11 @@
 package simulation.factory;
 
-import db.data.IFreeAgentFactory;
 import simulation.model.FreeAgent;
+import simulation.model.IFreeAgent;
 
-public class FreeAgentConcrete {
+public class FreeAgentConcrete implements IFreeAgentFactory{
 
-    public FreeAgent newFreeAgent() {
+    public IFreeAgent newFreeAgent() {
         return new FreeAgent();
     }
 

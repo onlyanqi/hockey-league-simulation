@@ -12,7 +12,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
     private static final String TRAININGINFORMATION = "Training Players and Team!";
     private static final String STATCHECKINFORMATION = "Performing stat increase check";
     private IHockeyContext hockeyContext;
-    private League league;
+    private ILeague league;
     private ConsoleOutput consoleOutput;
 
     public TrainingState(IHockeyContext hockeyContext) {
@@ -40,18 +40,18 @@ public class TrainingState implements ISimulateState, ITrainingState {
     }
 
     @Override
-    public void statIncreaseCheck(League league) {
+    public void statIncreaseCheck(ILeague league) {
         if (league == null) {
             return;
         }
-        List<Conference> conferenceList = league.getConferenceList();
-        for (Conference conference : conferenceList) {
-            List<Division> divisionList = conference.getDivisionList();
-            for (Division division : divisionList) {
-                List<Team> teamList = division.getTeamList();
-                for (Team team : teamList) {
-                    List<Player> playerList = team.getPlayerList();
-                    for (Player player : playerList) {
+        List<IConference> conferenceList = league.getConferenceList();
+        for (IConference conference : conferenceList) {
+            List<IDivision> divisionList = conference.getDivisionList();
+            for (IDivision division : divisionList) {
+                List<ITeam> teamList = division.getTeamList();
+                for (ITeam team : teamList) {
+                    List<IPlayer> playerList = team.getPlayerList();
+                    for (IPlayer player : playerList) {
                         statIncreaseCheckForPlayer(player, team.getCoach());
                     }
                 }
@@ -60,7 +60,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
     }
 
     @Override
-    public void statIncreaseCheckForPlayer(Player player, Coach headCoach) {
+    public void statIncreaseCheckForPlayer(IPlayer player, ICoach headCoach) {
         if (player == null || headCoach == null) {
             return;
         }
@@ -125,10 +125,10 @@ public class TrainingState implements ISimulateState, ITrainingState {
     }
 
     public ISimulateState exit() {
-        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
+        INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
-        GameSchedule games = league.getGames();
-        List<Game> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
+        IGameSchedule games = league.getGames();
+        List<IGame> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
         if (gamesOnCurrentDay.size() == 0) {
             if (nhlEvents.checkTradeDeadlinePassed(league.getCurrentDate())) {
                 return new AgingState(hockeyContext);

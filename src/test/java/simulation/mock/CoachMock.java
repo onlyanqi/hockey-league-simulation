@@ -2,18 +2,19 @@ package simulation.mock;
 
 import db.data.ICoachDao;
 import simulation.model.Coach;
+import simulation.model.ICoach;
 
 import java.util.List;
 
 public class CoachMock implements ICoachDao {
     @Override
-    public int addCoach(Coach coach) throws Exception {
+    public int addCoach(ICoach coach) throws Exception {
         coach = new Coach(1);
         return coach.getId();
     }
 
     @Override
-    public void loadCoachById(int id, Coach coach) throws Exception {
+    public void loadCoachById(int id, ICoach coach) throws Exception {
 
         switch (id) {
             case 0:
@@ -117,7 +118,7 @@ public class CoachMock implements ICoachDao {
     }
 
     @Override
-    public List<Coach> loadFreeCoachListByLeagueId(int leagueId) throws Exception {
+    public List<ICoach> loadFreeCoachListByLeagueId(int leagueId) throws Exception {
         LeagueMock leagueMock = new LeagueMock();
         return leagueMock.formCoachList();
     }

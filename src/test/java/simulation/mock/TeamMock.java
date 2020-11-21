@@ -1,25 +1,22 @@
 package simulation.mock;
 
-import db.data.IPlayerFactory;
-import db.data.ITeamFactory;
-import simulation.model.Coach;
-import simulation.model.Manager;
-import simulation.model.Player;
-import simulation.model.Team;
+import db.data.IPlayerDao;
+import db.data.ITeamDao;
+import simulation.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamMock implements ITeamFactory {
+public class TeamMock implements ITeamDao {
 
     public List formPlayerList() throws Exception {
         List<Player> playerList = new ArrayList<>();
-        IPlayerFactory playerFactory = new PlayerMock();
+        IPlayerDao playerFactory = new PlayerMock();
         addPlayerInList(playerList, playerFactory);
         return playerList;
     }
 
-    private void addPlayerInList(List<Player> playerList, IPlayerFactory playerFactory) throws Exception {
+    private void addPlayerInList(List<Player> playerList, IPlayerDao playerFactory) throws Exception {
         Player player;
         for (int i = 1; i < 31; i++) {
             player = new Player(i, playerFactory);
@@ -28,13 +25,13 @@ public class TeamMock implements ITeamFactory {
     }
 
     @Override
-    public int addTeam(Team team) {
+    public int addTeam(ITeam team) {
         team = new Team(1);
         return team.getId();
     }
 
     @Override
-    public void loadTeamById(int id, Team team) throws Exception {
+    public void loadTeamById(int id, ITeam team) throws Exception {
 
         switch (new Long(id).intValue()) {
             case 1:
@@ -148,7 +145,7 @@ public class TeamMock implements ITeamFactory {
 
 
     @Override
-    public void loadTeamByName(String teamName, Team team) throws Exception {
+    public void loadTeamByName(String teamName, ITeam team) throws Exception {
         team = new Team();
         team.setName("Team1");
         team.setDivisionId(1);
@@ -168,13 +165,13 @@ public class TeamMock implements ITeamFactory {
     }
 
     @Override
-    public List<Team> loadTeamListByDivisionId(int divisionId) throws Exception {
+    public List<ITeam> loadTeamListByDivisionId(int divisionId) throws Exception {
         DivisionMock loadDivisionMock = new DivisionMock();
         return loadDivisionMock.formTeamList();
     }
 
     @Override
-    public void updateTeamById(Team team) throws Exception {
+    public void updateTeamById(ITeam team) throws Exception {
         team.setName("Team1");
         team.setDivisionId(1);
         team.setMascot("Tiger1");

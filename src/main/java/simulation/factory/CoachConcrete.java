@@ -1,16 +1,17 @@
 package simulation.factory;
 
 import simulation.model.Coach;
+import simulation.model.ICoach;
 
 public class CoachConcrete implements ICoachFactory{
 
     @Override
-    public Coach newCoach() {
+    public ICoach newCoach() {
         return new Coach();
     }
 
      @Override
-     public Coach newCoachWithCoach(Coach coach) {
+     public ICoach newCoachWithCoach(ICoach coach) {
          return new Coach(coach);
      }
  }

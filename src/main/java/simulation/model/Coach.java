@@ -2,7 +2,7 @@ package simulation.model;
 
 import db.data.ICoachDao;
 
-public class Coach extends SharedAttributes {
+public class Coach extends SharedAttributes implements ICoach {
     private int teamId;
     private int leagueId;
     private Double skating;
@@ -18,7 +18,7 @@ public class Coach extends SharedAttributes {
         setId(id);
     }
 
-    public Coach(Coach coach) {
+    public Coach(ICoach coach) {
         if (coach == null) {
             return;
         }

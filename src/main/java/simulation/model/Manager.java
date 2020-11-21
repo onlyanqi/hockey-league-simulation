@@ -1,8 +1,8 @@
 package simulation.model;
 
-import db.data.IManagerFactory;
+import db.data.IManagerDao;
 
-public class Manager extends SharedAttributes {
+public class Manager extends SharedAttributes implements IManager{
     private int leagueId;
     private int teamId;
     private String personality;
@@ -15,17 +15,17 @@ public class Manager extends SharedAttributes {
         setId(id);
     }
 
-    public Manager(Manager manager) {
+    public Manager(IManager manager) {
         if (manager == null) {
             return;
         }
         this.setId(manager.getId());
         this.setLeagueId(manager.getLeagueId());
         this.setName(manager.getName());
-        this.setTeamId(manager.teamId);
+        this.setTeamId(manager.getTeamId());
     }
 
-    public Manager(int id, IManagerFactory managerFactory) throws Exception {
+    public Manager(int id, IManagerDao managerFactory) throws Exception {
         if (managerFactory == null) {
             return;
         }

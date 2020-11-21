@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.data.IPlayerFactory;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.model.Player;
