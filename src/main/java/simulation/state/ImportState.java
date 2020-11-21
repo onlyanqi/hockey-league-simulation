@@ -6,6 +6,7 @@ import presentation.ConsoleOutput;
 import simulation.factory.*;
 import simulation.model.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -52,6 +53,10 @@ public class ImportState implements IHockeyState {
     private static final String RANDOM_ACCEPTANCE_CHANCE = "randomAcceptanceChance";
     private static final String GM_TABLE = "gmTable";
     public static final String INITIALIZE_INFO = "Validating JSON input and initializing the league model object...";
+    public static final String BIRTH_DAY = "birthDay";
+    public static final String BIRTH_MONTH = "birthMonth";
+    public static final String BIRTH_YEAR = "birthYear";
+    public static final String STAT_DECAY_CHANCE = "statDecayChance";
     private final Set<String> appearedName = new HashSet<>();
     private IHockeyContext hockeyContext;
     private String filePath;
@@ -380,7 +385,7 @@ public class ImportState implements IHockeyState {
                     }
                 }
 
-                int age = getPlayerAge(playerJsonObject);
+                LocalDate birthday = getPlayerBirthday(playerJsonObject);
 
                 int skating = getPlayerSkating(playerJsonObject);
 
@@ -390,7 +395,7 @@ public class ImportState implements IHockeyState {
 
                 int saving = getPlayerSaving(playerJsonObject);
 
-                Player player = setTeamPlayerVariables(playerName, position, captain, age, skating, shooting, checking, saving);
+                Player player = setTeamPlayerVariables(playerName, position, captain, birthday, skating, shooting, checking, saving);
                 player.setTeamId(teamId);
                 playerList.add(player);
 
@@ -431,11 +436,21 @@ public class ImportState implements IHockeyState {
         return (int) (long) playerJsonObject.get(CHECKING);
     }
 
-    private int getPlayerAge(JSONObject playerJsonObject) {
-        if (validateKeyInObject(playerJsonObject, AGE)) {
-            throw new IllegalArgumentException("Please make sure player age is provided in JSON");
+    private LocalDate getPlayerBirthday(JSONObject playerJsonObject) {
+        if (validateKeyInObject(playerJsonObject, BIRTH_DAY)) {
+            throw new IllegalArgumentException("Please make sure the player's birth day is provided in JSON");
         }
-        return (int) (long) playerJsonObject.get(AGE);
+        int birthDay = (int) (long) playerJsonObject.get(BIRTH_DAY);
+        if (validateKeyInObject(playerJsonObject, BIRTH_MONTH)) {
+            throw new IllegalArgumentException("Please make sure the player's birth month is provided in JSON");
+        }
+        int birthMonth = (int) (long) playerJsonObject.get(BIRTH_MONTH);
+        if (validateKeyInObject(playerJsonObject, BIRTH_YEAR)) {
+            throw new IllegalArgumentException("Please make sure the player's birthDay is provided in JSON");
+        }
+        int birthYear = (int) (long) playerJsonObject.get(BIRTH_YEAR);
+
+        return LocalDate.of(birthYear, birthMonth, birthDay);
     }
 
     private Player.Position validatePosition(JSONObject playerJsonObject) throws IllegalArgumentException {
@@ -454,13 +469,13 @@ public class ImportState implements IHockeyState {
         return positionEnum;
     }
 
-    private Player setTeamPlayerVariables(String playerName, Player.Position position, boolean captain, int age, int skating, int shooting, int checking, int saving) {
+    private Player setTeamPlayerVariables(String playerName, Player.Position position, boolean captain, LocalDate birthday, int skating, int shooting, int checking, int saving) {
         PlayerConcrete playerConcrete = new PlayerConcrete();
         Player player = playerConcrete.newPlayer();
         player.setName(playerName);
         player.setPosition(position);
         player.setCaptain(captain);
-        player.setAge(age);
+        player.setBirthday(birthday);
         player.setSkating(skating);
         player.setShooting(shooting);
         player.setChecking(checking);
@@ -570,7 +585,7 @@ public class ImportState implements IHockeyState {
 
             Player.Position position = validatePosition(freeAgentJsonObject);
 
-            int age = getPlayerAge(freeAgentJsonObject);
+            LocalDate birthday = getPlayerBirthday(freeAgentJsonObject);
 
             int skating = getPlayerSkating(freeAgentJsonObject);
 
@@ -580,7 +595,7 @@ public class ImportState implements IHockeyState {
 
             int saving = getPlayerSaving(freeAgentJsonObject);
 
-            Player player = setFreePlayerVariables(playerName, position, age, skating, shooting, checking, saving);
+            Player player = setFreePlayerVariables(playerName, position, birthday, skating, shooting, checking, saving);
 
             if (player.validName()) {
                 freeAgentList.add(player);
@@ -592,12 +607,12 @@ public class ImportState implements IHockeyState {
         return freeAgentList;
     }
 
-    private Player setFreePlayerVariables(String playerName, Player.Position position, int age, int skating, int shooting, int checking, int saving) {
+    private Player setFreePlayerVariables(String playerName, Player.Position position, LocalDate birthday, int skating, int shooting, int checking, int saving) {
         PlayerConcrete playerConcrete = new PlayerConcrete();
         Player player = playerConcrete.newPlayer();
         player.setName(playerName);
         player.setPosition(position);
-        player.setAge(age);
+        player.setBirthday(birthday);
         player.setSkating(skating);
         player.setShooting(shooting);
         player.setChecking(checking);
@@ -648,11 +663,18 @@ public class ImportState implements IHockeyState {
             throw new IllegalArgumentException("Please make sure maximumAge is provided in JSON");
         }
         int maximumAge = (int) (long) agingJSONObject.get(MAXIMUM_AGE);
+
+        if (validateKeyInObject(agingJSONObject, STAT_DECAY_CHANCE)) {
+            throw new IllegalArgumentException("Please make sure statDecayChance is provided in JSON");
+        }
+        Double statDecayChance = (Double) agingJSONObject.get(STAT_DECAY_CHANCE);
+
         IAgingFactory agingFactory = hockeyContext.getAgingFactory();
         //IAging aging = agingFactory.newAging();
         Aging aging = agingFactory.newAging();
         aging.setAverageRetirementAge(averageRetirementAge);
         aging.setMaximumAge(maximumAge);
+        aging.setStatDecayChance(statDecayChance);
         return aging;
     }
 
@@ -723,13 +745,13 @@ public class ImportState implements IHockeyState {
         }
         double randomAcceptanceChance = (Double) tradingJSONObject.get(RANDOM_ACCEPTANCE_CHANCE);
 
-        if(validateKeyInObject(tradingJSONObject, GM_TABLE)){
+        if (validateKeyInObject(tradingJSONObject, GM_TABLE)) {
             throw new IllegalArgumentException("Please make sure gmTable is provided in JSON");
         }
 
         JSONObject gmTableJsonObject = (JSONObject) tradingJSONObject.get(GM_TABLE);
         Map<String, Double> gmTable = new HashMap<>();
-        for(Object key : gmTableJsonObject.keySet()){
+        for (Object key : gmTableJsonObject.keySet()) {
             String attribute = (String) key;
             double attributeValue = (Double) gmTableJsonObject.get(attribute);
             gmTable.put(attribute, attributeValue);
