@@ -25,6 +25,7 @@ public class JSONControllerMock {
         JSONObject aging = new JSONObject();
         aging.put("averageRetirementAge", (long) 35);
         aging.put("maximumAge", (long) 50);
+        aging.put("statDecayChance", 0.04);
 
         JSONObject gameResolver = new JSONObject();
         gameResolver.put("randomWinChance", 0.1);
@@ -132,7 +133,9 @@ public class JSONControllerMock {
             forward.put("playerName", "Agent " + i);
             forward.put("position", "forward");
             forward.put("captain", false);
-            forward.put("age", (long) 27);
+            forward.put("birthDay", (long) 20);
+            forward.put("birthMonth", (long) 11);
+            forward.put("birthYear", (long) 1992);
             forward.put("skating", (long) 12);
             forward.put("shooting", (long) 18);
             forward.put("checking", (long) 11);
@@ -144,7 +147,9 @@ public class JSONControllerMock {
             defense.put("playerName", "Agent " + i);
             defense.put("position", "defense");
             defense.put("captain", false);
-            defense.put("age", (long) 24);
+            defense.put("birthDay", (long) 25);
+            defense.put("birthMonth", (long) 12);
+            defense.put("birthYear", (long) 1994);
             defense.put("skating", (long) 13);
             defense.put("shooting", (long) 18);
             defense.put("checking", (long) 19);
@@ -156,7 +161,9 @@ public class JSONControllerMock {
             goalie.put("playerName", "Agent " + i);
             goalie.put("position", "goalie");
             goalie.put("captain", false);
-            goalie.put("age", (long) 27);
+            goalie.put("birthDay", (long) 15);
+            goalie.put("birthMonth", (long) 2);
+            goalie.put("birthYear", (long) 1992);
             goalie.put("skating", (long) 10);
             goalie.put("shooting", (long) 9);
             goalie.put("checking", (long) 12);
@@ -171,7 +178,9 @@ public class JSONControllerMock {
             forward.put("playerName", "Player " + i);
             forward.put("position", "forward");
             forward.put("captain", false);
-            forward.put("age", (long) 27);
+            forward.put("birthDay", (long) 11);
+            forward.put("birthMonth", (long) 7);
+            forward.put("birthYear", (long) 1990);
             forward.put("skating", (long) 12);
             forward.put("shooting", (long) 18);
             forward.put("checking", (long) 11);
@@ -183,7 +192,9 @@ public class JSONControllerMock {
             defense.put("playerName", "Player " + i);
             defense.put("position", "defense");
             defense.put("captain", false);
-            defense.put("age", (long) 24);
+            defense.put("birthDay", (long) 11);
+            defense.put("birthMonth", (long) 7);
+            defense.put("birthYear", (long) 1990);
             defense.put("skating", (long) 13);
             defense.put("shooting", (long) 18);
             defense.put("checking", (long) 19);
@@ -195,7 +206,9 @@ public class JSONControllerMock {
             goalie.put("playerName", "Player " + i);
             goalie.put("position", "goalie");
             goalie.put("captain", false);
-            goalie.put("age", (long) 27);
+            goalie.put("birthDay", (long) 19);
+            goalie.put("birthMonth", (long) 4);
+            goalie.put("birthYear", (long) 1995);
             goalie.put("skating", (long) 10);
             goalie.put("shooting", (long) 9);
             goalie.put("checking", (long) 12);
