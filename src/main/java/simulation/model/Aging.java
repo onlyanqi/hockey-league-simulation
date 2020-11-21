@@ -3,14 +3,15 @@ package simulation.model;
 import db.data.IAgingDao;
 
 public class Aging extends SharedAttributes
-        implements IAging
-        {
+        implements IAging {
 
     private int averageRetirementAge;
 
     private int maximumAge;
 
     private int leagueId;
+
+    private Double statDecayChance;
 
     public Aging() {
         setId(System.identityHashCode(this));
@@ -62,5 +63,15 @@ public class Aging extends SharedAttributes
             throw new IllegalArgumentException("Maximum retirement age must be greater than average retirement age!");
         }
         this.maximumAge = maximumAge;
+    }
+
+    //@Override
+    public Double getStatDecayChance() {
+        return statDecayChance;
+    }
+
+    //@Override
+    public void setStatDecayChance(Double statDecayChance) {
+        this.statDecayChance = statDecayChance;
     }
 }

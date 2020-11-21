@@ -8,6 +8,7 @@ import java.util.Random;
 public class Player extends SharedAttributes implements Comparable<Player> {
 
     private int age;
+    private LocalDate birthday;
     private Position position;
     private int teamId;
     private int freeAgentId;
@@ -89,6 +90,14 @@ public class Player extends SharedAttributes implements Comparable<Player> {
             throw new IllegalArgumentException("Player age must greater than 0!");
         }
         this.age = age;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public Position getPosition() {
