@@ -63,7 +63,6 @@ public class TeamStanding implements ITeamStanding {
             if (teamScore.getTeamName().equals(teamName)) {
                 int previousNumberOfWins = teamScore.getNumberOfWins();
                 teamScore.setNumberOfWins(previousNumberOfWins + 1);
-                setTeamPoints(teamScore.getTeamName());
             }
         }
     }
@@ -118,7 +117,7 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public List<ITeamScore> sortTeamsScoreList(List<ITeamScore> teamsScoreList) {
-        teamsScoreList.sort((ITeamScore team1, ITeamScore team2) -> team1.getPoints().compareTo(team2.getPoints()));
+        teamsScoreList.sort((ITeamScore team1, ITeamScore team2) -> team2.getPoints().compareTo(team1.getPoints()));
         return teamsScoreList;
     }
 

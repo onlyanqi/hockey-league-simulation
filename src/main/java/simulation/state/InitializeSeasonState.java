@@ -9,6 +9,7 @@ import simulation.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -78,6 +79,7 @@ public class InitializeSeasonState implements ISimulateState {
         league.setPlayOffStanding(new TeamStanding());
         league.setGames(games);
         league.setActiveTeamStanding(league.getRegularSeasonStanding());
+        league.setStanleyCupFinalsTeamScores(new HashMap<>());
         league.setNhlRegularSeasonEvents(nhlEvents);
     }
 

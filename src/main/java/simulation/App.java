@@ -5,7 +5,6 @@ import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.*;
 import simulation.model.IUser;
-import simulation.model.User;
 import java.io.FileNotFoundException;
 
 import org.apache.log4j.Logger;
@@ -18,14 +17,6 @@ public class App {
 
     public static void main(String[] args) {
 
-
-        log.debug("DEBUG Message");
-        log.info("INFO Message");
-        log.warn("WARN Message");
-        log.error("ERROR Message");
-        log.fatal("Fatal Message");
-
-
         String filePath = "";
         JSONObject jsonFromInput = null;
 
@@ -34,6 +25,7 @@ public class App {
         String userName = readUserInput.getInput("Please enter username");
         try {
             if (userName == null || userName.isEmpty()) {
+                log.error("Invalid Username " + userName);
                 ConsoleOutput.getInstance().printMsgToConsole("User name is invalid. Exiting the App.");
             } else {
                 IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
@@ -51,6 +43,7 @@ public class App {
                     ConsoleOutput.getInstance().printMsgToConsole("Loading the team...");
                 } else {
                     if (JSONController.invalidJSON(filePath)) {
+                        log.error("Invalid JSON file " + filePath);
                         ConsoleOutput.getInstance().printMsgToConsole("Invalid JSON file Provided.Exiting the app!");
                         System.exit(1);
                     }
@@ -61,8 +54,10 @@ public class App {
                 context.startAction(jsonFromInput);
             }
         } catch (FileNotFoundException e) {
+            log.error("File "+filePath+" not found " + e);
             ConsoleOutput.getInstance().printMsgToConsole("File Not found. " + e);
         } catch (Exception e) {
+            log.error("Exception occurred " + e);
             ConsoleOutput.getInstance().printMsgToConsole("System faced unexpected exception. Please contact team. " + e);
         }
 
