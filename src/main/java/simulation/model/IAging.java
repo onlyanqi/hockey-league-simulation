@@ -13,4 +13,11 @@ public interface IAging {
     int getMaximumAge();
 
     void setMaximumAge(int maximumAge) throws IllegalArgumentException;
+
+    int getId();
+
+    Double getStatDecayChance();
+
+    void setStatDecayChance(Double statDecayChance);
+
 }

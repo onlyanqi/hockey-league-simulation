@@ -1,9 +1,8 @@
 package simulation.model;
 
-import db.data.ITrainingFactory;
+import db.data.ITrainingDao;
 
-public class Training {
-
+public class Training implements ITraining {
 
     private int id;
     private int daysUntilStatIncreaseCheck;
@@ -13,7 +12,7 @@ public class Training {
         setId(System.identityHashCode(this));
     }
 
-    public Training(int LeagueId, ITrainingFactory trainingFactory) throws Exception {
+    public Training(int LeagueId, ITrainingDao trainingFactory) throws Exception {
         if (trainingFactory == null) {
             return;
         }

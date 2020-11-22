@@ -1,11 +1,14 @@
 package db.data;
 
-import simulation.model.Aging;
+import org.json.simple.JSONObject;
+import simulation.model.IAging;
 
 public interface IAgingDao {
-    int addAging(Aging aging) throws Exception;
+    int addAging(IAging aging) throws Exception;
 
-    Aging loadAgingByLeagueId(int leagueId) throws Exception;
+    IAging loadAgingByLeagueId(int leagueId) throws Exception;
 
-    void loadAgingById(int id, Aging aging) throws Exception;
+    void loadAgingById(int id, IAging aging) throws Exception;
+
+    void loadAgingFromJSON(IAging aging, JSONObject jsonObject);
 }

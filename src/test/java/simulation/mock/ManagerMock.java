@@ -1,22 +1,23 @@
 package simulation.mock;
 
-import db.data.IManagerFactory;
+import db.data.IManagerDao;
+import simulation.model.IManager;
 import simulation.model.Manager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerMock implements IManagerFactory {
+public class ManagerMock implements IManagerDao {
 
     @Override
-    public int addManager(Manager manager) throws Exception {
+    public int addManager(IManager manager) throws Exception {
         manager = new Manager(1);
         return manager.getId();
 
     }
 
     @Override
-    public void loadManagerById(int managerId, Manager manager) throws Exception {
+    public void loadManagerById(int managerId, IManager manager) throws Exception {
         switch (managerId) {
             case 1:
                 manager.setName("Sam Mathew");
@@ -52,9 +53,9 @@ public class ManagerMock implements IManagerFactory {
     }
 
     @Override
-    public List<Manager> loadFreeManagersByLeagueId(int leagueId) throws Exception {
-        List<Manager> managerList = new ArrayList<>();
-        IManagerFactory managerFactory = new ManagerMock();
+    public List<IManager> loadFreeManagersByLeagueId(int leagueId) throws Exception {
+        List<IManager> managerList = new ArrayList<>();
+        IManagerDao managerFactory = new ManagerMock();
         for (int i = 1; i <= 5; i++) {
             Manager manager = new Manager(i, managerFactory);
             managerList.add(manager);
@@ -63,8 +64,8 @@ public class ManagerMock implements IManagerFactory {
     }
 
     @Override
-    public Manager loadManagerByTeamId(int teamId) throws Exception {
-        Manager manager = new Manager();
+    public IManager loadManagerByTeamId(int teamId) throws Exception {
+        IManager manager = new Manager();
         manager.setTeamId(1);
         manager.setName("Alix Sarty");
         manager.setId(1);

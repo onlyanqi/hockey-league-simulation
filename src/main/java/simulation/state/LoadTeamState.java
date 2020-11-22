@@ -14,7 +14,7 @@ public class LoadTeamState implements IHockeyState {
 
     private IHockeyContext hockeyContext;
     private String teamName;
-    private League league;
+    private ILeague league;
     private ReadUserInput readUserInput;
 
     public LoadTeamState(IHockeyContext hockeyContext) {
@@ -22,11 +22,11 @@ public class LoadTeamState implements IHockeyState {
         readUserInput = ReadUserInput.getInstance();
     }
 
-    public League getLeague() {
+    public ILeague getLeague() {
         return league;
     }
 
-    public void setLeague(League league) {
+    public void setLeague(ILeague league) {
         this.league = league;
     }
 
@@ -37,7 +37,6 @@ public class LoadTeamState implements IHockeyState {
         while ((teamName.isEmpty() || teamName == null)) {
             teamName = readUserInput.getInput("Please enter valid and existing team name");
         }
-
     }
 
 
@@ -45,7 +44,7 @@ public class LoadTeamState implements IHockeyState {
     public void process() throws Exception {
         LeagueDataSerializerDeSerializer leagueDataSerializerDeSerializer = new LeagueDataSerializerDeSerializer();
         String filename = "JsonFiles"+"/"+teamName;
-        league = leagueDataSerializerDeSerializer.deSerialize(filename);
+        league = leagueDataSerializerDeSerializer.deSerialize(filename, hockeyContext);
         hockeyContext.getUser().setLeague(league);
 //        ConsoleOutput.getInstance().printMsgToConsole("We are loading the league data. Please wait..");
 //

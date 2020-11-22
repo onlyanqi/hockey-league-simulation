@@ -1,11 +1,11 @@
 package simulation.factory;
 
-import db.data.IEventFactory;
+import simulation.model.INHLEvents;
 import simulation.model.NHLEvents;
 
 public class EventConcrete {
 
-    public NHLEvents newEvents() {
+    public INHLEvents newEvents() {
         return new NHLEvents();
     }
 

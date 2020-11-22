@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class GeneratePlayoffScheduleDateTest {
 
-    private static IUserFactory userFactory;
+    private static IUserDao userFactory;
     private static IHockeyContext hockeyContext;
     private static IHockeyContextFactory hockeyContextFactory;
 

@@ -9,7 +9,7 @@ public class AgingState implements ISimulateState {
 
     public static final String AGING_DAY = "Aging all players by one day!";
     private IHockeyContext hockeyContext;
-    private League league;
+    private ILeague league;
 
     public AgingState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -23,17 +23,17 @@ public class AgingState implements ISimulateState {
         return exit();
     }
 
-    private void agingPlayerDay(League league) {
-        List<Conference> conferenceList = league.getConferenceList();
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
-        for (Conference conference : conferenceList) {
-            List<Division> divisionList = conference.getDivisionList();
-            for (Division division : divisionList) {
-                List<Team> teamList = division.getTeamList();
-                for (Team team : teamList) {
+    private void agingPlayerDay(ILeague league) {
+        List<IConference> conferenceList = league.getConferenceList();
+        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
+        for (IConference conference : conferenceList) {
+            List<IDivision> divisionList = conference.getDivisionList();
+            for (IDivision division : divisionList) {
+                List<ITeam> teamList = division.getTeamList();
+                for (ITeam team : teamList) {
                     team.setActivePlayerList();
-                    List<Player> playerList = team.getPlayerList();
-                    for (Player teamPlayer : playerList) {
+                    List<IPlayer> playerList = team.getPlayerList();
+                    for (IPlayer teamPlayer : playerList) {
                         teamPlayer.calculateAge(league);
                         // statDecay
                         teamPlayer.agingInjuryRecovery(league);
@@ -41,7 +41,7 @@ public class AgingState implements ISimulateState {
                 }
             }
         }
-        for (Player freeAgentPlayer : freeAgentList) {
+        for (IPlayer freeAgentPlayer : freeAgentList) {
             freeAgentPlayer.calculateAge(league);
             freeAgentPlayer.agingInjuryRecovery(league);
         }
@@ -56,10 +56,11 @@ public class AgingState implements ISimulateState {
     }
 
     public Boolean stanleyCupWinnerDetermined() {
-        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
-        GameSchedule games = league.getGames();
-        TeamStanding teamStanding = league.getActiveTeamStanding();
-        if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate()) && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2) {
+        INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
+        IGameSchedule games = league.getGames();
+        ITeamStanding teamStanding = league.getActiveTeamStanding();
+        if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate())
+                && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2) {
             return true;
         }
         return false;

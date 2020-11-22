@@ -1,7 +1,7 @@
 package simulation.model;
 
-import db.data.IConferenceFactory;
-import db.data.IDivisionFactory;
+import db.data.IConferenceDao;
+import db.data.IDivisionDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.ConferenceMock;
@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class ConferenceTest {
 
-    private static IConferenceFactory loadConferenceFactory;
+    private static IConferenceDao loadConferenceFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
@@ -60,7 +60,7 @@ public class ConferenceTest {
     @Test
     public void getDivisionListTest() throws Exception {
         Conference conference = new Conference(1, loadConferenceFactory);
-        List<Division> divisionList = conference.getDivisionList();
+        List<IDivision> divisionList = conference.getDivisionList();
         assertNotNull(divisionList);
 
         assertTrue(divisionList.get(0).getId() == (1));
@@ -71,9 +71,9 @@ public class ConferenceTest {
 
     @Test
     public void setDivisionListTest() throws Exception {
-        IDivisionFactory divisionFactory = new DivisionMock();
-        List<Division> divisionList = new ArrayList<>();
-        Division division = new Division(1, divisionFactory);
+        IDivisionDao divisionFactory = new DivisionMock();
+        List<IDivision> divisionList = new ArrayList<>();
+        IDivision division = new Division(1, divisionFactory);
         divisionList.add(division);
         division = new Division(2, divisionFactory);
         divisionList.add(division);
@@ -100,7 +100,7 @@ public class ConferenceTest {
     @Test
     public void loadDivisionListByConferenceIdTest() throws Exception {
         Conference conference = new Conference(1);
-        IDivisionFactory loadDivisionFactory = new DivisionMock();
+        IDivisionDao loadDivisionFactory = new DivisionMock();
         conference.loadDivisionListByConferenceId(loadDivisionFactory);
 
         assertTrue(conference.getDivisionList().get(0).getId() == (1));

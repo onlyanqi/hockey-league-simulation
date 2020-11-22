@@ -1,12 +1,10 @@
 package simulation;
 
-import db.data.IUserFactory;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.*;
-import simulation.model.Aging;
-import simulation.model.SharedAttributes;
+import simulation.model.IUser;
 import simulation.model.User;
 import java.io.FileNotFoundException;
 
@@ -38,10 +36,13 @@ public class App {
             if (userName == null || userName.isEmpty()) {
                 ConsoleOutput.getInstance().printMsgToConsole("User name is invalid. Exiting the App.");
             } else {
+                IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
+                IHockeyContext context = hockeyContextFactory.newHockeyContext();
+
                 UserConcrete userConcrete = new UserConcrete();
             //    IUserFactory factory = userConcrete.newUserFactory();
             //    User user = userConcrete.newUserByName(userName, factory);
-                User user = userConcrete.newUser();
+                IUser user = userConcrete.newUser();
 
                 user.setName(userName);
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
@@ -55,8 +56,7 @@ public class App {
                     }
                     jsonFromInput = JSONController.readJSON(filePath);
                 }
-                IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
-                IHockeyContext context = hockeyContextFactory.newHockeyContext();
+
                 context.setUser(user);
                 context.startAction(jsonFromInput);
             }

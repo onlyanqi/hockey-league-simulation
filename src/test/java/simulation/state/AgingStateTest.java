@@ -1,8 +1,8 @@
 package simulation.state;
 
-import db.data.ILeagueFactory;
-import db.data.IPlayerFactory;
-import db.data.IUserFactory;
+import db.data.ILeagueDao;
+import db.data.IPlayerDao;
+import db.data.IUserDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.HockeyContextConcrete;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 public class AgingStateTest {
 
-    private static IUserFactory userFactory;
+    private static IUserDao userFactory;
     private static IHockeyContext hockeyContext;
 
 
@@ -33,9 +33,9 @@ public class AgingStateTest {
 
     @Test
     public void agingPlayerDayTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
-        IPlayerFactory playerFactory = new PlayerMock();
+        IPlayerDao playerFactory = new PlayerMock();
         Player player = new Player(12, playerFactory);
         assertTrue(player.getInjured());
         assertNotNull(player.getInjuryStartDate());

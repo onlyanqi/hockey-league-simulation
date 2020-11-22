@@ -25,12 +25,12 @@ public class ExecuteTradeStateTest {
     private static final String REJECTED = "rejected";
     private static final String FROMPLAYERLISTBEFORETRADE = "fromPlayerListBeforeTrade";
     private static final String FROMPLAYERLISTAFTERTRADE = "fromPlayerListAfterTrade";
-    private static ILeagueFactory leagueFactory;
-    private static ITeamFactory teamFactory;
-    private static IPlayerFactory playerFactory;
-    private static ITradeOfferFactory tradeOfferFactory;
-    private static ITradingFactory tradingFactory;
-    private static IUserFactory userFactory;
+    private static ILeagueDao leagueFactory;
+    private static ITeamDao teamFactory;
+    private static IPlayerDao playerFactory;
+    private static ITradeOfferDao tradeOfferFactory;
+    private static ITradingDao tradingFactory;
+    private static IUserDao userFactory;
     private static IHockeyContext hockeyContext;
     private static IHockeyContextFactory hockeyContextFactory;
 
@@ -98,7 +98,7 @@ public class ExecuteTradeStateTest {
         League league = new League(1, leagueFactory);
         assertTrue(state.loopAllTeamsForTradeInitiation(league));
         league = new League();
-        List<Conference> conferences = new ArrayList<>();
+        List<IConference> conferences = new ArrayList<>();
         league.setConferenceList(conferences);
         assertFalse(state.loopAllTeamsForTradeInitiation(league));
     }
@@ -135,7 +135,7 @@ public class ExecuteTradeStateTest {
         swap.put(FROMTEAM, fromTeam);
         swap.put(TOTEAM, toTeam);
 
-        ExecuteTradeState state = new ExecuteTradeState();
+        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         state.setLeague(league);
 
         state.createTradeOffer(swap);
@@ -172,7 +172,7 @@ public class ExecuteTradeStateTest {
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
         state.performTrade(swap);
 
-        List<TradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradeOfferList();
+        List<ITradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradeOfferList();
 
         assertEquals(tradeOfferList.get(3).getStatus(), ACCEPTED);
     }
@@ -277,7 +277,7 @@ public class ExecuteTradeStateTest {
 
         boolean isPlayerSwapped = false;
         boolean isPlayerNotSwapped = false;
-        for (Player soldPlayer : toTeam.getPlayerList()) {
+        for (IPlayer soldPlayer : toTeam.getPlayerList()) {
             if (fromPlayer.getId() == soldPlayer.getId()) {
                 isPlayerSwapped = true;
             }
@@ -291,7 +291,7 @@ public class ExecuteTradeStateTest {
 
         isPlayerSwapped = false;
 
-        for (Player boughtPlayer : fromTeam.getPlayerList()) {
+        for (IPlayer boughtPlayer : fromTeam.getPlayerList()) {
             if (toPlayer.getId() == boughtPlayer.getId()) {
                 isPlayerSwapped = true;
             }
@@ -317,7 +317,7 @@ public class ExecuteTradeStateTest {
 
         boolean isCaptainCreated = false;
 
-        for (Player soldPlayer : fromTeam.getPlayerList()) {
+        for (IPlayer soldPlayer : fromTeam.getPlayerList()) {
             if (soldPlayer.isCaptain()) {
                 isCaptainCreated = true;
                 break;
@@ -328,7 +328,7 @@ public class ExecuteTradeStateTest {
 
         isCaptainCreated = false;
 
-        for (Player boughtPlayer : toTeam.getPlayerList()) {
+        for (IPlayer boughtPlayer : toTeam.getPlayerList()) {
             if (boughtPlayer.isCaptain()) {
                 isCaptainCreated = true;
                 break;
@@ -341,7 +341,7 @@ public class ExecuteTradeStateTest {
     @Test
     public void checkTeamStrengthTest() throws Exception {
         Team team = new Team(1, teamFactory);
-        Player existingPlayer = team.getPlayerList().get(0);
+        IPlayer existingPlayer = team.getPlayerList().get(0);
         Player newPlayer = new Player(5, playerFactory);
 
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
@@ -395,7 +395,7 @@ public class ExecuteTradeStateTest {
         TradeOffer tradeOffer = new TradeOffer(10, tradeOfferFactory);
 
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        Player newPlayer = state.algorithmToFindSwapPlayer(team, weakestPlayer, swapPlayer, swap);
+        IPlayer newPlayer = state.algorithmToFindSwapPlayer(team, weakestPlayer, swapPlayer, swap);
 
         assertTrue(newPlayer.getStrength() >= swapPlayer.getStrength());
 
@@ -413,9 +413,7 @@ public class ExecuteTradeStateTest {
         League league = new League(1, leagueFactory);
 
         ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        List<Player> weakPlayerList;
-
-        weakPlayerList = state.getWeakestPlayerList(team, league);
+        List<IPlayer> weakPlayerList = state.getWeakestPlayerList(team, league);
 
         assertNotNull(weakPlayerList);
         assertTrue(weakPlayerList.size() > 0);
@@ -468,13 +466,13 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void removeObjectFromListTest() throws Exception {
-        List<Player> list = new ArrayList<>();
+        List<IPlayer> list = new ArrayList<>();
         Player player = new Player(1, playerFactory);
         list.add(player);
         player = new Player(5, playerFactory);
         list.add(player);
         boolean isPlayerExist = false;
-        for (Player player1 : list) {
+        for (IPlayer player1 : list) {
             if (player1.getId() == 5) {
                 isPlayerExist = true;
                 break;
@@ -487,7 +485,7 @@ public class ExecuteTradeStateTest {
 
         isPlayerExist = false;
 
-        for (Player player1 : list) {
+        for (IPlayer player1 : list) {
             if (player1.getId() == 5) {
                 isPlayerExist = true;
                 break;

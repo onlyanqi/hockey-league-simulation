@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IInjuryFactory;
+import db.data.IInjuryDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.InjuryMock;
@@ -8,7 +8,7 @@ import simulation.mock.InjuryMock;
 import static org.junit.Assert.*;
 
 public class InjuryTest {
-    private static IInjuryFactory loadInjuryFactory;
+    private static IInjuryDao loadInjuryFactory;
 
     @BeforeClass
     public static void setFactoryObj() {

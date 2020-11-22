@@ -1,11 +1,11 @@
 package simulation.factory;
 
-import db.data.IManagerFactory;
+import simulation.model.IManager;
 import simulation.model.Manager;
 
-public class ManagerConcrete {
+public class ManagerConcrete implements IManagerFactory{
 
-    public Manager newManagerConcrete() {
+    public IManager newManagerConcrete() {
         return new Manager();
     }
 

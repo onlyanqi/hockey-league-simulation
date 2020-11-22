@@ -1,5 +1,6 @@
 package simulation.state;
 
+import db.data.IAgingDao;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -55,17 +56,16 @@ public class ImportState implements IHockeyState {
     public static final String BIRTH_MONTH = "birthMonth";
     public static final String BIRTH_YEAR = "birthYear";
     public static final String STAT_DECAY_CHANCE = "statDecayChance";
+    private static final String PERSONALITY = "personality";
     private final Set<String> appearedName = new HashSet<>();
     private IHockeyContext hockeyContext;
     private JSONObject jsonFromInput;
-    private League league;
+    private ILeague league;
     private int leagueId;
     private int teamId;
     private int conferenceId;
     private int divisionId;
     private static Logger log = Logger.getLogger(ImportState.class);
-    private static final String PERSONALITY = "personality";
-
 
     public ImportState(IHockeyContext hockeyContext, JSONObject jsonFromInput) {
         this.jsonFromInput = jsonFromInput;
@@ -115,29 +115,32 @@ public class ImportState implements IHockeyState {
 
             JSONArray managers = validateManagers(leagueJSON);
 
-            GamePlayConfig gamePlayConfig = loadGamePlayConfigJSON(gameplayConfigJSONObject);
+            IGamePlayConfig gamePlayConfig = loadGamePlayConfigJSON(gameplayConfigJSONObject);
 
-            List<Conference> conferenceList = loadConferenceJSON(conferences);
+            List<IConference> conferenceList = loadConferenceJSON(conferences);
 
-            FreeAgentConcrete freeAgentConcrete = new FreeAgentConcrete();
-            FreeAgent freeAgent = freeAgentConcrete.newFreeAgent();
-            List<Player> freeAgentList = loadFreeAgentJSON(freeAgents);
+            IFreeAgentFactory freeAgentConcrete = hockeyContext.getFreeAgentFactory();
+            IFreeAgent freeAgent = freeAgentConcrete.newFreeAgent();
+            List<IPlayer> freeAgentList = loadFreeAgentJSON(freeAgents);
             freeAgent.setPlayerList(freeAgentList);
 
-            List<Coach> coachList = loadCoachJSON(coaches);
+            List<ICoach> coachList = loadCoachJSON(coaches);
 
-            List<Manager> managerList = loadManagerJSON(managers);
+            List<IManager> managerList = loadManagerJSON(managers);
 
-            List<Player> retiredPlayerList = new ArrayList<>();
+            List<IPlayer> retiredPlayerList = new ArrayList<>();
 
             setLeagueVariables(leagueName, gamePlayConfig, conferenceList, freeAgent, coachList, managerList, retiredPlayerList);
+
         } catch (Exception e) {
             log.error("ImportState: parseJSONAndInstantiateLeague: Exception: " + e);
             throw e;
         }
     }
 
-    private void setLeagueVariables(String leagueName, GamePlayConfig gamePlayConfig, List<Conference> conferenceList, FreeAgent freeAgent, List<Coach> coachList, List<Manager> managerList, List<Player> retiredPlayerList) {
+    private void setLeagueVariables(String leagueName, IGamePlayConfig gamePlayConfig,
+                                    List<IConference> conferenceList, IFreeAgent freeAgent,
+                                    List<ICoach> coachList, List<IManager> managerList, List<IPlayer> retiredPlayerList) {
         league.setName(leagueName);
         league.setConferenceList(conferenceList);
         league.setFreeAgent(freeAgent);
@@ -198,16 +201,15 @@ public class ImportState implements IHockeyState {
         return (JSONObject) leagueJSON.get(GAMEPLAY_CONFIG);
     }
 
-    private GamePlayConfig loadGamePlayConfigJSON(JSONObject gameplayConfigJSONObject) throws IllegalArgumentException {
-        GamePlayConfigConcrete gamePlayConfigConcrete = new GamePlayConfigConcrete();
-        GamePlayConfig gamePlayConfig = gamePlayConfigConcrete.newGamePlayConfig();
+    private IGamePlayConfig loadGamePlayConfigJSON(JSONObject gameplayConfigJSONObject) throws IllegalArgumentException {
+        IGamePlayConfigFactory gamePlayConfigConcrete = hockeyContext.getGamePlayConfigFactory();
+        IGamePlayConfig gamePlayConfig = gamePlayConfigConcrete.newGamePlayConfig();
 
         if (validateKeyInObject(gameplayConfigJSONObject, AGING)) {
             throw new IllegalArgumentException("Please make sure aging is provided in JSON");
         }
         JSONObject agingJSONObject = (JSONObject) gameplayConfigJSONObject.get(AGING);
-        //IAging aging = loadAgingJson(agingJSONObject);
-        Aging aging = loadAgingJson(agingJSONObject);
+        IAging aging = loadAgingJson(agingJSONObject);
         aging.setLeagueId(leagueId);
         gamePlayConfig.setAging(aging);
 
@@ -215,7 +217,7 @@ public class ImportState implements IHockeyState {
             throw new IllegalArgumentException("Please make sure injuries is provided in JSON");
         }
         JSONObject injuriesJSONObject = (JSONObject) gameplayConfigJSONObject.get(INJURIES);
-        Injury injury = loadInjuryJson(injuriesJSONObject);
+        IInjury injury = loadInjuryJson(injuriesJSONObject);
         injury.setLeagueId(leagueId);
         gamePlayConfig.setInjury(injury);
 
@@ -223,7 +225,7 @@ public class ImportState implements IHockeyState {
             throw new IllegalArgumentException("Please make sure training is provided in JSON");
         }
         JSONObject trainingJSONObject = (JSONObject) gameplayConfigJSONObject.get(TRAINING);
-        Training training = loadTrainingJson(trainingJSONObject);
+        ITraining training = loadTrainingJson(trainingJSONObject);
         training.setLeagueId(leagueId);
         gamePlayConfig.setTraining(training);
 
@@ -231,14 +233,15 @@ public class ImportState implements IHockeyState {
             throw new IllegalArgumentException("Please make sure trading is provided in JSON");
         }
         JSONObject tradingJSONObject = (JSONObject) gameplayConfigJSONObject.get(TRADING);
-        Trading trading = loadTradingJson(tradingJSONObject);
+        ITrading trading = loadTradingJson(tradingJSONObject);
         gamePlayConfig.setTrading(trading);
         gamePlayConfig.setLeagueId(leagueId);
         return gamePlayConfig;
     }
 
-    private List<Team> loadTeamJSON(JSONArray teams) throws IllegalArgumentException {
-        List<Team> teamList = new ArrayList<>();
+    private List<ITeam> loadTeamJSON(JSONArray teams) throws IllegalArgumentException {
+
+        List<ITeam> teamList = new ArrayList<>();
         for (Object teamObjectFromJSONArray : teams) {
 
             JSONObject teamJSONObject = (JSONObject) teamObjectFromJSONArray;
@@ -259,13 +262,13 @@ public class ImportState implements IHockeyState {
                 throw new IllegalArgumentException("Please make sure team name is unique in one league");
             }
 
-            Manager manager = setTeamManager(teamJSONObject);
+            IManager manager = setTeamManager(teamJSONObject);
 
-            Coach coach = setTeamCoach(teamJSONObject);
+            ICoach coach = setTeamCoach(teamJSONObject);
 
-            List<Player> playerList = setTeamPlayerList(teamJSONObject);
+            List<IPlayer> playerList = setTeamPlayerList(teamJSONObject);
 
-            Team team = setTeamVariables(teamName, manager, coach, playerList);
+            ITeam team = setTeamVariables(teamName, manager, coach, playerList);
             team.setDivisionId(divisionId);
             teamId = team.getId();
             manager.setTeamId(teamId);
@@ -277,7 +280,7 @@ public class ImportState implements IHockeyState {
         return teamList;
     }
 
-    private List<Player> setTeamPlayerList(JSONObject teamJSONObject) throws IllegalArgumentException {
+    private List<IPlayer> setTeamPlayerList(JSONObject teamJSONObject) throws IllegalArgumentException {
         if (validateKeyInObject(teamJSONObject, PLAYERS)) {
             throw new IllegalArgumentException("Please make sure team players is provided in JSON");
         }
@@ -289,7 +292,7 @@ public class ImportState implements IHockeyState {
         return loadPlayerJSON(players);
     }
 
-    private Coach setTeamCoach(JSONObject teamJSONObject) throws IllegalArgumentException {
+    private ICoach setTeamCoach(JSONObject teamJSONObject) throws IllegalArgumentException {
         if (validateKeyInObject(teamJSONObject, HEAD_COACH)) {
             throw new IllegalArgumentException("Please make sure team headCoach is provided in JSON");
         }
@@ -317,7 +320,7 @@ public class ImportState implements IHockeyState {
         return setCoachVariables(coachName, skating, shooting, checking, saving);
     }
 
-    private Manager setTeamManager(JSONObject teamJSONObject) throws IllegalArgumentException {
+    private IManager setTeamManager(JSONObject teamJSONObject) throws IllegalArgumentException {
         if (validateKeyInObject(teamJSONObject, MANAGER)) {
             throw new IllegalArgumentException("Please make sure manager name is provided and correct");
         }
@@ -329,20 +332,20 @@ public class ImportState implements IHockeyState {
         }
 
         String personality = (String) generalManager.get(PERSONALITY);
-        if (validateString(personality)) {
+        if(validateString(personality)){
             throw new IllegalArgumentException("Please make sure manager's personality is valid");
         }
 
-        ManagerConcrete managerConcrete = new ManagerConcrete();
-        Manager manager = managerConcrete.newManagerConcrete();
+        IManagerFactory managerConcrete = hockeyContext.getManagerFactory();
+        IManager manager = managerConcrete.newManagerConcrete();
         manager.setName(name);
         manager.setPersonality(personality);
         return manager;
     }
 
-    private Coach setCoachVariables(String coachName, Double skating, Double shooting, Double checking, Double saving) {
+    private ICoach setCoachVariables(String coachName, Double skating, Double shooting, Double checking, Double saving) {
         ICoachFactory coachConcrete = hockeyContext.getCoachFactory();
-        Coach coach = coachConcrete.newCoach();
+        ICoach coach = coachConcrete.newCoach();
         coach.setName(coachName);
         coach.setSkating(skating);
         coach.setShooting(shooting);
@@ -351,9 +354,9 @@ public class ImportState implements IHockeyState {
         return coach;
     }
 
-    private Team setTeamVariables(String teamName, Manager manager, Coach coach, List<Player> playerList) throws IllegalArgumentException {
-        TeamConcrete teamConcrete = new TeamConcrete();
-        Team team = teamConcrete.newTeam();
+    private ITeam setTeamVariables(String teamName, IManager manager, ICoach coach, List<IPlayer> playerList) throws IllegalArgumentException {
+        ITeamFactory teamConcrete = hockeyContext.getTeamFactory();
+        ITeam team = teamConcrete.newTeam();
         team.setName(teamName);
         team.setManager(manager);
         team.setCoach(coach);
@@ -364,9 +367,9 @@ public class ImportState implements IHockeyState {
         return team;
     }
 
-    private List<Player> loadPlayerJSON(JSONArray players) throws IllegalArgumentException {
+    private List<IPlayer> loadPlayerJSON(JSONArray players) throws IllegalArgumentException {
 
-        List<Player> playerList = new ArrayList<>();
+        List<IPlayer> playerList = new ArrayList<>();
         int captainCount = 0;
         try {
             for (Object playerObjectFromJSONArray : players) {
@@ -380,7 +383,7 @@ public class ImportState implements IHockeyState {
                     throw new IllegalArgumentException("Please make sure player name is valid ");
                 }
 
-                Player.Position position = validatePosition(playerJsonObject);
+                Position position = validatePosition(playerJsonObject);
 
                 if (validateKeyInObject(playerJsonObject, CAPTAIN)) {
                     throw new IllegalArgumentException("Please make sure player captain is provided");
@@ -406,7 +409,7 @@ public class ImportState implements IHockeyState {
 
                 int saving = getPlayerSaving(playerJsonObject);
 
-                Player player = setTeamPlayerVariables(playerName, position, captain, birthday, skating, shooting, checking, saving);
+                IPlayer player = setTeamPlayerVariables(playerName, position, captain, birthday, skating, shooting, checking, saving);
                 player.setTeamId(teamId);
 
                 player.setFreeAgentId(player.getId());
@@ -475,25 +478,27 @@ public class ImportState implements IHockeyState {
         return LocalDate.of(birthYear, birthMonth, birthDay);
     }
 
-    private Player.Position validatePosition(JSONObject playerJsonObject) throws IllegalArgumentException {
+    private Position validatePosition(JSONObject playerJsonObject) throws IllegalArgumentException {
         if (validateKeyInObject(playerJsonObject, POSITION)) {
             throw new IllegalArgumentException("Please make sure player position is provided");
         }
         String positionString = (String) playerJsonObject.get(POSITION);
-        Player.Position positionEnum = null;
-        if (positionString.equalsIgnoreCase(Player.Position.GOALIE.toString())) {
-            positionEnum = Player.Position.GOALIE;
-        } else if (positionString.equalsIgnoreCase(Player.Position.FORWARD.toString())) {
-            positionEnum = Player.Position.FORWARD;
-        } else if (positionString.equalsIgnoreCase(Player.Position.DEFENSE.toString())) {
-            positionEnum = Player.Position.DEFENSE;
+        Position positionEnum = null;
+        if (positionString.equalsIgnoreCase(Position.GOALIE.toString())) {
+            positionEnum = Position.GOALIE;
+        } else if (positionString.equalsIgnoreCase(Position.FORWARD.toString())) {
+            positionEnum = Position.FORWARD;
+        } else if (positionString.equalsIgnoreCase(Position.DEFENSE.toString())) {
+            positionEnum = Position.DEFENSE;
         }
         return positionEnum;
     }
 
-    private Player setTeamPlayerVariables(String playerName, Player.Position position, boolean captain, LocalDate birthday, int skating, int shooting, int checking, int saving) {
-        PlayerConcrete playerConcrete = new PlayerConcrete();
-        Player player = playerConcrete.newPlayer();
+    private IPlayer setTeamPlayerVariables(String playerName, Position position,
+                                           boolean captain, LocalDate birthday,
+                                           int skating, int shooting, int checking, int saving) {
+        IPlayerFactory playerConcrete = hockeyContext.getPlayerFactory();
+        IPlayer player = playerConcrete.newPlayer();
         player.setName(playerName);
         player.setPosition(position);
         player.setCaptain(captain);
@@ -509,8 +514,8 @@ public class ImportState implements IHockeyState {
         return player;
     }
 
-    private List<Division> loadDivisionJSON(JSONArray divisions) throws IllegalArgumentException {
-        List<Division> divisionList = new ArrayList<Division>();
+    private List<IDivision> loadDivisionJSON(JSONArray divisions) throws IllegalArgumentException {
+        List<IDivision> divisionList = new ArrayList<IDivision>();
         for (Object divisionObjectFromJSONArray : divisions) {
             JSONObject divisionJSONObject = (JSONObject) divisionObjectFromJSONArray;
 
@@ -539,7 +544,7 @@ public class ImportState implements IHockeyState {
                 throw new IllegalArgumentException("Please make sure at least one team is provided");
             }
 
-            List<Team> teamList = loadTeamJSON(teams);
+            List<ITeam> teamList = loadTeamJSON(teams);
 
             division.setTeamList(teamList);
             divisionList.add(division);
@@ -547,8 +552,8 @@ public class ImportState implements IHockeyState {
         return divisionList;
     }
 
-    private List<Conference> loadConferenceJSON(JSONArray conferences) throws IllegalArgumentException {
-        List<Conference> conferenceList = new ArrayList<Conference>();
+    private List<IConference> loadConferenceJSON(JSONArray conferences) throws IllegalArgumentException {
+        List<IConference> conferenceList = new ArrayList<IConference>();
         for (Object conferenceObjectFromJSONArray : conferences) {
             JSONObject conferenceJSONObject = (JSONObject) conferenceObjectFromJSONArray;
 
@@ -566,15 +571,15 @@ public class ImportState implements IHockeyState {
                 throw new IllegalArgumentException("Please make sure there are no duplicates in conference name");
             }
 
-            ConferenceConcrete conferenceConcrete = new ConferenceConcrete();
-            Conference conference = conferenceConcrete.newConference();
+            IConferenceFactory conferenceConcrete = hockeyContext.getConferenceFactory();
+            IConference conference = conferenceConcrete.newConference();
             conference.setLeagueId(leagueId);
             conference.setName(conferenceName);
             conferenceId = conference.getId();
 
             JSONArray divisions = validateDivisions(conferenceJSONObject);
 
-            List<Division> divisionList = loadDivisionJSON(divisions);
+            List<IDivision> divisionList = loadDivisionJSON(divisions);
 
             conference.setDivisionList(divisionList);
             conferenceList.add(conference);
@@ -594,10 +599,9 @@ public class ImportState implements IHockeyState {
         return divisions;
     }
 
-    private List<Player> loadFreeAgentJSON(JSONArray freeAgents) throws IllegalArgumentException {
+    private List<IPlayer> loadFreeAgentJSON(JSONArray freeAgents) throws IllegalArgumentException {
 
-        ArrayList<Player> freeAgentList = new ArrayList<>();
-
+        List<IPlayer> freeAgentList = new ArrayList<>();
 
         for (Object freeAgentObjectFromJSONArray : freeAgents) {
             JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
@@ -609,7 +613,7 @@ public class ImportState implements IHockeyState {
                 throw new IllegalArgumentException("Please make sure player name is valid in Free Agent");
             }
 
-            Player.Position position = validatePosition(freeAgentJsonObject);
+            Position position = validatePosition(freeAgentJsonObject);
 
             LocalDate birthday = getPlayerBirthday(freeAgentJsonObject);
 
@@ -621,7 +625,7 @@ public class ImportState implements IHockeyState {
 
             int saving = getPlayerSaving(freeAgentJsonObject);
 
-            Player player = setFreePlayerVariables(playerName, position, birthday, skating, shooting, checking, saving);
+            IPlayer player = setFreePlayerVariables(playerName, position, birthday, skating, shooting, checking, saving);
 
             if (player.validName()) {
                 freeAgentList.add(player);
@@ -633,9 +637,9 @@ public class ImportState implements IHockeyState {
         return freeAgentList;
     }
 
-    private Player setFreePlayerVariables(String playerName, Player.Position position, LocalDate birthday, int skating, int shooting, int checking, int saving) {
-        PlayerConcrete playerConcrete = new PlayerConcrete();
-        Player player = playerConcrete.newPlayer();
+    private IPlayer setFreePlayerVariables(String playerName, Position position, LocalDate birthday, int skating, int shooting, int checking, int saving) {
+        IPlayerFactory playerConcrete = hockeyContext.getPlayerFactory();
+        IPlayer player = playerConcrete.newPlayer();
         player.setName(playerName);
         player.setPosition(position);
         player.setBirthday(birthday);
@@ -650,8 +654,8 @@ public class ImportState implements IHockeyState {
         return player;
     }
 
-    private List<Manager> loadManagerJSON(JSONArray managers) {
-        List<Manager> managerList = new ArrayList<>();
+    private List<IManager> loadManagerJSON(JSONArray managers) {
+        List<IManager> managerList = new ArrayList<>();
         int managerSize = managers.size();
 
         for (int i = 0; i < managerSize; i++) {
@@ -667,8 +671,8 @@ public class ImportState implements IHockeyState {
                 throw new IllegalArgumentException("Please make sure manager's personality is valid");
             }
 
-            ManagerConcrete managerConcrete = new ManagerConcrete();
-            Manager manager = managerConcrete.newManagerConcrete();
+            IManagerFactory managerConcrete = hockeyContext.getManagerFactory();
+            IManager manager = managerConcrete.newManagerConcrete();
             manager.setName(name);
             manager.setPersonality(personality);
             managerList.add(manager);
@@ -676,8 +680,8 @@ public class ImportState implements IHockeyState {
         return managerList;
     }
 
-    private List<Coach> loadCoachJSON(JSONArray coaches) {
-        ArrayList<Coach> coachList = new ArrayList<>();
+    private List<ICoach> loadCoachJSON(JSONArray coaches) {
+        List<ICoach> coachList = new ArrayList<>();
         for (Object coachObjectFromJSONArray : coaches) {
             JSONObject coachJsonObject = (JSONObject) coachObjectFromJSONArray;
             String name = (String) coachJsonObject.get(NAME);
@@ -685,14 +689,13 @@ public class ImportState implements IHockeyState {
             Double shooting = (Double) coachJsonObject.get(SHOOTING);
             Double checking = (Double) coachJsonObject.get(CHECKING);
             Double saving = (Double) coachJsonObject.get(SAVING);
-            Coach coach = setCoachVariables(name, skating, shooting, checking, saving);
+            ICoach coach = setCoachVariables(name, skating, shooting, checking, saving);
             coachList.add(coach);
         }
         return coachList;
     }
 
-    //private IAging loadAgingJson(JSONObject agingJSONObject) {
-    private Aging loadAgingJson(JSONObject agingJSONObject) {
+    private IAging loadAgingJson(JSONObject agingJSONObject) {
         if (validateKeyInObject(agingJSONObject, AVERAGE_RETIREMENT_AGE)) {
             throw new IllegalArgumentException("Please make sure averageRetirementAge is provided in JSON");
         }
@@ -709,15 +712,14 @@ public class ImportState implements IHockeyState {
         Double statDecayChance = (Double) agingJSONObject.get(STAT_DECAY_CHANCE);
 
         IAgingFactory agingFactory = hockeyContext.getAgingFactory();
-        //IAging aging = agingFactory.newAging();
-        Aging aging = agingFactory.newAging();
+        IAging aging = agingFactory.newAging();
         aging.setAverageRetirementAge(averageRetirementAge);
         aging.setMaximumAge(maximumAge);
         aging.setStatDecayChance(statDecayChance);
         return aging;
     }
 
-    private Injury loadInjuryJson(JSONObject injuriesJSONObject) {
+    private IInjury loadInjuryJson(JSONObject injuriesJSONObject) {
         if (validateKeyInObject(injuriesJSONObject, RANDOM_INJURY_CHANCE)) {
             throw new IllegalArgumentException("Please make sure randomInjuryChance is provided in JSON");
         }
@@ -733,26 +735,26 @@ public class ImportState implements IHockeyState {
         }
         int injuryDaysHigh = (int) (long) injuriesJSONObject.get(INJURY_DAYS_HIGH);
 
-        InjuryConcrete injuryConcrete = new InjuryConcrete();
-        Injury injury = injuryConcrete.newInjury();
+        IInjuryFactory injuryConcrete = hockeyContext.getInjuryFactory();
+        IInjury injury = injuryConcrete.newInjury();
         injury.setRandomInjuryChance(randomInjuryChance);
         injury.setInjuryDaysLow(injuryDaysLow);
         injury.setInjuryDaysHigh(injuryDaysHigh);
         return injury;
     }
 
-    private Training loadTrainingJson(JSONObject trainingJSONObject) {
+    private ITraining loadTrainingJson(JSONObject trainingJSONObject) {
         if (validateKeyInObject(trainingJSONObject, DAYS_UNTIL_STAT_INCREASE_CHECK)) {
             throw new IllegalArgumentException("Please make sure daysUntilStatIncreaseCheck is provided in JSON");
         }
         int daysUntil = (int) (long) trainingJSONObject.get(DAYS_UNTIL_STAT_INCREASE_CHECK);
-        TrainingConcrete trainingConcrete = new TrainingConcrete();
-        Training training = trainingConcrete.newTraining();
+        ITrainingFactory trainingConcrete = hockeyContext.getTrainingFactory();
+        ITraining training = trainingConcrete.newTraining();
         training.setDaysUntilStatIncreaseCheck(daysUntil);
         return training;
     }
 
-    private Trading loadTradingJson(JSONObject tradingJSONObject) {
+    private ITrading loadTradingJson(JSONObject tradingJSONObject) {
         if (validateKeyInObject(tradingJSONObject, LOSS_POINT)) {
             throw new IllegalArgumentException("Please make sure lossPoint is provided in JSON");
         }
@@ -785,8 +787,8 @@ public class ImportState implements IHockeyState {
             gmTable.put(attribute, attributeValue);
         }
 
-        TradingConcrete tradingConcrete = new TradingConcrete();
-        Trading trading = tradingConcrete.newTrading();
+        ITradingFactory tradingConcrete = hockeyContext.getTradingFactory();
+        ITrading trading = tradingConcrete.newTrading();
         trading.setLossPoint(lossPoint);
         trading.setRandomTradeOfferChance(randomTradeOfferChance);
         trading.setMaxPlayersPerTrade(maxPlayersPerTrade);
@@ -823,9 +825,9 @@ public class ImportState implements IHockeyState {
         }
     }
 
-    private boolean isDivisionExists(List<Division> list, String name) {
+    private boolean isDivisionExists(List<IDivision> list, String name) {
         boolean isExist = false;
-        for (Division division : list) {
+        for (IDivision division : list) {
             if (division.getName().equals(name)) {
                 isExist = true;
             }
@@ -833,9 +835,9 @@ public class ImportState implements IHockeyState {
         return isExist;
     }
 
-    private boolean isConferenceExists(List<Conference> list, String name) {
+    private boolean isConferenceExists(List<IConference> list, String name) {
         boolean isExist = false;
-        for (Conference conference : list) {
+        for (IConference conference : list) {
             if (conference.getName().equals(name)) {
                 isExist = true;
             }
@@ -843,9 +845,9 @@ public class ImportState implements IHockeyState {
         return isExist;
     }
 
-    private boolean isTeamExistsInDivision(List<Team> list, String name) {
+    private boolean isTeamExistsInDivision(List<ITeam> list, String name) {
         boolean isExist = false;
-        for (Team team : list) {
+        for (ITeam team : list) {
             if (team.getName().equals(name)) {
                 isExist = true;
             }

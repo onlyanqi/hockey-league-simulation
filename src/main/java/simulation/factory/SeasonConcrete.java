@@ -1,11 +1,11 @@
 package simulation.factory;
 
-import db.data.ISeasonFactory;
+import simulation.model.ISeason;
 import simulation.model.Season;
 
 public class SeasonConcrete {
 
-    public Season newSeason() {
+    public ISeason newSeason() {
         return new Season();
     }
 

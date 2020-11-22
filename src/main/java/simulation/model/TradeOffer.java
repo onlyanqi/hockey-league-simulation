@@ -1,10 +1,10 @@
 package simulation.model;
 
-import db.data.ITradeOfferFactory;
+import db.data.ITradeOfferDao;
 
 import java.util.List;
 
-public class TradeOffer extends SharedAttributes {
+public class TradeOffer extends SharedAttributes implements ITradeOffer{
 
     private int leagueId;
     private int tradingId;
@@ -22,7 +22,7 @@ public class TradeOffer extends SharedAttributes {
         setId(System.identityHashCode(this));
     }
 
-    public TradeOffer(int tradingOfferId, ITradeOfferFactory factory) throws Exception {
+    public TradeOffer(int tradingOfferId, ITradeOfferDao factory) throws Exception {
         setId(tradingOfferId);
         factory.loadTradeOfferDetailsById(tradingOfferId, this);
     }
@@ -91,7 +91,7 @@ public class TradeOffer extends SharedAttributes {
         this.status = status;
     }
 
-    public void addTradeOffer(ITradeOfferFactory tradeOfferFactory) throws Exception {
+    public void addTradeOffer(ITradeOfferDao tradeOfferFactory) throws Exception {
         tradeOfferFactory.addTradeOfferDetails(this);
     }
 

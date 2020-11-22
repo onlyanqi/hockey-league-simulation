@@ -1,25 +1,22 @@
 package simulation.state;
 
-import db.data.ILeagueFactory;
-import db.data.IUserFactory;
+import db.data.ILeagueDao;
+import db.data.IUserDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.mock.UserMock;
-import simulation.model.Coach;
-import simulation.model.League;
-import simulation.model.Player;
-import simulation.model.User;
+import simulation.model.*;
 
 import static org.junit.Assert.*;
 
 public class TrainingStateTest {
     private static ITrainingState trainingState;
-    private static ILeagueFactory leagueFactory;
+    private static ILeagueDao leagueFactory;
     private static IHockeyContext hockeyContext;
-    private static IUserFactory userFactory;
+    private static IUserDao userFactory;
     private static IHockeyContextFactory hockeyContextFactory;
 
     @BeforeClass
@@ -64,10 +61,10 @@ public class TrainingStateTest {
         League league = new League(4, leagueFactory);
         hockeyContext.getUser().setLeague(league);
         League oldLeague = league;
-        Player player = league.getConferenceList().get(1).getDivisionList().get(1).getTeamList().get(0).getPlayerList().get(1);
-        Coach headCoach = league.getConferenceList().get(1).getDivisionList().get(1).getTeamList().get(0).getCoach();
-        Player oldPlayer = player;
-        Coach oldHeadCoach = headCoach;
+        IPlayer player = league.getConferenceList().get(1).getDivisionList().get(1).getTeamList().get(0).getPlayerList().get(1);
+        ICoach headCoach = league.getConferenceList().get(1).getDivisionList().get(1).getTeamList().get(0).getCoach();
+        IPlayer oldPlayer = player;
+        ICoach oldHeadCoach = headCoach;
         trainingState.statIncreaseCheckForPlayer(player, headCoach);
         assertEquals(oldPlayer, player);
         assertEquals(oldHeadCoach, headCoach);

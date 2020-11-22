@@ -1,19 +1,21 @@
 package simulation.mock;
 
-import db.data.IConferenceFactory;
-import db.data.IDivisionFactory;
+import db.data.IConferenceDao;
+import db.data.IDivisionDao;
 import simulation.model.Conference;
 import simulation.model.Division;
+import simulation.model.IConference;
+import simulation.model.IDivision;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConferenceMock implements IConferenceFactory {
+public class ConferenceMock implements IConferenceDao {
 
     public List formDivisionList() throws Exception {
-        List<Division> divisionList = new ArrayList<>();
+        List<IDivision> divisionList = new ArrayList<>();
 
-        IDivisionFactory divisionFactory = new DivisionMock();
+        IDivisionDao divisionFactory = new DivisionMock();
         Division division = new Division(1, divisionFactory);
         divisionList.add(division);
 
@@ -24,9 +26,9 @@ public class ConferenceMock implements IConferenceFactory {
     }
 
     public List formCreateTeamDivisionList() throws Exception {
-        List<Division> divisionList = new ArrayList<>();
+        List<IDivision> divisionList = new ArrayList<>();
 
-        IDivisionFactory divisionFactory = new DivisionMock();
+        IDivisionDao divisionFactory = new DivisionMock();
         Division division = new Division(1, divisionFactory);
         divisionList.add(division);
 
@@ -37,13 +39,13 @@ public class ConferenceMock implements IConferenceFactory {
     }
 
     @Override
-    public int addConference(Conference conference) throws Exception {
+    public int addConference(IConference conference) throws Exception {
         conference = new Conference(1);
         return conference.getId();
     }
 
     @Override
-    public void loadConferenceById(int id, Conference conference) throws Exception {
+    public void loadConferenceById(int id, IConference conference) throws Exception {
 
         switch (new Long(id).intValue()) {
             case 1:
@@ -74,8 +76,8 @@ public class ConferenceMock implements IConferenceFactory {
     }
 
     @Override
-    public Conference loadConferenceByName(String conferenceName) throws Exception {
-        Conference conference = new Conference();
+    public IConference loadConferenceByName(String conferenceName) throws Exception {
+        IConference conference = new Conference();
         conference.setName("Conference1");
         conference.setLeagueId(1);
         conference.setDivisionList(formDivisionList());
@@ -83,7 +85,7 @@ public class ConferenceMock implements IConferenceFactory {
     }
 
     @Override
-    public List<Conference> loadConferenceListByLeagueId(int leagueId) throws Exception {
+    public List<IConference> loadConferenceListByLeagueId(int leagueId) throws Exception {
         LeagueMock loadLeagueMock = new LeagueMock();
         return loadLeagueMock.formConferenceList();
     }

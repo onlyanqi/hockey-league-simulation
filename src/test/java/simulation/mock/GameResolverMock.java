@@ -1,13 +1,14 @@
 package simulation.mock;
 
-import db.data.IGameResolverFactory;
+import db.data.IGameResolverDao;
 import simulation.model.GameResolver;
+import simulation.model.IGameResolver;
 
-public class GameResolverMock implements IGameResolverFactory {
+public class GameResolverMock implements IGameResolverDao {
 
 
     @Override
-    public long addGameResolver(int leagueId, GameResolver gameResolver) throws Exception {
+    public long addGameResolver(int leagueId, IGameResolver gameResolver) throws Exception {
         if (gameResolver == null) {
             return -1;
         } else {
@@ -17,7 +18,7 @@ public class GameResolverMock implements IGameResolverFactory {
     }
 
     @Override
-    public void loadGameResolverById(int id, GameResolver gameResolver) throws Exception {
+    public void loadGameResolverById(int id, IGameResolver gameResolver) throws Exception {
         switch (id) {
             case 1:
                 gameResolver.setRandomWinChance(0.2);
@@ -30,7 +31,7 @@ public class GameResolverMock implements IGameResolverFactory {
     }
 
     @Override
-    public void loadResolverByLeagueId(int leagueId, GameResolver gameResolver) throws Exception {
+    public void loadResolverByLeagueId(int leagueId, IGameResolver gameResolver) throws Exception {
         switch (leagueId) {
             case 1:
                 gameResolver.setRandomWinChance(0.1);

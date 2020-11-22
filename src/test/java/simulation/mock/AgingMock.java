@@ -1,18 +1,20 @@
 package simulation.mock;
 
 import db.data.IAgingDao;
+import org.json.simple.JSONObject;
 import simulation.model.Aging;
+import simulation.model.IAging;
 
 public class AgingMock implements IAgingDao {
 
     @Override
-    public int addAging(Aging aging) {
+    public int addAging(IAging aging) {
         aging = new Aging(1);
         return aging.getId();
     }
 
     @Override
-    public Aging loadAgingByLeagueId(int id) {
+    public IAging loadAgingByLeagueId(int id) {
 
         Aging aging = new Aging();
 
@@ -45,7 +47,7 @@ public class AgingMock implements IAgingDao {
     }
 
     @Override
-    public void loadAgingById(int id, Aging aging) {
+    public void loadAgingById(int id, IAging aging) {
         switch (id) {
             case 1:
                 aging.setAverageRetirementAge(35);
@@ -78,6 +80,11 @@ public class AgingMock implements IAgingDao {
                 break;
 
         }
+    }
+
+    @Override
+    public void loadAgingFromJSON(IAging aging, JSONObject jsonObject) {
+
     }
 
 }

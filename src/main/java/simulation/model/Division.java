@@ -1,15 +1,15 @@
 package simulation.model;
 
-import db.data.IDivisionFactory;
-import db.data.ITeamFactory;
+import db.data.IDivisionDao;
+import db.data.ITeamDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Division extends SharedAttributes {
+public class Division extends SharedAttributes implements IDivision {
 
     private int conferenceId;
-    private List<Team> teamList;
+    private List<ITeam> teamList;
 
     public Division() {
         setId(System.identityHashCode(this));
@@ -19,7 +19,7 @@ public class Division extends SharedAttributes {
         setId(id);
     }
 
-    public Division(int id, IDivisionFactory factory) throws Exception {
+    public Division(int id, IDivisionDao factory) throws Exception {
         if (factory == null) {
             return;
         }
@@ -27,11 +27,11 @@ public class Division extends SharedAttributes {
         factory.loadDivisionById(id, this);
     }
 
-    public List<Team> getTeamList() {
+    public List<ITeam> getTeamList() {
         return teamList;
     }
 
-    public void setTeamList(List<Team> teamList) {
+    public void setTeamList(List<ITeam> teamList) {
         if (teamList == null) {
             return;
         }
@@ -46,14 +46,14 @@ public class Division extends SharedAttributes {
         this.conferenceId = conferenceId;
     }
 
-    public void addDivision(IDivisionFactory addDivisionFactory) throws Exception {
+    public void addDivision(IDivisionDao addDivisionFactory) throws Exception {
         if (addDivisionFactory == null) {
             return;
         }
         addDivisionFactory.addDivision(this);
     }
 
-    public void loadTeamListByDivisionId(ITeamFactory teamFactory) throws Exception {
+    public void loadTeamListByDivisionId(ITeamDao teamFactory) throws Exception {
         if (teamFactory == null) {
             return;
         }
@@ -62,7 +62,7 @@ public class Division extends SharedAttributes {
 
     public List<String> getTeamNameList() {
         List<String> teamNameList = new ArrayList<>();
-        for (Team team : this.getTeamList()) {
+        for (ITeam team : this.getTeamList()) {
             teamNameList.add(team.getName().toLowerCase());
         }
         return teamNameList;

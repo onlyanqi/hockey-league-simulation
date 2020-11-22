@@ -1,21 +1,22 @@
 package simulation.mock;
 
-import db.data.IEventFactory;
+import db.data.IEventDao;
+import simulation.model.INHLEvents;
 import simulation.model.NHLEvents;
 
 import java.time.LocalDate;
 import java.time.Month;
 
-public class NHLEventMock implements IEventFactory {
+public class NHLEventMock implements IEventDao {
 
     @Override
-    public long addEvent(int leagueId, NHLEvents event) {
+    public long addEvent(int leagueId, INHLEvents event) {
         event.setId(1);
         return event.getId();
     }
 
     @Override
-    public void loadEventById(int id, NHLEvents event) {
+    public void loadEventById(int id, INHLEvents event) {
         switch (id) {
             case 0:
                 event.setId(0);
@@ -47,7 +48,7 @@ public class NHLEventMock implements IEventFactory {
     }
 
     @Override
-    public void loadEventByLeagueId(int leagueId, NHLEvents event) {
+    public void loadEventByLeagueId(int leagueId, INHLEvents event) {
         switch (leagueId) {
             case 0:
                 event.setId(3);

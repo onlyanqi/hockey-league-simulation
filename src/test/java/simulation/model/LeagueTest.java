@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class LeagueTest {
 
-    private static ILeagueFactory leagueFactory;
+    private static ILeagueDao leagueFactory;
 
 
     @BeforeClass
@@ -47,7 +47,7 @@ public class LeagueTest {
     @Test
     public void getConferenceListTest() throws Exception {
         League league = new League(1, leagueFactory);
-        List<Conference> conferenceList = league.getConferenceList();
+        List<IConference> conferenceList = league.getConferenceList();
         assertNotNull(conferenceList);
 
         assertTrue(conferenceList.get(0).getId() == (1));
@@ -58,8 +58,8 @@ public class LeagueTest {
 
     @Test
     public void setConferenceListTest() throws Exception {
-        IConferenceFactory conferenceFactory = new ConferenceMock();
-        List<Conference> conferenceList = new ArrayList<>();
+        IConferenceDao conferenceFactory = new ConferenceMock();
+        List<IConference> conferenceList = new ArrayList<>();
         Conference conference = new Conference(1, conferenceFactory);
         conferenceList.add(conference);
         conference = new Conference(2, conferenceFactory);
@@ -77,7 +77,7 @@ public class LeagueTest {
     @Test
     public void removeManagerFromManagerListByIdTest() throws Exception {
         League league = new League(1, leagueFactory);
-        List<Manager> managerList = league.getManagerList();
+        List<IManager> managerList = league.getManagerList();
         assertEquals(managerList.size(), league.removeManagerFromManagerListById(managerList, 0).size() + 1);
         assertNotEquals(league.removeManagerFromManagerListById(managerList, 0), null);
         assertNotEquals(managerList.size(), league.removeManagerFromManagerListById(managerList, 0).size());
@@ -87,7 +87,7 @@ public class LeagueTest {
     public void removeCoachFromManagerListByIdTest() throws Exception {
         League league = new League(1, leagueFactory);
         ICoachFactory coachFactory = new CoachConcrete();
-        List<Coach> coachList = league.getCoachList();
+        List<ICoach> coachList = league.getCoachList();
         assertEquals(coachList.size(), league.removeCoachFromCoachListById(
                 coachList, 0, coachFactory).size() + 1);
         assertNotEquals(league.removeCoachFromCoachListById(
@@ -108,7 +108,7 @@ public class LeagueTest {
     @Test
     public void getConferenceFromListByNameTest() throws Exception {
         League league = new League(4, leagueFactory);
-        Conference conference = league.getConferenceFromListByName("Conference4");
+        IConference conference = league.getConferenceFromListByName("Conference4");
         assertEquals(conference.getName(), "Conference4");
         assertNotEquals(conference.getName(), null);
     }
@@ -116,7 +116,7 @@ public class LeagueTest {
     @Test
     public void getTeamByTeamNameTest() throws Exception {
         League league = new League(4, leagueFactory);
-        Team team = league.getTeamByTeamName("Team1");
+        ITeam team = league.getTeamByTeamName("Team1");
         assertEquals(team.getName(), "Team1");
         assertNotEquals(team.getName(), null);
     }
@@ -125,7 +125,7 @@ public class LeagueTest {
     public void getFreeAgentTest() throws Exception {
         League league = new League(1, leagueFactory);
         assertNotEquals(league.getFreeAgent().getId(), 0);
-        List<Player> playerList = league.getFreeAgent().getPlayerList();
+        List<IPlayer> playerList = league.getFreeAgent().getPlayerList();
         assertTrue(playerList.get(0).getName().equals("Player1"));
     }
 
@@ -133,8 +133,8 @@ public class LeagueTest {
     public void setFreeAgentTest() throws Exception {
         FreeAgent freeAgent = new FreeAgent();
         League league = new League();
-        IPlayerFactory playerFactory = new PlayerMock();
-        List<Player> playerList = new ArrayList<>();
+        IPlayerDao playerFactory = new PlayerMock();
+        List<IPlayer> playerList = new ArrayList<>();
 
         Player player = new Player(1, playerFactory);
         playerList.add(player);
@@ -163,7 +163,7 @@ public class LeagueTest {
 
     @Test
     public void loadConferenceListByLeagueId() throws Exception {
-        IConferenceFactory conferenceFactory = new ConferenceMock();
+        IConferenceDao conferenceFactory = new ConferenceMock();
         League league = new League();
         league.loadConferenceListByLeagueId(conferenceFactory);
 
@@ -176,7 +176,7 @@ public class LeagueTest {
     @Test
     public void loadFreeAgentByLeagueId() throws Exception {
         League league = new League(1);
-        IFreeAgentFactory loadFreeAgentFactory = new FreeAgentMock();
+        IFreeAgentDao loadFreeAgentFactory = new FreeAgentMock();
         league.loadFreeAgentByLeagueId(loadFreeAgentFactory);
         assertTrue(league.getFreeAgent().getLeagueId() == league.getId());
     }
@@ -185,7 +185,7 @@ public class LeagueTest {
     @Test
     public void getTradingOfferListTest() throws Exception {
         League league = new League(1, leagueFactory);
-        ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
+        ITradeOfferDao tradeOfferFactory = new TradeOfferMock();
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
         assertEquals(league.getTradeOfferList().get(0).getId(), tradeOffer.getId());
         assertEquals(league.getTradeOfferList().get(0).getFromTeamId(), tradeOffer.getFromTeamId());
@@ -193,10 +193,10 @@ public class LeagueTest {
 
     @Test
     public void setTradingOfferListTest() throws Exception {
-        ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
+        ITradeOfferDao tradeOfferFactory = new TradeOfferMock();
         TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
         TradeOffer tradeOffer1 = new TradeOffer(2, tradeOfferFactory);
-        List<TradeOffer> tradeOfferList = new ArrayList<>();
+        List<ITradeOffer> tradeOfferList = new ArrayList<>();
         tradeOfferList.add(tradeOffer);
         tradeOfferList.add(tradeOffer1);
         League league = new League(1, leagueFactory);
@@ -211,7 +211,7 @@ public class LeagueTest {
     public void loadTradingOfferDetailsByLeagueId() throws Exception {
         League league = new League();
         league.setId(1);
-        ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
+        ITradeOfferDao tradeOfferFactory = new TradeOfferMock();
         league.loadTradingOfferDetailsByLeagueId(tradeOfferFactory);
         assertEquals(league.getTradeOfferList().get(0).getId(), 1);
         assertNotEquals(league.getTradeOfferList().get(1).getId(), 1);

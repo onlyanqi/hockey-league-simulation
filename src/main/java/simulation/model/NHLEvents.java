@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IEventFactory;
+import db.data.IEventDao;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
 
 
-public class NHLEvents {
+public class NHLEvents implements INHLEvents{
 
     public int id;
     public LocalDate regularSeasonStartDate;
@@ -26,8 +26,8 @@ public class NHLEvents {
         initializeLastDayStanleyCupFinals();
         initializeNextSeasonDate();
     }
-    public NHLEvents(int leagueId, IEventFactory iEventFactory) throws Exception {
-        iEventFactory.loadEventByLeagueId(leagueId, this);
+    public NHLEvents(int leagueId, IEventDao iEventDao) throws Exception {
+        iEventDao.loadEventByLeagueId(leagueId, this);
     }
 
     public int getId() {

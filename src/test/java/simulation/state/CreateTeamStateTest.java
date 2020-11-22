@@ -20,17 +20,17 @@ public class CreateTeamStateTest {
     static User user;
     static League league;
 
-    private static ILeagueFactory factory = new LeagueMock();
-    private static ITeamFactory factoryTeam = new TeamMock();
-    private static IUserFactory factoryUser = new UserMock();
+    private static ILeagueDao factory = new LeagueMock();
+    private static ITeamDao factoryTeam = new TeamMock();
+    private static IUserDao factoryUser = new UserMock();
     private static IHockeyContext hockeyContext;
     private static IHockeyContextFactory hockeyContextFactory;
-    private List<Manager> managerList = null;
-    private List<Coach> coachList = null;
-    private FreeAgent freeAgent = null;
+    private List<IManager> managerList = null;
+    private List<ICoach> coachList = null;
+    private IFreeAgent freeAgent = null;
     private String conferenceName = null;
     private String divisionName = null;
-    private Team team = null;
+    private ITeam team = null;
 
     @BeforeClass
     public static void setState() throws Exception {
@@ -55,8 +55,8 @@ public class CreateTeamStateTest {
     @Test
     public void hasEnoughManagersTest() throws Exception {
         CreateTeamState createTeamState = new CreateTeamState();
-        List<Manager> managerList;
-        IManagerFactory managerFactory = new ManagerMock();
+        List<IManager> managerList;
+        IManagerDao managerFactory = new ManagerMock();
         managerList = managerFactory.loadFreeManagersByLeagueId(1);
         assertTrue(createTeamState.hasEnoughManagers(managerList));
         assertFalse(createTeamState.hasEnoughManagers(null));
@@ -70,7 +70,7 @@ public class CreateTeamStateTest {
     @Test
     public void hasEnoughCoachTest() throws Exception {
         CreateTeamState createTeamState = new CreateTeamState();
-        List<Coach> coachList;
+        List<ICoach> coachList;
         ICoachDao coachFactory = new CoachMock();
         coachList = coachFactory.loadFreeCoachListByLeagueId(1);
         assertTrue(createTeamState.hasEnoughCoaches(coachList));
@@ -86,10 +86,10 @@ public class CreateTeamStateTest {
     @Test
     public void hasEnoughFreeAgentTest() throws Exception {
         CreateTeamState createTeamState = new CreateTeamState();
-        IFreeAgentFactory freeAgentFactory = new FreeAgentMock();
+        IFreeAgentDao freeAgentFactory = new FreeAgentMock();
         FreeAgent freeAgent = new FreeAgent(1, freeAgentFactory);
         assertTrue(createTeamState.hasEnoughFreeAgent(freeAgent));
-        List<Player> freeAgentList = freeAgent.getPlayerList();
+        List<IPlayer> freeAgentList = freeAgent.getPlayerList();
         int freeAgentListSize = freeAgentList.size();
         for (int i = freeAgentListSize - 1; i >= 0; i--) {
             freeAgentList.remove(i);
@@ -101,7 +101,7 @@ public class CreateTeamStateTest {
 
     @Test
     public void getTeamNameTest() throws Exception {
-        IDivisionFactory divisionFactory = new DivisionMock();
+        IDivisionDao divisionFactory = new DivisionMock();
         Division division = new Division(4, divisionFactory);
         List<String> teamNameList = division.getTeamNameList();
         String teamName = "team10";
@@ -112,7 +112,7 @@ public class CreateTeamStateTest {
 
     @Test
     public void chooseDivisionTest() throws Exception {
-        IConferenceFactory conferenceFactory = new ConferenceMock();
+        IConferenceDao conferenceFactory = new ConferenceMock();
         Conference conference = new Conference(4, conferenceFactory);
         List<String> divisionNameList = conference.getDivisionNameList();
         String divisionName = "Division4";
@@ -123,7 +123,7 @@ public class CreateTeamStateTest {
 
     @Test
     public void chooseConferenceTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(4, leagueFactory);
         List<String> conferenceNameList = league.createConferenceNameList();
         String conferenceName = "Conference4";
@@ -134,16 +134,16 @@ public class CreateTeamStateTest {
 
     @Test
     public void choosePlayersTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(4, leagueFactory);
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
+        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
         int oldSizeOfFreeAgentList = freeAgentList.size();
         List<Integer> chosenPlayersIdList = new ArrayList<>();
         for (int i = 1; i < 21; i++) {
             chosenPlayersIdList.add(i);
         }
         CreateTeamState createTeamState = new CreateTeamState();
-        List<Player> teamPlayers = createTeamState.createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
+        List<IPlayer> teamPlayers = createTeamState.createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
         int teamPlayersListLength = teamPlayers.size();
         freeAgentList = createTeamState.removeChosenPlayersFromFreeAgentList(chosenPlayersIdList, freeAgentList);
         int newSizeOfFreeAgentList = freeAgentList.size();
@@ -154,10 +154,10 @@ public class CreateTeamStateTest {
 
     @Test
     public void chooseCoachTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(4, leagueFactory);
         ICoachFactory coachFactory = new CoachConcrete();
-        List<Coach> coachList = league.getCoachList();
+        List<ICoach> coachList = league.getCoachList();
         int oldCoachListLength = coachList.size();
         coachList = league.removeCoachFromCoachListById(coachList, 1, coachFactory);
         int newCoachListLength = coachList.size();
@@ -168,9 +168,9 @@ public class CreateTeamStateTest {
 
     @Test
     public void chooseManagerTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(4, leagueFactory);
-        List<Manager> managerList = league.getManagerList();
+        List<IManager> managerList = league.getManagerList();
         int oldManagerListLength = managerList.size();
         managerList = league.removeManagerFromManagerListById(managerList, 1);
         int newManagerListLength = managerList.size();
@@ -183,14 +183,14 @@ public class CreateTeamStateTest {
     public void createPlayerListByChosenPlayerIdTest() throws Exception {
         CreateTeamState createTeamState = new CreateTeamState();
         List<Integer> chosenPlayersIdList = new ArrayList<>();
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(4, leagueFactory);
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
+        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
         int freeAgentListSize = freeAgentList.size();
         for (int i = 1; i < 21; i++) {
             chosenPlayersIdList.add(i);
         }
-        List<Player> teamPlayers = createTeamState.createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
+        List<IPlayer> teamPlayers = createTeamState.createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
 
         assertEquals(teamPlayers.size(), 20);
         assertNotEquals(teamPlayers.size(), 15);
@@ -207,9 +207,9 @@ public class CreateTeamStateTest {
     public void removeChosenPlayersFromFreeAgentListTest() throws Exception {
         CreateTeamState createTeamState = new CreateTeamState();
         List<Integer> chosenPlayersIdList = new ArrayList<>();
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(4, leagueFactory);
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
+        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
         int freeAgentListSize = freeAgentList.size();
         for (int i = 1; i < 21; i++) {
             chosenPlayersIdList.add(i);
@@ -227,7 +227,7 @@ public class CreateTeamStateTest {
 
     @Test
     public void isLeaguePresentTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
 
         assertEquals(league.getName(), "League1");
@@ -242,14 +242,14 @@ public class CreateTeamStateTest {
         freeAgent = league.getFreeAgent();
         conferenceName = "Conference1";
         divisionName = "Division1";
-        List<Conference> conferenceList = league.getConferenceList();
+        List<IConference> conferenceList = league.getConferenceList();
         conferenceList.remove(1);
         league.setConferenceList(conferenceList);
-        List<Division> divisionList = league.getConferenceList().get(0).getDivisionList();
+        List<IDivision> divisionList = league.getConferenceList().get(0).getDivisionList();
         divisionList.remove(1);
         league.getConferenceList().get(0).setDivisionList(divisionList);
         hockeyContext.getUser().setLeague(league);
-        ITeamFactory teamFactory = new TeamMock();
+        ITeamDao teamFactory = new TeamMock();
         team = new Team(1, teamFactory);
         CreateTeamState createTeamState = new CreateTeamState(hockeyContext, null, null);
         createTeamState.setConferenceName(conferenceName);

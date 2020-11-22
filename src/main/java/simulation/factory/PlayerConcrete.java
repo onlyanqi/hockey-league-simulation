@@ -1,11 +1,11 @@
 package simulation.factory;
 
-import db.data.IPlayerFactory;
+import simulation.model.IPlayer;
 import simulation.model.Player;
 
-public class PlayerConcrete {
+public class PlayerConcrete implements IPlayerFactory {
 
-    public Player newPlayer() {
+    public IPlayer newPlayer() {
         return new Player();
     }
 

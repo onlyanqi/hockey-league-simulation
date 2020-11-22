@@ -1,8 +1,5 @@
 package simulation.model;
 
-import db.data.ISharedAttributesFactory;
-import org.apache.commons.lang3.StringUtils;
-
 
 public abstract class SharedAttributes {
 

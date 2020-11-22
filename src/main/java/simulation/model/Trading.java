@@ -1,9 +1,9 @@
 package simulation.model;
 
-import db.data.ITradingFactory;
+import db.data.ITradingDao;
 import java.util.*;
 
-public class Trading extends SharedAttributes {
+public class Trading extends SharedAttributes implements ITrading {
 
     private List<Integer> currentYearSeasonMonths = new ArrayList<>
             (Arrays.asList(9, 10, 11));
@@ -26,7 +26,7 @@ public class Trading extends SharedAttributes {
         setId(System.identityHashCode(this));
     }
 
-    public Trading(int tradingId, ITradingFactory factory) throws Exception {
+    public Trading(int tradingId, ITradingDao factory) throws Exception {
         setId(tradingId);
         factory.loadTradingDetailsByTradingId(tradingId, this);
     }
@@ -178,7 +178,7 @@ public class Trading extends SharedAttributes {
         isTradingPeriod = tradingPeriod;
     }
 
-    public void addTrading(ITradingFactory tradingFactory) throws Exception {
+    public void addTrading(ITradingDao tradingFactory) throws Exception {
         tradingFactory.addTradingDetails(this);
     }
 

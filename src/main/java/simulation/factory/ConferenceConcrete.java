@@ -1,11 +1,11 @@
 package simulation.factory;
 
-import db.data.IConferenceFactory;
 import simulation.model.Conference;
+import simulation.model.IConference;
 
-public class ConferenceConcrete {
+public class ConferenceConcrete implements IConferenceFactory{
 
-    public Conference newConference() {
+    public IConference newConference() {
         return new Conference();
     }
 

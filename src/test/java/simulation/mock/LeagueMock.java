@@ -1,22 +1,23 @@
 package simulation.mock;
 
 import db.data.*;
+import org.json.simple.JSONObject;
 import simulation.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeagueMock implements ILeagueFactory {
+public class LeagueMock implements ILeagueDao {
     static final String FREEAGENT = "FreeAgent";
     List<Player> playerList = new ArrayList<>();
-    IPlayerFactory playerFactory = new PlayerMock();
+    IPlayerDao playerFactory = new PlayerMock();
 
-    public List<Conference> formConferenceList() throws Exception {
-        List<Conference> conferenceList = new ArrayList<>();
+    public List<IConference> formConferenceList() throws Exception {
+        List<IConference> conferenceList = new ArrayList<>();
 
-        IConferenceFactory conferenceFactory = new ConferenceMock();
-        Conference conference = new Conference(1, conferenceFactory);
+        IConferenceDao conferenceFactory = new ConferenceMock();
+        IConference conference = new Conference(1, conferenceFactory);
         conferenceList.add(conference);
 
         conference = new Conference(2, conferenceFactory);
@@ -25,10 +26,10 @@ public class LeagueMock implements ILeagueFactory {
         return conferenceList;
     }
 
-    public List<Conference> formCreateTeamConferenceList() throws Exception {
-        List<Conference> conferenceList = new ArrayList<>();
+    public List<IConference> formCreateTeamConferenceList() throws Exception {
+        List<IConference> conferenceList = new ArrayList<>();
 
-        IConferenceFactory conferenceFactory = new ConferenceMock();
+        IConferenceDao conferenceFactory = new ConferenceMock();
         Conference conference = new Conference(1, conferenceFactory);
         conferenceList.add(conference);
 
@@ -38,8 +39,8 @@ public class LeagueMock implements ILeagueFactory {
         return conferenceList;
     }
 
-    public List<Coach> formCoachList() throws Exception {
-        List<Coach> coachList = new ArrayList<>();
+    public List<ICoach> formCoachList() throws Exception {
+        List<ICoach> coachList = new ArrayList<>();
 
         ICoachDao coachFactory = new CoachMock();
 
@@ -52,10 +53,10 @@ public class LeagueMock implements ILeagueFactory {
         return coachList;
     }
 
-    public List<Manager> formManagerList() throws Exception {
-        List<Manager> managerList = new ArrayList<>();
+    public List<IManager> formManagerList() throws Exception {
+        List<IManager> managerList = new ArrayList<>();
 
-        IManagerFactory managerFactory = new ManagerMock();
+        IManagerDao managerFactory = new ManagerMock();
 
         for (int i = 1; i < 6; i++) {
             Manager manager = new Manager(i, managerFactory);
@@ -64,25 +65,25 @@ public class LeagueMock implements ILeagueFactory {
         return managerList;
     }
 
-    public GameSchedule formGames() throws Exception {
-        GameSchedule games = new GameSchedule();
-        List<Game> gameList = new ArrayList<>();
+    public IGameSchedule formGames() throws Exception {
+        IGameSchedule games = new GameSchedule();
+        List<IGame> gameList = new ArrayList<>();
 
-        IGameFactory gameFactory = new GameMock();
+        IGameDao gameFactory = new GameMock();
 
         for (int i = 0; i < 4; i++) {
-            Game game = new Game(i, gameFactory);
+            IGame game = new Game(i, gameFactory);
             gameList.add(game);
         }
         games.setGameList(gameList);
         return games;
     }
 
-    public TeamStanding formTeamStanding() throws Exception {
-        TeamStanding teamStanding = new TeamStanding();
-        List<TeamScore> teamScoreList = new ArrayList<>();
+    public ITeamStanding formTeamStanding() throws Exception {
+        ITeamStanding teamStanding = new TeamStanding();
+        List<ITeamScore> teamScoreList = new ArrayList<>();
 
-        ITeamScoreFactory teamScoreFactory = new TeamScoreMock();
+        ITeamScoreDao teamScoreFactory = new TeamScoreMock();
 
         for (int i = 0; i < 4; i++) {
             TeamScore teamScore = new TeamScore(i, teamScoreFactory);
@@ -93,13 +94,13 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     public NHLEvents formNHLEvents(int id) throws Exception {
-        IEventFactory eventFactory = new NHLEventMock();
+        IEventDao eventFactory = new NHLEventMock();
         NHLEvents nhlEvents = new NHLEvents(id, eventFactory);
         return nhlEvents;
     }
 
     @Override
-    public int addLeague(League league) throws Exception {
+    public int addLeague(ILeague league) throws Exception {
         league = new League(1);
         return league.getId();
     }
@@ -113,7 +114,7 @@ public class LeagueMock implements ILeagueFactory {
     public List formPlayerList() throws Exception {
         List<Player> playerList = new ArrayList<>();
 
-        IPlayerFactory playerFactory = new PlayerMock();
+        IPlayerDao playerFactory = new PlayerMock();
         for (int i = 1; i < 22; i++) {
             Player player = new Player(i, playerFactory);
             playerList.add(player);
@@ -123,13 +124,13 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     public Trading getTrading() throws Exception {
-        ITradingFactory tradingFactory = new TradingMock();
+        ITradingDao tradingFactory = new TradingMock();
         Trading trading = new Trading(1, tradingFactory);
         return trading;
     }
 
     public Injury getInjury() throws Exception {
-        IInjuryFactory injuryFactory = new InjuryMock();
+        IInjuryDao injuryFactory = new InjuryMock();
         Injury injury = new Injury(1, injuryFactory);
         return injury;
     }
@@ -141,25 +142,25 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     public Training getTraining() throws Exception {
-        ITrainingFactory trainingFactory = new TrainingMock();
+        ITrainingDao trainingFactory = new TrainingMock();
         Training training = new Training(1, trainingFactory);
         return training;
     }
 
     public GameResolver getGameResolver() throws Exception {
-        IGameResolverFactory resolverFactory = new GameResolverMock();
+        IGameResolverDao resolverFactory = new GameResolverMock();
         GameResolver gameResolver = new GameResolver(1, resolverFactory);
         return gameResolver;
     }
 
-    public List<TradeOffer> getTradeOfferList(int leagueId) throws Exception {
-        ITradeOfferFactory tradeOfferFactory = new TradeOfferMock();
+    public List<ITradeOffer> getTradeOfferList(int leagueId) throws Exception {
+        ITradeOfferDao tradeOfferFactory = new TradeOfferMock();
         return tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
     }
 
 
-    public GamePlayConfig formGamePlayConfig() throws Exception {
-        GamePlayConfig gamePlayConfig = new GamePlayConfig();
+    public IGamePlayConfig formGamePlayConfig() throws Exception {
+        IGamePlayConfig gamePlayConfig = new GamePlayConfig();
         gamePlayConfig.setTrading(getTrading());
         gamePlayConfig.setAging(getAging());
         gamePlayConfig.setInjury(getInjury());
@@ -169,7 +170,7 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     @Override
-    public void loadLeagueById(int id, League league) throws Exception {
+    public void loadLeagueById(int id, ILeague league) throws Exception {
 
         switch (new Long(id).intValue()) {
             case 1:
@@ -243,14 +244,14 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     @Override
-    public void loadLeagueByName(String leagueName, int userId, League league) throws Exception {
+    public void loadLeagueByName(String leagueName, int userId, ILeague league) throws Exception {
         league.setName("League1");
         league.setConferenceList(formConferenceList());
         league.setFreeAgent(formFreeAgent());
     }
 
     public List formLeagueList() throws Exception {
-        List<League> leagueList = new ArrayList<>();
+        List<ILeague> leagueList = new ArrayList<>();
 
         League league = new League(1);
         league.setName("League1");
@@ -264,20 +265,25 @@ public class LeagueMock implements ILeagueFactory {
     }
 
     @Override
-    public List<League> loadLeagueListByUserId(int userId) throws Exception {
+    public List<ILeague> loadLeagueListByUserId(int userId) throws Exception {
         return formLeagueList();
     }
 
-    public List<Conference> formConferenceListForGames() throws Exception {
+    @Override
+    public void loadLeagueFromJSON(ILeague league, JSONObject jsonObject) {
+
+    }
+
+    public List<IConference> formConferenceListForGames() throws Exception {
         League league = new League(1);
         league.setName("League1");
 
-        List<Conference> conferenceList = new ArrayList<>();
-        List<Division> divisionList1 = new ArrayList<>();
-        List<Division> divisionList2 = new ArrayList<>();
-        List<Team> teamList = new ArrayList<>();
+        List<IConference> conferenceList = new ArrayList<>();
+        List<IDivision> divisionList1 = new ArrayList<>();
+        List<IDivision> divisionList2 = new ArrayList<>();
+        List<ITeam> teamList = new ArrayList<>();
 
-        Conference conference1 = new Conference();
+        IConference conference1 = new Conference();
         conference1.setId(1);
         conference1.setName("Eastern Conference");
         conference1.setId(league.getId());
@@ -324,11 +330,11 @@ public class LeagueMock implements ILeagueFactory {
         return conferenceList;
     }
 
-    private List<Team> formTeamListDivision1ForGames() throws Exception {
+    private List<ITeam> formTeamListDivision1ForGames() throws Exception {
 
-        List<Team> teamList = new ArrayList<>();
+        List<ITeam> teamList = new ArrayList<>();
 
-        Team team11 = new Team();
+        ITeam team11 = new Team();
         team11.setId(11);
         team11.setName("Team11");
         team11.setDivisionId(1);
@@ -363,8 +369,8 @@ public class LeagueMock implements ILeagueFactory {
         return teamList;
     }
 
-    public List<Team> formTeamListDivision2ForGames() throws Exception {
-        List<Team> teamList = new ArrayList<>();
+    public List<ITeam> formTeamListDivision2ForGames() throws Exception {
+        List<ITeam> teamList = new ArrayList<>();
         Team team21 = new Team();
         team21.setId(21);
         team21.setName("Team21");
@@ -398,9 +404,9 @@ public class LeagueMock implements ILeagueFactory {
         return teamList;
     }
 
-    public List<Team> formTeamListDivision3ForGames() throws Exception {
-        List<Team> teamList = new ArrayList<>();
-        Team team31 = new Team();
+    public List<ITeam> formTeamListDivision3ForGames() throws Exception {
+        List<ITeam> teamList = new ArrayList<>();
+        ITeam team31 = new Team();
         team31.setId(31);
         team31.setName("Team31");
         team31.setPlayerList(addPlayerInList());
@@ -430,9 +436,9 @@ public class LeagueMock implements ILeagueFactory {
         return teamList;
     }
 
-    public List<Team> formTeamListDivision4ForGames() throws Exception {
-        List<Team> teamList = new ArrayList<>();
-        Team team41 = new Team();
+    public List<ITeam> formTeamListDivision4ForGames() throws Exception {
+        List<ITeam> teamList = new ArrayList<>();
+        ITeam team41 = new Team();
         team41.setId(41);
         team41.setName("Team41");
         team41.setPlayerList(addPlayerInList());
@@ -460,9 +466,9 @@ public class LeagueMock implements ILeagueFactory {
         return teamList;
     }
 
-    private List<Player> addPlayerInList() throws Exception {
+    private List<IPlayer> addPlayerInList() throws Exception {
 
-        List<Player> playerList = new ArrayList<>();
+        List<IPlayer> playerList = new ArrayList<>();
         Player player;
         for (int i = 1; i < 31; i++) {
             player = new Player(i, playerFactory);

@@ -1,6 +1,6 @@
 package simulation.state;
 
-import db.data.IUserFactory;
+import db.data.IUserDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.HockeyContextConcrete;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InjuryCheckStateTest {
-    private static IUserFactory userFactory;
+    private static IUserDao userFactory;
     private static IHockeyContext hockeyContext;
     private static IHockeyContextFactory hockeyContextFactory;
 

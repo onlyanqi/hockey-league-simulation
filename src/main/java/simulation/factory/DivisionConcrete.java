@@ -1,11 +1,11 @@
 package simulation.factory;
 
-import db.data.IDivisionFactory;
 import simulation.model.Division;
+import simulation.model.IDivision;
 
 public class DivisionConcrete {
 
-    public Division newDivision() {
+    public IDivision newDivision() {
         return new Division();
     }
 
