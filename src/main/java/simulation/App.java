@@ -19,14 +19,6 @@ public class App {
 
     public static void main(String[] args) {
 
-
-        log.debug("DEBUG Message");
-        log.info("INFO Message");
-        log.warn("WARN Message");
-        log.error("ERROR Message");
-        log.fatal("Fatal Message");
-
-
         String filePath = "";
         JSONObject jsonFromInput = null;
 
@@ -51,10 +43,11 @@ public class App {
                     addUser(user);
                 }
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
-
+                log.info("Provided JSON file "+ filePath);
                 if (validation.isNotNull(filePath) && filePath.length() > 0) {
 
                     if (JSONController.invalidJSON(filePath)) {
+                        log.error("JSON file provided seems to be invalid");
                         System.out.println("Invalid JSON file Provided.Exiting the app!");
                         System.exit(1);
                     }
@@ -65,8 +58,10 @@ public class App {
 
             }
         } catch (FileNotFoundException e) {
+            log.error("Provided json file is not found" + e);
             System.out.println("File Not found. " + e);
         } catch (Exception e) {
+            log.error("There is an exception in the application " + e);
             System.out.println("System faced unexpected exception. Please contact team. " + e);
         }
     }

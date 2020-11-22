@@ -1,6 +1,8 @@
 package simulation.state;
 
+import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
+import simulation.App;
 import simulation.model.*;
 
 import java.time.LocalDate;
@@ -10,10 +12,12 @@ import java.util.Random;
 
 public class InitializeSeasonState implements ISimulateState {
 
+    private Logger log = Logger.getLogger(InitializeSeasonState.class);
     private final Integer TotalGamesPerTeam = 82;
     private final Integer minimumTeamCountForPlayOffs = 5;
     private League league;
     private HockeyContext hockeyContext;
+
 
     public InitializeSeasonState(HockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -25,6 +29,7 @@ public class InitializeSeasonState implements ISimulateState {
         if (isMinimumTeamCountSatisfiedForPlayoffs(league)) {
             InitializeRegularSeason();
         } else {
+            log.error("league model contains less than" +minimumTeamCountForPlayOffs +"teams");
             ConsoleOutput.getInstance().printMsgToConsole("Please make sure minimum number of teams(5) for each division are provided to the league");
             return null;
         }
@@ -72,6 +77,7 @@ public class InitializeSeasonState implements ISimulateState {
         league.setGames(games);
         league.setActiveTeamStanding(league.getRegularSeasonStanding());
         league.setNhlRegularSeasonEvents(nhlEvents);
+        log.info("Regular Season Game Schedule is initialized");
     }
 
     private Boolean isMinimumTeamCountSatisfiedForPlayoffs(League league) {

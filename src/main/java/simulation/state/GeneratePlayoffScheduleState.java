@@ -1,5 +1,6 @@
 package simulation.state;
 
+import org.apache.log4j.Logger;
 import simulation.model.*;
 
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class GeneratePlayoffScheduleState implements ISimulateState {
 
+    private Logger log = Logger.getLogger(GeneratePlayoffScheduleState.class);
     private final Integer numberOfGamesPerTeam = 7;
     private final Integer numberOfTeamStandingBeforeStanleyCup = 4;
     private HockeyContext hockeyContext;
@@ -29,11 +31,14 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
     public ISimulateState action() {
         if (nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())) {
             generatePlayOffFirstRoundSchedule();
+            log.info("PlayOff First Round is Scheduled");
         } else if (games.doGamesDoesNotExistOnOrAfterDate(league.getCurrentDate())) {
             if (teamStanding.getTeamsScoreList().size() == numberOfTeamStandingBeforeStanleyCup) {
                 generateStanleyCupSchedule();
+                log.info("Stanley Cup is Scheduled");
             } else {
                 generatePlayOffSecondAndThirdRoundSchedule();
+                log.info("Second or Third round of Stanley cup is scheduled");
             }
         }
         return exit();
