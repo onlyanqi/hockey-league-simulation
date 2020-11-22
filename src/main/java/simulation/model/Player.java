@@ -214,7 +214,12 @@ public class Player extends SharedAttributes implements IPlayer {
         addPlayerFactory.addPlayer(this);
     }
 
-    public boolean retirementCheck(League league) {
+    @Override
+    public void getOlder() {
+
+    }
+
+    public boolean retirementCheck(ILeague league) {
         if (league == null) {
             return false;
         }
@@ -238,7 +243,7 @@ public class Player extends SharedAttributes implements IPlayer {
         } else return this.age >= aging.getMaximumAge();
     }
 
-    public void calculateAge(League league) {
+    public void calculateAge(ILeague league) {
         LocalDate birthday = this.getBirthday();
         LocalDate currentDate = league.getCurrentDate();
         if (birthday == null || currentDate == null) {
@@ -267,9 +272,14 @@ public class Player extends SharedAttributes implements IPlayer {
         }
     }
 
-    public void findBestReplacement(List<Player> targetPlayerList, Position position, int index, List<Player> replacementPlayerList) {
+    @Override
+    public void agingInjuryRecovery(ILeague league) {
+
+    }
+
+    public void findBestReplacement(List<IPlayer> targetPlayerList, Position position, int index, List<IPlayer> replacementPlayerList) {
         Collections.sort(replacementPlayerList, Collections.reverseOrder());
-        Player replacePlayer = new Player();
+        IPlayer replacePlayer = new Player();
         int size = replacementPlayerList.size();
         for (int i = 0; i < size; i++) {
             if (replacementPlayerList.get(i).getPosition().equals(position)) {

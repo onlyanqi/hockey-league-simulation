@@ -92,4 +92,12 @@ public interface ILeague{
 
     void setName(String name);
 
+    String getUserCreatedTeamName();
+
+    void setUserCreatedTeamName(String userCreatedTeamName);
+
+    String getUser();
+
+    void setUser(String user);
+
 }

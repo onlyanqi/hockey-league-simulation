@@ -44,7 +44,7 @@ public class LoadTeamState implements IHockeyState {
     public void process() throws Exception {
         LeagueDataSerializerDeSerializer leagueDataSerializerDeSerializer = new LeagueDataSerializerDeSerializer();
         String filename = "JsonFiles"+"/"+teamName;
-        league = leagueDataSerializerDeSerializer.deSerialize(filename);
+        league = leagueDataSerializerDeSerializer.deSerialize(filename, hockeyContext);
         hockeyContext.getUser().setLeague(league);
 //        ConsoleOutput.getInstance().printMsgToConsole("We are loading the league data. Please wait..");
 //

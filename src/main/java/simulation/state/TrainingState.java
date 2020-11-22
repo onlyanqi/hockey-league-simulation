@@ -44,23 +44,23 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (league == null) {
             return;
         }
-        List<Conference> conferenceList = league.getConferenceList();
-        for (Conference conference : conferenceList) {
-            List<Division> divisionList = conference.getDivisionList();
-            for (Division division : divisionList) {
-                List<Team> teamList = division.getTeamList();
-                for (Team team : teamList) {
-                    List<Player> activePlayerList = team.getActivePlayerList();
-                    List<Player> inactivePlayerList = team.getInactivePlayerList();
+        List<IConference> conferenceList = league.getConferenceList();
+        for (IConference conference : conferenceList) {
+            List<IDivision> divisionList = conference.getDivisionList();
+            for (IDivision division : divisionList) {
+                List<ITeam> teamList = division.getTeamList();
+                for (ITeam team : teamList) {
+                    List<IPlayer> activePlayerList = team.getActivePlayerList();
+                    List<IPlayer> inactivePlayerList = team.getInactivePlayerList();
                     int size = activePlayerList.size();
                     for (int i = size - 1; i >= 0; i--) {
-                        Player activePlayer = activePlayerList.get(i);
+                        IPlayer activePlayer = activePlayerList.get(i);
                         statIncreaseCheckForPlayer(activePlayer, team.getCoach());
                         if(activePlayer.getInjured()){
                             activePlayer.findBestReplacement(activePlayerList,activePlayer.getPosition(),i,inactivePlayerList);
                         }
                     }
-                    for (Player inactivePlayer : inactivePlayerList){
+                    for (IPlayer inactivePlayer : inactivePlayerList){
                         statIncreaseCheckForPlayer(inactivePlayer, team.getCoach());
                     }
                 }

@@ -8,16 +8,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class League extends SharedAttributes {
+public class League extends SharedAttributes implements ILeague {
 
     private int createdBy;
     private String user;
     private String userCreatedTeamName;
-    private List<Conference> conferenceList;
-    private List<Coach> coachList;
-    private List<Manager> managerList;
-    private List<Player> retiredPlayerList;
-    private FreeAgent freeAgent;
+    private List<IConference> conferenceList;
+    private List<ICoach> coachList;
+    private List<IManager> managerList;
+    private List<IPlayer> retiredPlayerList;
+    private IFreeAgent freeAgent;
     private LocalDate currentDate;
     private IGamePlayConfig gamePlayConfig;
     private IGameSchedule games;
@@ -64,15 +64,15 @@ public class League extends SharedAttributes {
         this.user = user;
     }
 
-    public NHLEvents getNhlEvents() {
+    public INHLEvents getNhlEvents() {
         return nhlEvents;
     }
 
-    public void setNhlEvents(NHLEvents nhlEvents) {
+    public void setNhlEvents(INHLEvents nhlEvents) {
         this.nhlEvents = nhlEvents;
     }
 
-    public NHLEvents getNHLRegularSeasonEvents() {
+    public INHLEvents getNHLRegularSeasonEvents() {
         return nhlEvents;
     }
 

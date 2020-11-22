@@ -3,6 +3,7 @@ package simulation.model;
 import db.data.IPlayerDao;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface IPlayer extends Comparable<IPlayer>{
 
@@ -64,7 +65,7 @@ public interface IPlayer extends Comparable<IPlayer>{
 
     void addPlayer(IPlayerDao addPlayerFactory) throws Exception;
 
-    boolean retirementCheck(IAging aging);
+    boolean retirementCheck(ILeague league);
 
     void getOlder();
 
@@ -89,4 +90,12 @@ public interface IPlayer extends Comparable<IPlayer>{
     void setName(String name);
 
     void setId(int id);
+
+    LocalDate getBirthday();
+
+    void setBirthday(LocalDate birthday);
+
+    void calculateAge(ILeague league);
+
+    void findBestReplacement(List<IPlayer> targetPlayerList, Position position, int index, List<IPlayer> replacementPlayerList);
 }

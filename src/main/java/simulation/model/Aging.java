@@ -64,12 +64,12 @@ public class Aging extends SharedAttributes implements IAging {
         this.maximumAge = maximumAge;
     }
 
-    //@Override
+    @Override
     public Double getStatDecayChance() {
         return statDecayChance;
     }
 
-    //@Override
+    @Override
     public void setStatDecayChance(Double statDecayChance) {
         this.statDecayChance = statDecayChance;
     }

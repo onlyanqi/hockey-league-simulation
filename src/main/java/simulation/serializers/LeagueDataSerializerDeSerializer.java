@@ -37,27 +37,27 @@ public class LeagueDataSerializerDeSerializer {
     private static final String DIVISION_NAME = "divisionName";
     private static final String TEAM_NAME = "teamName";
     private static final String CONFERENCES = "conferenceList";
-    private static final String DIVISIONS = "divisions";
-    private static final String TEAMS = "teams";
-    private static final String MANAGER = "generalManager";
-    private static final String HEAD_COACH = "headCoach";
+    private static final String DIVISIONS = "divisionList";
+    private static final String TEAMS = "teamList";
+    private static final String MANAGER = "manager";
+    private static final String HEAD_COACH = "coach";
     private static final String NAME = "name";
     private static final String SKATING = "skating";
     private static final String SHOOTING = "shooting";
     private static final String CHECKING = "checking";
     private static final String SAVING = "saving";
-    private static final String PLAYERS = "players";
-    private static final String PLAYER_NAME = "playerName";
-    private static final String CAPTAIN = "captain";
+    private static final String PLAYERS = "playerList";
+    private static final String PLAYER_NAME = "name";
+    private static final String CAPTAIN = "isCaptain";
     private static final String POSITION = "position";
     private static final String AGE = "age";
-    private static final String FREE_AGENTS = "freeAgents";
-    private static final String MANAGERS = "generalManagers";
-    private static final String COACHES = "coaches";
+    private static final String FREE_AGENTS = "freeAgent";
+    private static final String MANAGERS = "managerList";
+    private static final String COACHES = "coachList";
     private static final String GAMEPLAY_CONFIG = "gamePlayConfig";
     private static final String AGING = "aging";
     private static final String GAME_RESOLVER = "gameResolver";
-    private static final String INJURIES = "injuries";
+    private static final String INJURIES = "injury";
     private static final String TRAINING = "training";
     private static final String TRADING = "trading";
     private static final String AVERAGE_RETIREMENT_AGE = "averageRetirementAge";
@@ -117,7 +117,7 @@ public class LeagueDataSerializerDeSerializer {
         }
     }
 
-    public League deSerialize(String filename) {
+    public ILeague deSerialize(String filename, IHockeyContext hockeyContext) throws IOException {
         System.out.println(filename);
         if (consoleOutput == null) {
             consoleOutput = ConsoleOutput.getInstance();
@@ -146,7 +146,7 @@ public class LeagueDataSerializerDeSerializer {
 
             JSONArray conferences = (JSONArray) leagueJSON.get(CONFERENCES);
 
-            JSONArray freeAgents = (JSONArray) leagueJSON.get(FREE_AGENTS);
+            JSONObject freeAgents = (JSONObject) leagueJSON.get(FREE_AGENTS);
 
             JSONArray coaches = (JSONArray) leagueJSON.get(COACHES);
 
@@ -158,8 +158,11 @@ public class LeagueDataSerializerDeSerializer {
 
             IFreeAgentFactory freeAgentConcrete = hockeyContext.getFreeAgentFactory();
             IFreeAgent freeAgent = freeAgentConcrete.newFreeAgent();
-            List<IPlayer> freeAgentList = loadFreeAgentJSON(freeAgents);
+            JSONArray freeAgentPlayerList = (JSONArray) freeAgents.get("playerList");
+            List<IPlayer> freeAgentList = loadFreeAgentJSON(freeAgentPlayerList);
             freeAgent.setPlayerList(freeAgentList);
+            freeAgent.setLeagueId((int) (long) freeAgents.get("leagueId"));
+            freeAgent.setSeasonId((int) (long) freeAgents.get("seasonId"));
 
             List<ICoach> coachList = loadCoachJSON(coaches);
 
@@ -231,11 +234,11 @@ public class LeagueDataSerializerDeSerializer {
     }
 
 
-    private List<IPlayer> loadFreeAgentJSON(JSONArray freeAgents) throws IllegalArgumentException {
+    private List<IPlayer> loadFreeAgentJSON(JSONArray freeAgent) throws IllegalArgumentException {
 
         List<IPlayer> freeAgentList = new ArrayList<>();
 
-        for (Object freeAgentObjectFromJSONArray : freeAgents) {
+        for (Object freeAgentObjectFromJSONArray : freeAgent) {
             JSONObject freeAgentJsonObject = (JSONObject) freeAgentObjectFromJSONArray;
             String playerName = (String) freeAgentJsonObject.get(PLAYER_NAME);
             Position position = validatePosition(freeAgentJsonObject);
@@ -323,13 +326,13 @@ public class LeagueDataSerializerDeSerializer {
         int maxPlayersPerTrade = (int) (long) tradingJSONObject.get(MAX_PLAYERS_PER_TRADE);
         double randomAcceptanceChance = (Double) tradingJSONObject.get(RANDOM_ACCEPTANCE_CHANCE);
 
-        JSONObject gmTableJsonObject = (JSONObject) tradingJSONObject.get(GM_TABLE);
+        /*JSONObject gmTableJsonObject = (JSONObject) tradingJSONObject.get(GM_TABLE);
         Map<String, Double> gmTable = new HashMap<>();
         for(Object key : gmTableJsonObject.keySet()){
             String attribute = (String) key;
             double attributeValue = (Double) gmTableJsonObject.get(attribute);
             gmTable.put(attribute, attributeValue);
-        }
+        }*/
 
         ITradingFactory tradingConcrete = hockeyContext.getTradingFactory();
         ITrading trading = tradingConcrete.newTrading();
@@ -337,7 +340,7 @@ public class LeagueDataSerializerDeSerializer {
         trading.setRandomTradeOfferChance(randomTradeOfferChance);
         trading.setMaxPlayersPerTrade(maxPlayersPerTrade);
         trading.setRandomAcceptanceChance(randomAcceptanceChance);
-        trading.setGmTable(gmTable);
+        //trading.setGmTable(gmTable);
         return trading;
     }
 

@@ -5,6 +5,7 @@ import db.data.ILeagueDao;
 import db.data.IPlayerDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.factory.ILeagueFactory;
 import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
 
@@ -211,7 +212,7 @@ public class PlayerTest {
 
     @Test
     public void retirementCheckTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
         Player player = new Player(20, loadPlayerFactory);
         boolean retired = player.retirementCheck(league);
@@ -232,7 +233,7 @@ public class PlayerTest {
 
     @Test
     public void calculateAgeTest() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
         Player player = new Player(31, loadPlayerFactory);
         player.calculateAge(league);
