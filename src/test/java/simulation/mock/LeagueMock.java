@@ -6,6 +6,7 @@ import simulation.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class LeagueMock implements ILeagueDao {
@@ -71,7 +72,7 @@ public class LeagueMock implements ILeagueDao {
 
         IGameDao gameFactory = new GameMock();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             IGame game = new Game(i, gameFactory);
             gameList.add(game);
         }
@@ -235,6 +236,7 @@ public class LeagueMock implements ILeagueDao {
                 league.setTradeOfferList(getTradeOfferList(1));
                 league.setNhlRegularSeasonEvents(formNHLEvents(0));
                 league.setActiveTeamStanding(formTeamStanding());
+                league.setStanleyCupFinalsTeamScores(new HashMap<>());
                 league.setGames(formGames());
                 league.setGamePlayConfig(formGamePlayConfig());
                 league.setCurrentDate(LocalDate.of(2021,05,06));

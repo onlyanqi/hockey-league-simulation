@@ -6,4 +6,6 @@ public interface INHLEventsFactory {
 
     INHLEvents newNHLEvents();
 
+    INHLEvents newNHLEventsByYear(int year);
+
 }

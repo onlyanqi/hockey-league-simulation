@@ -6,6 +6,7 @@ import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class League extends SharedAttributes implements ILeague {
@@ -24,6 +25,7 @@ public class League extends SharedAttributes implements ILeague {
     private ITeamStanding regularSeasonStanding;
     private ITeamStanding playOffStanding;
     private ITeamStanding activeTeamStanding;
+    HashMap<String,Integer> stanleyCupFinalsTeamScores;
     private INHLEvents nhlEvents;
     private List<ITradeOffer> tradeOfferList;
 
@@ -188,6 +190,14 @@ public class League extends SharedAttributes implements ILeague {
             return;
         }
         this.activeTeamStanding = activeTeamStanding;
+    }
+
+    public HashMap<String, Integer> getStanleyCupFinalsTeamScores() {
+        return stanleyCupFinalsTeamScores;
+    }
+
+    public void setStanleyCupFinalsTeamScores(HashMap<String, Integer> stanleyCupFinalsTeamScores) {
+        this.stanleyCupFinalsTeamScores = stanleyCupFinalsTeamScores;
     }
 
     public List<IManager> removeManagerFromManagerListById(List<IManager> managerList, int indexOfManagerObject) {

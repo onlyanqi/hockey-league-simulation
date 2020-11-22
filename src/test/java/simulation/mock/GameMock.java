@@ -59,6 +59,14 @@ public class GameMock implements IGameDao {
                 game.setTeam2("Team12");
                 game.setDate(LocalDate.of(2020, Month.NOVEMBER, 03));
                 break;
+            case 5:
+                game.setId(id);
+                game.setWinner(null);
+                game.setPlayed(false);
+                game.setTeam1("Team21");
+                game.setTeam2("Team22");
+                game.setDate(LocalDate.of(2021, Month.MAY, 10));
+                break;
         }
     }
 
