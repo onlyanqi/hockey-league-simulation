@@ -10,4 +10,9 @@ public class NHLEventsConcrete implements INHLEventsFactory {
         return new NHLEvents();
     }
 
+    @Override
+    public INHLEvents newNHLEventsByYear(int year) {
+        return new NHLEvents(year);
+    }
+
 }

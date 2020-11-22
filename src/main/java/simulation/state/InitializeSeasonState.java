@@ -42,7 +42,7 @@ public class InitializeSeasonState implements ISimulateState {
     public void InitializeRegularSeason() {
 
         INHLEventsFactory inhlEventsFactory = hockeyContext.getNHLEventsFactory();
-        INHLEvents nhlEvents = inhlEventsFactory.newNHLEvents();
+        INHLEvents nhlEvents = inhlEventsFactory.newNHLEventsByYear(league.getCurrentDate().getYear());
         LocalDate regularSeasonStartDate = nhlEvents.getRegularSeasonStartDate();
         LocalDate previousDateOfRegularSeasonStart = DateTime.minusDays(nhlEvents.getRegularSeasonStartDate(), 1);
         LocalDate endDate = nhlEvents.getEndOfRegularSeason();
