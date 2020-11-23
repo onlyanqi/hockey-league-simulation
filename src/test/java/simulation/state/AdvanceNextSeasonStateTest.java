@@ -46,7 +46,7 @@ public class AdvanceNextSeasonStateTest {
         assertEquals(playerList.get(19).getName(), "Player20");
         IPlayer player1 = playerList.get(0);
         assertEquals(playerList.get(0).getName(), "Player1");
-        player1.findBestReplacement(playerList, Position.FORWARD, 0, freePlayerList);
+        player1.findBestReplacement(playerList, freePlayerList);
         assertNotEquals(playerList.get(0).getName(), "Player1");
         assertEquals(playerList.get(19).getName(), "Player6");
     }

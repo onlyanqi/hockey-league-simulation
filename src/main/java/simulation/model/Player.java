@@ -49,7 +49,15 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setId(player.getId());
         this.setName(player.getName());
         this.isFreeAgent = player.isFreeAgent();
+        this.setFreeAgentId(player.getFreeAgentId());
         this.setAge(player.getAge());
+        this.setBirthday(player.getBirthday());
+        this.setTeamId(player.getTeamId());
+        this.setInjured(player.getInjured());
+        this.setInjuryDatesRange(player.getInjuryDatesRange());
+        this.setInjuryStartDate(player.getInjuryStartDate());
+        this.setCaptain(player.isCaptain());
+        this.setRetired(player.isRetired());
         this.setPosition(player.getPosition());
         this.setSaving(player.getSaving());
         this.setChecking(player.getChecking());
@@ -90,7 +98,8 @@ public class Player extends SharedAttributes implements IPlayer {
         return position;
     }
 
-    public void setPosition(Position position) {
+    @Override
+    public void setPosition(simulation.model.Position position) {
         this.position = position;
     }
 
@@ -207,6 +216,15 @@ public class Player extends SharedAttributes implements IPlayer {
         this.injuryDatesRange = injuryDatesRange;
     }
 
+    public boolean isRetired() {
+        return isRetired;
+    }
+
+    public void setRetired(boolean retired) {
+        this.isRetired = retired;
+    }
+
+    @Override
     public void addPlayer(IPlayerDao addPlayerFactory) throws Exception {
         if (addPlayerFactory == null) {
             return;
@@ -215,10 +233,6 @@ public class Player extends SharedAttributes implements IPlayer {
     }
 
     @Override
-    public void getOlder() {
-
-    }
-
     public boolean retirementCheck(ILeague league) {
         if (league == null) {
             return false;
@@ -243,16 +257,48 @@ public class Player extends SharedAttributes implements IPlayer {
         } else return this.age >= aging.getMaximumAge();
     }
 
+    @Override
     public void calculateAge(ILeague league) {
         LocalDate birthday = this.getBirthday();
         LocalDate currentDate = league.getCurrentDate();
         if (birthday == null || currentDate == null) {
             return;
         }
-        int age = Period.between(birthday,currentDate).getYears();
+        int age = Period.between(birthday, currentDate).getYears();
         this.setAge(age);
     }
 
+    @Override
+    public boolean isBirthday(ILeague league) {
+        LocalDate currentDate = league.getCurrentDate();
+        int currentDayOfMonth = currentDate.getDayOfMonth();
+        int currentMonth = currentDate.getMonthValue();
+        int birthDayOfMonth = birthday.getDayOfMonth();
+        int birthMonth = birthday.getMonthValue();
+
+        if (currentDayOfMonth == birthDayOfMonth && currentMonth == birthMonth) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void statDecayCheck(ILeague league) {
+        if (isBirthday(league)) {
+            Random randomStatDecay = new Random();
+            double chanceOfStatDecay = randomStatDecay.nextDouble();
+            double statDecayChance = league.getGamePlayConfig().getAging().getStatDecayChance();
+            if (chanceOfStatDecay < statDecayChance) {
+                this.setSkating(Math.max((this.getSkating() - 1), 1));
+                this.setShooting(Math.max((this.getShooting() - 1), 1));
+                this.setChecking(Math.max((this.getChecking() - 1), 1));
+                this.setSaving(Math.max((this.getSaving() - 1), 1));
+            }
+        }
+    }
+
+    @Override
     public void injuryCheck(ILeague league) {
         if (league == null) {
             return;
@@ -274,29 +320,6 @@ public class Player extends SharedAttributes implements IPlayer {
 
     @Override
     public void agingInjuryRecovery(ILeague league) {
-
-    }
-
-    public void findBestReplacement(List<IPlayer> targetPlayerList, Position position, int index, List<IPlayer> replacementPlayerList) {
-        Collections.sort(replacementPlayerList, Collections.reverseOrder());
-        IPlayer replacePlayer = new Player();
-        int size = replacementPlayerList.size();
-        for (int i = 0; i < size; i++) {
-            if (replacementPlayerList.get(i).getPosition().equals(position)) {
-                replacementPlayerList.get(i).setTeamId(targetPlayerList.get(index).getTeamId());
-                replacePlayer = new Player(replacementPlayerList.get(i));
-                replacementPlayerList.remove(i);
-                break;
-            }
-        }
-        if(replacePlayer.getName() == null){
-            return;
-        }
-        targetPlayerList.add(replacePlayer);
-        targetPlayerList.remove(index);
-    }
-
-    public void agingInjuryRecovery(League league) {
         if (league == null) {
             return;
         }
@@ -307,19 +330,28 @@ public class Player extends SharedAttributes implements IPlayer {
         }
     }
 
-    public boolean isRetired() {
-        return isRetired;
-    }
-
-    public void setRetired(boolean retired) {
-        this.isRetired = retired;
+    @Override
+    public void findBestReplacement(List<IPlayer> targetPlayerList, List<IPlayer> replacementPlayerList) {
+        Collections.sort(replacementPlayerList, Collections.reverseOrder());
+        Player replacePlayer = new Player();
+        Position position = this.getPosition();
+        for (IPlayer player : replacementPlayerList) {
+            if (player.getPosition().equals(position)) {
+                replacePlayer = new Player(player);
+                replacementPlayerList.remove(player);
+                break;
+            }
+        }
+        if (replacePlayer.getName() == null) {
+            return;
+        }
+        replacePlayer.setTeamId(this.getTeamId());
+        targetPlayerList.add(replacePlayer);
+        targetPlayerList.remove(this);
     }
 
     @Override
     public int compareTo(@NotNull IPlayer player) {
-        if (player == null) {
-            return -2;
-        }
         double compare = this.getStrength() - player.getStrength();
         int returnValue = 0;
         if (compare > 0) {
