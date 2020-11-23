@@ -9,6 +9,7 @@ import simulation.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -42,7 +43,7 @@ public class InitializeSeasonState implements ISimulateState {
     public void InitializeRegularSeason() {
 
         INHLEventsFactory inhlEventsFactory = hockeyContext.getNHLEventsFactory();
-        INHLEvents nhlEvents = inhlEventsFactory.newNHLEvents();
+        INHLEvents nhlEvents = inhlEventsFactory.newNHLEventsByYear(league.getCurrentDate().getYear());
         LocalDate regularSeasonStartDate = nhlEvents.getRegularSeasonStartDate();
         LocalDate previousDateOfRegularSeasonStart = DateTime.minusDays(nhlEvents.getRegularSeasonStartDate(), 1);
         LocalDate endDate = nhlEvents.getEndOfRegularSeason();
@@ -78,6 +79,7 @@ public class InitializeSeasonState implements ISimulateState {
         league.setPlayOffStanding(new TeamStanding());
         league.setGames(games);
         league.setActiveTeamStanding(league.getRegularSeasonStanding());
+        league.setStanleyCupFinalsTeamScores(new HashMap<>());
         league.setNhlRegularSeasonEvents(nhlEvents);
     }
 

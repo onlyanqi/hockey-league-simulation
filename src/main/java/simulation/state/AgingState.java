@@ -3,7 +3,10 @@ package simulation.state;
 import presentation.ConsoleOutput;
 import simulation.model.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class AgingState implements ISimulateState {
 
@@ -35,7 +38,7 @@ public class AgingState implements ISimulateState {
                     List<IPlayer> playerList = team.getPlayerList();
                     for (IPlayer teamPlayer : playerList) {
                         teamPlayer.calculateAge(league);
-                        // statDecay
+                        teamPlayer.statDecayCheck(league);
                         teamPlayer.agingInjuryRecovery(league);
                     }
                 }
@@ -43,15 +46,25 @@ public class AgingState implements ISimulateState {
         }
         for (IPlayer freeAgentPlayer : freeAgentList) {
             freeAgentPlayer.calculateAge(league);
+            freeAgentPlayer.statDecayCheck(league);
             freeAgentPlayer.agingInjuryRecovery(league);
         }
     }
 
     private ISimulateState exit() {
         if (stanleyCupWinnerDetermined()) {
+            updateTeamScoreList();
             return new AdvanceNextSeasonState(hockeyContext);
         } else {
             return new PersistState(hockeyContext);
+        }
+    }
+
+    private void updateTeamScoreList() {
+        HashMap<String,Integer> stanleyCupTeamStanding = league.getStanleyCupFinalsTeamScores();
+        List<ITeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
+        for(ITeamScore teamScore : teamScoreList){
+            stanleyCupTeamStanding.put(teamScore.getTeamName(),stanleyCupTeamStanding.get(teamScore.getTeamName()) + teamScore.getPoints());
         }
     }
 

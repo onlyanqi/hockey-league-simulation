@@ -5,7 +5,6 @@ import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.factory.*;
 import simulation.model.IUser;
-import simulation.model.User;
 import java.io.FileNotFoundException;
 
 import org.apache.log4j.Logger;
@@ -18,18 +17,15 @@ public class App {
 
     public static void main(String[] args) {
 
-        log.debug("DEBUG Message");
-        log.info("INFO Message");
-        log.warn("WARN Message");
-        log.error("ERROR Message");
-        log.fatal("Fatal Message");
-
         String filePath = "";
         JSONObject jsonFromInput = null;
+
         ReadUserInput readUserInput = ReadUserInput.getInstance();
+
         String userName = readUserInput.getInput("Please enter username");
         try {
             if (userName == null || userName.isEmpty()) {
+                log.error("Invalid Username " + userName);
                 ConsoleOutput.getInstance().printMsgToConsole("User name is invalid. Exiting the App.");
             } else {
                 IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
@@ -40,11 +36,12 @@ public class App {
 
                 user.setName(userName);
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
-                
+
                 if (filePath == null || filePath.isEmpty()) {
                     ConsoleOutput.getInstance().printMsgToConsole("Loading the team...");
                 } else {
                     if (JSONController.invalidJSON(filePath)) {
+                        log.error("Invalid JSON file " + filePath);
                         ConsoleOutput.getInstance().printMsgToConsole("Invalid JSON file Provided.Exiting the app!");
                         System.exit(1);
                     }
@@ -55,11 +52,11 @@ public class App {
                 context.startAction(jsonFromInput);
             }
         } catch (FileNotFoundException e) {
+            log.error("File "+filePath+" not found " + e);
             ConsoleOutput.getInstance().printMsgToConsole("File Not found. " + e);
-            log.error("App: main: FileNotFoundException: "+e);
         } catch (Exception e) {
+            log.error("Exception occurred " + e);
             ConsoleOutput.getInstance().printMsgToConsole("System faced unexpected exception. Please contact team. " + e);
-            log.error("App: main: Exception: "+e);
         }
 
     }

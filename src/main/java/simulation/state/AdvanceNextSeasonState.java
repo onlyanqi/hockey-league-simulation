@@ -35,7 +35,6 @@ public class AdvanceNextSeasonState implements ISimulateState {
         List<IConference> conferenceList = league.getConferenceList();
         List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
         List<IPlayer> retiredPlayerList = league.getRetiredPlayerList();
-        IAging aging = league.getGamePlayConfig().getAging();
 
         for (IConference conference : conferenceList) {
             List<IDivision> divisionList = conference.getDivisionList();
@@ -49,8 +48,8 @@ public class AdvanceNextSeasonState implements ISimulateState {
                         if (teamPlayer.retirementCheck(league)) {
                             teamPlayer.setRetired(true);
                             retiredPlayerList.add(teamPlayer);
-                            Position position = teamPlayer.getPosition();
-                            teamPlayer.findBestReplacement(playerList, position, i, freeAgentList);
+                            playerList.remove(teamPlayer);
+                            teamPlayer.findBestReplacement(playerList, freeAgentList);
                         }
                         teamPlayer.agingInjuryRecovery(league);
                     }

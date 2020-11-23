@@ -7,6 +7,7 @@ import db.data.ITradeOfferDao;
 import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public interface ILeague{
@@ -54,6 +55,10 @@ public interface ILeague{
     ITeamStanding getActiveTeamStanding();
 
     void setActiveTeamStanding(ITeamStanding activeTeamStanding);
+
+    HashMap<String,Integer> getStanleyCupFinalsTeamScores();
+
+    void setStanleyCupFinalsTeamScores(HashMap<String, Integer> stanleyCupFinalsTeamScores);
 
     List<IManager> removeManagerFromManagerListById(List<IManager> managerList, int indexOfManagerObject);
 

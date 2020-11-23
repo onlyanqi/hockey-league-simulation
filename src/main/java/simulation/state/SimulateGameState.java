@@ -1,11 +1,15 @@
 package simulation.state;
 
+import org.apache.log4j.Logger;
+import simulation.App;
 import simulation.model.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class SimulateGameState implements ISimulateState {
 
+    private Logger log = Logger.getLogger(SimulateGameState.class);
     private IHockeyContext hockeyContext;
     private ILeague league;
 
@@ -16,12 +20,17 @@ public class SimulateGameState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
+
+        if(league.getCurrentDate().equals(LocalDate.of(2021,05,24))){
+            System.out.println("On day 24");
+        }
+
         List<IGame> gamesOnCurrentDay = league.getGames().getUnPlayedGamesOnDate(league.getCurrentDate());
         IGame game = gamesOnCurrentDay.get(0);
 
         simulateGame(game);
         updateTeamStandings(game);
-
+        log.debug("Simulated game between "+ game.getTeam1() + " and " + game.getTeam2() + " on date " + game.getDate());
         return exit();
     }
 

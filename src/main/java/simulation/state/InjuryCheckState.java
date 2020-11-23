@@ -1,5 +1,6 @@
 package simulation.state;
 
+import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
 import simulation.model.*;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 public class InjuryCheckState implements ISimulateState {
 
+    private Logger log = Logger.getLogger(InjuryCheckState.class);
     public static final String INJURY_CHECK = "Injury Check!";
     private IHockeyContext hockeyContext;
     private ILeague league;
@@ -20,6 +22,7 @@ public class InjuryCheckState implements ISimulateState {
     public ISimulateState action() {
         ConsoleOutput.getInstance().printMsgToConsole(INJURY_CHECK);
         playerInjuryCheck(league);
+        log.debug("Checked injury on date " + league.getCurrentDate());
         return exit();
     }
 
@@ -36,7 +39,8 @@ public class InjuryCheckState implements ISimulateState {
             IPlayer teamPlayer = activePlayerList1.get(i);
             teamPlayer.injuryCheck(league);
             if (teamPlayer.getInjured()) {
-                teamPlayer.findBestReplacement(activePlayerList1, teamPlayer.getPosition(), i, inactivePlayerList1);
+                teamPlayer.findBestReplacement(activePlayerList1, inactivePlayerList1);
+                inactivePlayerList1.add(teamPlayer);
             }
         }
         int size2 = activePlayerList2.size();
@@ -44,7 +48,8 @@ public class InjuryCheckState implements ISimulateState {
             IPlayer teamPlayer = activePlayerList2.get(i);
             teamPlayer.injuryCheck(league);
             if (teamPlayer.getInjured()) {
-                teamPlayer.findBestReplacement(activePlayerList2, teamPlayer.getPosition(), i, inactivePlayerList2);
+                teamPlayer.findBestReplacement(activePlayerList2, inactivePlayerList2);
+                inactivePlayerList2.add(teamPlayer);
             }
         }
     }
