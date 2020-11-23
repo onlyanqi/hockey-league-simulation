@@ -49,7 +49,6 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setId(player.getId());
         this.setName(player.getName());
         this.isFreeAgent = player.isFreeAgent();
-        this.isFreeAgent = player.isFreeAgent;
         this.setFreeAgentId(player.getFreeAgentId());
         this.setAge(player.getAge());
         this.setBirthday(player.getBirthday());
@@ -66,24 +65,6 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setSkating(player.getSkating());
         this.setStrength();
         this.setRelativeStrength();
-    }
-
-    public enum Position {
-        FORWARD {
-            public String toString() {
-                return "forward";
-            }
-        },
-        DEFENSE {
-            public String toString() {
-                return "defense";
-            }
-        },
-        GOALIE {
-            public String toString() {
-                return "goalie";
-            }
-        }
     }
 
     public boolean isFreeAgent() {
@@ -117,7 +98,8 @@ public class Player extends SharedAttributes implements IPlayer {
         return position;
     }
 
-    public void setPosition(Position position) {
+    @Override
+    public void setPosition(simulation.model.Position position) {
         this.position = position;
     }
 
@@ -241,6 +223,11 @@ public class Player extends SharedAttributes implements IPlayer {
         addPlayerFactory.addPlayer(this);
     }
 
+    @Override
+    public boolean retirementCheck(ILeague league) {
+        return false;
+    }
+
     public boolean retirementCheck(League league) {
         if (league == null) {
             return false;
@@ -322,6 +309,18 @@ public class Player extends SharedAttributes implements IPlayer {
         }
     }
 
+    @Override
+    public void agingInjuryRecovery(ILeague league) {
+        if (league == null) {
+            return;
+        }
+        if (this.getInjured() && DateTime.diffDays(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
+            this.setInjured(false);
+            this.setInjuryStartDate(null);
+            this.setInjuryDatesRange(0);
+        }
+    }
+
     public void findBestReplacement(List<IPlayer> targetPlayerList, List<IPlayer> replacementPlayerList) {
         Collections.sort(replacementPlayerList, Collections.reverseOrder());
         Player replacePlayer = new Player();
@@ -341,7 +340,8 @@ public class Player extends SharedAttributes implements IPlayer {
         targetPlayerList.remove(this);
     }
 
-    public void agingInjuryRecovery(League league) {
+    @Override
+    public void statDecayCheck(ILeague league) {
         if (league == null) {
             return;
         }

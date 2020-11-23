@@ -173,7 +173,7 @@ public class CreateTeamState implements IHockeyState {
         List<IPlayer> teamPlayers = createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
         freeAgentList = removeChosenPlayersFromFreeAgentList(chosenPlayersIdList, freeAgentList);
         freeAgent.setPlayerList(freeAgentList);
-        for(Player player :teamPlayers ){
+        for (IPlayer player : teamPlayers) {
             player.setTeamId(team.getId());
         }
         team.setPlayerList(teamPlayers);
@@ -274,7 +274,7 @@ public class CreateTeamState implements IHockeyState {
             }
         }
         league.setConferenceList(conferenceList);
-        if(team == null){
+        if (team == null) {
             return;
         }
         league.setUserCreatedTeamName(team.getName());

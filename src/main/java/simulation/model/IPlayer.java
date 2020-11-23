@@ -67,8 +67,6 @@ public interface IPlayer extends Comparable<IPlayer>{
 
     boolean retirementCheck(ILeague league);
 
-    void getOlder();
-
     void injuryCheck(ILeague league);
 
     void agingInjuryRecovery(ILeague league);
@@ -97,5 +95,7 @@ public interface IPlayer extends Comparable<IPlayer>{
 
     void calculateAge(ILeague league);
 
-    void findBestReplacement(List<IPlayer> targetPlayerList, Position position, int index, List<IPlayer> replacementPlayerList);
+    void findBestReplacement(List<IPlayer> targetPlayerList, List<IPlayer> replacementPlayerList);
+
+    void statDecayCheck(ILeague league);
 }
