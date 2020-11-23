@@ -7,7 +7,7 @@
          "statDecayChance": 0.01
       },
       "injuries": {
-         "randomInjuryChance": 0.88,
+         "randomInjuryChance": 0.08,
          "injuryDaysLow": 4,
          "injuryDaysHigh": 123
       },

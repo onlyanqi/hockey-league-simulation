@@ -49,7 +49,7 @@ public class AdvanceNextSeasonStateTest {
         assertEquals(playerList.get(19).getName(), "Player20");
         Player player1 = playerList.get(0);
         assertEquals(playerList.get(0).getName(), "Player1");
-        player1.findBestReplacement(playerList, Player.Position.FORWARD, 0, freePlayerList);
+        player1.findBestReplacement(playerList, freePlayerList);
         assertNotEquals(playerList.get(0).getName(), "Player1");
         assertEquals(playerList.get(19).getName(), "Player6");
     }

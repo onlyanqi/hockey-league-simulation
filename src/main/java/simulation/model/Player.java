@@ -48,7 +48,15 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         this.setId(player.getId());
         this.setName(player.getName());
         this.isFreeAgent = player.isFreeAgent;
+        this.setFreeAgentId(player.getFreeAgentId());
         this.setAge(player.getAge());
+        this.setBirthday(player.getBirthday());
+        this.setTeamId(player.getTeamId());
+        this.setInjured(player.getInjured());
+        this.setInjuryDatesRange(player.getInjuryDatesRange());
+        this.setInjuryStartDate(player.getInjuryStartDate());
+        this.setCaptain(player.isCaptain());
+        this.setRetired(player.isRetired());
         this.setPosition(player.getPosition());
         this.setSaving(player.getSaving());
         this.setChecking(player.getChecking());
@@ -261,8 +269,36 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         if (birthday == null || currentDate == null) {
             return;
         }
-        int age = Period.between(birthday,currentDate).getYears();
+        int age = Period.between(birthday, currentDate).getYears();
         this.setAge(age);
+    }
+
+    public boolean isBirthday(League league) {
+        LocalDate currentDate = league.getCurrentDate();
+        int currentDayOfMonth = currentDate.getDayOfMonth();
+        int currentMonth = currentDate.getMonthValue();
+        int birthDayOfMonth = birthday.getDayOfMonth();
+        int birthMonth = birthday.getMonthValue();
+
+        if (currentDayOfMonth == birthDayOfMonth && currentMonth == birthMonth) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void statDecayCheck(League league) {
+        if (isBirthday(league)) {
+            Random randomStatDecay = new Random();
+            double chanceOfStatDecay = randomStatDecay.nextDouble();
+            double statDecayChance = league.getGamePlayConfig().getAging().getStatDecayChance();
+            if (chanceOfStatDecay < statDecayChance) {
+                this.setSkating(Math.max((this.getSkating() - 1), 1));
+                this.setShooting(Math.max((this.getShooting() - 1), 1));
+                this.setChecking(Math.max((this.getChecking() - 1), 1));
+                this.setSaving(Math.max((this.getSaving() - 1), 1));
+            }
+        }
     }
 
     public void injuryCheck(League league) {
@@ -284,23 +320,23 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         }
     }
 
-    public void findBestReplacement(List<Player> targetPlayerList, Position position, int index, List<Player> replacementPlayerList) {
+    public void findBestReplacement(List<Player> targetPlayerList, List<Player> replacementPlayerList) {
         Collections.sort(replacementPlayerList, Collections.reverseOrder());
         Player replacePlayer = new Player();
-        int size = replacementPlayerList.size();
-        for (int i = 0; i < size; i++) {
-            if (replacementPlayerList.get(i).getPosition().equals(position)) {
-                replacementPlayerList.get(i).setTeamId(targetPlayerList.get(index).getTeamId());
-                replacePlayer = new Player(replacementPlayerList.get(i));
-                replacementPlayerList.remove(i);
+        Position position = this.getPosition();
+        for (Player player : replacementPlayerList) {
+            if (player.getPosition().equals(position)) {
+                replacePlayer = new Player(player);
+                replacementPlayerList.remove(player);
                 break;
             }
         }
-        if(replacePlayer.getName() == null){
+        if (replacePlayer.getName() == null) {
             return;
         }
+        replacePlayer.setTeamId(this.getTeamId());
         targetPlayerList.add(replacePlayer);
-        targetPlayerList.remove(index);
+        targetPlayerList.remove(this);
     }
 
     public void agingInjuryRecovery(League league) {

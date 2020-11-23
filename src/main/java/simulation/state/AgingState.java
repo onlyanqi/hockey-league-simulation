@@ -4,6 +4,7 @@ import presentation.ConsoleOutput;
 import simulation.model.*;
 
 import java.util.List;
+import java.util.Random;
 
 public class AgingState implements ISimulateState {
 
@@ -35,7 +36,7 @@ public class AgingState implements ISimulateState {
                     List<Player> playerList = team.getPlayerList();
                     for (Player teamPlayer : playerList) {
                         teamPlayer.calculateAge(league);
-                        // statDecay
+                        teamPlayer.statDecayCheck(league);
                         teamPlayer.agingInjuryRecovery(league);
                     }
                 }
@@ -43,6 +44,7 @@ public class AgingState implements ISimulateState {
         }
         for (Player freeAgentPlayer : freeAgentList) {
             freeAgentPlayer.calculateAge(league);
+            freeAgentPlayer.statDecayCheck(league);
             freeAgentPlayer.agingInjuryRecovery(league);
         }
     }

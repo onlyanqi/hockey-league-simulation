@@ -36,7 +36,8 @@ public class InjuryCheckState implements ISimulateState {
             Player teamPlayer = activePlayerList1.get(i);
             teamPlayer.injuryCheck(league);
             if (teamPlayer.getInjured()) {
-                teamPlayer.findBestReplacement(activePlayerList1, teamPlayer.getPosition(), i, inactivePlayerList1);
+                teamPlayer.findBestReplacement(activePlayerList1, inactivePlayerList1);
+                inactivePlayerList1.add(teamPlayer);
             }
         }
         int size2 = activePlayerList2.size();
@@ -44,7 +45,8 @@ public class InjuryCheckState implements ISimulateState {
             Player teamPlayer = activePlayerList2.get(i);
             teamPlayer.injuryCheck(league);
             if (teamPlayer.getInjured()) {
-                teamPlayer.findBestReplacement(activePlayerList2, teamPlayer.getPosition(), i, inactivePlayerList2);
+                teamPlayer.findBestReplacement(activePlayerList2, inactivePlayerList2);
+                inactivePlayerList2.add(teamPlayer);
             }
         }
     }
