@@ -31,6 +31,7 @@ public class HockeyContext implements IHockeyContext{
     private IGameScheduleFactory gameScheduleFactory;
     private ITeamStandingFactory teamStandingFactory;
     private ILeagueFactory leagueFactory;
+    private IDivisionFactory divisionFactory;
 
     private HockeyContext() {
     }
@@ -258,5 +259,15 @@ public class HockeyContext implements IHockeyContext{
     @Override
     public void setLeagueFactory(ILeagueFactory leagueFactory) {
         this.leagueFactory = leagueFactory;
+    }
+
+    @Override
+    public IDivisionFactory getDivisionFactory() {
+        return divisionFactory;
+    }
+
+    @Override
+    public void setDivisionFactory(IDivisionFactory divisionFactory) {
+        this.divisionFactory = divisionFactory;
     }
 }

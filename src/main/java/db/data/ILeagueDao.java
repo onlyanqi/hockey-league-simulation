@@ -1,6 +1,7 @@
 package db.data;
 
 import org.json.simple.JSONObject;
+import simulation.model.IConference;
 import simulation.model.ILeague;
 import simulation.model.League;
 
@@ -17,4 +18,6 @@ public interface ILeagueDao {
     List<ILeague> loadLeagueListByUserId(int userId) throws Exception;
 
     void loadLeagueFromJSON(ILeague league, JSONObject jsonObject);
+
+    List<IConference> formConferenceList() throws Exception;
 }

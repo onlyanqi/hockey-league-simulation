@@ -27,4 +27,9 @@ public class ConferenceDao extends DBExceptionLog implements IConferenceDao {
         return null;
     }
 
+    @Override
+    public List formDivisionList() throws Exception {
+        return null;
+    }
+
 }

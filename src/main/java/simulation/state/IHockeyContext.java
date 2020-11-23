@@ -87,4 +87,8 @@ public interface IHockeyContext {
 
     ILeagueFactory getLeagueFactory();
 
+    IDivisionFactory getDivisionFactory();
+
+    void setDivisionFactory(IDivisionFactory divisionFactory);
+
 }

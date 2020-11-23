@@ -27,4 +27,6 @@ public interface IDivision{
 
     int getId();
 
+    void setId(int id);
+
 }

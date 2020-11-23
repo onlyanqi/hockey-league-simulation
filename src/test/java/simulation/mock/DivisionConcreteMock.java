@@ -1,18 +1,18 @@
-package simulation.factory;
+package simulation.mock;
 
-import db.dao.DivisionDao;
 import db.data.IDivisionDao;
+import simulation.factory.IDivisionFactory;
 import simulation.model.Division;
 import simulation.model.IDivision;
 
-public class DivisionConcrete implements IDivisionFactory {
+public class DivisionConcreteMock implements IDivisionFactory {
 
     public IDivision newDivision() {
         return new Division();
     }
 
     public IDivisionDao newDivisionDao(){
-        return new DivisionDao();
+        return new DivisionMock();
     }
 
     public IDivision newDivisionWithIdDao(int id, IDivisionDao divisionDao) throws Exception {

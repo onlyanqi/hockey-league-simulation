@@ -1,18 +1,19 @@
-package simulation.factory;
+package simulation.mock;
 
 import db.dao.ConferenceDao;
 import db.data.IConferenceDao;
+import simulation.factory.IConferenceFactory;
 import simulation.model.Conference;
 import simulation.model.IConference;
 
-public class ConferenceConcrete implements IConferenceFactory{
+public class ConferenceConcreteMock implements IConferenceFactory {
 
     public IConference newConference() {
         return new Conference();
     }
 
     public IConferenceDao newConferenceDao(){
-        return new ConferenceDao();
+        return new ConferenceMock();
     }
 
     public IConference newConferenceWithId(int id){

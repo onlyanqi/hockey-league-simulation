@@ -1,25 +1,43 @@
 package simulation.mock;
 
+import db.data.IConferenceDao;
 import db.data.IDivisionDao;
 import db.data.ITeamDao;
+import simulation.factory.HockeyContextConcreteMock;
+import simulation.factory.IDivisionFactory;
+import simulation.factory.IHockeyContextFactory;
+import simulation.factory.ITeamFactory;
 import simulation.model.Division;
 import simulation.model.IDivision;
 import simulation.model.ITeam;
 import simulation.model.Team;
+import simulation.state.IHockeyContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DivisionMock implements IDivisionDao {
 
+    private IHockeyContextFactory hockeyContextFactory;
+    private IHockeyContext hockeyContext;
+    private ITeamFactory teamFactory;
+    private ITeamDao teamDao;
+    private IDivisionFactory divisionFactory;
+
+    public DivisionMock(){
+        hockeyContextFactory = HockeyContextConcreteMock.getInstance();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
+        teamFactory = hockeyContext.getTeamFactory();
+        teamDao = teamFactory.newTeamDao();
+        divisionFactory = hockeyContext.getDivisionFactory();
+    }
+
     public List<ITeam> formTeamList() throws Exception {
         List<ITeam> teamList = new ArrayList<>();
-
-        ITeamDao teamFactory = new TeamMock();
-        Team team = new Team(1, teamFactory);
+        ITeam team = teamFactory.newTeamWithIdDao(1, teamDao);
         teamList.add(team);
 
-        team = new Team(3, teamFactory);
+        team = teamFactory.newTeamWithIdDao(3, teamDao);
         teamList.add(team);
 
         return teamList;
@@ -27,9 +45,7 @@ public class DivisionMock implements IDivisionDao {
 
     public List<ITeam> formCreateTeamTeamList() throws Exception {
         List<ITeam> teamList = new ArrayList<>();
-
-        ITeamDao teamFactory = new TeamMock();
-        Team team = new Team(1, teamFactory);
+        ITeam team = teamFactory.newTeamWithIdDao(1, teamDao);
         teamList.add(team);
         return teamList;
 
@@ -37,7 +53,7 @@ public class DivisionMock implements IDivisionDao {
 
     @Override
     public int addDivision(IDivision division) throws Exception {
-        division = new Division(1);
+        division = divisionFactory.newDivisionWithId(1);
         return division.getId();
     }
 
@@ -71,8 +87,8 @@ public class DivisionMock implements IDivisionDao {
     }
 
     @Override
-    public Division loadDivisionByName(String divisionName) throws Exception {
-        Division division = new Division();
+    public IDivision loadDivisionByName(String divisionName) throws Exception {
+        IDivision division = divisionFactory.newDivision();
         division.setName("Division1");
         division.setConferenceId(1);
         division.setTeamList(formTeamList());
@@ -81,8 +97,8 @@ public class DivisionMock implements IDivisionDao {
 
     @Override
     public List<IDivision> loadDivisionListByConferenceId(int conferenceId) throws Exception {
-        ConferenceMock loadConferenceMock = new ConferenceMock();
-        return loadConferenceMock.formDivisionList();
+        IConferenceDao conferenceDao = hockeyContext.getConferenceFactory().newConferenceDao();
+        return conferenceDao.formDivisionList();
     }
 
 }

@@ -1,5 +1,7 @@
 package simulation.factory;
 
+import simulation.mock.ConferenceConcreteMock;
+import simulation.mock.DivisionConcreteMock;
 import simulation.mock.PlayerConcreteMock;
 import simulation.state.HockeyContext;
 import simulation.state.IHockeyContext;
@@ -42,7 +44,7 @@ public class HockeyContextConcreteMock implements IHockeyContextFactory {
         IManagerFactory managerFactory = new ManagerConcrete();
         hockeyContext.setManagerFactory(managerFactory);
 
-        IConferenceFactory conferenceFactory = new ConferenceConcrete();
+        IConferenceFactory conferenceFactory = new ConferenceConcreteMock();
         hockeyContext.setConferenceFactory(conferenceFactory);
 
         IInjuryFactory injuryFactory = new InjuryConcrete();
@@ -77,6 +79,9 @@ public class HockeyContextConcreteMock implements IHockeyContextFactory {
 
         ILeagueFactory leagueFactory = new LeagueConcreteMock();
         hockeyContext.setLeagueFactory(leagueFactory);
+
+        IDivisionFactory divisionFactory = new DivisionConcreteMock();
+        hockeyContext.setDivisionFactory(divisionFactory);
 
         return hockeyContext;
     }
