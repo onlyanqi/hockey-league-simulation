@@ -15,4 +15,5 @@ public interface IConferenceDao {
 
     List<IConference> loadConferenceListByLeagueId(int leagueId) throws Exception;
 
+    List formDivisionList() throws Exception;
 }

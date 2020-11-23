@@ -2,7 +2,6 @@ package simulation.model;
 
 import db.data.IDivisionDao;
 import db.data.ITeamDao;
-
 import java.util.ArrayList;
 import java.util.List;
 

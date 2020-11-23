@@ -173,7 +173,7 @@ public class TeamTest {
     }
 
     @Test
-    public void getTradeOfferCountOfSeasonTest() throws Exception {
+    public void getPlayersTradedCountTest() throws Exception {
         Team team = new Team(1, teamFactory);
         assertEquals(team.getPlayersTradedCount(), 0);
         assertNotEquals(team.getPlayersTradedCount(), 2);
@@ -183,7 +183,7 @@ public class TeamTest {
     }
 
     @Test
-    public void setTradeOfferCountOfSeasonTest() {
+    public void setPlayersTradedCountTest() {
         Team team = new Team();
         int tradeOfferCountOfSeason = 1;
         team.setPlayersTradedCount(tradeOfferCountOfSeason);

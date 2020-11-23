@@ -2,7 +2,6 @@ package simulation.model;
 
 import db.data.IConferenceDao;
 import db.data.IDivisionDao;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,11 +72,11 @@ public class Conference extends SharedAttributes implements IConference {
         addConferenceFactory.addConference(this);
     }
 
-    public void loadDivisionListByConferenceId(IDivisionDao loadDivisionFactory) throws Exception {
-        if (loadDivisionFactory == null) {
+    public void loadDivisionListByConferenceId(IDivisionDao divisionDao) throws Exception {
+        if (divisionDao == null) {
             return;
         }
-        this.divisionList = loadDivisionFactory.loadDivisionListByConferenceId(getId());
+        this.divisionList = divisionDao.loadDivisionListByConferenceId(getId());
     }
 
 }

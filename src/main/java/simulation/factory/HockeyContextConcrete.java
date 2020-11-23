@@ -11,7 +11,7 @@ public class HockeyContextConcrete implements IHockeyContextFactory{
 
     public static IHockeyContextFactory getInstance(){
         if(hockeyContextConcrete == null){
-            return new HockeyContextConcrete();
+            hockeyContextConcrete = new HockeyContextConcrete();
         }
         return hockeyContextConcrete;
     }
@@ -76,6 +76,9 @@ public class HockeyContextConcrete implements IHockeyContextFactory{
 
         ILeagueFactory leagueFactory = new LeagueConcrete();
         hockeyContext.setLeagueFactory(leagueFactory);
+
+        IDivisionFactory divisionFactory = new DivisionConcrete();
+        hockeyContext.setDivisionFactory(divisionFactory);
 
         return hockeyContext;
     }
