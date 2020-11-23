@@ -53,9 +53,9 @@ public interface ITeam {
 
     boolean checkNumPlayer(List<IPlayer> playerList);
 
-    int getTradeOfferCountOfSeason();
+    int getPlayersTradedCount();
 
-    void setTradeOfferCountOfSeason(int tradeOfferCountOfSeason);
+    void setPlayersTradedCount(int playersTradedCount);
 
     int getLossPoint();
 

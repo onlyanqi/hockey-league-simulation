@@ -175,27 +175,27 @@ public class TeamTest {
     @Test
     public void getTradeOfferCountOfSeasonTest() throws Exception {
         Team team = new Team(1, teamFactory);
-        assertEquals(team.getTradeOfferCountOfSeason(), 0);
-        assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
+        assertEquals(team.getPlayersTradedCount(), 0);
+        assertNotEquals(team.getPlayersTradedCount(), 2);
         team = new Team(2, teamFactory);
-        assertEquals(team.getTradeOfferCountOfSeason(), 2);
-        assertNotEquals(team.getTradeOfferCountOfSeason(), 1);
+        assertEquals(team.getPlayersTradedCount(), 2);
+        assertNotEquals(team.getPlayersTradedCount(), 1);
     }
 
     @Test
     public void setTradeOfferCountOfSeasonTest() {
         Team team = new Team();
         int tradeOfferCountOfSeason = 1;
-        team.setTradeOfferCountOfSeason(tradeOfferCountOfSeason);
-        assertEquals(team.getTradeOfferCountOfSeason(), tradeOfferCountOfSeason);
-        assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
+        team.setPlayersTradedCount(tradeOfferCountOfSeason);
+        assertEquals(team.getPlayersTradedCount(), tradeOfferCountOfSeason);
+        assertNotEquals(team.getPlayersTradedCount(), 2);
     }
 
     @Test
     public void getLossPointTest() throws Exception {
         Team team = new Team(1, teamFactory);
         assertEquals(team.getLossPoint(), 0);
-        assertNotEquals(team.getTradeOfferCountOfSeason(), 2);
+        assertNotEquals(team.getPlayersTradedCount(), 2);
         team = new Team(2, teamFactory);
         assertEquals(team.getLossPoint(), 2);
         assertNotEquals(team.getLossPoint(), 1);

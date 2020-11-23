@@ -5,7 +5,7 @@ import db.data.ITradeOfferDao;
 import simulation.model.ITradeOffer;
 import simulation.model.TradeOffer;
 
-public class TradeOfferConcrete implements ITradeOfferFactory {
+public class TradeOfferConcreteMock implements ITradeOfferFactory{
 
     public ITradeOffer newTradeOffer() {
         return new TradeOffer();

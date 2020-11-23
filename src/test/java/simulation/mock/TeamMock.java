@@ -52,7 +52,7 @@ public class TeamMock implements ITeamDao {
                 team.setLossPoint(0);
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setTradeOfferCountOfSeason(0);
+                team.setPlayersTradedCount(0);
                 team.setActivePlayerList();
                 break;
 
@@ -74,7 +74,7 @@ public class TeamMock implements ITeamDao {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setTradeOfferCountOfSeason(2);
+                team.setPlayersTradedCount(2);
                 break;
 
             case 3:
@@ -94,7 +94,7 @@ public class TeamMock implements ITeamDao {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setTradeOfferCountOfSeason(0);
+                team.setPlayersTradedCount(0);
                 team.setActivePlayerList();
                 break;
 
@@ -115,7 +115,7 @@ public class TeamMock implements ITeamDao {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(false);
-                team.setTradeOfferCountOfSeason(1);
+                team.setPlayersTradedCount(1);
                 team.setActivePlayerList();
                 break;
 
@@ -137,7 +137,7 @@ public class TeamMock implements ITeamDao {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setTradeOfferCountOfSeason(6);
+                team.setPlayersTradedCount(6);
                 break;
         }
 
@@ -189,7 +189,7 @@ public class TeamMock implements ITeamDao {
         team.setLossPoint(0);
         team.setStrength();
         team.setAiTeam(true);
-        team.setTradeOfferCountOfSeason(0);
+        team.setPlayersTradedCount(0);
     }
 
 }
