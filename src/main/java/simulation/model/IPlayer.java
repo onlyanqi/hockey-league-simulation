@@ -98,4 +98,6 @@ public interface IPlayer extends Comparable<IPlayer>{
     void findBestReplacement(List<IPlayer> targetPlayerList, List<IPlayer> replacementPlayerList);
 
     void statDecayCheck(ILeague league);
+
+    boolean isBirthday(ILeague league);
 }
