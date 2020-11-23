@@ -1,8 +1,8 @@
 package simulation.model;
 
 
-import db.data.ILeagueFactory;
-import db.data.ITeamScoreFactory;
+import db.data.ILeagueDao;
+import db.data.ITeamScoreDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.LeagueMock;
@@ -15,13 +15,13 @@ import static org.junit.Assert.*;
 
 public class TeamStandingTest {
 
-    private static ITeamScoreFactory iTeamScoreFactory;
-    private static ILeagueFactory iLeagueFactory;
+    private static ITeamScoreDao iTeamScoreDao;
+    private static ILeagueDao iLeagueDao;
 
     @BeforeClass
     public static void setFactoryObj() {
-        iTeamScoreFactory = new TeamScoreMock();
-        iLeagueFactory = new LeagueMock();
+        iTeamScoreDao = new TeamScoreMock();
+        iLeagueDao = new LeagueMock();
     }
 
     @Test
@@ -33,7 +33,7 @@ public class TeamStandingTest {
     @Test
     public void initializeTeamStandingsTest() throws Exception {
 
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertEquals(teamScore.getId(), 1);
 
         TeamStanding teamStanding = new TeamStanding();

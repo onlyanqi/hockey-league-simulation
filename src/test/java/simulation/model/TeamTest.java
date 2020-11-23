@@ -1,7 +1,7 @@
 package simulation.model;
 
-import db.data.IPlayerFactory;
-import db.data.ITeamFactory;
+import db.data.IPlayerDao;
+import db.data.ITeamDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.PlayerMock;
@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class TeamTest {
 
-    private static ITeamFactory teamFactory;
+    private static ITeamDao teamFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
@@ -107,8 +107,8 @@ public class TeamTest {
 
     @Test
     public void getPlayerListTest() throws Exception {
-        Team team = new Team(2, teamFactory);
-        List<Player> playerList = team.getPlayerList();
+        ITeam team = new Team(2, teamFactory);
+        List<IPlayer> playerList = team.getPlayerList();
         assertNotNull(playerList);
         assertEquals(1, playerList.get(0).getId());
         assertEquals(5, playerList.get(4).getId());
@@ -118,9 +118,9 @@ public class TeamTest {
 
     @Test
     public void setPlayerListTest() throws Exception {
-        IPlayerFactory playerFactory = new PlayerMock();
-        List<Player> playerList = new ArrayList<>();
-        Player player;
+        IPlayerDao playerFactory = new PlayerMock();
+        List<IPlayer> playerList = new ArrayList<>();
+        IPlayer player;
         for (int i = 1; i < 31; i++) {
             player = new Player(i, playerFactory);
             playerList.add(player);
@@ -155,7 +155,7 @@ public class TeamTest {
     @Test
     public void loadPlayerListByTeamIdTest() throws Exception {
         Team team = new Team(1);
-        IPlayerFactory playerFactory = new PlayerMock();
+        IPlayerDao playerFactory = new PlayerMock();
         team.loadPlayerListByTeamId(playerFactory);
 
         assertEquals(team.getPlayerList().get(0).getId(), (1));

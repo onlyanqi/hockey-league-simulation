@@ -1,7 +1,7 @@
 package simulation.model;
 
-import db.data.ILeagueFactory;
-import db.data.IUserFactory;
+import db.data.ILeagueDao;
+import db.data.IUserDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.LeagueMock;
@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class UserTest {
 
-    private static IUserFactory loadUserFactory;
+    private static IUserDao loadUserFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
@@ -57,14 +57,14 @@ public class UserTest {
     @Test
     public void getLeagueTest() throws Exception {
         User user = new User(1, loadUserFactory);
-        League league = user.getLeagueList().get(0);
+        ILeague league = user.getLeagueList().get(0);
         assertEquals(league.getId(), (1));
     }
 
     @Test
     public void setLeagueTest() throws Exception {
         User user = new User(1, loadUserFactory);
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
         assertEquals(user.getLeagueList().get(0).getId(), league.getId());
     }
@@ -72,14 +72,14 @@ public class UserTest {
     @Test
     public void getLeagueListTest() throws Exception {
         User user = new User(1, loadUserFactory);
-        League league = user.getLeagueList().get(0);
+        ILeague league = user.getLeagueList().get(0);
         assertEquals(league.getId(), (1));
     }
 
     @Test
     public void setLeagueListTest() throws Exception {
         User user = new User(1, loadUserFactory);
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
         assertEquals(user.getLeagueList().get(0).getId(), league.getId());
     }

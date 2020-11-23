@@ -1,13 +1,14 @@
 package simulation.mock;
 
-import db.data.ITeamScoreFactory;
+import db.data.ITeamScoreDao;
+import simulation.model.ITeamScore;
 import simulation.model.TeamScore;
 
 import java.util.List;
 
-public class TeamScoreMock implements ITeamScoreFactory {
+public class TeamScoreMock implements ITeamScoreDao {
     @Override
-    public long addTeamScore(int leagueId, int regularSeason, TeamScore teamScore) throws Exception {
+    public long addTeamScore(int leagueId, int regularSeason, ITeamScore teamScore) throws Exception {
         teamScore.setId(0);
         teamScore.setPoints(10);
         teamScore.setNumberOfWins(5);
@@ -18,7 +19,7 @@ public class TeamScoreMock implements ITeamScoreFactory {
     }
 
     @Override
-    public void loadTeamScoreById(int id, TeamScore teamScore) throws Exception {
+    public void loadTeamScoreById(int id, ITeamScore teamScore) throws Exception {
         switch (id) {
             case 0:
                 teamScore.setId(id);
@@ -56,8 +57,8 @@ public class TeamScoreMock implements ITeamScoreFactory {
     }
 
     @Override
-    public List<TeamScore> loadRegularTeamScoreListByLeagueId(int leagueId) throws Exception {
-        List<TeamScore> teamScoreList = null;
+    public List<ITeamScore> loadRegularTeamScoreListByLeagueId(int leagueId) throws Exception {
+        List<ITeamScore> teamScoreList = null;
         switch (leagueId) {
             case 0:
                 TeamScore teamScore = new TeamScore();
@@ -93,8 +94,8 @@ public class TeamScoreMock implements ITeamScoreFactory {
     }
 
     @Override
-    public List<TeamScore> loadPlayoffTeamScoreListByLeagueId(int leagueId) throws Exception {
-        List<TeamScore> teamScoreList = null;
+    public List<ITeamScore> loadPlayoffTeamScoreListByLeagueId(int leagueId) throws Exception {
+        List<ITeamScore> teamScoreList = null;
         switch (leagueId) {
             case 0:
                 TeamScore teamScore = new TeamScore();
@@ -130,7 +131,7 @@ public class TeamScoreMock implements ITeamScoreFactory {
     }
 
     @Override
-    public void updateTeamScoreById(TeamScore teamScore) {
+    public void updateTeamScoreById(ITeamScore teamScore) {
         teamScore.setId(teamScore.getId());
         teamScore.setPoints(teamScore.getPoints());
         teamScore.setNumberOfWins(teamScore.getNumberOfWins());

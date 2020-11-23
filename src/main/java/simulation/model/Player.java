@@ -1,6 +1,7 @@
 package simulation.model;
 
-import db.data.IPlayerFactory;
+import db.data.IPlayerDao;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -8,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Player extends SharedAttributes implements Comparable<Player> {
+public class Player extends SharedAttributes implements IPlayer {
 
     private int age;
     private LocalDate birthday;
@@ -36,17 +37,18 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         setId(id);
     }
 
-    public Player(int id, IPlayerFactory factory) throws Exception {
+    public Player(int id, IPlayerDao factory) throws Exception {
         setId(id);
         factory.loadPlayerById(id, this);
     }
 
-    public Player(Player player) {
+    public Player(IPlayer player) {
         if (player == null) {
             return;
         }
         this.setId(player.getId());
         this.setName(player.getName());
+        this.isFreeAgent = player.isFreeAgent();
         this.isFreeAgent = player.isFreeAgent;
         this.setFreeAgentId(player.getFreeAgentId());
         this.setAge(player.getAge());
@@ -232,7 +234,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         this.injuryDatesRange = injuryDatesRange;
     }
 
-    public void addPlayer(IPlayerFactory addPlayerFactory) throws Exception {
+    public void addPlayer(IPlayerDao addPlayerFactory) throws Exception {
         if (addPlayerFactory == null) {
             return;
         }
@@ -263,7 +265,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         } else return this.age >= aging.getMaximumAge();
     }
 
-    public void calculateAge(League league) {
+    public void calculateAge(ILeague league) {
         LocalDate birthday = this.getBirthday();
         LocalDate currentDate = league.getCurrentDate();
         if (birthday == null || currentDate == null) {
@@ -301,7 +303,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         }
     }
 
-    public void injuryCheck(League league) {
+    public void injuryCheck(ILeague league) {
         if (league == null) {
             return;
         }
@@ -320,11 +322,11 @@ public class Player extends SharedAttributes implements Comparable<Player> {
         }
     }
 
-    public void findBestReplacement(List<Player> targetPlayerList, List<Player> replacementPlayerList) {
+    public void findBestReplacement(List<IPlayer> targetPlayerList, List<IPlayer> replacementPlayerList) {
         Collections.sort(replacementPlayerList, Collections.reverseOrder());
         Player replacePlayer = new Player();
         Position position = this.getPosition();
-        for (Player player : replacementPlayerList) {
+        for (IPlayer player : replacementPlayerList) {
             if (player.getPosition().equals(position)) {
                 replacePlayer = new Player(player);
                 replacementPlayerList.remove(player);
@@ -359,7 +361,7 @@ public class Player extends SharedAttributes implements Comparable<Player> {
     }
 
     @Override
-    public int compareTo(Player player) {
+    public int compareTo(@NotNull IPlayer player) {
         if (player == null) {
             return -2;
         }

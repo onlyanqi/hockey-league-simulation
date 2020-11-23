@@ -1,15 +1,16 @@
 package simulation.factory;
 
-import db.data.IUserFactory;
+import db.data.IUserDao;
+import simulation.model.IUser;
 import simulation.model.User;
 
-public class UserConcrete {
+public class UserConcrete implements IUserFactory{
 
-    public User newUser() {
+    public IUser newUser() {
         return new User();
     }
 
-    public User newUserByName(String name, IUserFactory loadUserFactory) throws Exception {
+    public IUser newUserByName(String name, IUserDao loadUserFactory) throws Exception {
         return new User(name, loadUserFactory);
     }
 

@@ -1,16 +1,18 @@
 package db.data;
 
 import simulation.model.Coach;
+import simulation.model.ICoach;
 
 import java.util.List;
 
 public interface ICoachDao {
-    int addCoach(Coach coach) throws Exception;
 
-    void loadCoachById(int id, Coach coach) throws Exception;
+    int addCoach(ICoach coach) throws Exception;
 
-    Coach loadCoachByTeamId(int teamId) throws Exception;
+    void loadCoachById(int id, ICoach coach) throws Exception;
 
-    List<Coach> loadFreeCoachListByLeagueId(int leagueId) throws Exception;
+    ICoach loadCoachByTeamId(int teamId) throws Exception;
+
+    List<ICoach> loadFreeCoachListByLeagueId(int leagueId) throws Exception;
 }
 

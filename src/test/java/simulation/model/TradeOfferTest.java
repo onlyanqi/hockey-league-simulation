@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITradeOfferFactory;
+import db.data.ITradeOfferDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.TradeOfferMock;
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertNotEquals;
 
 public class TradeOfferTest {
 
-    private static ITradeOfferFactory tradeOfferFactory;
+    private static ITradeOfferDao tradeOfferFactory;
 
     @BeforeClass
     public static void setFactoryObj() {

@@ -2,8 +2,7 @@ package simulation.model;
 
 import db.data.IAgingDao;
 
-public class Aging extends SharedAttributes
-        implements IAging {
+public class Aging extends SharedAttributes implements IAging {
 
     private int averageRetirementAge;
 
@@ -26,22 +25,22 @@ public class Aging extends SharedAttributes
         loadAgingFactory.loadAgingById(id, this);
     }
 
-    //@Override
+    @Override
     public int getLeagueId() {
         return leagueId;
     }
 
-    //@Override
+    @Override
     public void setLeagueId(int leagueId) {
         this.leagueId = leagueId;
     }
 
-    //@Override
+    @Override
     public int getAverageRetirementAge() {
         return averageRetirementAge;
     }
 
-    //@Override
+    @Override
     public void setAverageRetirementAge(int averageRetirementAge) throws IllegalArgumentException {
         if (averageRetirementAge < 0) {
             throw new IllegalArgumentException("averageRetirementAge must be greater than 0!");
@@ -49,12 +48,12 @@ public class Aging extends SharedAttributes
         this.averageRetirementAge = averageRetirementAge;
     }
 
-    //@Override
+    @Override
     public int getMaximumAge() {
         return maximumAge;
     }
 
-    //@Override
+    @Override
     public void setMaximumAge(int maximumAge) throws IllegalArgumentException {
         if (maximumAge < 0) {
             throw new IllegalArgumentException("maximumAge must be greater than 0!");
@@ -65,12 +64,12 @@ public class Aging extends SharedAttributes
         this.maximumAge = maximumAge;
     }
 
-    //@Override
+    @Override
     public Double getStatDecayChance() {
         return statDecayChance;
     }
 
-    //@Override
+    @Override
     public void setStatDecayChance(Double statDecayChance) {
         this.statDecayChance = statDecayChance;
     }

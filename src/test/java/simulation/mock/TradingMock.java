@@ -1,14 +1,15 @@
 package simulation.mock;
 
-import db.data.ITradingFactory;
+import db.data.ITradingDao;
+import simulation.model.ITrading;
 import simulation.model.Trading;
 
 import java.util.Arrays;
 import java.util.Date;
 
-public class TradingMock implements ITradingFactory {
+public class TradingMock implements ITradingDao {
 
-    private Trading getTrading(int leagueId, int tradingId, Trading trading) {
+    private ITrading getTrading(int leagueId, int tradingId, ITrading trading) {
         trading.setId(1);
         trading.setLeagueId(1);
         trading.setLossPoint(2);
@@ -24,14 +25,14 @@ public class TradingMock implements ITradingFactory {
     }
 
     @Override
-    public int addTradingDetails(Trading trading) {
+    public int addTradingDetails(ITrading trading) {
         trading = getTrading(1, 1, trading);
         return trading.getId();
     }
 
     @Override
-    public Trading loadTradingDetailsByLeagueId(int leagueId) {
-        Trading trading = new Trading();
+    public ITrading loadTradingDetailsByLeagueId(int leagueId) {
+        ITrading trading = new Trading();
         trading = getTrading(leagueId, 1, trading);
 
         switch (leagueId) {
@@ -60,7 +61,7 @@ public class TradingMock implements ITradingFactory {
     }
 
     @Override
-    public void loadTradingDetailsByTradingId(int tradingId, Trading trading) {
+    public void loadTradingDetailsByTradingId(int tradingId, ITrading trading) {
 
         trading = getTrading(1, tradingId, trading);
 

@@ -1,7 +1,7 @@
 package simulation.state;
 
 
-import db.data.ILeagueFactory;
+import db.data.ILeagueDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.HockeyContextConcrete;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class HockeyContextTest {
 
     private static User user;
-    private static ILeagueFactory factory;
+    private static ILeagueDao factory;
     private static IHockeyContextFactory hockeyContextFactory;
 
     @BeforeClass

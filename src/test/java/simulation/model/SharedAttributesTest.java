@@ -1,17 +1,15 @@
 package simulation.model;
 
-import db.data.IPlayerFactory;
-import db.data.ISharedAttributesFactory;
+import db.data.IPlayerDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.PlayerMock;
-import simulation.mock.SharedAttributesMock;
 
 import static org.junit.Assert.*;
 
 public class SharedAttributesTest {
 
-    private static IPlayerFactory playerFactory;
+    private static IPlayerDao playerFactory;
 
     @BeforeClass
     public static void setFactoryObj() {

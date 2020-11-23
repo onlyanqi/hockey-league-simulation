@@ -1,15 +1,15 @@
 package simulation.model;
 
-import db.data.ILeagueFactory;
-import db.data.IUserFactory;
+import db.data.ILeagueDao;
+import db.data.IUserDao;
 
 import java.util.List;
 
-public class User extends SharedAttributes {
+public class User extends SharedAttributes implements IUser {
 
     private String password;
-    private List<League> leagueList;
-    private League league;
+    private List<ILeague> leagueList;
+    private ILeague league;
 
     public User() {
         setId(System.identityHashCode(this));
@@ -18,22 +18,22 @@ public class User extends SharedAttributes {
     public User(int id) {
         setId(id);
     }
-    public User(int id, IUserFactory factory) throws Exception {
+    public User(int id, IUserDao factory) throws Exception {
         setId(id);
         factory.loadUserById(id, this);
     }
-    public User(String name, IUserFactory factory) throws Exception {
+    public User(String name, IUserDao factory) throws Exception {
         if (factory == null) {
             return;
         }
         factory.loadUserByName(name, this);
     }
 
-    public List<League> getLeagueList() {
+    public List<ILeague> getLeagueList() {
         return leagueList;
     }
 
-    public void setLeagueList(List<League> leagueList) {
+    public void setLeagueList(List<ILeague> leagueList) {
         if (leagueList == null) {
             return;
         }
@@ -52,25 +52,25 @@ public class User extends SharedAttributes {
         }
     }
 
-    public void addUser(IUserFactory addUserFactory) throws Exception {
+    public void addUser(IUserDao addUserFactory) throws Exception {
         if (addUserFactory == null) {
             return;
         }
         addUserFactory.addUser(this);
     }
 
-    public League getLeague() {
+    public ILeague getLeague() {
         return league;
     }
 
-    public void setLeague(League league) {
+    public void setLeague(ILeague league) {
         if (league == null) {
             return;
         }
         this.league = league;
     }
 
-    public void loadLeagueByUserId(ILeagueFactory loadLeagueFactory) throws Exception {
+    public void loadLeagueByUserId(ILeagueDao loadLeagueFactory) throws Exception {
         if (loadLeagueFactory == null) {
             return;
         }

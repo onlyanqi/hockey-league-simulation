@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import db.data.ITradeOfferFactory;
 import org.junit.Test;
 import simulation.model.SharedAttributes;
 import simulation.model.TradeOffer;

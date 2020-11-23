@@ -1,25 +1,25 @@
 package simulation.model;
 
 import config.AppConfig;
-import db.data.IPlayerFactory;
-import db.data.ITeamFactory;
+import db.data.IPlayerDao;
+import db.data.ITeamDao;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Team extends SharedAttributes {
+public class Team extends SharedAttributes implements ITeam {
 
     private String mascot;
     private int divisionId;
     private double strength;
     private boolean aiTeam;
-    private Coach coach;
-    private Manager manager;
-    private List<Player> playerList;
-    private List<Player> activePlayerList;
-    private List<Player> inactivePlayerList;
+    private ICoach coach;
+    private IManager manager;
+    private List<IPlayer> playerList;
+    private List<IPlayer> activePlayerList;
+    private List<IPlayer> inactivePlayerList;
     private int tradeOfferCountOfSeason;
     private int lossPoint;
 
@@ -31,20 +31,20 @@ public class Team extends SharedAttributes {
         setId(id);
     }
 
-    public Team(int id, ITeamFactory factory) throws Exception {
+    public Team(int id, ITeamDao factory) throws Exception {
         setId(id);
         factory.loadTeamById(id, this);
     }
 
-    public Team(String name, ITeamFactory factory) throws Exception {
+    public Team(String name, ITeamDao factory) throws Exception {
         factory.loadTeamByName(name, this);
     }
 
-    public List<Player> getPlayerList() {
+    public List<IPlayer> getPlayerList() {
         return playerList;
     }
 
-    public void setPlayerList(List<Player> playerList) throws IllegalArgumentException {
+    public void setPlayerList(List<IPlayer> playerList) throws IllegalArgumentException {
         if (checkNumPlayer(playerList)) {
             this.playerList = playerList;
         } else {
@@ -52,21 +52,21 @@ public class Team extends SharedAttributes {
         }
     }
 
-    public List<Player> getActivePlayerList() {
+    public List<IPlayer> getActivePlayerList() {
         return activePlayerList;
     }
 
     public void setActivePlayerList() {
         int noOfGoalies = 0;
         int noOfSkaters = 0;
-        List<Player> teamPlayerList = this.getPlayerList();
-        List<Player> activePlayerList = new ArrayList<>();
+        List<IPlayer> teamPlayerList = this.getPlayerList();
+        List<IPlayer> activePlayerList = new ArrayList<>();
         Collections.sort(teamPlayerList, Collections.reverseOrder());
-        for (Player thisPlayer : teamPlayerList) {
+        for (IPlayer thisPlayer : teamPlayerList) {
             if (thisPlayer.getInjured()) {
                 continue;
             }
-            if (thisPlayer.getPosition() == Player.Position.GOALIE && noOfGoalies < 2) {
+            if (thisPlayer.getPosition() == Position.GOALIE && noOfGoalies < 2) {
                 activePlayerList.add(thisPlayer);
                 noOfGoalies++;
             } else if (noOfSkaters < 18) {
@@ -75,8 +75,8 @@ public class Team extends SharedAttributes {
             }
         }
         if (noOfGoalies < 2 || noOfSkaters < 18) {
-            for (Player thisPlayer : teamPlayerList) {
-                if (thisPlayer.getPosition() == Player.Position.GOALIE && noOfGoalies < 2 && thisPlayer.getInjured()) {
+            for (IPlayer thisPlayer : teamPlayerList) {
+                if (thisPlayer.getPosition() == Position.GOALIE && noOfGoalies < 2 && thisPlayer.getInjured()) {
                     activePlayerList.add(thisPlayer);
                     noOfGoalies++;
                 } else if (noOfSkaters < 18 && thisPlayer.getInjured()) {
@@ -86,19 +86,18 @@ public class Team extends SharedAttributes {
             }
         }
         this.activePlayerList = activePlayerList;
-        List<Player> inactivePlayers = new ArrayList<>(teamPlayerList);
+        List<IPlayer> inactivePlayers = new ArrayList<>(teamPlayerList);
         inactivePlayers.removeAll(activePlayerList);
         setInactivePlayerList(inactivePlayers);
     }
 
-    public List<Player> getInactivePlayerList() {
+    public List<IPlayer> getInactivePlayerList() {
         return inactivePlayerList;
     }
 
-    public void setInactivePlayerList(List<Player> inactivePlayerList) {
+    public void setInactivePlayerList(List<IPlayer> inactivePlayerList) {
         this.inactivePlayerList = inactivePlayerList;
     }
-
 
     public String getMascot() {
         return mascot;
@@ -116,28 +115,28 @@ public class Team extends SharedAttributes {
         this.divisionId = divisionId;
     }
 
-    public Coach getCoach() {
+    public ICoach getCoach() {
         return coach;
     }
 
-    public void setCoach(Coach coach) {
+    public void setCoach(ICoach coach) {
         this.coach = coach;
     }
 
-    public Manager getManager() {
+    public IManager getManager() {
         return manager;
     }
 
-    public void setManager(Manager manager) {
+    public void setManager(IManager manager) {
         this.manager = manager;
     }
 
-    public void addTeam(ITeamFactory addTeamFactory) throws Exception {
+    public void addTeam(ITeamDao addTeamFactory) throws Exception {
         addTeamFactory.addTeam(this);
     }
 
     public void setStrength() {
-        for (Player player : getPlayerList()) {
+        for (IPlayer player : getPlayerList()) {
             if (player.getInjured()) {
                 this.strength += 0.5 * player.getStrength();
             } else {
@@ -158,18 +157,18 @@ public class Team extends SharedAttributes {
         this.aiTeam = aiTeam;
     }
 
-    public void loadPlayerListByTeamId(IPlayerFactory loadPlayerFactory) throws Exception {
+    public void loadPlayerListByTeamId(IPlayerDao loadPlayerFactory) throws Exception {
         this.playerList = loadPlayerFactory.loadPlayerListByTeamId(getId());
     }
 
-    public List<Integer> createChosenPlayerIdList(FreeAgent freeAgent) {
+    public List<Integer> createChosenPlayerIdList(IFreeAgent freeAgent) {
         IUserInputForTeamCreation teamCreationInput = AppConfig.getInstance().getInputForTeamCreation();
         IConsoleOutputForTeamCreation teamCreationOutput = AppConfig.getInstance().getOutputForTeamCreation();
         int numberOfForward = 0;
         int numberOfGoalie = 0;
         int numberOfDefense = 0;
 
-        List<Player> freeAgentList = freeAgent.getPlayerList();
+        List<IPlayer> freeAgentList = freeAgent.getPlayerList();
         List<Double> strengthList = createStrengthList(freeAgentList);
 
         List<Integer> goodFreeAgentsIdList = freeAgent.getGoodFreeAgentsList(strengthList);
@@ -181,10 +180,10 @@ public class Team extends SharedAttributes {
         return chosenPlayersIdList;
     }
 
-    public List<Double> createStrengthList(List<Player> freeAgentList) {
+    public List<Double> createStrengthList(List<IPlayer> freeAgentList) {
         List<Double> strengthList = new ArrayList<>();
         for (int i = 0; i < freeAgentList.size(); i++) {
-            Player freeAgentPlayer = freeAgentList.get(i);
+            IPlayer freeAgentPlayer = freeAgentList.get(i);
             freeAgentPlayer.setStrength();
             Double playerStrength = freeAgentPlayer.getStrength();
             strengthList.add(i, playerStrength);
@@ -194,7 +193,7 @@ public class Team extends SharedAttributes {
 
     private void selectPlayers(IUserInputForTeamCreation teamCreationInput,
                                IConsoleOutputForTeamCreation teamCreationOutput, int numberOfForward,
-                               int numberOfGoalie, int numberOfDefense, List<Player> freeAgentList,
+                               int numberOfGoalie, int numberOfDefense, List<IPlayer> freeAgentList,
                                List<Integer> chosenPlayersIdList) {
         int playerId;
         while (numberOfGoalie < 4 || numberOfForward < 16 || numberOfDefense < 10) {
@@ -205,16 +204,16 @@ public class Team extends SharedAttributes {
                 teamCreationOutput.playerIdAlreadyChosenMessage(chosenPlayersIdList);
                 continue;
             }
-            Player player = freeAgentList.get(playerId);
-            if (numberOfGoalie < 4 && player.getPosition() == Player.Position.GOALIE) {
+            IPlayer player = freeAgentList.get(playerId);
+            if (numberOfGoalie < 4 && player.getPosition() == Position.GOALIE) {
                 chosenPlayersIdList.add(playerId);
                 numberOfGoalie = numberOfGoalie + 1;
                 teamCreationOutput.showCountOfNeededPlayers(4 - numberOfGoalie, 16 - numberOfForward, 10 - numberOfDefense);
-            } else if (numberOfForward < 16 && player.getPosition() == Player.Position.FORWARD) {
+            } else if (numberOfForward < 16 && player.getPosition() == Position.FORWARD) {
                 chosenPlayersIdList.add(playerId);
                 numberOfForward = numberOfForward + 1;
                 teamCreationOutput.showCountOfNeededPlayers(4 - numberOfGoalie, 16 - numberOfForward, 10 - numberOfDefense);
-            } else if (numberOfDefense < 10 && player.getPosition() == Player.Position.DEFENSE) {
+            } else if (numberOfDefense < 10 && player.getPosition() == Position.DEFENSE) {
                 chosenPlayersIdList.add(playerId);
                 numberOfDefense = numberOfDefense + 1;
                 teamCreationOutput.showCountOfNeededPlayers(4 - numberOfGoalie, 16 - numberOfForward, 10 - numberOfDefense);
@@ -222,7 +221,7 @@ public class Team extends SharedAttributes {
         }
     }
 
-    public boolean checkNumPlayer(List<Player> playerList) {
+    public boolean checkNumPlayer(List<IPlayer> playerList) {
         boolean isValid = false;
         int goalieNum = 0;
         int forwardNum = 0;
@@ -233,10 +232,10 @@ public class Team extends SharedAttributes {
         int maxForwards = 16;
         int maxDefences = 10;
 
-        for (Player player : playerList) {
-            if (player.getPosition() == Player.Position.GOALIE) {
+        for (IPlayer player : playerList) {
+            if (player.getPosition() == Position.GOALIE) {
                 goalieNum++;
-            } else if (player.getPosition() == Player.Position.FORWARD) {
+            } else if (player.getPosition() == Position.FORWARD) {
                 forwardNum++;
             } else {
                 defenseNum++;
@@ -267,7 +266,7 @@ public class Team extends SharedAttributes {
         this.lossPoint = lossPoint;
     }
 
-    public void fixTeamAfterTrading(List<Player> freeAgentList){
+    public void fixTeamAfterTrading(List<IPlayer> freeAgentList){
         int goalieNum = 0;
         int forwardNum = 0;
         int defenseNum = 0;
@@ -275,10 +274,10 @@ public class Team extends SharedAttributes {
         int maxForwards = 16;
         int maxDefences = 10;
 
-        for (Player player : playerList) {
-            if (player.getPosition() == Player.Position.GOALIE) {
+        for (IPlayer player : playerList) {
+            if (player.getPosition() == Position.GOALIE) {
                 goalieNum++;
-            } else if (player.getPosition() == Player.Position.FORWARD) {
+            } else if (player.getPosition() == Position.FORWARD) {
                 forwardNum++;
             } else {
                 defenseNum++;
@@ -288,26 +287,26 @@ public class Team extends SharedAttributes {
         Collections.sort(freeAgentList, Collections.reverseOrder());
 
         if (goalieNum < maxGoalies) {
-            addPlayer(freeAgentList, Player.Position.GOALIE.toString(), goalieNum, maxGoalies);
+            addPlayer(freeAgentList, Position.GOALIE.toString(), goalieNum, maxGoalies);
         } else if(goalieNum > maxGoalies){
-            dropPlayer(freeAgentList, Player.Position.GOALIE.toString(), goalieNum, maxGoalies);
+            dropPlayer(freeAgentList, Position.GOALIE.toString(), goalieNum, maxGoalies);
         }
 
         if (forwardNum < maxForwards) {
-            addPlayer(freeAgentList, Player.Position.FORWARD.toString(), forwardNum, maxForwards);
+            addPlayer(freeAgentList, Position.FORWARD.toString(), forwardNum, maxForwards);
         } else if(forwardNum > maxForwards){
-            dropPlayer(freeAgentList, Player.Position.FORWARD.toString(), forwardNum, maxForwards);
+            dropPlayer(freeAgentList, Position.FORWARD.toString(), forwardNum, maxForwards);
         }
 
         if (defenseNum < maxDefences) {
-            addPlayer(freeAgentList, Player.Position.DEFENSE.toString(), defenseNum, maxDefences);
+            addPlayer(freeAgentList, Position.DEFENSE.toString(), defenseNum, maxDefences);
         } else if(defenseNum > maxDefences){
-            dropPlayer(freeAgentList, Player.Position.DEFENSE.toString(), defenseNum, maxDefences);
+            dropPlayer(freeAgentList, Position.DEFENSE.toString(), defenseNum, maxDefences);
         }
     }
 
-    private void addPlayer(List<Player> freeAgentList, String position, int noOfPlayers, int maxPlayers){
-        for(Player player : freeAgentList){
+    private void addPlayer(List<IPlayer> freeAgentList, String position, int noOfPlayers, int maxPlayers){
+        for(IPlayer player : freeAgentList){
             if(player.getPosition().equals(position) && noOfPlayers < maxPlayers){
                 freeAgentList.remove(player);
                 getPlayerList().add(player);
@@ -316,10 +315,10 @@ public class Team extends SharedAttributes {
         }
     }
 
-    private void dropPlayer(List<Player> freeAgentList, String position, int noOfPlayers, int maxPlayers){
+    private void dropPlayer(List<IPlayer> freeAgentList, String position, int noOfPlayers, int maxPlayers){
         Collections.sort(getPlayerList());
         for(int i = 0; noOfPlayers > maxPlayers; i++){
-            Player player = getPlayerList().get(i);
+            IPlayer player = getPlayerList().get(i);
             if(player.getPosition().toString().equals(position) && maxPlayers < noOfPlayers){
                 freeAgentList.add(player);
                 getPlayerList().remove(player);

@@ -1,15 +1,15 @@
 package simulation.model;
 
-import db.data.IGameResolverFactory;
+import db.data.IGameResolverDao;
 
-public class GameResolver extends SharedAttributes {
+public class GameResolver extends SharedAttributes implements IGameResolver{
     private Double randomWinChance;
 
     public GameResolver() {
         setId(System.identityHashCode(this));
     }
 
-    public GameResolver(int leagueId, IGameResolverFactory gameResolverFactory) throws Exception {
+    public GameResolver(int leagueId, IGameResolverDao gameResolverFactory) throws Exception {
         if (gameResolverFactory == null) {
             return;
         }

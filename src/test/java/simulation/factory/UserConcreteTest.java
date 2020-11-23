@@ -1,9 +1,10 @@
 package simulation.factory;
 
-import db.data.IUserFactory;
+import db.data.IUserDao;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.mock.UserMock;
+import simulation.model.IUser;
 import simulation.model.User;
 
 import static org.junit.Assert.assertTrue;
@@ -25,9 +26,9 @@ public class UserConcreteTest {
     @Test
     public void newUserByNameTest() throws Exception {
         String name = "name";
-        IUserFactory loadUserFactory = new UserMock();
-        User user = userConcrete.newUserByName(name, loadUserFactory);
-        assertTrue(user instanceof User);
+        IUserDao loadUserFactory = new UserMock();
+        IUser user = userConcrete.newUserByName(name, loadUserFactory);
+        assertTrue(user instanceof IUser);
     }
 
 }

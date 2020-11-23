@@ -1,8 +1,8 @@
 package simulation.model;
 
-import db.data.ISeasonFactory;
+import db.data.ISeasonDao;
 
-public class Season extends SharedAttributes {
+public class Season extends SharedAttributes implements ISeason {
 
     public Season() {
         setId(System.identityHashCode(this));
@@ -12,7 +12,7 @@ public class Season extends SharedAttributes {
         setId(id);
     }
 
-    public Season(int id, ISeasonFactory factory) throws Exception {
+    public Season(int id, ISeasonDao factory) throws Exception {
         if (factory == null) {
             return;
         }
@@ -20,7 +20,7 @@ public class Season extends SharedAttributes {
         factory.loadSeasonById(id, this);
     }
 
-    public void addSeason(ISeasonFactory addSeasonFactory) throws Exception {
+    public void addSeason(ISeasonDao addSeasonFactory) throws Exception {
         if (addSeasonFactory == null) {
             return;
         }

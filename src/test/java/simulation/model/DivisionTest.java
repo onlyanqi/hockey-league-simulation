@@ -1,7 +1,7 @@
 package simulation.model;
 
-import db.data.IDivisionFactory;
-import db.data.ITeamFactory;
+import db.data.IDivisionDao;
+import db.data.ITeamDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.DivisionMock;
@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class DivisionTest {
 
-    private static IDivisionFactory loadDivisionFactory;
+    private static IDivisionDao loadDivisionFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
@@ -60,7 +60,7 @@ public class DivisionTest {
     @Test
     public void getTeamListTest() throws Exception {
         Division division = new Division(1, loadDivisionFactory);
-        List<Team> teamList = division.getTeamList();
+        List<ITeam> teamList = division.getTeamList();
         assertNotNull(teamList);
         assertEquals(teamList.get(0).getId(), (1));
         assertEquals(teamList.get(1).getId(), (3));
@@ -69,8 +69,8 @@ public class DivisionTest {
 
     @Test
     public void setPlayerListTest() throws Exception {
-        ITeamFactory teamFactory = new TeamMock();
-        List<Team> teamList = new ArrayList<>();
+        ITeamDao teamFactory = new TeamMock();
+        List<ITeam> teamList = new ArrayList<>();
         Team team = new Team(1, teamFactory);
         teamList.add(team);
         team = new Team(2, teamFactory);
@@ -98,7 +98,7 @@ public class DivisionTest {
     @Test
     public void loadTeamListByDivisionIdTest() throws Exception {
         Division division = new Division(1);
-        ITeamFactory loadTeamFactory = new TeamMock();
+        ITeamDao loadTeamFactory = new TeamMock();
         division.loadTeamListByDivisionId(loadTeamFactory);
 
         assertTrue(division.getTeamList().get(0).getId() == (1));

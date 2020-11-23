@@ -1,10 +1,10 @@
 package simulation.model;
 
-import db.data.IGameFactory;
+import db.data.IGameDao;
 
 import java.time.LocalDate;
 
-public class Game {
+public class Game implements IGame {
 
     private int id;
     private String team1;
@@ -18,7 +18,7 @@ public class Game {
         setId(System.identityHashCode(this));
     }
 
-    public Game(int id, IGameFactory factory) throws Exception {
+    public Game(int id, IGameDao factory) throws Exception {
         setId(id);
         factory.loadGameById(id, this);
     }
@@ -88,9 +88,4 @@ public class Game {
         }
     }
 
-    public enum Result {
-        TEAM1,
-        TEAM2,
-        TIE
-    }
 }

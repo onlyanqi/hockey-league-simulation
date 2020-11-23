@@ -1,8 +1,8 @@
 package simulation.model;
 
-import db.data.IInjuryFactory;
+import db.data.IInjuryDao;
 
-public class Injury extends SharedAttributes {
+public class Injury extends SharedAttributes implements IInjury{
 
     private Double randomInjuryChance;
 
@@ -20,7 +20,7 @@ public class Injury extends SharedAttributes {
         setId(id);
     }
 
-    public Injury(int id, IInjuryFactory loadInjuryFactory) throws Exception {
+    public Injury(int id, IInjuryDao loadInjuryFactory) throws Exception {
         setId(id);
         loadInjuryFactory.loadInjuryById(id, this);
     }

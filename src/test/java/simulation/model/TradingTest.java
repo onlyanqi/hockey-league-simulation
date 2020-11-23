@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITradingFactory;
+import db.data.ITradingDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.TradingMock;
@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class TradingTest {
 
-    private static ITradingFactory tradingFactory;
+    private static ITradingDao tradingFactory;
 
     @BeforeClass
     public static void setFactoryObj() {

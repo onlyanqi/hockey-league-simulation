@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IGameFactory;
+import db.data.IGameDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.GameMock;
@@ -13,11 +13,11 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class GameScheduleTest {
-    private static IGameFactory iGameFactory;
+    private static IGameDao iGameDao;
 
     @BeforeClass
     public static void setFactoryObj() {
-        iGameFactory = new GameMock();
+        iGameDao = new GameMock();
     }
 
     @Test
@@ -44,9 +44,9 @@ public class GameScheduleTest {
     @Test
     public void getGamesOnDateTest() throws Exception {
 
-        Game game = new Game(2, iGameFactory);
-        Game game2 = new Game(1, iGameFactory);
-        List<Game> gameList = new ArrayList<>();
+        Game game = new Game(2, iGameDao);
+        Game game2 = new Game(1, iGameDao);
+        List<IGame> gameList = new ArrayList<>();
         gameList.add(game);
         gameList.add(game2);
 
@@ -58,9 +58,9 @@ public class GameScheduleTest {
 
     @Test
     public void doGamesExistAfterDateTest() throws Exception {
-        Game game = new Game(2, iGameFactory);
-        Game game2 = new Game(1, iGameFactory);
-        List<Game> gameList = new ArrayList<>();
+        Game game = new Game(2, iGameDao);
+        Game game2 = new Game(1, iGameDao);
+        List<IGame> gameList = new ArrayList<>();
         gameList.add(game);
         gameList.add(game2);
 

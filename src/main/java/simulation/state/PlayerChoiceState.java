@@ -52,8 +52,8 @@ public class PlayerChoiceState implements IHockeyState {
                 break;
             }
             case CREATEORLOADTEAM: {
-                InternalState internalState = new InternalState(hockeyContext);
-                return internalState;
+                SeasonSimulationState seasonSimulationState = new SeasonSimulationState(hockeyContext,Integer.parseInt(userInput));
+                return seasonSimulationState;
             }
             default: {
 

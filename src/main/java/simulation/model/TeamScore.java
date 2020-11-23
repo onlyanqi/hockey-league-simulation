@@ -1,8 +1,8 @@
 package simulation.model;
 
-import db.data.ITeamScoreFactory;
+import db.data.ITeamScoreDao;
 
-public class TeamScore extends SharedAttributes {
+public class TeamScore extends SharedAttributes implements ITeamScore{
 
     String teamName;
     Integer points;
@@ -22,8 +22,8 @@ public class TeamScore extends SharedAttributes {
         this.points = 0;
     }
 
-    public TeamScore(int id, ITeamScoreFactory iTeamScoreFactory) throws Exception {
-        iTeamScoreFactory.loadTeamScoreById(id, this);
+    public TeamScore(int id, ITeamScoreDao iTeamScoreDao) throws Exception {
+        iTeamScoreDao.loadTeamScoreById(id, this);
     }
 
     public String getTeamName() {

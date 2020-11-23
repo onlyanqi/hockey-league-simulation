@@ -1,16 +1,16 @@
 package simulation.model;
 
-import db.data.IFreeAgentFactory;
-import db.data.IPlayerFactory;
+import db.data.IFreeAgentDao;
+import db.data.IPlayerDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreeAgent extends SharedAttributes {
+public class FreeAgent extends SharedAttributes implements IFreeAgent{
 
     private int seasonId;
     private int leagueId;
-    private List<Player> playerList;
+    private List<IPlayer> playerList;
 
     public FreeAgent() {
         setId(System.identityHashCode(this));
@@ -20,7 +20,7 @@ public class FreeAgent extends SharedAttributes {
         setId(id);
     }
 
-    public FreeAgent(int id, IFreeAgentFactory loadFreeAgentFactory) throws Exception {
+    public FreeAgent(int id, IFreeAgentDao loadFreeAgentFactory) throws Exception {
         if (loadFreeAgentFactory == null) {
             return;
         }
@@ -43,25 +43,25 @@ public class FreeAgent extends SharedAttributes {
         this.leagueId = leagueId;
     }
 
-    public List<Player> getPlayerList() {
+    public List<IPlayer> getPlayerList() {
         return playerList;
     }
 
-    public void setPlayerList(List<Player> playerList) {
+    public void setPlayerList(List<IPlayer> playerList) {
         if (playerList == null) {
             return;
         }
         this.playerList = playerList;
     }
 
-    public void addFreeAgent(IFreeAgentFactory addFreeAgentFactory) throws Exception {
+    public void addFreeAgent(IFreeAgentDao addFreeAgentFactory) throws Exception {
         if (addFreeAgentFactory == null) {
             return;
         }
         addFreeAgentFactory.addFreeAgent(this);
     }
 
-    public void loadPlayerListByFreeAgentId(IPlayerFactory loadPlayerFactory) throws Exception {
+    public void loadPlayerListByFreeAgentId(IPlayerDao loadPlayerFactory) throws Exception {
         if (loadPlayerFactory == null) {
             return;
         }

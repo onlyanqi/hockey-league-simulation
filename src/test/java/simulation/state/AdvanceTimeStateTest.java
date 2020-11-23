@@ -1,7 +1,7 @@
 package simulation.state;
 
-import db.data.IEventFactory;
-import db.data.IUserFactory;
+import db.data.IEventDao;
+import db.data.IUserDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.HockeyContextConcrete;
@@ -18,9 +18,9 @@ import static org.junit.Assert.assertTrue;
 
 public class AdvanceTimeStateTest {
 
-    private static IUserFactory userFactory;
+    private static IUserDao userFactory;
     private static IHockeyContext hockeyContext;
-    private static IEventFactory eventFactory;
+    private static IEventDao eventFactory;
 
 
     @BeforeClass

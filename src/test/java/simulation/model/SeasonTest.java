@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ISeasonFactory;
+import db.data.ISeasonDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.SeasonMock;
@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class SeasonTest {
 
-    private static ISeasonFactory loadSeasonFactory;
+    private static ISeasonDao loadSeasonFactory;
 
     @BeforeClass
     public static void setFactoryObj() {

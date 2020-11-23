@@ -1,9 +1,12 @@
 package simulation.factory;
 
-import simulation.model.Aging;
+import db.data.IAgingDao;
+import simulation.model.IAging;
 
 public interface IAgingFactory {
 
-    Aging newAging();
+    IAging newAging();
+
+    IAgingDao newAgingDao();
 
 }
