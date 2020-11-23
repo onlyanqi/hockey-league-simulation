@@ -6,6 +6,7 @@ import db.data.ITeamDao;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,8 +21,9 @@ public class Team extends SharedAttributes implements ITeam {
     private List<IPlayer> playerList;
     private List<IPlayer> activePlayerList;
     private List<IPlayer> inactivePlayerList;
-    private int tradeOfferCountOfSeason;
+    private int playersTradedCount;
     private int lossPoint;
+    private List<String> draftPicks = new ArrayList<>(Arrays.asList(null, null, null, null, null, null, null));
 
     public Team() {
         setId(System.identityHashCode(this));
@@ -250,12 +252,12 @@ public class Team extends SharedAttributes implements ITeam {
         return isValid;
     }
 
-    public int getTradeOfferCountOfSeason() {
-        return tradeOfferCountOfSeason;
+    public int getPlayersTradedCount() {
+        return playersTradedCount;
     }
 
-    public void setTradeOfferCountOfSeason(int tradeOfferCountOfSeason) {
-        this.tradeOfferCountOfSeason = tradeOfferCountOfSeason;
+    public void setPlayersTradedCount(int playersTradedCount) {
+        this.playersTradedCount = playersTradedCount;
     }
 
     public int getLossPoint() {
@@ -327,4 +329,11 @@ public class Team extends SharedAttributes implements ITeam {
         }
     }
 
+    public List<String> getDraftPicks() {
+        return draftPicks;
+    }
+
+    public void setDraftPicks(List<String> draftPicks) {
+        this.draftPicks = draftPicks;
+    }
 }

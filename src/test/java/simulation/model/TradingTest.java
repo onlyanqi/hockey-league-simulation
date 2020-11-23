@@ -5,10 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.TradingMock;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -205,6 +202,29 @@ public class TradingTest {
     }
 
     @Test
+    public void getGmTableTest() throws Exception {
+        Trading trading = new Trading(1, tradingFactory);
+        assertTrue(trading.getGmTable().get("shrewd") == -0.1);
+        assertFalse(trading.getGmTable().get("shrewd") == 0.1);
+        assertTrue(trading.getGmTable().get("gambler") == 0.1);
+        assertFalse(trading.getGmTable().get("gambler") == -0.1);
+    }
+
+    @Test
+    public void setGmTableTest() {
+        Trading trading = new Trading();
+        Map<String, Double> gmTable = new HashMap<>();
+        gmTable.put("shrewd", -0.1);
+        gmTable.put("gambler", 0.1);
+        gmTable.put("normal", 0.0);
+        trading.setGmTable(gmTable);
+        assertTrue(trading.getGmTable().get("shrewd") == -0.1);
+        assertFalse(trading.getGmTable().get("shrewd") == 0.1);
+        assertTrue(trading.getGmTable().get("gambler") == 0.1);
+        assertFalse(trading.getGmTable().get("gambler") == -0.1);
+    }
+
+    @Test
     public void isTradingPeriodTest() throws Exception {
         Trading trading = new Trading(1, tradingFactory);
         assertTrue(trading.isTradingPeriod());
@@ -225,5 +245,7 @@ public class TradingTest {
         assertEquals(1, trading.getId());
         assertEquals(3, trading.getMaxPlayersPerTrade());
     }
+
+
 
 }

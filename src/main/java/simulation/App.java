@@ -18,19 +18,15 @@ public class App {
 
     public static void main(String[] args) {
 
-
         log.debug("DEBUG Message");
         log.info("INFO Message");
         log.warn("WARN Message");
         log.error("ERROR Message");
         log.fatal("Fatal Message");
 
-
         String filePath = "";
         JSONObject jsonFromInput = null;
-
         ReadUserInput readUserInput = ReadUserInput.getInstance();
-
         String userName = readUserInput.getInput("Please enter username");
         try {
             if (userName == null || userName.isEmpty()) {
@@ -39,14 +35,12 @@ public class App {
                 IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
                 IHockeyContext context = hockeyContextFactory.newHockeyContext();
 
-                UserConcrete userConcrete = new UserConcrete();
-            //    IUserFactory factory = userConcrete.newUserFactory();
-            //    User user = userConcrete.newUserByName(userName, factory);
+                IUserFactory userConcrete = context.getUserFactory();
                 IUser user = userConcrete.newUser();
 
                 user.setName(userName);
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");
-
+                
                 if (filePath == null || filePath.isEmpty()) {
                     ConsoleOutput.getInstance().printMsgToConsole("Loading the team...");
                 } else {
@@ -62,8 +56,10 @@ public class App {
             }
         } catch (FileNotFoundException e) {
             ConsoleOutput.getInstance().printMsgToConsole("File Not found. " + e);
+            log.error("App: main: FileNotFoundException: "+e);
         } catch (Exception e) {
             ConsoleOutput.getInstance().printMsgToConsole("System faced unexpected exception. Please contact team. " + e);
+            log.error("App: main: Exception: "+e);
         }
 
     }

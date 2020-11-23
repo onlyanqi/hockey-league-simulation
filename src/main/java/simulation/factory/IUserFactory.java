@@ -10,5 +10,7 @@ public interface IUserFactory {
 
     IUser newUserByName(String name, IUserDao loadUserFactory) throws Exception;
 
+    IUser newUserWithIdDao(int id, IUserDao userDao) throws Exception;
 
+    IUserDao newUserDao();
 }

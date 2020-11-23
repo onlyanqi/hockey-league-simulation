@@ -1,11 +1,12 @@
 package simulation.factory;
 
-import db.dao.UserDao;
 import db.data.IUserDao;
+import simulation.factory.IUserFactory;
+import simulation.mock.UserMock;
 import simulation.model.IUser;
 import simulation.model.User;
 
-public class UserConcrete implements IUserFactory{
+public class UserConcreteMock implements IUserFactory {
 
     public IUser newUser() {
         return new User();
@@ -20,7 +21,7 @@ public class UserConcrete implements IUserFactory{
     }
 
     public IUserDao newUserDao(){
-        return new UserDao();
+        return new UserMock();
     }
 
 }

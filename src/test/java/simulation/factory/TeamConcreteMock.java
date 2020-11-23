@@ -2,10 +2,12 @@ package simulation.factory;
 
 import db.dao.TeamDao;
 import db.data.ITeamDao;
+import simulation.factory.ITeamFactory;
+import simulation.mock.TeamMock;
 import simulation.model.ITeam;
 import simulation.model.Team;
 
-public class TeamConcrete implements ITeamFactory{
+public class TeamConcreteMock implements ITeamFactory {
 
     public ITeam newTeam() {
         return new Team();
@@ -20,7 +22,7 @@ public class TeamConcrete implements ITeamFactory{
     }
 
     public ITeamDao newTeamDao(){
-        return new TeamDao();
+        return new TeamMock();
     }
 
 }

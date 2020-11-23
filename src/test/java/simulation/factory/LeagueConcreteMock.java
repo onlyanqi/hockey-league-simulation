@@ -1,12 +1,12 @@
 package simulation.factory;
 
-import db.dao.LeagueDao;
 import db.data.ILeagueDao;
-import db.data.IUserDao;
+import simulation.factory.ILeagueFactory;
+import simulation.mock.LeagueMock;
 import simulation.model.ILeague;
 import simulation.model.League;
 
-public class LeagueConcrete implements ILeagueFactory{
+public class LeagueConcreteMock implements ILeagueFactory {
 
     public ILeague newLeague() {
         return new League();
@@ -17,7 +17,7 @@ public class LeagueConcrete implements ILeagueFactory{
     }
 
     public ILeagueDao newLeagueDao(){
-        return new LeagueDao();
+        return new LeagueMock();
     }
 
     @Override
