@@ -31,4 +31,9 @@ public class LeagueDao extends DBExceptionLog implements ILeagueDao {
     public void loadLeagueFromJSON(ILeague league, JSONObject jsonObject) {
 
     }
+
+    @Override
+    public List<IConference> formConferenceList() throws Exception {
+        return null;
+    }
 }

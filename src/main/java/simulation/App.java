@@ -32,9 +32,7 @@ public class App {
                 IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
                 IHockeyContext context = hockeyContextFactory.newHockeyContext();
 
-                UserConcrete userConcrete = new UserConcrete();
-            //    IUserFactory factory = userConcrete.newUserFactory();
-            //    User user = userConcrete.newUserByName(userName, factory);
+                IUserFactory userConcrete = context.getUserFactory();
                 IUser user = userConcrete.newUser();
 
                 user.setName(userName);

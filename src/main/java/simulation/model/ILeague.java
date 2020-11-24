@@ -112,4 +112,6 @@ public interface ILeague{
 
     void setUser(String user);
 
+    void setId(int id);
+
 }

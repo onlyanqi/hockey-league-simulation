@@ -173,6 +173,9 @@ public class CreateTeamState implements IHockeyState {
         List<IPlayer> teamPlayers = createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
         freeAgentList = removeChosenPlayersFromFreeAgentList(chosenPlayersIdList, freeAgentList);
         freeAgent.setPlayerList(freeAgentList);
+        for (IPlayer player : teamPlayers) {
+            player.setTeamId(team.getId());
+        }
         team.setPlayerList(teamPlayers);
         team.setStrength();
     }
@@ -206,7 +209,9 @@ public class CreateTeamState implements IHockeyState {
         }
         List<IPlayer> teamPlayers = new ArrayList<>();
         for (int freeAgentIndex : chosenPlayersIdList) {
-            teamPlayers.add(new Player(freeAgentList.get(freeAgentIndex)));
+            Player chosenPlayer = new Player(freeAgentList.get(freeAgentIndex));
+            chosenPlayer.setIsFreeAgent(false);
+            teamPlayers.add(chosenPlayer);
         }
         return teamPlayers;
     }
@@ -269,7 +274,7 @@ public class CreateTeamState implements IHockeyState {
             }
         }
         league.setConferenceList(conferenceList);
-        if(team == null){
+        if (team == null) {
             return;
         }
         league.setUserCreatedTeamName(team.getName());

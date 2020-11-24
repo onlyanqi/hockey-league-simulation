@@ -6,6 +6,7 @@ import simulation.model.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class AgingState implements ISimulateState {
 
@@ -37,7 +38,7 @@ public class AgingState implements ISimulateState {
                     List<IPlayer> playerList = team.getPlayerList();
                     for (IPlayer teamPlayer : playerList) {
                         teamPlayer.calculateAge(league);
-                        // statDecay
+                        teamPlayer.statDecayCheck(league);
                         teamPlayer.agingInjuryRecovery(league);
                     }
                 }
@@ -45,6 +46,7 @@ public class AgingState implements ISimulateState {
         }
         for (IPlayer freeAgentPlayer : freeAgentList) {
             freeAgentPlayer.calculateAge(league);
+            freeAgentPlayer.statDecayCheck(league);
             freeAgentPlayer.agingInjuryRecovery(league);
         }
     }

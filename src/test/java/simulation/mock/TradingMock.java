@@ -6,6 +6,8 @@ import simulation.model.Trading;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TradingMock implements ITradingDao {
 
@@ -21,6 +23,11 @@ public class TradingMock implements ITradingDao {
         trading.setNextYearSeasonMonths(Arrays.asList(0, 1));
         trading.setTradeStartDate(new Date((2020 - 1900), 9, 1));
         trading.setTradeEndDate(new Date((2021 - 1900), 1, 22));
+        Map<String, Double> gmTable = new HashMap<>();
+        gmTable.put("shrewd", -0.1);
+        gmTable.put("gambler", 0.1);
+        gmTable.put("normal", 0.0);
+        trading.setGmTable(gmTable);
         return trading;
     }
 
