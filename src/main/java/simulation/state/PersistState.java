@@ -26,7 +26,7 @@ public class PersistState implements ISimulateState {
     @Override
     public ISimulateState action() throws Exception {
         ConsoleOutput.getInstance().printMsgToConsole("Saving... Please wait");
-        //saveToPersistence();
+        saveToPersistence();
         return exit();
     }
 
