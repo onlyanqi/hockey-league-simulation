@@ -25,7 +25,8 @@ public class League extends SharedAttributes implements ILeague {
     private ITeamStanding regularSeasonStanding;
     private ITeamStanding playOffStanding;
     private ITeamStanding activeTeamStanding;
-    HashMap<String,Integer> stanleyCupFinalsTeamScores;
+    private HashMap<String,Integer> stanleyCupFinalsTeamScores;
+    private ArrayList<TeamStat> teamStats;
     private INHLEvents nhlEvents;
     private List<ITradeOffer> tradeOfferList;
 
@@ -200,6 +201,16 @@ public class League extends SharedAttributes implements ILeague {
         this.stanleyCupFinalsTeamScores = stanleyCupFinalsTeamScores;
     }
 
+    @Override
+    public ArrayList<TeamStat> getTeamStats() {
+        return teamStats;
+    }
+
+    @Override
+    public void setTeamStats(ArrayList<TeamStat> teamStats) {
+        this.teamStats = teamStats;
+    }
+
     public List<IManager> removeManagerFromManagerListById(List<IManager> managerList, int indexOfManagerObject) {
         if (null == managerList) {
             return null;
@@ -290,6 +301,16 @@ public class League extends SharedAttributes implements ILeague {
             }
         }
         return null;
+    }
+
+    @Override
+    public TeamStat getTeamStatByTeamName(String teamName) {
+        for(TeamStat teamStat: teamStats){
+            if(teamStat.getTeamName().equals(teamName)){
+                return teamStat;
+            }
+        }
+        throw new IllegalArgumentException("Provided teamName doesn't contain any stats");
     }
 
 
