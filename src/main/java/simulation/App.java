@@ -3,6 +3,7 @@ package simulation;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
+import simulation.GamePubSub.*;
 import simulation.factory.*;
 import simulation.model.IUser;
 import java.io.FileNotFoundException;
@@ -50,6 +51,8 @@ public class App {
                     jsonFromInput = JSONController.readJSON(filePath);
                 }
 
+                addSubscribers();
+
                 context.setUser(user);
                 context.startAction(jsonFromInput);
             }
@@ -61,5 +64,13 @@ public class App {
             ConsoleOutput.getInstance().printMsgToConsole("System faced unexpected exception. Please contact team. " + e);
         }
 
+    }
+
+    private static void addSubscribers() {
+        GoalSubject.getInstance().attach(new GameSubscriber());
+        PenaltySubject.getInstance().attach(new GameSubscriber());
+        SaveSubject.getInstance().attach(new GameSubscriber());
+        ShotSubject.getInstance().attach(new GameSubscriber());
+        TotalGamesSubject.getInstance().attach(new GameSubscriber());
     }
 }

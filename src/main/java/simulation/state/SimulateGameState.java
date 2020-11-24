@@ -1,15 +1,14 @@
 package simulation.state;
 
-import org.apache.log4j.Logger;
-import simulation.App;
+import presentation.ReadUserInput;
+import simulation.GamePubSub.*;
 import simulation.model.*;
 
-import java.time.LocalDate;
-import java.util.List;
+
+import java.util.*;
 
 public class SimulateGameState implements ISimulateState {
 
-    private Logger log = Logger.getLogger(SimulateGameState.class);
     private IHockeyContext hockeyContext;
     private ILeague league;
 
@@ -20,17 +19,15 @@ public class SimulateGameState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-
-        if(league.getCurrentDate().equals(LocalDate.of(2021,05,24))){
-            System.out.println("On day 24");
-        }
-
         List<IGame> gamesOnCurrentDay = league.getGames().getUnPlayedGamesOnDate(league.getCurrentDate());
         IGame game = gamesOnCurrentDay.get(0);
+        try {
+            simulateGame(game);
+            updateTeamStandings(game);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 
-        simulateGame(game);
-        updateTeamStandings(game);
-        log.debug("Simulated game between "+ game.getTeam1() + " and " + game.getTeam2() + " on date " + game.getDate());
         return exit();
     }
 
@@ -38,28 +35,68 @@ public class SimulateGameState implements ISimulateState {
         return new InjuryCheckState(hockeyContext);
     }
 
-    public void simulateGame(IGame game) {
-        double upset = 0.2;
+    public void simulateGame(IGame game) throws Exception {
         ITeam team1 = league.getTeamByTeamName(game.getTeam1());
         ITeam team2 = league.getTeamByTeamName(game.getTeam2());
+        Random rand = new Random();
 
-        if (team1.getStrength() > team2.getStrength()) {
+        GameSimulation gameSimulation = new GameSimulation(team1,team2);
+        gameSimulation.play();
+
+
+
+        HashMap<String,Integer> goals = gameSimulation.getGoals();
+        HashMap<String,Integer> shots = gameSimulation.getShots();
+        HashMap<String,Integer> saves = gameSimulation.getSaves();
+        HashMap<String,Integer> penalties = gameSimulation.getPenalties();
+
+        if (goals.get(team1.getName()) > goals.get(team2.getName())) {
             game.setWinner(Result.TEAM1);
             team2.setLossPoint(team2.getLossPoint() + 1);
-        } else {
+        } else if (goals.get(team1.getName()) < goals.get(team2.getName())) {
             game.setWinner(Result.TEAM2);
             team1.setLossPoint(team1.getLossPoint() + 1);
-        }
-        if (Math.random() <= upset) {
-            if (game.getWinner().equals(Result.TEAM1)) {
-                game.setWinner(Result.TEAM2);
-                team1.setLossPoint(team1.getLossPoint() + 1);
-            } else {
+        }else if(goals.get(team1.getName()) == goals.get(team2.getName())){
+            if(rand.nextDouble() > 0.5){
                 game.setWinner(Result.TEAM1);
                 team2.setLossPoint(team2.getLossPoint() + 1);
+            }else{
+                game.setWinner(Result.TEAM2);
+                team1.setLossPoint(team1.getLossPoint() + 1);
             }
         }
+
         game.setPlayed(true);
+
+
+        GoalSubject.getInstance().notifyObservers(league,team1.getName(),goals.get(team1.getName()));
+        GoalSubject.getInstance().notifyObservers(league,team2.getName(),goals.get(team2.getName()));
+
+        PenaltySubject.getInstance().notifyObservers(league,team1.getName(),penalties.get(team1.getName()));
+        PenaltySubject.getInstance().notifyObservers(league,team2.getName(),penalties.get(team2.getName()));
+
+        ShotSubject.getInstance().notifyObservers(league,team1.getName(),shots.get(team1.getName()));
+        ShotSubject.getInstance().notifyObservers(league,team2.getName(),shots.get(team2.getName()));
+
+        SaveSubject.getInstance().notifyObservers(league,team1.getName(),saves.get(team1.getName()));
+        SaveSubject.getInstance().notifyObservers(league,team2.getName(),saves.get(team2.getName()));
+
+        TotalGamesSubject.getInstance().notifyObservers(league,team1.getName(),0);
+        TotalGamesSubject.getInstance().notifyObservers(league,team2.getName(),0);
+
+
+
+        System.out.println("Team 1 Goals " + goals.get(team1.getName()));
+        System.out.println("Team 2 Goals " + goals.get(team2.getName()));
+        System.out.println("-----------------------------------------");
+        System.out.println("Team 1 Penalties " + penalties.get(team1.getName()));
+        System.out.println("Team 2 Penalties " + penalties.get(team2.getName()));
+        System.out.println("-----------------------------------------");
+        System.out.println("Team 1 Saves " + saves.get(team1.getName()));
+        System.out.println("Team 2 Saves " + saves.get(team2.getName()));
+        System.out.println("-----------------------------------------");
+        System.out.println("Team 1 Shots " + shots.get(team1.getName()));
+        System.out.println("Team 2 Shots " + shots.get(team2.getName()));
     }
 
     public void updateTeamStandings(IGame game) {
@@ -77,5 +114,7 @@ public class SimulateGameState implements ISimulateState {
             teamStanding.setTeamTies(game.getTeam2());
             teamStanding.setTeamTies(game.getTeam1());
         }
+
     }
+
 }
