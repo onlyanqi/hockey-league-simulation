@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IGameDao;
+import simulation.dao.IGameDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.GameMock;

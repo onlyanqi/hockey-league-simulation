@@ -1,7 +1,6 @@
 package simulation.factory;
 
-import db.data.IDivisionDao;
-import simulation.model.Division;
+import simulation.dao.IDivisionDao;
 import simulation.model.IDivision;
 
 public interface IDivisionFactory {

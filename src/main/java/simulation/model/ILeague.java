@@ -1,9 +1,9 @@
 package simulation.model;
 
-import db.data.IConferenceDao;
-import db.data.IFreeAgentDao;
-import db.data.ILeagueDao;
-import db.data.ITradeOfferDao;
+import simulation.dao.IConferenceDao;
+import simulation.dao.IFreeAgentDao;
+import simulation.dao.ILeagueDao;
+import simulation.dao.ITradeOfferDao;
 import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;

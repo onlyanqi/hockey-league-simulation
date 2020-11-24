@@ -1,6 +1,6 @@
 package simulation.state;
 
-import db.data.*;
+import simulation.dao.IUserDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.HockeyContextConcrete;

@@ -194,8 +194,7 @@ public class CreateTeamState implements IHockeyState {
     private void chooseManager() {
         managerList = league.getManagerList();
         teamCreationOutput.showManagerListOnScreen(managerList);
-        //int generalManagerId = teamCreationInput.getGeneralManagerId(managerList);
-        int generalManagerId = 0;
+        int generalManagerId = teamCreationInput.getGeneralManagerId(managerList);
 
         Manager generalManager = new Manager(managerList.get(generalManagerId));
         team.setManager(generalManager);

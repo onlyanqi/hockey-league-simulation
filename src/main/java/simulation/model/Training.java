@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITrainingDao;
+import simulation.dao.ITrainingDao;
 
 public class Training implements ITraining {
 

@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IPlayerDao;
+import simulation.dao.IPlayerDao;
 
 import java.time.LocalDate;
 import java.util.List;

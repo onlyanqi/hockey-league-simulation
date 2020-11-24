@@ -1,7 +1,7 @@
 package simulation.model;
 
-import db.data.IDivisionDao;
-import db.data.ITeamDao;
+import simulation.dao.IDivisionDao;
+import simulation.dao.ITeamDao;
 
 import java.util.List;
 

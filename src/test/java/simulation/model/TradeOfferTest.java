@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITradeOfferDao;
+import simulation.dao.ITradeOfferDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.TradeOfferMock;

@@ -1,7 +1,6 @@
 package simulation.mock;
 
-import db.dao.ConferenceDao;
-import db.data.IConferenceDao;
+import simulation.dao.IConferenceDao;
 import simulation.factory.IConferenceFactory;
 import simulation.model.Conference;
 import simulation.model.IConference;

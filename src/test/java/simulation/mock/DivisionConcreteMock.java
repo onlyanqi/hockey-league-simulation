@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import db.data.IDivisionDao;
+import simulation.dao.IDivisionDao;
 import simulation.factory.IDivisionFactory;
 import simulation.model.Division;
 import simulation.model.IDivision;

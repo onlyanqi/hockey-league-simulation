@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IGameDao;
+import simulation.dao.IGameDao;
 
 import java.time.LocalDate;
 

@@ -1,8 +1,6 @@
 package simulation.factory;
 
-import db.dao.TeamDao;
-import db.data.ITeamDao;
-import simulation.factory.ITeamFactory;
+import simulation.dao.ITeamDao;
 import simulation.mock.TeamMock;
 import simulation.model.ITeam;
 import simulation.model.Team;

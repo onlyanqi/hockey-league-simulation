@@ -1,9 +1,7 @@
 package simulation.factory;
 
-import db.dao.TradeOfferDao;
-import db.data.ITradeOfferDao;
+import simulation.dao.ITradeOfferDao;
 import simulation.model.ITradeOffer;
-import simulation.model.TradeOffer;
 
 public interface ITradeOfferFactory {
 

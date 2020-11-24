@@ -1,7 +1,9 @@
 package simulation.model;
 
-import db.data.*;
-import simulation.factory.CoachConcrete;
+import simulation.dao.IConferenceDao;
+import simulation.dao.IFreeAgentDao;
+import simulation.dao.ILeagueDao;
+import simulation.dao.ITradeOfferDao;
 import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;

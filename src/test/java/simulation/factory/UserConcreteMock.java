@@ -1,7 +1,6 @@
 package simulation.factory;
 
-import db.data.IUserDao;
-import simulation.factory.IUserFactory;
+import simulation.dao.IUserDao;
 import simulation.mock.UserMock;
 import simulation.model.IUser;
 import simulation.model.User;

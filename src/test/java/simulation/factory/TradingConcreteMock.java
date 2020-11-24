@@ -1,7 +1,6 @@
 package simulation.factory;
 
-import db.dao.TradingDao;
-import db.data.ITradingDao;
+import simulation.dao.ITradingDao;
 import simulation.mock.TradingMock;
 import simulation.model.ITrading;
 import simulation.model.Trading;

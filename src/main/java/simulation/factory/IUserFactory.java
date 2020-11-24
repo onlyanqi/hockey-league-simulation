@@ -1,8 +1,7 @@
 package simulation.factory;
 
-import db.data.IUserDao;
+import simulation.dao.IUserDao;
 import simulation.model.IUser;
-import simulation.model.User;
 
 public interface IUserFactory {
 

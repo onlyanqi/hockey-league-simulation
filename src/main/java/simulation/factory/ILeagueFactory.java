@@ -1,9 +1,7 @@
 package simulation.factory;
 
-import db.data.ILeagueDao;
-import db.data.IUserDao;
+import simulation.dao.ILeagueDao;
 import simulation.model.ILeague;
-import simulation.model.League;
 
 public interface ILeagueFactory {
 

@@ -2,7 +2,7 @@ package simulation.serializers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import db.data.ILeagueDao;
+import simulation.dao.ILeagueDao;
 import org.junit.Test;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
@@ -36,8 +36,8 @@ public class LeagueDataSerializerDeSerializerTest {
 
         oldLeagueJSONString = gson.toJson(oldLeague);
         newLeagueJSONString = gson.toJson(newLeague);
-        /*assertEquals(oldLeagueJSONString, newLeagueJSONString);
+        assertEquals(oldLeagueJSONString, newLeagueJSONString);
         assertNotEquals(oldLeagueJSONString, null);
-        assertNotEquals(newLeagueJSONString, null);*/
+        assertNotEquals(newLeagueJSONString, null);
     }
 }

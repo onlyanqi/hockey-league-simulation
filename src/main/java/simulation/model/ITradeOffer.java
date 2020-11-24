@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITradeOfferDao;
+import simulation.dao.ITradeOfferDao;
 
 import java.util.List;
 

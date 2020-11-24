@@ -1,7 +1,7 @@
 package simulation.factory;
 
-import db.dao.UserDao;
-import db.data.IUserDao;
+import simulation.dao.UserDao;
+import simulation.dao.IUserDao;
 import simulation.model.IUser;
 import simulation.model.User;
 

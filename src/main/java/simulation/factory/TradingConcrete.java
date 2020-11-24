@@ -1,7 +1,7 @@
 package simulation.factory;
 
-import db.dao.TradingDao;
-import db.data.ITradingDao;
+import simulation.dao.TradingDao;
+import simulation.dao.ITradingDao;
 import simulation.model.ITrading;
 import simulation.model.Trading;
 

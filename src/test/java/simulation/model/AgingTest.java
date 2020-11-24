@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IAgingDao;
+import simulation.dao.IAgingDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.AgingMock;

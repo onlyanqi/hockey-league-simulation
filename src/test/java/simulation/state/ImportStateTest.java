@@ -1,6 +1,6 @@
 package simulation.state;
 
-import db.data.ILeagueDao;
+import simulation.dao.ILeagueDao;
 import org.json.simple.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;

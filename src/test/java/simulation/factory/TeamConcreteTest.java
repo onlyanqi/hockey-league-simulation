@@ -1,6 +1,6 @@
 package simulation.factory;
 
-import db.data.ITeamDao;
+import simulation.dao.ITeamDao;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.mock.TeamMock;

@@ -1,7 +1,7 @@
 package simulation.factory;
 
-import db.dao.TeamDao;
-import db.data.ITeamDao;
+import simulation.dao.TeamDao;
+import simulation.dao.ITeamDao;
 import simulation.model.ITeam;
 import simulation.model.Team;
 

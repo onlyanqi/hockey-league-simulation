@@ -1,9 +1,7 @@
 package simulation.factory;
 
-import db.dao.PlayerDao;
-import db.data.IPlayerDao;
+import simulation.dao.IPlayerDao;
 import simulation.model.IPlayer;
-import simulation.model.Player;
 
 public interface IPlayerFactory {
 

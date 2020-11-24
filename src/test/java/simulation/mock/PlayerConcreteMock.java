@@ -1,7 +1,6 @@
 package simulation.mock;
 
-import db.dao.PlayerDao;
-import db.data.IPlayerDao;
+import simulation.dao.IPlayerDao;
 import simulation.factory.IPlayerFactory;
 import simulation.model.IPlayer;
 import simulation.model.Player;

@@ -24,6 +24,9 @@ public class ExecuteTradeState implements ISimulateState {
     private final String TRADEOFFER = "tradeOffer";
     private final Random random = new Random();
     private final String REJECTED = "rejected";
+    private final String TYPE = "type";
+    private final String STRONG = "strong";
+    private final String WEAK = "weak";
     private final Integer[] tradedDraftRound = {1, 2, 3, 4, 5, 6, 7};
     private final int ZERO = 0;
     private final String TRADED_ROUND_NUMBER = "tradedRoundNumber";
@@ -97,12 +100,12 @@ public class ExecuteTradeState implements ISimulateState {
                             for (IPlayer weakestPlayer : tradingPlayerList) {
                                 swap.put(FROMTEAM, team);
                                 findBestSwapPlayer(team, league, weakestPlayer, swap);
-                                List<IPlayer> swapPlayerList = (List<IPlayer>) swap.get(TOPLAYERLIST);
-                                if (swapPlayerList == null || swapPlayerList.isEmpty()) {
+                                draftPickTradeDecider(swap);
+                                ITeam toTeam = (ITeam) swap.get(TOTEAM);
+                                if(toTeam == null){
                                     continue;
-                                } else {
-                                    performTrade(swap);
                                 }
+                                performTrade(swap);
                                 if(team.getPlayersTradedCount() >= trading.getMaxPlayersPerTrade()){
                                     team.setPlayersTradedCount(ZERO);
                                     break;
@@ -124,6 +127,25 @@ public class ExecuteTradeState implements ISimulateState {
             e.printStackTrace();
             log.error("ExecuteTradeState: tradingLogic: Exception: "+e);
             throw e;
+        }
+    }
+
+    private void draftPickTradeDecider(Map<String, Object> tradeDetails){
+        Object type = tradeDetails.get(TYPE);
+        Object swappedDraftPick = tradeDetails.get(TRADED_ROUND_NUMBER);
+        int ONE = 1;
+        int TWO = 2;
+
+        if(type == null || swappedDraftPick == null){
+            return;
+        } else if(strongWeakPlayerTradeDecider() && STRONG.equalsIgnoreCase((String) type)
+            && (ONE == (int) swappedDraftPick || TWO == (int) swappedDraftPick)){
+
+            tradeDetails.put(FROMPLAYERLISTAFTERTRADE, new ArrayList<>());
+        } else if(strongWeakPlayerTradeDecider() && WEAK.equalsIgnoreCase((String) type)
+            && (ONE == (int) swappedDraftPick || TWO == (int) swappedDraftPick)){
+
+            tradeDetails.put(TOPLAYERLIST, new ArrayList<>());
         }
     }
 
@@ -185,6 +207,11 @@ public class ExecuteTradeState implements ISimulateState {
                                     swapPlayer = findOneToManyStrongPlayer(otherTeam,
                                             swapPlayer, swap);
                                 }
+                            } else {
+                                if(tradePlayerCountDecider){
+                                    swapPlayer = findOneToOneWeakPlayer(otherTeam,
+                                            weakestPlayer, swapPlayer, swap);
+                                }
                             }
                         }
                     }
@@ -198,8 +225,8 @@ public class ExecuteTradeState implements ISimulateState {
         List<IPlayer> fromPlayerListBeforeTrade = (List<IPlayer>) swap.get(FROMPLAYERLISTBEFORETRADE);
         List<IPlayer> playerList = otherTeam.getPlayerList();
         double weakPlayersStrengthTotal = ZERO;
-        int ONE = 1;
-        int TWO = 2;
+        ITeam fromTeam = (ITeam) swap.get(FROMTEAM);
+        List<String> draftPicks = fromTeam.getDraftPicks();
 
         for(IPlayer weakPlayer : fromPlayerListBeforeTrade){
             weakPlayersStrengthTotal = weakPlayersStrengthTotal + weakPlayer.getRelativeStrength();
@@ -207,20 +234,23 @@ public class ExecuteTradeState implements ISimulateState {
 
         for (IPlayer player : playerList) {
             if ((swapPlayer == null) || (swapPlayer.getRelativeStrength() < player.getRelativeStrength())) {
-                boolean conditionSatisfied = findStrongPlayerAlgorithm(weakPlayersStrengthTotal,
-                        player.getRelativeStrength(), swap, player.getPosition().toString());
+                boolean conditionSatisfied = findPlayerAlgorithm(weakPlayersStrengthTotal,
+                        player.getRelativeStrength(), swap, player.getPosition().toString(),
+                        draftPicks);
                 if(conditionSatisfied) {
                     swapPlayer = player;
                     List<IPlayer> toPlayerList = new ArrayList<>(Arrays.asList(player));
                     swap.put(TOPLAYERLIST, toPlayerList);
                     swap.put(TOTEAM, otherTeam);
-                    Object swappedDraftPick = swap.get(TRADED_ROUND_NUMBER);
-                    if(swappedDraftPick == null) {
-                        swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListBeforeTrade);
-                    } else if((ONE == (int) swappedDraftPick || TWO == (int) swappedDraftPick) && strongWeakPlayerTradeDecider()){
-                        swap.put(FROMPLAYERLISTAFTERTRADE, new ArrayList<>());
-                    } else {
-                        swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListBeforeTrade);
+                    swap.put(TYPE, STRONG);
+                    swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListBeforeTrade);
+                    Object draftRoundNumber = swap.get(TRADED_ROUND_NUMBER);
+                    int tradedRoundNumber;
+                    if(draftRoundNumber == null){
+                        tradedRoundNumber = 0;
+                    } else{
+                        tradedRoundNumber = (int) draftRoundNumber;
+                        draftPicks.add(tradedRoundNumber, otherTeam.getName());
                     }
                 }
                 if(tradeAssumptionFlag()){
@@ -235,17 +265,28 @@ public class ExecuteTradeState implements ISimulateState {
                                             IPlayer swapPlayer, Map<String, Object> swap) {
         List<IPlayer> playerList = otherTeam.getPlayerList();
         List<IPlayer> weakPlayerList = new ArrayList<>(Arrays.asList(weakestPlayer));
+        ITeam fromTeam = (ITeam) swap.get(FROMTEAM);
+        List<String> draftPicks = fromTeam.getDraftPicks();
 
         for (IPlayer player : playerList) {
             if ((swapPlayer == null) || (swapPlayer.getRelativeStrength() < player.getRelativeStrength())) {
-                boolean conditionSatisfied = findStrongPlayerAlgorithm(weakestPlayer.getRelativeStrength(),
-                        player.getRelativeStrength(), swap, player.getPosition().toString());
+                boolean conditionSatisfied = findPlayerAlgorithm(weakestPlayer.getRelativeStrength(),
+                        player.getRelativeStrength(), swap, player.getPosition().toString(), draftPicks);
                 if(conditionSatisfied) {
                     swapPlayer = player;
                     List<IPlayer> toPlayerList = new ArrayList<>(Arrays.asList(player));
                     swap.put(TOPLAYERLIST, toPlayerList);
                     swap.put(TOTEAM, otherTeam);
                     swap.put(FROMPLAYERLISTAFTERTRADE, weakPlayerList);
+                    swap.put(TYPE, STRONG);
+                    Object draftRoundNumber = swap.get(TRADED_ROUND_NUMBER);
+                    int tradedRoundNumber;
+                    if(draftRoundNumber == null){
+                        tradedRoundNumber = 0;
+                    } else{
+                        tradedRoundNumber = (int) draftRoundNumber;
+                        draftPicks.add(tradedRoundNumber, otherTeam.getName());
+                    }
                 }
                 if(tradeAssumptionFlag()){
                     break;
@@ -255,8 +296,44 @@ public class ExecuteTradeState implements ISimulateState {
         return swapPlayer;
     }
 
-    private boolean findStrongPlayerAlgorithm(double weakStrength, double swapStrength,
-                                              Map<String, Object> swap, String position){
+    private IPlayer findOneToOneWeakPlayer(ITeam otherTeam, IPlayer fromPlayer,
+                                             IPlayer swapPlayer, Map<String, Object> swap) {
+        List<IPlayer> playerList = otherTeam.getPlayerList();
+        List<IPlayer> fromPlayerList = new ArrayList<>(Arrays.asList(fromPlayer));
+        List<String> draftPicks = otherTeam.getDraftPicks();
+        ITeam fromTeam = (ITeam) swap.get(FROMTEAM);
+
+        for (IPlayer player : playerList) {
+            if ((swapPlayer == null) || (player.getRelativeStrength() < swapPlayer.getRelativeStrength())) {
+                boolean conditionSatisfied = findPlayerAlgorithm(player.getRelativeStrength(),
+                        fromPlayer.getRelativeStrength(), swap, fromPlayer.getPosition().toString(), draftPicks);
+                if(conditionSatisfied) {
+                    swapPlayer = player;
+                    List<IPlayer> toPlayerList = new ArrayList<>(Arrays.asList(player));
+                    swap.put(TOPLAYERLIST, toPlayerList);
+                    swap.put(TOTEAM, otherTeam);
+                    swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerList);
+                    swap.put(TYPE, WEAK);
+                    Object draftRoundNumber = swap.get(TRADED_ROUND_NUMBER);
+                    int tradedRoundNumber;
+                    if(draftRoundNumber == null){
+                        tradedRoundNumber = 0;
+                    } else{
+                        tradedRoundNumber = (int) draftRoundNumber;
+                        draftPicks.add(tradedRoundNumber, fromTeam.getName());
+                    }
+                }
+                if(tradeAssumptionFlag()){
+                    break;
+                }
+            }
+        }
+        return swapPlayer;
+    }
+
+    private boolean findPlayerAlgorithm(double weakStrength, double swapStrength,
+                                        Map<String, Object> swap, String position,
+                                        List<String> draftPicks){
         double thirtyFive = 0.35;
         double fortyFive = 0.45;
         double fiftyFive = 0.55;
@@ -282,39 +359,45 @@ public class ExecuteTradeState implements ISimulateState {
                 && (weakStrength < (swapStrength * fortyFive)))
                 && (position.equalsIgnoreCase(DEFENSE))) {
 
-            conditionSatisfied = true;
-            if(tradeAssumptionFlag()) {
+            if(tradeAssumptionFlag() && draftPicks.get(ZERO) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[ZERO]);
-            } else{
+            } else if(draftPicks.get(ONE) == null){
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[ONE]);
+            } else{
+                return conditionSatisfied;
             }
+            conditionSatisfied = true;
         }
         else if(((weakStrength >= (swapStrength * fortyFive))
                 && (weakStrength < (swapStrength * fiftyFive)))
                 && (position.equalsIgnoreCase(FORWARD) || position.equalsIgnoreCase(DEFENSE))) {
 
-            conditionSatisfied = true;
-            if(tradeAssumptionFlag()) {
+            if(tradeAssumptionFlag() && draftPicks.get(ONE) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[ONE]);
-            } else{
+            } else if(draftPicks.get(TWO) == null){
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[TWO]);
+            } else {
+                return conditionSatisfied;
             }
+            conditionSatisfied = true;
         }
         else if((weakStrength >= (swapStrength * fiftyFive))
                 && (weakStrength < (swapStrength * sixty))) {
-
-            conditionSatisfied = true;
-            if(tradeAssumptionFlag()) {
+            
+            if(tradeAssumptionFlag() && draftPicks.get(TWO) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[TWO]);
-            } else{
+            } else if(draftPicks.get(THREE) == null){
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[THREE]);
+            } else{
+                return conditionSatisfied;
             }
+            conditionSatisfied = true;
         }
         else if((weakStrength >= (swapStrength * sixty))
                 && (weakStrength < (swapStrength * seventy))) {
 
             conditionSatisfied = true;
-            if(tradeAssumptionFlag()) {
+            if(tradeAssumptionFlag() && draftPicks.get(THREE) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[THREE]);
             }
         }
@@ -322,7 +405,7 @@ public class ExecuteTradeState implements ISimulateState {
                 && (weakStrength < (swapStrength * seventyFive))) {
 
             conditionSatisfied = true;
-            if(tradeAssumptionFlag()) {
+            if(tradeAssumptionFlag() && draftPicks.get(FOUR) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[FOUR]);
             }
         }
@@ -330,7 +413,7 @@ public class ExecuteTradeState implements ISimulateState {
                 && (weakStrength < (swapStrength * eighty))) {
 
             conditionSatisfied = true;
-            if(tradeAssumptionFlag()) {
+            if(tradeAssumptionFlag() && draftPicks.get(FIVE) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[FIVE]);
             }
         }
@@ -338,7 +421,7 @@ public class ExecuteTradeState implements ISimulateState {
                 && (weakStrength < (swapStrength * ninety))) {
 
             conditionSatisfied = true;
-            if(tradeAssumptionFlag()) {
+            if(tradeAssumptionFlag() && draftPicks.get(SIX) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[SIX]);
             }
         }
@@ -463,6 +546,16 @@ public class ExecuteTradeState implements ISimulateState {
         List<IPlayer> toPlayerList = (List<IPlayer>) tradeDetails.get(TOPLAYERLIST);
         List<IPlayer> fromPlayerList = (List<IPlayer>) tradeDetails.get(FROMPLAYERLISTAFTERTRADE);
         ITeam toTeam = (ITeam) tradeDetails.get(TOTEAM);
+        Object tradedDraftPick = tradeDetails.get(TRADED_ROUND_NUMBER);
+        int tradeDraftRoundNumber;
+        if(tradedDraftPick == null){
+            tradeDraftRoundNumber = 0;
+        } else{
+            tradeDraftRoundNumber = (int) tradedDraftPick;
+            List<String> draftPicks = fromTeam.getDraftPicks();
+            draftPicks.add(tradeDraftRoundNumber, toTeam.getName());
+        }
+
         List<IPlayer> toTeamPlayerList = toTeam.getPlayerList();
         List<IPlayer> fromTeamPlayerList = fromTeam.getPlayerList();
 

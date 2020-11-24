@@ -1,16 +1,14 @@
 package simulation.mock;
 
-import db.data.IConferenceDao;
-import db.data.IDivisionDao;
-import db.data.ITeamDao;
+import simulation.dao.IConferenceDao;
+import simulation.dao.IDivisionDao;
+import simulation.dao.ITeamDao;
 import simulation.factory.HockeyContextConcreteMock;
 import simulation.factory.IDivisionFactory;
 import simulation.factory.IHockeyContextFactory;
 import simulation.factory.ITeamFactory;
-import simulation.model.Division;
 import simulation.model.IDivision;
 import simulation.model.ITeam;
-import simulation.model.Team;
 import simulation.state.IHockeyContext;
 
 import java.util.ArrayList;

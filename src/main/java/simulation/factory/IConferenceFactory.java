@@ -1,7 +1,6 @@
 package simulation.factory;
 
-import db.data.IConferenceDao;
-import simulation.model.Conference;
+import simulation.dao.IConferenceDao;
 import simulation.model.IConference;
 
 public interface IConferenceFactory {

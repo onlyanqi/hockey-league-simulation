@@ -1,8 +1,7 @@
 package simulation.factory;
 
-import db.data.ITeamDao;
+import simulation.dao.ITeamDao;
 import simulation.model.ITeam;
-import simulation.model.Team;
 
 public interface ITeamFactory {
 

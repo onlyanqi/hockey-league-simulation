@@ -1,7 +1,6 @@
 package simulation.factory;
 
-import db.data.ILeagueDao;
-import simulation.factory.ILeagueFactory;
+import simulation.dao.ILeagueDao;
 import simulation.mock.LeagueMock;
 import simulation.model.ILeague;
 import simulation.model.League;

@@ -1,6 +1,6 @@
 package simulation.factory;
 
-import db.data.IUserDao;
+import simulation.dao.IUserDao;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.mock.UserMock;

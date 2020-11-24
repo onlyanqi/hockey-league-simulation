@@ -1,14 +1,13 @@
 package simulation.model;
 
-import db.data.IConferenceDao;
-import db.data.IDivisionDao;
+import simulation.dao.IConferenceDao;
+import simulation.dao.IDivisionDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.HockeyContextConcreteMock;
 import simulation.factory.IConferenceFactory;
 import simulation.factory.IDivisionFactory;
 import simulation.factory.IHockeyContextFactory;
-import simulation.mock.DivisionMock;
 import simulation.state.IHockeyContext;
 import java.util.ArrayList;
 import java.util.List;
