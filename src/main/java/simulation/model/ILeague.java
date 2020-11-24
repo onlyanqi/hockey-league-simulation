@@ -7,6 +7,7 @@ import simulation.dao.ITradeOfferDao;
 import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,6 +61,10 @@ public interface ILeague{
 
     void setStanleyCupFinalsTeamScores(HashMap<String, Integer> stanleyCupFinalsTeamScores);
 
+    ArrayList<TeamStat> getTeamStats();
+
+    void setTeamStats(ArrayList<TeamStat> teamStats);
+
     List<IManager> removeManagerFromManagerListById(List<IManager> managerList, int indexOfManagerObject);
 
     List<ICoach> removeCoachFromCoachListById(List<ICoach> coachList,
@@ -84,6 +89,8 @@ public interface ILeague{
     void loadFreeAgentByLeagueId(IFreeAgentDao loadFreeAgentFactory) throws Exception;
 
     ITeam getTeamByTeamName(String teamName);
+
+    TeamStat getTeamStatByTeamName(String teamName);
 
     List<ITradeOffer> getTradeOfferList();
 

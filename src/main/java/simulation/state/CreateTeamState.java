@@ -178,6 +178,7 @@ public class CreateTeamState implements IHockeyState {
         }
         team.setPlayerList(teamPlayers);
         team.setStrength();
+        team.setActivePlayerList();
     }
 
     private void chooseCoach() {

@@ -54,10 +54,30 @@ public class AgingState implements ISimulateState {
     private ISimulateState exit() {
         if (stanleyCupWinnerDetermined()) {
             updateTeamScoreList();
+            displayTeamStats();
             return new AdvanceNextSeasonState(hockeyContext);
         } else {
             return new PersistState(hockeyContext);
         }
+    }
+
+    private void displayTeamStats() {
+        ArrayList<TeamStat> teamStats = league.getTeamStats();
+        float goalAvg = 0;
+        float saveAvg = 0;
+        float shotAvg = 0;
+        float penaltyAvg = 0;
+        for(TeamStat teamStat : teamStats){
+            goalAvg = goalAvg + (float)teamStat.getGoals()/teamStat.getNumberOfGamesPlayed();
+            penaltyAvg = penaltyAvg + (float)teamStat.getPenalties()/teamStat.getNumberOfGamesPlayed();
+            shotAvg = shotAvg + (float)teamStat.getShots()/teamStat.getNumberOfGamesPlayed();
+            saveAvg = saveAvg + (float)teamStat.getSaves()/teamStat.getNumberOfGamesPlayed();
+        }
+
+        System.out.println("Goals Avg " + goalAvg / teamStats.size());
+        System.out.println("Penalty Avg " + penaltyAvg / teamStats.size());
+        System.out.println("Shot Avg " + shotAvg / teamStats.size());
+        System.out.println("Save Avg " + saveAvg / teamStats.size());
     }
 
     private void updateTeamScoreList() {
