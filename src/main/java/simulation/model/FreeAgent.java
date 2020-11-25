@@ -2,6 +2,7 @@ package simulation.model;
 
 import simulation.dao.IFreeAgentDao;
 import simulation.dao.IPlayerDao;
+import simulation.serializers.ModelsForDeserialization.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ public class FreeAgent extends SharedAttributes implements IFreeAgent{
 
     private int seasonId;
     private int leagueId;
-    private List<IPlayer> playerList;
+    private List<IPlayer> playerList = new ArrayList<>();
 
     public FreeAgent() {
         setId(System.identityHashCode(this));
@@ -25,6 +26,16 @@ public class FreeAgent extends SharedAttributes implements IFreeAgent{
             return;
         }
         loadFreeAgentFactory.loadFreeAgentById(id, this);
+    }
+
+    public FreeAgent(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent){
+        this.leagueId = freeAgent.leagueId;
+        for(Player player : freeAgent.playerList){
+            this.playerList.add(new simulation.model.Player(player));
+        }
+        this.seasonId = freeAgent.seasonId;
+        this.setName(freeAgent.name);
+        this.setId(freeAgent.id);
     }
 
     public int getSeasonId() {

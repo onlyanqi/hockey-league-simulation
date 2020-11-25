@@ -6,11 +6,18 @@ import java.util.List;
 public class TeamStanding implements ITeamStanding {
 
     private int id;
-    private List<ITeamScore> teamsScoreList;
+    private List<ITeamScore> teamsScoreList = new ArrayList<>();
 
     public TeamStanding() {
         teamsScoreList = new ArrayList<>();
         setId(System.identityHashCode(this));
+    }
+
+    public TeamStanding(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding){
+        this.id = teamStanding.id;
+        for (simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore: teamStanding.teamsScoreList){
+            this.teamsScoreList.add(new TeamScore(teamScore));
+        }
     }
 
     public int getId() {

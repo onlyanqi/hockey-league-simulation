@@ -26,6 +26,16 @@ public class TeamScore extends SharedAttributes implements ITeamScore{
         iTeamScoreDao.loadTeamScoreById(id, this);
     }
 
+    public TeamScore(simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore){
+        this.teamName = teamScore.teamName;
+        this.points = teamScore.points;
+        this.numberOfLoss = teamScore.numberOfLoss;
+        this.numberOfTies = teamScore.numberOfTies;
+        this.numberOfWins = teamScore.numberOfWins;
+        this.setId(teamScore.id);
+        this.setName(teamScore.name);
+    }
+
     public String getTeamName() {
         return teamName;
     }

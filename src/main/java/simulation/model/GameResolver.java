@@ -9,6 +9,16 @@ public class GameResolver extends SharedAttributes implements IGameResolver{
         setId(System.identityHashCode(this));
     }
 
+    public GameResolver(simulation.serializers.ModelsForDeserialization.model.GameResolver gameResolver){
+        if(gameResolver == null){
+            this.randomWinChance = 0.0;
+        }else{
+            this.randomWinChance = gameResolver.randomWinChance;
+            this.setName(gameResolver.name);
+            this.setId(gameResolver.id);
+        }
+    }
+
     public GameResolver(int leagueId, IGameResolverDao gameResolverFactory) throws Exception {
         if (gameResolverFactory == null) {
             return;

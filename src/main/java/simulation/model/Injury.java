@@ -25,6 +25,15 @@ public class Injury extends SharedAttributes implements IInjury{
         loadInjuryFactory.loadInjuryById(id, this);
     }
 
+    public Injury(simulation.serializers.ModelsForDeserialization.model.Injury injury){
+        this.injuryDaysHigh = injury.injuryDaysHigh;
+        this.injuryDaysLow = injury.injuryDaysLow;
+        this.randomInjuryChance = injury.randomInjuryChance;
+        this.leagueId = injury.leagueId;
+        this.setName(injury.name);
+        this.setId(injury.id);
+    }
+
     public Double getRandomInjuryChance() {
         return randomInjuryChance;
     }
