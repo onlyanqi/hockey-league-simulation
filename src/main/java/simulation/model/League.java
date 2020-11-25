@@ -4,7 +4,6 @@ import simulation.dao.IConferenceDao;
 import simulation.dao.IFreeAgentDao;
 import simulation.dao.ILeagueDao;
 import simulation.dao.ITradeOfferDao;
-import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
