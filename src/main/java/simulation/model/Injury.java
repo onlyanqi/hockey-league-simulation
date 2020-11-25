@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IInjuryDao;
+import simulation.dao.IInjuryDao;
 
 public class Injury extends SharedAttributes implements IInjury{
 

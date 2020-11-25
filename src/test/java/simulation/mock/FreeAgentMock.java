@@ -1,7 +1,7 @@
 package simulation.mock;
 
-import db.data.IFreeAgentDao;
-import db.data.IPlayerDao;
+import simulation.dao.IFreeAgentDao;
+import simulation.dao.IPlayerDao;
 import simulation.model.*;
 
 import java.util.ArrayList;

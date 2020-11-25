@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IAgingDao;
+import simulation.dao.IAgingDao;
 
 public class Aging extends SharedAttributes implements IAging {
 

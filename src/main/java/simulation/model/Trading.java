@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITradingDao;
+import simulation.dao.ITradingDao;
 import java.util.*;
 
 public class Trading extends SharedAttributes implements ITrading {

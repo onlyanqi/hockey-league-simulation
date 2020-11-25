@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import db.data.ITradingDao;
+import simulation.dao.ITradingDao;
 import simulation.model.ITrading;
 import simulation.model.Trading;
 

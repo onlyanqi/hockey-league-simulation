@@ -1,11 +1,9 @@
 package simulation.state;
 
-import db.data.*;
+import simulation.dao.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.factory.CoachConcrete;
 import simulation.factory.HockeyContextConcrete;
-import simulation.factory.ICoachFactory;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.*;
 import simulation.model.*;
@@ -156,7 +154,7 @@ public class CreateTeamStateTest {
     public void chooseCoachTest() throws Exception {
         ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(4, leagueFactory);
-        ICoachFactory coachFactory = new CoachConcrete();
+        IModelFactory coachFactory = ModelFactory.getInstance();
         List<ICoach> coachList = league.getCoachList();
         int oldCoachListLength = coachList.size();
         coachList = league.removeCoachFromCoachListById(coachList, 1, coachFactory);

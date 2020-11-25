@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ICoachDao;
+import simulation.dao.ICoachDao;
 
 public class Coach extends SharedAttributes implements ICoach {
     private int teamId;

@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IGameResolverDao;
+import simulation.dao.IGameResolverDao;
 
 public class GameResolver extends SharedAttributes implements IGameResolver{
     private Double randomWinChance;

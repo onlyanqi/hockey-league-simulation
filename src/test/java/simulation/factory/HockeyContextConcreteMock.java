@@ -1,8 +1,9 @@
 package simulation.factory;
 
-import simulation.mock.ConferenceConcreteMock;
-import simulation.mock.DivisionConcreteMock;
-import simulation.mock.PlayerConcreteMock;
+import simulation.dao.DaoFactoryMock;
+import simulation.dao.IDaoFactory;
+import simulation.model.IModelFactory;
+import simulation.model.ModelFactory;
 import simulation.state.HockeyContext;
 import simulation.state.IHockeyContext;
 
@@ -26,62 +27,11 @@ public class HockeyContextConcreteMock implements IHockeyContextFactory {
     private IHockeyContext createHockeyContext(){
         IHockeyContext hockeyContext = HockeyContext.getInstance();
 
-        IAgingFactory agingFactory = new AgingConcrete();
-        hockeyContext.setAgingFactory(agingFactory);
+        IModelFactory modelFactory = ModelFactory.getInstance();
+        IDaoFactory daoFactory = DaoFactoryMock.getInstance();
 
-        ICoachFactory coachFactory = new CoachConcrete();
-        hockeyContext.setCoachFactory(coachFactory);
-
-        IFreeAgentFactory freeAgentFactory = new FreeAgentConcrete();
-        hockeyContext.setFreeAgentFactory(freeAgentFactory);
-
-        IPlayerFactory playerFactory = new PlayerConcreteMock();
-        hockeyContext.setPlayerFactory(playerFactory);
-
-        ITeamFactory teamFactory = new TeamConcreteMock();
-        hockeyContext.setTeamFactory(teamFactory);
-
-        IManagerFactory managerFactory = new ManagerConcrete();
-        hockeyContext.setManagerFactory(managerFactory);
-
-        IConferenceFactory conferenceFactory = new ConferenceConcreteMock();
-        hockeyContext.setConferenceFactory(conferenceFactory);
-
-        IInjuryFactory injuryFactory = new InjuryConcrete();
-        hockeyContext.setInjuryFactory(injuryFactory);
-
-        IGamePlayConfigFactory gamePlayConfigFactory = new GamePlayConfigConcrete();
-        hockeyContext.setGamePlayConfigFactory(gamePlayConfigFactory);
-
-        ITradingFactory tradingFactory = new TradingConcreteMock();
-        hockeyContext.setTradingFactory(tradingFactory);
-
-        IUserFactory userFactory = new UserConcrete();
-        hockeyContext.setUserFactory(userFactory);
-
-        ITradeOfferFactory tradeOfferFactory = new TradeOfferConcreteMock();
-        hockeyContext.setTradeOfferFactory(tradeOfferFactory);
-
-        IGameFactory gameFactory = new GameConcrete();
-        hockeyContext.setGameFactory(gameFactory);
-
-        INHLEventsFactory inhlEventsFactory = new NHLEventsConcrete();
-        hockeyContext.setNHLEventsFactory(inhlEventsFactory);
-
-        IGameScheduleFactory gameScheduleFactory = new GameScheduleConcrete();
-        hockeyContext.setGameScheduleFactory(gameScheduleFactory);
-
-        ITeamStandingFactory teamStandingFactory = new TeamStandingConcrete();
-        hockeyContext.setTeamStandingFactory(teamStandingFactory);
-
-        ITrainingFactory trainingFactory = new TrainingConcrete();
-        hockeyContext.setTrainingFactory(trainingFactory);
-
-        ILeagueFactory leagueFactory = new LeagueConcreteMock();
-        hockeyContext.setLeagueFactory(leagueFactory);
-
-        IDivisionFactory divisionFactory = new DivisionConcreteMock();
-        hockeyContext.setDivisionFactory(divisionFactory);
+        hockeyContext.setModelFactory(modelFactory);
+        hockeyContext.setDaoFactory(daoFactory);
 
         return hockeyContext;
     }

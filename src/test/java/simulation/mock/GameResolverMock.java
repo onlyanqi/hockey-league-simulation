@@ -1,7 +1,6 @@
 package simulation.mock;
 
-import db.data.IGameResolverDao;
-import simulation.model.GameResolver;
+import simulation.dao.IGameResolverDao;
 import simulation.model.IGameResolver;
 
 public class GameResolverMock implements IGameResolverDao {

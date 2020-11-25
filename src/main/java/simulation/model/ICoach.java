@@ -1,7 +1,5 @@
 package simulation.model;
 
-import db.data.ICoachDao;
-
 public interface ICoach {
 
     int getTeamId();

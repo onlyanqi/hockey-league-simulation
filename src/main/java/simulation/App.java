@@ -5,6 +5,7 @@ import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.GamePubSub.*;
 import simulation.factory.*;
+import simulation.model.IModelFactory;
 import simulation.model.IUser;
 import java.io.FileNotFoundException;
 
@@ -32,7 +33,7 @@ public class App {
                 IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
                 IHockeyContext context = hockeyContextFactory.newHockeyContext();
 
-                IUserFactory userConcrete = context.getUserFactory();
+                IModelFactory userConcrete = context.getModelFactory();
                 IUser user = userConcrete.newUser();
 
                 user.setName(userName);

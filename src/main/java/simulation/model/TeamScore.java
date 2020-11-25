@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITeamScoreDao;
+import simulation.dao.ITeamScoreDao;
 
 public class TeamScore extends SharedAttributes implements ITeamScore{
 

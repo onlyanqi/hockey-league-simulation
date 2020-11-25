@@ -1,6 +1,9 @@
 package simulation.model;
 
-import db.data.*;
+import simulation.dao.IConferenceDao;
+import simulation.dao.IFreeAgentDao;
+import simulation.dao.ILeagueDao;
+import simulation.dao.ITradeOfferDao;
 import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;
@@ -236,7 +239,7 @@ public class League extends SharedAttributes implements ILeague {
     }
 
     public List<ICoach> removeCoachFromCoachListById(List<ICoach> coachList,
-                                                    int indexOfCoachObject, ICoachFactory coachFactory) {
+                                                    int indexOfCoachObject, IModelFactory coachFactory) {
         if (null == coachList) {
             return null;
         }
