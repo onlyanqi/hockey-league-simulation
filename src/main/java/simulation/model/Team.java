@@ -1,10 +1,12 @@
 package simulation.model;
 
 import config.AppConfig;
-import db.data.IPlayerDao;
-import db.data.ITeamDao;
+import simulation.dao.IPlayerDao;
+import simulation.dao.ITeamDao;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
+import simulation.serializers.ModelsForDeserialization.model.Player;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,9 +20,9 @@ public class Team extends SharedAttributes implements ITeam {
     private boolean aiTeam;
     private ICoach coach;
     private IManager manager;
-    private List<IPlayer> playerList;
-    private List<IPlayer> activePlayerList;
-    private List<IPlayer> inactivePlayerList;
+    private List<IPlayer> playerList = new ArrayList<>();
+    private List<IPlayer> activePlayerList = new ArrayList<>();
+    private List<IPlayer> inactivePlayerList = new ArrayList<>();
     private int playersTradedCount;
     private int lossPoint;
     private List<String> draftPicks = new ArrayList<>(Arrays.asList(null, null, null, null, null, null, null));
@@ -40,6 +42,29 @@ public class Team extends SharedAttributes implements ITeam {
 
     public Team(String name, ITeamDao factory) throws Exception {
         factory.loadTeamByName(name, this);
+    }
+
+    public Team(simulation.serializers.ModelsForDeserialization.model.Team team){
+        for(Player player : team.activePlayerList){
+            this.activePlayerList.add(new simulation.model.Player(player));
+        }
+        this.aiTeam = team.aiTeam;
+        this.coach = new Coach(team.coach);
+        this.divisionId = team.divisionId;
+        this.draftPicks = team.draftPicks;
+        for(Player player : team.inactivePlayerList){
+            this.inactivePlayerList.add(new simulation.model.Player(player));
+        }
+        this.lossPoint = team.lossPoint;
+        this.manager = new Manager(team.manager);
+        this.mascot = team.mascot;
+        for(Player player : team.playerList){
+            this.playerList.add(new simulation.model.Player(player));
+        }
+        this.playersTradedCount = team.playersTradedCount;
+        this.strength = team.strength;
+        this.setName(team.name);
+        this.setId(team.id);
     }
 
     public List<IPlayer> getPlayerList() {

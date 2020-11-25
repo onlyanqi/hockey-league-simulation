@@ -1,14 +1,14 @@
 package simulation.model;
 
-import db.data.IDivisionDao;
-import db.data.ITeamDao;
+import simulation.dao.IDivisionDao;
+import simulation.dao.ITeamDao;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Division extends SharedAttributes implements IDivision {
 
     private int conferenceId;
-    private List<ITeam> teamList;
+    private List<ITeam> teamList = new ArrayList<>();
 
     public Division() {
         setId(System.identityHashCode(this));
@@ -24,6 +24,15 @@ public class Division extends SharedAttributes implements IDivision {
         }
         setId(id);
         factory.loadDivisionById(id, this);
+    }
+
+    public Division(simulation.serializers.ModelsForDeserialization.model.Division divisionFromDeserialization){
+        this.conferenceId = divisionFromDeserialization.conferenceId;
+        for(simulation.serializers.ModelsForDeserialization.model.Team team : divisionFromDeserialization.teamList){
+            this.teamList.add(new Team(team));
+        }
+        this.setName(divisionFromDeserialization.name);
+        this.setId(divisionFromDeserialization.id);
     }
 
     public List<ITeam> getTeamList() {

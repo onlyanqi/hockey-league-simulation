@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IPlayerDao;
+import simulation.dao.IPlayerDao;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -96,4 +96,16 @@ public interface IPlayer extends Comparable<IPlayer>{
     void statDecayCheck(ILeague league);
 
     boolean isBirthday(ILeague league);
+
+    int getSaves();
+
+    int getPenaltyCount();
+
+    void setSaves(int saves);
+
+    void setPenaltyCount(int penaltyCount);
+
+    int getGoalScore();
+
+    void setGoalScore(int goalScore);
 }

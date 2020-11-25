@@ -29,7 +29,7 @@ public interface ITeamStanding {
 
     List<ITeamScore> getTeamsRankAcrossDivision(ILeague league, String divisionName);
 
-    List<ITeamScore> getTeamsRankAcrossLeague();
+    List<ITeamScore> getTeamsRankAcrossLeague(ILeague league);
 
     List<ITeamScore> sortTeamsScoreList(List<ITeamScore> teamsScoreList);
 

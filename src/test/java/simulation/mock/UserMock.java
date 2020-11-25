@@ -1,7 +1,7 @@
 package simulation.mock;
 
-import db.data.ILeagueDao;
-import db.data.IUserDao;
+import simulation.dao.ILeagueDao;
+import simulation.dao.IUserDao;
 import simulation.model.IUser;
 import simulation.model.League;
 import simulation.model.User;

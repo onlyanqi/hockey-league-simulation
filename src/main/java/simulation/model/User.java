@@ -1,7 +1,7 @@
 package simulation.model;
 
-import db.data.ILeagueDao;
-import db.data.IUserDao;
+import simulation.dao.ILeagueDao;
+import simulation.dao.IUserDao;
 
 import java.util.List;
 

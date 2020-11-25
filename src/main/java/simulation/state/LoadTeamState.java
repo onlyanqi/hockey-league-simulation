@@ -1,13 +1,8 @@
 package simulation.state;
 
-import db.data.*;
-import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
-import simulation.factory.*;
 import simulation.model.*;
 import simulation.serializers.LeagueDataSerializerDeSerializer;
-
-import java.util.List;
 
 
 public class LoadTeamState implements IHockeyState {
@@ -44,7 +39,7 @@ public class LoadTeamState implements IHockeyState {
     public void process() throws Exception {
         LeagueDataSerializerDeSerializer leagueDataSerializerDeSerializer = new LeagueDataSerializerDeSerializer();
         String filename = "JsonFiles"+"/"+teamName;
-        league = leagueDataSerializerDeSerializer.deSerialize(filename, hockeyContext);
+        league = new League(leagueDataSerializerDeSerializer.deSerialize(filename));
         hockeyContext.getUser().setLeague(league);
 //        ConsoleOutput.getInstance().printMsgToConsole("We are loading the league data. Please wait..");
 //

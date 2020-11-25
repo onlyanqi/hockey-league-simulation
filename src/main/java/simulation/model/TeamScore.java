@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITeamScoreDao;
+import simulation.dao.ITeamScoreDao;
 
 public class TeamScore extends SharedAttributes implements ITeamScore{
 
@@ -24,6 +24,16 @@ public class TeamScore extends SharedAttributes implements ITeamScore{
 
     public TeamScore(int id, ITeamScoreDao iTeamScoreDao) throws Exception {
         iTeamScoreDao.loadTeamScoreById(id, this);
+    }
+
+    public TeamScore(simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore){
+        this.teamName = teamScore.teamName;
+        this.points = teamScore.points;
+        this.numberOfLoss = teamScore.numberOfLoss;
+        this.numberOfTies = teamScore.numberOfTies;
+        this.numberOfWins = teamScore.numberOfWins;
+        this.setId(teamScore.id);
+        this.setName(teamScore.name);
     }
 
     public String getTeamName() {

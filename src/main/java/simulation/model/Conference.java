@@ -1,14 +1,16 @@
 package simulation.model;
 
-import db.data.IConferenceDao;
-import db.data.IDivisionDao;
+import simulation.dao.IConferenceDao;
+import simulation.dao.IDivisionDao;
+import simulation.serializers.ModelsForDeserialization.model.Division;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Conference extends SharedAttributes implements IConference {
 
     private int leagueId;
-    private List<IDivision> divisionList;
+    private List<IDivision> divisionList = new ArrayList<>();;
 
     public Conference() {
         setId(System.identityHashCode(this));
@@ -24,6 +26,15 @@ public class Conference extends SharedAttributes implements IConference {
         }
         setId(id);
         factory.loadConferenceById(id, this);
+    }
+
+    public Conference(simulation.serializers.ModelsForDeserialization.model.Conference conferenceFromDeserialization){
+        leagueId = conferenceFromDeserialization.leagueId;
+        for(Division division : conferenceFromDeserialization.divisionList){
+            this.divisionList.add(new simulation.model.Division(division));
+        }
+        this.setName(conferenceFromDeserialization.name);
+        this.setId(conferenceFromDeserialization.id);
     }
 
     public int getLeagueId() {

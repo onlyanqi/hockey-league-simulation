@@ -1,12 +1,11 @@
 package simulation.model;
 
-import db.data.IConferenceDao;
-import db.data.IFreeAgentDao;
-import db.data.ILeagueDao;
-import db.data.ITradeOfferDao;
-import simulation.factory.ICoachFactory;
-
+import simulation.dao.IConferenceDao;
+import simulation.dao.IFreeAgentDao;
+import simulation.dao.ILeagueDao;
+import simulation.dao.ITradeOfferDao;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,10 +59,14 @@ public interface ILeague{
 
     void setStanleyCupFinalsTeamScores(HashMap<String, Integer> stanleyCupFinalsTeamScores);
 
+    ArrayList<TeamStat> getTeamStats();
+
+    void setTeamStats(ArrayList<TeamStat> teamStats);
+
     List<IManager> removeManagerFromManagerListById(List<IManager> managerList, int indexOfManagerObject);
 
     List<ICoach> removeCoachFromCoachListById(List<ICoach> coachList,
-                                                    int indexOfCoachObject, ICoachFactory coachFactory);
+                                                    int indexOfCoachObject, IModelFactory coachFactory);
 
     int getCreatedBy();
 
@@ -85,6 +88,8 @@ public interface ILeague{
 
     ITeam getTeamByTeamName(String teamName);
 
+    TeamStat getTeamStatByTeamName(String teamName);
+
     List<ITradeOffer> getTradeOfferList();
 
     void setTradeOfferList(List<ITradeOffer> tradeOfferList);
@@ -101,7 +106,11 @@ public interface ILeague{
 
     void setName(String name);
 
-    String getUserCreatedTeamName();
+    ITrophy getTrophy();
+
+    void setTrophy(ITrophy trophy);
+
+    abstract String getUserCreatedTeamName();
 
     void setUserCreatedTeamName(String userCreatedTeamName);
 
@@ -111,4 +120,9 @@ public interface ILeague{
 
     void setId(int id);
 
+    List<ITeam> createTeamList();
+
+    List<IPlayer> createPlayerList();
+
+    List<ICoach> createCoachList();
 }

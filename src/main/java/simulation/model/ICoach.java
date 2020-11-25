@@ -1,7 +1,5 @@
 package simulation.model;
 
-import db.data.ICoachDao;
-
 public interface ICoach {
 
     int getTeamId();
@@ -35,4 +33,8 @@ public interface ICoach {
     int getId();
 
     void setId(int id);
+
+    int getCoachingEffectiveness();
+
+    void setCoachingEffectiveness(int coachingEffectiveness);
 }

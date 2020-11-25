@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import db.data.IGameDao;
+import simulation.dao.IGameDao;
 import simulation.model.Game;
 import simulation.model.IGame;
 import simulation.model.Result;

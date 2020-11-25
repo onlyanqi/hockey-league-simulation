@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IEventDao;
+import simulation.dao.IEventDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.NHLEventMock;

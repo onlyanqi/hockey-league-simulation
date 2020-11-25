@@ -1,7 +1,7 @@
 package simulation.mock;
 
-import db.data.ITeamScoreDao;
-import db.data.ITeamStandingDao;
+import simulation.dao.ITeamScoreDao;
+import simulation.dao.ITeamStandingDao;
 import simulation.model.ITeamScore;
 import simulation.model.ITeamStanding;
 import simulation.model.TeamScore;

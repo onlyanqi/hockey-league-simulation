@@ -1,8 +1,8 @@
 package simulation.model;
 
 
-import db.data.ILeagueDao;
-import db.data.ITeamScoreDao;
+import simulation.dao.ILeagueDao;
+import simulation.dao.ITeamScoreDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.LeagueMock;

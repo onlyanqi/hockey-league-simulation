@@ -1,19 +1,17 @@
 package simulation.state;
 
-import db.data.ILeagueDao;
+import simulation.dao.ILeagueDao;
 import org.json.simple.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.factory.AgingConcrete;
 import simulation.factory.HockeyContextConcrete;
-import simulation.factory.IAgingFactory;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.JSONControllerMock;
 import simulation.mock.LeagueMock;
+import simulation.model.IModelFactory;
+import simulation.model.ModelFactory;
 import simulation.model.User;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 
 
@@ -38,8 +36,8 @@ public class ImportStateTest {
     public void processTest() throws Exception {
         IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
         hockeyContext.setUser(user);
-        IAgingFactory agingFactory = new AgingConcrete();
-        hockeyContext.setAgingFactory(agingFactory);
+        IModelFactory agingFactory = ModelFactory.getInstance();
+        hockeyContext.setModelFactory(agingFactory);
         assertEquals(hockeyContext.getUser().getId(), user.getId());
         assertEquals(hockeyContext.getUser().getName(), user.getName());
 

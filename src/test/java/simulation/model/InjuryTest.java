@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IInjuryDao;
+import simulation.dao.IInjuryDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.InjuryMock;

@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ICoachDao;
+import simulation.dao.ICoachDao;
 
 public class Coach extends SharedAttributes implements ICoach {
     private int teamId;
@@ -9,6 +9,8 @@ public class Coach extends SharedAttributes implements ICoach {
     private Double shooting;
     private Double checking;
     private Double saving;
+
+    private int coachingEffectiveness;
 
     public Coach() {
         setId(System.identityHashCode(this));
@@ -30,6 +32,19 @@ public class Coach extends SharedAttributes implements ICoach {
         this.setSaving(coach.getSaving());
         this.setShooting(coach.getShooting());
         this.setSkating(coach.getSkating());
+        this.setCoachingEffectiveness(coach.getCoachingEffectiveness());
+    }
+
+    public Coach(simulation.serializers.ModelsForDeserialization.model.Coach coachFromDeserialization){
+        this.teamId=coachFromDeserialization.teamId;
+        this.leagueId = coachFromDeserialization.leagueId;
+        this.skating = coachFromDeserialization.skating;
+        this.shooting = coachFromDeserialization.skating;
+        this.checking = coachFromDeserialization.checking;
+        this.saving = coachFromDeserialization.saving;
+        this.setCoachingEffectiveness(coachFromDeserialization.coachingEffectiveness);
+        this.setName(coachFromDeserialization.name);
+        this.setId(coachFromDeserialization.id);
     }
 
     public Coach(int id, ICoachDao coachFactory) throws Exception {
@@ -55,6 +70,15 @@ public class Coach extends SharedAttributes implements ICoach {
     public void setLeagueId(int leagueId) {
         this.leagueId = leagueId;
     }
+
+    public int getCoachingEffectiveness() {
+        return coachingEffectiveness;
+    }
+
+    public void setCoachingEffectiveness(int coachingEffectiveness) {
+        this.coachingEffectiveness = coachingEffectiveness;
+    }
+
 
     public Double getSkating() {
         return skating;

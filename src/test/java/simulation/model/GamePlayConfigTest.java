@@ -1,8 +1,8 @@
 package simulation.model;
 
-import db.data.IGamePlayConfigDao;
-import db.data.ILeagueDao;
-import db.data.ITradingDao;
+import simulation.dao.IGamePlayConfigDao;
+import simulation.dao.ILeagueDao;
+import simulation.dao.ITradingDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.GamePlayConfigMock;

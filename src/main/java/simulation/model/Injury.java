@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IInjuryDao;
+import simulation.dao.IInjuryDao;
 
 public class Injury extends SharedAttributes implements IInjury{
 
@@ -23,6 +23,15 @@ public class Injury extends SharedAttributes implements IInjury{
     public Injury(int id, IInjuryDao loadInjuryFactory) throws Exception {
         setId(id);
         loadInjuryFactory.loadInjuryById(id, this);
+    }
+
+    public Injury(simulation.serializers.ModelsForDeserialization.model.Injury injury){
+        this.injuryDaysHigh = injury.injuryDaysHigh;
+        this.injuryDaysLow = injury.injuryDaysLow;
+        this.randomInjuryChance = injury.randomInjuryChance;
+        this.leagueId = injury.leagueId;
+        this.setName(injury.name);
+        this.setId(injury.id);
     }
 
     public Double getRandomInjuryChance() {

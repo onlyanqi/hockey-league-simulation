@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IPlayerDao;
+import simulation.dao.IPlayerDao;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
@@ -27,6 +27,10 @@ public class Player extends SharedAttributes implements IPlayer {
     private int saving;
     private double strength;
     private double relativeStrength;
+    private int penaltyCount;
+    private int goalScore;
+
+    private int saves;
 
     public Player() {
         setId(System.identityHashCode(this));
@@ -63,10 +67,61 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setSkating(player.getSkating());
         this.setStrength();
         this.setRelativeStrength();
+        this.setSaves(player.getSaves());
+        this.setPenaltyCount(player.getPenaltyCount());
+        this.setGoalScore(player.getGoalScore());
+    }
+
+    public Player(simulation.serializers.ModelsForDeserialization.model.Player playerFromDeserialization){
+        this.setId(playerFromDeserialization.id);
+        this.setName(playerFromDeserialization.name);
+        this.age = playerFromDeserialization.age;
+        this.birthday = playerFromDeserialization.birthday;
+        this.checking = playerFromDeserialization.checking;
+        this.freeAgentId = playerFromDeserialization.freeAgentId;
+        this.goalScore = playerFromDeserialization.goalScore;
+        this.injuryDatesRange = playerFromDeserialization.injuryDatesRange;
+        this.injuryStartDate = playerFromDeserialization.injuryStartDate;
+        this.isCaptain = playerFromDeserialization.isCaptain;
+        this.isInjured = playerFromDeserialization.isInjured;
+        this.isRetired = playerFromDeserialization.isRetired;
+        this.penaltyCount = playerFromDeserialization.penaltyCount;
+        this.position = playerFromDeserialization.position;
+        this.relativeStrength = playerFromDeserialization.relativeStrength;
+        this.saves =playerFromDeserialization.saves;
+        this.saving = playerFromDeserialization.saving;
+        this.shooting = playerFromDeserialization.shooting;
+        this.skating = playerFromDeserialization.skating;
+        this.strength = playerFromDeserialization.strength;
+        this.isFreeAgent=playerFromDeserialization.isFreeAgent;
     }
 
     public boolean isFreeAgent() {
         return isFreeAgent;
+    }
+
+    public int getGoalScore() {
+        return goalScore;
+    }
+
+    public void setGoalScore(int goalScore) {
+        this.goalScore = goalScore;
+    }
+
+    public int getPenaltyCount() {
+        return penaltyCount;
+    }
+
+    public void setPenaltyCount(int penaltyCount) {
+        this.penaltyCount = penaltyCount;
+    }
+
+    public int getSaves() {
+        return saves;
+    }
+
+    public void setSaves(int saves) {
+        this.saves = saves;
     }
 
     public void setIsFreeAgent(boolean freeAgent) {

@@ -1,15 +1,8 @@
 package simulation.state;
 
-import db.data.*;
 import presentation.ConsoleOutput;
-import simulation.factory.*;
 import simulation.model.*;
 import simulation.serializers.LeagueDataSerializerDeSerializer;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class PersistState implements ISimulateState {
 

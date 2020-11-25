@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITrainingDao;
+import simulation.dao.ITrainingDao;
 
 public class Training implements ITraining {
 
@@ -18,6 +18,12 @@ public class Training implements ITraining {
         }
         setId(id);
         trainingFactory.loadTrainingByLeagueId(id, this);
+    }
+
+    public Training(simulation.serializers.ModelsForDeserialization.model.Training training){
+        this.id = training.id;
+        this.daysUntilStatIncreaseCheck = training.daysUntilStatIncreaseCheck;
+        this.leagueId = training.leagueId;
     }
 
     public int getDaysUntilStatIncreaseCheck() {

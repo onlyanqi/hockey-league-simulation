@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IGameDao;
+import simulation.dao.IGameDao;
 
 import java.time.LocalDate;
 
@@ -30,6 +30,15 @@ public class Game implements IGame {
             }
         }
         return null;
+    }
+
+    public Game(simulation.serializers.ModelsForDeserialization.model.Game game){
+        this.id = game.id;
+        this.date = game.date;
+        this.played = game.played;
+        this.team1 = game.team1;
+        this.team2 = game.team2;
+        this.winner = game.winner;
     }
 
     public int getId() {

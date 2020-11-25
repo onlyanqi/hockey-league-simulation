@@ -33,6 +33,9 @@ public class ConsoleOutput {
         String FROMTEAM = "fromTeam";
         String TOTEAM = "toTeam";
         String TRADEDDRAFTPICKROUNDNUMBER = "tradedRoundNumber";
+        String TYPE = "type";
+        String STRONG = "strong";
+        String WEAK = "weak";
         List<IPlayer> fromPlayerList = (List<IPlayer>) tradeDetails.get(FROMPLAYERLIST);
         List<IPlayer> toPlayerList = (List<IPlayer>) tradeDetails.get(TOPLAYERLIST);
         ITeam fromTeam = (ITeam) tradeDetails.get(FROMTEAM);
@@ -53,9 +56,9 @@ public class ConsoleOutput {
             printMsgToConsole("\t\t\tPlayer strength: " + player.getStrength());
             printMsgToConsole("\t\t\tPlayer position: "+ player.getPosition());
         }
-        if(tradedDraftPickRoundNumber == 0){
+        if(STRONG.equalsIgnoreCase((String)tradeDetails.get(TYPE)) && tradedDraftPickRoundNumber == 0){
             printMsgToConsole("\t\t Trade does not include draft picks.");
-        } else {
+        } else if (STRONG.equalsIgnoreCase((String)tradeDetails.get(TYPE))){
             printMsgToConsole("\t\t Trade includes draft pick round number: " + tradedDraftPickRoundNumber);
         }
         printMsgToConsole("");
@@ -65,6 +68,11 @@ public class ConsoleOutput {
             printMsgToConsole("\t\t\tPlayer name: " + player.getName());
             printMsgToConsole("\t\t\tPlayer strength: " + player.getStrength());
             printMsgToConsole("\t\t\tPlayer position: "+player.getPosition());
+        }
+        if(WEAK.equalsIgnoreCase((String)tradeDetails.get(TYPE)) && tradedDraftPickRoundNumber == 0){
+            printMsgToConsole("\t\t Trade does not include draft picks.");
+        } else if (WEAK.equalsIgnoreCase((String)tradeDetails.get(TYPE))){
+            printMsgToConsole("\t\t Trade includes draft pick round number: " + tradedDraftPickRoundNumber);
         }
         printMsgToConsole("--------------------------------------------------------------------");
     }

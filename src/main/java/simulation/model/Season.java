@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ISeasonDao;
+import simulation.dao.ISeasonDao;
 
 public class Season extends SharedAttributes implements ISeason {
 

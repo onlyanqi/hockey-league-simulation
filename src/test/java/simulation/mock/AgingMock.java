@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import db.data.IAgingDao;
+import simulation.dao.IAgingDao;
 import org.json.simple.JSONObject;
 import simulation.model.Aging;
 import simulation.model.IAging;

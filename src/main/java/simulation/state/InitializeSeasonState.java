@@ -1,10 +1,6 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
-import simulation.factory.IGameFactory;
-import simulation.factory.IGameScheduleFactory;
-import simulation.factory.INHLEventsFactory;
-import simulation.factory.ITeamStandingFactory;
 import simulation.model.*;
 
 import java.time.LocalDate;
@@ -42,15 +38,13 @@ public class InitializeSeasonState implements ISimulateState {
 
     public void InitializeRegularSeason() {
 
-        INHLEventsFactory inhlEventsFactory = hockeyContext.getNHLEventsFactory();
-        INHLEvents nhlEvents = inhlEventsFactory.newNHLEventsByYear(league.getCurrentDate().getYear());
+        IModelFactory modelFactory = hockeyContext.getModelFactory();
+        INHLEvents nhlEvents = modelFactory.newNHLEventsByYear(league.getCurrentDate().getYear());
         LocalDate regularSeasonStartDate = nhlEvents.getRegularSeasonStartDate();
         LocalDate previousDateOfRegularSeasonStart = DateTime.minusDays(nhlEvents.getRegularSeasonStartDate(), 1);
         LocalDate endDate = nhlEvents.getEndOfRegularSeason();
-        IGameScheduleFactory gameScheduleFactory = hockeyContext.getGameScheduleFactory();
-        IGameSchedule games = gameScheduleFactory.newGameSchedule();
-        ITeamStandingFactory teamStandingFactory = hockeyContext.getTeamStandingFactory();
-        ITeamStanding regularSeasonTeamStanding = teamStandingFactory.newTeamStanding();
+        IGameSchedule games = modelFactory.newGameSchedule();
+        ITeamStanding regularSeasonTeamStanding = modelFactory.newTeamStanding();
         List<IGame> tempGameList = new ArrayList<>();
         int diffInDays = (int) DateTime.diffDays(previousDateOfRegularSeasonStart, endDate);
 
@@ -81,6 +75,21 @@ public class InitializeSeasonState implements ISimulateState {
         league.setActiveTeamStanding(league.getRegularSeasonStanding());
         league.setStanleyCupFinalsTeamScores(new HashMap<>());
         league.setNhlRegularSeasonEvents(nhlEvents);
+        setTeamStats(league);
+    }
+
+    private void setTeamStats(ILeague league) {
+        ArrayList<TeamStat> teamStats = new ArrayList<>() ;//league.getTeamStats();
+        for(IConference conference : league.getConferenceList()){
+            for(IDivision division : conference.getDivisionList()){
+                for(ITeam team : division.getTeamList()){
+                    TeamStat teamStat = new TeamStat();
+                    teamStat.setTeamName(team.getName());
+                    teamStats.add(teamStat);
+                }
+            }
+        }
+        league.setTeamStats(teamStats);
     }
 
     private Boolean isMinimumTeamCountSatisfiedForPlayoffs(ILeague league) {
@@ -124,7 +133,7 @@ public class InitializeSeasonState implements ISimulateState {
                 if (checkMaxGamesReached(tempGameList, teamOutsideDivision)) {
                     continue;
                 }
-                IGameFactory gameFactory = hockeyContext.getGameFactory();
+                IModelFactory gameFactory = hockeyContext.getModelFactory();
                 IGame game = gameFactory.newGame();
                 game.setTeam1(team.getName());
                 game.setTeam2(teamOutsideDivision.getName());
@@ -142,7 +151,7 @@ public class InitializeSeasonState implements ISimulateState {
             if (checkMaxGamesReached(tempGameList, teamInsideDivision)) {
                 continue;
             }
-            IGameFactory factory = hockeyContext.getGameFactory();
+            IModelFactory factory = hockeyContext.getModelFactory();
             IGame game = factory.newGame();
             game.setTeam1(team.getName());
             game.setTeam2(teamInsideDivision.getName());

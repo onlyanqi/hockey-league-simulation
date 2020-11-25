@@ -1,7 +1,7 @@
 package simulation.model;
 
-import db.data.ILeagueDao;
-import db.data.IPlayerDao;
+import simulation.dao.ILeagueDao;
+import simulation.dao.IPlayerDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.LeagueMock;
@@ -37,7 +37,7 @@ public class PlayerTest {
 
     @Test
     public void playerNullTest() {
-        IPlayer player = new Player(null);
+        IPlayer player = new Player((Player)null);
         assertEquals(player.getId(), 0);
     }
 

@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ITradingDao;
+import simulation.dao.ITradingDao;
 import java.util.*;
 
 public class Trading extends SharedAttributes implements ITrading {
@@ -20,7 +20,7 @@ public class Trading extends SharedAttributes implements ITrading {
     private int maxPlayersPerTrade;
     private double randomAcceptanceChance;
     private boolean isTradingPeriod;
-    private Map<String, Double> gmTable;
+    private Map<String, Double> gmTable = new HashMap<>();
 
     public Trading() {
         setId(System.identityHashCode(this));
@@ -29,6 +29,22 @@ public class Trading extends SharedAttributes implements ITrading {
     public Trading(int tradingId, ITradingDao factory) throws Exception {
         setId(tradingId);
         factory.loadTradingDetailsByTradingId(tradingId, this);
+    }
+
+    public Trading(simulation.serializers.ModelsForDeserialization.model.Trading trading){
+        this.currentYearSeasonMonths = trading.currentYearSeasonMonths;
+        this.nextYearSeasonMonths = trading.nextYearSeasonMonths;
+        this.tradeStartDate = trading.tradeStartDate;
+        this.tradeEndDate = trading.tradeEndDate;
+        this.leagueId = trading.leagueId;
+        this.lossPoint = trading.lossPoint;
+        this.randomTradeOfferChance = trading.randomTradeOfferChance;
+        this.maxPlayersPerTrade = trading.maxPlayersPerTrade;
+        this.randomAcceptanceChance = trading.randomAcceptanceChance;
+        this.isTradingPeriod = trading.isTradingPeriod;
+        this.gmTable = trading.gmTable;
+        this.setId(trading.id);
+        this.setName(trading.name);
     }
 
     public List<Integer> getCurrentYearSeasonMonths() {

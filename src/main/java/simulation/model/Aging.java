@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IAgingDao;
+import simulation.dao.IAgingDao;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,6 +26,15 @@ public class Aging extends SharedAttributes implements IAging {
     public Aging(int id, IAgingDao loadAgingFactory) throws Exception {
         setId(id);
         loadAgingFactory.loadAgingById(id, this);
+    }
+
+    public  Aging(simulation.serializers.ModelsForDeserialization.model.Aging agingFromDeserialization){
+        this.averageRetirementAge = agingFromDeserialization.averageRetirementAge;
+        this.maximumAge = agingFromDeserialization.maximumAge;
+        this.leagueId = agingFromDeserialization.leagueId;
+        this.statDecayChance = agingFromDeserialization.statDecayChance;
+        this.setName(agingFromDeserialization.name);
+        this.setId(agingFromDeserialization.id);
     }
 
     @Override

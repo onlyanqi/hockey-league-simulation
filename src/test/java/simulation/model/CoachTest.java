@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ICoachDao;
+import simulation.dao.ICoachDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.CoachMock;
@@ -29,7 +29,7 @@ public class CoachTest {
 
     @Test
     public void coachObjectTest() {
-        Coach coach = new Coach(null);
+        Coach coach = new Coach((Coach)null);
         assertEquals(coach.getId(), 0);
     }
 
