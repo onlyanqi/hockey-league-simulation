@@ -116,6 +116,21 @@ public class TeamStanding implements ITeamStanding {
         return sortTeamsScoreList(teamsScoreWithinDivision);
     }
 
+    @Override
+    public List<ITeamScore> getTeamsRankAcrossLeague(ILeague league) {
+        List<ITeamScore> teamsScoreListLocal = this.teamsScoreList;
+        List<ITeamScore> teamsScoreWithinLeague = new ArrayList<>();
+
+        for (IConference conference : league.getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    teamsScoreWithinLeague.add(getTeamScoreByTeamName(teamsScoreListLocal, team.getName()));
+                }
+            }
+        }
+        return sortTeamsScoreList(teamsScoreWithinLeague);
+    }
+
     public List<ITeamScore> sortTeamsScoreList(List<ITeamScore> teamsScoreList) {
         teamsScoreList.sort((ITeamScore team1, ITeamScore team2) -> team2.getPoints().compareTo(team1.getPoints()));
         return teamsScoreList;

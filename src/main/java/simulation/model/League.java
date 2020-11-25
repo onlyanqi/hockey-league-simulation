@@ -4,6 +4,7 @@ import simulation.dao.IConferenceDao;
 import simulation.dao.IFreeAgentDao;
 import simulation.dao.ILeagueDao;
 import simulation.dao.ITradeOfferDao;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +31,8 @@ public class League extends SharedAttributes implements ILeague {
     private INHLEvents nhlEvents;
     private List<ITradeOffer> tradeOfferList;
 
+    private ITrophy trophy;
+
     public League() {
         setId(System.identityHashCode(this));
     }
@@ -50,7 +53,18 @@ public class League extends SharedAttributes implements ILeague {
         loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
     }
 
+    @Override
+    public ITrophy getTrophy() {
+        return trophy;
+    }
 
+    @Override
+    public void setTrophy(ITrophy trophy) {
+        this.trophy = trophy;
+    }
+
+
+    @Override
     public String getUserCreatedTeamName() {
         return userCreatedTeamName;
     }
@@ -141,6 +155,7 @@ public class League extends SharedAttributes implements ILeague {
         this.coachList = coachList;
     }
 
+    @Override
     public List<IManager> getManagerList() {
         return managerList;
     }
@@ -326,4 +341,42 @@ public class League extends SharedAttributes implements ILeague {
         this.tradeOfferList = tradingOfferFactory.loadTradeOfferDetailsByLeagueId(getId());
     }
 
+    @Override
+    public List<ITeam> createTeamList(){
+        List<ITeam> teamList=new ArrayList<>();
+        for (IConference conference : getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    teamList.add(team);
+                }
+            }
+        }
+        return teamList;
+    }
+
+    @Override
+    public List<IPlayer> createPlayerList(){
+        List<IPlayer> playerList=new ArrayList<>();
+        for (IConference conference : getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    playerList.addAll(team.getPlayerList());
+                }
+            }
+        }
+        return playerList;
+    }
+
+    @Override
+    public List<ICoach> createCoachList(){
+        List<ICoach> coachList=new ArrayList<>();
+        for (IConference conference : getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    coachList.add(team.getCoach());
+                }
+            }
+        }
+        return coachList;
+    }
 }

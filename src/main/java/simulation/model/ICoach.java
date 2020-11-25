@@ -33,4 +33,8 @@ public interface ICoach {
     int getId();
 
     void setId(int id);
+
+    int getCoachingEffectiveness();
+
+    void setCoachingEffectiveness(int coachingEffectiveness);
 }

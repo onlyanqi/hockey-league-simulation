@@ -28,6 +28,10 @@ public class Player extends SharedAttributes implements IPlayer {
     private int saving;
     private double strength;
     private double relativeStrength;
+    private int penaltyCount;
+    private int goalScore;
+
+    private int saves;
 
     public Player() {
         setId(System.identityHashCode(this));
@@ -65,10 +69,37 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setSkating(player.getSkating());
         this.setStrength();
         this.setRelativeStrength();
+        this.setSaves(player.getSaves());
+        this.setPenaltyCount(player.getPenaltyCount());
+        this.setGoalScore(player.getGoalScore());
     }
 
     public boolean isFreeAgent() {
         return isFreeAgent;
+    }
+
+    public int getGoalScore() {
+        return goalScore;
+    }
+
+    public void setGoalScore(int goalScore) {
+        this.goalScore = goalScore;
+    }
+
+    public int getPenaltyCount() {
+        return penaltyCount;
+    }
+
+    public void setPenaltyCount(int penaltyCount) {
+        this.penaltyCount = penaltyCount;
+    }
+
+    public int getSaves() {
+        return saves;
+    }
+
+    public void setSaves(int saves) {
+        this.saves = saves;
     }
 
     public void setIsFreeAgent(boolean freeAgent) {
