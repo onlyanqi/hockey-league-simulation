@@ -104,7 +104,11 @@ public interface ILeague{
 
     void setName(String name);
 
-    String getUserCreatedTeamName();
+    ITrophy getTrophy();
+
+    void setTrophy(ITrophy trophy);
+
+    abstract String getUserCreatedTeamName();
 
     void setUserCreatedTeamName(String userCreatedTeamName);
 
@@ -114,4 +118,9 @@ public interface ILeague{
 
     void setId(int id);
 
+    List<ITeam> createTeamList();
+
+    List<IPlayer> createPlayerList();
+
+    List<ICoach> createCoachList();
 }

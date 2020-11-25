@@ -1,0 +1,548 @@
+2020-11-24 22:39:38,850 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,861 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:38,862 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:38,863 INFO presentation.ConsoleOutput printMsgToConsole Advanced Day. Current date is 2021-05-07 
+2020-11-24 22:39:38,865 INFO presentation.ConsoleOutput printMsgToConsole Advanced Day. Current date is 2021-05-08 
+2020-11-24 22:39:38,865 INFO presentation.ConsoleOutput printMsgToConsole Advanced Day. Current date is 2020-10-20 
+2020-11-24 22:39:38,869 INFO presentation.ConsoleOutput printMsgToConsole Aging all players by one day! 
+2020-11-24 22:39:38,874 INFO presentation.ConsoleOutput printMsgToConsole Aging all players by one day! 
+2020-11-24 22:39:38,876 INFO presentation.ConsoleOutput printMsgToConsole Aging all players by one day! 
+2020-11-24 22:39:38,896 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,912 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:38,920 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:38,924 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,931 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,936 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,937 INFO presentation.ConsoleOutput printMsgToConsole Below Trade offer is received. 
+2020-11-24 22:39:38,939 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,939 INFO presentation.ConsoleOutput printMsgToConsole 	From team: Team1 
+2020-11-24 22:39:38,940 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,940 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player1 
+2020-11-24 22:39:38,940 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 39.0 
+2020-11-24 22:39:38,940 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,940 INFO presentation.ConsoleOutput printMsgToConsole 		 Trade does not include draft picks. 
+2020-11-24 22:39:38,940 INFO presentation.ConsoleOutput printMsgToConsole  
+2020-11-24 22:39:38,941 INFO presentation.ConsoleOutput printMsgToConsole 	To Team name: Invalid Date 
+2020-11-24 22:39:38,941 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,941 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player3 
+2020-11-24 22:39:38,941 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 44.0 
+2020-11-24 22:39:38,941 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,942 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,942 INFO presentation.ConsoleOutput printMsgToConsole Enter "A" to accept or "R" to reject the trade offer. 
+2020-11-24 22:39:38,949 INFO presentation.ConsoleOutput printMsgToConsole Trade offer is accepted successfully. 
+2020-11-24 22:39:38,951 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,951 INFO presentation.ConsoleOutput printMsgToConsole Below Trade offer is received. 
+2020-11-24 22:39:38,951 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,951 INFO presentation.ConsoleOutput printMsgToConsole 	From team: Team1 
+2020-11-24 22:39:38,952 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,952 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player1 
+2020-11-24 22:39:38,952 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 39.0 
+2020-11-24 22:39:38,952 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,954 INFO presentation.ConsoleOutput printMsgToConsole 		 Trade does not include draft picks. 
+2020-11-24 22:39:38,954 INFO presentation.ConsoleOutput printMsgToConsole  
+2020-11-24 22:39:38,954 INFO presentation.ConsoleOutput printMsgToConsole 	To Team name: Invalid Date 
+2020-11-24 22:39:38,955 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,955 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player3 
+2020-11-24 22:39:38,955 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 44.0 
+2020-11-24 22:39:38,955 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,955 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,955 INFO presentation.ConsoleOutput printMsgToConsole Enter "A" to accept or "R" to reject the trade offer. 
+2020-11-24 22:39:38,956 INFO presentation.ConsoleOutput printMsgToConsole Trade offer is accepted successfully. 
+2020-11-24 22:39:38,956 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,957 INFO presentation.ConsoleOutput printMsgToConsole Below Trade offer is received. 
+2020-11-24 22:39:38,957 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,957 INFO presentation.ConsoleOutput printMsgToConsole 	From team: Team1 
+2020-11-24 22:39:38,958 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,958 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player1 
+2020-11-24 22:39:38,958 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 39.0 
+2020-11-24 22:39:38,958 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,958 INFO presentation.ConsoleOutput printMsgToConsole 		 Trade does not include draft picks. 
+2020-11-24 22:39:38,958 INFO presentation.ConsoleOutput printMsgToConsole  
+2020-11-24 22:39:38,958 INFO presentation.ConsoleOutput printMsgToConsole 	To Team name: Invalid Date 
+2020-11-24 22:39:38,959 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,959 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player3 
+2020-11-24 22:39:38,959 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 44.0 
+2020-11-24 22:39:38,959 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,959 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,959 INFO presentation.ConsoleOutput printMsgToConsole Enter "A" to accept or "R" to reject the trade offer. 
+2020-11-24 22:39:38,960 INFO presentation.ConsoleOutput printMsgToConsole Trade offer rejected successfully. 
+2020-11-24 22:39:38,960 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,960 INFO presentation.ConsoleOutput printMsgToConsole Below Trade offer is received. 
+2020-11-24 22:39:38,960 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,960 INFO presentation.ConsoleOutput printMsgToConsole 	From team: Team1 
+2020-11-24 22:39:38,961 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,961 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player1 
+2020-11-24 22:39:38,961 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 39.0 
+2020-11-24 22:39:38,961 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,961 INFO presentation.ConsoleOutput printMsgToConsole 		 Trade does not include draft picks. 
+2020-11-24 22:39:38,961 INFO presentation.ConsoleOutput printMsgToConsole  
+2020-11-24 22:39:38,961 INFO presentation.ConsoleOutput printMsgToConsole 	To Team name: Invalid Date 
+2020-11-24 22:39:38,961 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,962 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player3 
+2020-11-24 22:39:38,962 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 44.0 
+2020-11-24 22:39:38,962 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,962 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,962 INFO presentation.ConsoleOutput printMsgToConsole Enter "A" to accept or "R" to reject the trade offer. 
+2020-11-24 22:39:38,962 INFO presentation.ConsoleOutput printMsgToConsole Trade offer rejected successfully. 
+2020-11-24 22:39:38,964 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,971 INFO presentation.ConsoleOutput printMsgToConsole Below trade is accepted successfully. 
+2020-11-24 22:39:38,972 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,973 INFO presentation.ConsoleOutput printMsgToConsole 	From team: Team1 
+2020-11-24 22:39:38,973 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,973 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player3 
+2020-11-24 22:39:38,973 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 44.0 
+2020-11-24 22:39:38,973 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,973 INFO presentation.ConsoleOutput printMsgToConsole 		 Trade does not include draft picks. 
+2020-11-24 22:39:38,973 INFO presentation.ConsoleOutput printMsgToConsole  
+2020-11-24 22:39:38,973 INFO presentation.ConsoleOutput printMsgToConsole 	To Team name: Invalid Date 
+2020-11-24 22:39:38,974 INFO presentation.ConsoleOutput printMsgToConsole 		Traded players: 
+2020-11-24 22:39:38,974 INFO presentation.ConsoleOutput printMsgToConsole 			Player name: Player1 
+2020-11-24 22:39:38,974 INFO presentation.ConsoleOutput printMsgToConsole 			Player strength: 39.0 
+2020-11-24 22:39:38,974 INFO presentation.ConsoleOutput printMsgToConsole 			Player position: forward 
+2020-11-24 22:39:38,974 INFO presentation.ConsoleOutput printMsgToConsole -------------------------------------------------------------------- 
+2020-11-24 22:39:38,976 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,978 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,979 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,982 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,983 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,986 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:38,988 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:38,989 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:38,998 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:39,109 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 
+2020-11-24 22:39:39,109 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:39,109 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:39,109 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:39,109 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:39,110 INFO simulation.state.ExecuteTradeState exit Trading check ends. 
+2020-11-24 22:39:39,113 INFO presentation.ConsoleOutput printMsgToConsole Exiting App!!! 
+2020-11-24 22:39:39,131 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was11 and increased to 12 
+2020-11-24 22:39:39,131 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player10 was16 and increased to 17 
+2020-11-24 22:39:39,131 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player27 was17 and increased to 18 
+2020-11-24 22:39:39,131 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player27 was18 and increased to 19 
+2020-11-24 22:39:39,132 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player28 was16 and increased to 17 
+2020-11-24 22:39:39,133 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,133 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player9 was18 and increased to 19 
+2020-11-24 22:39:39,133 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player9 was15 and increased to 16 
+2020-11-24 22:39:39,135 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player9 was0 and increased to 1 
+2020-11-24 22:39:39,135 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player8 was18 and increased to 19 
+2020-11-24 22:39:39,136 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player8 was15 and increased to 16 
+2020-11-24 22:39:39,137 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player8 was0 and increased to 1 
+2020-11-24 22:39:39,137 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player7 was18 and increased to 19 
+2020-11-24 22:39:39,137 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player5 was18 and increased to 19 
+2020-11-24 22:39:39,137 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player5 was15 and increased to 16 
+2020-11-24 22:39:39,138 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player5 was0 and increased to 1 
+2020-11-24 22:39:39,138 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player2 was15 and increased to 16 
+2020-11-24 22:39:39,138 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player2 was12 and increased to 13 
+2020-11-24 22:39:39,138 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player20 was16 and increased to 17 
+2020-11-24 22:39:39,138 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player18 was17 and increased to 18 
+2020-11-24 22:39:39,139 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player18 was16 and increased to 17 
+2020-11-24 22:39:39,139 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player18 was0 and increased to 1 
+2020-11-24 22:39:39,139 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player17 was18 and increased to 19 
+2020-11-24 22:39:39,139 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player26 was17 and increased to 18 
+2020-11-24 22:39:39,139 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player26 was0 and increased to 1 
+2020-11-24 22:39:39,139 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player25 was16 and increased to 17 
+2020-11-24 22:39:39,139 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player25 was0 and increased to 1 
+2020-11-24 22:39:39,139 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player24 was17 and increased to 18 
+2020-11-24 22:39:39,140 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player24 was18 and increased to 19 
+2020-11-24 22:39:39,140 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player24 was0 and increased to 1 
+2020-11-24 22:39:39,140 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player23 was16 and increased to 17 
+2020-11-24 22:39:39,140 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player23 was17 and increased to 18 
+2020-11-24 22:39:39,140 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player22 was16 and increased to 17 
+2020-11-24 22:39:39,140 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player22 was18 and increased to 19 
+2020-11-24 22:39:39,140 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player22 was0 and increased to 1 
+2020-11-24 22:39:39,140 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player21 was16 and increased to 17 
+2020-11-24 22:39:39,141 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player21 was17 and increased to 18 
+2020-11-24 22:39:39,141 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player21 was0 and increased to 1 
+2020-11-24 22:39:39,141 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player19 was12 and increased to 13 
+2020-11-24 22:39:39,141 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player19 was0 and increased to 1 
+2020-11-24 22:39:39,141 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,141 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player19 was13 and increased to 14 
+2020-11-24 22:39:39,142 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player19 was19 and increased to 20 
+2020-11-24 22:39:39,142 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player19 was19 and increased to 20 
+2020-11-24 22:39:39,142 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player19 was0 and increased to 1 
+2020-11-24 22:39:39,142 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,142 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player28 was18 and increased to 19 
+2020-11-24 22:39:39,143 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,143 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was12 and increased to 13 
+2020-11-24 22:39:39,143 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player10 was17 and increased to 18 
+2020-11-24 22:39:39,143 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player10 was9 and increased to 10 
+2020-11-24 22:39:39,143 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player12 was3 and increased to 4 
+2020-11-24 22:39:39,143 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player13 was19 and increased to 20 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player13 was0 and increased to 1 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player14 was19 and increased to 20 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player14 was3 and increased to 4 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player14 was0 and increased to 1 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player15 was17 and increased to 18 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player11 was9 and increased to 10 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player11 was19 and increased to 20 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player11 was0 and increased to 1 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player29 was17 and increased to 18 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player29 was18 and increased to 19 
+2020-11-24 22:39:39,144 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player29 was12 and increased to 13 
+2020-11-24 22:39:39,145 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player4 was9 and increased to 10 
+2020-11-24 22:39:39,145 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player4 was10 and increased to 11 
+2020-11-24 22:39:39,145 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player4 was15 and increased to 16 
+2020-11-24 22:39:39,145 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,145 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was11 and increased to 12 
+2020-11-24 22:39:39,145 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player10 was16 and increased to 17 
+2020-11-24 22:39:39,145 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player10 was9 and increased to 10 
+2020-11-24 22:39:39,145 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player10 was0 and increased to 1 
+2020-11-24 22:39:39,146 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player28 was16 and increased to 17 
+2020-11-24 22:39:39,146 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player9 was18 and increased to 19 
+2020-11-24 22:39:39,146 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player9 was12 and increased to 13 
+2020-11-24 22:39:39,146 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player9 was0 and increased to 1 
+2020-11-24 22:39:39,146 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player8 was0 and increased to 1 
+2020-11-24 22:39:39,146 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player7 was0 and increased to 1 
+2020-11-24 22:39:39,147 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player5 was12 and increased to 13 
+2020-11-24 22:39:39,147 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player5 was0 and increased to 1 
+2020-11-24 22:39:39,147 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player2 was0 and increased to 1 
+2020-11-24 22:39:39,147 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player20 was15 and increased to 16 
+2020-11-24 22:39:39,147 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player20 was0 and increased to 1 
+2020-11-24 22:39:39,147 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player18 was17 and increased to 18 
+2020-11-24 22:39:39,147 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player18 was18 and increased to 19 
+2020-11-24 22:39:39,148 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player18 was0 and increased to 1 
+2020-11-24 22:39:39,148 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player17 was0 and increased to 1 
+2020-11-24 22:39:39,148 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player26 was17 and increased to 18 
+2020-11-24 22:39:39,148 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player26 was18 and increased to 19 
+2020-11-24 22:39:39,148 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player26 was0 and increased to 1 
+2020-11-24 22:39:39,148 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player25 was18 and increased to 19 
+2020-11-24 22:39:39,148 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player25 was0 and increased to 1 
+2020-11-24 22:39:39,148 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player24 was16 and increased to 17 
+2020-11-24 22:39:39,148 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player24 was18 and increased to 19 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player23 was16 and increased to 17 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player23 was0 and increased to 1 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player22 was16 and increased to 17 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player22 was18 and increased to 19 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player22 was0 and increased to 1 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player21 was18 and increased to 19 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player21 was0 and increased to 1 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player19 was12 and increased to 13 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player19 was19 and increased to 20 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player19 was19 and increased to 20 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player19 was0 and increased to 1 
+2020-11-24 22:39:39,149 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player3 was18 and increased to 19 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player3 was0 and increased to 1 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player21 was19 and increased to 20 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player21 was0 and increased to 1 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player16 was12 and increased to 13 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player16 was0 and increased to 1 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player12 was19 and increased to 20 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player12 was3 and increased to 4 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player12 was17 and increased to 18 
+2020-11-24 22:39:39,150 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player12 was0 and increased to 1 
+2020-11-24 22:39:39,151 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player13 was3 and increased to 4 
+2020-11-24 22:39:39,151 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player13 was17 and increased to 18 
+2020-11-24 22:39:39,151 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player13 was0 and increased to 1 
+2020-11-24 22:39:39,151 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player14 was0 and increased to 1 
+2020-11-24 22:39:39,151 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player15 was9 and increased to 10 
+2020-11-24 22:39:39,151 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player15 was13 and increased to 14 
+2020-11-24 22:39:39,151 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player15 was0 and increased to 1 
+2020-11-24 22:39:39,151 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player11 was11 and increased to 12 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player11 was19 and increased to 20 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player11 was0 and increased to 1 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player29 was18 and increased to 19 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player29 was12 and increased to 13 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player4 was0 and increased to 1 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was11 and increased to 12 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player10 was16 and increased to 17 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player10 was9 and increased to 10 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player10 was0 and increased to 1 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player27 was17 and increased to 18 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player27 was15 and increased to 16 
+2020-11-24 22:39:39,152 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,153 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player28 was18 and increased to 19 
+2020-11-24 22:39:39,153 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player9 was15 and increased to 16 
+2020-11-24 22:39:39,153 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player8 was15 and increased to 16 
+2020-11-24 22:39:39,153 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player8 was0 and increased to 1 
+2020-11-24 22:39:39,153 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player7 was15 and increased to 16 
+2020-11-24 22:39:39,153 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player5 was15 and increased to 16 
+2020-11-24 22:39:39,153 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player2 was18 and increased to 19 
+2020-11-24 22:39:39,153 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player2 was15 and increased to 16 
+2020-11-24 22:39:39,154 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player2 was12 and increased to 13 
+2020-11-24 22:39:39,154 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player20 was16 and increased to 17 
+2020-11-24 22:39:39,154 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player20 was17 and increased to 18 
+2020-11-24 22:39:39,154 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player18 was17 and increased to 18 
+2020-11-24 22:39:39,154 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player18 was16 and increased to 17 
+2020-11-24 22:39:39,154 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player17 was11 and increased to 12 
+2020-11-24 22:39:39,154 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player17 was18 and increased to 19 
+2020-11-24 22:39:39,154 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player17 was0 and increased to 1 
+2020-11-24 22:39:39,154 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player26 was16 and increased to 17 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player26 was0 and increased to 1 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player25 was17 and increased to 18 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player25 was0 and increased to 1 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player24 was17 and increased to 18 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player24 was18 and increased to 19 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player24 was0 and increased to 1 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player23 was17 and increased to 18 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player23 was0 and increased to 1 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player22 was16 and increased to 17 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player22 was17 and increased to 18 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player22 was0 and increased to 1 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player21 was16 and increased to 17 
+2020-11-24 22:39:39,155 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player21 was17 and increased to 18 
+2020-11-24 22:39:39,156 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player21 was0 and increased to 1 
+2020-11-24 22:39:39,156 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player19 was19 and increased to 20 
+2020-11-24 22:39:39,156 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player3 was12 and increased to 13 
+2020-11-24 22:39:39,156 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,156 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player19 was0 and increased to 1 
+2020-11-24 22:39:39,157 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player16 was15 and increased to 16 
+2020-11-24 22:39:39,157 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player28 was16 and increased to 17 
+2020-11-24 22:39:39,157 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player28 was18 and increased to 19 
+2020-11-24 22:39:39,157 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player12 was3 and increased to 4 
+2020-11-24 22:39:39,157 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player12 was0 and increased to 1 
+2020-11-24 22:39:39,157 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player13 was19 and increased to 20 
+2020-11-24 22:39:39,157 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player13 was3 and increased to 4 
+2020-11-24 22:39:39,158 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player13 was0 and increased to 1 
+2020-11-24 22:39:39,158 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player14 was3 and increased to 4 
+2020-11-24 22:39:39,158 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player14 was0 and increased to 1 
+2020-11-24 22:39:39,158 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player15 was13 and increased to 14 
+2020-11-24 22:39:39,158 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player15 was0 and increased to 1 
+2020-11-24 22:39:39,158 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player11 was11 and increased to 12 
+2020-11-24 22:39:39,158 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player11 was9 and increased to 10 
+2020-11-24 22:39:39,158 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player11 was0 and increased to 1 
+2020-11-24 22:39:39,158 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player29 was16 and increased to 17 
+2020-11-24 22:39:39,159 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player29 was12 and increased to 13 
+2020-11-24 22:39:39,159 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player4 was9 and increased to 10 
+2020-11-24 22:39:39,159 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player4 was10 and increased to 11 
+2020-11-24 22:39:39,159 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player4 was0 and increased to 1 
+2020-11-24 22:39:39,159 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,159 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was11 and increased to 12 
+2020-11-24 22:39:39,159 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player10 was9 and increased to 10 
+2020-11-24 22:39:39,159 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player10 was0 and increased to 1 
+2020-11-24 22:39:39,160 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player27 was15 and increased to 16 
+2020-11-24 22:39:39,160 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player28 was16 and increased to 17 
+2020-11-24 22:39:39,160 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player28 was18 and increased to 19 
+2020-11-24 22:39:39,160 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,160 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player9 was12 and increased to 13 
+2020-11-24 22:39:39,160 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player9 was0 and increased to 1 
+2020-11-24 22:39:39,160 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player8 was18 and increased to 19 
+2020-11-24 22:39:39,161 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player8 was0 and increased to 1 
+2020-11-24 22:39:39,161 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player7 was18 and increased to 19 
+2020-11-24 22:39:39,161 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player7 was15 and increased to 16 
+2020-11-24 22:39:39,161 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player5 was15 and increased to 16 
+2020-11-24 22:39:39,161 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player5 was0 and increased to 1 
+2020-11-24 22:39:39,162 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player2 was12 and increased to 13 
+2020-11-24 22:39:39,162 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player2 was0 and increased to 1 
+2020-11-24 22:39:39,162 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player20 was16 and increased to 17 
+2020-11-24 22:39:39,162 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player18 was0 and increased to 1 
+2020-11-24 22:39:39,162 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player17 was0 and increased to 1 
+2020-11-24 22:39:39,163 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player26 was16 and increased to 17 
+2020-11-24 22:39:39,163 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player26 was0 and increased to 1 
+2020-11-24 22:39:39,163 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player25 was16 and increased to 17 
+2020-11-24 22:39:39,163 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player25 was0 and increased to 1 
+2020-11-24 22:39:39,163 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player24 was16 and increased to 17 
+2020-11-24 22:39:39,163 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player23 was0 and increased to 1 
+2020-11-24 22:39:39,163 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player22 was18 and increased to 19 
+2020-11-24 22:39:39,163 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player22 was0 and increased to 1 
+2020-11-24 22:39:39,163 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player21 was16 and increased to 17 
+2020-11-24 22:39:39,164 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player21 was18 and increased to 19 
+2020-11-24 22:39:39,164 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player21 was0 and increased to 1 
+2020-11-24 22:39:39,164 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player19 was12 and increased to 13 
+2020-11-24 22:39:39,164 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player19 was19 and increased to 20 
+2020-11-24 22:39:39,165 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player19 was0 and increased to 1 
+2020-11-24 22:39:39,165 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player3 was12 and increased to 13 
+2020-11-24 22:39:39,165 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player3 was0 and increased to 1 
+2020-11-24 22:39:39,165 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player19 was13 and increased to 14 
+2020-11-24 22:39:39,165 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player28 was18 and increased to 19 
+2020-11-24 22:39:39,165 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was12 and increased to 13 
+2020-11-24 22:39:39,165 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player10 was16 and increased to 17 
+2020-11-24 22:39:39,166 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player10 was10 and increased to 11 
+2020-11-24 22:39:39,166 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player10 was0 and increased to 1 
+2020-11-24 22:39:39,166 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player12 was19 and increased to 20 
+2020-11-24 22:39:39,166 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player12 was17 and increased to 18 
+2020-11-24 22:39:39,166 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player13 was19 and increased to 20 
+2020-11-24 22:39:39,166 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player13 was17 and increased to 18 
+2020-11-24 22:39:39,166 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player14 was17 and increased to 18 
+2020-11-24 22:39:39,167 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player14 was0 and increased to 1 
+2020-11-24 22:39:39,167 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player15 was13 and increased to 14 
+2020-11-24 22:39:39,167 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player15 was17 and increased to 18 
+2020-11-24 22:39:39,167 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player15 was0 and increased to 1 
+2020-11-24 22:39:39,167 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player11 was9 and increased to 10 
+2020-11-24 22:39:39,167 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player11 was19 and increased to 20 
+2020-11-24 22:39:39,168 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player11 was0 and increased to 1 
+2020-11-24 22:39:39,168 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player29 was16 and increased to 17 
+2020-11-24 22:39:39,168 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player29 was12 and increased to 13 
+2020-11-24 22:39:39,168 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,168 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was11 and increased to 12 
+2020-11-24 22:39:39,168 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player10 was16 and increased to 17 
+2020-11-24 22:39:39,168 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player27 was17 and increased to 18 
+2020-11-24 22:39:39,169 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player27 was15 and increased to 16 
+2020-11-24 22:39:39,169 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,169 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,170 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player9 was18 and increased to 19 
+2020-11-24 22:39:39,170 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player9 was15 and increased to 16 
+2020-11-24 22:39:39,170 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player9 was0 and increased to 1 
+2020-11-24 22:39:39,170 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player8 was18 and increased to 19 
+2020-11-24 22:39:39,170 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player8 was15 and increased to 16 
+2020-11-24 22:39:39,170 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player2 was15 and increased to 16 
+2020-11-24 22:39:39,170 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player2 was0 and increased to 1 
+2020-11-24 22:39:39,170 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player20 was16 and increased to 17 
+2020-11-24 22:39:39,171 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player20 was0 and increased to 1 
+2020-11-24 22:39:39,171 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player18 was16 and increased to 17 
+2020-11-24 22:39:39,171 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player18 was18 and increased to 19 
+2020-11-24 22:39:39,171 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player17 was11 and increased to 12 
+2020-11-24 22:39:39,171 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player17 was18 and increased to 19 
+2020-11-24 22:39:39,171 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player26 was16 and increased to 17 
+2020-11-24 22:39:39,171 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player26 was17 and increased to 18 
+2020-11-24 22:39:39,171 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player25 was16 and increased to 17 
+2020-11-24 22:39:39,171 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player25 was17 and increased to 18 
+2020-11-24 22:39:39,172 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player25 was18 and increased to 19 
+2020-11-24 22:39:39,172 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player25 was0 and increased to 1 
+2020-11-24 22:39:39,172 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player24 was17 and increased to 18 
+2020-11-24 22:39:39,172 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player24 was0 and increased to 1 
+2020-11-24 22:39:39,173 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player23 was0 and increased to 1 
+2020-11-24 22:39:39,173 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player22 was16 and increased to 17 
+2020-11-24 22:39:39,173 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player22 was17 and increased to 18 
+2020-11-24 22:39:39,173 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player22 was18 and increased to 19 
+2020-11-24 22:39:39,173 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player22 was0 and increased to 1 
+2020-11-24 22:39:39,174 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player21 was17 and increased to 18 
+2020-11-24 22:39:39,174 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player21 was0 and increased to 1 
+2020-11-24 22:39:39,174 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player19 was12 and increased to 13 
+2020-11-24 22:39:39,174 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player19 was19 and increased to 20 
+2020-11-24 22:39:39,174 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,174 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player19 was13 and increased to 14 
+2020-11-24 22:39:39,174 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was12 and increased to 13 
+2020-11-24 22:39:39,174 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player10 was17 and increased to 18 
+2020-11-24 22:39:39,175 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player10 was9 and increased to 10 
+2020-11-24 22:39:39,175 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player10 was0 and increased to 1 
+2020-11-24 22:39:39,175 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player12 was3 and increased to 4 
+2020-11-24 22:39:39,175 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player12 was0 and increased to 1 
+2020-11-24 22:39:39,175 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player13 was19 and increased to 20 
+2020-11-24 22:39:39,175 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player13 was3 and increased to 4 
+2020-11-24 22:39:39,175 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player14 was19 and increased to 20 
+2020-11-24 22:39:39,175 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player14 was3 and increased to 4 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player14 was0 and increased to 1 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player15 was0 and increased to 1 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player11 was11 and increased to 12 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player11 was9 and increased to 10 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player29 was16 and increased to 17 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player29 was17 and increased to 18 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player4 was10 and increased to 11 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was11 and increased to 12 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player10 was0 and increased to 1 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player27 was16 and increased to 17 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player27 was15 and increased to 16 
+2020-11-24 22:39:39,176 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player28 was16 and increased to 17 
+2020-11-24 22:39:39,177 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player28 was18 and increased to 19 
+2020-11-24 22:39:39,177 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,177 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player9 was18 and increased to 19 
+2020-11-24 22:39:39,177 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player9 was12 and increased to 13 
+2020-11-24 22:39:39,177 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player9 was0 and increased to 1 
+2020-11-24 22:39:39,177 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player8 was18 and increased to 19 
+2020-11-24 22:39:39,177 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player8 was0 and increased to 1 
+2020-11-24 22:39:39,177 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player7 was12 and increased to 13 
+2020-11-24 22:39:39,177 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player7 was0 and increased to 1 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player2 was15 and increased to 16 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player2 was0 and increased to 1 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player18 was17 and increased to 18 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player18 was18 and increased to 19 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player18 was0 and increased to 1 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player17 was18 and increased to 19 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player17 was19 and increased to 20 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player17 was0 and increased to 1 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player26 was16 and increased to 17 
+2020-11-24 22:39:39,178 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player26 was0 and increased to 1 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player25 was16 and increased to 17 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player25 was18 and increased to 19 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player25 was0 and increased to 1 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player24 was0 and increased to 1 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player23 was0 and increased to 1 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player21 was18 and increased to 19 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player21 was0 and increased to 1 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player19 was19 and increased to 20 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player19 was0 and increased to 1 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player3 was18 and increased to 19 
+2020-11-24 22:39:39,179 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player3 was0 and increased to 1 
+2020-11-24 22:39:39,180 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,180 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player19 was12 and increased to 13 
+2020-11-24 22:39:39,180 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player19 was0 and increased to 1 
+2020-11-24 22:39:39,180 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,180 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player28 was19 and increased to 20 
+2020-11-24 22:39:39,180 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was12 and increased to 13 
+2020-11-24 22:39:39,180 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player10 was9 and increased to 10 
+2020-11-24 22:39:39,180 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player10 was0 and increased to 1 
+2020-11-24 22:39:39,180 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player12 was19 and increased to 20 
+2020-11-24 22:39:39,181 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player12 was0 and increased to 1 
+2020-11-24 22:39:39,182 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player13 was19 and increased to 20 
+2020-11-24 22:39:39,183 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player13 was17 and increased to 18 
+2020-11-24 22:39:39,183 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player13 was0 and increased to 1 
+2020-11-24 22:39:39,183 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player14 was19 and increased to 20 
+2020-11-24 22:39:39,183 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player14 was17 and increased to 18 
+2020-11-24 22:39:39,185 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player14 was0 and increased to 1 
+2020-11-24 22:39:39,186 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player15 was17 and increased to 18 
+2020-11-24 22:39:39,186 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player15 was0 and increased to 1 
+2020-11-24 22:39:39,186 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player11 was11 and increased to 12 
+2020-11-24 22:39:39,186 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player11 was19 and increased to 20 
+2020-11-24 22:39:39,186 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player11 was0 and increased to 1 
+2020-11-24 22:39:39,186 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player29 was16 and increased to 17 
+2020-11-24 22:39:39,187 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player29 was12 and increased to 13 
+2020-11-24 22:39:39,187 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player4 was10 and increased to 11 
+2020-11-24 22:39:39,187 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player4 was15 and increased to 16 
+2020-11-24 22:39:39,187 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,187 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player10 was11 and increased to 12 
+2020-11-24 22:39:39,189 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player10 was16 and increased to 17 
+2020-11-24 22:39:39,189 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player10 was9 and increased to 10 
+2020-11-24 22:39:39,189 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player27 was17 and increased to 18 
+2020-11-24 22:39:39,189 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player27 was18 and increased to 19 
+2020-11-24 22:39:39,190 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player28 was17 and increased to 18 
+2020-11-24 22:39:39,190 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player28 was18 and increased to 19 
+2020-11-24 22:39:39,190 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player9 was18 and increased to 19 
+2020-11-24 22:39:39,190 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player9 was15 and increased to 16 
+2020-11-24 22:39:39,191 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player9 was0 and increased to 1 
+2020-11-24 22:39:39,191 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player8 was15 and increased to 16 
+2020-11-24 22:39:39,192 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player7 was18 and increased to 19 
+2020-11-24 22:39:39,192 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player7 was15 and increased to 16 
+2020-11-24 22:39:39,192 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player5 was0 and increased to 1 
+2020-11-24 22:39:39,192 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player2 was15 and increased to 16 
+2020-11-24 22:39:39,192 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player2 was0 and increased to 1 
+2020-11-24 22:39:39,195 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player20 was17 and increased to 18 
+2020-11-24 22:39:39,195 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player20 was15 and increased to 16 
+2020-11-24 22:39:39,195 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player20 was0 and increased to 1 
+2020-11-24 22:39:39,195 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player18 was17 and increased to 18 
+2020-11-24 22:39:39,195 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player18 was16 and increased to 17 
+2020-11-24 22:39:39,195 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player18 was0 and increased to 1 
+2020-11-24 22:39:39,195 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player17 was11 and increased to 12 
+2020-11-24 22:39:39,195 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player17 was18 and increased to 19 
+2020-11-24 22:39:39,196 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player17 was0 and increased to 1 
+2020-11-24 22:39:39,196 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player26 was17 and increased to 18 
+2020-11-24 22:39:39,196 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player25 was17 and increased to 18 
+2020-11-24 22:39:39,196 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player24 was17 and increased to 18 
+2020-11-24 22:39:39,197 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player24 was18 and increased to 19 
+2020-11-24 22:39:39,197 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player24 was0 and increased to 1 
+2020-11-24 22:39:39,197 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player23 was16 and increased to 17 
+2020-11-24 22:39:39,197 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player23 was0 and increased to 1 
+2020-11-24 22:39:39,198 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player22 was17 and increased to 18 
+2020-11-24 22:39:39,198 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player21 was17 and increased to 18 
+2020-11-24 22:39:39,198 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player19 was19 and increased to 20 
+2020-11-24 22:39:39,198 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player3 was18 and increased to 19 
+2020-11-24 22:39:39,198 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player3 was0 and increased to 1 
+2020-11-24 22:39:39,198 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,199 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player28 was18 and increased to 19 
+2020-11-24 22:39:39,199 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player10 was17 and increased to 18 
+2020-11-24 22:39:39,199 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player10 was0 and increased to 1 
+2020-11-24 22:39:39,199 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player12 was3 and increased to 4 
+2020-11-24 22:39:39,199 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player12 was0 and increased to 1 
+2020-11-24 22:39:39,199 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player13 was3 and increased to 4 
+2020-11-24 22:39:39,199 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player13 was17 and increased to 18 
+2020-11-24 22:39:39,199 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player13 was0 and increased to 1 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player14 was19 and increased to 20 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player14 was3 and increased to 4 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player14 was17 and increased to 18 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player15 was9 and increased to 10 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player15 was13 and increased to 14 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player15 was17 and increased to 18 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player11 was11 and increased to 12 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player11 was9 and increased to 10 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player11 was0 and increased to 1 
+2020-11-24 22:39:39,200 INFO presentation.ConsoleOutput printMsgToConsole Skating strength of Player29 was17 and increased to 18 
+2020-11-24 22:39:39,201 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player29 was12 and increased to 13 
+2020-11-24 22:39:39,201 INFO presentation.ConsoleOutput printMsgToConsole Shooting strength of Player4 was9 and increased to 10 
+2020-11-24 22:39:39,201 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player4 was0 and increased to 1 
+2020-11-24 22:39:39,201 INFO presentation.ConsoleOutput printMsgToConsole Saving strength of Player6 was0 and increased to 1 
+2020-11-24 22:39:39,202 INFO presentation.ConsoleOutput printMsgToConsole Checking strength of Player3 was12 and increased to 13 
+2020-11-24 22:39:39,207 INFO presentation.ConsoleOutput printMsgToConsole Training Players and Team! 
+2020-11-24 22:39:39,208 INFO presentation.ConsoleOutput printMsgToConsole Training Players and Team! 
+2020-11-24 22:39:39,208 INFO simulation.state.ExecuteTradeState <init> Trading check starts. 

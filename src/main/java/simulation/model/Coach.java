@@ -10,6 +10,8 @@ public class Coach extends SharedAttributes implements ICoach {
     private Double checking;
     private Double saving;
 
+    private int coachingEffectiveness;
+
     public Coach() {
         setId(System.identityHashCode(this));
     }
@@ -30,6 +32,7 @@ public class Coach extends SharedAttributes implements ICoach {
         this.setSaving(coach.getSaving());
         this.setShooting(coach.getShooting());
         this.setSkating(coach.getSkating());
+        this.setCoachingEffectiveness(coach.getCoachingEffectiveness());
     }
 
     public Coach(int id, ICoachDao coachFactory) throws Exception {
@@ -55,6 +58,15 @@ public class Coach extends SharedAttributes implements ICoach {
     public void setLeagueId(int leagueId) {
         this.leagueId = leagueId;
     }
+
+    public int getCoachingEffectiveness() {
+        return coachingEffectiveness;
+    }
+
+    public void setCoachingEffectiveness(int coachingEffectiveness) {
+        this.coachingEffectiveness = coachingEffectiveness;
+    }
+
 
     public Double getSkating() {
         return skating;
