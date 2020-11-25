@@ -1,7 +1,6 @@
 package db.dao;
 
 import db.data.ICoachDao;
-import simulation.model.Coach;
 import simulation.model.ICoach;
 
 import java.util.List;

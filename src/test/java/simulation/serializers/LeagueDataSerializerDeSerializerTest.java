@@ -36,8 +36,8 @@ public class LeagueDataSerializerDeSerializerTest {
 
         oldLeagueJSONString = gson.toJson(oldLeague);
         newLeagueJSONString = gson.toJson(newLeague);
-        /*assertEquals(oldLeagueJSONString, newLeagueJSONString);
-        assertNotEquals(oldLeagueJSONString, null);
-        assertNotEquals(newLeagueJSONString, null);*/
+//        assertEquals(oldLeagueJSONString, newLeagueJSONString);
+//        assertNotEquals(oldLeagueJSONString, null);
+//        assertNotEquals(newLeagueJSONString, null);
     }
 }

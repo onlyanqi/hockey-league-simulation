@@ -2,6 +2,9 @@ package simulation.model;
 
 import db.data.IAgingDao;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class Aging extends SharedAttributes implements IAging {
 
     private int averageRetirementAge;
@@ -72,5 +75,80 @@ public class Aging extends SharedAttributes implements IAging {
     @Override
     public void setStatDecayChance(Double statDecayChance) {
         this.statDecayChance = statDecayChance;
+    }
+
+    @Override
+    public void agingPlayerDay(ILeague league) {
+        List<IConference> conferenceList = league.getConferenceList();
+        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
+        for (IConference conference : conferenceList) {
+            List<IDivision> divisionList = conference.getDivisionList();
+            for (IDivision division : divisionList) {
+                List<ITeam> teamList = division.getTeamList();
+                for (ITeam team : teamList) {
+                    team.setActivePlayerList();
+                    List<IPlayer> playerList = team.getPlayerList();
+                    for (IPlayer teamPlayer : playerList) {
+                        teamPlayer.statDecayCheck(league);
+                        teamPlayer.agingInjuryRecovery(league);
+                    }
+                }
+            }
+        }
+        for (IPlayer freeAgentPlayer : freeAgentList) {
+            freeAgentPlayer.statDecayCheck(league);
+            freeAgentPlayer.agingInjuryRecovery(league);
+        }
+    }
+
+    @Override
+    public void agingPlayerPeriod(ILeague league, LocalDate before) {
+        LocalDate currentDate = league.getCurrentDate();
+        LocalDate agingDate = before;
+        while (currentDate.compareTo(agingDate) > 0) {
+            agingPlayerDay(league);
+            agingPlayerRetirement(league);
+            agingDate = agingDate.plusDays(1);
+        }
+    }
+
+    @Override
+    public void agingPlayerRetirement(ILeague league) {
+        List<IConference> conferenceList = league.getConferenceList();
+        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
+        List<IPlayer> retiredPlayerList = league.getRetiredPlayerList();
+
+        for (IConference conference : conferenceList) {
+            List<IDivision> divisionList = conference.getDivisionList();
+            for (IDivision division : divisionList) {
+                List<ITeam> teamList = division.getTeamList();
+                for (ITeam team : teamList) {
+                    List<IPlayer> playerList = team.getPlayerList();
+                    int size = playerList.size();
+                    for (int i = size - 1; i >= 0; i--) {
+                        IPlayer teamPlayer = playerList.get(i);
+                        teamPlayer.calculateAge(league);
+                        if (teamPlayer.isBirthday(league)) {
+                            if (teamPlayer.retirementCheck(league)) {
+                                retiredPlayerList.add(teamPlayer);
+                                playerList.remove(teamPlayer);
+                                teamPlayer.findBestReplacement(playerList, freeAgentList);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        int size = freeAgentList.size();
+        for (int i = size - 1; i >= 0; i--) {
+            IPlayer freeAgentPlayer = freeAgentList.get(i);
+            freeAgentPlayer.calculateAge(league);
+            if (freeAgentPlayer.isBirthday(league)) {
+                if (freeAgentPlayer.retirementCheck(league)) {
+                    retiredPlayerList.add(freeAgentPlayer);
+                    freeAgentList.remove(i);
+                }
+            }
+        }
     }
 }

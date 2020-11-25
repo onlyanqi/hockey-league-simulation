@@ -1,5 +1,7 @@
 package simulation.model;
 
+import java.time.LocalDate;
+
 public interface IAging {
 
     int getLeagueId();
@@ -19,5 +21,11 @@ public interface IAging {
     Double getStatDecayChance();
 
     void setStatDecayChance(Double statDecayChance);
+
+    void agingPlayerDay(ILeague league);
+
+    void agingPlayerPeriod(ILeague league, LocalDate before);
+
+    void agingPlayerRetirement(ILeague league);
 
 }

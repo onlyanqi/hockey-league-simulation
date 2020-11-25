@@ -2,7 +2,6 @@ package db.dao;
 
 import db.data.IAgingDao;
 import org.json.simple.JSONObject;
-import simulation.model.Aging;
 import simulation.model.IAging;
 
 public class AgingDao extends DBExceptionLog implements IAgingDao {

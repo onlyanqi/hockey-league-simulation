@@ -26,7 +26,6 @@ public class Conference extends SharedAttributes implements IConference {
         factory.loadConferenceById(id, this);
     }
 
-
     public int getLeagueId() {
         return leagueId;
     }

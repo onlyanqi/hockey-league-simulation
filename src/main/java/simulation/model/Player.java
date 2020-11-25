@@ -21,7 +21,6 @@ public class Player extends SharedAttributes implements IPlayer {
     private LocalDate injuryStartDate;
     private int injuryDatesRange;
     private boolean isFreeAgent = false;
-    private boolean isRetired = false;
     private int skating;
     private int shooting;
     private int checking;
@@ -57,7 +56,6 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setInjuryDatesRange(player.getInjuryDatesRange());
         this.setInjuryStartDate(player.getInjuryStartDate());
         this.setCaptain(player.isCaptain());
-        this.setRetired(player.isRetired());
         this.setPosition(player.getPosition());
         this.setSaving(player.getSaving());
         this.setChecking(player.getChecking());
@@ -216,13 +214,6 @@ public class Player extends SharedAttributes implements IPlayer {
         this.injuryDatesRange = injuryDatesRange;
     }
 
-    public boolean isRetired() {
-        return isRetired;
-    }
-
-    public void setRetired(boolean retired) {
-        this.isRetired = retired;
-    }
 
     @Override
     public void addPlayer(IPlayerDao addPlayerFactory) throws Exception {
@@ -286,6 +277,7 @@ public class Player extends SharedAttributes implements IPlayer {
     @Override
     public void statDecayCheck(ILeague league) {
         if (isBirthday(league)) {
+            calculateAge(league);
             Random randomStatDecay = new Random();
             double chanceOfStatDecay = randomStatDecay.nextDouble();
             double statDecayChance = league.getGamePlayConfig().getAging().getStatDecayChance();
@@ -313,7 +305,8 @@ public class Player extends SharedAttributes implements IPlayer {
             Random randomInjuryDays = new Random();
             int injuryDaysHigh = league.getGamePlayConfig().getInjury().getInjuryDaysHigh();
             int injuryDaysLow = league.getGamePlayConfig().getInjury().getInjuryDaysLow();
-            this.setInjuryDatesRange(randomInjuryDays.nextInt(injuryDaysHigh - injuryDaysLow) + injuryDaysLow);
+            int range = injuryDaysHigh - injuryDaysLow + 1;
+            this.setInjuryDatesRange(randomInjuryDays.nextInt(range) + injuryDaysLow);
             this.setInjured(true);
         }
     }

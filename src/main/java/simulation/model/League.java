@@ -1,7 +1,6 @@
 package simulation.model;
 
 import db.data.*;
-import simulation.factory.CoachConcrete;
 import simulation.factory.ICoachFactory;
 
 import java.time.LocalDate;
@@ -18,6 +17,7 @@ public class League extends SharedAttributes implements ILeague {
     private List<ICoach> coachList;
     private List<IManager> managerList;
     private List<IPlayer> retiredPlayerList;
+    private List<IPlayer> draftedPlayerList;
     private IFreeAgent freeAgent;
     private LocalDate currentDate;
     private IGamePlayConfig gamePlayConfig;
@@ -304,5 +304,14 @@ public class League extends SharedAttributes implements ILeague {
     public void loadTradingOfferDetailsByLeagueId(ITradeOfferDao tradingOfferFactory) throws Exception {
         this.tradeOfferList = tradingOfferFactory.loadTradeOfferDetailsByLeagueId(getId());
     }
+
+    public List<IPlayer> getDraftedPlayerList() {
+        return draftedPlayerList;
+    }
+
+    public void setDraftedPlayerList(List<IPlayer> draftedPlayerList) {
+        this.draftedPlayerList = draftedPlayerList;
+    }
+
 
 }

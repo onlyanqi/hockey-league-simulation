@@ -20,6 +20,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.io.*;
 
 public class LeagueDataSerializerDeSerializer {
 
+    public static final String BIRTHDAY = "birthday";
     public static String FILENAME = "JsonOutput.txt";
     public static final String JSONCREATIONERROR = "Json could not be created";
     public static final String DESERIALIZATIONERROR = "Could not deserialize";
@@ -91,7 +93,7 @@ public class LeagueDataSerializerDeSerializer {
         //Source for creating folder through java program: https://stackoverflow.com/questions/3634853/how-to-create-a-directory-in-java
 
         File jsonDir = new File("/JsonFiles");
-        if (!jsonDir.exists()){
+        if (!jsonDir.exists()) {
             jsonDir.mkdirs();
         }
 
@@ -100,7 +102,7 @@ public class LeagueDataSerializerDeSerializer {
 
         FileWriter fileWriter = null;
         try {
-            FILENAME = "JsonFiles"+"/"+league.getUserCreatedTeamName();
+            FILENAME = "JsonFiles" + "/" + league.getUserCreatedTeamName();
             fileWriter = new FileWriter(FILENAME);
             gson.toJson(league, fileWriter);
 
@@ -128,7 +130,7 @@ public class LeagueDataSerializerDeSerializer {
 
         try {
             fileReader = new FileReader(filename);
-            Gson gson = new Gson();
+//            Gson gson = new Gson();
 
             /*GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeHierarchyAdapter(IAging.class, new AgingCreator());
@@ -477,7 +479,9 @@ public class LeagueDataSerializerDeSerializer {
 
                 int saving = getPlayerSaving(playerJsonObject);
 
-                IPlayer player = setTeamPlayerVariables(playerName, position, captain, skating, shooting, checking, saving);
+                LocalDate birthday = getPlayerBirthday(playerJsonObject);
+
+                IPlayer player = setTeamPlayerVariables(playerName, position, birthday, captain, skating, shooting, checking, saving);
                 player.setTeamId(teamId);
                 playerList.add(player);
 
@@ -490,13 +494,14 @@ public class LeagueDataSerializerDeSerializer {
 
     }
 
-    private IPlayer setTeamPlayerVariables(String playerName, Position position,
+    private IPlayer setTeamPlayerVariables(String playerName, Position position, LocalDate birthday,
                                            boolean captain, int skating, int shooting, int checking, int saving) {
         IPlayerFactory playerConcrete = hockeyContext.getPlayerFactory();
         IPlayer player = playerConcrete.newPlayer();
         player.setName(playerName);
         player.setPosition(position);
         player.setCaptain(captain);
+        player.setBirthday(birthday);
         player.setSkating(skating);
         player.setShooting(shooting);
         player.setChecking(checking);
@@ -515,6 +520,11 @@ public class LeagueDataSerializerDeSerializer {
 
     private int getPlayerSkating(JSONObject playerJsonObject) throws IllegalArgumentException {
         return (int) (long) playerJsonObject.get(SKATING);
+    }
+
+
+    private LocalDate getPlayerBirthday(JSONObject playerJsonObject) {
+        return (LocalDate) playerJsonObject.get(BIRTHDAY);
     }
 
     private Position validatePosition(JSONObject playerJsonObject) throws IllegalArgumentException {
@@ -564,7 +574,6 @@ public class LeagueDataSerializerDeSerializer {
         manager.setPersonality(personality);
         return manager;
     }
-
 
 
 }

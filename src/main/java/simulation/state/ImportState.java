@@ -1,6 +1,5 @@
 package simulation.state;
 
-import db.data.IAgingDao;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -361,6 +360,9 @@ public class ImportState implements IHockeyState {
         team.setManager(manager);
         team.setCoach(coach);
         team.setAiTeam(true);
+        for (IPlayer player : playerList) {
+            player.setTeamId(team.getId());
+        }
         team.setPlayerList(playerList);
         team.setStrength();
         team.setActivePlayerList();
@@ -410,7 +412,6 @@ public class ImportState implements IHockeyState {
                 int saving = getPlayerSaving(playerJsonObject);
 
                 IPlayer player = setTeamPlayerVariables(playerName, position, captain, birthday, skating, shooting, checking, saving);
-                player.setTeamId(teamId);
 
                 player.setFreeAgentId(player.getId());
                 playerList.add(player);
@@ -515,7 +516,7 @@ public class ImportState implements IHockeyState {
     }
 
     private List<IDivision> loadDivisionJSON(JSONArray divisions) throws IllegalArgumentException {
-        List<IDivision> divisionList = new ArrayList<IDivision>();
+        List<IDivision> divisionList = new ArrayList<>();
         for (Object divisionObjectFromJSONArray : divisions) {
             JSONObject divisionJSONObject = (JSONObject) divisionObjectFromJSONArray;
 
@@ -553,7 +554,7 @@ public class ImportState implements IHockeyState {
     }
 
     private List<IConference> loadConferenceJSON(JSONArray conferences) throws IllegalArgumentException {
-        List<IConference> conferenceList = new ArrayList<IConference>();
+        List<IConference> conferenceList = new ArrayList<>();
         for (Object conferenceObjectFromJSONArray : conferences) {
             JSONObject conferenceJSONObject = (JSONObject) conferenceObjectFromJSONArray;
 

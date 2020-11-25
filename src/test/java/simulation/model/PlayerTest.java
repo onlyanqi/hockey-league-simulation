@@ -6,8 +6,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
+import simulation.state.AdvanceNextSeasonState;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -217,12 +220,6 @@ public class PlayerTest {
         assertTrue(retired);
     }
 
-    @Test
-    public void isRetiredTest() throws Exception {
-        Player player = new Player(1, loadPlayerFactory);
-        assertFalse(player.isRetired());
-    }
-
 
     @Test
     public void calculateAgeTest() throws Exception {
@@ -280,5 +277,23 @@ public class PlayerTest {
         assertTrue(player.getInjured());
         assertNotNull(player.getInjuryStartDate());
         assertEquals(player.getInjuryDatesRange(), 80);
+    }
+
+    @Test
+    public void findBestReplacementTest() throws Exception {
+        ILeagueDao leagueFactory = new LeagueMock();
+        League league = new League(1, leagueFactory);
+        List<IPlayer> playerList = new ArrayList<>();
+        for (int i = 1; i < 21; i++) {
+            Player player = new Player(i, loadPlayerFactory);
+            playerList.add(player);
+        }
+        List<IPlayer> freePlayerList = league.getFreeAgent().getPlayerList();
+        assertEquals(playerList.get(19).getName(), "Player20");
+        IPlayer player1 = playerList.get(0);
+        assertEquals(playerList.get(0).getName(), "Player1");
+        player1.findBestReplacement(playerList, freePlayerList);
+        assertNotEquals(playerList.get(0).getName(), "Player1");
+        assertEquals(playerList.get(19).getName(), "Player6");
     }
 }

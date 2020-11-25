@@ -17,6 +17,7 @@ public class NHLEvents implements INHLEvents{
     public LocalDate playOffStartDate;
     public LocalDate lastDayStanleyCupFinals;
     public LocalDate nextSeasonDate;
+    public LocalDate playerDraftDate;
     public int currentYear;
 
     public NHLEvents() {
@@ -28,6 +29,7 @@ public class NHLEvents implements INHLEvents{
         initializePlayOffStartDate();
         initializeLastDayStanleyCupFinals();
         initializeNextSeasonDate();
+        initializeDraftDate();
     }
 
     public NHLEvents(int currentYear){
@@ -39,6 +41,7 @@ public class NHLEvents implements INHLEvents{
         initializePlayOffStartDate();
         initializeLastDayStanleyCupFinals();
         initializeNextSeasonDate();
+        initializeDraftDate();
     }
 
     public NHLEvents(int leagueId, IEventDao iEventDao) throws Exception {
@@ -101,6 +104,14 @@ public class NHLEvents implements INHLEvents{
         this.lastDayStanleyCupFinals = lastDayStanleyCupFinals;
     }
 
+    public LocalDate getPlayerDraftDate() {
+        return playerDraftDate;
+    }
+
+    public void setPlayerDraftDate(LocalDate playerDraftDate) {
+        this.playerDraftDate = playerDraftDate;
+    }
+
     public boolean checkTradeDeadlinePassed(LocalDate currentDate) {
         if (currentDate.compareTo(tradeDeadlineDate) > 0) {
             return true;
@@ -156,6 +167,11 @@ public class NHLEvents implements INHLEvents{
     public void initializeNextSeasonDate() {
         LocalDate nextSeasonStartDate = LocalDate.of(currentYear + 1, Month.SEPTEMBER, 29);
         setNextSeasonDate(nextSeasonStartDate);
+    }
+
+    public void initializeDraftDate(){
+        LocalDate playerDraftDate = LocalDate.of(currentYear + 1, Month.JULY, 15);
+        setPlayerDraftDate(playerDraftDate);
     }
 
 }

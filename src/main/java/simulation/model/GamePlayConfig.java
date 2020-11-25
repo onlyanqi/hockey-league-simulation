@@ -9,7 +9,6 @@ public class GamePlayConfig implements IGamePlayConfig{
     private int leagueId;
     private IAging aging;
     private IInjury injury;
-    private IGameResolver gameResolver;
     private ITrading trading;
     private ITraining training;
 
@@ -57,17 +56,6 @@ public class GamePlayConfig implements IGamePlayConfig{
             return;
         }
         this.injury = injury;
-    }
-
-    public IGameResolver getGameResolver() {
-        return gameResolver;
-    }
-
-    public void setGameResolver(IGameResolver gameResolver) {
-        if (gameResolver == null) {
-            return;
-        }
-        this.gameResolver = gameResolver;
     }
 
     public ITrading getTrading() {
