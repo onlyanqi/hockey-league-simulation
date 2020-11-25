@@ -34,7 +34,7 @@ public class PlayerTest {
 
     @Test
     public void playerNullTest() {
-        IPlayer player = new Player(null);
+        IPlayer player = new Player((Player)null);
         assertEquals(player.getId(), 0);
     }
 

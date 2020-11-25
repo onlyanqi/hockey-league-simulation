@@ -10,16 +10,28 @@ public class GameSimulation {
     private Shift team2Shift;
     private ITeam team1;
     private ITeam team2;
-    private HashMap<String,HashMap<String,Integer>> teamPlayersCount;
-    private HashMap<String,Integer> goals;
-    private HashMap<String,Integer> penalties;
-    private HashMap<String,Integer> shots;
-    private HashMap<String,Integer> saves;
+    private HashMap<String,HashMap<String,Integer>> teamPlayersCount = new HashMap<>();
+    private HashMap<String,Integer> goals = new HashMap<>();
+    private HashMap<String,Integer> penalties = new HashMap<>();
+    private HashMap<String,Integer> shots = new HashMap<>();
+    private HashMap<String,Integer> saves = new HashMap<>();
 
     public GameSimulation(ITeam team1, ITeam team2) {
         this.team1 = team1;
         this.team2 = team2;
         initializeGameSimulation();
+    }
+
+    public GameSimulation(simulation.serializers.ModelsForDeserialization.model.GameSimulation gameSimulation){
+        this.team1Shift = new Shift(gameSimulation.team1Shift);
+        this.team2Shift = new Shift(gameSimulation.team2Shift);
+        this.team1 = new Team(gameSimulation.team1);
+        this.team2 = new Team(gameSimulation.team2);
+        this.teamPlayersCount = gameSimulation.teamPlayersCount;
+        this.goals = gameSimulation.goals;
+        this.penalties = gameSimulation.penalties;
+        this.shots = gameSimulation.shots;
+        this.saves = gameSimulation.saves;
     }
 
     public void initializeGameSimulation(){

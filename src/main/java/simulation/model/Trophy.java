@@ -10,6 +10,18 @@ public class Trophy implements ITrophy {
     String robHawkeyMemorialCup;
     String participationAward;
 
+    Trophy(){}
+
+    Trophy(simulation.serializers.ModelsForDeserialization.model.Trophy trophy){
+        this.presidentsTrophy = trophy.presidentsTrophy;
+        this.calderMemorialTrophy = trophy.calderMemorialTrophy;
+        this.vezinaTrophy = trophy.vezinaTrophy;
+        this.jackAdamsAward = new Coach(trophy.jackAdamsAward);
+        this.mauriceRichardTrophy = trophy.mauriceRichardTrophy;
+        this.robHawkeyMemorialCup = trophy.robHawkeyMemorialCup;
+        this.participationAward = trophy.participationAward;
+    }
+
     @Override
     public String getPresidentsTrophy() {
         return presidentsTrophy;

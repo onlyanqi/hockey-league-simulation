@@ -29,7 +29,7 @@ public class CoachTest {
 
     @Test
     public void coachObjectTest() {
-        Coach coach = new Coach(null);
+        Coach coach = new Coach((Coach)null);
         assertEquals(coach.getId(), 0);
     }
 

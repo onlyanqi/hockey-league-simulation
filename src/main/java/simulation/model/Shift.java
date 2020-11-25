@@ -1,21 +1,35 @@
 package simulation.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Shift{
 
     String teamName;
     IPlayer goalie;
-    List<IPlayer> forward;
-    List<IPlayer> defense;
-    HashMap<IPlayer,Integer> penalizedDefensePlayer;
+    List<IPlayer> forward = new ArrayList<>();
+    List<IPlayer> defense = new ArrayList<>();
+    HashMap<IPlayer,Integer> penalizedDefensePlayer =  new HashMap<>();;
 
 
     public Shift(){
         penalizedDefensePlayer = new HashMap<>();
+    }
+
+    public Shift(simulation.serializers.ModelsForDeserialization.model.Shift shift){
+        this.teamName = shift.teamName;
+        this.goalie = new Player(shift.goalie);
+        for(simulation.serializers.ModelsForDeserialization.model.Player player : shift.forward){
+            this.forward.add(new Player(player));
+        }
+        for(simulation.serializers.ModelsForDeserialization.model.Player player : shift.defense){
+            this.defense.add(new Player(player));
+        }
+
+        Iterator iterator = shift.penalizedDefensePlayer.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry mapEntry = (Map.Entry) iterator.next();
+            this.penalizedDefensePlayer.put(new Player((simulation.serializers.ModelsForDeserialization.model.Player)mapEntry.getKey()),(Integer)mapEntry.getValue());
+        }
     }
 
     public IPlayer getGoalie() {

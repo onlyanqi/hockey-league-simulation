@@ -21,6 +21,16 @@ public class GamePlayConfig implements IGamePlayConfig{
         gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
     }
 
+    public GamePlayConfig(simulation.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig){
+        this.id = gamePlayConfig.id;
+        this.aging = new Aging(gamePlayConfig.aging);
+        this.leagueId = gamePlayConfig.leagueId;
+        this.gameResolver = new GameResolver(gamePlayConfig.gameResolver);
+        this.injury = new Injury(gamePlayConfig.injury);
+        this.trading = new Trading(gamePlayConfig.trading);
+        this.training = new Training(gamePlayConfig.training);
+    }
+
     public int getId() {
         return id;
     }
