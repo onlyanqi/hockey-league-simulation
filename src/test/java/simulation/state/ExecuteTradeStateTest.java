@@ -4,13 +4,8 @@ import simulation.dao.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.*;
-import simulation.model.IUser;
-import simulation.model.ILeague;
-import simulation.model.IPlayer;
-import simulation.model.ITeam;
-import simulation.model.IConference;
-import simulation.model.ITradeOffer;
-import simulation.model.ITrading;
+import simulation.model.*;
+
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.*;
@@ -36,12 +31,8 @@ public class ExecuteTradeStateTest {
     private static ITradeOfferDao tradeOfferDao;
     private static ITradingDao tradingDao;
     private static IUserDao userDao;
-    private static ILeagueFactory leagueFactory;
-    private static ITeamFactory teamFactory;
-    private static IPlayerFactory playerFactory;
-    private static ITradeOfferFactory tradeOfferFactory;
-    private static ITradingFactory tradingFactory;
-    private static IUserFactory userFactory;
+    private static IModelFactory modelFactory;
+    private static IDaoFactory daoFactory;
     private static IHockeyContext hockeyContext;
     private static IHockeyContextFactory hockeyContextFactory;
     private static ILeague league;
@@ -51,22 +42,18 @@ public class ExecuteTradeStateTest {
     public static void init() throws Exception {
         hockeyContextFactory = HockeyContextConcreteMock.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
-        leagueFactory = hockeyContext.getLeagueFactory();
-        leagueDao = leagueFactory.newLeagueDao();
-        userFactory = hockeyContext.getUserFactory();
-        userDao = userFactory.newUserDao();
-        teamFactory = hockeyContext.getTeamFactory();
-        teamDao = teamFactory.newTeamDao();
-        playerFactory = hockeyContext.getPlayerFactory();
-        playerDao = playerFactory.newPlayerDao();
-        tradingFactory = hockeyContext.getTradingFactory();
-        tradingDao = tradingFactory.newTradingDao();
-        tradeOfferFactory = hockeyContext.getTradeOfferFactory();
-        tradeOfferDao = tradeOfferFactory.newTradeOfferDao();
+        modelFactory = hockeyContext.getModelFactory();
+        daoFactory = hockeyContext.getDaoFactory();
+        leagueDao = daoFactory.newLeagueDao();
+        userDao = daoFactory.newUserDao();
+        teamDao = daoFactory.newTeamDao();
+        playerDao = daoFactory.newPlayerDao();
+        tradingDao = daoFactory.newTradingDao();
+        tradeOfferDao = daoFactory.newTradeOfferDao();
     }
 
     private ExecuteTradeState newStateEmptyConstructor() throws Exception {
-        league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
+        league = modelFactory.newLeagueWithIdDao(1, leagueDao);
         ExecuteTradeState executeTradeState = new ExecuteTradeState();
         executeTradeState.setLeague(league);
         return executeTradeState;
@@ -85,8 +72,8 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void initConstructorTest() throws Exception {
-        league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
-        user = userFactory.newUserWithIdDao(1, userDao);
+        league = modelFactory.newLeagueWithIdDao(1, leagueDao);
+        user = modelFactory.newUserWithIdDao(1, userDao);
         user.setLeague(league);
         hockeyContext.setUser(user);
         ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
@@ -105,7 +92,7 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void setLeagueTest() throws Exception {
-        ILeague league = leagueFactory.newLeague();
+        ILeague league = modelFactory.newLeague();
         league.setId(1);
         league.setCreatedBy(1);
 
@@ -126,9 +113,9 @@ public class ExecuteTradeStateTest {
     @Test
     public void loopAllTeamsForTradeInitiationTest() throws Exception {
         ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
-        ILeague league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
+        ILeague league = modelFactory.newLeagueWithIdDao(1, leagueDao);
         assertTrue(state.loopAllTeamsForTradeInitiation(league));
-        league = leagueFactory.newLeague();
+        league = modelFactory.newLeague();
         List<IConference> conferences = new ArrayList<>();
         league.setConferenceList(conferences);
         assertFalse(state.loopAllTeamsForTradeInitiation(league));
@@ -138,8 +125,8 @@ public class ExecuteTradeStateTest {
     public void tradingLogicTest() throws Exception {
         ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
 
-        ITeam team = teamFactory.newTeamWithIdDao(5, teamDao);
-        ILeague league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
+        ITeam team = modelFactory.newTeamWithIdDao(5, teamDao);
+        ILeague league = modelFactory.newLeagueWithIdDao(1, leagueDao);
 
         for (int i = 0; i < 50; i++) {
             state.tradingLogic(team, league);
@@ -154,13 +141,13 @@ public class ExecuteTradeStateTest {
     @Test
     public void createTradeOfferTest() throws Exception {
         Map<String, Object> swap = new HashMap<>();
-        ILeague league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
-        IUser user = userFactory.newUserWithIdDao(1, userDao);
+        ILeague league = modelFactory.newLeagueWithIdDao(1, leagueDao);
+        IUser user = modelFactory.newUserWithIdDao(1, userDao);
         user.setLeague(league);
         hockeyContext.setUser(user);
         ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
-        ITeam fromTeam = teamFactory.newTeamWithIdDao(1, teamDao);
-        ITeam toTeam = teamFactory.newTeamWithIdDao(2, teamDao);
+        ITeam fromTeam = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam toTeam = modelFactory.newTeamWithIdDao(2, teamDao);
         IPlayer fromPlayer = fromTeam.getPlayerList().get(22);
         IPlayer toPlayer = toTeam.getPlayerList().get(19);
         List<IPlayer> fromPlayerList = new ArrayList<>(Arrays.asList(fromPlayer));
@@ -186,14 +173,14 @@ public class ExecuteTradeStateTest {
     public void performTradeTest() throws Exception {
         Map<String, Object> swap = new HashMap<>();
 
-        IPlayer player1 = playerFactory.newPlayerWithIdDao(3, playerDao);
-        IPlayer player2 = playerFactory.newPlayerWithIdDao(1, playerDao);
-        ITeam team1 = teamFactory.newTeamWithIdDao(1, teamDao);
-        ITeam team2 = teamFactory.newTeamWithIdDao(3, teamDao);
-        ITrading trading = tradingFactory.newTradingWithIdDao(3, tradingDao);
-        league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
+        IPlayer player1 = modelFactory.newPlayerWithIdDao(3, playerDao);
+        IPlayer player2 = modelFactory.newPlayerWithIdDao(1, playerDao);
+        ITeam team1 = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam team2 = modelFactory.newTeamWithIdDao(3, teamDao);
+        ITrading trading = modelFactory.newTradingWithIdDao(3, tradingDao);
+        league = modelFactory.newLeagueWithIdDao(1, leagueDao);
         league.getGamePlayConfig().setTrading(trading);
-        user = userFactory.newUserWithIdDao(1, userDao);
+        user = modelFactory.newUserWithIdDao(1, userDao);
         user.setLeague(league);
         hockeyContext.setUser(user);
         List<IPlayer> fromPlayerListAfterTrade = new ArrayList<>(Arrays.asList(player1));
@@ -221,12 +208,12 @@ public class ExecuteTradeStateTest {
         for (String userInput : userInputs) {
             swap = new HashMap<>();
 
-            IPlayer player1 = playerFactory.newPlayerWithIdDao(1, playerDao);
-            IPlayer player2 = playerFactory.newPlayerWithIdDao(3, playerDao);
-            ITeam team1 = teamFactory.newTeamWithIdDao(1, teamDao);
-            ITeam team2 = teamFactory.newTeamWithIdDao(3, teamDao);
-            ITradeOffer tradeOffer = tradeOfferFactory.newTradeOfferWithIdDao(1, tradeOfferDao);
-            ITrading trading = tradingFactory.newTradingWithIdDao(1, tradingDao);
+            IPlayer player1 = modelFactory.newPlayerWithIdDao(1, playerDao);
+            IPlayer player2 = modelFactory.newPlayerWithIdDao(3, playerDao);
+            ITeam team1 = modelFactory.newTeamWithIdDao(1, teamDao);
+            ITeam team2 = modelFactory.newTeamWithIdDao(3, teamDao);
+            ITradeOffer tradeOffer = modelFactory.newTradeOfferWithIdDao(1, tradeOfferDao);
+            ITrading trading = modelFactory.newTradingWithIdDao(1, tradingDao);
             List<IPlayer> fromPlayerListAfterTrade = new ArrayList<>(Arrays.asList(player1));
             List<IPlayer> toPlayerList = new ArrayList<>(Arrays.asList(player2));
 
@@ -256,15 +243,15 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void acceptRejectTradeOfferTest() throws Exception {
-        ITrading trading = tradingFactory.newTradingWithIdDao(3, tradingDao);
-        ILeague league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
-        IUser user = userFactory.newUserWithIdDao(1, userDao);
+        ITrading trading = modelFactory.newTradingWithIdDao(3, tradingDao);
+        ILeague league = modelFactory.newLeagueWithIdDao(1, leagueDao);
+        IUser user = modelFactory.newUserWithIdDao(1, userDao);
         league.getGamePlayConfig().setTrading(trading);
         user.setLeague(league);
         hockeyContext.setUser(user);
         ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
         Map<String, Object> swap = new HashMap<>();
-        ITeam fromTeam = teamFactory.newTeamWithIdDao(1, teamDao);
+        ITeam fromTeam = modelFactory.newTeamWithIdDao(1, teamDao);
 
         swap.put(FROMTEAM, fromTeam);
 
@@ -276,19 +263,19 @@ public class ExecuteTradeStateTest {
         Map<String, Object> tradeDetails = new HashMap<>();
         IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
         IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
-        IUser user = userFactory.newUserWithIdDao(1, userDao);
-        ILeague league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
+        IUser user = modelFactory.newUserWithIdDao(1, userDao);
+        ILeague league = modelFactory.newLeagueWithIdDao(1, leagueDao);
         user.setLeague(league);
         hockeyContext.setUser(user);
         ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
 
-        ITeam fromTeam = teamFactory.newTeamWithIdDao(1, teamDao);
-        ITeam toTeam = teamFactory.newTeamWithIdDao(2, teamDao);
-        IPlayer fromPlayer = playerFactory.newPlayerWithIdDao(27, playerDao);
+        ITeam fromTeam = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam toTeam = modelFactory.newTeamWithIdDao(2, teamDao);
+        IPlayer fromPlayer = modelFactory.newPlayerWithIdDao(27, playerDao);
         state.removeObjectFromList(fromTeam.getPlayerList(), fromPlayer);
-        IPlayer toPlayer = playerFactory.newPlayerWithIdDao(28, playerDao);
+        IPlayer toPlayer = modelFactory.newPlayerWithIdDao(28, playerDao);
         state.removeObjectFromList(toTeam.getPlayerList(), toPlayer);
-        ITradeOffer tradeOffer = tradeOfferFactory.newTradeOfferWithIdDao(1, tradeOfferDao);
+        ITradeOffer tradeOffer = modelFactory.newTradeOfferWithIdDao(1, tradeOfferDao);
 
         fromTeam.getPlayerList().add(fromPlayer);
         toTeam.getPlayerList().add(toPlayer);
@@ -373,8 +360,8 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void getWeakestPlayerListTest() throws Exception {
-        ITeam team = teamFactory.newTeamWithIdDao(1, teamDao);
-        ILeague league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
+        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ILeague league = modelFactory.newLeagueWithIdDao(1, leagueDao);
 
         ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
         List<IPlayer> weakPlayerList = state.getWeakestPlayerList(team, league);
@@ -385,19 +372,19 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void checkCurrentTradeOfferTest() throws Exception {
-        ITeam team = teamFactory.newTeamWithIdDao(5, teamDao);
+        ITeam team = modelFactory.newTeamWithIdDao(5, teamDao);
         ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
 
         assertFalse(state.checkCurrentTradeOffer(team));
 
-        team = teamFactory.newTeamWithIdDao(10, teamDao);
+        team = modelFactory.newTeamWithIdDao(10, teamDao);
         assertTrue(state.checkCurrentTradeOffer(team));
     }
 
     @Test
     public void checkTradingPeriodTest() throws Exception {
         LocalDate currentDate = LocalDate.now();
-        ITrading trading = tradingFactory.newTradingWithIdDao(1, tradingDao);
+        ITrading trading = modelFactory.newTradingWithIdDao(1, tradingDao);
 
         ExecuteTradeState state = newStateEmptyConstructor();
         assertTrue(state.checkTradingPeriod(trading, currentDate));
@@ -405,13 +392,13 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void checkLossPointTest() throws Exception {
-        ITeam team = teamFactory.newTeamWithIdDao(1, teamDao);
-        ITrading trading = tradingFactory.newTradingWithIdDao(1, tradingDao);
+        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITrading trading = modelFactory.newTradingWithIdDao(1, tradingDao);
         ExecuteTradeState state = newStateEmptyConstructor();
 
         assertFalse(state.checkLossPoint(team, trading));
 
-        team = teamFactory.newTeamWithIdDao(5, teamDao);
+        team = modelFactory.newTeamWithIdDao(5, teamDao);
 
         assertTrue(state.checkLossPoint(team, trading));
     }
@@ -429,9 +416,9 @@ public class ExecuteTradeStateTest {
     @Test
     public void removeObjectFromListTest() throws Exception {
         List<IPlayer> list = new ArrayList<>();
-        IPlayer player = playerFactory.newPlayerWithIdDao(1, playerDao);
+        IPlayer player = modelFactory.newPlayerWithIdDao(1, playerDao);
         list.add(player);
-        player = playerFactory.newPlayerWithIdDao(5, playerDao);
+        player = modelFactory.newPlayerWithIdDao(5, playerDao);
         list.add(player);
         boolean isPlayerExist = false;
         for (IPlayer player1 : list) {
@@ -458,8 +445,8 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void exitTest() throws Exception {
-        league = leagueFactory.newLeagueWithIdDao(1, leagueDao);
-        user = userFactory.newUserWithIdDao(1, userDao);
+        league = modelFactory.newLeagueWithIdDao(1, leagueDao);
+        user = modelFactory.newUserWithIdDao(1, userDao);
         user.setLeague(league);
         hockeyContext.setUser(user);
         ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);

@@ -5,12 +5,8 @@ import presentation.ConsoleOutput;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import presentation.ReadUserInput;
-import simulation.factory.ICoachFactory;
-import simulation.factory.ITeamFactory;
 import simulation.model.*;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -144,7 +140,7 @@ public class CreateTeamState implements IHockeyState {
         }
         List<String> teamNameList = division.getTeamNameList();
         String teamName = teamCreationInput.getTeamName(teamNameList);
-        ITeamFactory teamFactory = hockeyContext.getTeamFactory();
+        IModelFactory teamFactory = hockeyContext.getModelFactory();
         team = teamFactory.newTeam();
         team.setName(teamName);
         team.setAiTeam(false);
@@ -185,7 +181,7 @@ public class CreateTeamState implements IHockeyState {
         coachList = league.getCoachList();
         teamCreationOutput.showCoachListOnScreen(coachList);
         int headCoachId = teamCreationInput.getHeadCoachId(coachList);
-        ICoachFactory coachFactory = hockeyContext.getCoachFactory();
+        IModelFactory coachFactory = hockeyContext.getModelFactory();
         ICoach headCoach = coachFactory.newCoachWithCoach(coachList.get(headCoachId));
         team.setCoach(headCoach);
         coachList = league.removeCoachFromCoachListById(coachList, headCoachId, coachFactory);

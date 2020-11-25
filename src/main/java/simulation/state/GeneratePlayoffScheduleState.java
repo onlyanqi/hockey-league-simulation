@@ -1,7 +1,6 @@
 package simulation.state;
 
 import org.apache.log4j.Logger;
-import simulation.factory.IGameFactory;
 import simulation.model.*;
 
 import java.time.LocalDate;
@@ -102,7 +101,7 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
     private void scheduleGameBetweenTeams(String team1, String team2, List<IGame> games, LocalDate startDate) {
         LocalDate currentDate = startDate;
         for (Integer i = 0; i < numberOfGamesPerTeam; i++) {
-            IGameFactory gameFactory = hockeyContext.getGameFactory();
+            IModelFactory gameFactory = hockeyContext.getModelFactory();
             IGame game = gameFactory.newGame();
             game.setTeam1(team1);
             game.setTeam2(team2);

@@ -3,14 +3,8 @@ package simulation.state;
 import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
-import simulation.factory.ITradeOfferFactory;
-import simulation.model.IPlayer;
-import simulation.model.ITeam;
-import simulation.model.IConference;
-import simulation.model.IDivision;
-import simulation.model.ILeague;
-import simulation.model.ITrading;
-import simulation.model.ITradeOffer;
+import simulation.model.*;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -437,7 +431,7 @@ public class ExecuteTradeState implements ISimulateState {
         String PENDING = "pending";
         ITeam fromTeam = (ITeam) swap.get(FROMTEAM);
         ITeam toTeam = (ITeam) swap.get(TOTEAM);
-        ITradeOfferFactory tradeOfferConcrete = hockeyContext.getTradeOfferFactory();
+        IModelFactory tradeOfferConcrete = hockeyContext.getModelFactory();
         ITradeOffer tradeOffer = tradeOfferConcrete.newTradeOffer();
         try {
             tradeOffer.setLeagueId(league.getId());

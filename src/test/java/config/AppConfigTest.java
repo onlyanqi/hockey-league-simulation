@@ -3,7 +3,7 @@ package config;
 import org.junit.Test;
 import presentation.ConsoleOutputForTeamCreation;
 import presentation.UseInputForTeamCreation;
-import simulation.factory.LeagueConcrete;
+import simulation.model.IModelFactory;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -33,7 +33,7 @@ public class AppConfigTest {
     @Test
     public void getLeagueConcreteTest() {
         AppConfig appConfig = AppConfig.getInstance();
-        assertTrue(appConfig.getLeagueConcrete() instanceof LeagueConcrete);
+        assertTrue(appConfig.getLeagueConcrete() instanceof IModelFactory);
         assertNotEquals(appConfig.getLeagueConcrete(), null);
     }
 }

@@ -3,8 +3,6 @@ package simulation.model;
 import simulation.dao.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.factory.CoachConcrete;
-import simulation.factory.ICoachFactory;
 import simulation.mock.*;
 
 import java.util.ArrayList;
@@ -86,7 +84,7 @@ public class LeagueTest {
     @Test
     public void removeCoachFromManagerListByIdTest() throws Exception {
         League league = new League(1, leagueFactory);
-        ICoachFactory coachFactory = new CoachConcrete();
+        IModelFactory coachFactory = ModelFactory.getInstance();
         List<ICoach> coachList = league.getCoachList();
         assertEquals(coachList.size(), league.removeCoachFromCoachListById(
                 coachList, 0, coachFactory).size() + 1);

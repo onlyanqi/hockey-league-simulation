@@ -4,8 +4,6 @@ import simulation.dao.IConferenceDao;
 import simulation.dao.IFreeAgentDao;
 import simulation.dao.ILeagueDao;
 import simulation.dao.ITradeOfferDao;
-import simulation.factory.ICoachFactory;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +66,7 @@ public interface ILeague{
     List<IManager> removeManagerFromManagerListById(List<IManager> managerList, int indexOfManagerObject);
 
     List<ICoach> removeCoachFromCoachListById(List<ICoach> coachList,
-                                                    int indexOfCoachObject, ICoachFactory coachFactory);
+                                                    int indexOfCoachObject, IModelFactory coachFactory);
 
     int getCreatedBy();
 
