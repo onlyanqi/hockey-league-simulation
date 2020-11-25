@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ICoachDao;
+import simulation.dao.ICoachDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.CoachMock;

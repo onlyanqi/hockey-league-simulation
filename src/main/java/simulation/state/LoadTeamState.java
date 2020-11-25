@@ -1,13 +1,8 @@
 package simulation.state;
 
-import db.data.*;
-import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
-import simulation.factory.*;
 import simulation.model.*;
 import simulation.serializers.LeagueDataSerializerDeSerializer;
-
-import java.util.List;
 
 
 public class LoadTeamState implements IHockeyState {

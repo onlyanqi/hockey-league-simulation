@@ -3,9 +3,7 @@ package simulation.serializers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.InstanceCreator;
-import db.data.IAgingDao;
-import db.data.ILeagueDao;
+import simulation.dao.IAgingDao;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,11 +17,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.io.*;
 
 public class LeagueDataSerializerDeSerializer {
@@ -136,7 +131,7 @@ public class LeagueDataSerializerDeSerializer {
 
             //league = gson.fromJson(jsonParser.parse(fileReader).toString(), League.class);
 
-            ILeagueFactory leagueFactory = hockeyContext.getLeagueFactory();
+            IModelFactory leagueFactory = hockeyContext.getModelFactory();
             league = leagueFactory.newLeague();
             leagueId = league.getId();
 
@@ -156,7 +151,7 @@ public class LeagueDataSerializerDeSerializer {
 
             List<IConference> conferenceList = loadConferenceJSON(conferences);
 
-            IFreeAgentFactory freeAgentConcrete = hockeyContext.getFreeAgentFactory();
+            IModelFactory freeAgentConcrete = hockeyContext.getModelFactory();
             IFreeAgent freeAgent = freeAgentConcrete.newFreeAgent();
             JSONArray freeAgentPlayerList = (JSONArray) freeAgents.get("playerList");
             List<IPlayer> freeAgentList = loadFreeAgentJSON(freeAgentPlayerList);
@@ -197,7 +192,7 @@ public class LeagueDataSerializerDeSerializer {
             String name = (String) generalManager.get(NAME);
             String personality = (String) generalManager.get(PERSONALITY);
 
-            IManagerFactory managerConcrete = hockeyContext.getManagerFactory();
+            IModelFactory managerConcrete = hockeyContext.getModelFactory();
             IManager manager = managerConcrete.newManagerConcrete();
             manager.setName(name);
             manager.setPersonality(personality);
@@ -268,7 +263,7 @@ public class LeagueDataSerializerDeSerializer {
 
     private IPlayer setFreePlayerVariables(String playerName,
                                            Position position, int skating, int shooting, int checking, int saving) {
-        IPlayerFactory playerFactory = hockeyContext.getPlayerFactory();
+        IModelFactory playerFactory = hockeyContext.getModelFactory();
         IPlayer player = playerFactory.newPlayer();
         player.setName(playerName);
         player.setPosition(position);
@@ -288,16 +283,14 @@ public class LeagueDataSerializerDeSerializer {
     }
 
     private IAging loadAgingJson(JSONObject agingJSONObject) {
-        IAgingFactory agingFactory = hockeyContext.getAgingFactory();
-        IAging aging = agingFactory.newAging();
-        IAgingDao agingDao = agingFactory.newAgingDao();
-        agingDao.loadAgingFromJSON(aging, agingJSONObject);
+        IModelFactory modelFactory = hockeyContext.getModelFactory();
+        IAging aging = modelFactory.newAging();
         return aging;
     }
 
     private IInjury loadInjuryJson(JSONObject injuriesJSONObject) {
 
-        IInjuryFactory injuryConcrete = hockeyContext.getInjuryFactory();
+        IModelFactory injuryConcrete = hockeyContext.getModelFactory();
         IInjury injury = injuryConcrete.newInjury();
 
         double randomInjuryChance = (Double) injuriesJSONObject.get(RANDOM_INJURY_CHANCE);
@@ -313,7 +306,7 @@ public class LeagueDataSerializerDeSerializer {
     private ITraining loadTrainingJson(JSONObject trainingJSONObject) {
 
         int daysUntil = (int) (long) trainingJSONObject.get(DAYS_UNTIL_STAT_INCREASE_CHECK);
-        ITrainingFactory trainingConcrete = hockeyContext.getTrainingFactory();
+        IModelFactory trainingConcrete = hockeyContext.getModelFactory();
         ITraining training = trainingConcrete.newTraining();
         training.setDaysUntilStatIncreaseCheck(daysUntil);
         return training;
@@ -334,7 +327,7 @@ public class LeagueDataSerializerDeSerializer {
             gmTable.put(attribute, attributeValue);
         }*/
 
-        ITradingFactory tradingConcrete = hockeyContext.getTradingFactory();
+        IModelFactory tradingConcrete = hockeyContext.getModelFactory();
         ITrading trading = tradingConcrete.newTrading();
         trading.setLossPoint(lossPoint);
         trading.setRandomTradeOfferChance(randomTradeOfferChance);
@@ -345,7 +338,7 @@ public class LeagueDataSerializerDeSerializer {
     }
 
     private IGamePlayConfig loadGamePlayConfigJSON(JSONObject gameplayConfigJSONObject) throws IllegalArgumentException {
-        IGamePlayConfigFactory gamePlayConfigConcrete = hockeyContext.getGamePlayConfigFactory();
+        IModelFactory gamePlayConfigConcrete = hockeyContext.getModelFactory();
         IGamePlayConfig gamePlayConfig = gamePlayConfigConcrete.newGamePlayConfig();
         JSONObject agingJSONObject = (JSONObject) gameplayConfigJSONObject.get(AGING);
         IAging aging = loadAgingJson(agingJSONObject);
@@ -375,7 +368,7 @@ public class LeagueDataSerializerDeSerializer {
         for (Object conferenceObjectFromJSONArray : conferences) {
             JSONObject conferenceJSONObject = (JSONObject) conferenceObjectFromJSONArray;
             String conferenceName = (String) conferenceJSONObject.get(CONFERENCE_NAME);
-            IConferenceFactory conferenceConcrete = hockeyContext.getConferenceFactory();
+            IModelFactory conferenceConcrete = hockeyContext.getModelFactory();
             IConference conference = conferenceConcrete.newConference();
 
             conference.setName(conferenceName);
@@ -433,7 +426,7 @@ public class LeagueDataSerializerDeSerializer {
     }
 
     private ITeam setTeamVariables(String teamName, IManager manager, ICoach coach, List<IPlayer> playerList) throws IllegalArgumentException {
-        ITeamFactory teamConcrete = hockeyContext.getTeamFactory();
+        IModelFactory teamConcrete = hockeyContext.getModelFactory();
         ITeam team = teamConcrete.newTeam();
         team.setName(teamName);
         team.setManager(manager);
@@ -492,7 +485,7 @@ public class LeagueDataSerializerDeSerializer {
 
     private IPlayer setTeamPlayerVariables(String playerName, Position position,
                                            boolean captain, int skating, int shooting, int checking, int saving) {
-        IPlayerFactory playerConcrete = hockeyContext.getPlayerFactory();
+        IModelFactory playerConcrete = hockeyContext.getModelFactory();
         IPlayer player = playerConcrete.newPlayer();
         player.setName(playerName);
         player.setPosition(position);
@@ -542,7 +535,7 @@ public class LeagueDataSerializerDeSerializer {
     }
 
     private ICoach setCoachVariables(String coachName, Double skating, Double shooting, Double checking, Double saving) {
-        ICoachFactory coachConcrete = hockeyContext.getCoachFactory();
+        IModelFactory coachConcrete = hockeyContext.getModelFactory();
         ICoach coach = coachConcrete.newCoach();
         coach.setName(coachName);
         coach.setSkating(skating);
@@ -558,7 +551,7 @@ public class LeagueDataSerializerDeSerializer {
         String name = (String) generalManager.get(NAME);
         String personality = (String) generalManager.get(PERSONALITY);
 
-        IManagerFactory managerConcrete = hockeyContext.getManagerFactory();
+        IModelFactory managerConcrete = hockeyContext.getModelFactory();
         IManager manager = managerConcrete.newManagerConcrete();
         manager.setName(name);
         manager.setPersonality(personality);

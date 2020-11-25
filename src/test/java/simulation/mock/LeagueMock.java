@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import db.data.*;
+import simulation.dao.*;
 import org.json.simple.JSONObject;
 import simulation.model.*;
 

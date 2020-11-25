@@ -1,7 +1,7 @@
 package simulation.model;
 
-import db.data.IGamePlayConfigDao;
-import db.data.ITradingDao;
+import simulation.dao.IGamePlayConfigDao;
+import simulation.dao.ITradingDao;
 
 public class GamePlayConfig implements IGamePlayConfig{
 

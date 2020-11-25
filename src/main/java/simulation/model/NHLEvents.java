@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IEventDao;
+import simulation.dao.IEventDao;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

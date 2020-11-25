@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import db.data.ISeasonDao;
+import simulation.dao.ISeasonDao;
 import simulation.model.ISeason;
 import simulation.model.Season;
 

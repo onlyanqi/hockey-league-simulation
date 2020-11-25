@@ -1,8 +1,7 @@
 package simulation.mock;
 
-import db.data.IEventDao;
+import simulation.dao.IEventDao;
 import simulation.model.INHLEvents;
-import simulation.model.NHLEvents;
 
 import java.time.LocalDate;
 import java.time.Month;

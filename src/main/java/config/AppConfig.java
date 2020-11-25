@@ -4,7 +4,8 @@ import presentation.ConsoleOutputForTeamCreation;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import presentation.UseInputForTeamCreation;
-import simulation.factory.LeagueConcrete;
+import simulation.model.IModelFactory;
+import simulation.model.ModelFactory;
 import simulation.serializers.LeagueDataSerializerDeSerializer;
 
 public class AppConfig {
@@ -14,12 +15,12 @@ public class AppConfig {
     private IUserInputForTeamCreation inputForTeamCreation;
     private IConsoleOutputForTeamCreation outputForTeamCreation;
     private LeagueDataSerializerDeSerializer dataSerializer;
-    private LeagueConcrete leagueConcrete;
+    private IModelFactory modelFactory;
 
     private AppConfig() {
         inputForTeamCreation = new UseInputForTeamCreation();
         outputForTeamCreation = new ConsoleOutputForTeamCreation();
-        leagueConcrete = new LeagueConcrete();
+        modelFactory = ModelFactory.getInstance();
         dataSerializer = new LeagueDataSerializerDeSerializer();
     }
 
@@ -42,8 +43,8 @@ public class AppConfig {
         return outputForTeamCreation;
     }
 
-    public LeagueConcrete getLeagueConcrete() {
-        return leagueConcrete;
+    public IModelFactory getLeagueConcrete() {
+        return modelFactory;
     }
 
 }

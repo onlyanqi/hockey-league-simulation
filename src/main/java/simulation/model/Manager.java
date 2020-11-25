@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.IManagerDao;
+import simulation.dao.IManagerDao;
 
 public class Manager extends SharedAttributes implements IManager{
     private int leagueId;

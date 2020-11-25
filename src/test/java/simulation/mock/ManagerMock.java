@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import db.data.IManagerDao;
+import simulation.dao.IManagerDao;
 import simulation.model.IManager;
 import simulation.model.Manager;
 

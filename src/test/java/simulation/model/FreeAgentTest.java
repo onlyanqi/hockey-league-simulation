@@ -1,8 +1,8 @@
 package simulation.model;
 
-import db.data.IFreeAgentDao;
-import db.data.IPlayerDao;
-import db.data.ITeamDao;
+import simulation.dao.IFreeAgentDao;
+import simulation.dao.IPlayerDao;
+import simulation.dao.ITeamDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.FreeAgentMock;

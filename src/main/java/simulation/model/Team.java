@@ -1,8 +1,8 @@
 package simulation.model;
 
 import config.AppConfig;
-import db.data.IPlayerDao;
-import db.data.ITeamDao;
+import simulation.dao.IPlayerDao;
+import simulation.dao.ITeamDao;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import java.util.ArrayList;

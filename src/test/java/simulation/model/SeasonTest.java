@@ -1,6 +1,6 @@
 package simulation.model;
 
-import db.data.ISeasonDao;
+import simulation.dao.ISeasonDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.SeasonMock;
