@@ -10,7 +10,7 @@ public class GameSimulation {
     private Shift team2Shift;
     private ITeam team1;
     private ITeam team2;
-    private HashMap<String,HashMap<String,Integer>> teamPlayersCount = new HashMap<>();
+    private HashMap<String,HashMap<Integer,Integer>> teamPlayersCount = new HashMap<>();
     private HashMap<String,Integer> goals = new HashMap<>();
     private HashMap<String,Integer> penalties = new HashMap<>();
     private HashMap<String,Integer> shots = new HashMap<>();
@@ -79,6 +79,10 @@ public class GameSimulation {
                     penalPlayer.setValue(penalPlayer.getValue()-1);
                 }
             }
+            if(timeIn10Seconds == 240){
+                team1Shift.updateGoalie(team1);
+                team2Shift.updateGoalie(team2);
+            }
             //change shifts for every 90 seconds to make 40 shifts over 20 min periods
             if(timeIn10Seconds % 9 ==0){
                 //get shifts
@@ -134,11 +138,11 @@ public class GameSimulation {
         this.team2 = team2;
     }
 
-    public HashMap<String, HashMap<String, Integer>> getTeamPlayersCount() {
+    public HashMap<String, HashMap<Integer, Integer>> getTeamPlayersCount() {
         return teamPlayersCount;
     }
 
-    public void setTeamPlayersCount(HashMap<String, HashMap<String, Integer>> teamPlayersCount) {
+    public void setTeamPlayersCount(HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
         this.teamPlayersCount = teamPlayersCount;
     }
 
@@ -185,9 +189,9 @@ public class GameSimulation {
     }
 
     private void initializeTeamPlayerShiftCount(ITeam team) {
-        HashMap<String,Integer> playersCount  = new HashMap<>();
-        for(IPlayer player : team.getPlayerList()){
-            playersCount.put(player.getName(),0);
+        HashMap<Integer,Integer> playersCount  = new HashMap<>();
+        for(IPlayer player : team.getActivePlayerList()){
+            playersCount.put(player.getId(),0);
         }
         teamPlayersCount.put(team.getName(),playersCount);
     }

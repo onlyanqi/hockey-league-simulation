@@ -8,7 +8,7 @@ public class GameSimulation {
     public Shift team2Shift;
     public Team team1;
     public Team team2;
-    public HashMap<String,HashMap<String,Integer>> teamPlayersCount;
+    public HashMap<String,HashMap<Integer,Integer>> teamPlayersCount;
     public HashMap<String,Integer> goals;
     public HashMap<String,Integer> penalties;
     public HashMap<String,Integer> shots;
