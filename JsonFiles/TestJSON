@@ -22,13 +22,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 547201549,
+                "id": 444920847,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 195984832,
+                "id": 1259769769,
                 "name": "Manager1"
               },
               "playerList": [
@@ -359,7 +359,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -369,9 +369,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -520,7 +520,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -660,7 +660,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -691,7 +691,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1376,7 +1376,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1386,9 +1386,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -1407,7 +1407,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1469,7 +1469,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1500,7 +1500,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1674,13 +1674,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 455785638,
+                "id": 2032188048,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 236304360,
+                "id": 589835301,
                 "name": "Manager3"
               },
               "playerList": [
@@ -2011,7 +2011,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -2021,9 +2021,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -2172,7 +2172,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -2312,7 +2312,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -2343,7 +2343,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3028,7 +3028,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3038,9 +3038,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -3059,7 +3059,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3121,7 +3121,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3152,7 +3152,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3333,13 +3333,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 785570251,
+                "id": 992846223,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1670546046,
+                "id": 112466394,
                 "name": "Manager1"
               },
               "playerList": [
@@ -3670,7 +3670,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3680,9 +3680,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -3831,7 +3831,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3971,7 +3971,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4002,7 +4002,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4687,7 +4687,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4697,9 +4697,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -4718,7 +4718,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4780,7 +4780,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4811,7 +4811,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4985,13 +4985,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 1138410383,
+                "id": 630074945,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 224100622,
+                "id": 1493625803,
                 "name": "Manager3"
               },
               "playerList": [
@@ -5322,7 +5322,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -5332,9 +5332,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -5483,7 +5483,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -5623,7 +5623,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -5654,7 +5654,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6339,7 +6339,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6349,9 +6349,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -6370,7 +6370,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6432,7 +6432,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6463,7 +6463,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6650,13 +6650,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 210281271,
+                "id": 1436901839,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 875313400,
+                "id": 64133603,
                 "name": "Manager1"
               },
               "playerList": [
@@ -6987,7 +6987,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6997,9 +6997,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -7148,7 +7148,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -7288,7 +7288,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -7319,7 +7319,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8004,7 +8004,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8014,9 +8014,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -8035,7 +8035,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8097,7 +8097,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8128,7 +8128,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8302,13 +8302,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 1213818572,
+                "id": 1866161430,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1560940633,
+                "id": 999522307,
                 "name": "Manager3"
               },
               "playerList": [
@@ -8639,7 +8639,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8649,9 +8649,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -8800,7 +8800,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8940,7 +8940,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8971,7 +8971,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9656,7 +9656,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9666,9 +9666,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -9687,7 +9687,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9749,7 +9749,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9780,7 +9780,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9961,13 +9961,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 1421866327,
+                "id": 107241811,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 501705927,
+                "id": 2024918163,
                 "name": "Manager1"
               },
               "playerList": [
@@ -10298,7 +10298,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -10308,9 +10308,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -10459,7 +10459,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -10599,7 +10599,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -10630,7 +10630,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11315,7 +11315,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11325,9 +11325,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -11346,7 +11346,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11408,7 +11408,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11439,7 +11439,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 25
+                    "day": 26
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11617,7 +11617,7 @@
       "shooting": 0.8,
       "checking": 0.3,
       "saving": 1.0,
-      "coachingEffectiveness": 0,
+      "coachingEffectiveness": 10,
       "id": 0,
       "name": "Joe Smith"
     },
@@ -11628,7 +11628,7 @@
       "shooting": 0.8,
       "checking": 0.3,
       "saving": 1.0,
-      "coachingEffectiveness": 0,
+      "coachingEffectiveness": 10,
       "id": 0,
       "name": "Joe Smith"
     },
@@ -11774,7 +11774,7 @@
         "injuryStartDate": {
           "year": 2020,
           "month": 11,
-          "day": 25
+          "day": 26
         },
         "injuryDatesRange": 80,
         "isFreeAgent": false,
@@ -11784,9 +11784,9 @@
         "saving": 1,
         "strength": 39.0,
         "relativeStrength": 7.8,
-        "penaltyCount": 0,
-        "goalScore": 0,
-        "saves": 0,
+        "penaltyCount": 10,
+        "goalScore": 8,
+        "saves": 15,
         "id": 1,
         "name": "Player1"
       },
@@ -12096,7 +12096,7 @@
         "injuryStartDate": {
           "year": 2020,
           "month": 11,
-          "day": 25
+          "day": 26
         },
         "injuryDatesRange": 80,
         "isFreeAgent": false,
@@ -12127,7 +12127,7 @@
         "injuryStartDate": {
           "year": 2020,
           "month": 11,
-          "day": 25
+          "day": 26
         },
         "injuryDatesRange": 80,
         "isFreeAgent": false,
@@ -12184,7 +12184,7 @@
         "injuryStartDate": {
           "year": 2020,
           "month": 11,
-          "day": 25
+          "day": 26
         },
         "injuryDatesRange": 80,
         "isFreeAgent": false,
@@ -12331,15 +12331,15 @@
         "name": "Player21"
       }
     ],
-    "id": 1497018177
+    "id": 558922244
   },
   "currentDate": {
     "year": 2020,
     "month": 11,
-    "day": 25
+    "day": 26
   },
   "gamePlayConfig": {
-    "id": 936653983,
+    "id": 1131040331,
     "leagueId": 0,
     "aging": {
       "averageRetirementAge": 35,
@@ -12364,8 +12364,8 @@
         0,
         1
       ],
-      "tradeStartDate": "Oct 1, 2020, 12:00:00 AM",
-      "tradeEndDate": "Feb 22, 2021, 12:00:00 AM",
+      "tradeStartDate": "Oct 1, 2020 12:00:00 AM",
+      "tradeEndDate": "Feb 22, 2021 12:00:00 AM",
       "leagueId": 1,
       "lossPoint": 2,
       "randomTradeOfferChance": 0.05000000074505806,
@@ -12456,7 +12456,7 @@
         "played": false
       }
     ],
-    "id": 1526970878
+    "id": 1702660825
   },
   "stanleyCupFinalsTeamScores": {},
   "teamStats": [],
@@ -12535,6 +12535,7 @@
       "id": 5
     }
   ],
+  "historicalTrophyList": [],
   "id": 4,
   "name": "League4"
 }

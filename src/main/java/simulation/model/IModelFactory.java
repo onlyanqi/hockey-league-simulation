@@ -79,4 +79,5 @@ public interface IModelFactory {
     IUser newUserWithIdDao(int id, IUserDao userDao) throws Exception;
 
 
+    ITrophy newTrophy();
 }

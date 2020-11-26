@@ -36,7 +36,7 @@ public class League extends SharedAttributes implements ILeague {
     private ArrayList<TeamStat> teamStats = new ArrayList<>();
     private INHLEvents nhlEvents;
     private List<ITradeOffer> tradeOfferList = new ArrayList<>();
-
+    private List<ITrophy> historicalTrophyList = new ArrayList<>();
     private ITrophy trophy;
 
     public League() {
@@ -99,7 +99,11 @@ public class League extends SharedAttributes implements ILeague {
         for(TradeOffer tradeOffer : leagueDeserializationModel.tradeOfferList){
             this.tradeOfferList.add(new simulation.model.TradeOffer(tradeOffer));
         }
-        if(trophy == null){
+        for(simulation.serializers.ModelsForDeserialization.model.Trophy trophy : leagueDeserializationModel.historicalTrophyList){
+            this.historicalTrophyList.add(new Trophy(trophy));
+        }
+
+        if(leagueDeserializationModel.trophy == null){
             this.trophy = new Trophy();
         }else{
             this.trophy = new Trophy(leagueDeserializationModel.trophy);
@@ -155,6 +159,16 @@ public class League extends SharedAttributes implements ILeague {
             return;
         }
         this.nhlEvents = nhlEvents;
+    }
+
+    @Override
+    public List<ITrophy> getHistoricalTrophyList() {
+        return historicalTrophyList;
+    }
+
+    @Override
+    public void setHistoricalTrophyList(List<ITrophy> historicalTrophyList) {
+        this.historicalTrophyList = historicalTrophyList;
     }
 
     public IGameSchedule getGames() {

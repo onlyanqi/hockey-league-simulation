@@ -13,9 +13,9 @@ public interface ITrophy {
 
     void setVezinaTrophy(String vezinaTrophy);
 
-    ICoach getJackAdamsAward();
+    String getJackAdamsAward();
 
-    void setJackAdamsAward(ICoach jackAdamsAward);
+    void setJackAdamsAward(String jackAdamsAward);
 
     String getMauriceRichardTrophy();
 
