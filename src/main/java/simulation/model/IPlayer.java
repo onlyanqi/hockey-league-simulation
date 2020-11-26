@@ -71,10 +71,6 @@ public interface IPlayer extends Comparable<IPlayer>{
 
     void agingInjuryRecovery(ILeague league);
 
-    boolean isRetired();
-
-    void setRetired(boolean retired);
-
     void setRelativeStrength();
 
     double getRelativeStrength();

@@ -2,7 +2,6 @@ package simulation.state;
 
 import org.json.simple.JSONObject;
 import simulation.dao.IDaoFactory;
-import simulation.factory.*;
 import simulation.model.IModelFactory;
 import simulation.model.IUser;
 

@@ -21,10 +21,6 @@ public class ModelFactory implements IModelFactory{
         return new GameSchedule();
     }
 
-    public IGameResolver newGameResolver() {
-        return new GameResolver();
-    }
-
     public IAging newAging() {
         return new Aging();
     }

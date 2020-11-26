@@ -41,7 +41,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setInjured(true);
                 player.setInjuryStartDate(LocalDate.now());
                 player.setInjuryDatesRange(80);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 player.setPenaltyCount(10);
                 player.setGoalScore(8);
@@ -61,7 +60,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -78,7 +76,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -95,7 +92,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -112,7 +108,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -129,7 +124,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -146,7 +140,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -163,7 +156,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -180,7 +172,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -197,7 +188,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -214,7 +204,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -233,7 +222,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setInjured(true);
                 player.setInjuryStartDate(LocalDate.of(2020, 1, 1));
                 player.setInjuryDatesRange(80);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -252,7 +240,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setInjured(true);
                 player.setInjuryStartDate(LocalDate.now());
                 player.setInjuryDatesRange(80);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -271,7 +258,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setInjured(true);
                 player.setInjuryStartDate(LocalDate.now());
                 player.setInjuryDatesRange(80);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -288,7 +274,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -307,7 +292,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setInjured(true);
                 player.setInjuryStartDate(LocalDate.now());
                 player.setInjuryDatesRange(80);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -324,7 +308,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -341,7 +324,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -358,7 +340,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -375,7 +356,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -392,7 +372,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -409,7 +388,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -426,7 +404,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -443,7 +420,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -460,7 +436,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -477,7 +452,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -494,7 +468,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(15);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -511,7 +484,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(17);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -528,7 +500,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(12);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -545,7 +516,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(13);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -562,7 +532,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
 
@@ -579,7 +548,6 @@ public class PlayerMock implements IPlayerDao {
                 player.setSaving(1);
                 player.setStrength();
                 player.setInjured(false);
-                player.setRetired(false);
                 player.setRelativeStrength();
                 break;
         }

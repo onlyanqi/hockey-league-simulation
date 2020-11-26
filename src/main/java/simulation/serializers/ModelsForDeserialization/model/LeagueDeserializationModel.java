@@ -1,5 +1,7 @@
 package simulation.serializers.ModelsForDeserialization.model;
 
+import simulation.model.IPlayer;
+
 import simulation.model.ITrophy;
 
 import java.time.LocalDate;
@@ -16,6 +18,7 @@ public class LeagueDeserializationModel extends SharedAttributes {
     public List<Coach> coachList;
     public List<Manager> managerList;
     public List<Player> retiredPlayerList;
+    public List<Player> draftedPlayerList;
     public FreeAgent freeAgent;
     public LocalDate currentDate;
     public GamePlayConfig gamePlayConfig;

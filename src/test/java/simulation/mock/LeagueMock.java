@@ -148,12 +148,6 @@ public class LeagueMock implements ILeagueDao {
         return training;
     }
 
-    public GameResolver getGameResolver() throws Exception {
-        IGameResolverDao resolverFactory = new GameResolverMock();
-        GameResolver gameResolver = new GameResolver(1, resolverFactory);
-        return gameResolver;
-    }
-
     public List<ITradeOffer> getTradeOfferList(int leagueId) throws Exception {
         ITradeOfferDao tradeOfferFactory = new TradeOfferMock();
         return tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
@@ -166,7 +160,6 @@ public class LeagueMock implements ILeagueDao {
         gamePlayConfig.setAging(getAging());
         gamePlayConfig.setInjury(getInjury());
         gamePlayConfig.setTraining(getTraining());
-        gamePlayConfig.setGameResolver(getGameResolver());
         return gamePlayConfig;
     }
 
