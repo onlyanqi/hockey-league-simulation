@@ -84,7 +84,6 @@ public class Player extends SharedAttributes implements IPlayer {
         this.injuryStartDate = playerFromDeserialization.injuryStartDate;
         this.isCaptain = playerFromDeserialization.isCaptain;
         this.isInjured = playerFromDeserialization.isInjured;
-        this.isRetired = playerFromDeserialization.isRetired;
         this.penaltyCount = playerFromDeserialization.penaltyCount;
         this.position = playerFromDeserialization.position;
         this.relativeStrength = playerFromDeserialization.relativeStrength;

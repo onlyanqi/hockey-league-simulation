@@ -1,7 +1,6 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
-import simulation.factory.IPlayerFactory;
 import simulation.model.*;
 
 import java.time.LocalDate;
@@ -31,7 +30,7 @@ public class DraftState implements ISimulateState {
         aging.agingPlayerPeriod(league, beforeDate);
         int round = 7;
         ITeamStanding standing = league.getRegularSeasonStanding();
-        int teamNum = standing.getTeamsRankAcrossLeague().size();
+        int teamNum = standing.getTeamsRankAcrossLeague(league).size();
         generatePlayers(round,teamNum);
 
 
@@ -44,7 +43,7 @@ public class DraftState implements ISimulateState {
         int playersNum = round * teamNum;
         int addedPlayers = 0;
         while (addedPlayers < playersNum) {
-            IPlayerFactory playerFactory = hockeyContext.getPlayerFactory();
+            IModelFactory playerFactory = hockeyContext.getModelFactory();
             IPlayer player = playerFactory.newPlayer();
             player.setName(getRandomName(firstNameList, lastNameList));
             player.setPosition(Position.generateRandomPosition());

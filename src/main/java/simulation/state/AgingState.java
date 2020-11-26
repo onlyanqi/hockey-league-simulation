@@ -2,6 +2,8 @@ package simulation.state;
 
 import presentation.ConsoleOutput;
 import simulation.model.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,7 +35,8 @@ public class AgingState implements ISimulateState {
         if (stanleyCupWinnerDetermined()) {
             updateTeamScoreList();
             displayTeamStats();
-            return new AdvanceNextSeasonState(hockeyContext);
+//            return new DraftState(hockeyContext,league.getCurrentDate());
+            return new AdvanceNextSeasonState(hockeyContext,league.getCurrentDate());
         } else {
             return new PersistState(hockeyContext);
         }

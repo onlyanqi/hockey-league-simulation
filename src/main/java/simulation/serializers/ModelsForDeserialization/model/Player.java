@@ -15,8 +15,7 @@ public class Player extends SharedAttributes {
     public boolean isInjured;
     public LocalDate injuryStartDate;
     public int injuryDatesRange;
-    public boolean isFreeAgent = false;
-    public boolean isRetired = false;
+    public boolean isFreeAgent;
     public int skating;
     public int shooting;
     public int checking;

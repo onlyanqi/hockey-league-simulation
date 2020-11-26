@@ -1,7 +1,5 @@
 package simulation.model;
 
-import db.data.*;
-import simulation.factory.ICoachFactory;
 import simulation.dao.IConferenceDao;
 import simulation.dao.IFreeAgentDao;
 import simulation.dao.ILeagueDao;
