@@ -1,4 +1,4 @@
-package simulation.TrophyPublisherSubsribers;
+package simulation.trophyPublisherSubsribers;
 
 import simulation.model.Player;
 

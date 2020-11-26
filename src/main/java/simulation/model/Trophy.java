@@ -5,18 +5,18 @@ public class Trophy implements ITrophy {
     String presidentsTrophy;
     String calderMemorialTrophy;
     String vezinaTrophy;
-    ICoach jackAdamsAward;
+    String jackAdamsAward;
     String mauriceRichardTrophy;
     String robHawkeyMemorialCup;
     String participationAward;
 
-    Trophy(){}
+    public Trophy(){}
 
     Trophy(simulation.serializers.ModelsForDeserialization.model.Trophy trophy){
         this.presidentsTrophy = trophy.presidentsTrophy;
         this.calderMemorialTrophy = trophy.calderMemorialTrophy;
         this.vezinaTrophy = trophy.vezinaTrophy;
-        this.jackAdamsAward = new Coach(trophy.jackAdamsAward);
+        this.jackAdamsAward = trophy.jackAdamsAward;
         this.mauriceRichardTrophy = trophy.mauriceRichardTrophy;
         this.robHawkeyMemorialCup = trophy.robHawkeyMemorialCup;
         this.participationAward = trophy.participationAward;
@@ -53,12 +53,12 @@ public class Trophy implements ITrophy {
     }
 
     @Override
-    public ICoach getJackAdamsAward() {
+    public String getJackAdamsAward() {
         return jackAdamsAward;
     }
 
     @Override
-    public void setJackAdamsAward(ICoach jackAdamsAward) {
+    public void setJackAdamsAward(String jackAdamsAward) {
         this.jackAdamsAward = jackAdamsAward;
     }
 

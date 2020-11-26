@@ -43,6 +43,9 @@ public class PlayerMock implements IPlayerDao {
                 player.setInjuryDatesRange(80);
                 player.setRetired(false);
                 player.setRelativeStrength();
+                player.setPenaltyCount(10);
+                player.setGoalScore(8);
+                player.setSaves(15);
                 break;
 
             case 2:
