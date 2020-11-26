@@ -1,7 +1,7 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
-import simulation.TrophyPublisherSubsribers.TrophySystemPublisher;
+import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
 import simulation.model.*;
 
 import java.time.LocalDate;

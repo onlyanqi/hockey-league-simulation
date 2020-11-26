@@ -3,6 +3,8 @@ package simulation.serializers.ModelsForDeserialization.model;
 import simulation.model.IPlayer;
 import simulation.model.ITeam;
 
+import simulation.model.ITrophy;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +31,7 @@ public class LeagueDeserializationModel extends SharedAttributes {
     public ArrayList<TeamStat> teamStats;
     public NHLEvents nhlEvents;
     public List<TradeOffer> tradeOfferList;
-
+    public List<Trophy> historicalTrophyList;
     public Trophy trophy;
 
 }

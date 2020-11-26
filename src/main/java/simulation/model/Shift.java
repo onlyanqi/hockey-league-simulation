@@ -107,15 +107,19 @@ public class Shift{
         return teamDefenseTotal;
     }
 
-    public Shift getShift(ITeam team, HashMap<String, HashMap<String, Integer>> teamPlayersCount) {
+    public Shift getShift(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
         Shift shift = new Shift();
-        HashMap<String,Integer> playersCount  = teamPlayersCount.get(team.getName());
-        IPlayer goalie = getRandomPlayerByPosition(team,"GOALIE");
-        while(didPlayerReachShiftCount(playersCount,goalie)){
-            goalie = getRandomPlayerByPosition(team,"GOALIE");
+        HashMap<Integer,Integer> playersCount  = teamPlayersCount.get(team.getName());
+
+        if(goalie==null){
+            IPlayer goalie = getRandomPlayerByPosition(team,"GOALIE");
+            while(didPlayerReachShiftCount(playersCount,goalie)){
+                goalie = getRandomPlayerByPosition(team,"GOALIE");
+            }
+            shift.setGoalie(goalie);
+        }else{
+            shift.setGoalie(goalie);
         }
-        //set Goalie to shift
-        shift.setGoalie(goalie);
 
         List<IPlayer> forwardList = new ArrayList<>();
         for(int forwards =0; forwards<3;forwards++){
@@ -125,7 +129,6 @@ public class Shift{
             }
             forwardList.add(forward);
         }
-        //set forwards list to shift
         shift.setForward(forwardList);
 
         List<IPlayer> defenseList = new ArrayList<>();
@@ -142,17 +145,29 @@ public class Shift{
         return shift;
     }
 
-    public boolean didPlayerReachShiftCount(HashMap<String,Integer> playersCount,IPlayer player){
-        if(playersCount.get(player.getName())>13){
+    public void updateGoalie(ITeam team){
+        for(IPlayer player: team.getActivePlayerList()){
+            if(player.getPosition().name().equals("GOALIE")){
+                if(goalie.getId() == player.getId()){
+                    break;
+                }else{
+                    this.goalie = player;
+                }
+            }
+        }
+    }
+
+    public boolean didPlayerReachShiftCount(HashMap<Integer,Integer> playersCount,IPlayer player){
+        if(playersCount.get(player.getId())>13){
             return true;
         }else{
             return false;
         }
     }
 
-    public Shift getShiftForPenalizedTeam(ITeam team, HashMap<String, HashMap<String, Integer>> teamPlayersCount) {
+    public Shift getShiftForPenalizedTeam(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
         Shift shift = new Shift();
-        HashMap<String,Integer> playersCount  = teamPlayersCount.get(team.getName());
+        HashMap<Integer,Integer> playersCount  = teamPlayersCount.get(team.getName());
         IPlayer goalie = getRandomPlayerByPosition(team,"GOALIE");
         while(didPlayerReachShiftCount(playersCount,goalie)){
             goalie = getRandomPlayerByPosition(team,"GOALIE");

@@ -15,6 +15,10 @@ public interface ILeague{
 
     void setNhlRegularSeasonEvents(INHLEvents nhlEvents);
 
+    List<ITrophy> getHistoricalTrophyList();
+
+    void setHistoricalTrophyList(List<ITrophy> historicalTrophyList);
+
     IGameSchedule getGames();
 
     void setGames(IGameSchedule games);

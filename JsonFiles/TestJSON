@@ -22,13 +22,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 987249254,
+                "id": 444920847,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1464191502,
+                "id": 1259769769,
                 "name": "Manager1"
               },
               "playerList": [
@@ -369,9 +369,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -1386,9 +1386,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -1674,13 +1674,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 398457879,
+                "id": 2032188048,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1020154737,
+                "id": 589835301,
                 "name": "Manager3"
               },
               "playerList": [
@@ -2021,9 +2021,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -3038,9 +3038,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -3333,13 +3333,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 363023858,
+                "id": 992846223,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1850954068,
+                "id": 112466394,
                 "name": "Manager1"
               },
               "playerList": [
@@ -3680,9 +3680,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -4697,9 +4697,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -4985,13 +4985,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 865059288,
+                "id": 630074945,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1530446316,
+                "id": 1493625803,
                 "name": "Manager3"
               },
               "playerList": [
@@ -5332,9 +5332,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -6349,9 +6349,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -6650,13 +6650,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 1222768327,
+                "id": 1436901839,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1193471756,
+                "id": 64133603,
                 "name": "Manager1"
               },
               "playerList": [
@@ -6997,9 +6997,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -8014,9 +8014,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -8302,13 +8302,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 403170294,
+                "id": 1866161430,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1439394198,
+                "id": 999522307,
                 "name": "Manager3"
               },
               "playerList": [
@@ -8649,9 +8649,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -9666,9 +9666,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -9961,13 +9961,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 253601149,
+                "id": 107241811,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1208825205,
+                "id": 2024918163,
                 "name": "Manager1"
               },
               "playerList": [
@@ -10308,9 +10308,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -11325,9 +11325,9 @@
                   "saving": 1,
                   "strength": 39.0,
                   "relativeStrength": 7.8,
-                  "penaltyCount": 0,
-                  "goalScore": 0,
-                  "saves": 0,
+                  "penaltyCount": 10,
+                  "goalScore": 8,
+                  "saves": 15,
                   "id": 1,
                   "name": "Player1"
                 },
@@ -11617,7 +11617,7 @@
       "shooting": 0.8,
       "checking": 0.3,
       "saving": 1.0,
-      "coachingEffectiveness": 0,
+      "coachingEffectiveness": 10,
       "id": 0,
       "name": "Joe Smith"
     },
@@ -11628,7 +11628,7 @@
       "shooting": 0.8,
       "checking": 0.3,
       "saving": 1.0,
-      "coachingEffectiveness": 0,
+      "coachingEffectiveness": 10,
       "id": 0,
       "name": "Joe Smith"
     },
@@ -11784,9 +11784,9 @@
         "saving": 1,
         "strength": 39.0,
         "relativeStrength": 7.8,
-        "penaltyCount": 0,
-        "goalScore": 0,
-        "saves": 0,
+        "penaltyCount": 10,
+        "goalScore": 8,
+        "saves": 15,
         "id": 1,
         "name": "Player1"
       },
@@ -12331,7 +12331,7 @@
         "name": "Player21"
       }
     ],
-    "id": 26540753
+    "id": 558922244
   },
   "currentDate": {
     "year": 2020,
@@ -12339,7 +12339,7 @@
     "day": 26
   },
   "gamePlayConfig": {
-    "id": 944140566,
+    "id": 1131040331,
     "leagueId": 0,
     "aging": {
       "averageRetirementAge": 35,
@@ -12364,8 +12364,8 @@
         0,
         1
       ],
-      "tradeStartDate": "Oct 1, 2020, 12:00:00 AM",
-      "tradeEndDate": "Feb 22, 2021, 12:00:00 AM",
+      "tradeStartDate": "Oct 1, 2020 12:00:00 AM",
+      "tradeEndDate": "Feb 22, 2021 12:00:00 AM",
       "leagueId": 1,
       "lossPoint": 2,
       "randomTradeOfferChance": 0.05000000074505806,
@@ -12456,7 +12456,7 @@
         "played": false
       }
     ],
-    "id": 1125964210
+    "id": 1702660825
   },
   "stanleyCupFinalsTeamScores": {},
   "teamStats": [],
@@ -12535,6 +12535,7 @@
       "id": 5
     }
   ],
+  "historicalTrophyList": [],
   "id": 4,
   "name": "League4"
 }

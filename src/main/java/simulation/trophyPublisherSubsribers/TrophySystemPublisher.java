@@ -1,10 +1,14 @@
-package simulation.TrophyPublisherSubsribers;
+package simulation.trophyPublisherSubsribers;
 
 import java.util.HashMap;
 
 public class TrophySystemPublisher {
     HashMap<String,ITrophyEventListeners> listeners = new HashMap<String, ITrophyEventListeners>();
     private static String[] eventTypes={"coachStatAbilityUpdate","goalScoreUpdate","penaltyCountUpdate","savesUpdate"};
+
+    public HashMap<String, ITrophyEventListeners> getListeners() {
+        return listeners;
+    }
 
     public void subscribe(String eventType, ITrophyEventListeners listener){
 
