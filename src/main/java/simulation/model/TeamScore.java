@@ -4,6 +4,7 @@ import simulation.dao.ITeamScoreDao;
 
 public class TeamScore extends SharedAttributes implements ITeamScore{
 
+    ITeam team;
     String teamName;
     Integer points;
     Integer numberOfWins;
@@ -14,8 +15,9 @@ public class TeamScore extends SharedAttributes implements ITeamScore{
         setId(System.identityHashCode(this));
     }
 
-    public TeamScore(String teamName) {
-        this.teamName = teamName;
+    public TeamScore(ITeam team) {
+        this.team = team;
+        this.teamName = team.getName();
         this.numberOfLoss = 0;
         this.numberOfWins = 0;
         this.numberOfTies = 0;
@@ -36,12 +38,12 @@ public class TeamScore extends SharedAttributes implements ITeamScore{
         this.setName(teamScore.name);
     }
 
-    public String getTeamName() {
-        return teamName;
+    public ITeam getTeam() {
+        return team;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public void setTeam(ITeam team) {
+        this.team = team;
     }
 
     public Integer getPoints() {

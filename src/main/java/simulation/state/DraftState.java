@@ -4,9 +4,7 @@ import presentation.ConsoleOutput;
 import simulation.model.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DraftState implements ISimulateState {
@@ -31,10 +29,36 @@ public class DraftState implements ISimulateState {
         int round = 7;
         ITeamStanding standing = league.getRegularSeasonStanding();
         int teamNum = standing.getTeamsRankAcrossLeague(league).size();
-        generatePlayers(round,teamNum);
-
-
+        generatePlayers(round, teamNum);
+        performDraft(round, teamNum, standing);
         return exit();
+    }
+
+    private void performDraft(int round, int teamNum, ITeamStanding teamStanding) {
+        int firstN = teamNum - 16;
+        List<IPlayer> selectPlayerList = league.getDraftedPlayerList();
+        Collections.sort(selectPlayerList);
+        Stack<IPlayer> playerStack = new Stack<>();
+        while (selectPlayerList.size() > 0) {
+            playerStack.push(selectPlayerList.remove(0));
+        }
+        while (round > 0) {
+            for (int i = firstN-1; i >= 0; i--) {
+                ITeam team = teamStanding.getTeamsRankAcrossLeague(league).get(i).getTeam();
+                List<IPlayer> existingPlayers = team.getPlayerList();
+                existingPlayers.add(playerStack.pop());
+                ConsoleOutput.getInstance().printMsgToConsole("Team: " + team.getName() + " picked a draft");
+            }
+            Set<ITeam> remainingTeams = league.getStanleyCupFinalsTeamScores().keySet();
+            List<ITeam> secondTeamList = new ArrayList<>(remainingTeams);
+            for (int j = firstN; j < teamNum; j++) {
+                List<IPlayer> existingPlayers = secondTeamList.get(j).getPlayerList();
+                existingPlayers.add(playerStack.pop());
+            }
+            ConsoleOutput.getInstance().printMsgToConsole("Picking drafts in " + (8 - round) + "rounds");
+            round = round - 1;
+        }
+
     }
 
     private void generatePlayers(int round, int teamNum) {
@@ -68,31 +92,31 @@ public class DraftState implements ISimulateState {
     private void generateStats(IPlayer player) {
         Position position = player.getPosition();
         if (position == Position.FORWARD) {
-            int skating = ThreadLocalRandom.current().nextInt(12,21);
+            int skating = ThreadLocalRandom.current().nextInt(12, 21);
             player.setSkating(skating);
             int shooting = ThreadLocalRandom.current().nextInt(12, 21);
             player.setShooting(shooting);
-            int checking = ThreadLocalRandom.current().nextInt(9,19);
+            int checking = ThreadLocalRandom.current().nextInt(9, 19);
             player.setChecking(checking);
-            int saving = ThreadLocalRandom.current().nextInt( 1,8);
+            int saving = ThreadLocalRandom.current().nextInt(1, 8);
             player.setSaving(saving);
-        } else if (position == Position.DEFENSE){
-            int skating = ThreadLocalRandom.current().nextInt(10,20);
+        } else if (position == Position.DEFENSE) {
+            int skating = ThreadLocalRandom.current().nextInt(10, 20);
             player.setSkating(skating);
             int shooting = ThreadLocalRandom.current().nextInt(9, 19);
             player.setShooting(shooting);
-            int checking = ThreadLocalRandom.current().nextInt(12,21);
+            int checking = ThreadLocalRandom.current().nextInt(12, 21);
             player.setChecking(checking);
-            int saving = ThreadLocalRandom.current().nextInt( 1,13);
+            int saving = ThreadLocalRandom.current().nextInt(1, 13);
             player.setSaving(saving);
-        } else if (position == Position.GOALIE){
-            int skating = ThreadLocalRandom.current().nextInt(8,16);
+        } else if (position == Position.GOALIE) {
+            int skating = ThreadLocalRandom.current().nextInt(8, 16);
             player.setSkating(skating);
             int shooting = ThreadLocalRandom.current().nextInt(1, 11);
             player.setShooting(shooting);
-            int checking = ThreadLocalRandom.current().nextInt(1,13);
+            int checking = ThreadLocalRandom.current().nextInt(1, 13);
             player.setChecking(checking);
-            int saving = ThreadLocalRandom.current().nextInt( 12,21);
+            int saving = ThreadLocalRandom.current().nextInt(12, 21);
             player.setSaving(saving);
         }
     }

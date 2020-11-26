@@ -28,16 +28,16 @@ public class TeamScoreTest {
 
         TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertEquals(teamScore2.getId(), 3);
-        assertNull(teamScore2.getTeamName());
+        assertNull(teamScore2.getTeam().getName());
     }
 
     @Test
-    public void getTeamNameTest() throws Exception {
+    public void getTeamTest() throws Exception {
         TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
-        assertEquals(teamScore.getTeamName(), "Team1");
+        assertEquals(teamScore.getTeam().getName(), "Team1");
 
         TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
-        assertNull(teamScore2.getTeamName());
+        assertNull(teamScore2.getTeam().getName());
     }
 
     @Test
@@ -68,10 +68,12 @@ public class TeamScoreTest {
     }
 
     @Test
-    public void setTeamNameTest() {
+    public void setTeamTest() {
         TeamScore teamScore = new TeamScore();
-        teamScore.setTeamName("Temp Team Name");
-        assertTrue(teamScore.getTeamName().equals("Temp Team Name"));
+        Team team = new Team();
+        team.setName("Temp Team Name");
+        teamScore.setTeam(team);
+        assertTrue(teamScore.getTeam().getName().equals("Temp Team Name"));
     }
 
     @Test

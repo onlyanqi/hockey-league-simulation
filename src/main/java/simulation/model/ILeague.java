@@ -55,9 +55,9 @@ public interface ILeague{
 
     void setActiveTeamStanding(ITeamStanding activeTeamStanding);
 
-    HashMap<String,Integer> getStanleyCupFinalsTeamScores();
+    HashMap<ITeam,Integer> getStanleyCupFinalsTeamScores();
 
-    void setStanleyCupFinalsTeamScores(HashMap<String, Integer> stanleyCupFinalsTeamScores);
+    void setStanleyCupFinalsTeamScores(HashMap<ITeam, Integer> stanleyCupFinalsTeamScores);
 
     ArrayList<TeamStat> getTeamStats();
 

@@ -35,8 +35,8 @@ public class AgingState implements ISimulateState {
         if (stanleyCupWinnerDetermined()) {
             updateTeamScoreList();
             displayTeamStats();
-//            return new DraftState(hockeyContext,league.getCurrentDate());
-            return new AdvanceNextSeasonState(hockeyContext,league.getCurrentDate());
+            return new DraftState(hockeyContext,league.getCurrentDate());
+//            return new AdvanceNextSeasonState(hockeyContext,league.getCurrentDate());
         } else {
             return new PersistState(hockeyContext);
         }
@@ -62,10 +62,10 @@ public class AgingState implements ISimulateState {
     }
 
     private void updateTeamScoreList() {
-        HashMap<String,Integer> stanleyCupTeamStanding = league.getStanleyCupFinalsTeamScores();
+        HashMap<ITeam,Integer> stanleyCupTeamStanding = league.getStanleyCupFinalsTeamScores();
         List<ITeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
         for(ITeamScore teamScore : teamScoreList){
-            stanleyCupTeamStanding.put(teamScore.getTeamName(),stanleyCupTeamStanding.get(teamScore.getTeamName()) + teamScore.getPoints());
+            stanleyCupTeamStanding.put(teamScore.getTeam(),stanleyCupTeamStanding.get(teamScore.getTeam()) + teamScore.getPoints());
         }
     }
 
