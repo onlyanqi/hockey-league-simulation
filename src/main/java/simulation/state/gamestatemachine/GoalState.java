@@ -1,6 +1,7 @@
 package simulation.state.gamestatemachine;
 
 import simulation.model.GameSimulation;
+import simulation.model.IPlayer;
 import simulation.model.Shift;
 import simulation.state.GameContext;
 import simulation.state.IGameState;
@@ -37,8 +38,10 @@ public class GoalState implements IGameState {
         }
 
         if(goal && (rand.nextDouble() < 0.21)){
+            IPlayer forwardWhoMadeAGoal = offensive.getForward().get(rand.nextInt(offensive.getForward().size()));
             goal = true;
         }else{
+            IPlayer goalieWhoSavedFromAGoal = defensive.getGoalie();
             goal = false;
         }
         updateSimulationStats();
