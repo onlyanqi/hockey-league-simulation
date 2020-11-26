@@ -9,7 +9,6 @@ public class GamePlayConfig implements IGamePlayConfig{
     private int leagueId;
     private IAging aging;
     private IInjury injury;
-    private IGameResolver gameResolver;
     private ITrading trading;
     private ITraining training;
 
@@ -25,7 +24,6 @@ public class GamePlayConfig implements IGamePlayConfig{
         this.id = gamePlayConfig.id;
         this.aging = new Aging(gamePlayConfig.aging);
         this.leagueId = gamePlayConfig.leagueId;
-        this.gameResolver = new GameResolver(gamePlayConfig.gameResolver);
         this.injury = new Injury(gamePlayConfig.injury);
         this.trading = new Trading(gamePlayConfig.trading);
         this.training = new Training(gamePlayConfig.training);
@@ -67,17 +65,6 @@ public class GamePlayConfig implements IGamePlayConfig{
             return;
         }
         this.injury = injury;
-    }
-
-    public IGameResolver getGameResolver() {
-        return gameResolver;
-    }
-
-    public void setGameResolver(IGameResolver gameResolver) {
-        if (gameResolver == null) {
-            return;
-        }
-        this.gameResolver = gameResolver;
     }
 
     public ITrading getTrading() {

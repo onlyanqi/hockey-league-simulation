@@ -30,8 +30,6 @@ public interface IModelFactory {
 
     IGamePlayConfig newGamePlayConfig();
 
-    IGameResolver newGameResolver();
-
     IGameSchedule newGameSchedule();
 
     IInjury newInjury();

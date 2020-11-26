@@ -96,6 +96,10 @@ public interface ILeague{
 
     void loadTradingOfferDetailsByLeagueId(ITradeOfferDao tradingOfferFactory) throws Exception;
 
+    List<IPlayer> getDraftedPlayerList();
+
+    void setDraftedPlayerList(List<IPlayer> draftedPlayerList);
+
     int getId();
 
     String getName();

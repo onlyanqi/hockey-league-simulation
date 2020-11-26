@@ -20,10 +20,6 @@ public interface IGamePlayConfig {
 
     void setInjury(IInjury injury);
 
-    IGameResolver getGameResolver();
-
-    void setGameResolver(IGameResolver gameResolver);
-
     ITrading getTrading();
 
     void setTrading(ITrading trading);
