@@ -63,7 +63,7 @@ public class TrophySystem implements ISimulateState{
     }
 
     private ISimulateState exit() {
-        return new AdvanceNextSeasonState(hockeyContext,league.getCurrentDate());
+        return new DraftState(hockeyContext,league.getCurrentDate());
     }
 
     @Override
@@ -71,6 +71,10 @@ public class TrophySystem implements ISimulateState{
         setPresidentsAndParticipationAwards();
 
         calculateAndSetAwardOfPlayers();
+
+        if(league.getHistoricalTrophyList().size()>0){
+            setCalderMemorialTrophy();
+        }
 
         List<ICoach> coachList = league.createCoachList();
         trophy.setJackAdamsAward(calculateJackAdamsAward(coachList));
@@ -81,6 +85,17 @@ public class TrophySystem implements ISimulateState{
 
         showHistoricalTrophyList(trophyList);
         return exit();
+    }
+
+    private void setCalderMemorialTrophy() {
+        List<IPlayer> draftedPlayers = league.getDraftedPlayerList();
+        IPlayer calderMemorialTrophyWinnerPlayer = draftedPlayers.get(0);
+        for(IPlayer player : draftedPlayers){
+            if(player.getRelativeStrength()>calderMemorialTrophyWinnerPlayer.getRelativeStrength()){
+                calderMemorialTrophyWinnerPlayer=player;
+            }
+        }
+        trophy.setCalderMemorialTrophy(calderMemorialTrophyWinnerPlayer.getName());
     }
 
     private void calculateAndSetAwardOfPlayers() {
