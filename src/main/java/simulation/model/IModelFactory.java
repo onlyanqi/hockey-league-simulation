@@ -78,6 +78,9 @@ public interface IModelFactory {
 
     IUser newUserWithIdDao(int id, IUserDao userDao) throws Exception;
 
+    IFreeAgent newFreeAgentWithId(int id);
 
     ITrophy newTrophy();
+
+    IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception;
 }

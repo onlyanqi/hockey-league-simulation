@@ -1,8 +1,6 @@
 package simulation.model;
 
-import simulation.dao.IFreeAgentDao;
-import simulation.dao.IPlayerDao;
-import simulation.dao.ITeamDao;
+import simulation.dao.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.FreeAgentMock;
@@ -16,28 +14,32 @@ import static org.junit.Assert.*;
 
 public class FreeAgentTest {
 
-    private static IFreeAgentDao loadFreeAgentFactory;
+    private static IDaoFactory daoFactory;
+    private static IFreeAgentDao freeAgentDao;
+    private static IModelFactory modelFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
-        loadFreeAgentFactory = new FreeAgentMock();
+        daoFactory = DaoFactoryMock.getInstance();
+        freeAgentDao = daoFactory.newFreeAgentDao();
+        modelFactory = ModelFactory.getInstance();
     }
 
     @Test
     public void defaultConstructorTest() {
-        FreeAgent freeAgent = new FreeAgent();
+        IFreeAgent freeAgent = modelFactory.newFreeAgent();
         assertNotEquals(freeAgent.getId(), 0);
     }
 
     @Test
     public void freeAgentTest() {
-        FreeAgent freeAgent = new FreeAgent(1);
+        IFreeAgent freeAgent = modelFactory.newFreeAgentWithId(1);
         assertEquals(freeAgent.getId(), 1);
     }
 
     @Test
     public void freeAgentFactoryTest() throws Exception {
-        FreeAgent freeAgent = new FreeAgent(1, loadFreeAgentFactory);
+        IFreeAgent freeAgent = modelFactory.newFreeAgentWithIdDao(1, freeAgentDao);
         List<IPlayer> playerList = freeAgent.getPlayerList();
         IPlayer player = playerList.get(0);
         assertEquals(player.getId(), 1);
@@ -46,7 +48,7 @@ public class FreeAgentTest {
 
     @Test
     public void getPlayerListTest() throws Exception {
-        FreeAgent freeAgent = new FreeAgent(1, loadFreeAgentFactory);
+        IFreeAgent freeAgent = modelFactory.newFreeAgentWithIdDao(1, freeAgentDao);
         List<IPlayer> playerList = freeAgent.getPlayerList();
         assertNotNull(playerList);
         assertTrue(playerList.get(0).getId() == (1));
@@ -57,14 +59,14 @@ public class FreeAgentTest {
 
     @Test
     public void setPlayerListTest() throws Exception {
-        IPlayerDao playerFactory = new PlayerMock();
+        IPlayerDao playerFactory = daoFactory.newPlayerDao();
         List<IPlayer> playerList = new ArrayList<>();
-        Player player = new Player(1, playerFactory);
+        IPlayer player = modelFactory.newPlayerWithIdDao(1, playerFactory);
         playerList.add(player);
-        player = new Player(5, playerFactory);
+        player = modelFactory.newPlayerWithIdDao(5, playerFactory);
         playerList.add(player);
 
-        FreeAgent freeAgent = new FreeAgent();
+        IFreeAgent freeAgent = modelFactory.newFreeAgent();
         freeAgent.setPlayerList(playerList);
 
         assertTrue(freeAgent.getPlayerList().get(0).getId() == (1));
@@ -75,23 +77,23 @@ public class FreeAgentTest {
 
     @Test
     public void addFreeAgentTest() throws Exception {
-        FreeAgent freeAgent = new FreeAgent();
+        IFreeAgent freeAgent = modelFactory.newFreeAgent();
         freeAgent.setId(1);
         freeAgent.setName("FreeAgent1");
-        freeAgent.addFreeAgent(loadFreeAgentFactory);
+        freeAgent.addFreeAgent(freeAgentDao);
         assertTrue(1 == freeAgent.getId());
         assertTrue("FreeAgent1".equals(freeAgent.getName()));
     }
 
     @Test
     public void getSeasonIdTest() throws Exception {
-        FreeAgent freeAgent = new FreeAgent(1, loadFreeAgentFactory);
+        IFreeAgent freeAgent = modelFactory.newFreeAgentWithIdDao(1, freeAgentDao);
         assertTrue(freeAgent.getSeasonId() == (1));
     }
 
     @Test
     public void setSeasonIdTest() {
-        FreeAgent freeAgent = new FreeAgent();
+        IFreeAgent freeAgent = modelFactory.newFreeAgent();
         int seasonId = 1;
         freeAgent.setSeasonId(seasonId);
         assertTrue(freeAgent.getSeasonId() == seasonId);
@@ -99,13 +101,13 @@ public class FreeAgentTest {
 
     @Test
     public void getLeagueIdTest() throws Exception {
-        FreeAgent freeAgent = new FreeAgent(1, loadFreeAgentFactory);
+        IFreeAgent freeAgent = modelFactory.newFreeAgentWithIdDao(1, freeAgentDao);
         assertTrue(freeAgent.getLeagueId() == (1));
     }
 
     @Test
     public void setLeagueIdTest() {
-        FreeAgent freeAgent = new FreeAgent();
+        IFreeAgent freeAgent = modelFactory.newFreeAgent();
         int leagueId = 1;
         freeAgent.setLeagueId(leagueId);
         assertTrue(freeAgent.getLeagueId() == leagueId);
@@ -113,8 +115,8 @@ public class FreeAgentTest {
 
     @Test
     public void loadPlayerListByFreeAgentIdTest() throws Exception {
-        FreeAgent freeAgent = new FreeAgent(1);
-        IPlayerDao playerFactory = new PlayerMock();
+        IFreeAgent freeAgent = modelFactory.newFreeAgentWithId(1);
+        IPlayerDao playerFactory = daoFactory.newPlayerDao();
         freeAgent.loadPlayerListByFreeAgentId(playerFactory);
 
         assertTrue(freeAgent.getPlayerList().get(0).getId() == 1);
@@ -125,10 +127,10 @@ public class FreeAgentTest {
 
     @Test
     public void getGoodFreeAgentsListTest() throws Exception {
-        FreeAgent freeAgent = new FreeAgent(1, loadFreeAgentFactory);
+        IFreeAgent freeAgent = modelFactory.newFreeAgentWithIdDao(1, freeAgentDao);
         List<IPlayer> playerList = freeAgent.getPlayerList();
-        ITeamDao teamFactory = new TeamMock();
-        Team team = new Team(1, teamFactory);
+        ITeamDao teamFactory = daoFactory.newTeamDao();
+        ITeam team = modelFactory.newTeamWithIdDao(1, teamFactory);
         List<Double> strengthList = team.createStrengthList(playerList);
         assertTrue(freeAgent.getGoodFreeAgentsList(strengthList).size() <= playerList.size());
         assertFalse(freeAgent.getGoodFreeAgentsList(strengthList).size() > playerList.size());

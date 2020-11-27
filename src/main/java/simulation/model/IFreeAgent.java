@@ -31,4 +31,8 @@ public interface IFreeAgent {
 
     void setName(String name);
 
+    void setId(int id);
+
+    String getName();
+
 }

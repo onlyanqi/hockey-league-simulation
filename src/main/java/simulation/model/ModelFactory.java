@@ -180,4 +180,11 @@ public class ModelFactory implements IModelFactory{
     @Override
     public ITrophy newTrophy() {return new Trophy();}
 
+    public IFreeAgent newFreeAgentWithId(int id){
+        return new FreeAgent(id);
+    }
+
+    public IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception {
+        return new FreeAgent(id, freeAgentDao);
+    }
 }
