@@ -3,6 +3,7 @@ package simulation.trophyPublisherSubsribers;
 import simulation.GamePubSub.PenaltySubject;
 
 import java.util.HashMap;
+//https://refactoring.guru/design-patterns/observer
 
 public class TrophySystemPublisher {
     HashMap<String,ITrophyEventListeners> listeners = new HashMap<String, ITrophyEventListeners>();
