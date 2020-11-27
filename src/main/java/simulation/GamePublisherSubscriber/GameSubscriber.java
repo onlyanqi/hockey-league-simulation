@@ -1,8 +1,6 @@
-package simulation.GamePubSub;
+package simulation.GamePublisherSubscriber;
 
 import simulation.model.*;
-
-import java.util.ArrayList;
 
 public class GameSubscriber implements IGoalSubscriber,IPenaltyObserver,ISaveSubscriber,IShotSubscriber,ITotalGameSub{
 

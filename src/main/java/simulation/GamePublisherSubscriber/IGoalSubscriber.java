@@ -1,8 +1,6 @@
-package simulation.GamePubSub;
+package simulation.GamePublisherSubscriber;
 
 import simulation.model.ILeague;
-import simulation.model.IPlayer;
-import simulation.model.ITeam;
 
 public interface IGoalSubscriber {
     void updateGoal(ILeague league, String team,Integer count);

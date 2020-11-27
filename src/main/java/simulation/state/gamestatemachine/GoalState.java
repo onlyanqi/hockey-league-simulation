@@ -2,8 +2,10 @@ package simulation.state.gamestatemachine;
 
 import simulation.model.GameSimulation;
 import simulation.model.IPlayer;
+import simulation.model.ISimulate;
 import simulation.model.Shift;
 import simulation.state.GameContext;
+import simulation.state.HockeyContext;
 import simulation.state.IGameState;
 import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
 
@@ -17,9 +19,11 @@ public class GoalState implements IGameState {
     GameSimulation gameSimulation;
     Shift offensive;
     Shift defensive;
+    ISimulate simulateConfig;
     boolean goal;
 
     public GoalState(GameContext gameContext) {
+        simulateConfig  = HockeyContext.getInstance().getUser().getLeague().getGamePlayConfig().getSimulate();
         rand = new Random();
         this.gameContext = gameContext;
         gameSimulation = gameContext.getGameSimulation();
@@ -34,11 +38,11 @@ public class GoalState implements IGameState {
         }else{
             goal = false;
         }
-        if(rand.nextDouble() < 0.4){
+        if(rand.nextDouble() < simulateConfig.getUpset()){
             reverseGoal();
         }
 
-        if(goal && (rand.nextDouble() < 0.21)){
+        if(goal && (rand.nextDouble() < simulateConfig.getGoalChance())){
             IPlayer forwardWhoMadeAGoal = offensive.getForward().get(rand.nextInt(offensive.getForward().size()));
             updateTrophyPublisherGoal(forwardWhoMadeAGoal);
             goal = true;
@@ -51,7 +55,7 @@ public class GoalState implements IGameState {
         return null;
     }
 
-    boolean reverseGoal(){
+    private boolean reverseGoal(){
         return !goal;
     }
 

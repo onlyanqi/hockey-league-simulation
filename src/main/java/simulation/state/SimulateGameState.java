@@ -1,7 +1,6 @@
 package simulation.state;
 
-import presentation.ReadUserInput;
-import simulation.GamePubSub.*;
+import simulation.GamePublisherSubscriber.*;
 import simulation.model.*;
 
 

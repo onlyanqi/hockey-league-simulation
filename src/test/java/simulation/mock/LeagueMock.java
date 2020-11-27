@@ -148,6 +148,15 @@ public class LeagueMock implements ILeagueDao {
         return training;
     }
 
+    public Simulate getSimulate() throws Exception {
+        Simulate simulate = new Simulate();
+        simulate.setUpset(0.4);
+        simulate.setPenaltyChance(0.25);
+        simulate.setDefendChance(0.65);
+        simulate.setGoalChance(0.21);
+        return simulate;
+    }
+
     public List<ITradeOffer> getTradeOfferList(int leagueId) throws Exception {
         ITradeOfferDao tradeOfferFactory = new TradeOfferMock();
         return tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
@@ -159,6 +168,7 @@ public class LeagueMock implements ILeagueDao {
         gamePlayConfig.setTrading(getTrading());
         gamePlayConfig.setAging(getAging());
         gamePlayConfig.setInjury(getInjury());
+        gamePlayConfig.setSimulate(getSimulate());
         gamePlayConfig.setTraining(getTraining());
         return gamePlayConfig;
     }
@@ -334,27 +344,32 @@ public class LeagueMock implements ILeagueDao {
         team11.setName("Team11");
         team11.setDivisionId(1);
         team11.setPlayerList(addPlayerInList());
+        team11.setActivePlayerList();
 
 
         Team team12 = new Team();
         team12.setId(12);
         team12.setName("Team12");
         team12.setPlayerList(addPlayerInList());
+        team12.setActivePlayerList();
 
         Team team13 = new Team();
         team13.setId(13);
         team13.setName("Team13");
         team13.setPlayerList(addPlayerInList());
+        team13.setActivePlayerList();
 
         Team team14 = new Team();
         team14.setId(14);
         team14.setName("Team14");
         team14.setPlayerList(addPlayerInList());
+        team14.setActivePlayerList();
 
         Team team15 = new Team();
         team15.setId(15);
         team15.setName("Team15");
         team15.setPlayerList(addPlayerInList());
+        team15.setActivePlayerList();
 
         teamList.add(team11);
         teamList.add(team12);
@@ -370,26 +385,31 @@ public class LeagueMock implements ILeagueDao {
         team21.setId(21);
         team21.setName("Team21");
         team21.setPlayerList(addPlayerInList());
+        team21.setActivePlayerList();
 
         Team team22 = new Team();
         team22.setId(22);
         team22.setName("Team22");
         team22.setPlayerList(addPlayerInList());
+        team22.setActivePlayerList();
 
         Team team23 = new Team();
         team23.setId(23);
         team23.setName("Team23");
         team23.setPlayerList(addPlayerInList());
+        team23.setActivePlayerList();
 
         Team team24 = new Team();
         team24.setId(24);
         team24.setName("Team24");
         team24.setPlayerList(addPlayerInList());
+        team24.setActivePlayerList();
 
         Team team25 = new Team();
         team25.setId(25);
         team25.setName("Team25");
         team25.setPlayerList(addPlayerInList());
+        team25.setActivePlayerList();
 
         teamList.add(team21);
         teamList.add(team22);
@@ -405,24 +425,32 @@ public class LeagueMock implements ILeagueDao {
         team31.setId(31);
         team31.setName("Team31");
         team31.setPlayerList(addPlayerInList());
+        team31.setActivePlayerList();
 
         Team team32 = new Team();
         team32.setId(22);
         team32.setName("Team32");
         team32.setPlayerList(addPlayerInList());
+        team32.setActivePlayerList();
 
         Team team33 = new Team();
         team33.setId(23);
         team33.setName("Team33");
         team33.setPlayerList(addPlayerInList());
+        team33.setActivePlayerList();
+
         Team team34 = new Team();
         team34.setId(24);
         team34.setName("Team34");
         team34.setPlayerList(addPlayerInList());
+        team34.setActivePlayerList();
+
         Team team35 = new Team();
         team35.setId(35);
         team35.setName("Team35");
         team35.setPlayerList(addPlayerInList());
+        team35.setActivePlayerList();
+
         teamList.add(team31);
         teamList.add(team32);
         teamList.add(team33);
@@ -437,22 +465,32 @@ public class LeagueMock implements ILeagueDao {
         team41.setId(41);
         team41.setName("Team41");
         team41.setPlayerList(addPlayerInList());
+        team41.setActivePlayerList();
+
         Team team42 = new Team();
         team42.setId(42);
         team42.setName("Team42");
         team42.setPlayerList(addPlayerInList());
+        team42.setActivePlayerList();
+
         Team team43 = new Team();
         team43.setId(43);
         team43.setName("Team43");
         team43.setPlayerList(addPlayerInList());
+        team43.setActivePlayerList();
+
         Team team44 = new Team();
         team44.setId(44);
         team44.setName("Team44");
         team44.setPlayerList(addPlayerInList());
+        team44.setActivePlayerList();
+
         Team team45 = new Team();
         team45.setId(45);
         team45.setName("Team45");
         team45.setPlayerList(addPlayerInList());
+        team45.setActivePlayerList();
+
         teamList.add(team41);
         teamList.add(team42);
         teamList.add(team43);
@@ -472,6 +510,4 @@ public class LeagueMock implements ILeagueDao {
 
         return playerList;
     }
-
-
 }
