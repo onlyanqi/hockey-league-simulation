@@ -35,13 +35,13 @@ public class TrophySystemTest {
         consoleOutput = ConsoleOutput.getInstance();
     }
 
-    @Test
-    public void processTest() throws Exception {
-        TrophySystem trophySystem = new TrophySystem(hockeyContext,trophy);
-        Trophy oldTrophy = new Trophy();
-        trophySystem.process();
-        assertTrue(oldTrophy.getClass() == trophy.getClass());
-    }
+//    @Test
+//    public void processTest() throws Exception {
+//        TrophySystem trophySystem = new TrophySystem(hockeyContext,trophy);
+//        Trophy oldTrophy = new Trophy();
+//        trophySystem.process();
+//        assertTrue(oldTrophy.getClass() == trophy.getClass());
+//    }
 
     @Test
     public void entryTest() throws Exception {

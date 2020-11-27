@@ -1,6 +1,8 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
+import simulation.trophyPublisherSubsribers.CoachStatAbilitySubscriber;
+import simulation.trophyPublisherSubsribers.ITrophyEventListeners;
 import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
 import simulation.model.*;
 
@@ -72,7 +74,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     @Override
     public void statIncreaseCheckForPlayer(IPlayer player, ICoach headCoach) {
-        TrophySystemPublisher trophySystemPublisher = new TrophySystemPublisher();
+        TrophySystemPublisher trophySystemPublisher = TrophySystemPublisher.getInstance();
 
         if (player == null || headCoach == null) {
             return;

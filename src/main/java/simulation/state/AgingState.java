@@ -35,8 +35,7 @@ public class AgingState implements ISimulateState {
         if (stanleyCupWinnerDetermined()) {
             updateTeamScoreList();
             displayTeamStats();
-//            return new DraftState(hockeyContext,league.getCurrentDate());
-            return new AdvanceNextSeasonState(hockeyContext,league.getCurrentDate());
+            return new TrophySystem(hockeyContext);
         } else {
             return new PersistState(hockeyContext);
         }

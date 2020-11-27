@@ -1,10 +1,21 @@
 package simulation.trophyPublisherSubsribers;
 
+import simulation.GamePubSub.PenaltySubject;
+
 import java.util.HashMap;
 
 public class TrophySystemPublisher {
     HashMap<String,ITrophyEventListeners> listeners = new HashMap<String, ITrophyEventListeners>();
     private static String[] eventTypes={"coachStatAbilityUpdate","goalScoreUpdate","penaltyCountUpdate","savesUpdate"};
+
+    private static TrophySystemPublisher instance;
+
+    public static TrophySystemPublisher getInstance() {
+        if (instance == null) {
+            instance = new TrophySystemPublisher();
+        }
+        return instance;
+    }
 
     public HashMap<String, ITrophyEventListeners> getListeners() {
         return listeners;
