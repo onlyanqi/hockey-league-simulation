@@ -51,7 +51,7 @@ public class GoalState implements IGameState {
         return null;
     }
 
-    boolean reverseGoal(){
+    private boolean reverseGoal(){
         return !goal;
     }
 

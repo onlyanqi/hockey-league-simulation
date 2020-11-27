@@ -3,7 +3,7 @@ package simulation;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
-import simulation.GamePubSub.*;
+import simulation.GamePublisherSubscriber.*;
 import simulation.factory.*;
 import simulation.model.IModelFactory;
 import simulation.model.IUser;
@@ -52,7 +52,6 @@ public class App {
                 }
 
                 addSubscribers();
-
                 context.setUser(user);
                 context.startAction(jsonFromInput);
             }

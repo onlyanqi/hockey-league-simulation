@@ -1,6 +1,5 @@
 package simulation.trophyPublisherSubsribers;
 
-import simulation.GamePubSub.PenaltySubject;
 
 import java.util.HashMap;
 

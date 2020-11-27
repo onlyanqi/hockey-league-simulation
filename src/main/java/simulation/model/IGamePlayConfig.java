@@ -20,6 +20,10 @@ public interface IGamePlayConfig {
 
     void setInjury(IInjury injury);
 
+    ISimulate getSimulate();
+
+    void setSimulate(ISimulate simulate);
+
     ITrading getTrading();
 
     void setTrading(ITrading trading);

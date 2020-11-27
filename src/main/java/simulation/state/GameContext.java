@@ -2,7 +2,6 @@ package simulation.state;
 
 import simulation.model.GameSimulation;
 import simulation.model.Shift;
-import simulation.state.gamestatemachine.GoalState;
 import simulation.state.gamestatemachine.ShootingState;
 
 public class GameContext {
@@ -10,6 +9,8 @@ public class GameContext {
     Shift offensive;
     Shift defensive;
     GameSimulation gameSimulation;
+    IGameState gameState;
+
 
     public GameContext(GameSimulation gameSimulation) {
         this.offensive = new Shift();
@@ -47,5 +48,13 @@ public class GameContext {
 
     public void setGameSimulation(GameSimulation gameSimulation) {
         this.gameSimulation = gameSimulation;
+    }
+
+    public IGameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(IGameState gameState) {
+        this.gameState = gameState;
     }
 }

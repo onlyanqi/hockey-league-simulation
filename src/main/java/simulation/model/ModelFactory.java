@@ -80,6 +80,10 @@ public class ModelFactory implements IModelFactory{
         return new Injury();
     }
 
+    public ISimulate newSimulate() {
+        return new Simulate();
+    }
+
     public ILeague newLeague() {
         return new League();
     }

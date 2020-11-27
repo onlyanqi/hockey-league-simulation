@@ -1,4 +1,4 @@
-package simulation.GamePubSub;
+package simulation.GamePublisherSubscriber;
 
 import simulation.model.ILeague;
 
