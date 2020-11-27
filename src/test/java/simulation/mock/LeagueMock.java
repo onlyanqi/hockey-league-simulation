@@ -148,6 +148,15 @@ public class LeagueMock implements ILeagueDao {
         return training;
     }
 
+    public Simulate getSimulate() throws Exception {
+        Simulate simulate = new Simulate();
+        simulate.setUpset(0.4);
+        simulate.setPenaltyChance(0.25);
+        simulate.setDefendChance(0.65);
+        simulate.setGoalChance(0.21);
+        return simulate;
+    }
+
     public List<ITradeOffer> getTradeOfferList(int leagueId) throws Exception {
         ITradeOfferDao tradeOfferFactory = new TradeOfferMock();
         return tradeOfferFactory.loadTradeOfferDetailsByLeagueId(leagueId);
@@ -159,6 +168,7 @@ public class LeagueMock implements ILeagueDao {
         gamePlayConfig.setTrading(getTrading());
         gamePlayConfig.setAging(getAging());
         gamePlayConfig.setInjury(getInjury());
+        gamePlayConfig.setSimulate(getSimulate());
         gamePlayConfig.setTraining(getTraining());
         return gamePlayConfig;
     }

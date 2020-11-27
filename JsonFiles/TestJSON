@@ -22,13 +22,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 396283472,
+                "id": 1709804316,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 164974746,
+                "id": 536122141,
                 "name": "Manager1"
               },
               "playerList": [
@@ -1674,13 +1674,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 1020520290,
+                "id": 1792550665,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 989892772,
+                "id": 1630678941,
                 "name": "Manager3"
               },
               "playerList": [
@@ -3333,13 +3333,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 2125238280,
+                "id": 2014838114,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 530653666,
+                "id": 1359953204,
                 "name": "Manager1"
               },
               "playerList": [
@@ -4985,13 +4985,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 1658699134,
+                "id": 593687897,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1092004553,
+                "id": 136936250,
                 "name": "Manager3"
               },
               "playerList": [
@@ -6650,13 +6650,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 1859374258,
+                "id": 1276611190,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1961176822,
+                "id": 187472540,
                 "name": "Manager1"
               },
               "playerList": [
@@ -8302,13 +8302,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 366873404,
+                "id": 1004023029,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 442987331,
+                "id": 262457445,
                 "name": "Manager3"
               },
               "playerList": [
@@ -9961,13 +9961,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 945288723,
+                "id": 612097453,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1217467887,
+                "id": 1414506856,
                 "name": "Manager1"
               },
               "playerList": [
@@ -12331,7 +12331,7 @@
         "name": "Player21"
       }
     ],
-    "id": 428566321
+    "id": 221634215
   },
   "currentDate": {
     "year": 2020,
@@ -12339,7 +12339,7 @@
     "day": 27
   },
   "gamePlayConfig": {
-    "id": 1293680848,
+    "id": 2012330741,
     "leagueId": 0,
     "aging": {
       "averageRetirementAge": 35,
@@ -12383,6 +12383,13 @@
       "id": 0,
       "daysUntilStatIncreaseCheck": 0,
       "leagueId": 0
+    },
+    "simulate": {
+      "upset": 0.4,
+      "defendChance": 0.65,
+      "penaltyChance": 0.25,
+      "goalChance": 0.21,
+      "id": 1101184763
     }
   },
   "games": {
@@ -12456,7 +12463,7 @@
         "played": false
       }
     ],
-    "id": 2030538903
+    "id": 131206411
   },
   "stanleyCupFinalsTeamScores": {},
   "teamStats": [],
