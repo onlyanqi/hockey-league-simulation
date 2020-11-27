@@ -26,6 +26,7 @@ public class CoachMock implements ICoachDao {
                 coach.setSaving(1.0);
                 coach.setLeagueId(1);
                 coach.setTeamId(0);
+                coach.setCoachingEffectiveness(10);
                 break;
             case 1:
                 coach.setId(id);

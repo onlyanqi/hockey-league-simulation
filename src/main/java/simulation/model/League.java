@@ -4,6 +4,12 @@ import simulation.dao.IConferenceDao;
 import simulation.dao.IFreeAgentDao;
 import simulation.dao.ILeagueDao;
 import simulation.dao.ITradeOfferDao;
+import simulation.serializers.ModelsForDeserialization.model.Coach;
+import simulation.serializers.ModelsForDeserialization.model.Conference;
+import simulation.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
+import simulation.serializers.ModelsForDeserialization.model.Player;
+import simulation.serializers.ModelsForDeserialization.model.TradeOffer;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,10 +20,11 @@ public class League extends SharedAttributes implements ILeague {
     private int createdBy;
     private String user;
     private String userCreatedTeamName;
-    private List<IConference> conferenceList;
-    private List<ICoach> coachList;
-    private List<IManager> managerList;
-    private List<IPlayer> retiredPlayerList;
+    private List<IConference> conferenceList = new ArrayList<>();
+    private List<ICoach> coachList = new ArrayList<>();
+    private List<IManager> managerList = new ArrayList<>();
+    private List<IPlayer> retiredPlayerList = new ArrayList<>();
+    private List<IPlayer> draftedPlayerList = new ArrayList<>();
     private IFreeAgent freeAgent;
     private LocalDate currentDate;
     private IGamePlayConfig gamePlayConfig;
@@ -25,10 +32,12 @@ public class League extends SharedAttributes implements ILeague {
     private ITeamStanding regularSeasonStanding;
     private ITeamStanding playOffStanding;
     private ITeamStanding activeTeamStanding;
-    private HashMap<String,Integer> stanleyCupFinalsTeamScores;
-    private ArrayList<TeamStat> teamStats;
+    private HashMap<String,Integer> stanleyCupFinalsTeamScores = new HashMap<>();
+    private ArrayList<TeamStat> teamStats = new ArrayList<>();
     private INHLEvents nhlEvents;
-    private List<ITradeOffer> tradeOfferList;
+    private List<ITradeOffer> tradeOfferList = new ArrayList<>();
+    private List<ITrophy> historicalTrophyList = new ArrayList<>();
+    private ITrophy trophy;
 
     public League() {
         setId(System.identityHashCode(this));
@@ -50,7 +59,73 @@ public class League extends SharedAttributes implements ILeague {
         loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
     }
 
+    public League(LeagueDeserializationModel leagueDeserializationModel){
+        this.activeTeamStanding = new TeamStanding(leagueDeserializationModel.activeTeamStanding);
+        for(Coach coach : leagueDeserializationModel.coachList){
+            this.coachList.add(new simulation.model.Coach(coach));
+        }
+        for(Conference conference : leagueDeserializationModel.conferenceList){
+            this.conferenceList.add(new simulation.model.Conference(conference));
+        }
+        this.createdBy = leagueDeserializationModel.createdBy;
+        this.currentDate = leagueDeserializationModel.currentDate;
+        this.freeAgent = new FreeAgent(leagueDeserializationModel.freeAgent);
+        this.gamePlayConfig = new GamePlayConfig(leagueDeserializationModel.gamePlayConfig);
+        this.games = new GameSchedule(leagueDeserializationModel.games);
+        for(simulation.serializers.ModelsForDeserialization.model.Manager manager : leagueDeserializationModel.managerList){
+            this.managerList.add(new Manager(manager));
+        }
+        this.nhlEvents = new NHLEvents(leagueDeserializationModel.nhlEvents);
+        this.playOffStanding = new TeamStanding(leagueDeserializationModel.playOffStanding);
+        this.regularSeasonStanding = new TeamStanding(leagueDeserializationModel.regularSeasonStanding);
+        for(Player player : leagueDeserializationModel.retiredPlayerList){
+            this.retiredPlayerList.add(new simulation.model.Player(player));
+        }
+        if(leagueDeserializationModel.stanleyCupFinalsTeamScores == null){
+            this.stanleyCupFinalsTeamScores = new HashMap<>();
+        }else{
+            this.stanleyCupFinalsTeamScores = leagueDeserializationModel.stanleyCupFinalsTeamScores;
+        }
 
+        if(leagueDeserializationModel.teamStats == null){
+            this.teamStats = new ArrayList<>();
+        }else{
+            for(simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat : leagueDeserializationModel.teamStats){
+                this.teamStats.add(new TeamStat(teamStat));
+            }
+        }
+
+        this.nhlEvents = new NHLEvents(leagueDeserializationModel.nhlEvents);
+        for(TradeOffer tradeOffer : leagueDeserializationModel.tradeOfferList){
+            this.tradeOfferList.add(new simulation.model.TradeOffer(tradeOffer));
+        }
+        for(simulation.serializers.ModelsForDeserialization.model.Trophy trophy : leagueDeserializationModel.historicalTrophyList){
+            this.historicalTrophyList.add(new Trophy(trophy));
+        }
+
+        if(leagueDeserializationModel.trophy == null){
+            this.trophy = new Trophy();
+        }else{
+            this.trophy = new Trophy(leagueDeserializationModel.trophy);
+        }
+        this.user = leagueDeserializationModel.user;
+        this.userCreatedTeamName = leagueDeserializationModel.userCreatedTeamName;
+        this.setName(leagueDeserializationModel.name);
+        this.setId(leagueDeserializationModel.id);
+    }
+
+    @Override
+    public ITrophy getTrophy() {
+        return trophy;
+    }
+
+    @Override
+    public void setTrophy(ITrophy trophy) {
+        this.trophy = trophy;
+    }
+
+
+    @Override
     public String getUserCreatedTeamName() {
         return userCreatedTeamName;
     }
@@ -84,6 +159,16 @@ public class League extends SharedAttributes implements ILeague {
             return;
         }
         this.nhlEvents = nhlEvents;
+    }
+
+    @Override
+    public List<ITrophy> getHistoricalTrophyList() {
+        return historicalTrophyList;
+    }
+
+    @Override
+    public void setHistoricalTrophyList(List<ITrophy> historicalTrophyList) {
+        this.historicalTrophyList = historicalTrophyList;
     }
 
     public IGameSchedule getGames() {
@@ -141,6 +226,7 @@ public class League extends SharedAttributes implements ILeague {
         this.coachList = coachList;
     }
 
+    @Override
     public List<IManager> getManagerList() {
         return managerList;
     }
@@ -326,4 +412,51 @@ public class League extends SharedAttributes implements ILeague {
         this.tradeOfferList = tradingOfferFactory.loadTradeOfferDetailsByLeagueId(getId());
     }
 
+    public List<IPlayer> getDraftedPlayerList() {
+        return draftedPlayerList;
+    }
+
+    public void setDraftedPlayerList(List<IPlayer> draftedPlayerList) {
+        this.draftedPlayerList = draftedPlayerList;
+    }
+
+
+    @Override
+    public List<ITeam> createTeamList(){
+        List<ITeam> teamList=new ArrayList<>();
+        for (IConference conference : getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    teamList.add(team);
+                }
+            }
+        }
+        return teamList;
+    }
+
+    @Override
+    public List<IPlayer> createPlayerList(){
+        List<IPlayer> playerList=new ArrayList<>();
+        for (IConference conference : getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    playerList.addAll(team.getPlayerList());
+                }
+            }
+        }
+        return playerList;
+    }
+
+    @Override
+    public List<ICoach> createCoachList(){
+        List<ICoach> coachList=new ArrayList<>();
+        for (IConference conference : getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    coachList.add(team.getCoach());
+                }
+            }
+        }
+        return coachList;
+    }
 }

@@ -1,6 +1,7 @@
 package simulation.model;
 
 import simulation.dao.*;
+import simulation.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 
 public class ModelFactory implements IModelFactory{
 
@@ -18,10 +19,6 @@ public class ModelFactory implements IModelFactory{
     @Override
     public IGameSchedule newGameSchedule() {
         return new GameSchedule();
-    }
-
-    public IGameResolver newGameResolver() {
-        return new GameResolver();
     }
 
     public IAging newAging() {
@@ -89,6 +86,10 @@ public class ModelFactory implements IModelFactory{
 
     public ILeague createLeagueFromNameAndUserId(String leagueName, int userId, ILeagueDao leagueFactory) throws Exception {
         return new League(leagueName, userId, leagueFactory);
+    }
+
+    public ILeague createLeagueFromDeserializationObject(LeagueDeserializationModel leagueDeserializationModel){
+        return new League(leagueDeserializationModel);
     }
 
     @Override
@@ -175,6 +176,9 @@ public class ModelFactory implements IModelFactory{
     public ITraining newTraining() {
         return new Training();
     }
+
+    @Override
+    public ITrophy newTrophy() {return new Trophy();}
 
     public IFreeAgent newFreeAgentWithId(int id){
         return new FreeAgent(id);

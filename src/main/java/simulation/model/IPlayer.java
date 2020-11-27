@@ -71,10 +71,6 @@ public interface IPlayer extends Comparable<IPlayer>{
 
     void agingInjuryRecovery(ILeague league);
 
-    boolean isRetired();
-
-    void setRetired(boolean retired);
-
     void setRelativeStrength();
 
     double getRelativeStrength();
@@ -100,4 +96,16 @@ public interface IPlayer extends Comparable<IPlayer>{
     void statDecayCheck(ILeague league);
 
     boolean isBirthday(ILeague league);
+
+    int getSaves();
+
+    int getPenaltyCount();
+
+    void setSaves(int saves);
+
+    void setPenaltyCount(int penaltyCount);
+
+    int getGoalScore();
+
+    void setGoalScore(int goalScore);
 }

@@ -25,6 +25,14 @@ public class Manager extends SharedAttributes implements IManager{
         this.setTeamId(manager.getTeamId());
     }
 
+    public Manager(simulation.serializers.ModelsForDeserialization.model.Manager manager){
+        this.leagueId = manager.leagueId;
+        this.personality = manager.personality;
+        this.teamId = manager.teamId;
+        this.setId(manager.id);
+        this.setName(manager.name);
+    }
+
     public Manager(int id, IManagerDao managerFactory) throws Exception {
         if (managerFactory == null) {
             return;

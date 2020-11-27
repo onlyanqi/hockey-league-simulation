@@ -10,16 +10,28 @@ public class GameSimulation {
     private Shift team2Shift;
     private ITeam team1;
     private ITeam team2;
-    private HashMap<String,HashMap<String,Integer>> teamPlayersCount;
-    private HashMap<String,Integer> goals;
-    private HashMap<String,Integer> penalties;
-    private HashMap<String,Integer> shots;
-    private HashMap<String,Integer> saves;
+    private HashMap<String,HashMap<Integer,Integer>> teamPlayersCount = new HashMap<>();
+    private HashMap<String,Integer> goals = new HashMap<>();
+    private HashMap<String,Integer> penalties = new HashMap<>();
+    private HashMap<String,Integer> shots = new HashMap<>();
+    private HashMap<String,Integer> saves = new HashMap<>();
 
     public GameSimulation(ITeam team1, ITeam team2) {
         this.team1 = team1;
         this.team2 = team2;
         initializeGameSimulation();
+    }
+
+    public GameSimulation(simulation.serializers.ModelsForDeserialization.model.GameSimulation gameSimulation){
+        this.team1Shift = new Shift(gameSimulation.team1Shift);
+        this.team2Shift = new Shift(gameSimulation.team2Shift);
+        this.team1 = new Team(gameSimulation.team1);
+        this.team2 = new Team(gameSimulation.team2);
+        this.teamPlayersCount = gameSimulation.teamPlayersCount;
+        this.goals = gameSimulation.goals;
+        this.penalties = gameSimulation.penalties;
+        this.shots = gameSimulation.shots;
+        this.saves = gameSimulation.saves;
     }
 
     public void initializeGameSimulation(){
@@ -66,6 +78,10 @@ public class GameSimulation {
                     }
                     penalPlayer.setValue(penalPlayer.getValue()-1);
                 }
+            }
+            if(timeIn10Seconds == 240){
+                team1Shift.updateGoalie(team1);
+                team2Shift.updateGoalie(team2);
             }
             //change shifts for every 90 seconds to make 40 shifts over 20 min periods
             if(timeIn10Seconds % 9 ==0){
@@ -122,11 +138,11 @@ public class GameSimulation {
         this.team2 = team2;
     }
 
-    public HashMap<String, HashMap<String, Integer>> getTeamPlayersCount() {
+    public HashMap<String, HashMap<Integer, Integer>> getTeamPlayersCount() {
         return teamPlayersCount;
     }
 
-    public void setTeamPlayersCount(HashMap<String, HashMap<String, Integer>> teamPlayersCount) {
+    public void setTeamPlayersCount(HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
         this.teamPlayersCount = teamPlayersCount;
     }
 
@@ -173,9 +189,9 @@ public class GameSimulation {
     }
 
     private void initializeTeamPlayerShiftCount(ITeam team) {
-        HashMap<String,Integer> playersCount  = new HashMap<>();
-        for(IPlayer player : team.getPlayerList()){
-            playersCount.put(player.getName(),0);
+        HashMap<Integer,Integer> playersCount  = new HashMap<>();
+        for(IPlayer player : team.getActivePlayerList()){
+            playersCount.put(player.getId(),0);
         }
         teamPlayersCount.put(team.getName(),playersCount);
     }

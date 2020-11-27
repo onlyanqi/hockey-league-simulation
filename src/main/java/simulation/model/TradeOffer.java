@@ -1,6 +1,8 @@
 package simulation.model;
 
 import simulation.dao.ITradeOfferDao;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class TradeOffer extends SharedAttributes implements ITradeOffer{
@@ -11,8 +13,8 @@ public class TradeOffer extends SharedAttributes implements ITradeOffer{
     private int toTeamId;
     private int fromPlayerId;
     private int toPlayerId;
-    private List<Integer> fromPlayerIdList;
-    private List<Integer> toPlayerIdList;
+    private List<Integer> fromPlayerIdList = new ArrayList<>();
+    private List<Integer> toPlayerIdList = new ArrayList<>();
 
     private int seasonId;
     private String status;
@@ -24,6 +26,21 @@ public class TradeOffer extends SharedAttributes implements ITradeOffer{
     public TradeOffer(int tradingOfferId, ITradeOfferDao factory) throws Exception {
         setId(tradingOfferId);
         factory.loadTradeOfferDetailsById(tradingOfferId, this);
+    }
+
+    public TradeOffer(simulation.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer){
+        this.leagueId = tradeOffer.leagueId;
+        this.tradingId = tradeOffer.tradingId;
+        this.fromPlayerId = tradeOffer.fromPlayerId;
+        this.toTeamId = tradeOffer.toTeamId;
+        this.fromPlayerId = tradeOffer.fromPlayerId;
+        this.toPlayerId = tradeOffer.toPlayerId;
+        this.fromPlayerIdList = tradeOffer.fromPlayerIdList;
+        this.toPlayerIdList = tradeOffer.toPlayerIdList;
+        this.seasonId = tradeOffer.seasonId;
+        this.status = tradeOffer.status;
+        this.setName(tradeOffer.name);
+        this.setId(tradeOffer.id);
     }
 
     public int getLeagueId() {

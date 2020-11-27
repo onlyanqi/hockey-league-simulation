@@ -21,13 +21,16 @@ public class Player extends SharedAttributes implements IPlayer {
     private LocalDate injuryStartDate;
     private int injuryDatesRange;
     private boolean isFreeAgent = false;
-    private boolean isRetired = false;
     private int skating;
     private int shooting;
     private int checking;
     private int saving;
     private double strength;
     private double relativeStrength;
+    private int penaltyCount;
+    private int goalScore;
+
+    private int saves;
 
     public Player() {
         setId(System.identityHashCode(this));
@@ -57,7 +60,6 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setInjuryDatesRange(player.getInjuryDatesRange());
         this.setInjuryStartDate(player.getInjuryStartDate());
         this.setCaptain(player.isCaptain());
-        this.setRetired(player.isRetired());
         this.setPosition(player.getPosition());
         this.setSaving(player.getSaving());
         this.setChecking(player.getChecking());
@@ -65,10 +67,60 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setSkating(player.getSkating());
         this.setStrength();
         this.setRelativeStrength();
+        this.setSaves(player.getSaves());
+        this.setPenaltyCount(player.getPenaltyCount());
+        this.setGoalScore(player.getGoalScore());
+    }
+
+    public Player(simulation.serializers.ModelsForDeserialization.model.Player playerFromDeserialization){
+        this.setId(playerFromDeserialization.id);
+        this.setName(playerFromDeserialization.name);
+        this.age = playerFromDeserialization.age;
+        this.birthday = playerFromDeserialization.birthday;
+        this.checking = playerFromDeserialization.checking;
+        this.freeAgentId = playerFromDeserialization.freeAgentId;
+        this.goalScore = playerFromDeserialization.goalScore;
+        this.injuryDatesRange = playerFromDeserialization.injuryDatesRange;
+        this.injuryStartDate = playerFromDeserialization.injuryStartDate;
+        this.isCaptain = playerFromDeserialization.isCaptain;
+        this.isInjured = playerFromDeserialization.isInjured;
+        this.penaltyCount = playerFromDeserialization.penaltyCount;
+        this.position = playerFromDeserialization.position;
+        this.relativeStrength = playerFromDeserialization.relativeStrength;
+        this.saves =playerFromDeserialization.saves;
+        this.saving = playerFromDeserialization.saving;
+        this.shooting = playerFromDeserialization.shooting;
+        this.skating = playerFromDeserialization.skating;
+        this.strength = playerFromDeserialization.strength;
+        this.isFreeAgent=playerFromDeserialization.isFreeAgent;
     }
 
     public boolean isFreeAgent() {
         return isFreeAgent;
+    }
+
+    public int getGoalScore() {
+        return goalScore;
+    }
+
+    public void setGoalScore(int goalScore) {
+        this.goalScore = goalScore;
+    }
+
+    public int getPenaltyCount() {
+        return penaltyCount;
+    }
+
+    public void setPenaltyCount(int penaltyCount) {
+        this.penaltyCount = penaltyCount;
+    }
+
+    public int getSaves() {
+        return saves;
+    }
+
+    public void setSaves(int saves) {
+        this.saves = saves;
     }
 
     public void setIsFreeAgent(boolean freeAgent) {
@@ -216,13 +268,6 @@ public class Player extends SharedAttributes implements IPlayer {
         this.injuryDatesRange = injuryDatesRange;
     }
 
-    public boolean isRetired() {
-        return isRetired;
-    }
-
-    public void setRetired(boolean retired) {
-        this.isRetired = retired;
-    }
 
     @Override
     public void addPlayer(IPlayerDao addPlayerFactory) throws Exception {
@@ -286,6 +331,7 @@ public class Player extends SharedAttributes implements IPlayer {
     @Override
     public void statDecayCheck(ILeague league) {
         if (isBirthday(league)) {
+            calculateAge(league);
             Random randomStatDecay = new Random();
             double chanceOfStatDecay = randomStatDecay.nextDouble();
             double statDecayChance = league.getGamePlayConfig().getAging().getStatDecayChance();
@@ -313,7 +359,8 @@ public class Player extends SharedAttributes implements IPlayer {
             Random randomInjuryDays = new Random();
             int injuryDaysHigh = league.getGamePlayConfig().getInjury().getInjuryDaysHigh();
             int injuryDaysLow = league.getGamePlayConfig().getInjury().getInjuryDaysLow();
-            this.setInjuryDatesRange(randomInjuryDays.nextInt(injuryDaysHigh - injuryDaysLow) + injuryDaysLow);
+            int range = injuryDaysHigh - injuryDaysLow + 1;
+            this.setInjuryDatesRange(randomInjuryDays.nextInt(range) + injuryDaysLow);
             this.setInjured(true);
         }
     }

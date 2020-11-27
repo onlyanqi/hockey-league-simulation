@@ -1,6 +1,5 @@
 package simulation.model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -17,14 +16,6 @@ public class DateTime {
 
     public static long diffDays(LocalDate beforeDate, LocalDate afterDate) {
         return DAYS.between(beforeDate, afterDate);
-    }
-
-    public static Date convertLocalDateToSQLDate(LocalDate date) {
-        if (date == null) {
-            return null;
-        } else {
-            return java.sql.Date.valueOf(date);
-        }
     }
 
 }

@@ -33,6 +33,10 @@ public interface INHLEvents {
 
     void setLastDayStanleyCupFinals(LocalDate lastDayStanleyCupFinals);
 
+    LocalDate getPlayerDraftDate();
+
+    void setPlayerDraftDate(LocalDate playerDraftDate);
+
     boolean checkTradeDeadlinePassed(LocalDate currentDate);
 
     boolean checkEndOfRegularSeason(LocalDate currentDate);
@@ -50,5 +54,7 @@ public interface INHLEvents {
     void initializeLastDayStanleyCupFinals();
 
     void initializeNextSeasonDate();
+
+    void initializeDraftDate();
 
 }

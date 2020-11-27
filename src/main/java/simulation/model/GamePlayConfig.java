@@ -9,7 +9,6 @@ public class GamePlayConfig implements IGamePlayConfig{
     private int leagueId;
     private IAging aging;
     private IInjury injury;
-    private IGameResolver gameResolver;
     private ITrading trading;
     private ITraining training;
 
@@ -19,6 +18,15 @@ public class GamePlayConfig implements IGamePlayConfig{
 
     public GamePlayConfig(int leagueId, IGamePlayConfigDao gamePlayConfigFactory) throws Exception {
         gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
+    }
+
+    public GamePlayConfig(simulation.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig){
+        this.id = gamePlayConfig.id;
+        this.aging = new Aging(gamePlayConfig.aging);
+        this.leagueId = gamePlayConfig.leagueId;
+        this.injury = new Injury(gamePlayConfig.injury);
+        this.trading = new Trading(gamePlayConfig.trading);
+        this.training = new Training(gamePlayConfig.training);
     }
 
     public int getId() {
@@ -57,17 +65,6 @@ public class GamePlayConfig implements IGamePlayConfig{
             return;
         }
         this.injury = injury;
-    }
-
-    public IGameResolver getGameResolver() {
-        return gameResolver;
-    }
-
-    public void setGameResolver(IGameResolver gameResolver) {
-        if (gameResolver == null) {
-            return;
-        }
-        this.gameResolver = gameResolver;
     }
 
     public ITrading getTrading() {

@@ -17,6 +17,7 @@ public class NHLEvents implements INHLEvents{
     public LocalDate playOffStartDate;
     public LocalDate lastDayStanleyCupFinals;
     public LocalDate nextSeasonDate;
+    public LocalDate playerDraftDate;
     public int currentYear;
 
     public NHLEvents() {
@@ -28,6 +29,7 @@ public class NHLEvents implements INHLEvents{
         initializePlayOffStartDate();
         initializeLastDayStanleyCupFinals();
         initializeNextSeasonDate();
+        initializeDraftDate();
     }
 
     public NHLEvents(int currentYear){
@@ -39,10 +41,22 @@ public class NHLEvents implements INHLEvents{
         initializePlayOffStartDate();
         initializeLastDayStanleyCupFinals();
         initializeNextSeasonDate();
+        initializeDraftDate();
     }
 
     public NHLEvents(int leagueId, IEventDao iEventDao) throws Exception {
         iEventDao.loadEventByLeagueId(leagueId, this);
+    }
+
+    public NHLEvents(simulation.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents){
+        this.id =nhlEvents.id;
+        this.regularSeasonStartDate = nhlEvents.regularSeasonStartDate;
+        this.tradeDeadlineDate = nhlEvents.tradeDeadlineDate;
+        this.endOfRegularSeason = nhlEvents.endOfRegularSeason;
+        this.playOffStartDate = nhlEvents.playOffStartDate;
+        this.lastDayStanleyCupFinals = nhlEvents.lastDayStanleyCupFinals;
+        this.nextSeasonDate = nhlEvents.nextSeasonDate;
+        this.currentYear = nhlEvents.currentYear;
     }
 
     public int getId() {
@@ -101,6 +115,14 @@ public class NHLEvents implements INHLEvents{
         this.lastDayStanleyCupFinals = lastDayStanleyCupFinals;
     }
 
+    public LocalDate getPlayerDraftDate() {
+        return playerDraftDate;
+    }
+
+    public void setPlayerDraftDate(LocalDate playerDraftDate) {
+        this.playerDraftDate = playerDraftDate;
+    }
+
     public boolean checkTradeDeadlinePassed(LocalDate currentDate) {
         if (currentDate.compareTo(tradeDeadlineDate) > 0) {
             return true;
@@ -156,6 +178,11 @@ public class NHLEvents implements INHLEvents{
     public void initializeNextSeasonDate() {
         LocalDate nextSeasonStartDate = LocalDate.of(currentYear + 1, Month.SEPTEMBER, 29);
         setNextSeasonDate(nextSeasonStartDate);
+    }
+
+    public void initializeDraftDate(){
+        LocalDate playerDraftDate = LocalDate.of(currentYear + 1, Month.JULY, 15);
+        setPlayerDraftDate(playerDraftDate);
     }
 
 }

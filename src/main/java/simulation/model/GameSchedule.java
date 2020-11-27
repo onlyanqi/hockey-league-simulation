@@ -1,5 +1,7 @@
 package simulation.model;
 
+import simulation.serializers.ModelsForDeserialization.model.Game;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,13 @@ public class GameSchedule implements IGameSchedule{
     int id;
     public GameSchedule() {
         setId(System.identityHashCode(this));
+    }
+
+    public GameSchedule(simulation.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule){
+        this.id = gameSchedule.id;
+        for(Game game : gameSchedule.gameList){
+            this.gameList.add(new simulation.model.Game(game));
+        }
     }
 
     public int getId() {

@@ -6,11 +6,18 @@ import java.util.List;
 public class TeamStanding implements ITeamStanding {
 
     private int id;
-    private List<ITeamScore> teamsScoreList;
+    private List<ITeamScore> teamsScoreList = new ArrayList<>();
 
     public TeamStanding() {
         teamsScoreList = new ArrayList<>();
         setId(System.identityHashCode(this));
+    }
+
+    public TeamStanding(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding){
+        this.id = teamStanding.id;
+        for (simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore: teamStanding.teamsScoreList){
+            this.teamsScoreList.add(new TeamScore(teamScore));
+        }
     }
 
     public int getId() {
@@ -114,6 +121,21 @@ public class TeamStanding implements ITeamStanding {
             }
         }
         return sortTeamsScoreList(teamsScoreWithinDivision);
+    }
+
+    @Override
+    public List<ITeamScore> getTeamsRankAcrossLeague(ILeague league) {
+        List<ITeamScore> teamsScoreListLocal = this.teamsScoreList;
+        List<ITeamScore> teamsScoreWithinLeague = new ArrayList<>();
+
+        for (IConference conference : league.getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    teamsScoreWithinLeague.add(getTeamScoreByTeamName(teamsScoreListLocal, team.getName()));
+                }
+            }
+        }
+        return sortTeamsScoreList(teamsScoreWithinLeague);
     }
 
     public List<ITeamScore> sortTeamsScoreList(List<ITeamScore> teamsScoreList) {

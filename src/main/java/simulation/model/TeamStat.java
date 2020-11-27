@@ -11,6 +11,17 @@ public class TeamStat {
     private int penalties;
     private int numberOfGamesPlayed;
 
+    public TeamStat(){}
+
+    public TeamStat(simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat){
+        this.teamName = teamStat.teamName;
+        this.goals = teamStat.goals;
+        this.saves = teamStat.saves;
+        this.shots = teamStat.shots;
+        this.penalties = teamStat.penalties;
+        this.numberOfGamesPlayed = teamStat.penalties;
+    }
+
     public String getTeamName() {
         return teamName;
     }

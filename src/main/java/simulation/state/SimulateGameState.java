@@ -43,8 +43,6 @@ public class SimulateGameState implements ISimulateState {
         GameSimulation gameSimulation = new GameSimulation(team1,team2);
         gameSimulation.play();
 
-
-
         HashMap<String,Integer> goals = gameSimulation.getGoals();
         HashMap<String,Integer> shots = gameSimulation.getShots();
         HashMap<String,Integer> saves = gameSimulation.getSaves();
