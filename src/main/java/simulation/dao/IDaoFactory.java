@@ -20,5 +20,5 @@ public interface IDaoFactory {
 
     IUserDao newUserDao();
 
-
+    IFreeAgentDao newFreeAgentDao();
 }

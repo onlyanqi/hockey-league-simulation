@@ -1,7 +1,6 @@
 package simulation.model;
 
 import simulation.dao.ITradeOfferDao;
-
 import java.util.List;
 
 public class TradeOffer extends SharedAttributes implements ITradeOffer{

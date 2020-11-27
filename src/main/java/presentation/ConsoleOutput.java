@@ -55,6 +55,8 @@ public class ConsoleOutput {
             printMsgToConsole("\t\t\tPlayer name: " + player.getName());
             printMsgToConsole("\t\t\tPlayer strength: " + player.getStrength());
             printMsgToConsole("\t\t\tPlayer position: "+ player.getPosition());
+            printMsgToConsole("\t\t\tPlayer age: "+player.getAge());
+            printMsgToConsole("");
         }
         if(STRONG.equalsIgnoreCase((String)tradeDetails.get(TYPE)) && tradedDraftPickRoundNumber == 0){
             printMsgToConsole("\t\t Trade does not include draft picks.");
@@ -68,6 +70,8 @@ public class ConsoleOutput {
             printMsgToConsole("\t\t\tPlayer name: " + player.getName());
             printMsgToConsole("\t\t\tPlayer strength: " + player.getStrength());
             printMsgToConsole("\t\t\tPlayer position: "+player.getPosition());
+            printMsgToConsole("\t\t\tPlayer age: "+player.getAge());
+            printMsgToConsole("");
         }
         if(WEAK.equalsIgnoreCase((String)tradeDetails.get(TYPE)) && tradedDraftPickRoundNumber == 0){
             printMsgToConsole("\t\t Trade does not include draft picks.");

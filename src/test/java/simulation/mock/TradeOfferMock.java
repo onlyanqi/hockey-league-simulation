@@ -1,7 +1,9 @@
 package simulation.mock;
 
 import simulation.dao.ITradeOfferDao;
+import simulation.model.IModelFactory;
 import simulation.model.ITradeOffer;
+import simulation.model.ModelFactory;
 import simulation.model.TradeOffer;
 
 import java.util.ArrayList;
@@ -9,9 +11,15 @@ import java.util.List;
 
 public class TradeOfferMock implements ITradeOfferDao {
 
+    private IModelFactory modelFactory;
+
+    public TradeOfferMock(){
+        modelFactory = ModelFactory.getInstance();
+    }
+
     @Override
     public void addTradeOfferDetails(ITradeOffer tradeOffer) {
-        tradeOffer = new TradeOffer();
+        tradeOffer = modelFactory.newTradeOffer();
         tradeOffer.setId(1);
         tradeOffer.setSeasonId(1);
         tradeOffer.setTradingId(1);
@@ -32,15 +40,15 @@ public class TradeOfferMock implements ITradeOfferDao {
     @Override
     public List<ITradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) {
         List<ITradeOffer> tradeOfferList = new ArrayList<>();
-        ITradeOffer tradeOffer = new TradeOffer();
+        ITradeOffer tradeOffer = modelFactory.newTradeOffer();
         getTradeOffer(tradeOffer, 1, 2);
         tradeOffer.setStatus("pending");
         tradeOfferList.add(tradeOffer);
-        tradeOffer = new TradeOffer();
+        tradeOffer = modelFactory.newTradeOffer();
         getTradeOffer(tradeOffer, 3, 4);
         tradeOffer.setStatus("accepted");
         tradeOfferList.add(tradeOffer);
-        tradeOffer = new TradeOffer();
+        tradeOffer = modelFactory.newTradeOffer();
         getTradeOffer(tradeOffer, 5, 6);
         tradeOffer.setStatus("rejected");
         tradeOfferList.add(tradeOffer);

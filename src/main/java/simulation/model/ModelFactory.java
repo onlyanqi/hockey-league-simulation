@@ -176,4 +176,11 @@ public class ModelFactory implements IModelFactory{
         return new Training();
     }
 
+    public IFreeAgent newFreeAgentWithId(int id){
+        return new FreeAgent(id);
+    }
+
+    public IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception {
+        return new FreeAgent(id, freeAgentDao);
+    }
 }
