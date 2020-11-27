@@ -63,7 +63,7 @@ public class DefenseStateTest {
     @Test
     public void testNext() {
         DefenseState defenseState = new DefenseState(gameContext);
-        assertTrue(defenseState.next() instanceof IGameState);
+        assertTrue((defenseState.next() instanceof IGameState) || (defenseState.next() == null));
         assertFalse(defenseState.next() instanceof IHockeyState);
     }
 }
