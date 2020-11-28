@@ -1,19 +1,14 @@
 package simulation.state.gamestatemachine;
 
-import junit.framework.TestCase;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IGameDao;
 import simulation.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
-import simulation.mock.GameMock;
 import simulation.mock.UserMock;
 import simulation.model.GameSimulation;
 import simulation.model.ITeam;
 import simulation.model.User;
-import simulation.state.GameContext;
-import simulation.state.IGameState;
 import simulation.state.IHockeyContext;
 import simulation.state.IHockeyState;
 
@@ -56,14 +51,14 @@ public class DefenseStateTest {
     @Test
     public void testProcess() throws Exception {
         DefenseState defenseState = new DefenseState(gameContext);
-        assertTrue((defenseState.process() instanceof IGameState) || (defenseState.process() == null));
+        assertTrue((defenseState.process() instanceof GameState) || (defenseState.process() == null));
         assertFalse(defenseState.process() instanceof IHockeyState);
     }
 
     @Test
     public void testNext() {
         DefenseState defenseState = new DefenseState(gameContext);
-        assertTrue((defenseState.next() instanceof IGameState) || (defenseState.next() == null));
+        assertTrue((defenseState.next() instanceof GameState) || (defenseState.next() == null));
         assertFalse(defenseState.next() instanceof IHockeyState);
     }
 }

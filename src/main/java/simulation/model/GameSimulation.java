@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.state.GameContext;
+import simulation.state.gamestatemachine.GameContext;
 import java.util.HashMap;
 import java.util.Map;
 

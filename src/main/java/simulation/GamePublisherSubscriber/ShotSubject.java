@@ -23,23 +23,16 @@ public class ShotSubject
 			observers = new ArrayList<IShotSubscriber>();
 	}
 
-	// Subscribe an observer to the subject. The observer will be
-	// notified when the subject is notified.
 	public void attach(IShotSubscriber observer)
 	{
 		observers.add(observer);
 	}
 
-	// Cancel an observer's subscription to the subject. The observer
-	// is no longer interested in being notified.
 	public void detach(IShotSubscriber observer)
 	{
 		observers.remove(observer);
 	}
 
-	// Notify all observers of the subject that the subject
-	// event has happened. I wanted this to be called notify() but
-	// Java has the Object.notify() method as final.
 	public void notifyObservers(ILeague league, String team, Integer count)
 	{
 		ListIterator<IShotSubscriber> iter = observers.listIterator();

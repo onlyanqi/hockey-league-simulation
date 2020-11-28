@@ -3,13 +3,10 @@ package simulation.state.gamestatemachine;
 import simulation.model.GameSimulation;
 import simulation.model.IPlayer;
 import simulation.model.Shift;
-import simulation.state.GameContext;
-import simulation.state.IGameState;
 import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
-
 import java.util.Random;
 
-public class PenaltyState implements IGameState {
+public class PenaltyState extends GameState {
 
     Random rand;
     GameContext gameContext;
@@ -24,8 +21,8 @@ public class PenaltyState implements IGameState {
         offensive = gameContext.getOffensive();
         defensive = gameContext.getDefensive();
     }
-    @Override
-    public IGameState process() throws Exception {
+
+    public GameState process() throws Exception {
         IPlayer defensePlayer = defensive.getDefense().get(rand.nextInt(defensive.getDefense().size()));
         updateTrophyPublisher(defensePlayer);
         gameSimulation.addToPenaltyBox(defensive,defensePlayer);
@@ -37,7 +34,7 @@ public class PenaltyState implements IGameState {
         TrophySystemPublisher.getInstance().notify("penaltyCountUpdate",randDefense,1);
     }
 
-    public IGameState next(){
-        return null;
+    public GameState next(){
+        return new FinalState();
     }
 }

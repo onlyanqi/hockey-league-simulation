@@ -9,8 +9,6 @@ import simulation.mock.UserMock;
 import simulation.model.GameSimulation;
 import simulation.model.ITeam;
 import simulation.model.User;
-import simulation.state.GameContext;
-import simulation.state.IGameState;
 import simulation.state.IHockeyContext;
 
 import static org.junit.Assert.*;
@@ -51,13 +49,13 @@ public class ShootingStateTest {
     public void testProcess() throws Exception {
         ShootingState shootingState  = new ShootingState(gameContext);
         assertNotNull(shootingState.process());
-        assertTrue(shootingState instanceof IGameState);
+        assertTrue(shootingState instanceof GameState);
     }
 
     @Test
     public void testNext() throws Exception {
         ShootingState shootingState  = new ShootingState(gameContext);
-        assertFalse(shootingState.next() == null);
-        assertTrue(shootingState instanceof IGameState);
+        assertFalse(shootingState.next() instanceof FinalState);
+        assertTrue(shootingState instanceof GameState);
     }
 }

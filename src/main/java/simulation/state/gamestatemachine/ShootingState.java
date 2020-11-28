@@ -3,13 +3,10 @@ package simulation.state.gamestatemachine;
 import simulation.model.GameSimulation;
 import simulation.model.ISimulate;
 import simulation.model.Shift;
-import simulation.state.GameContext;
 import simulation.state.HockeyContext;
-import simulation.state.IGameState;
-
 import java.util.Random;
 
-public class ShootingState implements IGameState {
+public class ShootingState extends GameState {
 
     Random rand;
     GameContext gameContext;
@@ -31,8 +28,7 @@ public class ShootingState implements IGameState {
         this.team2Shift = gameSimulation.getTeam2Shift();
     }
 
-    @Override
-    public IGameState process() throws Exception {
+    public GameState process() throws Exception {
         if(team1Shift.getTeamShiftShootingTotal() > team2Shift.getTeamShiftShootingTotal()){
             offensive = team1Shift;
             defensive = team2Shift;
@@ -50,7 +46,7 @@ public class ShootingState implements IGameState {
         return next();
     }
 
-    public IGameState next() throws Exception{
+    public GameState next() throws Exception{
         return new DefenseState(gameContext);
     }
 }

@@ -9,7 +9,6 @@ import simulation.mock.UserMock;
 import simulation.model.GameSimulation;
 import simulation.model.ITeam;
 import simulation.model.User;
-import simulation.state.GameContext;
 import simulation.state.IHockeyContext;
 import simulation.state.IHockeyState;
 
@@ -51,7 +50,8 @@ public class GoalStateTest  {
     @Test
     public void testProcess() throws Exception {
         GoalState goalState = new GoalState(gameContext);
-        assertNull(goalState.process());
+        assertNotNull(goalState.process());
+        assertTrue(goalState.process() instanceof FinalState);
         assertFalse(goalState.process() instanceof IHockeyState);
     }
 

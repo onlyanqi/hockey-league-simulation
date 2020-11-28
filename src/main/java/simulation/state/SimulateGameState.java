@@ -47,6 +47,15 @@ public class SimulateGameState implements ISimulateState {
         HashMap<String,Integer> saves = gameSimulation.getSaves();
         HashMap<String,Integer> penalties = gameSimulation.getPenalties();
 
+        notifyStats(team1, team2, goals, shots, saves, penalties);
+        setWinner(game, team1, team2, rand, goals);
+
+        game.setPlayed(true);
+
+
+    }
+
+    private void setWinner(IGame game, ITeam team1, ITeam team2, Random rand, HashMap<String, Integer> goals) {
         if (goals.get(team1.getName()) > goals.get(team2.getName())) {
             game.setWinner(Result.TEAM1);
             team2.setLossPoint(team2.getLossPoint() + 1);
@@ -62,41 +71,26 @@ public class SimulateGameState implements ISimulateState {
                 team1.setLossPoint(team1.getLossPoint() + 1);
             }
         }
-
-        game.setPlayed(true);
-
-
-        GoalSubject.getInstance().notifyObservers(league,team1.getName(),goals.get(team1.getName()));
-        GoalSubject.getInstance().notifyObservers(league,team2.getName(),goals.get(team2.getName()));
-
-        PenaltySubject.getInstance().notifyObservers(league,team1.getName(),penalties.get(team1.getName()));
-        PenaltySubject.getInstance().notifyObservers(league,team2.getName(),penalties.get(team2.getName()));
-
-        ShotSubject.getInstance().notifyObservers(league,team1.getName(),shots.get(team1.getName()));
-        ShotSubject.getInstance().notifyObservers(league,team2.getName(),shots.get(team2.getName()));
-
-        SaveSubject.getInstance().notifyObservers(league,team1.getName(),saves.get(team1.getName()));
-        SaveSubject.getInstance().notifyObservers(league,team2.getName(),saves.get(team2.getName()));
-
-        TotalGamesSubject.getInstance().notifyObservers(league,team1.getName(),0);
-        TotalGamesSubject.getInstance().notifyObservers(league,team2.getName(),0);
-
-
-
-        System.out.println("Team 1 Goals " + goals.get(team1.getName()));
-        System.out.println("Team 2 Goals " + goals.get(team2.getName()));
-        System.out.println("-----------------------------------------");
-        System.out.println("Team 1 Penalties " + penalties.get(team1.getName()));
-        System.out.println("Team 2 Penalties " + penalties.get(team2.getName()));
-        System.out.println("-----------------------------------------");
-        System.out.println("Team 1 Saves " + saves.get(team1.getName()));
-        System.out.println("Team 2 Saves " + saves.get(team2.getName()));
-        System.out.println("-----------------------------------------");
-        System.out.println("Team 1 Shots " + shots.get(team1.getName()));
-        System.out.println("Team 2 Shots " + shots.get(team2.getName()));
     }
 
-    public void updateTeamStandings(IGame game) {
+    private void notifyStats(ITeam team1, ITeam team2, HashMap<String, Integer> goals, HashMap<String, Integer> shots, HashMap<String, Integer> saves, HashMap<String, Integer> penalties) {
+        GoalSubject.getInstance().notifyObservers(league, team1.getName(), goals.get(team1.getName()));
+        GoalSubject.getInstance().notifyObservers(league, team2.getName(), goals.get(team2.getName()));
+
+        PenaltySubject.getInstance().notifyObservers(league, team1.getName(), penalties.get(team1.getName()));
+        PenaltySubject.getInstance().notifyObservers(league, team2.getName(), penalties.get(team2.getName()));
+
+        ShotSubject.getInstance().notifyObservers(league, team1.getName(), shots.get(team1.getName()));
+        ShotSubject.getInstance().notifyObservers(league, team2.getName(), shots.get(team2.getName()));
+
+        SaveSubject.getInstance().notifyObservers(league, team1.getName(), saves.get(team1.getName()));
+        SaveSubject.getInstance().notifyObservers(league, team2.getName(), saves.get(team2.getName()));
+
+        TotalGamesSubject.getInstance().notifyObservers(league, team1.getName(),0);
+        TotalGamesSubject.getInstance().notifyObservers(league, team2.getName(),0);
+    }
+
+    private void updateTeamStandings(IGame game) {
         ITeamStanding teamStanding = league.getActiveTeamStanding();
 
         if (game.getWinner().equals(Result.TEAM1)) {

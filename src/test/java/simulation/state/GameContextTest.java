@@ -12,6 +12,8 @@ import simulation.mock.UserMock;
 import simulation.model.GameSimulation;
 import simulation.model.ITeam;
 import simulation.model.User;
+import simulation.state.gamestatemachine.GameContext;
+
 import static org.junit.Assert.*;
 
 public class GameContextTest{

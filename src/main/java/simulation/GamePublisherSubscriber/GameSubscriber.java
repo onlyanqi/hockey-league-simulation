@@ -5,9 +5,6 @@ import simulation.model.*;
 public class GameSubscriber implements IGoalSubscriber,IPenaltyObserver,ISaveSubscriber,IShotSubscriber,ITotalGameSub{
 
 
-    public GameSubscriber() {
-    }
-
     @Override
     public void updateGoal(ILeague league, String team, Integer count) {
         TeamStat teamStats = league.getTeamStatByTeamName(team);
