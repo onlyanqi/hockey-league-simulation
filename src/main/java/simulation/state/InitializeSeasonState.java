@@ -75,21 +75,7 @@ public class InitializeSeasonState implements ISimulateState {
         league.setActiveTeamStanding(league.getRegularSeasonStanding());
         league.setStanleyCupFinalsTeamScores(new HashMap<>());
         league.setNhlRegularSeasonEvents(nhlEvents);
-        setTeamStats(league);
-    }
-
-    private void setTeamStats(ILeague league) {
-        ArrayList<TeamStat> teamStats = new ArrayList<>() ;//league.getTeamStats();
-        for(IConference conference : league.getConferenceList()){
-            for(IDivision division : conference.getDivisionList()){
-                for(ITeam team : division.getTeamList()){
-                    TeamStat teamStat = new TeamStat();
-                    teamStat.setTeamName(team.getName());
-                    teamStats.add(teamStat);
-                }
-            }
-        }
-        league.setTeamStats(teamStats);
+        league.initializeTeamStats();
     }
 
     private Boolean isMinimumTeamCountSatisfiedForPlayoffs(ILeague league) {

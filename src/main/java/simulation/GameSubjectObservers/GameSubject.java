@@ -24,6 +24,10 @@ public abstract class GameSubject {
         observers.remove(observer);
     }
 
+    public List<IGameObserver> getListeners(){
+        return observers;
+    }
+
     public void notifyObservers(ILeague league, String team, Integer count)
     {
         ListIterator<IGameObserver> iter = observers.listIterator();
