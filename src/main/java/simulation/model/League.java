@@ -81,6 +81,9 @@ public class League extends SharedAttributes implements ILeague {
         for(Player player : leagueDeserializationModel.retiredPlayerList){
             this.retiredPlayerList.add(new simulation.model.Player(player));
         }
+        for(Player player : leagueDeserializationModel.draftedPlayerList){
+            this.draftedPlayerList.add(new simulation.model.Player(player));
+        }
         if(leagueDeserializationModel.stanleyCupFinalsTeamScores == null){
             this.stanleyCupFinalsTeamScores = new HashMap<>();
         }else{

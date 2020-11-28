@@ -26,39 +26,82 @@ public class DraftState implements ISimulateState {
         league.setCurrentDate(nhlEvents.getPlayerDraftDate());
         ConsoleOutput.getInstance().printMsgToConsole("Advanced to the player draft state! Current date is " + nhlEvents.getPlayerDraftDate());
         aging.agingPlayerPeriod(league, beforeDate);
-        int round = 7;
-        ITeamStanding standing = league.getRegularSeasonStanding();
-        int teamNum = standing.getTeamsRankAcrossLeague(league).size();
-        generatePlayers(round, teamNum);
-        performDraft(round, teamNum, standing);
+        int totalRound = 7;
+        ITeamStanding regularSeasonStanding = league.getRegularSeasonStanding();
+        int teamNum = regularSeasonStanding.getTeamsRankAcrossLeague(league).size();
+        generatePlayers(totalRound, teamNum);
+        performDraft(totalRound, teamNum, regularSeasonStanding);
+        fixAllTeamPlayerNum();
         return exit();
     }
 
-    private void performDraft(int round, int teamNum, ITeamStanding teamStanding) {
+    public ISimulateState exit() throws Exception {
+        return new AdvanceNextSeasonState(hockeyContext, league.getCurrentDate());
+    }
+
+    private void performDraft(int totalRound, int teamNum, ITeamStanding teamStanding) {
         int firstN = teamNum - 16;
-        List<IPlayer> selectPlayerList = league.getDraftedPlayerList();
+        List<IPlayer> selectPlayerList = new ArrayList<>(league.getDraftedPlayerList());
         Collections.sort(selectPlayerList);
         Stack<IPlayer> playerStack = new Stack<>();
         while (selectPlayerList.size() > 0) {
             playerStack.push(selectPlayerList.remove(0));
         }
-        while (round > 0) {
-            for (int i = firstN-1; i >= 0; i--) {
-                ITeam team = teamStanding.getTeamsRankAcrossLeague(league).get(i).getTeam();
-                List<IPlayer> existingPlayers = team.getPlayerList();
-                existingPlayers.add(playerStack.pop());
-                ConsoleOutput.getInstance().printMsgToConsole("Team: " + team.getName() + " picked a draft");
+        int roundNum = 1;
+        while (roundNum <= totalRound) {
+            ConsoleOutput.getInstance().printMsgToConsole("Picked drafts in " + roundNum + " rounds");
+            for (int i = firstN - 1; i >= 0; i--) {
+                ITeam originalTeam = teamStanding.getTeamsRankAcrossLeague(league).get(i).getTeam();
+                String tradedToTeamName = originalTeam.getDraftPicks().get(roundNum - 1);
+                if (tradedToTeamName == null) {
+                    List<IPlayer> existingPlayers = originalTeam.getPlayerList();
+                    IPlayer player = playerStack.pop();
+                    player.setTeamId(originalTeam.getId());
+                    existingPlayers.add(player);
+                    originalTeam.setPlayerList(existingPlayers);
+                } else{
+                    ITeam tradedToTeam = league.getTeamByTeamName(tradedToTeamName);
+                    List<IPlayer> existingPlayers = tradedToTeam.getPlayerList();
+                    IPlayer player = playerStack.pop();
+                    player.setTeamId(tradedToTeam.getId());
+                    existingPlayers.add(player);
+                    tradedToTeam.setPlayerList(existingPlayers);
+                }
+
             }
             Set<ITeam> remainingTeams = league.getStanleyCupFinalsTeamScores().keySet();
             List<ITeam> secondTeamList = new ArrayList<>(remainingTeams);
-            for (int j = firstN; j < teamNum; j++) {
-                List<IPlayer> existingPlayers = secondTeamList.get(j).getPlayerList();
-                existingPlayers.add(playerStack.pop());
+            for (int j = 15; j >= 0; j--) {
+                ITeam originalTeam = secondTeamList.get(j);
+                String tradedToTeamName = originalTeam.getDraftPicks().get(roundNum - 1);
+                if(tradedToTeamName == null){
+                    List<IPlayer> existingPlayers = originalTeam.getPlayerList();
+                    IPlayer player = playerStack.pop();
+                    player.setTeamId(originalTeam.getId());
+                    existingPlayers.add(player);
+                    originalTeam.setPlayerList(existingPlayers);
+                }else {
+                    ITeam tradedToTeam = league.getTeamByTeamName(tradedToTeamName);
+                    List<IPlayer> existingPlayers = tradedToTeam.getPlayerList();
+                    IPlayer player = playerStack.pop();
+                    player.setTeamId(tradedToTeam.getId());
+                    existingPlayers.add(player);
+                    tradedToTeam.setPlayerList(existingPlayers);
+                }
             }
-            ConsoleOutput.getInstance().printMsgToConsole("Picking drafts in " + (8 - round) + "rounds");
-            round = round - 1;
+            roundNum++;
         }
+    }
 
+    private void fixAllTeamPlayerNum(){
+        for (IConference conference : league.getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    team.fixTeamPlayerNum(league.getFreeAgent().getPlayerList());
+                    team.setActivePlayerList();
+                }
+            }
+        }
     }
 
     private void generatePlayers(int round, int teamNum) {
@@ -83,10 +126,6 @@ public class DraftState implements ISimulateState {
             addedPlayers++;
         }
         league.setDraftedPlayerList(draftedPlayerList);
-    }
-
-    public ISimulateState exit() throws Exception {
-        return new AdvanceNextSeasonState(hockeyContext, league.getCurrentDate());
     }
 
     private void generateStats(IPlayer player) {

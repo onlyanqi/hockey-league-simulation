@@ -592,8 +592,8 @@ public class ExecuteTradeState implements ISimulateState {
         ITradeOffer tradeOffer = (ITradeOffer) tradeDetails.get(TRADEOFFER);
 
         updateTradingDetailsInTeams(tradeDetails);
-        fromTeam.fixTeamAfterTrading(league.getFreeAgent().getPlayerList());
-        toTeam.fixTeamAfterTrading(league.getFreeAgent().getPlayerList());
+        fromTeam.fixTeamPlayerNum(league.getFreeAgent().getPlayerList());
+        toTeam.fixTeamPlayerNum(league.getFreeAgent().getPlayerList());
         tradeOffer.setStatus(ACCEPTED);
     }
 
