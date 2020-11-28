@@ -5,8 +5,11 @@ import simulation.dao.IDaoFactory;
 import simulation.dao.ITradeOfferDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class TradeOfferTest {
 
@@ -161,6 +164,44 @@ public class TradeOfferTest {
         tradeOffer.addTradeOffer(tradeOfferDao);
         assertEquals(1, tradeOffer.getId());
         assertEquals(1, tradeOffer.getFromTeamId());
+    }
+
+    @Test
+    public void getFromPlayerIdListTest() throws Exception {
+        ITradeOffer tradeOffer = modelFactory.newTradeOfferWithIdDao(1, tradeOfferDao);
+        int fromPlayerId = tradeOffer.getFromPlayerIdList().get(0);
+        assertEquals(fromPlayerId, 1);
+        assertNotEquals(fromPlayerId, 0);
+    }
+
+    @Test
+    public void setFromPlayerIdListTest() {
+        ITradeOffer tradeOffer = modelFactory.newTradeOffer();
+        List<Integer> fromPlayerIdList = new ArrayList<>();
+        fromPlayerIdList.add(1);
+        tradeOffer.setFromPlayerIdList(fromPlayerIdList);
+        int fromPlayerId = tradeOffer.getFromPlayerIdList().get(0);
+        assertEquals(fromPlayerId, 1);
+        assertNotEquals(fromPlayerId, 2);
+    }
+
+    @Test
+    public void getToPlayerIdListTest() throws Exception {
+        ITradeOffer tradeOffer = modelFactory.newTradeOfferWithIdDao(1, tradeOfferDao);
+        int toPlayerId = tradeOffer.getToPlayerIdList().get(0);
+        assertEquals(toPlayerId, 2);
+        assertNotEquals(toPlayerId, 1);
+    }
+
+    @Test
+    public void setToPlayerIdListTest() {
+        ITradeOffer tradeOffer = modelFactory.newTradeOffer();
+        List<Integer> toPlayerIdList = new ArrayList<>();
+        toPlayerIdList.add(2);
+        tradeOffer.setToPlayerIdList(toPlayerIdList);
+        int toPlayerId = tradeOffer.getToPlayerIdList().get(0);
+        assertEquals(toPlayerId, 2);
+        assertNotEquals(toPlayerId, 1);
     }
 
 }

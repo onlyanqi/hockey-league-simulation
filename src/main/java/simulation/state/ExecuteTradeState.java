@@ -173,18 +173,6 @@ public class ExecuteTradeState implements ISimulateState {
         double weakOneToOneTradeDecider = 0.6;
         double weakOneToManyTradeDecider = 0.8;
 
-        if (tradeDecider < strongOneToOneTradeDecider) {
-            log.info("AA Trade 1");
-        } else if(tradeDecider < strongOneToManyTradeDecider) {
-            log.info("BB Trade 2");
-        } else if(tradeDecider < weakOneToOneTradeDecider){
-            log.info("CC Trade 3");
-        } else if(tradeDecider < weakOneToManyTradeDecider) {
-            log.info("DD Trade 4");
-        } else{
-            log.info("EE Trade 5");
-        }
-
         for (IConference conference : conferenceList) {
             if(tradeAssumptionFlag()){
                 break;
@@ -301,14 +289,7 @@ public class ExecuteTradeState implements ISimulateState {
         if(toPlayerList == null || toPlayerList.isEmpty()){
             return;
         } else{
-            /*List<IPlayer> previousList = (List<IPlayer>) swap.get(TOPLAYERLIST);
-            double previousStrength = ZERO;
-            for(IPlayer player : previousList){
-                previousStrength = previousStrength + player.getRelativeStrength();
-            }
-            if(previousStrength > newStrength) {*/
             swap.put(TOPLAYERLIST, toPlayerList);
-            //}
         }
     }
 
@@ -342,14 +323,6 @@ public class ExecuteTradeState implements ISimulateState {
                     swap.put(TOTEAM, otherTeam);
                     swap.put(TYPE, STRONG);
                     swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListBeforeTrade);
-                    Object draftRoundNumber = swap.get(TRADED_ROUND_NUMBER);
-                    int tradedRoundNumber;
-                    if(draftRoundNumber == null){
-                        tradedRoundNumber = 0;
-                    } else{
-                        tradedRoundNumber = (int) draftRoundNumber;
-                        draftPicks.add(tradedRoundNumber, otherTeam.getName());
-                    }
                 }
                 if(tradeAssumptionFlag()){
                     break;
@@ -399,14 +372,6 @@ public class ExecuteTradeState implements ISimulateState {
                     swap.put(TOTEAM, otherTeam);
                     swap.put(FROMPLAYERLISTAFTERTRADE, weakPlayerList);
                     swap.put(TYPE, STRONG);
-                    Object draftRoundNumber = swap.get(TRADED_ROUND_NUMBER);
-                    int tradedRoundNumber;
-                    if(draftRoundNumber == null){
-                        tradedRoundNumber = 0;
-                    } else{
-                        tradedRoundNumber = (int) draftRoundNumber;
-                        draftPicks.add(tradedRoundNumber, otherTeam.getName());
-                    }
                 }
                 if(tradeAssumptionFlag()){
                     break;
@@ -421,7 +386,6 @@ public class ExecuteTradeState implements ISimulateState {
         List<IPlayer> playerList = otherTeam.getPlayerList();
         List<IPlayer> fromPlayerList = new ArrayList<>(Arrays.asList(fromPlayer));
         List<String> draftPicks = otherTeam.getDraftPicks();
-        ITeam fromTeam = (ITeam) swap.get(FROMTEAM);
         List<String> positions = new ArrayList<>();
         positions.add(fromPlayer.getPosition().toString());
 
@@ -439,14 +403,6 @@ public class ExecuteTradeState implements ISimulateState {
                     swap.put(TOTEAM, otherTeam);
                     swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerList);
                     swap.put(TYPE, WEAK);
-                    Object draftRoundNumber = swap.get(TRADED_ROUND_NUMBER);
-                    int tradedRoundNumber;
-                    if(draftRoundNumber == null){
-                        tradedRoundNumber = 0;
-                    } else{
-                        tradedRoundNumber = (int) draftRoundNumber;
-                        draftPicks.add(tradedRoundNumber, fromTeam.getName());
-                    }
                 }
             }
         }
