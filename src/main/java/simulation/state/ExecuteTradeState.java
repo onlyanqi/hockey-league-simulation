@@ -138,7 +138,7 @@ public class ExecuteTradeState implements ISimulateState {
 
             tradeDetails.put(TOPLAYERLIST, new ArrayList<>());
         } else if(tradeAssumptionFlag()){
-            tradeDetails.put(TRADED_ROUND_NUMBER, 0);
+            tradeDetails.put(TRADED_ROUND_NUMBER, null);
         }
     }
 
@@ -623,14 +623,28 @@ public class ExecuteTradeState implements ISimulateState {
         List<IPlayer> toPlayerList = (List<IPlayer>) tradeDetails.get(TOPLAYERLIST);
         List<IPlayer> fromPlayerList = (List<IPlayer>) tradeDetails.get(FROMPLAYERLISTAFTERTRADE);
         ITeam toTeam = (ITeam) tradeDetails.get(TOTEAM);
+        Object type = tradeDetails.get(TYPE);
         Object tradedDraftPick = tradeDetails.get(TRADED_ROUND_NUMBER);
         int tradeDraftRoundNumber;
-        if(tradedDraftPick == null){
-            tradeDraftRoundNumber = 0;
-        } else{
-            tradeDraftRoundNumber = (int) tradedDraftPick;
-            List<String> draftPicks = fromTeam.getDraftPicks();
-            draftPicks.add(tradeDraftRoundNumber, toTeam.getName());
+        String typeStr;
+        if(type == null){
+            typeStr = null;
+        } else {
+            typeStr = (String) type;
+            if(tradedDraftPick == null){
+                tradeDraftRoundNumber = 0;
+            } else{
+                tradeDraftRoundNumber = (int) tradedDraftPick;
+                if(typeStr.equalsIgnoreCase(STRONG)){
+                    List<String> draftPicks = fromTeam.getDraftPicks();
+                    draftPicks.add(tradeDraftRoundNumber, toTeam.getName());
+                    fixDraftPicks(draftPicks);
+                } else if(typeStr.equalsIgnoreCase(WEAK)){
+                    List<String> draftPicks = toTeam.getDraftPicks();
+                    draftPicks.add(tradeDraftRoundNumber, fromTeam.getName());
+                    fixDraftPicks(draftPicks);
+                }
+            }
         }
 
         List<IPlayer> toTeamPlayerList = toTeam.getPlayerList();
@@ -665,6 +679,30 @@ public class ExecuteTradeState implements ISimulateState {
         } catch (Exception e){
             log.error("ExecuteTradeState: updateTradingDetailsInTeams: Exception: "+e);
             throw e;
+        }
+    }
+
+    private void fixDraftPicks(List<String> draftPicks){
+        if(draftPicks == null || draftPicks.isEmpty()){
+            return;
+        } else{
+            int draftPickSize = draftPicks.size();
+            if(draftPickSize > 7){
+                Iterator<String> itr = draftPicks.iterator();
+                while (itr.hasNext() && draftPicks.size() > 7) {
+                    String teamName = itr.next();
+                    if (teamName == null) {
+                        itr.remove();
+                    }
+                }
+            }
+            draftPickSize = draftPicks.size();
+            if(draftPickSize > 7){
+                Iterator<String> itr = draftPicks.iterator();
+                while (itr.hasNext() && draftPicks.size() > 7) {
+                    itr.remove();
+                }
+            }
         }
     }
 
