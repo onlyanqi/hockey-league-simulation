@@ -1,5 +1,6 @@
 package simulation.state.gamestatemachine;
 
+import org.apache.log4j.Logger;
 import simulation.model.GameSimulation;
 import simulation.model.ISimulate;
 import simulation.model.Shift;
@@ -8,6 +9,7 @@ import java.util.Random;
 
 public class ShootingState extends GameState {
 
+    Logger log = Logger.getLogger(ShootingState.class);
     Random rand;
     GameContext gameContext;
     GameSimulation gameSimulation;
@@ -29,6 +31,10 @@ public class ShootingState extends GameState {
     }
 
     public GameState process() throws Exception {
+        if(offensive==null || defensive==null){
+            log.error("Error while simulating game.Offensive or Defensive are not set.");
+            throw new IllegalStateException("Offensive or Defensive are null.");
+        }
         if(team1Shift.getTeamShiftShootingTotal() > team2Shift.getTeamShiftShootingTotal()){
             offensive = team1Shift;
             defensive = team2Shift;

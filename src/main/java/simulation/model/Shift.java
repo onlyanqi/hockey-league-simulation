@@ -1,5 +1,7 @@
 package simulation.model;
 
+import org.apache.log4j.Logger;
+
 import java.util.*;
 
 public class Shift{
@@ -9,7 +11,7 @@ public class Shift{
     List<IPlayer> forward = new ArrayList<>();
     List<IPlayer> defense = new ArrayList<>();
     HashMap<IPlayer,Integer> penalizedDefensePlayer =  new HashMap<>();;
-
+    Logger log = Logger.getLogger(Shift.class);
 
     public Shift(){
         penalizedDefensePlayer = new HashMap<>();

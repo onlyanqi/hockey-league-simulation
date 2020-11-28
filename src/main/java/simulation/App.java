@@ -3,7 +3,7 @@ package simulation;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
-import simulation.GamePublisherSubscriber.*;
+import simulation.GameSubjectObservers.*;
 import simulation.factory.*;
 import simulation.model.IModelFactory;
 import simulation.model.IUser;
@@ -66,11 +66,12 @@ public class App {
     }
 
     private static void addSubscribers() {
-        GoalSubject.getInstance().attach(new GameSubscriber());
-        PenaltySubject.getInstance().attach(new GameSubscriber());
-        SaveSubject.getInstance().attach(new GameSubscriber());
-        ShotSubject.getInstance().attach(new GameSubscriber());
-        TotalGamesSubject.getInstance().attach(new GameSubscriber());
+
+        GoalSubject.getInstance().attach(new GoalObserver());
+        PenaltySubject.getInstance().attach(new PenaltyObserver());
+        SaveSubject.getInstance().attach(new SaveObserver());
+        ShotSubject.getInstance().attach(new ShotObserver());
+        TotalGamesSubject.getInstance().attach(new TotalGameObserver());
         TrophySystemPublisher.getInstance().subscribe("coachStatAbilityUpdate", new CoachStatAbilitySubscriber());
         TrophySystemPublisher.getInstance().subscribe("goalScoreUpdate" ,new GoalScoreSubscriber());
         TrophySystemPublisher.getInstance().subscribe("penaltyCountUpdate", new PenaltyCountSubscriber());

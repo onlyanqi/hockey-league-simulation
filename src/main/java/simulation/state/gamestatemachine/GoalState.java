@@ -1,5 +1,6 @@
 package simulation.state.gamestatemachine;
 
+import org.apache.log4j.Logger;
 import simulation.model.GameSimulation;
 import simulation.model.IPlayer;
 import simulation.model.ISimulate;
@@ -11,6 +12,8 @@ import java.util.Random;
 
 public class GoalState extends GameState {
 
+
+    Logger log = Logger.getLogger(GoalState.class);
     Random rand;
     GameContext gameContext;
     GameSimulation gameSimulation;
@@ -29,6 +32,10 @@ public class GoalState extends GameState {
     }
 
     public GameState process() throws Exception {
+        if(offensive==null || defensive==null){
+            log.error("Error while simulating game.Offensive or Defensive are not set.");
+            throw new IllegalStateException("Offensive or Defensive are null.");
+        }
         if(offensive.getGoalie().getSaving() > defensive.getGoalie().getSaving()){
             goal = true;
         }else{

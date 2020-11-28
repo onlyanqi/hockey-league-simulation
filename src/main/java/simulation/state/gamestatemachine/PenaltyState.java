@@ -1,5 +1,6 @@
 package simulation.state.gamestatemachine;
 
+import org.apache.log4j.Logger;
 import simulation.model.GameSimulation;
 import simulation.model.IPlayer;
 import simulation.model.Shift;
@@ -8,6 +9,8 @@ import java.util.Random;
 
 public class PenaltyState extends GameState {
 
+
+    Logger log = Logger.getLogger(PenaltyState.class);
     Random rand;
     GameContext gameContext;
     Shift offensive;
@@ -23,6 +26,10 @@ public class PenaltyState extends GameState {
     }
 
     public GameState process() throws Exception {
+        if(offensive==null || defensive==null){
+            log.error("Error while simulating game.Offensive or Defensive are not set.");
+            throw new IllegalStateException("Offensive or Defensive are null.");
+        }
         IPlayer defensePlayer = defensive.getDefense().get(rand.nextInt(defensive.getDefense().size()));
         updateTrophyPublisher(defensePlayer);
         gameSimulation.addToPenaltyBox(defensive,defensePlayer);

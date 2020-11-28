@@ -1,6 +1,9 @@
 package simulation.model;
 
+import org.apache.log4j.Logger;
 import simulation.state.gamestatemachine.GameContext;
+import simulation.state.gamestatemachine.ShootingState;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +18,7 @@ public class GameSimulation {
     private HashMap<String,Integer> penalties = new HashMap<>();
     private HashMap<String,Integer> shots = new HashMap<>();
     private HashMap<String,Integer> saves = new HashMap<>();
+    Logger log = Logger.getLogger(GameSimulation.class);
 
     public GameSimulation(ITeam team1, ITeam team2) {
         this.team1 = team1;
@@ -83,9 +87,7 @@ public class GameSimulation {
                 team1Shift.updateGoalie(team1);
                 team2Shift.updateGoalie(team2);
             }
-            //change shifts for every 90 seconds to make 40 shifts over 20 min periods
             if(timeIn10Seconds % 9 ==0){
-                //get shifts
                 if(team1Shift.getPenalizedDefensePlayer().size() >0){
                     team1Shift = team1Shift.getShiftForPenalizedTeam(team1,teamPlayersCount);
                 }else{
@@ -98,7 +100,6 @@ public class GameSimulation {
                     team2Shift = team2Shift.getShift(team2,teamPlayersCount);
                 }
             }
-            //For every 50 seconds, any of the team makes a shot (not necessarily shot on goal)
             if(timeIn10Seconds % 5 ==0) {
                 GameContext gameContext = new GameContext(this);
                 gameContext.start();
@@ -179,6 +180,15 @@ public class GameSimulation {
     }
 
     public void addToPenaltyBox(Shift teamShift, IPlayer randDefense) {
+        if(teamShift==null){
+            log.error("Team Shift is null while adding to penalty box");
+            throw new IllegalArgumentException("Team Shift is null while adding to penalty box");
+        }
+        if(randDefense==null){
+            log.error("Defense Player is null while adding to penalty box");
+            throw new IllegalArgumentException("Defense Player is null while adding to penalty box");
+        }
+        log.debug("Added "+ randDefense.getName() + "to penalty box");
         teamShift.getPenalizedDefensePlayer().put(randDefense,12);
         teamShift.getDefense().remove(randDefense);
     }
@@ -189,6 +199,10 @@ public class GameSimulation {
     }
 
     private void initializeTeamPlayerShiftCount(ITeam team) {
+        if(team==null){
+            log.error("Provided team is null while initializing player shift count");
+            throw new IllegalArgumentException("provided team is null");
+        }
         HashMap<Integer,Integer> playersCount  = new HashMap<>();
         for(IPlayer player : team.getActivePlayerList()){
             playersCount.put(player.getId(),0);

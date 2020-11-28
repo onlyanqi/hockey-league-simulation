@@ -1,6 +1,7 @@
 package simulation.state;
 
-import simulation.GamePublisherSubscriber.*;
+import org.apache.log4j.Logger;
+import simulation.GameSubjectObservers.*;
 import simulation.model.*;
 
 
@@ -8,6 +9,7 @@ import java.util.*;
 
 public class SimulateGameState implements ISimulateState {
 
+    Logger log = Logger.getLogger(SimulateGameState.class);
     private IHockeyContext hockeyContext;
     private ILeague league;
 
@@ -26,7 +28,6 @@ public class SimulateGameState implements ISimulateState {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-
         return exit();
     }
 
@@ -37,6 +38,7 @@ public class SimulateGameState implements ISimulateState {
     public void simulateGame(IGame game) throws Exception {
         ITeam team1 = league.getTeamByTeamName(game.getTeam1());
         ITeam team2 = league.getTeamByTeamName(game.getTeam2());
+        log.debug("Started game between "+ team1.getName() + " and " + team2.getName());
         Random rand = new Random();
 
         GameSimulation gameSimulation = new GameSimulation(team1,team2);
@@ -51,22 +53,32 @@ public class SimulateGameState implements ISimulateState {
         setWinner(game, team1, team2, rand, goals);
 
         game.setPlayed(true);
-
-
     }
 
     private void setWinner(IGame game, ITeam team1, ITeam team2, Random rand, HashMap<String, Integer> goals) {
+        if(game==null){
+            log.error("game is null, unable to set winner");
+            throw new IllegalArgumentException("game is null, unable to set winner");
+        }
+        if(team1==null || team2 ==null){
+            log.error("One of the teams are null, unable to set winner");
+            throw new IllegalArgumentException("One of the teams are null, unable to set winner");
+        }
         if (goals.get(team1.getName()) > goals.get(team2.getName())) {
             game.setWinner(Result.TEAM1);
+            log.debug(team1.getName() + "won the game");
             team2.setLossPoint(team2.getLossPoint() + 1);
         } else if (goals.get(team1.getName()) < goals.get(team2.getName())) {
+            log.debug(team2.getName() + "won the game");
             game.setWinner(Result.TEAM2);
             team1.setLossPoint(team1.getLossPoint() + 1);
         }else if(goals.get(team1.getName()) == goals.get(team2.getName())){
             if(rand.nextDouble() > 0.5){
+                log.debug(team1.getName() + "won the game");
                 game.setWinner(Result.TEAM1);
                 team2.setLossPoint(team2.getLossPoint() + 1);
             }else{
+                log.debug(team2.getName() + "won the game");
                 game.setWinner(Result.TEAM2);
                 team1.setLossPoint(team1.getLossPoint() + 1);
             }
@@ -105,7 +117,6 @@ public class SimulateGameState implements ISimulateState {
             teamStanding.setTeamTies(game.getTeam2());
             teamStanding.setTeamTies(game.getTeam1());
         }
-
     }
 
 }

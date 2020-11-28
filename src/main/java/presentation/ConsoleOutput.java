@@ -81,4 +81,14 @@ public class ConsoleOutput {
         printMsgToConsole("--------------------------------------------------------------------");
     }
 
+    public void printGameStatsToUser(float goalAvg,float penaltyAvg,float shotAvg,float saveAvg){
+        printMsgToConsole("---------------------------------------");
+        printMsgToConsole("\n" + "Game Stats" + "\n");
+        printMsgToConsole("Game Goal Average for a Team : " + goalAvg);
+        printMsgToConsole("Game Penalty Average for a Team : " + penaltyAvg);
+        printMsgToConsole("Game Shot Average for a Team : " + shotAvg);
+        printMsgToConsole("Game Save Average for a Team : " + saveAvg);
+        printMsgToConsole("---------------------------------------\n");
+    }
+
 }
