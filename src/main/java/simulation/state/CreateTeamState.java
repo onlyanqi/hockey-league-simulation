@@ -165,8 +165,7 @@ public class CreateTeamState implements IHockeyState {
     private void choosePlayers() throws IllegalArgumentException {
         freeAgent = league.getFreeAgent();
         List<IPlayer> freeAgentList = freeAgent.getPlayerList();
-        List<Integer> myIds = Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,24,25,26,29,30,31,32,33,36,38);
-        List<Integer> chosenPlayersIdList = myIds;//team.createChosenPlayerIdList(freeAgent);
+        List<Integer> chosenPlayersIdList = team.createChosenPlayerIdList(freeAgent);
         teamCreationOutput.showTeamCreationWaitMessage();
         List<IPlayer> teamPlayers = createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
         freeAgentList = removeChosenPlayersFromFreeAgentList(chosenPlayersIdList, freeAgentList);
