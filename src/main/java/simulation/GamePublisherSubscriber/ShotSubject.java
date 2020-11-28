@@ -1,9 +1,6 @@
-package simulation.GamePubSub;
+package simulation.GamePublisherSubscriber;
 
-import simulation.model.IGame;
 import simulation.model.ILeague;
-import simulation.model.IPlayer;
-import simulation.model.ITeam;
 
 import java.util.ArrayList;
 import java.util.List;

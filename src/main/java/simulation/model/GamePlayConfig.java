@@ -11,6 +11,7 @@ public class GamePlayConfig implements IGamePlayConfig{
     private IInjury injury;
     private ITrading trading;
     private ITraining training;
+    private ISimulate simulate;
 
     public GamePlayConfig() {
         setId(System.identityHashCode(this));
@@ -27,6 +28,7 @@ public class GamePlayConfig implements IGamePlayConfig{
         this.injury = new Injury(gamePlayConfig.injury);
         this.trading = new Trading(gamePlayConfig.trading);
         this.training = new Training(gamePlayConfig.training);
+        this.simulate = new Simulate(gamePlayConfig.simulate);
     }
 
     public int getId() {
@@ -91,5 +93,16 @@ public class GamePlayConfig implements IGamePlayConfig{
             return;
         }
         this.training = training;
+    }
+
+    public ISimulate getSimulate() {
+        return simulate;
+    }
+
+    public void setSimulate(ISimulate simulate) {
+        if (simulate == null) {
+            return;
+        }
+        this.simulate = simulate;
     }
 }

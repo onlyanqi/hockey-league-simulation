@@ -37,6 +37,7 @@ public class ImportState implements IHockeyState {
     private static final String GAMEPLAY_CONFIG = "gameplayConfig";
     private static final String AGING = "aging";
     private static final String INJURIES = "injuries";
+    private static final String SIMULATE = "simulate";
     private static final String TRAINING = "training";
     private static final String TRADING = "trading";
     private static final String AVERAGE_RETIREMENT_AGE = "averageRetirementAge";
@@ -56,6 +57,10 @@ public class ImportState implements IHockeyState {
     public static final String BIRTH_YEAR = "birthYear";
     public static final String STAT_DECAY_CHANCE = "statDecayChance";
     private static final String PERSONALITY = "personality";
+    public static final String UPSET = "upset";
+    public static final String DEFEND_CHANCE = "defendChance";
+    public static final String PENALTY_CHANCE = "penaltyChance";
+    private static final String GOAL_CHANCE = "goalChance";
     private final Set<String> appearedName = new HashSet<>();
     private IHockeyContext hockeyContext;
     private JSONObject jsonFromInput;
@@ -218,6 +223,13 @@ public class ImportState implements IHockeyState {
         IInjury injury = loadInjuryJson(injuriesJSONObject);
         injury.setLeagueId(leagueId);
         gamePlayConfig.setInjury(injury);
+
+        if (validateKeyInObject(gameplayConfigJSONObject, SIMULATE)) {
+            throw new IllegalArgumentException("Please make sure simulate is provided in JSON");
+        }
+        JSONObject simulateJSONObject = (JSONObject) gameplayConfigJSONObject.get(SIMULATE);
+        ISimulate simulate = loadSimulateJSON(simulateJSONObject);
+        gamePlayConfig.setSimulate(simulate);
 
         if (validateKeyInObject(gameplayConfigJSONObject, TRAINING)) {
             throw new IllegalArgumentException("Please make sure training is provided in JSON");
@@ -795,6 +807,36 @@ public class ImportState implements IHockeyState {
         trading.setRandomAcceptanceChance(randomAcceptanceChance);
         trading.setGmTable(gmTable);
         return trading;
+    }
+
+    private ISimulate loadSimulateJSON(JSONObject injuriesJSONObject) {
+        if (validateKeyInObject(injuriesJSONObject, UPSET)) {
+            throw new IllegalArgumentException("Please make sure Upset is provided in JSON");
+        }
+        double upset = (Double) injuriesJSONObject.get(UPSET);
+
+        if (validateKeyInObject(injuriesJSONObject, DEFEND_CHANCE)) {
+            throw new IllegalArgumentException("Please make sure defend chance is provided in JSON");
+        }
+        double defendChance = (Double) injuriesJSONObject.get(DEFEND_CHANCE);
+
+        if (validateKeyInObject(injuriesJSONObject, PENALTY_CHANCE)) {
+            throw new IllegalArgumentException("Please make sure penalty chance is provided in JSON");
+        }
+        double penaltyChance = (Double) injuriesJSONObject.get(PENALTY_CHANCE);
+
+        if (validateKeyInObject(injuriesJSONObject, GOAL_CHANCE)) {
+            throw new IllegalArgumentException("Please make sure goal chance is provided in JSON");
+        }
+        double goalChance = (Double) injuriesJSONObject.get(GOAL_CHANCE);
+
+        IModelFactory simulateConcrete = hockeyContext.getModelFactory();
+        ISimulate simulate = simulateConcrete.newSimulate();
+        simulate.setUpset(upset);
+        simulate.setPenaltyChance(penaltyChance);
+        simulate.setDefendChance(defendChance);
+        simulate.setGoalChance(goalChance);
+        return simulate;
     }
 
     private boolean validateBoolean(Boolean bool) {

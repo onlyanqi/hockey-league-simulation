@@ -26,9 +26,9 @@ public class PenaltyState implements IGameState {
     }
     @Override
     public IGameState process() throws Exception {
-        IPlayer randDefense = defensive.getDefense().get(rand.nextInt(defensive.getDefense().size()));
-        updateTrophyPublisher(randDefense);
-        gameSimulation.addToPenaltyBox(defensive,randDefense);
+        IPlayer defensePlayer = defensive.getDefense().get(rand.nextInt(defensive.getDefense().size()));
+        updateTrophyPublisher(defensePlayer);
+        gameSimulation.addToPenaltyBox(defensive,defensePlayer);
         gameSimulation.getPenalties().put(defensive.getTeamName(), gameSimulation.getPenalties().get(defensive.getTeamName()) + 1);
         return next();
     }

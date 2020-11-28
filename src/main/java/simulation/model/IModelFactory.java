@@ -36,6 +36,8 @@ public interface IModelFactory {
 
     ILeague newLeague();
 
+    ISimulate newSimulate();
+
     ILeague createLeagueFromNameAndUserId(String leagueName, int userId, ILeagueDao leagueFactory) throws Exception;
 
     ILeague newLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception;

@@ -1,41 +1,38 @@
-package simulation.GamePubSub;
+package simulation.GamePublisherSubscriber;
 
-import simulation.model.IGame;
 import simulation.model.ILeague;
-import simulation.model.IPlayer;
-import simulation.model.ITeam;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class PenaltySubject
+public class SaveSubject
 {
-	private final List<IPenaltyObserver> observers;
-	private static PenaltySubject instance;
+	private final List<ISaveSubscriber> observers;
+	private static SaveSubject instance;
 
-	public static PenaltySubject getInstance() {
+	public static SaveSubject getInstance() {
 		if (instance == null) {
-			instance = new PenaltySubject();
+			instance = new SaveSubject();
 		}
 		return instance;
 	}
 
-	public PenaltySubject()
+	public SaveSubject()
 	{
-			observers = new ArrayList<IPenaltyObserver>();
+			observers = new ArrayList<ISaveSubscriber>();
 	}
 
 	// Subscribe an observer to the subject. The observer will be
 	// notified when the subject is notified.
-	public void attach(IPenaltyObserver observer)
+	public void attach(ISaveSubscriber observer)
 	{
 		observers.add(observer);
 	}
 
 	// Cancel an observer's subscription to the subject. The observer
 	// is no longer interested in being notified.
-	public void detach(IPenaltyObserver observer)
+	public void detach(ISaveSubscriber observer)
 	{
 		observers.remove(observer);
 	}
@@ -43,12 +40,12 @@ public class PenaltySubject
 	// Notify all observers of the subject that the subject
 	// event has happened. I wanted this to be called notify() but
 	// Java has the Object.notify() method as final.
-	public void notifyObservers(ILeague league, String team, Integer count)
+	public void notifyObservers(ILeague league,  String team, Integer count)
 	{
-		ListIterator<IPenaltyObserver> iter = observers.listIterator();
+		ListIterator<ISaveSubscriber> iter = observers.listIterator();
 		while (iter.hasNext())
 		{
-			iter.next().updatePenalty(league,team,count);
+			iter.next().updateSave(league,team,count);
 		}
 	}
 }
