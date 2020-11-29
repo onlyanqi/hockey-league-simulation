@@ -27,4 +27,6 @@ public interface ITeamScore {
     int getId();
 
     String getName();
+
+    void setTeamName(String teamName);
 }

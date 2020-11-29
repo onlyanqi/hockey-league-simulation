@@ -77,4 +77,9 @@ public class TeamScore extends SharedAttributes implements ITeamScore{
     public void setNumberOfTies(Integer numberOfTies) {
         this.numberOfTies = numberOfTies;
     }
+
+    @Override
+    public void setTeamName(String teamName){
+        this.teamName = teamName;
+    }
 }
