@@ -32,7 +32,7 @@ public class League extends SharedAttributes implements ILeague {
     private ITeamStanding regularSeasonStanding;
     private ITeamStanding playOffStanding;
     private ITeamStanding activeTeamStanding;
-    private HashMap<String,Integer> stanleyCupFinalsTeamScores = new HashMap<>();
+    private HashMap<ITeam,Integer> stanleyCupFinalsTeamScores = new HashMap<>();
     private ArrayList<TeamStat> teamStats = new ArrayList<>();
     private INHLEvents nhlEvents;
     private List<ITradeOffer> tradeOfferList = new ArrayList<>();
@@ -80,6 +80,9 @@ public class League extends SharedAttributes implements ILeague {
         this.regularSeasonStanding = new TeamStanding(leagueDeserializationModel.regularSeasonStanding);
         for(Player player : leagueDeserializationModel.retiredPlayerList){
             this.retiredPlayerList.add(new simulation.model.Player(player));
+        }
+        for(Player player : leagueDeserializationModel.draftedPlayerList){
+            this.draftedPlayerList.add(new simulation.model.Player(player));
         }
         if(leagueDeserializationModel.stanleyCupFinalsTeamScores == null){
             this.stanleyCupFinalsTeamScores = new HashMap<>();
@@ -279,11 +282,11 @@ public class League extends SharedAttributes implements ILeague {
         this.activeTeamStanding = activeTeamStanding;
     }
 
-    public HashMap<String, Integer> getStanleyCupFinalsTeamScores() {
+    public HashMap<ITeam, Integer> getStanleyCupFinalsTeamScores() {
         return stanleyCupFinalsTeamScores;
     }
 
-    public void setStanleyCupFinalsTeamScores(HashMap<String, Integer> stanleyCupFinalsTeamScores) {
+    public void setStanleyCupFinalsTeamScores(HashMap<ITeam, Integer> stanleyCupFinalsTeamScores) {
         this.stanleyCupFinalsTeamScores = stanleyCupFinalsTeamScores;
     }
 

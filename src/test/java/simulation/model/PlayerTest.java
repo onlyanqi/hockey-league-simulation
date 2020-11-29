@@ -1,12 +1,13 @@
 package simulation.model;
 
+import simulation.dao.DaoFactoryMock;
+import simulation.dao.IDaoFactory;
 import simulation.dao.ILeagueDao;
 import simulation.dao.IPlayerDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
-import simulation.state.AdvanceNextSeasonState;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,11 +17,15 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
 
-    private static IPlayerDao loadPlayerFactory;
+    private static IPlayerDao playerDao;
+    private static IModelFactory modelFactory;
+    private static IDaoFactory daoFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
-        loadPlayerFactory = new PlayerMock();
+        daoFactory = DaoFactoryMock.getInstance();
+        playerDao = daoFactory.newPlayerDao();
+        modelFactory = ModelFactory.getInstance();
     }
 
     @Test
@@ -43,17 +48,17 @@ public class PlayerTest {
 
     @Test
     public void playerFactoryTest() throws Exception {
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         assertEquals(player.getId(), 1);
         assertEquals(player.getName(), "Player1");
 
-        player = new Player(33, loadPlayerFactory);
+        player = new Player(33, playerDao);
         assertNull(player.getName());
     }
 
     @Test
     public void getAgeTest() throws Exception {
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         assertEquals(player.getAge(), 27);
     }
 
@@ -67,7 +72,7 @@ public class PlayerTest {
 
     @Test
     public void getPositionTest() throws Exception {
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         assertEquals(player.getPosition(), Position.FORWARD);
     }
 
@@ -81,7 +86,7 @@ public class PlayerTest {
 
     @Test
     public void getTeamIdTest() throws Exception {
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         assertEquals(player.getTeamId(), (1));
     }
 
@@ -95,7 +100,7 @@ public class PlayerTest {
 
     @Test
     public void isCaptainTest() throws Exception {
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         assertTrue(player.isCaptain());
     }
 
@@ -112,14 +117,14 @@ public class PlayerTest {
         IPlayer player = new Player();
         player.setId(1);
         player.setName("Player1");
-        player.addPlayer(loadPlayerFactory);
+        player.addPlayer(playerDao);
         assertEquals(1, player.getId());
         assertEquals("Player1", player.getName());
     }
 
     @Test
     public void getFreeAgentIdTest() throws Exception {
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         assertEquals(player.getFreeAgentId(), (1));
     }
 
@@ -133,13 +138,13 @@ public class PlayerTest {
 
     @Test
     public void getInjuredTest() throws Exception {
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         assertTrue(player.getInjured());
     }
 
     @Test
     public void getInjuredFalseTest() throws Exception {
-        IPlayer player = new Player(2, loadPlayerFactory);
+        IPlayer player = new Player(2, playerDao);
         assertFalse(player.getInjured());
     }
 
@@ -152,7 +157,7 @@ public class PlayerTest {
 
     @Test
     public void getInjuryStartDateTest() throws Exception {
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         assertEquals(player.getInjuryStartDate(), LocalDate.now());
     }
 
@@ -165,7 +170,7 @@ public class PlayerTest {
 
     @Test
     public void getInjuryDatesRangeTest() throws Exception {
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         assertEquals(player.getInjuryDatesRange(), 80);
     }
 
@@ -208,14 +213,14 @@ public class PlayerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void setInvalidPositionTest() throws Exception {
-        IPlayer player = new Player(32, loadPlayerFactory);
+        IPlayer player = new Player(32, playerDao);
     }
 
     @Test
     public void retirementCheckTest() throws Exception {
         ILeagueDao leagueFactory = new LeagueMock();
         ILeague league = new League(1, leagueFactory);
-        Player player = new Player(20, loadPlayerFactory);
+        Player player = new Player(20, playerDao);
         boolean retired = player.retirementCheck(league);
         assertTrue(retired);
     }
@@ -225,7 +230,7 @@ public class PlayerTest {
     public void calculateAgeTest() throws Exception {
         ILeagueDao leagueFactory = new LeagueMock();
         ILeague league = new League(1, leagueFactory);
-        Player player = new Player(31, loadPlayerFactory);
+        Player player = new Player(31, playerDao);
         player.calculateAge(league);
         assertEquals(player.getAge(), 23);
     }
@@ -234,7 +239,7 @@ public class PlayerTest {
     public void injuryCheckTest() throws Exception {
         ILeagueDao leagueFactory = new LeagueMock();
         ILeague league = new League(1, leagueFactory);
-        IPlayer player = new Player(2, loadPlayerFactory);
+        IPlayer player = new Player(2, playerDao);
         assertFalse(player.getInjured());
         player.injuryCheck(league);
         assertTrue(player.getInjured());
@@ -244,21 +249,21 @@ public class PlayerTest {
     public void injuryCheckInjuredTest() throws Exception {
         ILeagueDao leagueFactory = new LeagueMock();
         ILeague league = new League(1, leagueFactory);
-        IPlayer player = new Player(1, loadPlayerFactory);
+        IPlayer player = new Player(1, playerDao);
         player.injuryCheck(league);
         assertTrue(player.getInjured());
     }
 
     @Test
     public void injuryCheckNUllTest() throws Exception {
-        IPlayer player = new Player(2, loadPlayerFactory);
+        IPlayer player = new Player(2, playerDao);
         player.injuryCheck(null);
         assertFalse(player.getInjured());
     }
 
     @Test
     public void agingInjuryRecoveryTest() throws Exception {
-        IPlayer player = new Player(12, loadPlayerFactory);
+        IPlayer player = new Player(12, playerDao);
         ILeagueDao leagueFactory = new LeagueMock();
         ILeague league = new League(1, leagueFactory);
         assertTrue(player.getInjured());
@@ -272,7 +277,7 @@ public class PlayerTest {
 
     @Test
     public void agingInjuryRecoveryNullTest() throws Exception {
-        IPlayer player = new Player(12, loadPlayerFactory);
+        IPlayer player = new Player(12, playerDao);
         player.agingInjuryRecovery(null);
         assertTrue(player.getInjured());
         assertNotNull(player.getInjuryStartDate());
@@ -285,7 +290,7 @@ public class PlayerTest {
         League league = new League(1, leagueFactory);
         List<IPlayer> playerList = new ArrayList<>();
         for (int i = 1; i < 21; i++) {
-            Player player = new Player(i, loadPlayerFactory);
+            Player player = new Player(i, playerDao);
             playerList.add(player);
         }
         List<IPlayer> freePlayerList = league.getFreeAgent().getPlayerList();
@@ -296,4 +301,23 @@ public class PlayerTest {
         assertNotEquals(playerList.get(0).getName(), "Player1");
         assertEquals(playerList.get(19).getName(), "Player6");
     }
+
+    @Test
+    public void getRelativeStrengthTest() throws Exception {
+        IPlayer player = modelFactory.newPlayerWithIdDao(1, playerDao);
+        assertTrue(player.getRelativeStrength()==(7.8));
+    }
+
+    @Test
+    public void setRelativeStrengthTest() {
+        IPlayer player = modelFactory.newPlayer();
+        player.setSkating(15);
+        player.setShooting(18);
+        player.setChecking(12);
+        player.setPosition(Position.FORWARD);
+        player.setStrength();
+        player.setRelativeStrength();
+        assertTrue(player.getRelativeStrength()==(7.8));
+    }
+
 }

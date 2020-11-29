@@ -287,7 +287,7 @@ public class Player extends SharedAttributes implements IPlayer {
         double increaseRate = 0.5 / (aging.getMaximumAge() - aging.getAverageRetirementAge());
         if (this.age < aging.getAverageRetirementAge()) {
             Random randomRetire1 = new Random();
-            double chance1 = 0.5 - ((aging.getAverageRetirementAge() - this.age) * increaseRate);
+            double chance1 = 0.5 - ((aging.getAverageRetirementAge() - this.age) * increaseRate * 1.5);
             if (chance1 < 0.0) {
                 chance1 = 0.0;
             }
