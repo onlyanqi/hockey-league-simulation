@@ -361,18 +361,4 @@ public class Team extends SharedAttributes implements ITeam {
         this.draftPicks = draftPicks;
     }
 
-    private void removeObjectFromList(List<IPlayer> list, IPlayer toRemove) {
-        Iterator<IPlayer> itr = list.iterator();
-        while (itr.hasNext()) {
-            IPlayer player = itr.next();
-            if (player.getName().equals(toRemove.getName())
-                    && player.getPosition().equals(toRemove.getPosition())
-                    && player.getStrength() == toRemove.getStrength()
-                    && player.getSkating() == toRemove.getSkating()) {
-
-                itr.remove();
-                break;
-            }
-        }
-    }
 }
