@@ -36,10 +36,22 @@ public class AgingState implements ISimulateState {
         if (stanleyCupWinnerDetermined()) {
             updateTeamScoreList();
             displayTeamStats();
+            displayWinsLoss();
+            displayStanleyCupWinner();
             return new TrophySystem(hockeyContext);
         } else {
             return new PersistState(hockeyContext);
         }
+    }
+
+    private void displayStanleyCupWinner() {
+        List<ITeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
+        if (teamScoreList.get(0).getNumberOfWins() > teamScoreList.get(1).getNumberOfWins()) {
+            ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(0).getTeam().getName() + " won the stanley cup!");
+        } else {
+            ConsoleOutput.getInstance().printMsgToConsole(teamScoreList.get(1).getTeam().getName() + " won the stanley cup!");
+        }
+        consoleOutput.printMsgToConsole("----------------------------------------");
     }
 
     private void displayTeamStats() {
@@ -59,6 +71,11 @@ public class AgingState implements ISimulateState {
         shotAvg = shotAvg / teamStats.size();
         saveAvg = saveAvg / teamStats.size();
         consoleOutput.printGameStatsToUser(goalAvg, penaltyAvg, shotAvg, saveAvg);
+    }
+
+    private void displayWinsLoss(){
+        ITeamStanding teamStanding = league.getRegularSeasonStanding();
+        consoleOutput.printTeamGameScore(teamStanding);
     }
 
     private void updateTeamScoreList() {
