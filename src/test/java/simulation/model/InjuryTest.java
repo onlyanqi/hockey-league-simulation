@@ -1,8 +1,8 @@
 package simulation.model;
 
-import simulation.dao.IInjuryDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.IInjuryDao;
 import simulation.mock.InjuryMock;
 
 import static org.junit.Assert.*;

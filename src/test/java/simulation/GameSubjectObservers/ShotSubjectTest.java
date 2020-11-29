@@ -2,11 +2,9 @@ package simulation.GameSubjectObservers;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IGameDao;
 import simulation.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
-import simulation.mock.GameMock;
 import simulation.mock.UserMock;
 import simulation.model.User;
 import simulation.state.IHockeyContext;
@@ -33,27 +31,27 @@ public class ShotSubjectTest {
     @Test
     public void testAttach() {
         ShotObserver shotObserver = new ShotObserver();
-        ShotSubject  shotSubject= new ShotSubject();
+        ShotSubject shotSubject = new ShotSubject();
         shotSubject.attach(shotObserver);
-        assertTrue(shotSubject.getListeners().size()==1);
+        assertTrue(shotSubject.getListeners().size() == 1);
     }
 
     @Test
     public void testDetach() {
         ShotObserver shotObserver = new ShotObserver();
-        ShotSubject  shotSubject= new ShotSubject();
+        ShotSubject shotSubject = new ShotSubject();
         shotSubject.attach(shotObserver);
         shotSubject.detach(shotObserver);
-        assertTrue(shotSubject.getListeners().size()==0);
+        assertTrue(shotSubject.getListeners().size() == 0);
     }
 
     @Test
     public void testNotifyObservers() {
         ShotObserver shotObserver = new ShotObserver();
-        ShotSubject  shotSubject= new ShotSubject();
+        ShotSubject shotSubject = new ShotSubject();
         shotSubject.attach(shotObserver);
-        shotSubject.notifyObservers(hockeyContext.getUser().getLeague(),"Team11",2);
-        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getShots()==2);
-        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getShots()==2);
+        shotSubject.notifyObservers(hockeyContext.getUser().getLeague(), "Team11", 2);
+        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getShots() == 2);
+        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getShots() == 2);
     }
 }

@@ -1,13 +1,12 @@
 package simulation.model;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
 import simulation.dao.DaoFactoryMock;
 import simulation.dao.IDaoFactory;
 import simulation.dao.ILeagueDao;
 import simulation.dao.IPlayerDao;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import simulation.mock.LeagueMock;
-import simulation.mock.PlayerMock;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class PlayerTest {
 
     @Test
     public void playerNullTest() {
-        IPlayer player = new Player((Player)null);
+        IPlayer player = new Player((Player) null);
         assertEquals(player.getId(), 0);
     }
 
@@ -305,7 +304,7 @@ public class PlayerTest {
     @Test
     public void getRelativeStrengthTest() throws Exception {
         IPlayer player = modelFactory.newPlayerWithIdDao(1, playerDao);
-        assertTrue(player.getRelativeStrength()==(7.8));
+        assertTrue(player.getRelativeStrength() == (7.8));
     }
 
     @Test
@@ -317,7 +316,7 @@ public class PlayerTest {
         player.setPosition(Position.FORWARD);
         player.setStrength();
         player.setRelativeStrength();
-        assertTrue(player.getRelativeStrength()==(7.8));
+        assertTrue(player.getRelativeStrength() == (7.8));
     }
 
 }

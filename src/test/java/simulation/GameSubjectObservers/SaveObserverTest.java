@@ -33,10 +33,10 @@ public class SaveObserverTest {
     }
 
     @Test
-    public void update(){
+    public void update() {
         IGameObserver saveObserver = new SaveObserver();
-        saveObserver.update(hockeyContext.getUser().getLeague(),"Team11",3);
-        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getSaves()==3);
-        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getSaves()==3);
+        saveObserver.update(hockeyContext.getUser().getLeague(), "Team11", 3);
+        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getSaves() == 3);
+        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getSaves() == 3);
     }
 }

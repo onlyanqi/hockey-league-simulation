@@ -11,10 +11,11 @@ public class HockeyContextConcreteMock implements IHockeyContextFactory {
 
     private static IHockeyContextFactory hockeyContextConcrete;
 
-    private HockeyContextConcreteMock(){}
+    private HockeyContextConcreteMock() {
+    }
 
-    public static IHockeyContextFactory getInstance(){
-        if(hockeyContextConcrete == null){
+    public static IHockeyContextFactory getInstance() {
+        if (hockeyContextConcrete == null) {
             return new HockeyContextConcreteMock();
         }
         return hockeyContextConcrete;
@@ -24,7 +25,7 @@ public class HockeyContextConcreteMock implements IHockeyContextFactory {
         return createHockeyContext();
     }
 
-    private IHockeyContext createHockeyContext(){
+    private IHockeyContext createHockeyContext() {
         IHockeyContext hockeyContext = HockeyContext.getInstance();
 
         IModelFactory modelFactory = ModelFactory.getInstance();

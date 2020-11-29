@@ -22,7 +22,7 @@ public class ConferenceMock implements IConferenceDao {
     private IHockeyContextFactory hockeyContextFactory;
     private IHockeyContext hockeyContext;
 
-    public ConferenceMock(){
+    public ConferenceMock() {
         hockeyContextFactory = HockeyContextConcreteMock.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();

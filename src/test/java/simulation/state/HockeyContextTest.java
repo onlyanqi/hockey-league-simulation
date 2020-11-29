@@ -1,9 +1,9 @@
 package simulation.state;
 
 
-import simulation.dao.ILeagueDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.ILeagueDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;

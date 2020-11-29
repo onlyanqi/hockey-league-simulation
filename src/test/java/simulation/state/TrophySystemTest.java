@@ -11,7 +11,6 @@ import simulation.mock.LeagueMock;
 import simulation.mock.TrophyMock;
 import simulation.mock.UserMock;
 import simulation.model.*;
-import static org.junit.Assert.*;
 
 
 public class TrophySystemTest {
@@ -30,7 +29,7 @@ public class TrophySystemTest {
         IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         hockeyContext.setUser(user);
-        trophy = new TrophyMock().loadTrophyById(0,new Trophy());
+        trophy = new TrophyMock().loadTrophyById(0, new Trophy());
         league.setTrophy(trophy);
         consoleOutput = ConsoleOutput.getInstance();
     }
@@ -45,11 +44,12 @@ public class TrophySystemTest {
 
     @Test
     public void entryTest() throws Exception {
-        IUserDao userFactory = new UserMock();;
+        IUserDao userFactory = new UserMock();
+        ;
         User user = new User(4, userFactory);
         hockeyContext.setUser(user);
         league = hockeyContext.getUser().getLeague();
-        TrophySystem trophySystem = new TrophySystem(hockeyContext,trophy);
+        TrophySystem trophySystem = new TrophySystem(hockeyContext, trophy);
         Trophy oldTrophy = new Trophy();
 //        trophySystem.entry();
 //        assertTrue(oldTrophy.getClass() == trophy.getClass());

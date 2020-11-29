@@ -2,8 +2,8 @@ package simulation.serializers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import simulation.dao.ILeagueDao;
 import org.junit.Test;
+import simulation.dao.ILeagueDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
@@ -26,7 +26,7 @@ public class LeagueDataSerializerDeSerializerTest {
         LeagueDataSerializerDeSerializer leagueDataSerializerDeSerializer = new LeagueDataSerializerDeSerializer();
 
         leagueDataSerializerDeSerializer.serialize(oldLeague);
-        LeagueDeserializationModel newLeagueTest = leagueDataSerializerDeSerializer.deSerialize("JsonFiles/"+oldLeague.getUserCreatedTeamName());
+        LeagueDeserializationModel newLeagueTest = leagueDataSerializerDeSerializer.deSerialize("JsonFiles/" + oldLeague.getUserCreatedTeamName());
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting().create();

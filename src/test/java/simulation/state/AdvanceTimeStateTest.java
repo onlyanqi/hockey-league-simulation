@@ -1,9 +1,9 @@
 package simulation.state;
 
-import simulation.dao.IEventDao;
-import simulation.dao.IUserDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.IEventDao;
+import simulation.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.NHLEventMock;

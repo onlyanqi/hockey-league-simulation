@@ -1,8 +1,8 @@
 package simulation.model;
 
-import simulation.dao.ITrainingDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.ITrainingDao;
 import simulation.mock.TrainingMock;
 
 import static org.junit.Assert.assertEquals;

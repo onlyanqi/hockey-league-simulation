@@ -35,27 +35,27 @@ public class GoalSubjectTest {
     @Test
     public void testAttach() {
         GoalObserver goalObserver = new GoalObserver();
-        GoalSubject  goalSubject= new GoalSubject();
+        GoalSubject goalSubject = new GoalSubject();
         goalSubject.attach(goalObserver);
-        assertTrue(goalSubject.getListeners().size()==1);
+        assertTrue(goalSubject.getListeners().size() == 1);
     }
 
     @Test
     public void testDetach() {
         GoalObserver goalObserver = new GoalObserver();
-        GoalSubject  goalSubject= new GoalSubject();
+        GoalSubject goalSubject = new GoalSubject();
         goalSubject.attach(goalObserver);
         goalSubject.detach(goalObserver);
-        assertTrue(goalSubject.getListeners().size()==0);
+        assertTrue(goalSubject.getListeners().size() == 0);
     }
 
     @Test
     public void testNotifyObservers() {
         GoalObserver goalObserver = new GoalObserver();
-        GoalSubject  goalSubject= new GoalSubject();
+        GoalSubject goalSubject = new GoalSubject();
         goalSubject.attach(goalObserver);
-        goalSubject.notifyObservers(hockeyContext.getUser().getLeague(),"Team11",2);
-        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getGoals()==2);
-        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getGoals()==2);
+        goalSubject.notifyObservers(hockeyContext.getUser().getLeague(), "Team11", 2);
+        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getGoals() == 2);
+        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getGoals() == 2);
     }
 }
