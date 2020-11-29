@@ -18,10 +18,12 @@ public class User extends SharedAttributes implements IUser {
     public User(int id) {
         setId(id);
     }
+
     public User(int id, IUserDao factory) throws Exception {
         setId(id);
         factory.loadUserById(id, this);
     }
+
     public User(String name, IUserDao factory) throws Exception {
         if (factory == null) {
             return;

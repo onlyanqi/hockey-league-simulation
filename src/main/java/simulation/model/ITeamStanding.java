@@ -1,6 +1,5 @@
 package simulation.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface ITeamStanding {
@@ -13,7 +12,7 @@ public interface ITeamStanding {
 
     void setTeamsScoreList(List<ITeamScore> teamsScoreList);
 
-    void initializeTeamStandings(List<String> teamNames);
+    void initializeTeamStandings(List<ITeam> teams);
 
     void initializeTeamStandingsRegularSeason(ILeague league);
 

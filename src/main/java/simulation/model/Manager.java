@@ -2,7 +2,7 @@ package simulation.model;
 
 import simulation.dao.IManagerDao;
 
-public class Manager extends SharedAttributes implements IManager{
+public class Manager extends SharedAttributes implements IManager {
     private int leagueId;
     private int teamId;
     private String personality;
@@ -25,7 +25,7 @@ public class Manager extends SharedAttributes implements IManager{
         this.setTeamId(manager.getTeamId());
     }
 
-    public Manager(simulation.serializers.ModelsForDeserialization.model.Manager manager){
+    public Manager(simulation.serializers.ModelsForDeserialization.model.Manager manager) {
         this.leagueId = manager.leagueId;
         this.personality = manager.personality;
         this.teamId = manager.teamId;

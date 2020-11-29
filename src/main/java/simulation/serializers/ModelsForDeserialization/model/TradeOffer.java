@@ -2,7 +2,7 @@ package simulation.serializers.ModelsForDeserialization.model;
 
 import java.util.List;
 
-public class TradeOffer extends SharedAttributes  {
+public class TradeOffer extends SharedAttributes {
 
     public int leagueId;
     public int tradingId;

@@ -1,10 +1,12 @@
 package simulation.state;
 
 import config.AppConfig;
+import org.apache.log4j.Logger;
+import presentation.ConsoleOutput;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
-
-import java.util.Scanner;
+import presentation.ReadUserInput;
+import simulation.model.Player;
 
 public class PlayerChoiceState implements IHockeyState {
 
@@ -12,6 +14,7 @@ public class PlayerChoiceState implements IHockeyState {
     private static final String TWO = "2";
     private static final String IMPORTSTATE = "importState";
     private static final String CREATEORLOADTEAM = "createOrLoadTeam";
+    private static Logger log = Logger.getLogger(Player.class);
     private String input;
     private String stateName;
     private IHockeyContext hockeyContext;
@@ -25,14 +28,12 @@ public class PlayerChoiceState implements IHockeyState {
 
     @Override
     public void entry() {
-
+        ConsoleOutput.getInstance().printMsgToConsole(input);
     }
 
     @Override
     public void process() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(input);
-        userInput = scanner.nextLine();
+        userInput = ReadUserInput.getInstance().getInput("");
     }
 
     @Override
@@ -52,11 +53,12 @@ public class PlayerChoiceState implements IHockeyState {
                 break;
             }
             case CREATEORLOADTEAM: {
-                SeasonSimulationState seasonSimulationState = new SeasonSimulationState(hockeyContext,Integer.parseInt(userInput));
+                SeasonSimulationState seasonSimulationState = new SeasonSimulationState(hockeyContext, Integer.parseInt(userInput));
                 return seasonSimulationState;
             }
             default: {
-
+                log.error("Given State is invalid. Cannot proceed to simulating seasons");
+                throw new IllegalStateException("Given State is invalid. Cannot proceed to simulating seasons");
             }
         }
         return null;

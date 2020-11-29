@@ -13,12 +13,14 @@ public class AgingState implements ISimulateState {
     private IHockeyContext hockeyContext;
     private ILeague league;
     private IAging aging;
+    private ConsoleOutput consoleOutput;
 
 
     public AgingState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
         this.aging = league.getGamePlayConfig().getAging();
+        consoleOutput = ConsoleOutput.getInstance();
     }
 
     @Override
@@ -28,7 +30,6 @@ public class AgingState implements ISimulateState {
         aging.agingPlayerRetirement(league);
         return exit();
     }
-
 
 
     private ISimulateState exit() {
@@ -47,28 +48,28 @@ public class AgingState implements ISimulateState {
         float saveAvg = 0;
         float shotAvg = 0;
         float penaltyAvg = 0;
-        for(TeamStat teamStat : teamStats){
-            goalAvg = goalAvg + (float)teamStat.getGoals()/teamStat.getNumberOfGamesPlayed();
-            penaltyAvg = penaltyAvg + (float)teamStat.getPenalties()/teamStat.getNumberOfGamesPlayed();
-            shotAvg = shotAvg + (float)teamStat.getShots()/teamStat.getNumberOfGamesPlayed();
-            saveAvg = saveAvg + (float)teamStat.getSaves()/teamStat.getNumberOfGamesPlayed();
+        for (TeamStat teamStat : teamStats) {
+            goalAvg = goalAvg + (float) teamStat.getGoals() / teamStat.getNumberOfGamesPlayed();
+            penaltyAvg = penaltyAvg + (float) teamStat.getPenalties() / teamStat.getNumberOfGamesPlayed();
+            shotAvg = shotAvg + (float) teamStat.getShots() / teamStat.getNumberOfGamesPlayed();
+            saveAvg = saveAvg + (float) teamStat.getSaves() / teamStat.getNumberOfGamesPlayed();
         }
-
-        System.out.println("Goals Avg " + goalAvg / teamStats.size());
-        System.out.println("Penalty Avg " + penaltyAvg / teamStats.size());
-        System.out.println("Shot Avg " + shotAvg / teamStats.size());
-        System.out.println("Save Avg " + saveAvg / teamStats.size());
+        goalAvg = goalAvg / teamStats.size();
+        penaltyAvg = penaltyAvg / teamStats.size();
+        shotAvg = shotAvg / teamStats.size();
+        saveAvg = saveAvg / teamStats.size();
+        consoleOutput.printGameStatsToUser(goalAvg, penaltyAvg, shotAvg, saveAvg);
     }
 
     private void updateTeamScoreList() {
-        HashMap<String,Integer> stanleyCupTeamStanding = league.getStanleyCupFinalsTeamScores();
+        HashMap<ITeam, Integer> stanleyCupTeamStanding = league.getStanleyCupFinalsTeamScores();
         List<ITeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
-        for(ITeamScore teamScore : teamScoreList){
-            stanleyCupTeamStanding.put(teamScore.getTeamName(),stanleyCupTeamStanding.get(teamScore.getTeamName()) + teamScore.getPoints());
+        for (ITeamScore teamScore : teamScoreList) {
+            stanleyCupTeamStanding.put(teamScore.getTeam(), stanleyCupTeamStanding.get(teamScore.getTeam()) + teamScore.getPoints());
         }
     }
 
-    public Boolean stanleyCupWinnerDetermined() {
+    private Boolean stanleyCupWinnerDetermined() {
         INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         IGameSchedule games = league.getGames();
         ITeamStanding teamStanding = league.getActiveTeamStanding();

@@ -1,7 +1,10 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
-import simulation.model.*;
+import simulation.model.IGameSchedule;
+import simulation.model.ILeague;
+import simulation.model.INHLEvents;
+import simulation.model.ITeamStanding;
 import simulation.serializers.LeagueDataSerializerDeSerializer;
 
 public class PersistState implements ISimulateState {
@@ -19,7 +22,7 @@ public class PersistState implements ISimulateState {
     @Override
     public ISimulateState action() throws Exception {
         ConsoleOutput.getInstance().printMsgToConsole("Saving... Please wait");
-        saveToPersistence();
+        //saveToPersistence();
         return exit();
     }
 
@@ -57,7 +60,7 @@ public class PersistState implements ISimulateState {
 //        }
 //    }
 
-//    private void updateDataBaseWithSimulatedDate() {
+    //    private void updateDataBaseWithSimulatedDate() {
 //        if (validation.isNotNull(league)) {
 //            try {
 //                updateTeam();

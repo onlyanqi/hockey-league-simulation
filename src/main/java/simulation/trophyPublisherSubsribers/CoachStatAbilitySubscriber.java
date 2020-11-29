@@ -2,11 +2,11 @@ package simulation.trophyPublisherSubsribers;
 
 import simulation.model.Coach;
 
-public class CoachStatAbilitySubscriber implements ITrophyEventListeners{
+public class CoachStatAbilitySubscriber implements ITrophyEventListeners {
 
     @Override
     public void update(Object object, Integer count) {
         Coach coach = (Coach) object;
-        coach.setCoachingEffectiveness(coach.getCoachingEffectiveness()+count);
+        coach.setCoachingEffectiveness(coach.getCoachingEffectiveness() + count);
     }
 }

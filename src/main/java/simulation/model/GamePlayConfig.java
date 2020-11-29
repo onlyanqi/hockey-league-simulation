@@ -3,7 +3,7 @@ package simulation.model;
 import simulation.dao.IGamePlayConfigDao;
 import simulation.dao.ITradingDao;
 
-public class GamePlayConfig implements IGamePlayConfig{
+public class GamePlayConfig implements IGamePlayConfig {
 
     private int id;
     private int leagueId;
@@ -21,7 +21,7 @@ public class GamePlayConfig implements IGamePlayConfig{
         gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
     }
 
-    public GamePlayConfig(simulation.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig){
+    public GamePlayConfig(simulation.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig) {
         this.id = gamePlayConfig.id;
         this.aging = new Aging(gamePlayConfig.aging);
         this.leagueId = gamePlayConfig.leagueId;
@@ -47,7 +47,7 @@ public class GamePlayConfig implements IGamePlayConfig{
         this.leagueId = leagueId;
     }
 
-    public IAging getAging(){
+    public IAging getAging() {
         return aging;
     }
 

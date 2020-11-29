@@ -5,24 +5,22 @@ import org.json.simple.JSONObject;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import simulation.dao.IDaoFactory;
-import simulation.factory.*;
 import simulation.model.IModelFactory;
 import simulation.model.IUser;
-import simulation.model.User;
 
-public class HockeyContext implements IHockeyContext{
+public class HockeyContext implements IHockeyContext {
 
+    private static IHockeyContext hockeyContext;
     private IHockeyState hockeyState;
     private IUser user;
-    private static IHockeyContext hockeyContext;
     private IModelFactory modelFactory;
     private IDaoFactory daoFactory;
 
     private HockeyContext() {
     }
 
-    public static IHockeyContext getInstance(){
-        if(null == hockeyContext){
+    public static IHockeyContext getInstance() {
+        if (null == hockeyContext) {
             hockeyContext = new HockeyContext();
         }
         return hockeyContext;
@@ -69,12 +67,12 @@ public class HockeyContext implements IHockeyContext{
     }
 
     @Override
-    public IModelFactory getModelFactory(){
+    public IModelFactory getModelFactory() {
         return this.modelFactory;
     }
 
     @Override
-    public void setModelFactory(IModelFactory modelFactory){
+    public void setModelFactory(IModelFactory modelFactory) {
         this.modelFactory = modelFactory;
     }
 

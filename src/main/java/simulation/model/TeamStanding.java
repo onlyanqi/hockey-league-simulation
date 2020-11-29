@@ -1,10 +1,13 @@
 package simulation.model;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeamStanding implements ITeamStanding {
 
+    private static Logger log = Logger.getLogger(TeamStanding.class);
     private int id;
     private List<ITeamScore> teamsScoreList = new ArrayList<>();
 
@@ -13,9 +16,9 @@ public class TeamStanding implements ITeamStanding {
         setId(System.identityHashCode(this));
     }
 
-    public TeamStanding(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding){
+    public TeamStanding(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding) {
         this.id = teamStanding.id;
-        for (simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore: teamStanding.teamsScoreList){
+        for (simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore : teamStanding.teamsScoreList) {
             this.teamsScoreList.add(new TeamScore(teamScore));
         }
     }
@@ -29,6 +32,10 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public List<ITeamScore> getTeamsScoreList() {
+        if (teamsScoreList == null) {
+            log.error("Team Score list is empty.");
+            throw new IllegalStateException("Team Score list is empty.");
+        }
         return teamsScoreList;
     }
 
@@ -37,11 +44,15 @@ public class TeamStanding implements ITeamStanding {
     }
 
 
-    public void initializeTeamStandings(List<String> teamNames) {
-        Integer teamsSize = teamNames.size();
+    public void initializeTeamStandings(List<ITeam> teams) {
+        if (teams == null) {
+            log.error("Teams are empty to initialize team Standings");
+            throw new IllegalStateException("Teams are empty to initialize team Standings");
+        }
+        int teamsSize = teams.size();
         teamsScoreList = new ArrayList<>(teamsSize);
-        for (String teamName : teamNames) {
-            teamsScoreList.add(new TeamScore(teamName));
+        for (ITeam team : teams) {
+            teamsScoreList.add(new TeamScore(team));
         }
     }
 
@@ -49,15 +60,19 @@ public class TeamStanding implements ITeamStanding {
         for (IConference conference : league.getConferenceList()) {
             for (IDivision division : conference.getDivisionList()) {
                 for (ITeam team : division.getTeamList()) {
-                    teamsScoreList.add(new TeamScore(team.getName()));
+                    teamsScoreList.add(new TeamScore(team));
                 }
             }
         }
     }
 
     public void setTeamPoints(String teamName) {
+        if (teamName == null) {
+            log.error("Provided team is null. Unable to set team points");
+            throw new IllegalArgumentException("Provided team is null. Unable to set team points");
+        }
         for (ITeamScore teamScore : teamsScoreList) {
-            if (teamScore.getTeamName().equals(teamName)) {
+            if (teamScore.getTeam().getName().equals(teamName)) {
                 int previousScore = teamScore.getPoints();
                 int newTeamScore = previousScore + 2;
                 teamScore.setPoints(newTeamScore);
@@ -66,8 +81,12 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public void setTeamWins(String teamName) {
+        if (teamName == null) {
+            log.error("Provided team is null. Unable to set team wins");
+            throw new IllegalArgumentException("Provided team is null. Unable to set team wins");
+        }
         for (ITeamScore teamScore : teamsScoreList) {
-            if (teamScore.getTeamName().equals(teamName)) {
+            if (teamScore.getTeam().getName().equals(teamName)) {
                 int previousNumberOfWins = teamScore.getNumberOfWins();
                 teamScore.setNumberOfWins(previousNumberOfWins + 1);
             }
@@ -75,8 +94,12 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public void setTeamLoss(String teamName) {
+        if (teamName == null) {
+            log.error("Provided team is null. Unable to set team loss");
+            throw new IllegalArgumentException("Provided team is null. Unable to set team loss");
+        }
         for (ITeamScore teamScore : teamsScoreList) {
-            if (teamScore.getTeamName().equals(teamName)) {
+            if (teamScore.getTeam().getName().equals(teamName)) {
                 int previousNumberOfLoss = teamScore.getNumberOfLoss();
                 teamScore.setNumberOfLoss(previousNumberOfLoss + 1);
             }
@@ -84,8 +107,12 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public void setTeamTies(String teamName) {
+        if (teamName == null) {
+            log.error("Provided team is null. Unable to set team ties");
+            throw new IllegalArgumentException("Provided team is null. Unable to set team ties");
+        }
         for (ITeamScore teamScore : teamsScoreList) {
-            if (teamScore.getTeamName().equals(teamName)) {
+            if (teamScore.getTeam().getName().equals(teamName)) {
                 int previousNumberOfTies = teamScore.getNumberOfTies();
                 teamScore.setNumberOfTies(previousNumberOfTies + 1);
             }
@@ -144,7 +171,7 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public ITeamScore getTeamScoreByTeamName(List<ITeamScore> teamsScoreList, String teamName) {
-        return teamsScoreList.stream().filter(teamScore -> teamScore.getTeamName().equals(teamName)).findFirst().get();
+        return teamsScoreList.stream().filter(teamScore -> teamScore.getTeam().getName().equals(teamName)).findFirst().get();
     }
 
 }

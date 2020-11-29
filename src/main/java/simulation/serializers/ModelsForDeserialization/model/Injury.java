@@ -1,6 +1,6 @@
 package simulation.serializers.ModelsForDeserialization.model;
 
-public class Injury extends SharedAttributes{
+public class Injury extends SharedAttributes {
 
     public Double randomInjuryChance;
 

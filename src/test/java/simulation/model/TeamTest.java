@@ -1,24 +1,29 @@
 package simulation.model;
 
+import simulation.dao.DaoFactoryMock;
+import simulation.dao.IDaoFactory;
 import simulation.dao.IPlayerDao;
 import simulation.dao.ITeamDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.PlayerMock;
-import simulation.mock.TeamMock;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class TeamTest {
 
-    private static ITeamDao teamFactory;
+    private static ITeamDao teamDao;
+    private static IModelFactory modelFactory;
+    private static IDaoFactory daoFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
-        teamFactory = new TeamMock();
+        daoFactory = DaoFactoryMock.getInstance();
+        teamDao = daoFactory.newTeamDao();
+        modelFactory = ModelFactory.getInstance();
     }
 
     @Test
@@ -35,17 +40,17 @@ public class TeamTest {
 
     @Test
     public void teamFactoryTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(1, teamDao);
         assertEquals(team.getId(), 1);
         assertEquals(team.getName(), "Team1");
 
-        team = new Team(2, teamFactory);
+        team = new Team(2, teamDao);
         assertNull(team.getName());
     }
 
     @Test
     public void getMascotTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(1, teamDao);
         assertEquals(team.getMascot(), ("Tiger1"));
     }
 
@@ -59,7 +64,7 @@ public class TeamTest {
 
     @Test
     public void getGeneralManagerTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(1, teamDao);
         assertEquals(team.getManager().getName(), ("Manager1"));
     }
 
@@ -74,7 +79,7 @@ public class TeamTest {
 
     @Test
     public void getHeadCoachTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(1, teamDao);
         assertEquals(team.getCoach().getName(), ("Coach1"));
     }
 
@@ -93,7 +98,7 @@ public class TeamTest {
 
     @Test
     public void getDivisionIdTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(1, teamDao);
         assertEquals(team.getDivisionId(), (1));
     }
 
@@ -107,7 +112,7 @@ public class TeamTest {
 
     @Test
     public void getPlayerListTest() throws Exception {
-        ITeam team = new Team(2, teamFactory);
+        ITeam team = new Team(2, teamDao);
         List<IPlayer> playerList = team.getPlayerList();
         assertNotNull(playerList);
         assertEquals(1, playerList.get(0).getId());
@@ -137,7 +142,7 @@ public class TeamTest {
 
     @Test
     public  void getActivePlayerListTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(1, teamDao);
         assertNotEquals(team.getActivePlayerList().get(1).getId(), (1));
         assertEquals(team.getActivePlayerList().get(1).getId(), (3));
     }
@@ -147,7 +152,7 @@ public class TeamTest {
         Team team = new Team();
         team.setId(1);
         team.setName("Team1");
-        team.addTeam(teamFactory);
+        team.addTeam(teamDao);
         assertEquals(1, team.getId());
         assertEquals("Team1", (team.getName()));
     }
@@ -166,7 +171,7 @@ public class TeamTest {
 
     @Test
     public void checkNumPlayerTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(1, teamDao);
         assertTrue(team.checkNumPlayer(team.getPlayerList()));
         team.getPlayerList().remove(0);
         assertFalse(team.checkNumPlayer(team.getPlayerList()));
@@ -174,10 +179,10 @@ public class TeamTest {
 
     @Test
     public void getPlayersTradedCountTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(1, teamDao);
         assertEquals(team.getPlayersTradedCount(), 0);
         assertNotEquals(team.getPlayersTradedCount(), 2);
-        team = new Team(2, teamFactory);
+        team = new Team(2, teamDao);
         assertEquals(team.getPlayersTradedCount(), 2);
         assertNotEquals(team.getPlayersTradedCount(), 1);
     }
@@ -193,10 +198,10 @@ public class TeamTest {
 
     @Test
     public void getLossPointTest() throws Exception {
-        Team team = new Team(1, teamFactory);
+        Team team = new Team(1, teamDao);
         assertEquals(team.getLossPoint(), 0);
         assertNotEquals(team.getPlayersTradedCount(), 2);
-        team = new Team(2, teamFactory);
+        team = new Team(2, teamDao);
         assertEquals(team.getLossPoint(), 2);
         assertNotEquals(team.getLossPoint(), 1);
     }
@@ -210,5 +215,37 @@ public class TeamTest {
         assertNotEquals(team.getLossPoint(), 2);
     }
 
+    @Test
+    public void fixTeamPlayerNumTest() throws Exception {
+        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        List<IPlayer> playerList = team.getPlayerList();
+        playerList.remove(0);
+        IFreeAgent freeAgent = modelFactory.newFreeAgentWithIdDao(1, daoFactory.newFreeAgentDao());
+        team.fixTeamPlayerNum(freeAgent.getPlayerList());
+        int teamSize = team.getPlayerList().size();
+        assertEquals(teamSize, 30);
+        assertNotEquals(teamSize, 29);
+    }
+
+    @Test
+    public void getDraftPicksTest() throws Exception {
+        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        List<String> draftPicks = team.getDraftPicks();
+        assertNotNull(draftPicks);
+        int draftPickSize = draftPicks.size();
+        assertEquals(draftPickSize, 7);
+    }
+
+    @Test
+    public void setDraftPicksTest() throws Exception {
+        ITeam team = modelFactory.newTeam();
+        List<String> draftPicks = new ArrayList<>(Arrays.asList(
+                null, null, null, null, null, null, null
+        ));
+        team.setDraftPicks(draftPicks);
+        assertNotNull(team.getDraftPicks());
+        int draftPickSize = team.getDraftPicks().size();
+        assertEquals(draftPickSize, 7);
+    }
 
 }

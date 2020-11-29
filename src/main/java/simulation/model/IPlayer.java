@@ -5,7 +5,7 @@ import simulation.dao.IPlayerDao;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface IPlayer extends Comparable<IPlayer>{
+public interface IPlayer extends Comparable<IPlayer> {
 
     boolean isFreeAgent();
 
@@ -77,13 +77,13 @@ public interface IPlayer extends Comparable<IPlayer>{
 
     int getId();
 
-    String getName();
+    void setId(int id);
 
-    boolean validName();
+    String getName();
 
     void setName(String name);
 
-    void setId(int id);
+    boolean validName();
 
     LocalDate getBirthday();
 
@@ -99,9 +99,9 @@ public interface IPlayer extends Comparable<IPlayer>{
 
     int getSaves();
 
-    int getPenaltyCount();
-
     void setSaves(int saves);
+
+    int getPenaltyCount();
 
     void setPenaltyCount(int penaltyCount);
 

@@ -1,56 +1,61 @@
 package simulation.state.gamestatemachine;
 
-import simulation.model.*;
-import simulation.state.GameContext;
+import org.apache.log4j.Logger;
+import simulation.model.IShift;
+import simulation.model.ISimulate;
 import simulation.state.HockeyContext;
-import simulation.state.IGameState;
 
 import java.util.Random;
 
-public class DefenseState implements IGameState {
+public class DefenseState extends GameState {
 
+    static Logger log = Logger.getLogger(DefenseState.class);
     Random rand;
     GameContext gameContext;
-    Shift offensive;
-    Shift defensive;
+    IShift offensive;
+    IShift defensive;
     ISimulate simulateConfig;
     boolean defend;
 
+
     public DefenseState(GameContext gameContext) {
-        simulateConfig  = HockeyContext.getInstance().getUser().getLeague().getGamePlayConfig().getSimulate();
+        simulateConfig = HockeyContext.getInstance().getUser().getLeague().getGamePlayConfig().getSimulate();
         this.gameContext = gameContext;
         offensive = gameContext.getOffensive();
         defensive = gameContext.getDefensive();
         this.rand = new Random();
     }
 
-    @Override
-    public IGameState process() throws Exception{
-        if(offensive.getTeamShiftDefenseTotal() > defensive.getTeamShiftDefenseTotal()){
+    public GameState process() throws Exception {
+        if (offensive == null || defensive == null) {
+            log.error("Error while simulating game.Offensive or Defensive are not set.");
+            throw new IllegalStateException("Offensive or Defensive are null.");
+        }
+        if (offensive.getTeamShiftDefenseTotal() > defensive.getTeamShiftDefenseTotal()) {
             defend = false;
-        }else{
+        } else {
             defend = true;
         }
-        if(rand.nextDouble() < simulateConfig.getUpset()){
+        if (rand.nextDouble() < simulateConfig.getUpset()) {
             reverseDefending();
         }
-        if(defend && (rand.nextDouble() < simulateConfig.getDefendChance())){
+        if (defend && (rand.nextDouble() < simulateConfig.getDefendChance())) {
             defend = true;
-        }else{
+        } else {
             defend = false;
         }
         return next();
     }
 
-    public IGameState next(){
-        if(defend){
-            if(rand.nextDouble() < simulateConfig.getPenaltyChance()){
+    public GameState next() {
+        if (defend) {
+            if (rand.nextDouble() < simulateConfig.getPenaltyChance()) {
                 return new PenaltyState(gameContext);
             }
-        }else{
+        } else {
             return new GoalState(gameContext);
         }
-        return null;
+        return new FinalState();
     }
 
     private boolean reverseDefending() {

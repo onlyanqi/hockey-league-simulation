@@ -16,9 +16,9 @@ public interface IHockeyContext {
 
     IHockeyState getHockeyState();
 
-    void setModelFactory(IModelFactory modelFactory);
-
     IModelFactory getModelFactory();
+
+    void setModelFactory(IModelFactory modelFactory);
 
     IDaoFactory getDaoFactory();
 

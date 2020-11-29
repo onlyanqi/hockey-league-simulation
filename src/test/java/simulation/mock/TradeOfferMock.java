@@ -1,10 +1,10 @@
 package simulation.mock;
 
+import simulation.dao.DaoFactoryMock;
+import simulation.dao.IDaoFactory;
+import simulation.dao.IPlayerDao;
 import simulation.dao.ITradeOfferDao;
-import simulation.model.IModelFactory;
-import simulation.model.ITradeOffer;
-import simulation.model.ModelFactory;
-import simulation.model.TradeOffer;
+import simulation.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,10 @@ public class TradeOfferMock implements ITradeOfferDao {
         tradeOffer.setTradingId(1);
     }
 
-    public void getTradeOffer(ITradeOffer tradeOffer, int from, int to) {
+    public void getTradeOffer(ITradeOffer tradeOffer, int from, int to) throws Exception {
+        IDaoFactory daoFactory = DaoFactoryMock.getInstance();
+        IPlayerDao playerDao = daoFactory.newPlayerDao();
+
         tradeOffer.setId(from);
         tradeOffer.setLeagueId(from);
         tradeOffer.setTradingId(from);
@@ -35,10 +38,16 @@ public class TradeOfferMock implements ITradeOfferDao {
         tradeOffer.setToPlayerId(to);
         tradeOffer.setSeasonId(from);
         tradeOffer.setStatus("pending");
+        List<Integer> fromPlayerIdList = new ArrayList<>();
+        fromPlayerIdList.add(1);
+        tradeOffer.setFromPlayerIdList(fromPlayerIdList);
+        List<Integer> toPlayerIdList = new ArrayList<>();
+        toPlayerIdList.add(2);
+        tradeOffer.setToPlayerIdList(toPlayerIdList);
     }
 
     @Override
-    public List<ITradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) {
+    public List<ITradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
         List<ITradeOffer> tradeOfferList = new ArrayList<>();
         ITradeOffer tradeOffer = modelFactory.newTradeOffer();
         getTradeOffer(tradeOffer, 1, 2);
@@ -56,7 +65,7 @@ public class TradeOfferMock implements ITradeOfferDao {
     }
 
     @Override
-    public void loadTradeOfferDetailsById(int tradingOfferId, ITradeOffer tradeOffer) {
+    public void loadTradeOfferDetailsById(int tradingOfferId, ITradeOffer tradeOffer) throws Exception {
         getTradeOffer(tradeOffer, tradingOfferId, 3);
     }
 

@@ -7,7 +7,7 @@ import simulation.serializers.ModelsForDeserialization.model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreeAgent extends SharedAttributes implements IFreeAgent{
+public class FreeAgent extends SharedAttributes implements IFreeAgent {
 
     private int seasonId;
     private int leagueId;
@@ -22,15 +22,12 @@ public class FreeAgent extends SharedAttributes implements IFreeAgent{
     }
 
     public FreeAgent(int id, IFreeAgentDao loadFreeAgentFactory) throws Exception {
-        if (loadFreeAgentFactory == null) {
-            return;
-        }
         loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
 
-    public FreeAgent(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent){
+    public FreeAgent(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent) {
         this.leagueId = freeAgent.leagueId;
-        for(Player player : freeAgent.playerList){
+        for (Player player : freeAgent.playerList) {
             this.playerList.add(new simulation.model.Player(player));
         }
         this.seasonId = freeAgent.seasonId;
@@ -59,30 +56,18 @@ public class FreeAgent extends SharedAttributes implements IFreeAgent{
     }
 
     public void setPlayerList(List<IPlayer> playerList) {
-        if (playerList == null) {
-            return;
-        }
         this.playerList = playerList;
     }
 
     public void addFreeAgent(IFreeAgentDao addFreeAgentFactory) throws Exception {
-        if (addFreeAgentFactory == null) {
-            return;
-        }
         addFreeAgentFactory.addFreeAgent(this);
     }
 
     public void loadPlayerListByFreeAgentId(IPlayerDao loadPlayerFactory) throws Exception {
-        if (loadPlayerFactory == null) {
-            return;
-        }
         this.playerList = loadPlayerFactory.loadPlayerListByFreeAgentId(getId());
     }
 
     public List<Integer> getGoodFreeAgentsList(List<Double> strengthList) {
-        if (strengthList == null) {
-            return null;
-        }
         Double thresholdPointForGoodPlayer = calculateStrengthAverage(strengthList);
         List<Integer> goodFreeAgentsIdList = new ArrayList<>();
         for (int i = 0; i < strengthList.size(); i++) {
@@ -94,9 +79,6 @@ public class FreeAgent extends SharedAttributes implements IFreeAgent{
     }
 
     public Double calculateStrengthAverage(List<Double> strengthList) {
-        if (strengthList == null) {
-            return null;
-        }
         Double average = 0.0;
         for (int i = 0; i < strengthList.size(); i++) {
             average = average + strengthList.get(i);

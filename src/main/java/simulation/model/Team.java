@@ -1,10 +1,10 @@
 package simulation.model;
 
 import config.AppConfig;
-import simulation.dao.IPlayerDao;
-import simulation.dao.ITeamDao;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
+import simulation.dao.IPlayerDao;
+import simulation.dao.ITeamDao;
 import simulation.serializers.ModelsForDeserialization.model.Player;
 
 import java.util.ArrayList;
@@ -44,21 +44,21 @@ public class Team extends SharedAttributes implements ITeam {
         factory.loadTeamByName(name, this);
     }
 
-    public Team(simulation.serializers.ModelsForDeserialization.model.Team team){
-        for(Player player : team.activePlayerList){
+    public Team(simulation.serializers.ModelsForDeserialization.model.Team team) {
+        for (Player player : team.activePlayerList) {
             this.activePlayerList.add(new simulation.model.Player(player));
         }
         this.aiTeam = team.aiTeam;
         this.coach = new Coach(team.coach);
         this.divisionId = team.divisionId;
         this.draftPicks = team.draftPicks;
-        for(Player player : team.inactivePlayerList){
+        for (Player player : team.inactivePlayerList) {
             this.inactivePlayerList.add(new simulation.model.Player(player));
         }
         this.lossPoint = team.lossPoint;
         this.manager = new Manager(team.manager);
         this.mascot = team.mascot;
-        for(Player player : team.playerList){
+        for (Player player : team.playerList) {
             this.playerList.add(new simulation.model.Player(player));
         }
         this.playersTradedCount = team.playersTradedCount;
@@ -71,12 +71,8 @@ public class Team extends SharedAttributes implements ITeam {
         return playerList;
     }
 
-    public void setPlayerList(List<IPlayer> playerList) throws IllegalArgumentException {
-        if (checkNumPlayer(playerList)) {
-            this.playerList = playerList;
-        } else {
-            throw new IllegalArgumentException("Please make sure team: " + this.getName() + " has 30 players with 16 forwards, 10 defense, 4 goalies!");
-        }
+    public void setPlayerList(List<IPlayer> playerList) {
+        this.playerList = playerList;
     }
 
     public List<IPlayer> getActivePlayerList() {
@@ -293,7 +289,7 @@ public class Team extends SharedAttributes implements ITeam {
         this.lossPoint = lossPoint;
     }
 
-    public void fixTeamAfterTrading(List<IPlayer> freeAgentList){
+    public void fixTeamPlayerNum(List<IPlayer> freeAgentList) {
         int goalieNum = 0;
         int forwardNum = 0;
         int defenseNum = 0;
@@ -315,38 +311,44 @@ public class Team extends SharedAttributes implements ITeam {
 
         if (goalieNum < maxGoalies) {
             addPlayer(freeAgentList, Position.GOALIE.toString(), goalieNum, maxGoalies);
-        } else if(goalieNum > maxGoalies){
+        } else if (goalieNum > maxGoalies) {
             dropPlayer(freeAgentList, Position.GOALIE.toString(), goalieNum, maxGoalies);
         }
 
         if (forwardNum < maxForwards) {
             addPlayer(freeAgentList, Position.FORWARD.toString(), forwardNum, maxForwards);
-        } else if(forwardNum > maxForwards){
+        } else if (forwardNum > maxForwards) {
             dropPlayer(freeAgentList, Position.FORWARD.toString(), forwardNum, maxForwards);
         }
 
         if (defenseNum < maxDefences) {
             addPlayer(freeAgentList, Position.DEFENSE.toString(), defenseNum, maxDefences);
-        } else if(defenseNum > maxDefences){
+        } else if (defenseNum > maxDefences) {
             dropPlayer(freeAgentList, Position.DEFENSE.toString(), defenseNum, maxDefences);
         }
     }
 
-    private void addPlayer(List<IPlayer> freeAgentList, String position, int noOfPlayers, int maxPlayers){
-        for(IPlayer player : freeAgentList){
-            if(player.getPosition().equals(position) && noOfPlayers < maxPlayers){
-                freeAgentList.remove(player);
+    private void addPlayer(List<IPlayer> freeAgentList, String position, int noOfPlayers, int maxPlayers) {
+        List<IPlayer> removedList = new ArrayList<>();
+        for (IPlayer player : freeAgentList) {
+            if (player.getPosition().toString().equals(position) && noOfPlayers < maxPlayers) {
+                removedList.add(player);
                 getPlayerList().add(player);
                 noOfPlayers++;
+            } else if (noOfPlayers == maxPlayers) {
+                break;
             }
+        }
+        for (IPlayer player : removedList) {
+            freeAgentList.remove(player);
         }
     }
 
-    private void dropPlayer(List<IPlayer> freeAgentList, String position, int noOfPlayers, int maxPlayers){
+    private void dropPlayer(List<IPlayer> freeAgentList, String position, int noOfPlayers, int maxPlayers) {
         Collections.sort(getPlayerList());
-        for(int i = 0; noOfPlayers > maxPlayers; i++){
+        for (int i = 0; noOfPlayers > maxPlayers; i++) {
             IPlayer player = getPlayerList().get(i);
-            if(player.getPosition().toString().equals(position) && maxPlayers < noOfPlayers){
+            if (player.getPosition().toString().equals(position) && maxPlayers < noOfPlayers) {
                 freeAgentList.add(player);
                 getPlayerList().remove(player);
                 noOfPlayers--;
@@ -361,4 +363,5 @@ public class Team extends SharedAttributes implements ITeam {
     public void setDraftPicks(List<String> draftPicks) {
         this.draftPicks = draftPicks;
     }
+
 }

@@ -1,22 +1,25 @@
 package simulation.model;
 
+import org.apache.log4j.Logger;
 import simulation.serializers.ModelsForDeserialization.model.Game;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameSchedule implements IGameSchedule{
+public class GameSchedule implements IGameSchedule {
 
+    static Logger log = Logger.getLogger(GameSchedule.class);
     List<IGame> gameList = new ArrayList<>();
     int id;
+
     public GameSchedule() {
         setId(System.identityHashCode(this));
     }
 
-    public GameSchedule(simulation.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule){
+    public GameSchedule(simulation.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule) {
         this.id = gameSchedule.id;
-        for(Game game : gameSchedule.gameList){
+        for (Game game : gameSchedule.gameList) {
             this.gameList.add(new simulation.model.Game(game));
         }
     }
@@ -38,6 +41,10 @@ public class GameSchedule implements IGameSchedule{
     }
 
     public List<IGame> getUnPlayedGamesOnDate(LocalDate date) {
+        if (date == null) {
+            log.error("provided date is null. Please make sure date is provided");
+            throw new IllegalArgumentException("provided date is null. Please make sure date is provided");
+        }
         List<IGame> gameListOnGivenDate = new ArrayList<>();
         for (IGame game : gameList) {
             if (game.getDate().equals(date) && game.isGameUnPlayed()) {
@@ -53,6 +60,10 @@ public class GameSchedule implements IGameSchedule{
                 return gameList.get(i - 1);
             }
         }
+        if (gameList == null) {
+            log.error("Game List is null");
+            throw new IllegalArgumentException("Game List is null. Unable to get Played Games");
+        }
         return gameList.get(gameList.size() - 1);
     }
 
@@ -62,6 +73,10 @@ public class GameSchedule implements IGameSchedule{
             if (game.getDate().equals(date)) {
                 gameListOnGivenDate.add(game);
             }
+        }
+        if (gameList == null) {
+            log.error("Game List is null");
+            throw new IllegalArgumentException("Game List is null. Unable to get Games on given date");
         }
         return gameListOnGivenDate;
     }

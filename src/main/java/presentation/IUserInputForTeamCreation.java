@@ -1,9 +1,7 @@
 package presentation;
 
-import simulation.model.Coach;
 import simulation.model.ICoach;
 import simulation.model.IManager;
-import simulation.model.Manager;
 
 import java.util.List;
 

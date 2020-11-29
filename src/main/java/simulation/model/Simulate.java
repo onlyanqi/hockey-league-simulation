@@ -1,6 +1,7 @@
 package simulation.model;
 
 public class Simulate extends SharedAttributes implements ISimulate {
+
     private Double upset;
     private Double defendChance;
     private Double penaltyChance;
@@ -14,7 +15,7 @@ public class Simulate extends SharedAttributes implements ISimulate {
         setId(id);
     }
 
-    public Simulate(simulation.serializers.ModelsForDeserialization.model.Simulate simulate){
+    public Simulate(simulation.serializers.ModelsForDeserialization.model.Simulate simulate) {
         this.upset = simulate.upset;
         this.defendChance = simulate.defendChance;
         this.penaltyChance = simulate.penaltyChance;
