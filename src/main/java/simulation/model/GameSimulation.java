@@ -2,15 +2,14 @@ package simulation.model;
 
 import org.apache.log4j.Logger;
 import simulation.state.gamestatemachine.GameContext;
-import simulation.state.gamestatemachine.ShootingState;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameSimulation {
 
-    private Shift team1Shift;
-    private Shift team2Shift;
+    private IShift team1Shift;
+    private IShift team2Shift;
     private ITeam team1;
     private ITeam team2;
     private HashMap<String,HashMap<Integer,Integer>> teamPlayersCount = new HashMap<>();
@@ -107,19 +106,19 @@ public class GameSimulation {
         }
     }
 
-    public Shift getTeam1Shift() {
+    public IShift getTeam1Shift() {
         return team1Shift;
     }
 
-    public void setTeam1Shift(Shift team1Shift) {
+    public void setTeam1Shift(IShift team1Shift) {
         this.team1Shift = team1Shift;
     }
 
-    public Shift getTeam2Shift() {
+    public IShift getTeam2Shift() {
         return team2Shift;
     }
 
-    public void setTeam2Shift(Shift team2Shift) {
+    public void setTeam2Shift(IShift team2Shift) {
         this.team2Shift = team2Shift;
     }
 
@@ -179,7 +178,7 @@ public class GameSimulation {
         this.saves = saves;
     }
 
-    public void addToPenaltyBox(Shift teamShift, IPlayer randDefense) {
+    public void addToPenaltyBox(IShift teamShift, IPlayer randDefense) {
         if(teamShift==null){
             log.error("Team Shift is null while adding to penalty box");
             throw new IllegalArgumentException("Team Shift is null while adding to penalty box");
@@ -193,7 +192,7 @@ public class GameSimulation {
         teamShift.getDefense().remove(randDefense);
     }
 
-    public void removeFromPenaltyBoxAndAddToShift(Shift teamShift,IPlayer player) {
+    public void removeFromPenaltyBoxAndAddToShift(IShift teamShift, IPlayer player) {
         teamShift.getPenalizedDefensePlayer().remove(player);
         teamShift.getDefense().add(player);
     }

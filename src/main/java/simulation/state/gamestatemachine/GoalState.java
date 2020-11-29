@@ -1,10 +1,7 @@
 package simulation.state.gamestatemachine;
 
 import org.apache.log4j.Logger;
-import simulation.model.GameSimulation;
-import simulation.model.IPlayer;
-import simulation.model.ISimulate;
-import simulation.model.Shift;
+import simulation.model.*;
 import simulation.state.HockeyContext;
 import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
 import java.util.HashMap;
@@ -17,8 +14,8 @@ public class GoalState extends GameState {
     Random rand;
     GameContext gameContext;
     GameSimulation gameSimulation;
-    Shift offensive;
-    Shift defensive;
+    IShift offensive;
+    IShift defensive;
     ISimulate simulateConfig;
     boolean goal;
 

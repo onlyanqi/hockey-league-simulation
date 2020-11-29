@@ -1,14 +1,13 @@
 package simulation.state.gamestatemachine;
 
 import simulation.model.GameSimulation;
+import simulation.model.IShift;
 import simulation.model.Shift;
-import simulation.state.gamestatemachine.GameState;
-import simulation.state.gamestatemachine.ShootingState;
 
 public class GameContext {
 
-    Shift offensive;
-    Shift defensive;
+    IShift offensive;
+    IShift defensive;
     GameSimulation gameSimulation;
     GameState gameState;
 
@@ -27,19 +26,19 @@ public class GameContext {
         }
     }
 
-    public Shift getOffensive() {
+    public IShift getOffensive() {
         return offensive;
     }
 
-    public void setOffensive(Shift offensive) {
+    public void setOffensive(IShift offensive) {
         this.offensive = offensive;
     }
 
-    public Shift getDefensive() {
+    public IShift getDefensive() {
         return defensive;
     }
 
-    public void setDefensive(Shift defensive) {
+    public void setDefensive(IShift defensive) {
         this.defensive = defensive;
     }
 

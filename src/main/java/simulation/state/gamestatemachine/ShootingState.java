@@ -2,6 +2,7 @@ package simulation.state.gamestatemachine;
 
 import org.apache.log4j.Logger;
 import simulation.model.GameSimulation;
+import simulation.model.IShift;
 import simulation.model.ISimulate;
 import simulation.model.Shift;
 import simulation.state.HockeyContext;
@@ -13,10 +14,10 @@ public class ShootingState extends GameState {
     Random rand;
     GameContext gameContext;
     GameSimulation gameSimulation;
-    Shift team1Shift;
-    Shift team2Shift;
-    Shift offensive;
-    Shift defensive;
+    IShift team1Shift;
+    IShift team2Shift;
+    IShift offensive;
+    IShift defensive;
     ISimulate simulateConfig;
 
     public ShootingState(GameContext gameContext) {
@@ -43,7 +44,7 @@ public class ShootingState extends GameState {
             defensive = team1Shift;
         }
         if(rand.nextDouble() < simulateConfig.getUpset()){
-            Shift temp = offensive;
+            IShift temp = offensive;
             offensive = defensive;
             defensive = temp;
         }

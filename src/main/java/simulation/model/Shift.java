@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 import java.util.*;
 
-public class Shift{
+public class Shift implements IShift {
 
     String teamName;
     IPlayer goalie;
@@ -34,46 +34,57 @@ public class Shift{
         }
     }
 
+    @Override
     public IPlayer getGoalie() {
         return goalie;
     }
 
+    @Override
     public void setGoalie(IPlayer goalie) {
         this.goalie = goalie;
     }
 
+    @Override
     public List<IPlayer> getForward() {
         return forward;
     }
 
+    @Override
     public void setForward(List<IPlayer> forward) {
         this.forward = forward;
     }
 
+    @Override
     public List<IPlayer> getDefense() {
         return defense;
     }
 
+    @Override
     public void setDefense(List<IPlayer> defense) {
         this.defense = defense;
     }
 
+    @Override
     public HashMap<IPlayer, Integer> getPenalizedDefensePlayer() {
         return penalizedDefensePlayer;
     }
 
+    @Override
     public void setPenalizedDefensePlayer(HashMap<IPlayer, Integer> penalizedDefensePlayer) {
         this.penalizedDefensePlayer = penalizedDefensePlayer;
     }
 
+    @Override
     public String getTeamName() {
         return teamName;
     }
 
+    @Override
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
 
+    @Override
     public Integer getTeamShiftShootingTotal(){
         Integer teamShootingTotal = 0;
         teamShootingTotal += goalie.getShooting();
@@ -86,6 +97,7 @@ public class Shift{
         return  teamShootingTotal;
     }
 
+    @Override
     public Integer getTeamShiftDefenseTotal(){
         Integer teamDefenseTotal = 0;
         teamDefenseTotal += goalie.getChecking();
@@ -97,6 +109,7 @@ public class Shift{
         }
         return teamDefenseTotal;
     }
+    @Override
     public Integer getTeamSkatingTotal(){
         Integer teamDefenseTotal = 0;
         teamDefenseTotal += goalie.getSkating();
@@ -109,8 +122,9 @@ public class Shift{
         return teamDefenseTotal;
     }
 
-    public Shift getShift(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
-        Shift shift = new Shift();
+    @Override
+    public IShift getShift(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
+        IShift shift = new Shift();
         HashMap<Integer,Integer> playersCount  = teamPlayersCount.get(team.getName());
 
         if(goalie==null){
@@ -147,6 +161,7 @@ public class Shift{
         return shift;
     }
 
+    @Override
     public void updateGoalie(ITeam team){
         for(IPlayer player: team.getActivePlayerList()){
             if(player.getPosition().name().equals("GOALIE")){
@@ -159,7 +174,8 @@ public class Shift{
         }
     }
 
-    public boolean didPlayerReachShiftCount(HashMap<Integer,Integer> playersCount,IPlayer player){
+    @Override
+    public boolean didPlayerReachShiftCount(HashMap<Integer, Integer> playersCount, IPlayer player){
         if(playersCount.get(player.getId())>13){
             return true;
         }else{
@@ -167,7 +183,8 @@ public class Shift{
         }
     }
 
-    public Shift getShiftForPenalizedTeam(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
+    @Override
+    public IShift getShiftForPenalizedTeam(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
         Shift shift = new Shift();
         HashMap<Integer,Integer> playersCount  = teamPlayersCount.get(team.getName());
         IPlayer goalie = getRandomPlayerByPosition(team,"GOALIE");

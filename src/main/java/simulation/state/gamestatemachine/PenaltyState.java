@@ -3,6 +3,7 @@ package simulation.state.gamestatemachine;
 import org.apache.log4j.Logger;
 import simulation.model.GameSimulation;
 import simulation.model.IPlayer;
+import simulation.model.IShift;
 import simulation.model.Shift;
 import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
 import java.util.Random;
@@ -13,8 +14,8 @@ public class PenaltyState extends GameState {
     Logger log = Logger.getLogger(PenaltyState.class);
     Random rand;
     GameContext gameContext;
-    Shift offensive;
-    Shift defensive;
+    IShift offensive;
+    IShift defensive;
     GameSimulation gameSimulation;
 
     public PenaltyState(GameContext gameContext) {

@@ -11,8 +11,8 @@ public class DefenseState extends GameState {
     Logger log = Logger.getLogger(DefenseState.class);
     Random rand;
     GameContext gameContext;
-    Shift offensive;
-    Shift defensive;
+    IShift offensive;
+    IShift defensive;
     ISimulate simulateConfig;
     boolean defend;
 
