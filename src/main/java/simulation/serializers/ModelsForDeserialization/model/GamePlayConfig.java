@@ -1,7 +1,7 @@
 package simulation.serializers.ModelsForDeserialization.model;
 
 
-public class GamePlayConfig{
+public class GamePlayConfig {
 
     public int id;
     public int leagueId;

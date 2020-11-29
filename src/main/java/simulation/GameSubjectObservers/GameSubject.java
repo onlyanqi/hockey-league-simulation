@@ -12,35 +12,30 @@ public abstract class GameSubject {
     private static Logger log = Logger.getLogger(GameSubject.class);
     private final List<IGameObserver> observers;
 
-    public GameSubject()
-    {
+    public GameSubject() {
         observers = new ArrayList<IGameObserver>();
     }
 
-    public void attach(IGameObserver observer)
-    {
+    public void attach(IGameObserver observer) {
         observers.add(observer);
     }
 
-    public void detach(IGameObserver observer)
-    {
+    public void detach(IGameObserver observer) {
         observers.remove(observer);
     }
 
-    public List<IGameObserver> getListeners(){
+    public List<IGameObserver> getListeners() {
         return observers;
     }
 
-    public void notifyObservers(ILeague league, String team, Integer count)
-    {
-        if(league == null || team == null){
+    public void notifyObservers(ILeague league, String team, Integer count) {
+        if (league == null || team == null) {
             log.error("league and team are null while notifying observers in Game Subject");
             throw new IllegalArgumentException("league and team are null while notifying observers in Game Subject");
         }
         ListIterator<IGameObserver> iter = observers.listIterator();
-        while (iter.hasNext())
-        {
-            iter.next().update(league,team,count);
+        while (iter.hasNext()) {
+            iter.next().update(league, team, count);
         }
     }
 }

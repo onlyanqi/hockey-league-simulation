@@ -2,7 +2,9 @@ package simulation.model;
 
 import simulation.dao.ITradingDao;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public interface ITrading {
 

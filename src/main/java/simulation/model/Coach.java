@@ -35,8 +35,8 @@ public class Coach extends SharedAttributes implements ICoach {
         this.setCoachingEffectiveness(coach.getCoachingEffectiveness());
     }
 
-    public Coach(simulation.serializers.ModelsForDeserialization.model.Coach coachFromDeserialization){
-        this.teamId=coachFromDeserialization.teamId;
+    public Coach(simulation.serializers.ModelsForDeserialization.model.Coach coachFromDeserialization) {
+        this.teamId = coachFromDeserialization.teamId;
         this.leagueId = coachFromDeserialization.leagueId;
         this.skating = coachFromDeserialization.skating;
         this.shooting = coachFromDeserialization.skating;

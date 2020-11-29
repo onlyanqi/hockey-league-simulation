@@ -7,7 +7,7 @@ import simulation.serializers.ModelsForDeserialization.model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreeAgent extends SharedAttributes implements IFreeAgent{
+public class FreeAgent extends SharedAttributes implements IFreeAgent {
 
     private int seasonId;
     private int leagueId;
@@ -25,9 +25,9 @@ public class FreeAgent extends SharedAttributes implements IFreeAgent{
         loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
 
-    public FreeAgent(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent){
+    public FreeAgent(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent) {
         this.leagueId = freeAgent.leagueId;
-        for(Player player : freeAgent.playerList){
+        for (Player player : freeAgent.playerList) {
             this.playerList.add(new simulation.model.Player(player));
         }
         this.seasonId = freeAgent.seasonId;

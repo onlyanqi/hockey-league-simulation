@@ -1,7 +1,8 @@
 package simulation.state;
 
 import presentation.ReadUserInput;
-import simulation.model.*;
+import simulation.model.ILeague;
+import simulation.model.League;
 import simulation.serializers.LeagueDataSerializerDeSerializer;
 
 
@@ -28,7 +29,7 @@ public class LoadTeamState implements IHockeyState {
     @Override
     public void entry() throws Exception {
         teamName = readUserInput.getInput("Please enter team name");
-       // while ((teamName.isEmpty() || teamName == null || isTeamNotPresent(teamName))) {
+        // while ((teamName.isEmpty() || teamName == null || isTeamNotPresent(teamName))) {
         while ((teamName.isEmpty() || teamName == null)) {
             teamName = readUserInput.getInput("Please enter valid and existing team name");
         }
@@ -38,7 +39,7 @@ public class LoadTeamState implements IHockeyState {
     @Override
     public void process() throws Exception {
         LeagueDataSerializerDeSerializer leagueDataSerializerDeSerializer = new LeagueDataSerializerDeSerializer();
-        String filename = "JsonFiles"+"/"+teamName;
+        String filename = "JsonFiles" + "/" + teamName;
         league = new League(leagueDataSerializerDeSerializer.deSerialize(filename));
         hockeyContext.getUser().setLeague(league);
 //        ConsoleOutput.getInstance().printMsgToConsole("We are loading the league data. Please wait..");
@@ -80,7 +81,7 @@ public class LoadTeamState implements IHockeyState {
 //                    team.getPlayerList();
 //                }
 //            }
-        }
+    }
 
 //        FreeAgentConcrete freeAgentConcrete = new FreeAgentConcrete();
 //

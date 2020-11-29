@@ -2,11 +2,11 @@ package simulation.trophyPublisherSubsribers;
 
 import simulation.model.Player;
 
-public class SavesSubscriber implements ITrophyEventListeners{
+public class SavesSubscriber implements ITrophyEventListeners {
 
     @Override
     public void update(Object object, Integer count) {
         Player player = (Player) object;
-        player.setSaves(player.getSaves()+count);
+        player.setSaves(player.getSaves() + count);
     }
 }

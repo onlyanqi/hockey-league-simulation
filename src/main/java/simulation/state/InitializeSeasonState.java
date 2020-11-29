@@ -3,6 +3,7 @@ package simulation.state;
 import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
 import simulation.model.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +29,8 @@ public class InitializeSeasonState implements ISimulateState {
             InitializeRegularSeason();
             log.info("Initialized regular season for  " + league.getCurrentDate().getYear());
         } else {
-            log.error("Please make sure minimum number of teams("+minimumTeamCountForPlayOffs+") for each division are provided to the league");
-            ConsoleOutput.getInstance().printMsgToConsole("Please make sure minimum number of teams("+minimumTeamCountForPlayOffs+") for each division are provided to the league");
+            log.error("Please make sure minimum number of teams(" + minimumTeamCountForPlayOffs + ") for each division are provided to the league");
+            ConsoleOutput.getInstance().printMsgToConsole("Please make sure minimum number of teams(" + minimumTeamCountForPlayOffs + ") for each division are provided to the league");
             return null;
         }
         return exit();

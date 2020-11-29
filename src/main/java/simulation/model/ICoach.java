@@ -26,9 +26,9 @@ public interface ICoach {
 
     void setSaving(Double saving);
 
-    void setName(String name);
-
     String getName();
+
+    void setName(String name);
 
     int getId();
 

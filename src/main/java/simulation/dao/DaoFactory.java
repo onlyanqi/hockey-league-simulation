@@ -4,48 +4,49 @@ public class DaoFactory implements IDaoFactory {
 
     private static IDaoFactory daoFactory;
 
-    private DaoFactory(){}
+    private DaoFactory() {
+    }
 
-    public static IDaoFactory getInstance(){
-        if(null == daoFactory){
+    public static IDaoFactory getInstance() {
+        if (null == daoFactory) {
             daoFactory = new DaoFactory();
         }
         return daoFactory;
     }
 
-    public IAgingDao newAgingDao(){
-       return null;
-    }
-
-    public IConferenceDao newConferenceDao(){
+    public IAgingDao newAgingDao() {
         return null;
     }
 
-    public IDivisionDao newDivisionDao(){
+    public IConferenceDao newConferenceDao() {
         return null;
     }
 
-    public ILeagueDao newLeagueDao(){
+    public IDivisionDao newDivisionDao() {
         return null;
     }
 
-    public IPlayerDao newPlayerDao(){
+    public ILeagueDao newLeagueDao() {
         return null;
     }
 
-    public ITradeOfferDao newTradeOfferDao(){
+    public IPlayerDao newPlayerDao() {
         return null;
     }
 
-    public ITeamDao newTeamDao(){
+    public ITradeOfferDao newTradeOfferDao() {
         return null;
     }
 
-    public ITradingDao newTradingDao(){
+    public ITeamDao newTeamDao() {
         return null;
     }
 
-    public IUserDao newUserDao(){
+    public ITradingDao newTradingDao() {
+        return null;
+    }
+
+    public IUserDao newUserDao() {
         return null;
     }
 

@@ -1,7 +1,7 @@
 package simulation.model;
 
-import simulation.dao.IPlayerDao;
 import org.jetbrains.annotations.NotNull;
+import simulation.dao.IPlayerDao;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -72,7 +72,7 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setGoalScore(player.getGoalScore());
     }
 
-    public Player(simulation.serializers.ModelsForDeserialization.model.Player playerFromDeserialization){
+    public Player(simulation.serializers.ModelsForDeserialization.model.Player playerFromDeserialization) {
         this.setId(playerFromDeserialization.id);
         this.setName(playerFromDeserialization.name);
         this.age = playerFromDeserialization.age;
@@ -87,12 +87,12 @@ public class Player extends SharedAttributes implements IPlayer {
         this.penaltyCount = playerFromDeserialization.penaltyCount;
         this.position = playerFromDeserialization.position;
         this.relativeStrength = playerFromDeserialization.relativeStrength;
-        this.saves =playerFromDeserialization.saves;
+        this.saves = playerFromDeserialization.saves;
         this.saving = playerFromDeserialization.saving;
         this.shooting = playerFromDeserialization.shooting;
         this.skating = playerFromDeserialization.skating;
         this.strength = playerFromDeserialization.strength;
-        this.isFreeAgent=playerFromDeserialization.isFreeAgent;
+        this.isFreeAgent = playerFromDeserialization.isFreeAgent;
     }
 
     public boolean isFreeAgent() {

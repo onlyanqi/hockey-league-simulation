@@ -16,9 +16,9 @@ public class TeamStanding implements ITeamStanding {
         setId(System.identityHashCode(this));
     }
 
-    public TeamStanding(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding){
+    public TeamStanding(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding) {
         this.id = teamStanding.id;
-        for (simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore: teamStanding.teamsScoreList){
+        for (simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore : teamStanding.teamsScoreList) {
             this.teamsScoreList.add(new TeamScore(teamScore));
         }
     }
@@ -32,7 +32,7 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public List<ITeamScore> getTeamsScoreList() {
-        if(teamsScoreList == null){
+        if (teamsScoreList == null) {
             log.error("Team Score list is empty.");
             throw new IllegalStateException("Team Score list is empty.");
         }
@@ -45,7 +45,7 @@ public class TeamStanding implements ITeamStanding {
 
 
     public void initializeTeamStandings(List<ITeam> teams) {
-        if(teams == null){
+        if (teams == null) {
             log.error("Teams are empty to initialize team Standings");
             throw new IllegalStateException("Teams are empty to initialize team Standings");
         }
@@ -67,7 +67,7 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public void setTeamPoints(String teamName) {
-        if(teamName == null){
+        if (teamName == null) {
             log.error("Provided team is null. Unable to set team points");
             throw new IllegalArgumentException("Provided team is null. Unable to set team points");
         }
@@ -81,7 +81,7 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public void setTeamWins(String teamName) {
-        if(teamName == null){
+        if (teamName == null) {
             log.error("Provided team is null. Unable to set team wins");
             throw new IllegalArgumentException("Provided team is null. Unable to set team wins");
         }
@@ -94,7 +94,7 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public void setTeamLoss(String teamName) {
-        if(teamName == null){
+        if (teamName == null) {
             log.error("Provided team is null. Unable to set team loss");
             throw new IllegalArgumentException("Provided team is null. Unable to set team loss");
         }
@@ -107,7 +107,7 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public void setTeamTies(String teamName) {
-        if(teamName == null){
+        if (teamName == null) {
             log.error("Provided team is null. Unable to set team ties");
             throw new IllegalArgumentException("Provided team is null. Unable to set team ties");
         }

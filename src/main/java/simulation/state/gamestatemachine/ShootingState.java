@@ -1,8 +1,11 @@
 package simulation.state.gamestatemachine;
 
 import org.apache.log4j.Logger;
-import simulation.model.*;
+import simulation.model.IGameSimulation;
+import simulation.model.IShift;
+import simulation.model.ISimulate;
 import simulation.state.HockeyContext;
+
 import java.util.Random;
 
 public class ShootingState extends GameState {
@@ -18,7 +21,7 @@ public class ShootingState extends GameState {
     ISimulate simulateConfig;
 
     public ShootingState(GameContext gameContext) {
-        simulateConfig  = HockeyContext.getInstance().getUser().getLeague().getGamePlayConfig().getSimulate();
+        simulateConfig = HockeyContext.getInstance().getUser().getLeague().getGamePlayConfig().getSimulate();
         rand = new Random();
         this.gameContext = gameContext;
         this.offensive = gameContext.getOffensive();
@@ -29,18 +32,18 @@ public class ShootingState extends GameState {
     }
 
     public GameState process() throws Exception {
-        if(offensive==null || defensive==null){
+        if (offensive == null || defensive == null) {
             log.error("Error while simulating game.Offensive or Defensive are not set.");
             throw new IllegalStateException("Offensive or Defensive are null.");
         }
-        if(team1Shift.getTeamShiftShootingTotal() > team2Shift.getTeamShiftShootingTotal()){
+        if (team1Shift.getTeamShiftShootingTotal() > team2Shift.getTeamShiftShootingTotal()) {
             offensive = team1Shift;
             defensive = team2Shift;
-        }else{
+        } else {
             offensive = team2Shift;
             defensive = team1Shift;
         }
-        if(rand.nextDouble() < simulateConfig.getUpset()){
+        if (rand.nextDouble() < simulateConfig.getUpset()) {
             IShift temp = offensive;
             offensive = defensive;
             defensive = temp;
@@ -50,7 +53,7 @@ public class ShootingState extends GameState {
         return next();
     }
 
-    public GameState next() throws Exception{
+    public GameState next() throws Exception {
         return new DefenseState(gameContext);
     }
 }

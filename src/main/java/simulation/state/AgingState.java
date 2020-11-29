@@ -3,7 +3,6 @@ package simulation.state;
 import presentation.ConsoleOutput;
 import simulation.model.*;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +32,6 @@ public class AgingState implements ISimulateState {
     }
 
 
-
     private ISimulateState exit() {
         if (stanleyCupWinnerDetermined()) {
             updateTeamScoreList();
@@ -50,24 +48,24 @@ public class AgingState implements ISimulateState {
         float saveAvg = 0;
         float shotAvg = 0;
         float penaltyAvg = 0;
-        for(TeamStat teamStat : teamStats){
-            goalAvg = goalAvg + (float)teamStat.getGoals()/teamStat.getNumberOfGamesPlayed();
-            penaltyAvg = penaltyAvg + (float)teamStat.getPenalties()/teamStat.getNumberOfGamesPlayed();
-            shotAvg = shotAvg + (float)teamStat.getShots()/teamStat.getNumberOfGamesPlayed();
-            saveAvg = saveAvg + (float)teamStat.getSaves()/teamStat.getNumberOfGamesPlayed();
+        for (TeamStat teamStat : teamStats) {
+            goalAvg = goalAvg + (float) teamStat.getGoals() / teamStat.getNumberOfGamesPlayed();
+            penaltyAvg = penaltyAvg + (float) teamStat.getPenalties() / teamStat.getNumberOfGamesPlayed();
+            shotAvg = shotAvg + (float) teamStat.getShots() / teamStat.getNumberOfGamesPlayed();
+            saveAvg = saveAvg + (float) teamStat.getSaves() / teamStat.getNumberOfGamesPlayed();
         }
-        goalAvg = goalAvg/teamStats.size();
-        penaltyAvg = penaltyAvg/teamStats.size();
-        shotAvg = shotAvg/teamStats.size();
-        saveAvg = saveAvg/teamStats.size();
-        consoleOutput.printGameStatsToUser(goalAvg,penaltyAvg,shotAvg,saveAvg);
+        goalAvg = goalAvg / teamStats.size();
+        penaltyAvg = penaltyAvg / teamStats.size();
+        shotAvg = shotAvg / teamStats.size();
+        saveAvg = saveAvg / teamStats.size();
+        consoleOutput.printGameStatsToUser(goalAvg, penaltyAvg, shotAvg, saveAvg);
     }
 
     private void updateTeamScoreList() {
-        HashMap<ITeam,Integer> stanleyCupTeamStanding = league.getStanleyCupFinalsTeamScores();
+        HashMap<ITeam, Integer> stanleyCupTeamStanding = league.getStanleyCupFinalsTeamScores();
         List<ITeamScore> teamScoreList = league.getActiveTeamStanding().getTeamsScoreList();
-        for(ITeamScore teamScore : teamScoreList){
-            stanleyCupTeamStanding.put(teamScore.getTeam(),stanleyCupTeamStanding.get(teamScore.getTeam()) + teamScore.getPoints());
+        for (ITeamScore teamScore : teamScoreList) {
+            stanleyCupTeamStanding.put(teamScore.getTeam(), stanleyCupTeamStanding.get(teamScore.getTeam()) + teamScore.getPoints());
         }
     }
 
