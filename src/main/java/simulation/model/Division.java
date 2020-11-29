@@ -19,9 +19,6 @@ public class Division extends SharedAttributes implements IDivision {
     }
 
     public Division(int id, IDivisionDao factory) throws Exception {
-        if (factory == null) {
-            return;
-        }
         setId(id);
         factory.loadDivisionById(id, this);
     }
@@ -40,9 +37,6 @@ public class Division extends SharedAttributes implements IDivision {
     }
 
     public void setTeamList(List<ITeam> teamList) {
-        if (teamList == null) {
-            return;
-        }
         this.teamList = teamList;
     }
 
@@ -55,16 +49,10 @@ public class Division extends SharedAttributes implements IDivision {
     }
 
     public void addDivision(IDivisionDao addDivisionFactory) throws Exception {
-        if (addDivisionFactory == null) {
-            return;
-        }
         addDivisionFactory.addDivision(this);
     }
 
     public void loadTeamListByDivisionId(ITeamDao teamFactory) throws Exception {
-        if (teamFactory == null) {
-            return;
-        }
         this.teamList = teamFactory.loadTeamListByDivisionId(getId());
     }
 

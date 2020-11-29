@@ -95,12 +95,19 @@ public class Trading extends SharedAttributes implements ITrading {
 
     public void calTradeEndDateFromLeagueDate(Date leagueDate) {
 
-        int currentLeagueYear = leagueDate.getYear() + 1900;
+        int zero = 0;
+        int yearInit = 1900;
+        int twentyThree = 23;
+        int fiftyNine = 59;
+        int one = 1;
+        int negativeOne = -1;
+
+        int currentLeagueYear = leagueDate.getYear() + yearInit;
         int currentLeagueMonth = leagueDate.getMonth();
-        int tradingEndYear = 0;
+        int tradingEndYear = zero;
 
         if (currentYearSeasonMonths.contains(currentLeagueMonth)) {
-            tradingEndYear = currentLeagueYear + 1;
+            tradingEndYear = currentLeagueYear + one;
         } else if (nextYearSeasonMonths.contains(currentLeagueMonth)) {
             tradingEndYear = currentLeagueYear;
         }
@@ -110,38 +117,41 @@ public class Trading extends SharedAttributes implements ITrading {
         endDateCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         endDateCalendar.set(GregorianCalendar.MONTH, Calendar.FEBRUARY);
         endDateCalendar.set(GregorianCalendar.DAY_OF_WEEK, Calendar.MONDAY);
-        endDateCalendar.set(GregorianCalendar.DAY_OF_WEEK_IN_MONTH, -1);
-        endDateCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        endDateCalendar.set(Calendar.MINUTE, 0);
-        endDateCalendar.set(Calendar.SECOND, 0);
-        endDateCalendar.set(Calendar.MILLISECOND, 0);
+        endDateCalendar.set(GregorianCalendar.DAY_OF_WEEK_IN_MONTH, negativeOne);
+        endDateCalendar.set(Calendar.HOUR_OF_DAY, zero);
+        endDateCalendar.set(Calendar.MINUTE, zero);
+        endDateCalendar.set(Calendar.SECOND, zero);
+        endDateCalendar.set(Calendar.MILLISECOND, zero);
 
         this.tradeEndDate = endDateCalendar.getTime();
-        this.tradeEndDate.setHours(23);
-        this.tradeEndDate.setMinutes(59);
-        this.tradeEndDate.setSeconds(59);
+        this.tradeEndDate.setHours(twentyThree);
+        this.tradeEndDate.setMinutes(fiftyNine);
+        this.tradeEndDate.setSeconds(fiftyNine);
     }
 
     public void calTradeStartDateFromLeagueDate(Date leagueDate) {
 
-        int currentLeagueYear = leagueDate.getYear() + 1900;
+        int zero = 0;
+        int yearInit = 1900;
+        int one = 1;
+        int currentLeagueYear = leagueDate.getYear() + yearInit;
         int currentLeagueMonth = leagueDate.getMonth();
-        int tradingStartYear = 0;
+        int tradingStartYear = zero;
 
         if (currentYearSeasonMonths.contains(currentLeagueMonth)) {
             tradingStartYear = currentLeagueYear;
         } else if (nextYearSeasonMonths.contains(currentLeagueMonth)) {
-            tradingStartYear = currentLeagueYear - 1;
+            tradingStartYear = currentLeagueYear - one;
         }
 
         Calendar startDateCalendar = Calendar.getInstance();
         startDateCalendar.set(GregorianCalendar.YEAR, tradingStartYear);
-        startDateCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        startDateCalendar.set(Calendar.DAY_OF_MONTH, one);
         startDateCalendar.set(GregorianCalendar.MONTH, Calendar.OCTOBER);
-        startDateCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        startDateCalendar.set(Calendar.MINUTE, 0);
-        startDateCalendar.set(Calendar.SECOND, 0);
-        startDateCalendar.set(Calendar.MILLISECOND, 0);
+        startDateCalendar.set(Calendar.HOUR_OF_DAY, zero);
+        startDateCalendar.set(Calendar.MINUTE, zero);
+        startDateCalendar.set(Calendar.SECOND, zero);
+        startDateCalendar.set(Calendar.MILLISECOND, zero);
 
         this.tradeStartDate = startDateCalendar.getTime();
     }

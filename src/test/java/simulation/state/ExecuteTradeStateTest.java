@@ -5,7 +5,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.factory.*;
 import simulation.model.*;
-
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.*;
@@ -17,12 +16,10 @@ public class ExecuteTradeStateTest {
     private static final String FROMPLAYER = "fromPlayer";
     private static final String FROMTEAM = "fromTeam";
     private static final String TRADEOFFER = "tradeOffer";
-    private static final String TOPLAYER = "toPlayer";
     private static final String TOTEAM = "toTeam";
     private static final String TRADING = "trading";
     private static final String ACCEPTED = "accepted";
     private static final String REJECTED = "rejected";
-    private static final String FROMPLAYERLISTBEFORETRADE = "fromPlayerListBeforeTrade";
     private static final String FROMPLAYERLISTAFTERTRADE = "fromPlayerListAfterTrade";
     private final String TOPLAYERLIST = "toPlayerList";
     private static ILeagueDao leagueDao;
@@ -39,7 +36,7 @@ public class ExecuteTradeStateTest {
     private static IUser user;
 
     @BeforeClass
-    public static void init() throws Exception {
+    public static void init() {
         hockeyContextFactory = HockeyContextConcreteMock.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
@@ -64,14 +61,14 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void defaultConstructorTest() throws Exception {
+    public void executeTradeStateTest() throws Exception {
         ExecuteTradeState state = newStateEmptyConstructor();
         assertTrue(state instanceof ExecuteTradeState);
         assertTrue(state instanceof ISimulateState);
     }
 
     @Test
-    public void initConstructorTest() throws Exception {
+    public void executeTradeStateWithParameterTest() throws Exception {
         league = modelFactory.newLeagueWithIdDao(1, leagueDao);
         user = modelFactory.newUserWithIdDao(1, userDao);
         user.setLeague(league);
