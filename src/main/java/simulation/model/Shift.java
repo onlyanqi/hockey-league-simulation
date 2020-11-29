@@ -1,15 +1,18 @@
 package simulation.model;
 
+import org.apache.log4j.Logger;
+import simulation.state.HockeyContext;
+
 import java.util.*;
 
-public class Shift{
+public class Shift implements IShift {
 
     String teamName;
     IPlayer goalie;
     List<IPlayer> forward = new ArrayList<>();
     List<IPlayer> defense = new ArrayList<>();
     HashMap<IPlayer,Integer> penalizedDefensePlayer =  new HashMap<>();;
-
+    static Logger log = Logger.getLogger(Shift.class);
 
     public Shift(){
         penalizedDefensePlayer = new HashMap<>();
@@ -32,83 +35,101 @@ public class Shift{
         }
     }
 
+    @Override
     public IPlayer getGoalie() {
         return goalie;
     }
 
+    @Override
     public void setGoalie(IPlayer goalie) {
         this.goalie = goalie;
     }
 
+    @Override
     public List<IPlayer> getForward() {
         return forward;
     }
 
+    @Override
     public void setForward(List<IPlayer> forward) {
         this.forward = forward;
     }
 
+    @Override
     public List<IPlayer> getDefense() {
         return defense;
     }
 
+    @Override
     public void setDefense(List<IPlayer> defense) {
         this.defense = defense;
     }
 
+    @Override
     public HashMap<IPlayer, Integer> getPenalizedDefensePlayer() {
         return penalizedDefensePlayer;
     }
 
+    @Override
     public void setPenalizedDefensePlayer(HashMap<IPlayer, Integer> penalizedDefensePlayer) {
         this.penalizedDefensePlayer = penalizedDefensePlayer;
     }
 
+    @Override
     public String getTeamName() {
         return teamName;
     }
 
+    @Override
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
 
+    @Override
     public Integer getTeamShiftShootingTotal(){
         Integer teamShootingTotal = 0;
-        teamShootingTotal += goalie.getShooting();
         for(IPlayer player: forward){
             teamShootingTotal += player.getShooting();
         }
-        for(IPlayer player: defense){
-            teamShootingTotal += player.getShooting();
+        if(teamShootingTotal<0){
+            log.error("Team Shift Shooting total is negative.");
+            throw new IllegalArgumentException("Team Shift Shooting total is negative.");
         }
         return  teamShootingTotal;
     }
 
+    @Override
     public Integer getTeamShiftDefenseTotal(){
         Integer teamDefenseTotal = 0;
-        teamDefenseTotal += goalie.getChecking();
-        for(IPlayer player: forward){
-            teamDefenseTotal += player.getChecking();
-        }
         for(IPlayer player: defense){
             teamDefenseTotal += player.getChecking();
+        }
+        if(teamDefenseTotal<0){
+            log.error("Team Shift Defense Total is negative.");
+            throw new IllegalArgumentException("Team Shift Defense is negative.");
         }
         return teamDefenseTotal;
     }
+    @Override
     public Integer getTeamSkatingTotal(){
-        Integer teamDefenseTotal = 0;
-        teamDefenseTotal += goalie.getSkating();
+        Integer teamSkatingTotal = 0;
+        teamSkatingTotal += goalie.getSkating();
         for(IPlayer player: forward){
-            teamDefenseTotal += player.getSkating();
+            teamSkatingTotal += player.getSkating();
         }
         for(IPlayer player: defense){
-            teamDefenseTotal += player.getSkating();
+            teamSkatingTotal += player.getSkating();
         }
-        return teamDefenseTotal;
+        if(teamSkatingTotal<0){
+            log.error("Team Shift Skating total is negative.");
+            throw new IllegalArgumentException("Team Shift Skating total is negative.");
+        }
+        return teamSkatingTotal;
     }
 
-    public Shift getShift(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
-        Shift shift = new Shift();
+    @Override
+    public IShift getShift(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
+        IShift shift = HockeyContext.getInstance().getModelFactory().newShift();
         HashMap<Integer,Integer> playersCount  = teamPlayersCount.get(team.getName());
 
         if(goalie==null){
@@ -145,6 +166,7 @@ public class Shift{
         return shift;
     }
 
+    @Override
     public void updateGoalie(ITeam team){
         for(IPlayer player: team.getActivePlayerList()){
             if(player.getPosition().name().equals("GOALIE")){
@@ -157,7 +179,8 @@ public class Shift{
         }
     }
 
-    public boolean didPlayerReachShiftCount(HashMap<Integer,Integer> playersCount,IPlayer player){
+    @Override
+    public boolean didPlayerReachShiftCount(HashMap<Integer, Integer> playersCount, IPlayer player){
         if(playersCount.get(player.getId())>13){
             return true;
         }else{
@@ -165,8 +188,9 @@ public class Shift{
         }
     }
 
-    public Shift getShiftForPenalizedTeam(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
-        Shift shift = new Shift();
+    @Override
+    public IShift getShiftForPenalizedTeam(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
+        IShift shift = HockeyContext.getInstance().getModelFactory().newShift();
         HashMap<Integer,Integer> playersCount  = teamPlayersCount.get(team.getName());
         IPlayer goalie = getRandomPlayerByPosition(team,"GOALIE");
         while(didPlayerReachShiftCount(playersCount,goalie)){

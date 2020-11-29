@@ -5,6 +5,7 @@ import simulation.model.IPlayer;
 import simulation.model.ITeam;
 import simulation.state.ExecuteTradeState;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -83,6 +84,17 @@ public class ConsoleOutput {
 
     public static void printTradedDraftInfo(ITeam originalTeam, String tradedToTeamName, IPlayer player) {
         ConsoleOutput.getInstance().printMsgToConsole("Draft "+ player.getName() + "already traded from " + originalTeam.getName() + " to " + tradedToTeamName);
+    }
+
+    public void printGameStatsToUser(float goalAvg,float penaltyAvg,float shotAvg,float saveAvg){
+        DecimalFormat df = new DecimalFormat("0.00");
+        printMsgToConsole("---------------------------------------");
+        printMsgToConsole("\n" + "Game Stats" + "\n");
+        printMsgToConsole("Game Goal Average for a Team : " + df.format(goalAvg));
+        printMsgToConsole("Game Penalty Average for a Team : " + df.format(penaltyAvg));
+        printMsgToConsole("Game Shot Average for a Team : " + df.format(shotAvg));
+        printMsgToConsole("Game Save Average for a Team : " + df.format(saveAvg));
+        printMsgToConsole("---------------------------------------\n");
     }
 
 }

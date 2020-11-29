@@ -3,6 +3,7 @@ package simulation.state;
 import presentation.ConsoleOutput;
 import simulation.model.*;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +14,14 @@ public class AgingState implements ISimulateState {
     private IHockeyContext hockeyContext;
     private ILeague league;
     private IAging aging;
+    private ConsoleOutput consoleOutput;
 
 
     public AgingState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
         this.aging = league.getGamePlayConfig().getAging();
+        consoleOutput = ConsoleOutput.getInstance();
     }
 
     @Override
@@ -53,11 +56,11 @@ public class AgingState implements ISimulateState {
             shotAvg = shotAvg + (float)teamStat.getShots()/teamStat.getNumberOfGamesPlayed();
             saveAvg = saveAvg + (float)teamStat.getSaves()/teamStat.getNumberOfGamesPlayed();
         }
-
-        System.out.println("Goals Avg " + goalAvg / teamStats.size());
-        System.out.println("Penalty Avg " + penaltyAvg / teamStats.size());
-        System.out.println("Shot Avg " + shotAvg / teamStats.size());
-        System.out.println("Save Avg " + saveAvg / teamStats.size());
+        goalAvg = goalAvg/teamStats.size();
+        penaltyAvg = penaltyAvg/teamStats.size();
+        shotAvg = shotAvg/teamStats.size();
+        saveAvg = saveAvg/teamStats.size();
+        consoleOutput.printGameStatsToUser(goalAvg,penaltyAvg,shotAvg,saveAvg);
     }
 
     private void updateTeamScoreList() {

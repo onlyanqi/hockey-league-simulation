@@ -1,20 +1,21 @@
 package simulation.state.gamestatemachine;
 
+import org.apache.log4j.Logger;
+import simulation.App;
 import simulation.model.*;
-import simulation.state.GameContext;
 import simulation.state.HockeyContext;
-import simulation.state.IGameState;
-
 import java.util.Random;
 
-public class DefenseState implements IGameState {
+public class DefenseState extends GameState {
 
+    static Logger log = Logger.getLogger(DefenseState.class);
     Random rand;
     GameContext gameContext;
-    Shift offensive;
-    Shift defensive;
+    IShift offensive;
+    IShift defensive;
     ISimulate simulateConfig;
     boolean defend;
+
 
     public DefenseState(GameContext gameContext) {
         simulateConfig  = HockeyContext.getInstance().getUser().getLeague().getGamePlayConfig().getSimulate();
@@ -24,8 +25,11 @@ public class DefenseState implements IGameState {
         this.rand = new Random();
     }
 
-    @Override
-    public IGameState process() throws Exception{
+    public GameState process() throws Exception{
+        if(offensive==null || defensive==null){
+            log.error("Error while simulating game.Offensive or Defensive are not set.");
+            throw new IllegalStateException("Offensive or Defensive are null.");
+        }
         if(offensive.getTeamShiftDefenseTotal() > defensive.getTeamShiftDefenseTotal()){
             defend = false;
         }else{
@@ -42,7 +46,7 @@ public class DefenseState implements IGameState {
         return next();
     }
 
-    public IGameState next(){
+    public GameState next(){
         if(defend){
             if(rand.nextDouble() < simulateConfig.getPenaltyChance()){
                 return new PenaltyState(gameContext);
@@ -50,7 +54,7 @@ public class DefenseState implements IGameState {
         }else{
             return new GoalState(gameContext);
         }
-        return null;
+        return new FinalState();
     }
 
     private boolean reverseDefending() {

@@ -129,4 +129,6 @@ public interface ILeague{
     List<IPlayer> createPlayerList();
 
     List<ICoach> createCoachList();
+
+    void initializeTeamStats();
 }

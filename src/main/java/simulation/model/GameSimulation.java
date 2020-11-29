@@ -1,13 +1,16 @@
 package simulation.model;
 
-import simulation.state.GameContext;
+import org.apache.log4j.Logger;
+import simulation.state.HockeyContext;
+import simulation.state.gamestatemachine.GameContext;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameSimulation {
+public class GameSimulation implements IGameSimulation {
 
-    private Shift team1Shift;
-    private Shift team2Shift;
+    private IShift team1Shift;
+    private IShift team2Shift;
     private ITeam team1;
     private ITeam team2;
     private HashMap<String,HashMap<Integer,Integer>> teamPlayersCount = new HashMap<>();
@@ -15,6 +18,7 @@ public class GameSimulation {
     private HashMap<String,Integer> penalties = new HashMap<>();
     private HashMap<String,Integer> shots = new HashMap<>();
     private HashMap<String,Integer> saves = new HashMap<>();
+    static Logger log = Logger.getLogger(GameSimulation.class);
 
     public GameSimulation(ITeam team1, ITeam team2) {
         this.team1 = team1;
@@ -34,13 +38,14 @@ public class GameSimulation {
         this.saves = gameSimulation.saves;
     }
 
+    @Override
     public void initializeGameSimulation(){
         goals = new HashMap<>();
         penalties = new HashMap<>();
         saves = new HashMap<>();
         shots = new HashMap<>();
-        team1Shift = new Shift();
-        team2Shift = new Shift();
+        team1Shift = HockeyContext.getInstance().getModelFactory().newShift();
+        team2Shift = HockeyContext.getInstance().getModelFactory().newShift();
         teamPlayersCount = new HashMap<>();
         initializeGameStats();
         initializeTeamPlayerShiftCount(team1);
@@ -61,6 +66,7 @@ public class GameSimulation {
         shots.put(team2.getName(),0);
     }
 
+    @Override
     public void play() throws Exception {
         for(int timeIn10Seconds = 0 ; timeIn10Seconds < (60*60)/10 ;timeIn10Seconds ++){
             if(team1Shift.getPenalizedDefensePlayer().size() >0){
@@ -83,9 +89,7 @@ public class GameSimulation {
                 team1Shift.updateGoalie(team1);
                 team2Shift.updateGoalie(team2);
             }
-            //change shifts for every 90 seconds to make 40 shifts over 20 min periods
             if(timeIn10Seconds % 9 ==0){
-                //get shifts
                 if(team1Shift.getPenalizedDefensePlayer().size() >0){
                     team1Shift = team1Shift.getShiftForPenalizedTeam(team1,teamPlayersCount);
                 }else{
@@ -98,7 +102,6 @@ public class GameSimulation {
                     team2Shift = team2Shift.getShift(team2,teamPlayersCount);
                 }
             }
-            //For every 50 seconds, any of the team makes a shot (not necessarily shot on goal)
             if(timeIn10Seconds % 5 ==0) {
                 GameContext gameContext = new GameContext(this);
                 gameContext.start();
@@ -106,89 +109,122 @@ public class GameSimulation {
         }
     }
 
-    public Shift getTeam1Shift() {
+    @Override
+    public IShift getTeam1Shift() {
         return team1Shift;
     }
 
-    public void setTeam1Shift(Shift team1Shift) {
+    @Override
+    public void setTeam1Shift(IShift team1Shift) {
         this.team1Shift = team1Shift;
     }
 
-    public Shift getTeam2Shift() {
+    @Override
+    public IShift getTeam2Shift() {
         return team2Shift;
     }
 
-    public void setTeam2Shift(Shift team2Shift) {
+    @Override
+    public void setTeam2Shift(IShift team2Shift) {
         this.team2Shift = team2Shift;
     }
 
+    @Override
     public ITeam getTeam1() {
         return team1;
     }
 
+    @Override
     public void setTeam1(ITeam team1) {
         this.team1 = team1;
     }
 
+    @Override
     public ITeam getTeam2() {
         return team2;
     }
 
+    @Override
     public void setTeam2(ITeam team2) {
         this.team2 = team2;
     }
 
+    @Override
     public HashMap<String, HashMap<Integer, Integer>> getTeamPlayersCount() {
         return teamPlayersCount;
     }
 
+    @Override
     public void setTeamPlayersCount(HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
         this.teamPlayersCount = teamPlayersCount;
     }
 
+    @Override
     public HashMap<String, Integer> getGoals() {
         return goals;
     }
 
+    @Override
     public void setGoals(HashMap<String, Integer> goals) {
         this.goals = goals;
     }
 
+    @Override
     public HashMap<String, Integer> getPenalties() {
         return penalties;
     }
 
+    @Override
     public void setPenalties(HashMap<String, Integer> penalties) {
         this.penalties = penalties;
     }
 
+    @Override
     public HashMap<String, Integer> getShots() {
         return shots;
     }
 
+    @Override
     public void setShots(HashMap<String, Integer> shots) {
         this.shots = shots;
     }
 
+    @Override
     public HashMap<String, Integer> getSaves() {
         return saves;
     }
 
+    @Override
     public void setSaves(HashMap<String, Integer> saves) {
         this.saves = saves;
     }
 
-    public void addToPenaltyBox(Shift teamShift, IPlayer randDefense) {
+    @Override
+    public void addToPenaltyBox(IShift teamShift, IPlayer randDefense) {
+        if(teamShift==null){
+            log.error("Team Shift is null while adding to penalty box");
+            throw new IllegalArgumentException("Team Shift is null while adding to penalty box");
+        }
+        if(randDefense==null){
+            log.error("Defense Player is null while adding to penalty box");
+            throw new IllegalArgumentException("Defense Player is null while adding to penalty box");
+        }
+        log.debug("Added "+ randDefense.getName() + "to penalty box");
         teamShift.getPenalizedDefensePlayer().put(randDefense,12);
         teamShift.getDefense().remove(randDefense);
     }
 
-    public void removeFromPenaltyBoxAndAddToShift(Shift teamShift,IPlayer player) {
+    @Override
+    public void removeFromPenaltyBoxAndAddToShift(IShift teamShift, IPlayer player) {
         teamShift.getPenalizedDefensePlayer().remove(player);
         teamShift.getDefense().add(player);
     }
 
     private void initializeTeamPlayerShiftCount(ITeam team) {
+        if(team==null){
+            log.error("Provided team is null while initializing player shift count");
+            throw new IllegalArgumentException("provided team is null");
+        }
         HashMap<Integer,Integer> playersCount  = new HashMap<>();
         for(IPlayer player : team.getActivePlayerList()){
             playersCount.put(player.getId(),0);

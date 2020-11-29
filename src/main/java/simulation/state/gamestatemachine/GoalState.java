@@ -1,24 +1,21 @@
 package simulation.state.gamestatemachine;
 
-import simulation.model.GameSimulation;
-import simulation.model.IPlayer;
-import simulation.model.ISimulate;
-import simulation.model.Shift;
-import simulation.state.GameContext;
+import org.apache.log4j.Logger;
+import simulation.model.*;
 import simulation.state.HockeyContext;
-import simulation.state.IGameState;
 import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
-
 import java.util.HashMap;
 import java.util.Random;
 
-public class GoalState implements IGameState {
+public class GoalState extends GameState {
 
+
+    static Logger log = Logger.getLogger(GoalState.class);
     Random rand;
     GameContext gameContext;
-    GameSimulation gameSimulation;
-    Shift offensive;
-    Shift defensive;
+    IGameSimulation gameSimulation;
+    IShift offensive;
+    IShift defensive;
     ISimulate simulateConfig;
     boolean goal;
 
@@ -31,8 +28,11 @@ public class GoalState implements IGameState {
         defensive = gameContext.getDefensive();
     }
 
-    @Override
-    public IGameState process() throws Exception {
+    public GameState process() throws Exception {
+        if(offensive==null || defensive==null){
+            log.error("Error while simulating game.Offensive or Defensive are not set.");
+            throw new IllegalStateException("Offensive or Defensive are null.");
+        }
         if(offensive.getGoalie().getSaving() > defensive.getGoalie().getSaving()){
             goal = true;
         }else{
@@ -41,7 +41,6 @@ public class GoalState implements IGameState {
         if(rand.nextDouble() < simulateConfig.getUpset()){
             reverseGoal();
         }
-
         if(goal && (rand.nextDouble() < simulateConfig.getGoalChance())){
             IPlayer forwardWhoMadeAGoal = offensive.getForward().get(rand.nextInt(offensive.getForward().size()));
             updateTrophyPublisherGoal(forwardWhoMadeAGoal);
@@ -52,7 +51,7 @@ public class GoalState implements IGameState {
             goal = false;
         }
         updateSimulationStats();
-        return null;
+        return new FinalState();
     }
 
     private boolean reverseGoal(){
@@ -78,4 +77,5 @@ public class GoalState implements IGameState {
             saves.put(defensive.getTeamName(), saves.get(defensive.getTeamName()) + 1);
         }
     }
+
 }

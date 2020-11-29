@@ -462,4 +462,19 @@ public class League extends SharedAttributes implements ILeague {
         }
         return coachList;
     }
+
+    public void initializeTeamStats(){
+        ArrayList<TeamStat> teamStats = new ArrayList<>();
+        for(IConference conference : getConferenceList()){
+            for(IDivision division : conference.getDivisionList()){
+                for(ITeam team : division.getTeamList()){
+                    TeamStat teamStat = new TeamStat();
+                    teamStat.setTeamName(team.getName());
+                    teamStats.add(teamStat);
+                }
+            }
+        }
+        setTeamStats(teamStats);
+    }
+
 }

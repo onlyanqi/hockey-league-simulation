@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.mock.LeagueMock;
 import simulation.mock.TeamScoreMock;
+import simulation.state.HockeyContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class TeamStandingTest {
 
     @Test
     public void defaultConstructorTest() {
-        TeamStanding teamStanding = new TeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
         assertNotNull(teamStanding.getTeamsScoreList());
     }
 
@@ -36,7 +37,7 @@ public class TeamStandingTest {
         TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertEquals(teamScore.getId(), 1);
 
-        TeamStanding teamStanding = new TeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
         List<ITeam> teamList = new ArrayList<>();
         Team team = new Team();
         teamList.add(team);
