@@ -3,8 +3,14 @@ package simulation.state;
 import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
-import simulation.model.*;
-
+import simulation.model.ITeam;
+import simulation.model.IPlayer;
+import simulation.model.IConference;
+import simulation.model.ILeague;
+import simulation.model.IDivision;
+import simulation.model.ITrading;
+import simulation.model.ITradeOffer;
+import simulation.model.IModelFactory;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -35,6 +41,7 @@ public class ExecuteTradeState implements ISimulateState {
 
     public ExecuteTradeState() {
     }
+
     public ExecuteTradeState(IHockeyContext hockeyContext) {
         log.info("Trading check starts.");
         this.hockeyContext = hockeyContext;
@@ -108,15 +115,12 @@ public class ExecuteTradeState implements ISimulateState {
                 }
             }
         } catch (ConcurrentModificationException e){
-            e.printStackTrace();
             log.error("ExecuteTradeState: tradingLogic: ConcurrentModificationException: "+e);
             throw e;
         }catch (NullPointerException e){
-            e.printStackTrace();
             log.error("ExecuteTradeState: tradingLogic: NullPointerException: "+e);
             throw e;
         } catch (Exception e){
-            e.printStackTrace();
             log.error("ExecuteTradeState: tradingLogic: Exception: "+e);
             throw e;
         }
@@ -588,6 +592,7 @@ public class ExecuteTradeState implements ISimulateState {
         consoleOutput.printMsgToConsole("Below Trade offer is received.");
         consoleOutput.printTradeDetailsToUser(swap);
         String userResponse = readUserInput.getUserTradeResponse();
+        log.info("User response for the trade: "+userResponse);
         String a = "A";
         if (userResponse.equalsIgnoreCase(a.trim())) {
             updateTradingDetails(swap);
@@ -638,11 +643,11 @@ public class ExecuteTradeState implements ISimulateState {
                 if(typeStr.equalsIgnoreCase(STRONG)){
                     List<String> draftPicks = fromTeam.getDraftPicks();
                     draftPicks.add(tradeDraftRoundNumber, toTeam.getName());
-                    fixDraftPicks(draftPicks);
+                    fixDraftPicks(fromTeam);
                 } else if(typeStr.equalsIgnoreCase(WEAK)){
                     List<String> draftPicks = toTeam.getDraftPicks();
                     draftPicks.add(tradeDraftRoundNumber, fromTeam.getName());
-                    fixDraftPicks(draftPicks);
+                    fixDraftPicks(toTeam);
                 }
             }
         }
@@ -674,7 +679,6 @@ public class ExecuteTradeState implements ISimulateState {
             }
         } catch (NullPointerException e){
             log.error("ExecuteTradeState: updateTradingDetailsInTeams: NullPointerException: "+e);
-            e.printStackTrace();
             throw e;
         } catch (Exception e){
             log.error("ExecuteTradeState: updateTradingDetailsInTeams: Exception: "+e);
@@ -682,7 +686,8 @@ public class ExecuteTradeState implements ISimulateState {
         }
     }
 
-    private void fixDraftPicks(List<String> draftPicks){
+    private void fixDraftPicks(ITeam team){
+        List<String> draftPicks = team.getDraftPicks();
         if(draftPicks == null || draftPicks.isEmpty()){
             return;
         } else{

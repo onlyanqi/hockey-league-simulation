@@ -30,7 +30,7 @@ public class ConferenceTest {
     }
 
     @Test
-    public void defaultConstructorTest() {
+    public void ConferenceTest() {
         IConference conference = modelFactory.newConference();
         assertNotEquals(conference.getId(), 0);
     }
@@ -93,6 +93,32 @@ public class ConferenceTest {
         assertTrue(conference.getDivisionList().get(1).getId() == (2));
         assertTrue(conference.getDivisionList().get(0).getName().equals("Division1"));
         assertNull(conference.getDivisionList().get(1).getName());
+    }
+
+    @Test
+    public void getDivisionNameListTest() throws Exception {
+        IDivisionDao divisionDao = daoFactory.newDivisionDao();
+        List<IDivision> divisionList = new ArrayList<>();
+        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        divisionList.add(division);
+        division = modelFactory.newDivisionWithIdDao(3, divisionDao);
+        divisionList.add(division);
+        IConference conference = modelFactory.newConference();
+        conference.setDivisionList(divisionList);
+        List<String> divisionNameList = conference.getDivisionNameList();
+        String indexZero = "division1";
+        assertEquals(divisionNameList.get(0), indexZero);
+        assertNotNull(divisionNameList.get(0));
+    }
+
+    @Test
+    public void getDivisionFromListByNameTest() throws Exception {
+        IConference conference = modelFactory.newConferenceWithIdDao(1, conferenceDao);
+        String divisionName = "Division1";
+        IDivision division = conference.getDivisionFromListByName(divisionName);
+        assertEquals(division.getName(), divisionName);
+        assertNotNull(division);
+        assertNotEquals(division.getName(), null);
     }
 
     @Test
