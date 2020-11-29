@@ -32,7 +32,7 @@ public class TrophySystem implements ISimulateState {
         return teamScores;
     }
 
-    private String calculateJackAdamsAward(List<ICoach> coachList) {
+    public String calculateJackAdamsAward(List<ICoach> coachList) {
         ICoach winnerCoach = coachList.get(0);
         for (ICoach coach : coachList) {
             if (coach.getCoachingEffectiveness() > winnerCoach.getCoachingEffectiveness()) {
@@ -42,7 +42,7 @@ public class TrophySystem implements ISimulateState {
         return winnerCoach.getName();
     }
 
-    private void showHistoricalTrophyList(List<ITrophy> trophyList) {
+    public void showHistoricalTrophyList(List<ITrophy> trophyList) {
         consoleOutput.printMsgToConsole("Historical Awards List (Most recent to oldest)");
         consoleOutput.printMsgToConsole("------------------------------------------------");
         consoleOutput.printMsgToConsole("------------------------------------------------\n");
