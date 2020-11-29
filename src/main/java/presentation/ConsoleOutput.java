@@ -15,6 +15,7 @@ public class ConsoleOutput {
 
     private static ConsoleOutput consoleOutput;
     private static Logger log = Logger.getLogger(ExecuteTradeState.class);
+
     private ConsoleOutput() {
     }
 
