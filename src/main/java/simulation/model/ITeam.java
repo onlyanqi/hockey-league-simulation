@@ -9,7 +9,7 @@ public interface ITeam {
 
     List<IPlayer> getPlayerList();
 
-    void setPlayerList(List<IPlayer> playerList) throws IllegalArgumentException;
+    void setPlayerList(List<IPlayer> playerList);
 
     List<IPlayer> getActivePlayerList();
 
@@ -61,7 +61,7 @@ public interface ITeam {
 
     void setLossPoint(int lossPoint);
 
-    void fixTeamAfterTrading(List<IPlayer> freeAgentList);
+    void fixTeamPlayerNum(List<IPlayer> freeAgentList);
 
     String getName();
 

@@ -122,7 +122,7 @@ public class TrophySystem implements ISimulateState{
     private void setPresidentsAndParticipationAwards() {
         List<ITeamScore> teamScores= getSortedTeamScores();
         trophy = hockeyContext.getModelFactory().newTrophy();
-        trophy.setPresidentsTrophy(teamScores.get(teamScores.size()-1).getTeamName());
-        trophy.setParticipationAward(teamScores.get(0).getTeamName());
+        trophy.setPresidentsTrophy(teamScores.get(teamScores.size()-1).getTeam().getName());
+        trophy.setParticipationAward(teamScores.get(0).getTeam().getName());
     }
 }

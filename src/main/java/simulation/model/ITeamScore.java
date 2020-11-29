@@ -2,9 +2,9 @@ package simulation.model;
 
 public interface ITeamScore {
 
-    String getTeamName();
+    ITeam getTeam();
 
-    void setTeamName(String teamName);
+    void setTeam(ITeam team);
 
     Integer getPoints();
 

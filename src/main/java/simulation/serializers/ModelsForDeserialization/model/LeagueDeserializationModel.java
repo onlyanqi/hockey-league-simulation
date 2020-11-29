@@ -1,6 +1,7 @@
 package simulation.serializers.ModelsForDeserialization.model;
 
 import simulation.model.IPlayer;
+import simulation.model.ITeam;
 
 import simulation.model.ITrophy;
 
@@ -26,7 +27,7 @@ public class LeagueDeserializationModel extends SharedAttributes {
     public TeamStanding regularSeasonStanding;
     public TeamStanding playOffStanding;
     public TeamStanding activeTeamStanding;
-    public HashMap<String,Integer> stanleyCupFinalsTeamScores;
+    public HashMap<ITeam, Integer> stanleyCupFinalsTeamScores;
     public ArrayList<TeamStat> teamStats;
     public NHLEvents nhlEvents;
     public List<TradeOffer> tradeOfferList;
