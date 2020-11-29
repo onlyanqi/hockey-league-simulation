@@ -1,20 +1,22 @@
 package simulation.state.gamestatemachine;
 
 import simulation.model.GameSimulation;
+import simulation.model.IGameSimulation;
 import simulation.model.IShift;
 import simulation.model.Shift;
+import simulation.state.HockeyContext;
 
 public class GameContext {
 
     IShift offensive;
     IShift defensive;
-    GameSimulation gameSimulation;
+    IGameSimulation gameSimulation;
     GameState gameState;
 
 
-    public GameContext(GameSimulation gameSimulation) {
-        this.offensive = new Shift();
-        this.defensive = new Shift();
+    public GameContext(IGameSimulation gameSimulation) {
+        this.offensive = HockeyContext.getInstance().getModelFactory().newShift();
+        this.defensive = HockeyContext.getInstance().getModelFactory().newShift();
         this.gameSimulation = gameSimulation;
     }
 
@@ -42,11 +44,11 @@ public class GameContext {
         this.defensive = defensive;
     }
 
-    public GameSimulation getGameSimulation() {
+    public IGameSimulation getGameSimulation() {
         return gameSimulation;
     }
 
-    public void setGameSimulation(GameSimulation gameSimulation) {
+    public void setGameSimulation(IGameSimulation gameSimulation) {
         this.gameSimulation = gameSimulation;
     }
 

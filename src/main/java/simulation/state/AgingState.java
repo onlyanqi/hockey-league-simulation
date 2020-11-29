@@ -3,6 +3,7 @@ package simulation.state;
 import presentation.ConsoleOutput;
 import simulation.model.*;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -8,7 +8,7 @@ import java.util.*;
 
 public class GeneratePlayoffScheduleState implements ISimulateState {
 
-    private Logger log = Logger.getLogger(GeneratePlayoffScheduleState.class);
+    private static Logger log = Logger.getLogger(GeneratePlayoffScheduleState.class);
     private final Integer numberOfGamesPerTeam = 7;
     private final Integer numberOfTeamStandingBeforeStanleyCup = 4;
     private IHockeyContext hockeyContext;

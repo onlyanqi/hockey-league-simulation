@@ -9,7 +9,7 @@ import java.util.*;
 
 public class SimulateGameState implements ISimulateState {
 
-    Logger log = Logger.getLogger(SimulateGameState.class);
+    static Logger log = Logger.getLogger(SimulateGameState.class);
     private IHockeyContext hockeyContext;
     private ILeague league;
 
@@ -41,7 +41,7 @@ public class SimulateGameState implements ISimulateState {
         log.debug("Started game between "+ team1.getName() + " and " + team2.getName());
         Random rand = new Random();
 
-        GameSimulation gameSimulation = new GameSimulation(team1,team2);
+        IGameSimulation gameSimulation = hockeyContext.getModelFactory().newGameSimulationFromTeams(team1,team2);
         gameSimulation.play();
 
         HashMap<String,Integer> goals = gameSimulation.getGoals();

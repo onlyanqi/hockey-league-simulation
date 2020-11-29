@@ -10,10 +10,10 @@ import java.util.Random;
 public class GoalState extends GameState {
 
 
-    Logger log = Logger.getLogger(GoalState.class);
+    static Logger log = Logger.getLogger(GoalState.class);
     Random rand;
     GameContext gameContext;
-    GameSimulation gameSimulation;
+    IGameSimulation gameSimulation;
     IShift offensive;
     IShift defensive;
     ISimulate simulateConfig;

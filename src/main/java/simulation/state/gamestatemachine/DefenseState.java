@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class DefenseState extends GameState {
 
-    Logger log = Logger.getLogger(DefenseState.class);
+    static Logger log = Logger.getLogger(DefenseState.class);
     Random rand;
     GameContext gameContext;
     IShift offensive;

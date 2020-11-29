@@ -191,4 +191,14 @@ public class ModelFactory implements IModelFactory{
     public IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception {
         return new FreeAgent(id, freeAgentDao);
     }
+
+    public IShift newShift() {
+        return new Shift();
+    }
+
+    @Override
+    public IGameSimulation newGameSimulationFromTeams(ITeam team1, ITeam team2) {
+        return new GameSimulation(team1,team2);
+    }
+
 }

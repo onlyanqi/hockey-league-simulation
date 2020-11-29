@@ -1,19 +1,16 @@
 package simulation.state.gamestatemachine;
 
 import org.apache.log4j.Logger;
-import simulation.model.GameSimulation;
-import simulation.model.IShift;
-import simulation.model.ISimulate;
-import simulation.model.Shift;
+import simulation.model.*;
 import simulation.state.HockeyContext;
 import java.util.Random;
 
 public class ShootingState extends GameState {
 
-    Logger log = Logger.getLogger(ShootingState.class);
+    static Logger log = Logger.getLogger(ShootingState.class);
     Random rand;
     GameContext gameContext;
-    GameSimulation gameSimulation;
+    IGameSimulation gameSimulation;
     IShift team1Shift;
     IShift team2Shift;
     IShift offensive;

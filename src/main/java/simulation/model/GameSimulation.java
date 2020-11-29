@@ -1,12 +1,13 @@
 package simulation.model;
 
 import org.apache.log4j.Logger;
+import simulation.state.HockeyContext;
 import simulation.state.gamestatemachine.GameContext;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameSimulation {
+public class GameSimulation implements IGameSimulation {
 
     private IShift team1Shift;
     private IShift team2Shift;
@@ -17,7 +18,7 @@ public class GameSimulation {
     private HashMap<String,Integer> penalties = new HashMap<>();
     private HashMap<String,Integer> shots = new HashMap<>();
     private HashMap<String,Integer> saves = new HashMap<>();
-    Logger log = Logger.getLogger(GameSimulation.class);
+    static Logger log = Logger.getLogger(GameSimulation.class);
 
     public GameSimulation(ITeam team1, ITeam team2) {
         this.team1 = team1;
@@ -37,13 +38,14 @@ public class GameSimulation {
         this.saves = gameSimulation.saves;
     }
 
+    @Override
     public void initializeGameSimulation(){
         goals = new HashMap<>();
         penalties = new HashMap<>();
         saves = new HashMap<>();
         shots = new HashMap<>();
-        team1Shift = new Shift();
-        team2Shift = new Shift();
+        team1Shift = HockeyContext.getInstance().getModelFactory().newShift();
+        team2Shift = HockeyContext.getInstance().getModelFactory().newShift();
         teamPlayersCount = new HashMap<>();
         initializeGameStats();
         initializeTeamPlayerShiftCount(team1);
@@ -64,6 +66,7 @@ public class GameSimulation {
         shots.put(team2.getName(),0);
     }
 
+    @Override
     public void play() throws Exception {
         for(int timeIn10Seconds = 0 ; timeIn10Seconds < (60*60)/10 ;timeIn10Seconds ++){
             if(team1Shift.getPenalizedDefensePlayer().size() >0){
@@ -106,78 +109,97 @@ public class GameSimulation {
         }
     }
 
+    @Override
     public IShift getTeam1Shift() {
         return team1Shift;
     }
 
+    @Override
     public void setTeam1Shift(IShift team1Shift) {
         this.team1Shift = team1Shift;
     }
 
+    @Override
     public IShift getTeam2Shift() {
         return team2Shift;
     }
 
+    @Override
     public void setTeam2Shift(IShift team2Shift) {
         this.team2Shift = team2Shift;
     }
 
+    @Override
     public ITeam getTeam1() {
         return team1;
     }
 
+    @Override
     public void setTeam1(ITeam team1) {
         this.team1 = team1;
     }
 
+    @Override
     public ITeam getTeam2() {
         return team2;
     }
 
+    @Override
     public void setTeam2(ITeam team2) {
         this.team2 = team2;
     }
 
+    @Override
     public HashMap<String, HashMap<Integer, Integer>> getTeamPlayersCount() {
         return teamPlayersCount;
     }
 
+    @Override
     public void setTeamPlayersCount(HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
         this.teamPlayersCount = teamPlayersCount;
     }
 
+    @Override
     public HashMap<String, Integer> getGoals() {
         return goals;
     }
 
+    @Override
     public void setGoals(HashMap<String, Integer> goals) {
         this.goals = goals;
     }
 
+    @Override
     public HashMap<String, Integer> getPenalties() {
         return penalties;
     }
 
+    @Override
     public void setPenalties(HashMap<String, Integer> penalties) {
         this.penalties = penalties;
     }
 
+    @Override
     public HashMap<String, Integer> getShots() {
         return shots;
     }
 
+    @Override
     public void setShots(HashMap<String, Integer> shots) {
         this.shots = shots;
     }
 
+    @Override
     public HashMap<String, Integer> getSaves() {
         return saves;
     }
 
+    @Override
     public void setSaves(HashMap<String, Integer> saves) {
         this.saves = saves;
     }
 
+    @Override
     public void addToPenaltyBox(IShift teamShift, IPlayer randDefense) {
         if(teamShift==null){
             log.error("Team Shift is null while adding to penalty box");
@@ -192,6 +214,7 @@ public class GameSimulation {
         teamShift.getDefense().remove(randDefense);
     }
 
+    @Override
     public void removeFromPenaltyBoxAndAddToShift(IShift teamShift, IPlayer player) {
         teamShift.getPenalizedDefensePlayer().remove(player);
         teamShift.getDefense().add(player);

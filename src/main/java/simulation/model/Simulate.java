@@ -1,6 +1,7 @@
 package simulation.model;
 
 public class Simulate extends SharedAttributes implements ISimulate {
+
     private Double upset;
     private Double defendChance;
     private Double penaltyChance;

@@ -70,7 +70,7 @@ public class InitializeSeasonState implements ISimulateState {
         regularSeasonTeamStanding.initializeTeamStandingsRegularSeason(league);
 
         league.setRegularSeasonStanding(regularSeasonTeamStanding);
-        league.setPlayOffStanding(new TeamStanding());
+        league.setPlayOffStanding(hockeyContext.getModelFactory().newTeamStanding());
         league.setGames(games);
         league.setActiveTeamStanding(league.getRegularSeasonStanding());
         league.setStanleyCupFinalsTeamScores(new HashMap<>());

@@ -7,6 +7,7 @@ import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.UserMock;
 import simulation.model.GameSimulation;
+import simulation.model.IGameSimulation;
 import simulation.model.ITeam;
 import simulation.model.User;
 import simulation.state.IHockeyContext;
@@ -19,7 +20,7 @@ public class ShootingStateTest {
     private static IHockeyContextFactory hockeyContextFactory;
     private static ITeam team11;
     private static ITeam team12;
-    private static GameSimulation gameSimulation;
+    private static IGameSimulation gameSimulation;
     private static GameContext gameContext;
 
     @BeforeClass
@@ -31,7 +32,7 @@ public class ShootingStateTest {
         hockeyContext.setUser(user);
         team11 = hockeyContext.getUser().getLeague().getTeamByTeamName("Team11");
         team12 = hockeyContext.getUser().getLeague().getTeamByTeamName("Team12");
-        gameSimulation = new GameSimulation(team11,team12);
+        gameSimulation = hockeyContext.getModelFactory().newGameSimulationFromTeams(team11,team12);
         gameSimulation.setTeam1Shift(gameSimulation.getTeam1Shift().getShift(team11,gameSimulation.getTeamPlayersCount()));
         gameSimulation.setTeam2Shift(gameSimulation.getTeam2Shift().getShift(team12,gameSimulation.getTeamPlayersCount()));
         gameContext = new GameContext(gameSimulation);

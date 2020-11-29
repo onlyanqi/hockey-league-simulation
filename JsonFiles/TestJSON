@@ -22,13 +22,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 1363560175,
+                "id": 504807594,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1944798106,
+                "id": 159475521,
                 "name": "Manager1"
               },
               "playerList": [
@@ -359,7 +359,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -520,7 +520,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -660,7 +660,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -691,7 +691,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1376,7 +1376,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1407,7 +1407,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1469,7 +1469,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1500,7 +1500,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -1674,13 +1674,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 808228639,
+                "id": 90567568,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 811597470,
+                "id": 332873513,
                 "name": "Manager3"
               },
               "playerList": [
@@ -2011,7 +2011,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -2172,7 +2172,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -2312,7 +2312,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -2343,7 +2343,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3028,7 +3028,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3059,7 +3059,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3121,7 +3121,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3152,7 +3152,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3333,13 +3333,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 2061543916,
+                "id": 795321555,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 426960147,
+                "id": 131872530,
                 "name": "Manager1"
               },
               "playerList": [
@@ -3670,7 +3670,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3831,7 +3831,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -3971,7 +3971,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4002,7 +4002,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4687,7 +4687,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4718,7 +4718,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4780,7 +4780,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4811,7 +4811,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -4985,13 +4985,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 1640296160,
+                "id": 800088638,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 897848096,
+                "id": 98826337,
                 "name": "Manager3"
               },
               "playerList": [
@@ -5322,7 +5322,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -5483,7 +5483,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -5623,7 +5623,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -5654,7 +5654,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6339,7 +6339,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6370,7 +6370,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6432,7 +6432,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6463,7 +6463,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -6650,13 +6650,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 272678513,
+                "id": 1541525668,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 1863374262,
+                "id": 1236444285,
                 "name": "Manager1"
               },
               "playerList": [
@@ -6987,7 +6987,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -7148,7 +7148,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -7288,7 +7288,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -7319,7 +7319,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8004,7 +8004,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8035,7 +8035,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8097,7 +8097,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8128,7 +8128,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8302,13 +8302,13 @@
                 "checking": 0.4,
                 "saving": 0.8,
                 "coachingEffectiveness": 0,
-                "id": 1128132589,
+                "id": 1834361038,
                 "name": "Coach3"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 88646218,
+                "id": 1096485705,
                 "name": "Manager3"
               },
               "playerList": [
@@ -8639,7 +8639,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8800,7 +8800,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8940,7 +8940,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -8971,7 +8971,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9656,7 +9656,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9687,7 +9687,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9749,7 +9749,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9780,7 +9780,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -9961,13 +9961,13 @@
                 "checking": 0.3,
                 "saving": 0.5,
                 "coachingEffectiveness": 0,
-                "id": 1062186835,
+                "id": 1680503330,
                 "name": "Coach1"
               },
               "manager": {
                 "leagueId": 0,
                 "teamId": 0,
-                "id": 711540569,
+                "id": 823914581,
                 "name": "Manager1"
               },
               "playerList": [
@@ -10298,7 +10298,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -10459,7 +10459,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -10599,7 +10599,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -10630,7 +10630,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11315,7 +11315,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11346,7 +11346,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11408,7 +11408,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11439,7 +11439,7 @@
                   "injuryStartDate": {
                     "year": 2020,
                     "month": 11,
-                    "day": 28
+                    "day": 29
                   },
                   "injuryDatesRange": 80,
                   "isFreeAgent": false,
@@ -11774,7 +11774,7 @@
         "injuryStartDate": {
           "year": 2020,
           "month": 11,
-          "day": 28
+          "day": 29
         },
         "injuryDatesRange": 80,
         "isFreeAgent": false,
@@ -12096,7 +12096,7 @@
         "injuryStartDate": {
           "year": 2020,
           "month": 11,
-          "day": 28
+          "day": 29
         },
         "injuryDatesRange": 80,
         "isFreeAgent": false,
@@ -12127,7 +12127,7 @@
         "injuryStartDate": {
           "year": 2020,
           "month": 11,
-          "day": 28
+          "day": 29
         },
         "injuryDatesRange": 80,
         "isFreeAgent": false,
@@ -12184,7 +12184,7 @@
         "injuryStartDate": {
           "year": 2020,
           "month": 11,
-          "day": 28
+          "day": 29
         },
         "injuryDatesRange": 80,
         "isFreeAgent": false,
@@ -12331,15 +12331,15 @@
         "name": "Player21"
       }
     ],
-    "id": 2144665602
+    "id": 2100440237
   },
   "currentDate": {
     "year": 2020,
     "month": 11,
-    "day": 28
+    "day": 29
   },
   "gamePlayConfig": {
-    "id": 685558284,
+    "id": 1150058854,
     "leagueId": 0,
     "aging": {
       "averageRetirementAge": 35,
@@ -12389,7 +12389,7 @@
       "defendChance": 0.65,
       "penaltyChance": 0.25,
       "goalChance": 0.21,
-      "id": 1171802656
+      "id": 1148255190
     }
   },
   "games": {
@@ -12463,7 +12463,7 @@
         "played": false
       }
     ],
-    "id": 633240419
+    "id": 343812839
   },
   "stanleyCupFinalsTeamScores": {},
   "teamStats": [],
@@ -12509,8 +12509,12 @@
       "toTeamId": 2,
       "fromPlayerId": 2,
       "toPlayerId": 2,
-      "fromPlayerIdList": [],
-      "toPlayerIdList": [],
+      "fromPlayerIdList": [
+        1
+      ],
+      "toPlayerIdList": [
+        2
+      ],
       "seasonId": 1,
       "status": "pending",
       "id": 1
@@ -12522,8 +12526,12 @@
       "toTeamId": 4,
       "fromPlayerId": 4,
       "toPlayerId": 4,
-      "fromPlayerIdList": [],
-      "toPlayerIdList": [],
+      "fromPlayerIdList": [
+        1
+      ],
+      "toPlayerIdList": [
+        2
+      ],
       "seasonId": 3,
       "status": "accepted",
       "id": 3
@@ -12535,8 +12543,12 @@
       "toTeamId": 6,
       "fromPlayerId": 6,
       "toPlayerId": 6,
-      "fromPlayerIdList": [],
-      "toPlayerIdList": [],
+      "fromPlayerIdList": [
+        1
+      ],
+      "toPlayerIdList": [
+        2
+      ],
       "seasonId": 5,
       "status": "rejected",
       "id": 5
