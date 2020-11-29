@@ -3,6 +3,8 @@ package presentation;
 import org.apache.log4j.Logger;
 import simulation.model.IPlayer;
 import simulation.model.ITeam;
+import simulation.model.ITeamScore;
+import simulation.model.ITeamStanding;
 import simulation.state.ExecuteTradeState;
 
 import java.text.DecimalFormat;
@@ -89,12 +91,21 @@ public class ConsoleOutput {
     public void printGameStatsToUser(float goalAvg,float penaltyAvg,float shotAvg,float saveAvg){
         DecimalFormat df = new DecimalFormat("0.00");
         printMsgToConsole("---------------------------------------");
-        printMsgToConsole("\n" + "Game Stats" + "\n");
+        printMsgToConsole("\n" + "Game Averages" + "\n");
         printMsgToConsole("Game Goal Average for a Team : " + df.format(goalAvg));
         printMsgToConsole("Game Penalty Average for a Team : " + df.format(penaltyAvg));
         printMsgToConsole("Game Shot Average for a Team : " + df.format(shotAvg));
         printMsgToConsole("Game Save Average for a Team : " + df.format(saveAvg));
         printMsgToConsole("---------------------------------------\n");
+    }
+
+    public void printTeamGameScore(ITeamStanding teamStanding){
+        printMsgToConsole("----------------------------------------------");
+        printMsgToConsole("Team Game Stats for Regular Season");
+        for(ITeamScore teamScore : teamStanding.getTeamsScoreList()){
+            printMsgToConsole(teamScore.getTeam().getName() + " has won " + teamScore.getNumberOfWins() + " games and lost "+ teamScore.getNumberOfLoss() + " games" );
+        }
+        printMsgToConsole("----------------------------------------------");
     }
 
 }
