@@ -1,7 +1,5 @@
 package simulation.model;
 
-import java.util.HashMap;
-
 public class TeamStat {
 
     public String teamName;
@@ -11,9 +9,10 @@ public class TeamStat {
     private int penalties;
     private int numberOfGamesPlayed;
 
-    public TeamStat(){}
+    public TeamStat() {
+    }
 
-    public TeamStat(simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat){
+    public TeamStat(simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat) {
         this.teamName = teamStat.teamName;
         this.goals = teamStat.goals;
         this.saves = teamStat.saves;

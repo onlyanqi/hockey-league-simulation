@@ -1,8 +1,11 @@
 package simulation.state.gamestatemachine;
 
 import org.apache.log4j.Logger;
-import simulation.model.*;
+import simulation.model.IGameSimulation;
+import simulation.model.IPlayer;
+import simulation.model.IShift;
 import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
+
 import java.util.Random;
 
 public class PenaltyState extends GameState {
@@ -23,22 +26,22 @@ public class PenaltyState extends GameState {
     }
 
     public GameState process() throws Exception {
-        if(offensive==null || defensive==null){
+        if (offensive == null || defensive == null) {
             log.error("Error while simulating game.Offensive or Defensive are not set.");
             throw new IllegalStateException("Offensive or Defensive are null.");
         }
         IPlayer defensePlayer = defensive.getDefense().get(rand.nextInt(defensive.getDefense().size()));
         updateTrophyPublisher(defensePlayer);
-        gameSimulation.addToPenaltyBox(defensive,defensePlayer);
+        gameSimulation.addToPenaltyBox(defensive, defensePlayer);
         gameSimulation.getPenalties().put(defensive.getTeamName(), gameSimulation.getPenalties().get(defensive.getTeamName()) + 1);
         return next();
     }
 
     private void updateTrophyPublisher(IPlayer randDefense) {
-        TrophySystemPublisher.getInstance().notify("penaltyCountUpdate",randDefense,1);
+        TrophySystemPublisher.getInstance().notify("penaltyCountUpdate", randDefense, 1);
     }
 
-    public GameState next(){
+    public GameState next() {
         return new FinalState();
     }
 }

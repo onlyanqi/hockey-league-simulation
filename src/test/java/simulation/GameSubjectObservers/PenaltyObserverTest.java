@@ -33,10 +33,10 @@ public class PenaltyObserverTest {
     }
 
     @Test
-    public void update(){
+    public void update() {
         IGameObserver penaltyObserver = new PenaltyObserver();
-        penaltyObserver.update(hockeyContext.getUser().getLeague(),"Team11",3);
-        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getPenalties()==3);
-        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getPenalties()==3);
+        penaltyObserver.update(hockeyContext.getUser().getLeague(), "Team11", 3);
+        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getPenalties() == 3);
+        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getPenalties() == 3);
     }
 }

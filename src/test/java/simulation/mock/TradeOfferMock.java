@@ -4,7 +4,9 @@ import simulation.dao.DaoFactoryMock;
 import simulation.dao.IDaoFactory;
 import simulation.dao.IPlayerDao;
 import simulation.dao.ITradeOfferDao;
-import simulation.model.*;
+import simulation.model.IModelFactory;
+import simulation.model.ITradeOffer;
+import simulation.model.ModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ public class TradeOfferMock implements ITradeOfferDao {
 
     private IModelFactory modelFactory;
 
-    public TradeOfferMock(){
+    public TradeOfferMock() {
         modelFactory = ModelFactory.getInstance();
     }
 

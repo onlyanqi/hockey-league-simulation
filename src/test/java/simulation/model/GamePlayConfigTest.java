@@ -1,10 +1,10 @@
 package simulation.model;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
 import simulation.dao.IGamePlayConfigDao;
 import simulation.dao.ILeagueDao;
 import simulation.dao.ITradingDao;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import simulation.mock.GamePlayConfigMock;
 import simulation.mock.LeagueMock;
 import simulation.mock.TradingMock;

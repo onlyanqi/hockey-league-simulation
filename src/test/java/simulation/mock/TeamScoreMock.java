@@ -11,7 +11,6 @@ import java.util.List;
 public class TeamScoreMock implements ITeamScoreDao {
 
 
-
     @Override
     public long addTeamScore(int leagueId, int regularSeason, ITeamScore teamScore) throws Exception {
         ITeamDao teamFactory = new TeamMock();

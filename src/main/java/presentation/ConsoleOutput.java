@@ -13,16 +13,20 @@ import java.util.Map;
 
 public class ConsoleOutput {
 
-    private ConsoleOutput(){}
-
     private static ConsoleOutput consoleOutput;
     private static Logger log = Logger.getLogger(ExecuteTradeState.class);
+    private ConsoleOutput() {
+    }
 
     public static ConsoleOutput getInstance() {
         if (null == consoleOutput) {
             consoleOutput = new ConsoleOutput();
         }
         return consoleOutput;
+    }
+
+    public static void printTradedDraftInfo(ITeam originalTeam, String tradedToTeamName, IPlayer player) {
+        ConsoleOutput.getInstance().printMsgToConsole("Draft " + player.getName() + "already traded from " + originalTeam.getName() + " to " + tradedToTeamName);
     }
 
     public void printMsgToConsole(String outString) {
@@ -45,7 +49,7 @@ public class ConsoleOutput {
         ITeam toTeam = (ITeam) tradeDetails.get(TOTEAM);
         int tradedDraftPickRoundNumber;
         Object nullCheck = tradeDetails.get(TRADEDDRAFTPICKROUNDNUMBER);
-        if(nullCheck == null){
+        if (nullCheck == null) {
             tradedDraftPickRoundNumber = 0;
         } else {
             tradedDraftPickRoundNumber = (int) tradeDetails.get(TRADEDDRAFTPICKROUNDNUMBER);
@@ -54,41 +58,37 @@ public class ConsoleOutput {
         printMsgToConsole("--------------------------------------------------------------------");
         printMsgToConsole("\tFrom team: " + fromTeam.getName());
         printMsgToConsole("\t\tTraded players:");
-        for(IPlayer player : fromPlayerList){
+        for (IPlayer player : fromPlayerList) {
             printMsgToConsole("\t\t\tPlayer name: " + player.getName());
             printMsgToConsole("\t\t\tPlayer strength: " + player.getStrength());
-            printMsgToConsole("\t\t\tPlayer position: "+ player.getPosition());
-            printMsgToConsole("\t\t\tPlayer age: "+player.getAge());
+            printMsgToConsole("\t\t\tPlayer position: " + player.getPosition());
+            printMsgToConsole("\t\t\tPlayer age: " + player.getAge());
             printMsgToConsole("");
         }
-        if(STRONG.equalsIgnoreCase((String)tradeDetails.get(TYPE)) && tradedDraftPickRoundNumber == 0){
+        if (STRONG.equalsIgnoreCase((String) tradeDetails.get(TYPE)) && tradedDraftPickRoundNumber == 0) {
             printMsgToConsole("\t\t Trade does not include draft picks.");
-        } else if (STRONG.equalsIgnoreCase((String)tradeDetails.get(TYPE))){
+        } else if (STRONG.equalsIgnoreCase((String) tradeDetails.get(TYPE))) {
             printMsgToConsole("\t\t Trade includes draft pick round number: " + tradedDraftPickRoundNumber);
         }
         printMsgToConsole("");
         printMsgToConsole("\tTo Team name: " + toTeam.getName());
         printMsgToConsole("\t\tTraded players:");
-        for(IPlayer player : toPlayerList){
+        for (IPlayer player : toPlayerList) {
             printMsgToConsole("\t\t\tPlayer name: " + player.getName());
             printMsgToConsole("\t\t\tPlayer strength: " + player.getStrength());
-            printMsgToConsole("\t\t\tPlayer position: "+player.getPosition());
-            printMsgToConsole("\t\t\tPlayer age: "+player.getAge());
+            printMsgToConsole("\t\t\tPlayer position: " + player.getPosition());
+            printMsgToConsole("\t\t\tPlayer age: " + player.getAge());
             printMsgToConsole("");
         }
-        if(WEAK.equalsIgnoreCase((String)tradeDetails.get(TYPE)) && tradedDraftPickRoundNumber == 0){
+        if (WEAK.equalsIgnoreCase((String) tradeDetails.get(TYPE)) && tradedDraftPickRoundNumber == 0) {
             printMsgToConsole("\t\t Trade does not include draft picks.");
-        } else if (WEAK.equalsIgnoreCase((String)tradeDetails.get(TYPE))){
+        } else if (WEAK.equalsIgnoreCase((String) tradeDetails.get(TYPE))) {
             printMsgToConsole("\t\t Trade includes draft pick round number: " + tradedDraftPickRoundNumber);
         }
         printMsgToConsole("--------------------------------------------------------------------");
     }
 
-    public static void printTradedDraftInfo(ITeam originalTeam, String tradedToTeamName, IPlayer player) {
-        ConsoleOutput.getInstance().printMsgToConsole("Draft "+ player.getName() + "already traded from " + originalTeam.getName() + " to " + tradedToTeamName);
-    }
-
-    public void printGameStatsToUser(float goalAvg,float penaltyAvg,float shotAvg,float saveAvg){
+    public void printGameStatsToUser(float goalAvg, float penaltyAvg, float shotAvg, float saveAvg) {
         DecimalFormat df = new DecimalFormat("0.00");
         printMsgToConsole("---------------------------------------");
         printMsgToConsole("\n" + "Game Averages" + "\n");

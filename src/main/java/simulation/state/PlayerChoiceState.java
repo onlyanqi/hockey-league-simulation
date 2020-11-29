@@ -10,11 +10,11 @@ import simulation.model.Player;
 
 public class PlayerChoiceState implements IHockeyState {
 
-    private static Logger log = Logger.getLogger(Player.class);
     private static final String ONE = "1";
     private static final String TWO = "2";
     private static final String IMPORTSTATE = "importState";
     private static final String CREATEORLOADTEAM = "createOrLoadTeam";
+    private static Logger log = Logger.getLogger(Player.class);
     private String input;
     private String stateName;
     private IHockeyContext hockeyContext;
@@ -53,7 +53,7 @@ public class PlayerChoiceState implements IHockeyState {
                 break;
             }
             case CREATEORLOADTEAM: {
-                SeasonSimulationState seasonSimulationState = new SeasonSimulationState(hockeyContext,Integer.parseInt(userInput));
+                SeasonSimulationState seasonSimulationState = new SeasonSimulationState(hockeyContext, Integer.parseInt(userInput));
                 return seasonSimulationState;
             }
             default: {

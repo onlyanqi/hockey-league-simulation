@@ -1,9 +1,7 @@
 package simulation.state.gamestatemachine;
 
-import simulation.model.GameSimulation;
 import simulation.model.IGameSimulation;
 import simulation.model.IShift;
-import simulation.model.Shift;
 import simulation.state.HockeyContext;
 
 public class GameContext {
@@ -23,7 +21,7 @@ public class GameContext {
     public void start() throws Exception {
 
         GameState gameState = new ShootingState(this);
-        while(gameState.shouldContinue()){
+        while (gameState.shouldContinue()) {
             gameState = gameState.process();
         }
     }

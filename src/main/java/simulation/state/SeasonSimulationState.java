@@ -1,7 +1,6 @@
 package simulation.state;
 
 import simulation.model.ILeague;
-import simulation.model.League;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -10,7 +9,7 @@ public class SeasonSimulationState implements IHockeyState {
 
     private IHockeyContext hockeyContext;
     private ILeague league;
-    private IHockeyState hockeyState ;
+    private IHockeyState hockeyState;
     private int numberOfSeasons;
 
     public SeasonSimulationState(IHockeyContext hockeyContext, int numberOfSeasons) {
@@ -26,8 +25,8 @@ public class SeasonSimulationState implements IHockeyState {
 
     @Override
     public void process() throws Exception {
-        league.setCurrentDate(LocalDate.of(LocalDate.now().getYear(), Month.SEPTEMBER,29));
-        while(numberOfSeasons>0){
+        league.setCurrentDate(LocalDate.of(LocalDate.now().getYear(), Month.SEPTEMBER, 29));
+        while (numberOfSeasons > 0) {
             IHockeyState hockeyState = new InternalState(hockeyContext);
             hockeyState.entry();
             hockeyState.process();

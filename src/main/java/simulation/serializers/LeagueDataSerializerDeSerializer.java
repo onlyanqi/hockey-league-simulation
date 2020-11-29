@@ -7,16 +7,15 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import presentation.ConsoleOutput;
 import simulation.model.ILeague;
-import simulation.model.League;
 import simulation.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 
 import java.io.*;
 
 public class LeagueDataSerializerDeSerializer {
 
-    public static String FILENAME = "JsonOutput.txt";
     public static final String JSONCREATIONERROR = "Json could not be created";
     public static final String DESERIALIZATIONERROR = "Could not deserialize";
+    public static String FILENAME = "JsonOutput.txt";
     private ConsoleOutput consoleOutput = null;
 
     public void serialize(ILeague league) {
@@ -31,7 +30,7 @@ public class LeagueDataSerializerDeSerializer {
         //Source for creating folder through java program: https://stackoverflow.com/questions/3634853/how-to-create-a-directory-in-java
 
         File jsonDir = new File("/JsonFiles");
-        if (!jsonDir.exists()){
+        if (!jsonDir.exists()) {
             jsonDir.mkdirs();
         }
 
@@ -40,7 +39,7 @@ public class LeagueDataSerializerDeSerializer {
 
         FileWriter fileWriter = null;
         try {
-            FILENAME = "JsonFiles"+"/"+league.getUserCreatedTeamName();
+            FILENAME = "JsonFiles" + "/" + league.getUserCreatedTeamName();
             fileWriter = new FileWriter(FILENAME);
             gson.toJson(league, fileWriter);
 

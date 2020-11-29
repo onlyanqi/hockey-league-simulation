@@ -1,11 +1,8 @@
 package simulation.model;
 
-import simulation.dao.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.mock.FreeAgentMock;
-import simulation.mock.PlayerMock;
-import simulation.mock.TeamMock;
+import simulation.dao.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +134,7 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void calculateStrengthAverageTest(){
+    public void calculateStrengthAverageTest() {
         List<Double> strengthList = new ArrayList<>();
         Double strength = 10.0;
         strengthList.add(strength);

@@ -1,15 +1,17 @@
 package simulation.model;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
 import simulation.dao.IConferenceDao;
 import simulation.dao.IDaoFactory;
 import simulation.dao.IDivisionDao;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import simulation.factory.HockeyContextConcreteMock;
 import simulation.factory.IHockeyContextFactory;
 import simulation.state.IHockeyContext;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ConferenceTest {

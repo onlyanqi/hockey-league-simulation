@@ -4,7 +4,6 @@ import simulation.dao.ITradingDao;
 import simulation.model.IModelFactory;
 import simulation.model.ITrading;
 import simulation.model.ModelFactory;
-import simulation.model.Trading;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -15,7 +14,7 @@ public class TradingMock implements ITradingDao {
 
     private IModelFactory modelFactory;
 
-    public TradingMock(){
+    public TradingMock() {
         modelFactory = ModelFactory.getInstance();
     }
 

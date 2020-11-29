@@ -10,7 +10,8 @@ import java.util.List;
 public class Conference extends SharedAttributes implements IConference {
 
     private int leagueId;
-    private List<IDivision> divisionList = new ArrayList<>();;
+    private List<IDivision> divisionList = new ArrayList<>();
+    ;
 
     public Conference() {
         setId(System.identityHashCode(this));
@@ -25,9 +26,9 @@ public class Conference extends SharedAttributes implements IConference {
         factory.loadConferenceById(id, this);
     }
 
-    public Conference(simulation.serializers.ModelsForDeserialization.model.Conference conferenceFromDeserialization){
+    public Conference(simulation.serializers.ModelsForDeserialization.model.Conference conferenceFromDeserialization) {
         leagueId = conferenceFromDeserialization.leagueId;
-        for(Division division : conferenceFromDeserialization.divisionList){
+        for (Division division : conferenceFromDeserialization.divisionList) {
             this.divisionList.add(new simulation.model.Division(division));
         }
         this.setName(conferenceFromDeserialization.name);
@@ -58,7 +59,7 @@ public class Conference extends SharedAttributes implements IConference {
         return divisionNameList;
     }
 
-        public IDivision getDivisionFromListByName(String divisionName) {
+    public IDivision getDivisionFromListByName(String divisionName) {
         IDivision foundDivision = null;
         for (IDivision division : divisionList) {
             if (division.getName().toLowerCase().equals(divisionName.toLowerCase())) {

@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
-import simulation.factory.*;
 import simulation.model.*;
 
 import java.time.LocalDate;
@@ -13,6 +12,14 @@ import java.util.*;
 
 public class ImportState implements IHockeyState {
 
+    public static final String INITIALIZE_INFO = "Validating JSON input and initializing the league model object...";
+    public static final String BIRTH_DAY = "birthDay";
+    public static final String BIRTH_MONTH = "birthMonth";
+    public static final String BIRTH_YEAR = "birthYear";
+    public static final String STAT_DECAY_CHANCE = "statDecayChance";
+    public static final String UPSET = "upset";
+    public static final String DEFEND_CHANCE = "defendChance";
+    public static final String PENALTY_CHANCE = "penaltyChance";
     private static final String LEAGUE_NAME = "leagueName";
     private static final String CONFERENCE_NAME = "conferenceName";
     private static final String DIVISION_NAME = "divisionName";
@@ -51,16 +58,9 @@ public class ImportState implements IHockeyState {
     private static final String MAX_PLAYERS_PER_TRADE = "maxPlayersPerTrade";
     private static final String RANDOM_ACCEPTANCE_CHANCE = "randomAcceptanceChance";
     private static final String GM_TABLE = "gmTable";
-    public static final String INITIALIZE_INFO = "Validating JSON input and initializing the league model object...";
-    public static final String BIRTH_DAY = "birthDay";
-    public static final String BIRTH_MONTH = "birthMonth";
-    public static final String BIRTH_YEAR = "birthYear";
-    public static final String STAT_DECAY_CHANCE = "statDecayChance";
     private static final String PERSONALITY = "personality";
-    public static final String UPSET = "upset";
-    public static final String DEFEND_CHANCE = "defendChance";
-    public static final String PENALTY_CHANCE = "penaltyChance";
     private static final String GOAL_CHANCE = "goalChance";
+    private static Logger log = Logger.getLogger(ImportState.class);
     private final Set<String> appearedName = new HashSet<>();
     private IHockeyContext hockeyContext;
     private JSONObject jsonFromInput;
@@ -69,7 +69,6 @@ public class ImportState implements IHockeyState {
     private int teamId;
     private int conferenceId;
     private int divisionId;
-    private static Logger log = Logger.getLogger(ImportState.class);
 
     public ImportState(IHockeyContext hockeyContext, JSONObject jsonFromInput) {
         this.jsonFromInput = jsonFromInput;
@@ -377,7 +376,7 @@ public class ImportState implements IHockeyState {
         if (team.checkNumPlayer(playerList)) {
             team.setPlayerList(playerList);
         } else {
-            throw new IllegalArgumentException("Invalid player numbers in team: "+ teamName);
+            throw new IllegalArgumentException("Invalid player numbers in team: " + teamName);
         }
         team.setStrength();
         team.setActivePlayerList();
@@ -679,12 +678,12 @@ public class ImportState implements IHockeyState {
 
             String name = (String) generalManager.get(NAME);
             if (validateString(name)) {
-                throw new IllegalArgumentException("ManagerName is invalid,"+name);
+                throw new IllegalArgumentException("ManagerName is invalid," + name);
             }
 
             String personality = (String) generalManager.get(PERSONALITY);
             if (validateString(personality)) {
-                throw new IllegalArgumentException("Manager's personality is invalid,"+personality);
+                throw new IllegalArgumentException("Manager's personality is invalid," + personality);
             }
 
             IModelFactory managerConcrete = hockeyContext.getModelFactory();

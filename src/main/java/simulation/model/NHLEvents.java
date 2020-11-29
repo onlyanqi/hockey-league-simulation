@@ -8,7 +8,7 @@ import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
 
 
-public class NHLEvents implements INHLEvents{
+public class NHLEvents implements INHLEvents {
 
     public int id;
     public LocalDate regularSeasonStartDate;
@@ -32,7 +32,7 @@ public class NHLEvents implements INHLEvents{
         initializeDraftDate();
     }
 
-    public NHLEvents(int currentYear){
+    public NHLEvents(int currentYear) {
         setId(System.identityHashCode(this));
         this.currentYear = currentYear;
         initializeEndOfRegularSeason();
@@ -48,8 +48,8 @@ public class NHLEvents implements INHLEvents{
         iEventDao.loadEventByLeagueId(leagueId, this);
     }
 
-    public NHLEvents(simulation.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents){
-        this.id =nhlEvents.id;
+    public NHLEvents(simulation.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents) {
+        this.id = nhlEvents.id;
         this.regularSeasonStartDate = nhlEvents.regularSeasonStartDate;
         this.tradeDeadlineDate = nhlEvents.tradeDeadlineDate;
         this.endOfRegularSeason = nhlEvents.endOfRegularSeason;
@@ -180,7 +180,7 @@ public class NHLEvents implements INHLEvents{
         setNextSeasonDate(nextSeasonStartDate);
     }
 
-    public void initializeDraftDate(){
+    public void initializeDraftDate() {
         LocalDate playerDraftDate = LocalDate.of(currentYear + 1, Month.JULY, 15);
         setPlayerDraftDate(playerDraftDate);
     }

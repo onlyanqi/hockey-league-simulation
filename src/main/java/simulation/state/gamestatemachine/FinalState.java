@@ -1,6 +1,6 @@
 package simulation.state.gamestatemachine;
 
-public class FinalState extends GameState{
+public class FinalState extends GameState {
 
     @Override
     public GameState process() throws Exception {

@@ -1,15 +1,13 @@
 package simulation.model;
 
 
-import simulation.dao.IGameDao;
-import simulation.dao.ILeagueDao;
-import simulation.dao.ITeamScoreDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.ILeagueDao;
+import simulation.dao.ITeamScoreDao;
 import simulation.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
-import simulation.mock.GameMock;
 import simulation.mock.LeagueMock;
 import simulation.mock.TeamScoreMock;
 import simulation.mock.UserMock;
@@ -37,7 +35,7 @@ public class TeamStandingTest {
         hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(4, userFactory);
         hockeyContext.setUser(user);
-   }
+    }
 
     @BeforeClass
     public static void setFactoryObj() {

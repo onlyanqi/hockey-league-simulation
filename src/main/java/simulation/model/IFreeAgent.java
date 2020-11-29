@@ -29,10 +29,10 @@ public interface IFreeAgent {
 
     int getId();
 
-    void setName(String name);
-
     void setId(int id);
 
     String getName();
+
+    void setName(String name);
 
 }

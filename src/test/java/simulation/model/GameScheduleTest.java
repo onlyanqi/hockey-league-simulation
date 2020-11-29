@@ -1,8 +1,8 @@
 package simulation.model;
 
-import simulation.dao.IGameDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.IGameDao;
 import simulation.mock.GameMock;
 import simulation.state.HockeyContext;
 

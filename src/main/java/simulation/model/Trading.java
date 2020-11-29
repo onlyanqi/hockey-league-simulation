@@ -1,6 +1,7 @@
 package simulation.model;
 
 import simulation.dao.ITradingDao;
+
 import java.util.*;
 
 public class Trading extends SharedAttributes implements ITrading {
@@ -31,7 +32,7 @@ public class Trading extends SharedAttributes implements ITrading {
         factory.loadTradingDetailsByTradingId(tradingId, this);
     }
 
-    public Trading(simulation.serializers.ModelsForDeserialization.model.Trading trading){
+    public Trading(simulation.serializers.ModelsForDeserialization.model.Trading trading) {
         this.currentYearSeasonMonths = trading.currentYearSeasonMonths;
         this.nextYearSeasonMonths = trading.nextYearSeasonMonths;
         this.tradeStartDate = trading.tradeStartDate;
@@ -64,7 +65,7 @@ public class Trading extends SharedAttributes implements ITrading {
     }
 
     public void isLeagueInTradingPeriod(Date leagueDate) {
-        if (leagueDate == null){
+        if (leagueDate == null) {
             this.isTradingPeriod = false;
         } else {
             calTradeEndDateFromLeagueDate(leagueDate);

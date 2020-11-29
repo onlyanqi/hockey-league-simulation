@@ -1,17 +1,18 @@
 package simulation;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
 import simulation.GameSubjectObservers.*;
-import simulation.factory.*;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.model.IModelFactory;
 import simulation.model.IUser;
-import java.io.FileNotFoundException;
-
-import org.apache.log4j.Logger;
 import simulation.state.IHockeyContext;
 import simulation.trophyPublisherSubsribers.*;
+
+import java.io.FileNotFoundException;
 
 
 public class App {
@@ -56,7 +57,7 @@ public class App {
                 context.startAction(jsonFromInput);
             }
         } catch (FileNotFoundException e) {
-            log.error("File "+filePath+" not found " + e);
+            log.error("File " + filePath + " not found " + e);
             ConsoleOutput.getInstance().printMsgToConsole("File Not found. " + e);
         } catch (Exception e) {
             log.error("Exception occurred " + e);
@@ -73,7 +74,7 @@ public class App {
         ShotSubject.getInstance().attach(new ShotObserver());
         TotalGamesSubject.getInstance().attach(new TotalGameObserver());
         TrophySystemPublisher.getInstance().subscribe("coachStatAbilityUpdate", new CoachStatAbilitySubscriber());
-        TrophySystemPublisher.getInstance().subscribe("goalScoreUpdate" ,new GoalScoreSubscriber());
+        TrophySystemPublisher.getInstance().subscribe("goalScoreUpdate", new GoalScoreSubscriber());
         TrophySystemPublisher.getInstance().subscribe("penaltyCountUpdate", new PenaltyCountSubscriber());
         TrophySystemPublisher.getInstance().subscribe("savesUpdate", new SavesSubscriber());
     }

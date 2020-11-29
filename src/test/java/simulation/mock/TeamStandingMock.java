@@ -5,7 +5,6 @@ import simulation.dao.ITeamStandingDao;
 import simulation.model.ITeamScore;
 import simulation.model.ITeamStanding;
 import simulation.model.TeamScore;
-import simulation.model.TeamStanding;
 import simulation.state.HockeyContext;
 
 import java.util.ArrayList;
@@ -14,14 +13,14 @@ import java.util.List;
 public class TeamStandingMock implements ITeamStandingDao {
     @Override
     public long addTeamStanding(int leagueId, ITeamStanding teamStanding) throws Exception {
-        loadTeamStandingById(1,teamStanding);
+        loadTeamStandingById(1, teamStanding);
         teamStanding.setId(1);
         return teamStanding.getId();
     }
 
     @Override
     public void loadTeamStandingById(int id, ITeamStanding teamStanding) throws Exception {
-        switch (id){
+        switch (id) {
             case 1:
                 List<ITeamScore> teamScoreList = new ArrayList<>();
 
@@ -38,7 +37,7 @@ public class TeamStandingMock implements ITeamStandingDao {
     @Override
     public ITeamStanding loadTeamStandingByLeagueId(int leagueId) throws Exception {
         ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
-        switch (leagueId){
+        switch (leagueId) {
             case 1:
                 List<ITeamScore> teamScoreList = new ArrayList<>();
 

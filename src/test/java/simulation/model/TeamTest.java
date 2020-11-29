@@ -1,12 +1,13 @@
 package simulation.model;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
 import simulation.dao.DaoFactoryMock;
 import simulation.dao.IDaoFactory;
 import simulation.dao.IPlayerDao;
 import simulation.dao.ITeamDao;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import simulation.mock.PlayerMock;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -141,7 +142,7 @@ public class TeamTest {
     }
 
     @Test
-    public  void getActivePlayerListTest() throws Exception {
+    public void getActivePlayerListTest() throws Exception {
         Team team = new Team(1, teamDao);
         assertNotEquals(team.getActivePlayerList().get(1).getId(), (1));
         assertEquals(team.getActivePlayerList().get(1).getId(), (3));

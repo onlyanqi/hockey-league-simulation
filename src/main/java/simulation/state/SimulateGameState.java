@@ -3,7 +3,10 @@ package simulation.state;
 import org.apache.log4j.Logger;
 import simulation.GameSubjectObservers.*;
 import simulation.model.*;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 public class SimulateGameState implements ISimulateState {
 
@@ -36,16 +39,16 @@ public class SimulateGameState implements ISimulateState {
     public void simulateGame(IGame game) throws Exception {
         ITeam team1 = league.getTeamByTeamName(game.getTeam1());
         ITeam team2 = league.getTeamByTeamName(game.getTeam2());
-        log.debug("Started game between "+ team1.getName() + " and " + team2.getName());
+        log.debug("Started game between " + team1.getName() + " and " + team2.getName());
         Random rand = new Random();
 
-        IGameSimulation gameSimulation = hockeyContext.getModelFactory().newGameSimulationFromTeams(team1,team2);
+        IGameSimulation gameSimulation = hockeyContext.getModelFactory().newGameSimulationFromTeams(team1, team2);
         gameSimulation.play();
 
-        HashMap<String,Integer> goals = gameSimulation.getGoals();
-        HashMap<String,Integer> shots = gameSimulation.getShots();
-        HashMap<String,Integer> saves = gameSimulation.getSaves();
-        HashMap<String,Integer> penalties = gameSimulation.getPenalties();
+        HashMap<String, Integer> goals = gameSimulation.getGoals();
+        HashMap<String, Integer> shots = gameSimulation.getShots();
+        HashMap<String, Integer> saves = gameSimulation.getSaves();
+        HashMap<String, Integer> penalties = gameSimulation.getPenalties();
 
         notifyStats(team1, team2, goals, shots, saves, penalties);
         setWinner(game, team1, team2, rand, goals);
@@ -54,11 +57,11 @@ public class SimulateGameState implements ISimulateState {
     }
 
     private void setWinner(IGame game, ITeam team1, ITeam team2, Random rand, HashMap<String, Integer> goals) {
-        if(game==null){
+        if (game == null) {
             log.error("game is null, unable to set winner");
             throw new IllegalArgumentException("game is null, unable to set winner");
         }
-        if(team1==null || team2 ==null){
+        if (team1 == null || team2 == null) {
             log.error("One of the teams are null, unable to set winner");
             throw new IllegalArgumentException("One of the teams are null, unable to set winner");
         }
@@ -70,12 +73,12 @@ public class SimulateGameState implements ISimulateState {
             log.debug(team2.getName() + "won the game");
             game.setWinner(Result.TEAM2);
             team1.setLossPoint(team1.getLossPoint() + 1);
-        }else if(goals.get(team1.getName()) == goals.get(team2.getName())){
-            if(rand.nextDouble() > 0.5){
+        } else if (goals.get(team1.getName()) == goals.get(team2.getName())) {
+            if (rand.nextDouble() > 0.5) {
                 log.debug(team1.getName() + "won the game");
                 game.setWinner(Result.TEAM1);
                 team2.setLossPoint(team2.getLossPoint() + 1);
-            }else{
+            } else {
                 log.debug(team2.getName() + "won the game");
                 game.setWinner(Result.TEAM2);
                 team1.setLossPoint(team1.getLossPoint() + 1);
@@ -96,8 +99,8 @@ public class SimulateGameState implements ISimulateState {
         SaveSubject.getInstance().notifyObservers(league, team1.getName(), saves.get(team1.getName()));
         SaveSubject.getInstance().notifyObservers(league, team2.getName(), saves.get(team2.getName()));
 
-        TotalGamesSubject.getInstance().notifyObservers(league, team1.getName(),0);
-        TotalGamesSubject.getInstance().notifyObservers(league, team2.getName(),0);
+        TotalGamesSubject.getInstance().notifyObservers(league, team1.getName(), 0);
+        TotalGamesSubject.getInstance().notifyObservers(league, team2.getName(), 0);
     }
 
     private void updateTeamStandings(IGame game) {

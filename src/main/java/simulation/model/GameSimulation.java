@@ -9,16 +9,16 @@ import java.util.Map;
 
 public class GameSimulation implements IGameSimulation {
 
+    static Logger log = Logger.getLogger(GameSimulation.class);
     private IShift team1Shift;
     private IShift team2Shift;
     private ITeam team1;
     private ITeam team2;
-    private HashMap<String,HashMap<Integer,Integer>> teamPlayersCount = new HashMap<>();
-    private HashMap<String,Integer> goals = new HashMap<>();
-    private HashMap<String,Integer> penalties = new HashMap<>();
-    private HashMap<String,Integer> shots = new HashMap<>();
-    private HashMap<String,Integer> saves = new HashMap<>();
-    static Logger log = Logger.getLogger(GameSimulation.class);
+    private HashMap<String, HashMap<Integer, Integer>> teamPlayersCount = new HashMap<>();
+    private HashMap<String, Integer> goals = new HashMap<>();
+    private HashMap<String, Integer> penalties = new HashMap<>();
+    private HashMap<String, Integer> shots = new HashMap<>();
+    private HashMap<String, Integer> saves = new HashMap<>();
 
     public GameSimulation(ITeam team1, ITeam team2) {
         this.team1 = team1;
@@ -26,7 +26,7 @@ public class GameSimulation implements IGameSimulation {
         initializeGameSimulation();
     }
 
-    public GameSimulation(simulation.serializers.ModelsForDeserialization.model.GameSimulation gameSimulation){
+    public GameSimulation(simulation.serializers.ModelsForDeserialization.model.GameSimulation gameSimulation) {
         this.team1Shift = new Shift(gameSimulation.team1Shift);
         this.team2Shift = new Shift(gameSimulation.team2Shift);
         this.team1 = new Team(gameSimulation.team1);
@@ -39,7 +39,7 @@ public class GameSimulation implements IGameSimulation {
     }
 
     @Override
-    public void initializeGameSimulation(){
+    public void initializeGameSimulation() {
         goals = new HashMap<>();
         penalties = new HashMap<>();
         saves = new HashMap<>();
@@ -53,56 +53,56 @@ public class GameSimulation implements IGameSimulation {
     }
 
     private void initializeGameStats() {
-        goals.put(team1.getName(),0);
-        goals.put(team2.getName(),0);
+        goals.put(team1.getName(), 0);
+        goals.put(team2.getName(), 0);
 
-        penalties.put(team1.getName(),0);
-        penalties.put(team2.getName(),0);
+        penalties.put(team1.getName(), 0);
+        penalties.put(team2.getName(), 0);
 
-        saves.put(team1.getName(),0);
-        saves.put(team2.getName(),0);
+        saves.put(team1.getName(), 0);
+        saves.put(team2.getName(), 0);
 
-        shots.put(team1.getName(),0);
-        shots.put(team2.getName(),0);
+        shots.put(team1.getName(), 0);
+        shots.put(team2.getName(), 0);
     }
 
     @Override
     public void play() throws Exception {
-        for(int timeIn10Seconds = 0 ; timeIn10Seconds < (60*60)/10 ;timeIn10Seconds ++){
-            if(team1Shift.getPenalizedDefensePlayer().size() >0){
+        for (int timeIn10Seconds = 0; timeIn10Seconds < (60 * 60) / 10; timeIn10Seconds++) {
+            if (team1Shift.getPenalizedDefensePlayer().size() > 0) {
                 for (Map.Entry<IPlayer, Integer> penalPlayer : team1Shift.getPenalizedDefensePlayer().entrySet()) {
-                    if(penalPlayer.getValue().equals(0)){
-                        removeFromPenaltyBoxAndAddToShift(team1Shift,penalPlayer.getKey());
+                    if (penalPlayer.getValue().equals(0)) {
+                        removeFromPenaltyBoxAndAddToShift(team1Shift, penalPlayer.getKey());
                     }
-                    penalPlayer.setValue(penalPlayer.getValue()-1);
+                    penalPlayer.setValue(penalPlayer.getValue() - 1);
                 }
             }
-            if(team2Shift.getPenalizedDefensePlayer().size() >0){
+            if (team2Shift.getPenalizedDefensePlayer().size() > 0) {
                 for (Map.Entry<IPlayer, Integer> penalPlayer : team2Shift.getPenalizedDefensePlayer().entrySet()) {
-                    if(penalPlayer.getValue().equals(0)){
-                        removeFromPenaltyBoxAndAddToShift(team2Shift,penalPlayer.getKey());
+                    if (penalPlayer.getValue().equals(0)) {
+                        removeFromPenaltyBoxAndAddToShift(team2Shift, penalPlayer.getKey());
                     }
-                    penalPlayer.setValue(penalPlayer.getValue()-1);
+                    penalPlayer.setValue(penalPlayer.getValue() - 1);
                 }
             }
-            if(timeIn10Seconds == 240){
+            if (timeIn10Seconds == 240) {
                 team1Shift.updateGoalie(team1);
                 team2Shift.updateGoalie(team2);
             }
-            if(timeIn10Seconds % 9 ==0){
-                if(team1Shift.getPenalizedDefensePlayer().size() >0){
-                    team1Shift = team1Shift.getShiftForPenalizedTeam(team1,teamPlayersCount);
-                }else{
-                    team1Shift = team1Shift.getShift(team1,teamPlayersCount);
+            if (timeIn10Seconds % 9 == 0) {
+                if (team1Shift.getPenalizedDefensePlayer().size() > 0) {
+                    team1Shift = team1Shift.getShiftForPenalizedTeam(team1, teamPlayersCount);
+                } else {
+                    team1Shift = team1Shift.getShift(team1, teamPlayersCount);
                 }
 
-                if(team2Shift.getPenalizedDefensePlayer().size() > 0){
-                    team2Shift = team2Shift.getShiftForPenalizedTeam(team2,teamPlayersCount);
-                }else{
-                    team2Shift = team2Shift.getShift(team2,teamPlayersCount);
+                if (team2Shift.getPenalizedDefensePlayer().size() > 0) {
+                    team2Shift = team2Shift.getShiftForPenalizedTeam(team2, teamPlayersCount);
+                } else {
+                    team2Shift = team2Shift.getShift(team2, teamPlayersCount);
                 }
             }
-            if(timeIn10Seconds % 5 ==0) {
+            if (timeIn10Seconds % 5 == 0) {
                 GameContext gameContext = new GameContext(this);
                 gameContext.start();
             }
@@ -201,16 +201,16 @@ public class GameSimulation implements IGameSimulation {
 
     @Override
     public void addToPenaltyBox(IShift teamShift, IPlayer randDefense) {
-        if(teamShift==null){
+        if (teamShift == null) {
             log.error("Team Shift is null while adding to penalty box");
             throw new IllegalArgumentException("Team Shift is null while adding to penalty box");
         }
-        if(randDefense==null){
+        if (randDefense == null) {
             log.error("Defense Player is null while adding to penalty box");
             throw new IllegalArgumentException("Defense Player is null while adding to penalty box");
         }
-        log.debug("Added "+ randDefense.getName() + "to penalty box");
-        teamShift.getPenalizedDefensePlayer().put(randDefense,12);
+        log.debug("Added " + randDefense.getName() + "to penalty box");
+        teamShift.getPenalizedDefensePlayer().put(randDefense, 12);
         teamShift.getDefense().remove(randDefense);
     }
 
@@ -221,14 +221,14 @@ public class GameSimulation implements IGameSimulation {
     }
 
     private void initializeTeamPlayerShiftCount(ITeam team) {
-        if(team==null){
+        if (team == null) {
             log.error("Provided team is null while initializing player shift count");
             throw new IllegalArgumentException("provided team is null");
         }
-        HashMap<Integer,Integer> playersCount  = new HashMap<>();
-        for(IPlayer player : team.getActivePlayerList()){
-            playersCount.put(player.getId(),0);
+        HashMap<Integer, Integer> playersCount = new HashMap<>();
+        for (IPlayer player : team.getActivePlayerList()) {
+            playersCount.put(player.getId(), 0);
         }
-        teamPlayersCount.put(team.getName(),playersCount);
+        teamPlayersCount.put(team.getName(), playersCount);
     }
 }

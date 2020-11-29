@@ -28,7 +28,7 @@ public class Aging extends SharedAttributes implements IAging {
         loadAgingFactory.loadAgingById(id, this);
     }
 
-    public  Aging(simulation.serializers.ModelsForDeserialization.model.Aging agingFromDeserialization){
+    public Aging(simulation.serializers.ModelsForDeserialization.model.Aging agingFromDeserialization) {
         this.averageRetirementAge = agingFromDeserialization.averageRetirementAge;
         this.maximumAge = agingFromDeserialization.maximumAge;
         this.leagueId = agingFromDeserialization.leagueId;

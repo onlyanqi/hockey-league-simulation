@@ -1,7 +1,7 @@
 package simulation.mock;
 
-import simulation.dao.*;
 import org.json.simple.JSONObject;
+import simulation.dao.*;
 import simulation.model.*;
 import simulation.state.HockeyContext;
 
@@ -243,7 +243,7 @@ public class LeagueMock implements ILeagueDao {
                 league.setStanleyCupFinalsTeamScores(new HashMap<>());
                 league.setGames(formGames());
                 league.setGamePlayConfig(formGamePlayConfig());
-                league.setCurrentDate(LocalDate.of(2021,05,06));
+                league.setCurrentDate(LocalDate.of(2021, 05, 06));
                 break;
         }
 

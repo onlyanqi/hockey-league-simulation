@@ -5,7 +5,7 @@ import simulation.dao.ITeamDao;
 
 import java.util.List;
 
-public interface IDivision{
+public interface IDivision {
 
     List<ITeam> getTeamList();
 

@@ -9,11 +9,11 @@ public class TotalGameObserver implements IGameObserver {
     static Logger log = Logger.getLogger(TotalGameObserver.class);
 
     public void update(ILeague league, String team, Integer count) {
-        if(league == null || team == null){
+        if (league == null || team == null) {
             log.error("league or team are null. Please correct them");
             throw new IllegalArgumentException("league or team are null. Please correct them");
         }
         TeamStat teamStats = league.getTeamStatByTeamName(team);
-        teamStats.setNumberOfGamesPlayed(teamStats.getNumberOfGamesPlayed()+1);
+        teamStats.setNumberOfGamesPlayed(teamStats.getNumberOfGamesPlayed() + 1);
     }
 }

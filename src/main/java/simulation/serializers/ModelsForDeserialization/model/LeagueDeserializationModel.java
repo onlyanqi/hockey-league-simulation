@@ -1,9 +1,6 @@
 package simulation.serializers.ModelsForDeserialization.model;
 
-import simulation.model.IPlayer;
 import simulation.model.ITeam;
-
-import simulation.model.ITrophy;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

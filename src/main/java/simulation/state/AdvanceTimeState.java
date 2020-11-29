@@ -2,7 +2,10 @@ package simulation.state;
 
 import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
-import simulation.model.*;
+import simulation.model.DateTime;
+import simulation.model.ILeague;
+import simulation.model.INHLEvents;
+
 import java.time.LocalDate;
 
 public class AdvanceTimeState implements ISimulateState {
@@ -18,7 +21,7 @@ public class AdvanceTimeState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-        if(league.getCurrentDate() == null){
+        if (league.getCurrentDate() == null) {
             log.error("Current date is not set to league.Unable to proceed to further states.");
             throw new IllegalStateException("Current date is not set to league.Unable to proceed to further states.");
         }
@@ -31,7 +34,7 @@ public class AdvanceTimeState implements ISimulateState {
 
     private ISimulateState exit() {
         INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
-        if(nhlEvents == null){
+        if (nhlEvents == null) {
             log.error("NHL Events is not set to league.Unable to proceed to further states.");
             throw new IllegalStateException("NHL Events is not set to league.Unable to proceed to further states.");
         }
