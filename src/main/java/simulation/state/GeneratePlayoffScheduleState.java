@@ -2,7 +2,6 @@ package simulation.state;
 
 import org.apache.log4j.Logger;
 import simulation.model.*;
-
 import java.time.LocalDate;
 import java.util.*;
 
@@ -46,6 +45,10 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
 
     private void generatePlayOffFirstRoundSchedule() {
         ITeamStanding regularSeasonStanding = league.getRegularSeasonStanding();
+        if(regularSeasonStanding == null){
+            log.error("Regular season standing is null.");
+            throw new IllegalStateException("Regular team standing is null while generating playoff standing");
+        }
         league.setActiveTeamStanding(league.getPlayOffStanding());
 
         Map<String, List<ITeam>> playOffTeams = new HashMap<>();
@@ -78,6 +81,10 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
     }
 
     private void initializeTeamStandingsFirstRound(Map<String, List<ITeam>> playOffTeams) {
+        if(playOffTeams == null){
+            log.error("Play off teams is null.");
+            throw new IllegalStateException("Play off teams is null.");
+        }
         List<ITeam> teamsAcrossConferences = new ArrayList<>();
         for (IConference conference : league.getConferenceList()) {
             List<ITeam> teams = playOffTeams.get(conference.getName());
@@ -87,6 +94,10 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
     }
 
     private void initializeGamesPlayOffFirstRound(Map<String, List<ITeam>> playOffTeams) {
+        if(playOffTeams == null){
+            log.error("Play off teams is null.");
+            throw new IllegalStateException("Play off teams is null.");
+        }
         LocalDate playOffStartDate = nhlEvents.getPlayOffStartDate();
         List<IGame> games = this.games.getGameList();
         for (IConference conference : league.getConferenceList()) {
@@ -99,6 +110,10 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
     }
 
     private void scheduleGameBetweenTeams(String team1, String team2, List<IGame> games, LocalDate startDate) {
+        if(team1 == null || team2 == null){
+            log.error("Either of the teams are null to schedule games.");
+            throw new IllegalArgumentException("Either of the teams are null to schedule games.");
+        }
         LocalDate currentDate = startDate;
         for (Integer i = 0; i < numberOfGamesPerTeam; i++) {
             IModelFactory gameFactory = hockeyContext.getModelFactory();

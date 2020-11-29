@@ -5,10 +5,8 @@ import org.json.simple.JSONObject;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import simulation.dao.IDaoFactory;
-import simulation.factory.*;
 import simulation.model.IModelFactory;
 import simulation.model.IUser;
-import simulation.model.User;
 
 public class HockeyContext implements IHockeyContext{
 

@@ -3,8 +3,6 @@ package simulation.state;
 import org.apache.log4j.Logger;
 import simulation.GameSubjectObservers.*;
 import simulation.model.*;
-
-
 import java.util.*;
 
 public class SimulateGameState implements ISimulateState {
