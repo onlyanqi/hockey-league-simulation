@@ -35,6 +35,12 @@ public class JSONControllerMock {
         injuries.put("injuryDaysLow", (long) 1);
         injuries.put("injuryDaysHigh", (long) 260);
 
+        JSONObject simulate = new JSONObject();
+        simulate.put("upset", 0.4);
+        simulate.put("defendChance", 0.25);
+        simulate.put("penaltyChance", 0.65);
+        simulate.put("goalChance", 0.21);
+
         JSONObject training = new JSONObject();
         training.put("daysUntilStatIncreaseCheck", (long) 100);
 
@@ -54,6 +60,7 @@ public class JSONControllerMock {
         gameplayConfig.put("aging", aging);
         //gameplayConfig.put("gameResolver", gameResolver);
         gameplayConfig.put("injuries", injuries);
+        gameplayConfig.put("simulate",simulate);
         gameplayConfig.put("training", training);
         gameplayConfig.put("trading", trading);
 

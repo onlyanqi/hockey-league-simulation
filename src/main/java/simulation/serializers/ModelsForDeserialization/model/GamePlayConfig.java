@@ -10,4 +10,5 @@ public class GamePlayConfig{
     public GameResolver gameResolver;
     public Trading trading;
     public Training training;
+    public Simulate simulate;
 }

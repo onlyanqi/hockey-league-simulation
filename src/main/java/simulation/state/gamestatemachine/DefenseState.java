@@ -1,8 +1,8 @@
 package simulation.state.gamestatemachine;
 
-import simulation.model.IPlayer;
-import simulation.model.Shift;
+import simulation.model.*;
 import simulation.state.GameContext;
+import simulation.state.HockeyContext;
 import simulation.state.IGameState;
 
 import java.util.Random;
@@ -13,9 +13,11 @@ public class DefenseState implements IGameState {
     GameContext gameContext;
     Shift offensive;
     Shift defensive;
+    ISimulate simulateConfig;
     boolean defend;
 
     public DefenseState(GameContext gameContext) {
+        simulateConfig  = HockeyContext.getInstance().getUser().getLeague().getGamePlayConfig().getSimulate();
         this.gameContext = gameContext;
         offensive = gameContext.getOffensive();
         defensive = gameContext.getDefensive();
@@ -29,10 +31,10 @@ public class DefenseState implements IGameState {
         }else{
             defend = true;
         }
-        if(rand.nextDouble() < 0.4){
+        if(rand.nextDouble() < simulateConfig.getUpset()){
             reverseDefending();
         }
-        if(defend && (rand.nextDouble() < 0.25)){
+        if(defend && (rand.nextDouble() < simulateConfig.getDefendChance())){
             defend = true;
         }else{
             defend = false;
@@ -42,7 +44,7 @@ public class DefenseState implements IGameState {
 
     public IGameState next(){
         if(defend){
-            if(rand.nextDouble() < 0.65){
+            if(rand.nextDouble() < simulateConfig.getPenaltyChance()){
                 return new PenaltyState(gameContext);
             }
         }else{

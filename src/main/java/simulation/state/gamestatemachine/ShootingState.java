@@ -1,8 +1,10 @@
 package simulation.state.gamestatemachine;
 
 import simulation.model.GameSimulation;
+import simulation.model.ISimulate;
 import simulation.model.Shift;
 import simulation.state.GameContext;
+import simulation.state.HockeyContext;
 import simulation.state.IGameState;
 
 import java.util.Random;
@@ -16,7 +18,10 @@ public class ShootingState implements IGameState {
     Shift team2Shift;
     Shift offensive;
     Shift defensive;
+    ISimulate simulateConfig;
+
     public ShootingState(GameContext gameContext) {
+        simulateConfig  = HockeyContext.getInstance().getUser().getLeague().getGamePlayConfig().getSimulate();
         rand = new Random();
         this.gameContext = gameContext;
         this.offensive = gameContext.getOffensive();
@@ -35,7 +40,7 @@ public class ShootingState implements IGameState {
             offensive = team2Shift;
             defensive = team1Shift;
         }
-        if(rand.nextDouble() < 0.4){
+        if(rand.nextDouble() < simulateConfig.getUpset()){
             Shift temp = offensive;
             offensive = defensive;
             defensive = temp;

@@ -48,4 +48,9 @@ public class DaoFactory implements IDaoFactory {
     public IUserDao newUserDao(){
         return new UserDao();
     }
+
+    @Override
+    public IFreeAgentDao newFreeAgentDao() {
+        return new FreeAgentDao();
+    }
 }

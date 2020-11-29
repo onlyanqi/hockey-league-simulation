@@ -80,6 +80,10 @@ public class ModelFactory implements IModelFactory{
         return new Injury();
     }
 
+    public ISimulate newSimulate() {
+        return new Simulate();
+    }
+
     public ILeague newLeague() {
         return new League();
     }
@@ -180,4 +184,11 @@ public class ModelFactory implements IModelFactory{
     @Override
     public ITrophy newTrophy() {return new Trophy();}
 
+    public IFreeAgent newFreeAgentWithId(int id){
+        return new FreeAgent(id);
+    }
+
+    public IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception {
+        return new FreeAgent(id, freeAgentDao);
+    }
 }

@@ -1,10 +1,21 @@
 package simulation.trophyPublisherSubsribers;
 
+
 import java.util.HashMap;
+//https://refactoring.guru/design-patterns/observer
 
 public class TrophySystemPublisher {
     HashMap<String,ITrophyEventListeners> listeners = new HashMap<String, ITrophyEventListeners>();
     private static String[] eventTypes={"coachStatAbilityUpdate","goalScoreUpdate","penaltyCountUpdate","savesUpdate"};
+
+    private static TrophySystemPublisher instance;
+
+    public static TrophySystemPublisher getInstance() {
+        if (instance == null) {
+            instance = new TrophySystemPublisher();
+        }
+        return instance;
+    }
 
     public HashMap<String, ITrophyEventListeners> getListeners() {
         return listeners;

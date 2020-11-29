@@ -54,4 +54,8 @@ public class DaoFactoryMock implements IDaoFactory{
     public IUserDao newUserDao(){
         return new UserMock();
     }
+
+    public IFreeAgentDao newFreeAgentDao(){
+        return new FreeAgentMock();
+    }
 }

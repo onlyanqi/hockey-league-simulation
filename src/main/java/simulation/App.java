@@ -3,7 +3,7 @@ package simulation;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
 import presentation.ReadUserInput;
-import simulation.GamePubSub.*;
+import simulation.GamePublisherSubscriber.*;
 import simulation.factory.*;
 import simulation.model.IModelFactory;
 import simulation.model.IUser;
@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 
 import org.apache.log4j.Logger;
 import simulation.state.IHockeyContext;
+import simulation.trophyPublisherSubsribers.*;
 
 
 public class App {
@@ -51,7 +52,6 @@ public class App {
                 }
 
                 addSubscribers();
-
                 context.setUser(user);
                 context.startAction(jsonFromInput);
             }
@@ -71,5 +71,9 @@ public class App {
         SaveSubject.getInstance().attach(new GameSubscriber());
         ShotSubject.getInstance().attach(new GameSubscriber());
         TotalGamesSubject.getInstance().attach(new GameSubscriber());
+        TrophySystemPublisher.getInstance().subscribe("coachStatAbilityUpdate", new CoachStatAbilitySubscriber());
+        TrophySystemPublisher.getInstance().subscribe("goalScoreUpdate" ,new GoalScoreSubscriber());
+        TrophySystemPublisher.getInstance().subscribe("penaltyCountUpdate", new PenaltyCountSubscriber());
+        TrophySystemPublisher.getInstance().subscribe("savesUpdate", new SavesSubscriber());
     }
 }

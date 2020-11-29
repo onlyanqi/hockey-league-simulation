@@ -11,6 +11,12 @@
          "injuryDaysLow": 4,
          "injuryDaysHigh": 123
       },
+      "simulate": {
+         "upset": 0.4,
+         "defendChance": 0.25,
+         "penaltyChance": 0.65,
+         "goalChance": 0.21
+      },
       "training": {
          "daysUntilStatIncreaseCheck": 303
       },

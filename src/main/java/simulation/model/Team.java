@@ -7,10 +7,7 @@ import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import simulation.serializers.ModelsForDeserialization.model.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Team extends SharedAttributes implements ITeam {
 
@@ -329,12 +326,18 @@ public class Team extends SharedAttributes implements ITeam {
     }
 
     private void addPlayer(List<IPlayer> freeAgentList, String position, int noOfPlayers, int maxPlayers){
+        List<IPlayer> removedList = new ArrayList<>();
         for(IPlayer player : freeAgentList){
-            if(player.getPosition().equals(position) && noOfPlayers < maxPlayers){
-                freeAgentList.remove(player);
+            if(player.getPosition().toString().equals(position) && noOfPlayers < maxPlayers){
+                removedList.add(player);
                 getPlayerList().add(player);
                 noOfPlayers++;
+            } else if(noOfPlayers == maxPlayers){
+                break;
             }
+        }
+        for(IPlayer player : removedList){
+            freeAgentList.remove(player);
         }
     }
 
@@ -356,5 +359,20 @@ public class Team extends SharedAttributes implements ITeam {
 
     public void setDraftPicks(List<String> draftPicks) {
         this.draftPicks = draftPicks;
+    }
+
+    private void removeObjectFromList(List<IPlayer> list, IPlayer toRemove) {
+        Iterator<IPlayer> itr = list.iterator();
+        while (itr.hasNext()) {
+            IPlayer player = itr.next();
+            if (player.getName().equals(toRemove.getName())
+                    && player.getPosition().equals(toRemove.getPosition())
+                    && player.getStrength() == toRemove.getStrength()
+                    && player.getSkating() == toRemove.getSkating()) {
+
+                itr.remove();
+                break;
+            }
+        }
     }
 }
