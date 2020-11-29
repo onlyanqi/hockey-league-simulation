@@ -71,7 +71,7 @@ public class AgingState implements ISimulateState {
         }
     }
 
-    public Boolean stanleyCupWinnerDetermined() {
+    private Boolean stanleyCupWinnerDetermined() {
         INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         IGameSchedule games = league.getGames();
         ITeamStanding teamStanding = league.getActiveTeamStanding();

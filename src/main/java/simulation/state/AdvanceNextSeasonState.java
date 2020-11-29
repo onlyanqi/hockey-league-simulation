@@ -2,7 +2,6 @@ package simulation.state;
 
 import presentation.ConsoleOutput;
 import simulation.model.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
