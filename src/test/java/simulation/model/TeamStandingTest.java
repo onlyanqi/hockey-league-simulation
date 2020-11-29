@@ -37,8 +37,9 @@ public class TeamStandingTest {
         assertEquals(teamScore.getId(), 1);
 
         TeamStanding teamStanding = new TeamStanding();
-        List<String> teamList = new ArrayList<>();
-        teamList.add("Team1");
+        List<ITeam> teamList = new ArrayList<>();
+        Team team = new Team();
+        teamList.add(team);
         teamStanding.initializeTeamStandings(teamList);
         assertTrue(teamStanding.getTeamsScoreList().size() != 0);
     }

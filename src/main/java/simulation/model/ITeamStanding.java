@@ -13,7 +13,7 @@ public interface ITeamStanding {
 
     void setTeamsScoreList(List<ITeamScore> teamsScoreList);
 
-    void initializeTeamStandings(List<String> teamNames);
+    void initializeTeamStandings(List<ITeam> teams);
 
     void initializeTeamStandingsRegularSeason(ILeague league);
 

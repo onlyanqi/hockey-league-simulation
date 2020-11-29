@@ -4,9 +4,7 @@ import presentation.ConsoleOutput;
 import simulation.model.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DraftState implements ISimulateState {
@@ -28,13 +26,72 @@ public class DraftState implements ISimulateState {
         league.setCurrentDate(nhlEvents.getPlayerDraftDate());
         ConsoleOutput.getInstance().printMsgToConsole("Advanced to the player draft state! Current date is " + nhlEvents.getPlayerDraftDate());
         aging.agingPlayerPeriod(league, beforeDate);
-        int round = 7;
-        ITeamStanding standing = league.getRegularSeasonStanding();
-        int teamNum = standing.getTeamsRankAcrossLeague(league).size();
-        generatePlayers(round,teamNum);
-
-
+        int totalRound = 7;
+        ITeamStanding regularSeasonStanding = league.getRegularSeasonStanding();
+        int teamNum = regularSeasonStanding.getTeamsRankAcrossLeague(league).size();
+        generatePlayers(totalRound, teamNum);
+        performDraft(totalRound, teamNum, regularSeasonStanding);
+        fixAllTeamPlayerNum();
         return exit();
+    }
+
+    public ISimulateState exit() throws Exception {
+        return new AdvanceNextSeasonState(hockeyContext, league.getCurrentDate());
+    }
+
+    private void performDraft(int totalRound, int teamNum, ITeamStanding teamStanding) {
+        int firstN = teamNum - 16;
+        List<IPlayer> selectPlayerList = new ArrayList<>(league.getDraftedPlayerList());
+        Collections.sort(selectPlayerList);
+        Stack<IPlayer> playerStack = new Stack<>();
+        while (selectPlayerList.size() > 0) {
+            playerStack.push(selectPlayerList.remove(0));
+        }
+        int roundNum = 1;
+        while (roundNum <= totalRound) {
+            ConsoleOutput.getInstance().printMsgToConsole("Picked drafts in " + roundNum + " rounds");
+            for (int i = firstN - 1; i >= 0; i--) {
+                ITeam originalTeam = teamStanding.getTeamsRankAcrossLeague(league).get(i).getTeam();
+                selectDraft(playerStack, roundNum, originalTeam);
+            }
+            Set<ITeam> remainingTeams = league.getStanleyCupFinalsTeamScores().keySet();
+            List<ITeam> secondTeamList = new ArrayList<>(remainingTeams);
+            for (int j = 15; j >= 0; j--) {
+                ITeam originalTeam = secondTeamList.get(j);
+                selectDraft(playerStack, roundNum, originalTeam);
+            }
+            roundNum++;
+        }
+    }
+
+    private void selectDraft(Stack<IPlayer> playerStack, int roundNum, ITeam originalTeam) {
+        String tradedToTeamName = originalTeam.getDraftPicks().get(roundNum - 1);
+        if(tradedToTeamName == null){
+            List<IPlayer> existingPlayers = originalTeam.getPlayerList();
+            IPlayer player = playerStack.pop();
+            player.setTeamId(originalTeam.getId());
+            existingPlayers.add(player);
+            originalTeam.setPlayerList(existingPlayers);
+        }else {
+            ITeam tradedToTeam = league.getTeamByTeamName(tradedToTeamName);
+            List<IPlayer> existingPlayers = tradedToTeam.getPlayerList();
+            IPlayer player = playerStack.pop();
+            player.setTeamId(tradedToTeam.getId());
+            ConsoleOutput.printTradedDraftInfo(originalTeam, tradedToTeamName, player);
+            existingPlayers.add(player);
+            tradedToTeam.setPlayerList(existingPlayers);
+        }
+    }
+
+    private void fixAllTeamPlayerNum(){
+        for (IConference conference : league.getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    team.fixTeamPlayerNum(league.getFreeAgent().getPlayerList());
+                    team.setActivePlayerList();
+                }
+            }
+        }
     }
 
     private void generatePlayers(int round, int teamNum) {
@@ -61,38 +118,34 @@ public class DraftState implements ISimulateState {
         league.setDraftedPlayerList(draftedPlayerList);
     }
 
-    public ISimulateState exit() throws Exception {
-        return new AdvanceNextSeasonState(hockeyContext, league.getCurrentDate());
-    }
-
     private void generateStats(IPlayer player) {
         Position position = player.getPosition();
         if (position == Position.FORWARD) {
-            int skating = ThreadLocalRandom.current().nextInt(12,21);
+            int skating = ThreadLocalRandom.current().nextInt(12, 21);
             player.setSkating(skating);
             int shooting = ThreadLocalRandom.current().nextInt(12, 21);
             player.setShooting(shooting);
-            int checking = ThreadLocalRandom.current().nextInt(9,19);
+            int checking = ThreadLocalRandom.current().nextInt(9, 19);
             player.setChecking(checking);
-            int saving = ThreadLocalRandom.current().nextInt( 1,8);
+            int saving = ThreadLocalRandom.current().nextInt(1, 8);
             player.setSaving(saving);
-        } else if (position == Position.DEFENSE){
-            int skating = ThreadLocalRandom.current().nextInt(10,20);
+        } else if (position == Position.DEFENSE) {
+            int skating = ThreadLocalRandom.current().nextInt(10, 20);
             player.setSkating(skating);
             int shooting = ThreadLocalRandom.current().nextInt(9, 19);
             player.setShooting(shooting);
-            int checking = ThreadLocalRandom.current().nextInt(12,21);
+            int checking = ThreadLocalRandom.current().nextInt(12, 21);
             player.setChecking(checking);
-            int saving = ThreadLocalRandom.current().nextInt( 1,13);
+            int saving = ThreadLocalRandom.current().nextInt(1, 13);
             player.setSaving(saving);
-        } else if (position == Position.GOALIE){
-            int skating = ThreadLocalRandom.current().nextInt(8,16);
+        } else if (position == Position.GOALIE) {
+            int skating = ThreadLocalRandom.current().nextInt(8, 16);
             player.setSkating(skating);
             int shooting = ThreadLocalRandom.current().nextInt(1, 11);
             player.setShooting(shooting);
-            int checking = ThreadLocalRandom.current().nextInt(1,13);
+            int checking = ThreadLocalRandom.current().nextInt(1, 13);
             player.setChecking(checking);
-            int saving = ThreadLocalRandom.current().nextInt( 12,21);
+            int saving = ThreadLocalRandom.current().nextInt(12, 21);
             player.setSaving(saving);
         }
     }

@@ -37,11 +37,11 @@ public class TeamStanding implements ITeamStanding {
     }
 
 
-    public void initializeTeamStandings(List<String> teamNames) {
-        Integer teamsSize = teamNames.size();
+    public void initializeTeamStandings(List<ITeam> teams) {
+        int teamsSize = teams.size();
         teamsScoreList = new ArrayList<>(teamsSize);
-        for (String teamName : teamNames) {
-            teamsScoreList.add(new TeamScore(teamName));
+        for (ITeam team : teams) {
+            teamsScoreList.add(new TeamScore(team));
         }
     }
 
@@ -49,7 +49,7 @@ public class TeamStanding implements ITeamStanding {
         for (IConference conference : league.getConferenceList()) {
             for (IDivision division : conference.getDivisionList()) {
                 for (ITeam team : division.getTeamList()) {
-                    teamsScoreList.add(new TeamScore(team.getName()));
+                    teamsScoreList.add(new TeamScore(team));
                 }
             }
         }
@@ -57,7 +57,7 @@ public class TeamStanding implements ITeamStanding {
 
     public void setTeamPoints(String teamName) {
         for (ITeamScore teamScore : teamsScoreList) {
-            if (teamScore.getTeamName().equals(teamName)) {
+            if (teamScore.getTeam().getName().equals(teamName)) {
                 int previousScore = teamScore.getPoints();
                 int newTeamScore = previousScore + 2;
                 teamScore.setPoints(newTeamScore);
@@ -67,7 +67,7 @@ public class TeamStanding implements ITeamStanding {
 
     public void setTeamWins(String teamName) {
         for (ITeamScore teamScore : teamsScoreList) {
-            if (teamScore.getTeamName().equals(teamName)) {
+            if (teamScore.getTeam().getName().equals(teamName)) {
                 int previousNumberOfWins = teamScore.getNumberOfWins();
                 teamScore.setNumberOfWins(previousNumberOfWins + 1);
             }
@@ -76,7 +76,7 @@ public class TeamStanding implements ITeamStanding {
 
     public void setTeamLoss(String teamName) {
         for (ITeamScore teamScore : teamsScoreList) {
-            if (teamScore.getTeamName().equals(teamName)) {
+            if (teamScore.getTeam().getName().equals(teamName)) {
                 int previousNumberOfLoss = teamScore.getNumberOfLoss();
                 teamScore.setNumberOfLoss(previousNumberOfLoss + 1);
             }
@@ -85,7 +85,7 @@ public class TeamStanding implements ITeamStanding {
 
     public void setTeamTies(String teamName) {
         for (ITeamScore teamScore : teamsScoreList) {
-            if (teamScore.getTeamName().equals(teamName)) {
+            if (teamScore.getTeam().getName().equals(teamName)) {
                 int previousNumberOfTies = teamScore.getNumberOfTies();
                 teamScore.setNumberOfTies(previousNumberOfTies + 1);
             }
@@ -144,7 +144,7 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public ITeamScore getTeamScoreByTeamName(List<ITeamScore> teamsScoreList, String teamName) {
-        return teamsScoreList.stream().filter(teamScore -> teamScore.getTeamName().equals(teamName)).findFirst().get();
+        return teamsScoreList.stream().filter(teamScore -> teamScore.getTeam().getName().equals(teamName)).findFirst().get();
     }
 
 }

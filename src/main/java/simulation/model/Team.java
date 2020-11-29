@@ -68,12 +68,8 @@ public class Team extends SharedAttributes implements ITeam {
         return playerList;
     }
 
-    public void setPlayerList(List<IPlayer> playerList) throws IllegalArgumentException {
-        if (checkNumPlayer(playerList)) {
+    public void setPlayerList(List<IPlayer> playerList) {
             this.playerList = playerList;
-        } else {
-            throw new IllegalArgumentException("Please make sure team: " + this.getName() + " has 30 players with 16 forwards, 10 defense, 4 goalies!");
-        }
     }
 
     public List<IPlayer> getActivePlayerList() {
@@ -290,7 +286,7 @@ public class Team extends SharedAttributes implements ITeam {
         this.lossPoint = lossPoint;
     }
 
-    public void fixTeamAfterTrading(List<IPlayer> freeAgentList){
+    public void fixTeamPlayerNum(List<IPlayer> freeAgentList){
         int goalieNum = 0;
         int forwardNum = 0;
         int defenseNum = 0;

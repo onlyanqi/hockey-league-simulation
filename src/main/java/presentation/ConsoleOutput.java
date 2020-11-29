@@ -81,4 +81,8 @@ public class ConsoleOutput {
         printMsgToConsole("--------------------------------------------------------------------");
     }
 
+    public static void printTradedDraftInfo(ITeam originalTeam, String tradedToTeamName, IPlayer player) {
+        ConsoleOutput.getInstance().printMsgToConsole("Draft "+ player.getName() + "already traded from " + originalTeam.getName() + " to " + tradedToTeamName);
+    }
+
 }
