@@ -52,44 +52,34 @@ public class DraftState implements ISimulateState {
             ConsoleOutput.getInstance().printMsgToConsole("Picked drafts in " + roundNum + " rounds");
             for (int i = firstN - 1; i >= 0; i--) {
                 ITeam originalTeam = teamStanding.getTeamsRankAcrossLeague(league).get(i).getTeam();
-                String tradedToTeamName = originalTeam.getDraftPicks().get(roundNum - 1);
-                if (tradedToTeamName == null) {
-                    List<IPlayer> existingPlayers = originalTeam.getPlayerList();
-                    IPlayer player = playerStack.pop();
-                    player.setTeamId(originalTeam.getId());
-                    existingPlayers.add(player);
-                    originalTeam.setPlayerList(existingPlayers);
-                } else{
-                    ITeam tradedToTeam = league.getTeamByTeamName(tradedToTeamName);
-                    List<IPlayer> existingPlayers = tradedToTeam.getPlayerList();
-                    IPlayer player = playerStack.pop();
-                    player.setTeamId(tradedToTeam.getId());
-                    existingPlayers.add(player);
-                    tradedToTeam.setPlayerList(existingPlayers);
-                }
-
+                selectDraft(playerStack, roundNum, originalTeam);
             }
             Set<ITeam> remainingTeams = league.getStanleyCupFinalsTeamScores().keySet();
             List<ITeam> secondTeamList = new ArrayList<>(remainingTeams);
             for (int j = 15; j >= 0; j--) {
                 ITeam originalTeam = secondTeamList.get(j);
-                String tradedToTeamName = originalTeam.getDraftPicks().get(roundNum - 1);
-                if(tradedToTeamName == null){
-                    List<IPlayer> existingPlayers = originalTeam.getPlayerList();
-                    IPlayer player = playerStack.pop();
-                    player.setTeamId(originalTeam.getId());
-                    existingPlayers.add(player);
-                    originalTeam.setPlayerList(existingPlayers);
-                }else {
-                    ITeam tradedToTeam = league.getTeamByTeamName(tradedToTeamName);
-                    List<IPlayer> existingPlayers = tradedToTeam.getPlayerList();
-                    IPlayer player = playerStack.pop();
-                    player.setTeamId(tradedToTeam.getId());
-                    existingPlayers.add(player);
-                    tradedToTeam.setPlayerList(existingPlayers);
-                }
+                selectDraft(playerStack, roundNum, originalTeam);
             }
             roundNum++;
+        }
+    }
+
+    private void selectDraft(Stack<IPlayer> playerStack, int roundNum, ITeam originalTeam) {
+        String tradedToTeamName = originalTeam.getDraftPicks().get(roundNum - 1);
+        if(tradedToTeamName == null){
+            List<IPlayer> existingPlayers = originalTeam.getPlayerList();
+            IPlayer player = playerStack.pop();
+            player.setTeamId(originalTeam.getId());
+            existingPlayers.add(player);
+            originalTeam.setPlayerList(existingPlayers);
+        }else {
+            ITeam tradedToTeam = league.getTeamByTeamName(tradedToTeamName);
+            List<IPlayer> existingPlayers = tradedToTeam.getPlayerList();
+            IPlayer player = playerStack.pop();
+            player.setTeamId(tradedToTeam.getId());
+            ConsoleOutput.printTradedDraftInfo(originalTeam, tradedToTeamName, player);
+            existingPlayers.add(player);
+            tradedToTeam.setPlayerList(existingPlayers);
         }
     }
 

@@ -6,6 +6,12 @@
          "maximumAge": 59,
          "statDecayChance": 0.01
       },
+      "simulate": {
+         "upset": 0.4,
+         "defendChance": 0.25,
+         "penaltyChance": 0.65,
+         "goalChance": 0.21
+      },
       "injuries": {
          "randomInjuryChance": 0.31,
          "injuryDaysLow": 2,
