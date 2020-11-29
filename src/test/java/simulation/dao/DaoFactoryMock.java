@@ -2,14 +2,15 @@ package simulation.dao;
 
 import simulation.mock.*;
 
-public class DaoFactoryMock implements IDaoFactory{
+public class DaoFactoryMock implements IDaoFactory {
 
     private static DaoFactoryMock daoFactoryMock;
 
-    private DaoFactoryMock(){}
+    private DaoFactoryMock() {
+    }
 
-    public static DaoFactoryMock getInstance(){
-        if(null == daoFactoryMock){
+    public static DaoFactoryMock getInstance() {
+        if (null == daoFactoryMock) {
             daoFactoryMock = new DaoFactoryMock();
         }
         return daoFactoryMock;
@@ -30,7 +31,7 @@ public class DaoFactoryMock implements IDaoFactory{
         return new DivisionMock();
     }
 
-    public ILeagueDao newLeagueDao(){
+    public ILeagueDao newLeagueDao() {
         return new LeagueMock();
     }
 
@@ -39,23 +40,23 @@ public class DaoFactoryMock implements IDaoFactory{
         return new PlayerMock();
     }
 
-    public ITeamDao newTeamDao(){
+    public ITeamDao newTeamDao() {
         return new TeamMock();
     }
 
-    public ITradingDao newTradingDao(){
+    public ITradingDao newTradingDao() {
         return new TradingMock();
     }
 
-    public ITradeOfferDao newTradeOfferDao(){
+    public ITradeOfferDao newTradeOfferDao() {
         return new TradeOfferMock();
     }
 
-    public IUserDao newUserDao(){
+    public IUserDao newUserDao() {
         return new UserMock();
     }
 
-    public IFreeAgentDao newFreeAgentDao(){
+    public IFreeAgentDao newFreeAgentDao() {
         return new FreeAgentMock();
     }
 }

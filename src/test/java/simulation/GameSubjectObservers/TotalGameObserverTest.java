@@ -29,10 +29,10 @@ public class TotalGameObserverTest {
     }
 
     @Test
-    public void update(){
+    public void update() {
         IGameObserver totalGameObserver = new TotalGameObserver();
-        totalGameObserver.update(hockeyContext.getUser().getLeague(),"Team11",3);
-        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getNumberOfGamesPlayed()==1);
-        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getNumberOfGamesPlayed()==1);
+        totalGameObserver.update(hockeyContext.getUser().getLeague(), "Team11", 3);
+        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getNumberOfGamesPlayed() == 1);
+        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getNumberOfGamesPlayed() == 1);
     }
 }

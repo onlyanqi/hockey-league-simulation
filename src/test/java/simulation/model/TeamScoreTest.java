@@ -1,8 +1,8 @@
 package simulation.model;
 
-import simulation.dao.ITeamScoreDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.ITeamScoreDao;
 import simulation.mock.TeamScoreMock;
 
 import static org.junit.Assert.*;

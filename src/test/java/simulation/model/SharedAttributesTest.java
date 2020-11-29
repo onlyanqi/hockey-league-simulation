@@ -1,11 +1,12 @@
 package simulation.model;
 
-import simulation.dao.IPlayerDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.IPlayerDao;
 import simulation.mock.PlayerMock;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SharedAttributesTest {
 

@@ -1,11 +1,13 @@
 package simulation.model;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
 import simulation.dao.DaoFactoryMock;
 import simulation.dao.IDaoFactory;
 import simulation.dao.ITradingDao;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
 import java.util.*;
+
 import static org.junit.Assert.*;
 
 public class TradingTest {
@@ -129,7 +131,7 @@ public class TradingTest {
     public void calTradeStartDateFromLeagueDateTest() {
         ITrading trading = modelFactory.newTrading();
         trading.calTradeStartDateFromLeagueDate(new Date(System.currentTimeMillis()));
-        Date tradeStartDate = new Date((2020-yearInit), 9, one);
+        Date tradeStartDate = new Date((2020 - yearInit), 9, one);
         int compare = trading.getTradeStartDate().compareTo(tradeStartDate);
         assertEquals(compare, zero);
         assertNotEquals(compare, one);
@@ -254,7 +256,6 @@ public class TradingTest {
         assertEquals(one, trading.getId());
         assertEquals(3, trading.getMaxPlayersPerTrade());
     }
-
 
 
 }

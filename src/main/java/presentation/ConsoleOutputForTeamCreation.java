@@ -1,6 +1,8 @@
 package presentation;
 
-import simulation.model.*;
+import simulation.model.ICoach;
+import simulation.model.IManager;
+import simulation.model.IPlayer;
 
 import java.util.List;
 

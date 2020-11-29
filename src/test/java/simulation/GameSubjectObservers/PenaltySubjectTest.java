@@ -35,27 +35,27 @@ public class PenaltySubjectTest {
     @Test
     public void testAttach() {
         PenaltyObserver penaltyObserver = new PenaltyObserver();
-        PenaltySubject  penaltySubject= new PenaltySubject();
+        PenaltySubject penaltySubject = new PenaltySubject();
         penaltySubject.attach(penaltyObserver);
-        assertTrue(penaltySubject.getListeners().size()==1);
+        assertTrue(penaltySubject.getListeners().size() == 1);
     }
 
     @Test
     public void testDetach() {
         PenaltyObserver penaltyObserver = new PenaltyObserver();
-        PenaltySubject  penaltySubject= new PenaltySubject();
+        PenaltySubject penaltySubject = new PenaltySubject();
         penaltySubject.attach(penaltyObserver);
         penaltySubject.detach(penaltyObserver);
-        assertTrue(penaltySubject.getListeners().size()==0);
+        assertTrue(penaltySubject.getListeners().size() == 0);
     }
 
     @Test
     public void testNotifyObservers() {
         PenaltyObserver penaltyObserver = new PenaltyObserver();
-        PenaltySubject  penaltySubject= new PenaltySubject();
+        PenaltySubject penaltySubject = new PenaltySubject();
         penaltySubject.attach(penaltyObserver);
-        penaltySubject.notifyObservers(hockeyContext.getUser().getLeague(),"Team11",2);
-        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getPenalties()==2);
-        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getPenalties()==2);
+        penaltySubject.notifyObservers(hockeyContext.getUser().getLeague(), "Team11", 2);
+        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getPenalties() == 2);
+        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getPenalties() == 2);
     }
 }

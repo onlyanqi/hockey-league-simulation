@@ -1,8 +1,8 @@
 package simulation.model;
 
-import simulation.dao.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.*;
 import simulation.mock.*;
 
 import java.util.ArrayList;

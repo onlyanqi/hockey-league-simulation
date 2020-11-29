@@ -10,11 +10,9 @@ import simulation.mock.GameMock;
 import simulation.mock.UserMock;
 import simulation.model.User;
 import simulation.state.IHockeyContext;
-import simulation.trophyPublisherSubsribers.CoachStatAbilitySubscriber;
-import simulation.trophyPublisherSubsribers.ITrophyEventListeners;
-import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class TotalGamesSubjectTest {
 
@@ -39,7 +37,7 @@ public class TotalGamesSubjectTest {
         TotalGameObserver totalGameObserver = new TotalGameObserver();
         TotalGamesSubject totalGamesSubject = new TotalGamesSubject();
         totalGamesSubject.attach(totalGameObserver);
-        assertTrue(totalGamesSubject.getListeners().size()==1);
+        assertTrue(totalGamesSubject.getListeners().size() == 1);
     }
 
     @Test
@@ -48,7 +46,7 @@ public class TotalGamesSubjectTest {
         TotalGamesSubject totalGamesSubject = new TotalGamesSubject();
         totalGamesSubject.attach(totalGameObserver);
         totalGamesSubject.detach(totalGameObserver);
-        assertTrue(totalGamesSubject.getListeners().size()==0);
+        assertTrue(totalGamesSubject.getListeners().size() == 0);
     }
 
     @Test
@@ -56,8 +54,8 @@ public class TotalGamesSubjectTest {
         TotalGameObserver totalGameObserver = new TotalGameObserver();
         TotalGamesSubject totalGamesSubject = new TotalGamesSubject();
         totalGamesSubject.attach(totalGameObserver);
-        totalGamesSubject.notifyObservers(hockeyContext.getUser().getLeague(),"Team11",1);
-        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getNumberOfGamesPlayed()==1);
-        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getNumberOfGamesPlayed()==1);
+        totalGamesSubject.notifyObservers(hockeyContext.getUser().getLeague(), "Team11", 1);
+        assertTrue(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getNumberOfGamesPlayed() == 1);
+        assertNotNull(hockeyContext.getUser().getLeague().getTeamStatByTeamName("Team11").getNumberOfGamesPlayed() == 1);
     }
 }

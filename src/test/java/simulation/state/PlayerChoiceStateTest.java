@@ -6,7 +6,6 @@ import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 
 public class PlayerChoiceStateTest {

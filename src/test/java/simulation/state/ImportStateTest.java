@@ -1,9 +1,9 @@
 package simulation.state;
 
-import simulation.dao.ILeagueDao;
 import org.json.simple.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.ILeagueDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.JSONControllerMock;
@@ -11,6 +11,7 @@ import simulation.mock.LeagueMock;
 import simulation.model.IModelFactory;
 import simulation.model.ModelFactory;
 import simulation.model.User;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -19,8 +20,8 @@ public class ImportStateTest {
 
     private static User user;
     private static ILeagueDao factory;
-    private IHockeyState state;
     private static IHockeyContextFactory hockeyContextFactory;
+    private IHockeyState state;
 
     @BeforeClass
     public static void setAll() {
