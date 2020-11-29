@@ -14,43 +14,43 @@ public class DaoFactory implements IDaoFactory {
     }
 
     public IAgingDao newAgingDao(){
-        return new AgingDao();
+       return null;
     }
 
     public IConferenceDao newConferenceDao(){
-        return new ConferenceDao();
+        return null;
     }
 
     public IDivisionDao newDivisionDao(){
-        return new DivisionDao();
+        return null;
     }
 
     public ILeagueDao newLeagueDao(){
-        return new LeagueDao();
+        return null;
     }
 
     public IPlayerDao newPlayerDao(){
-        return new PlayerDao();
+        return null;
     }
 
     public ITradeOfferDao newTradeOfferDao(){
-        return new TradeOfferDao();
+        return null;
     }
 
     public ITeamDao newTeamDao(){
-        return new TeamDao();
+        return null;
     }
 
     public ITradingDao newTradingDao(){
-        return new TradingDao();
+        return null;
     }
 
     public IUserDao newUserDao(){
-        return new UserDao();
+        return null;
     }
 
     @Override
     public IFreeAgentDao newFreeAgentDao() {
-        return new FreeAgentDao();
+        return null;
     }
 }

@@ -1,7 +1,9 @@
 package simulation.mock;
 
 import simulation.dao.ITradingDao;
+import simulation.model.IModelFactory;
 import simulation.model.ITrading;
+import simulation.model.ModelFactory;
 import simulation.model.Trading;
 
 import java.util.Arrays;
@@ -11,9 +13,15 @@ import java.util.Map;
 
 public class TradingMock implements ITradingDao {
 
+    private IModelFactory modelFactory;
+
+    public TradingMock(){
+        modelFactory = ModelFactory.getInstance();
+    }
+
     private ITrading getTrading(int leagueId, int tradingId, ITrading trading) {
-        trading.setId(1);
-        trading.setLeagueId(1);
+        trading.setId(tradingId);
+        trading.setLeagueId(leagueId);
         trading.setLossPoint(2);
         trading.setMaxPlayersPerTrade(3);
         trading.setRandomAcceptanceChance(0.05f);
@@ -39,7 +47,7 @@ public class TradingMock implements ITradingDao {
 
     @Override
     public ITrading loadTradingDetailsByLeagueId(int leagueId) {
-        ITrading trading = new Trading();
+        ITrading trading = modelFactory.newTrading();
         trading = getTrading(leagueId, 1, trading);
 
         switch (leagueId) {

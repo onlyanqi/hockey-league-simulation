@@ -54,20 +54,6 @@ public class DivisionTest {
     }
 
     @Test
-    public void getConferenceIdTest() throws Exception {
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
-        assertTrue(division.getConferenceId() == (1));
-    }
-
-    @Test
-    public void setConferenceIdTest() {
-        IDivision division = modelFactory.newDivision();
-        int conferenceId = 1;
-        division.setConferenceId(conferenceId);
-        assertTrue(division.getConferenceId() == conferenceId);
-    }
-
-    @Test
     public void getTeamListTest() throws Exception {
         IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
         List<ITeam> teamList = division.getTeamList();
@@ -78,7 +64,7 @@ public class DivisionTest {
     }
 
     @Test
-    public void setPlayerListTest() throws Exception {
+    public void setTeamListTest() throws Exception {
         ITeamDao teamDao = daoFactory.newTeamDao();
         List<ITeam> teamList = new ArrayList<>();
         ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
@@ -93,6 +79,20 @@ public class DivisionTest {
         assertTrue(division.getTeamList().get(1).getId() == (2));
         assertTrue(division.getTeamList().get(0).getName().equals("Team1"));
         assertNull(division.getTeamList().get(1).getName());
+    }
+
+    @Test
+    public void getConferenceIdTest() throws Exception {
+        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        assertTrue(division.getConferenceId() == (1));
+    }
+
+    @Test
+    public void setConferenceIdTest() {
+        IDivision division = modelFactory.newDivision();
+        int conferenceId = 1;
+        division.setConferenceId(conferenceId);
+        assertTrue(division.getConferenceId() == conferenceId);
     }
 
     @Test
@@ -114,6 +114,22 @@ public class DivisionTest {
         assertTrue(division.getTeamList().get(0).getId() == (1));
         assertTrue(division.getTeamList().get(1).getId() == (3));
         assertTrue(division.getTeamList().get(0).getName().equals("Team1"));
+    }
+
+    @Test
+    public void getTeamNameListTest() throws Exception {
+        ITeamDao teamDao = daoFactory.newTeamDao();
+        List<ITeam> teamList = new ArrayList<>();
+        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        teamList.add(team);
+        team = modelFactory.newTeamWithIdDao(3, teamDao);
+        teamList.add(team);
+        IDivision division = modelFactory.newDivision();
+        division.setTeamList(teamList);
+        List<String> teamNameList = division.getTeamNameList();
+        String indexZero = "team1";
+        assertEquals(teamNameList.get(0), indexZero);
+        assertNotNull(teamNameList.get(0));
     }
 
 }

@@ -21,9 +21,6 @@ public class Conference extends SharedAttributes implements IConference {
     }
 
     public Conference(int id, IConferenceDao factory) throws Exception {
-        if (factory == null) {
-            return;
-        }
         setId(id);
         factory.loadConferenceById(id, this);
     }
@@ -50,9 +47,6 @@ public class Conference extends SharedAttributes implements IConference {
     }
 
     public void setDivisionList(List<IDivision> divisionList) {
-        if (divisionList == null) {
-            return;
-        }
         this.divisionList = divisionList;
     }
 
@@ -64,7 +58,7 @@ public class Conference extends SharedAttributes implements IConference {
         return divisionNameList;
     }
 
-    public IDivision getDivisionFromListByName(String divisionName) {
+        public IDivision getDivisionFromListByName(String divisionName) {
         IDivision foundDivision = null;
         for (IDivision division : divisionList) {
             if (division.getName().toLowerCase().equals(divisionName.toLowerCase())) {
@@ -76,16 +70,10 @@ public class Conference extends SharedAttributes implements IConference {
     }
 
     public void addConference(IConferenceDao addConferenceFactory) throws Exception {
-        if (addConferenceFactory == null) {
-            return;
-        }
         addConferenceFactory.addConference(this);
     }
 
     public void loadDivisionListByConferenceId(IDivisionDao divisionDao) throws Exception {
-        if (divisionDao == null) {
-            return;
-        }
         this.divisionList = divisionDao.loadDivisionListByConferenceId(getId());
     }
 

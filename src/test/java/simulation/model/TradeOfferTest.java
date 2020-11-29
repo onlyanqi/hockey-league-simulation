@@ -25,7 +25,7 @@ public class TradeOfferTest {
     }
 
     @Test
-    public void defaultConstructorTest() {
+    public void tradeOfferTest() {
         ITradeOffer tradeOffer = modelFactory.newTradeOffer();
         assertNotEquals(tradeOffer.getId(), 0);
         assertNotEquals(tradeOffer.getId(), 1);
