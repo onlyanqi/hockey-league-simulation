@@ -1,10 +1,10 @@
 package simulation.mock;
 
 
-import db.data.ISharedAttributesFactory;
+import persistance.dao.ISharedAttributesDao;
 import simulation.model.SharedAttributes;
 
-public class SharedAttributesMock implements ISharedAttributesFactory {
+public class SharedAttributesMock implements ISharedAttributesDao {
 
     @Override
     public void loadParentObj(int id, SharedAttributes sharedAttributes) {

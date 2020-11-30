@@ -1,9 +1,11 @@
 package simulation.state;
 
-import db.data.IEventFactory;
-import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IEventDao;
+import persistance.dao.IUserDao;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.NHLEventMock;
 import simulation.mock.UserMock;
 import simulation.model.User;
@@ -16,15 +18,16 @@ import static org.junit.Assert.assertTrue;
 
 public class AdvanceTimeStateTest {
 
-    private static IUserFactory userFactory;
-    private static HockeyContext hockeyContext;
-    private static IEventFactory eventFactory;
+    private static IUserDao userFactory;
+    private static IHockeyContext hockeyContext;
+    private static IEventDao eventFactory;
 
 
     @BeforeClass
     public static void init() throws Exception {
         userFactory = new UserMock();
-        hockeyContext = new HockeyContext();
+        IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(4, userFactory);
         hockeyContext.setUser(user);
         eventFactory = new NHLEventMock();

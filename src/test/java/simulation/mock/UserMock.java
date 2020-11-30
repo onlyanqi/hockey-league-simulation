@@ -1,29 +1,30 @@
 package simulation.mock;
 
-import db.data.ILeagueFactory;
-import db.data.IUserFactory;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IUserDao;
+import simulation.model.IUser;
 import simulation.model.League;
 import simulation.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserMock implements IUserFactory {
+public class UserMock implements IUserDao {
 
     @Override
-    public long addUser(User user) {
+    public long addUser(IUser user) {
         user = new User(1);
         return user.getId();
     }
 
     private League formLeague() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(1, leagueFactory);
         return league;
     }
 
     private List formLeagueList() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         List<League> leagueList = new ArrayList<>();
         League league = new League(1, leagueFactory);
         leagueList.add(league);
@@ -33,7 +34,7 @@ public class UserMock implements IUserFactory {
     }
 
     @Override
-    public void loadUserById(int id, User user) throws Exception {
+    public void loadUserById(int id, IUser user) throws Exception {
 
         switch (new Long(id).intValue()) {
             case 1:
@@ -66,12 +67,22 @@ public class UserMock implements IUserFactory {
                 user.setLeague(formLeagueForGames());
                 user.setLeagueList(formLeagueList());
                 break;
+
+            case 5:
+                user.setId(5);
+                user.setName("User5");
+                user.setPassword("Pass");
+                ILeagueDao leagueFactory = new LeagueMock();
+                League league = new League();
+                leagueFactory.loadLeagueById(6, league);
+                user.setLeague(league);
+                break;
         }
 
     }
 
     @Override
-    public void loadUserByName(String userName, User user) {
+    public void loadUserByName(String userName, IUser user) {
         user = new User();
         user.setId(1);
         user.setName("User1");
@@ -79,7 +90,7 @@ public class UserMock implements IUserFactory {
     }
 
     private League formLeagueForGames() throws Exception {
-        ILeagueFactory leagueFactory = new LeagueMock();
+        ILeagueDao leagueFactory = new LeagueMock();
         League league = new League(5, leagueFactory);
         return league;
     }

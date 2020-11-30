@@ -1,22 +1,36 @@
 package simulation.mock;
 
-import db.data.ITradeOfferFactory;
-import simulation.model.TradeOffer;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IPlayerDao;
+import persistance.dao.ITradeOfferDao;
+import simulation.dao.DaoFactoryMock;
+import simulation.model.IModelFactory;
+import simulation.model.ITradeOffer;
+import simulation.model.ModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TradeOfferMock implements ITradeOfferFactory {
+public class TradeOfferMock implements ITradeOfferDao {
+
+    private final IModelFactory modelFactory;
+
+    public TradeOfferMock() {
+        modelFactory = ModelFactory.getInstance();
+    }
 
     @Override
-    public void addTradeOfferDetails(TradeOffer tradeOffer) {
-        tradeOffer = new TradeOffer();
+    public void addTradeOfferDetails(ITradeOffer tradeOffer) {
+        tradeOffer = modelFactory.createTradeOffer();
         tradeOffer.setId(1);
         tradeOffer.setSeasonId(1);
         tradeOffer.setTradingId(1);
     }
 
-    public void getTradeOffer(TradeOffer tradeOffer, int from, int to) {
+    public void getTradeOffer(ITradeOffer tradeOffer, int from, int to) throws Exception {
+        IDaoFactory daoFactory = DaoFactoryMock.getInstance();
+        IPlayerDao playerDao = daoFactory.createPlayerDao();
+
         tradeOffer.setId(from);
         tradeOffer.setLeagueId(from);
         tradeOffer.setTradingId(from);
@@ -26,20 +40,26 @@ public class TradeOfferMock implements ITradeOfferFactory {
         tradeOffer.setToPlayerId(to);
         tradeOffer.setSeasonId(from);
         tradeOffer.setStatus("pending");
+        List<Integer> fromPlayerIdList = new ArrayList<>();
+        fromPlayerIdList.add(1);
+        tradeOffer.setFromPlayerIdList(fromPlayerIdList);
+        List<Integer> toPlayerIdList = new ArrayList<>();
+        toPlayerIdList.add(2);
+        tradeOffer.setToPlayerIdList(toPlayerIdList);
     }
 
     @Override
-    public List<TradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) {
-        List<TradeOffer> tradeOfferList = new ArrayList<>();
-        TradeOffer tradeOffer = new TradeOffer();
+    public List<ITradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
+        List<ITradeOffer> tradeOfferList = new ArrayList<>();
+        ITradeOffer tradeOffer = modelFactory.createTradeOffer();
         getTradeOffer(tradeOffer, 1, 2);
         tradeOffer.setStatus("pending");
         tradeOfferList.add(tradeOffer);
-        tradeOffer = new TradeOffer();
+        tradeOffer = modelFactory.createTradeOffer();
         getTradeOffer(tradeOffer, 3, 4);
         tradeOffer.setStatus("accepted");
         tradeOfferList.add(tradeOffer);
-        tradeOffer = new TradeOffer();
+        tradeOffer = modelFactory.createTradeOffer();
         getTradeOffer(tradeOffer, 5, 6);
         tradeOffer.setStatus("rejected");
         tradeOfferList.add(tradeOffer);
@@ -47,7 +67,7 @@ public class TradeOfferMock implements ITradeOfferFactory {
     }
 
     @Override
-    public void loadTradeOfferDetailsById(int tradingOfferId, TradeOffer tradeOffer) {
+    public void loadTradeOfferDetailsById(int tradingOfferId, ITradeOffer tradeOffer) throws Exception {
         getTradeOffer(tradeOffer, tradingOfferId, 3);
     }
 

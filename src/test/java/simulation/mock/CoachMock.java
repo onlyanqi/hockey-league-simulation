@@ -1,19 +1,20 @@
 package simulation.mock;
 
-import db.data.ICoachFactory;
+import persistance.dao.ICoachDao;
 import simulation.model.Coach;
+import simulation.model.ICoach;
 
 import java.util.List;
 
-public class CoachMock implements ICoachFactory {
+public class CoachMock implements ICoachDao {
     @Override
-    public int addCoach(Coach coach) throws Exception {
+    public int addCoach(ICoach coach) throws Exception {
         coach = new Coach(1);
         return coach.getId();
     }
 
     @Override
-    public void loadCoachById(int id, Coach coach) throws Exception {
+    public void loadCoachById(int id, ICoach coach) throws Exception {
 
         switch (id) {
             case 0:
@@ -25,6 +26,7 @@ public class CoachMock implements ICoachFactory {
                 coach.setSaving(1.0);
                 coach.setLeagueId(1);
                 coach.setTeamId(0);
+                coach.setCoachingEffectiveness(10);
                 break;
             case 1:
                 coach.setId(id);
@@ -112,12 +114,12 @@ public class CoachMock implements ICoachFactory {
 
     @Override
     public Coach loadCoachByTeamId(int teamId) throws Exception {
-        ICoachFactory coachFactory = new CoachMock();
+        ICoachDao coachFactory = new CoachMock();
         return new Coach(2, coachFactory);
     }
 
     @Override
-    public List<Coach> loadFreeCoachListByLeagueId(int leagueId) throws Exception {
+    public List<ICoach> loadFreeCoachListByLeagueId(int leagueId) throws Exception {
         LeagueMock leagueMock = new LeagueMock();
         return leagueMock.formCoachList();
     }

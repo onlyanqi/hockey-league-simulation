@@ -1,21 +1,21 @@
 package simulation.mock;
 
-import db.data.IEventFactory;
-import simulation.model.NHLEvents;
+import persistance.dao.IEventDao;
+import simulation.model.INHLEvents;
 
 import java.time.LocalDate;
 import java.time.Month;
 
-public class NHLEventMock implements IEventFactory {
+public class NHLEventMock implements IEventDao {
 
     @Override
-    public long addEvent(int leagueId, NHLEvents event) {
+    public long addEvent(int leagueId, INHLEvents event) {
         event.setId(1);
         return event.getId();
     }
 
     @Override
-    public void loadEventById(int id, NHLEvents event) {
+    public void loadEventById(int id, INHLEvents event) {
         switch (id) {
             case 0:
                 event.setId(0);
@@ -43,11 +43,22 @@ public class NHLEventMock implements IEventFactory {
                 event.setPlayOffStartDate(LocalDate.of(2021, Month.APRIL, 05));
                 event.setEndOfRegularSeason(null);
                 break;
+            case 3:
+                event.setId(3);
+                event.setRegularSeasonStartDate(LocalDate.of(2020, Month.SEPTEMBER, 30));
+                event.setTradeDeadlineDate(LocalDate.of(2021, Month.FEBRUARY, 03));
+                event.setNextSeasonDate(LocalDate.of(2021, Month.SEPTEMBER, 29));
+                event.setLastDayStanleyCupFinals(LocalDate.of(2021, Month.JUNE, 01));
+                event.setPlayOffStartDate(LocalDate.of(2021, Month.APRIL, 05));
+                event.setEndOfRegularSeason(null);
+                event.setPlayerDraftDate(LocalDate.of(2021, Month.JULY, 15));
+                break;
+
         }
     }
 
     @Override
-    public void loadEventByLeagueId(int leagueId, NHLEvents event) {
+    public void loadEventByLeagueId(int leagueId, INHLEvents event) {
         switch (leagueId) {
             case 0:
                 event.setId(3);
@@ -57,6 +68,7 @@ public class NHLEventMock implements IEventFactory {
                 event.setLastDayStanleyCupFinals(LocalDate.of(2021, Month.JUNE, 01));
                 event.setPlayOffStartDate(LocalDate.of(2021, Month.APRIL, 05));
                 event.setEndOfRegularSeason(LocalDate.of(2021, Month.APRIL, 06));
+                event.setPlayerDraftDate(LocalDate.of(2021, Month.JULY, 15));
                 break;
             case 1:
                 event.setId(4);
@@ -65,6 +77,7 @@ public class NHLEventMock implements IEventFactory {
                 event.setNextSeasonDate(LocalDate.of(2021, Month.OCTOBER, 01));
                 event.setLastDayStanleyCupFinals(LocalDate.of(2020, Month.JUNE, 01));
                 event.setPlayOffStartDate(LocalDate.of(2021, Month.APRIL, 05));
+                event.setPlayerDraftDate(LocalDate.of(2021, Month.JULY, 15));
                 break;
             case 2:
                 event.setId(5);
@@ -73,6 +86,7 @@ public class NHLEventMock implements IEventFactory {
                 event.setNextSeasonDate(LocalDate.of(2021, Month.OCTOBER, 01));
                 event.setLastDayStanleyCupFinals(LocalDate.of(2021, Month.JUNE, 01));
                 event.setPlayOffStartDate(LocalDate.of(2021, Month.APRIL, 05));
+                event.setPlayerDraftDate(LocalDate.of(2021, Month.JULY, 15));
                 event.setEndOfRegularSeason(null);
                 break;
         }

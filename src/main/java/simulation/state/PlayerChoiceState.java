@@ -1,10 +1,12 @@
 package simulation.state;
 
 import config.AppConfig;
+import org.apache.log4j.Logger;
+import presentation.ConsoleOutput;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
-
-import java.util.Scanner;
+import presentation.ReadUserInput;
+import simulation.model.Player;
 
 public class PlayerChoiceState implements IHockeyState {
 
@@ -12,12 +14,13 @@ public class PlayerChoiceState implements IHockeyState {
     private static final String TWO = "2";
     private static final String IMPORTSTATE = "importState";
     private static final String CREATEORLOADTEAM = "createOrLoadTeam";
-    private String input;
-    private String stateName;
-    private HockeyContext hockeyContext;
+    private static final Logger log = Logger.getLogger(Player.class);
+    private final String input;
+    private final String stateName;
+    private final IHockeyContext hockeyContext;
     private String userInput;
 
-    public PlayerChoiceState(HockeyContext hockeyContext, String input, String stateName) {
+    public PlayerChoiceState(IHockeyContext hockeyContext, String input, String stateName) {
         this.input = input;
         this.stateName = stateName;
         this.hockeyContext = hockeyContext;
@@ -25,14 +28,12 @@ public class PlayerChoiceState implements IHockeyState {
 
     @Override
     public void entry() {
-
+        ConsoleOutput.getInstance().printMsgToConsole(input);
     }
 
     @Override
     public void process() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(input);
-        userInput = scanner.nextLine();
+        userInput = ReadUserInput.getInstance().getInput("");
     }
 
     @Override
@@ -52,11 +53,12 @@ public class PlayerChoiceState implements IHockeyState {
                 break;
             }
             case CREATEORLOADTEAM: {
-                InternalState internalState = new InternalState(hockeyContext);
-                return internalState;
+                SeasonSimulationState seasonSimulationState = new SeasonSimulationState(hockeyContext, Integer.parseInt(userInput));
+                return seasonSimulationState;
             }
             default: {
-
+                log.error("Given State is invalid. Cannot proceed to simulating seasons");
+                throw new IllegalStateException("Given State is invalid. Cannot proceed to simulating seasons");
             }
         }
         return null;

@@ -1,24 +1,34 @@
 package simulation.state;
 
-import db.data.ILeagueFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IUserDao;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
-import simulation.model.Coach;
+import simulation.mock.UserMock;
+import simulation.model.ICoach;
+import simulation.model.IPlayer;
 import simulation.model.League;
-import simulation.model.Player;
 import simulation.model.User;
 
 import static org.junit.Assert.*;
 
 public class TrainingStateTest {
     private static ITrainingState trainingState;
-    private static ILeagueFactory leagueFactory;
-    private static HockeyContext hockeyContext;
+    private static ILeagueDao leagueFactory;
+    private static IHockeyContext hockeyContext;
+    private static IUserDao userFactory;
+    private static IHockeyContextFactory hockeyContextFactory;
 
     @BeforeClass
     public static void setFactoryObject() throws Exception {
-        hockeyContext = new HockeyContext(new User(1));
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
+        userFactory = new UserMock();
+        User user = new User(1, userFactory);
+        hockeyContext.setUser(user);
         trainingState = new TrainingState(hockeyContext);
         leagueFactory = new LeagueMock();
     }
@@ -54,10 +64,10 @@ public class TrainingStateTest {
         League league = new League(4, leagueFactory);
         hockeyContext.getUser().setLeague(league);
         League oldLeague = league;
-        Player player = league.getConferenceList().get(1).getDivisionList().get(1).getTeamList().get(0).getPlayerList().get(1);
-        Coach headCoach = league.getConferenceList().get(1).getDivisionList().get(1).getTeamList().get(0).getCoach();
-        Player oldPlayer = player;
-        Coach oldHeadCoach = headCoach;
+        IPlayer player = league.getConferenceList().get(1).getDivisionList().get(1).getTeamList().get(0).getPlayerList().get(1);
+        ICoach headCoach = league.getConferenceList().get(1).getDivisionList().get(1).getTeamList().get(0).getCoach();
+        IPlayer oldPlayer = player;
+        ICoach oldHeadCoach = headCoach;
         trainingState.statIncreaseCheckForPlayer(player, headCoach);
         assertEquals(oldPlayer, player);
         assertEquals(oldHeadCoach, headCoach);

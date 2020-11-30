@@ -1,10 +1,10 @@
 package simulation.model;
 
-import db.data.IGamePlayConfigFactory;
-import db.data.ILeagueFactory;
-import db.data.ITradingFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IGamePlayConfigDao;
+import persistance.dao.ILeagueDao;
+import persistance.dao.ITradingDao;
 import simulation.mock.GamePlayConfigMock;
 import simulation.mock.LeagueMock;
 import simulation.mock.TradingMock;
@@ -13,9 +13,9 @@ import static org.junit.Assert.*;
 
 public class GamePlayConfigTest {
 
-    private static ITradingFactory tradingFactory;
-    private static IGamePlayConfigFactory gamePlayConfigFactory;
-    private static ILeagueFactory leagueFactory;
+    private static ITradingDao tradingFactory;
+    private static IGamePlayConfigDao gamePlayConfigFactory;
+    private static ILeagueDao leagueFactory;
 
     @BeforeClass
     public static void init() {

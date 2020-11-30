@@ -2,12 +2,15 @@ package presentation;
 
 import java.util.Scanner;
 
-public class ReadUserInput {
+public class ReadUserInput implements IReadUserInput {
 
-    private static ReadUserInput readUserInput;
-    private static ConsoleOutput consoleOutput;
+    private static IReadUserInput readUserInput;
+    private static IConsoleOutput consoleOutput;
 
-    public static ReadUserInput getInstance() {
+    private ReadUserInput() {
+    }
+
+    public static IReadUserInput getInstance() {
         if (null == readUserInput) {
             readUserInput = new ReadUserInput();
         }

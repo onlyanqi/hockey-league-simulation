@@ -1,15 +1,15 @@
 package simulation.model;
 
-import db.data.ITrainingFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.ITrainingDao;
 import simulation.mock.TrainingMock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class TrainingTest {
-    private static ITrainingFactory trainingFactory;
+    private static ITrainingDao trainingFactory;
 
     @BeforeClass
     public static void setFactoryObject() {

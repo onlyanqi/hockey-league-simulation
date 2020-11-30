@@ -1,25 +1,26 @@
 package config;
 
+import persistance.serializers.LeagueDataSerializerDeSerializer;
 import presentation.ConsoleOutputForTeamCreation;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import presentation.UseInputForTeamCreation;
-import simulation.factory.LeagueConcrete;
-import simulation.serializers.LeagueDataSerializerDeSerializer;
+import simulation.model.IModelFactory;
+import simulation.model.ModelFactory;
 
 public class AppConfig {
 
     private static AppConfig appConfig = null;
 
-    private IUserInputForTeamCreation inputForTeamCreation;
-    private IConsoleOutputForTeamCreation outputForTeamCreation;
-    private LeagueDataSerializerDeSerializer dataSerializer;
-    private LeagueConcrete leagueConcrete;
+    private final IUserInputForTeamCreation inputForTeamCreation;
+    private final IConsoleOutputForTeamCreation outputForTeamCreation;
+    private final LeagueDataSerializerDeSerializer dataSerializer;
+    private final IModelFactory modelFactory;
 
-    public AppConfig() {
+    private AppConfig() {
         inputForTeamCreation = new UseInputForTeamCreation();
         outputForTeamCreation = new ConsoleOutputForTeamCreation();
-        leagueConcrete = new LeagueConcrete();
+        modelFactory = ModelFactory.getInstance();
         dataSerializer = new LeagueDataSerializerDeSerializer();
     }
 
@@ -34,6 +35,10 @@ public class AppConfig {
         return appConfig;
     }
 
+    public LeagueDataSerializerDeSerializer getDataSerializerDeSerializer() {
+        return dataSerializer;
+    }
+
     public IUserInputForTeamCreation getInputForTeamCreation() {
         return inputForTeamCreation;
     }
@@ -42,8 +47,8 @@ public class AppConfig {
         return outputForTeamCreation;
     }
 
-    public LeagueConcrete getLeagueConcrete() {
-        return leagueConcrete;
+    public IModelFactory getLeagueConcrete() {
+        return modelFactory;
     }
 
 }

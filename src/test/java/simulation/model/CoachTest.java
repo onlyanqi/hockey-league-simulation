@@ -1,15 +1,14 @@
 package simulation.model;
 
-import db.data.ICoachFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.ICoachDao;
 import simulation.mock.CoachMock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class CoachTest {
-    private static ICoachFactory loadCoachFactory;
+    private static ICoachDao loadCoachFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
@@ -19,7 +18,7 @@ public class CoachTest {
     @Test
     public void defaultConstructorTest() {
         Coach coach = new Coach();
-        assertEquals(coach.getId(), 0);
+        assertNotEquals(coach.getId(), 0);
     }
 
     @Test
@@ -30,7 +29,7 @@ public class CoachTest {
 
     @Test
     public void coachObjectTest() {
-        Coach coach = new Coach(null);
+        Coach coach = new Coach((Coach) null);
         assertEquals(coach.getId(), 0);
     }
 

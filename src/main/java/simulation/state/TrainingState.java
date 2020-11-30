@@ -1,7 +1,9 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
+import presentation.IConsoleOutput;
 import simulation.model.*;
+import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,11 +13,11 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     private static final String TRAININGINFORMATION = "Training Players and Team!";
     private static final String STATCHECKINFORMATION = "Performing stat increase check";
-    private HockeyContext hockeyContext;
-    private League league;
-    private ConsoleOutput consoleOutput;
+    private final IHockeyContext hockeyContext;
+    private final ILeague league;
+    private final IConsoleOutput consoleOutput;
 
-    public TrainingState(HockeyContext hockeyContext) {
+    public TrainingState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
         consoleOutput = ConsoleOutput.getInstance();
@@ -40,19 +42,29 @@ public class TrainingState implements ISimulateState, ITrainingState {
     }
 
     @Override
-    public void statIncreaseCheck(League league) {
+    public void statIncreaseCheck(ILeague league) {
         if (league == null) {
             return;
         }
-        List<Conference> conferenceList = league.getConferenceList();
-        for (Conference conference : conferenceList) {
-            List<Division> divisionList = conference.getDivisionList();
-            for (Division division : divisionList) {
-                List<Team> teamList = division.getTeamList();
-                for (Team team : teamList) {
-                    List<Player> playerList = team.getPlayerList();
-                    for (Player player : playerList) {
-                        statIncreaseCheckForPlayer(player, team.getCoach());
+        List<IConference> conferenceList = league.getConferenceList();
+        for (IConference conference : conferenceList) {
+            List<IDivision> divisionList = conference.getDivisionList();
+            for (IDivision division : divisionList) {
+                List<ITeam> teamList = division.getTeamList();
+                for (ITeam team : teamList) {
+                    List<IPlayer> activePlayerList = team.getActivePlayerList();
+                    List<IPlayer> inactivePlayerList = team.getInactivePlayerList();
+                    int size = activePlayerList.size();
+                    for (int i = size - 1; i >= 0; i--) {
+                        IPlayer activePlayer = activePlayerList.get(i);
+                        statIncreaseCheckForPlayer(activePlayer, team.getCoach());
+                        if (activePlayer.getInjured()) {
+                            activePlayer.findBestReplacement(activePlayerList, inactivePlayerList);
+                            inactivePlayerList.add(activePlayer);
+                        }
+                    }
+                    for (IPlayer inactivePlayer : inactivePlayerList) {
+                        statIncreaseCheckForPlayer(inactivePlayer, team.getCoach());
                     }
                 }
             }
@@ -60,7 +72,9 @@ public class TrainingState implements ISimulateState, ITrainingState {
     }
 
     @Override
-    public void statIncreaseCheckForPlayer(Player player, Coach headCoach) {
+    public void statIncreaseCheckForPlayer(IPlayer player, ICoach headCoach) {
+        TrophySystemPublisher trophySystemPublisher = TrophySystemPublisher.getInstance();
+
         if (player == null || headCoach == null) {
             return;
         }
@@ -72,6 +86,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (isRandomLess(coachShootingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getShooting() + 1)) {
                 player.setShooting(player.getShooting() + 1);
+                trophySystemPublisher.notify("coachStatAbilityUpdate", headCoach, 1);
                 consoleOutput.printMsgToConsole("Shooting strength of " + player.getName() + " was" + (player.getShooting() - 1) + " and increased to " + player.getShooting());
             }
         } else {
@@ -80,6 +95,8 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (isRandomLess(coachSkatingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getSkating() + 1)) {
                 player.setSkating(player.getSkating() + 1);
+                headCoach.setCoachingEffectiveness(1);
+                trophySystemPublisher.notify("coachStatAbilityUpdate", headCoach, 1);
                 consoleOutput.printMsgToConsole("Skating strength of " + player.getName() + " was" + (player.getSkating() - 1) + " and increased to " + player.getSkating());
             }
 
@@ -89,6 +106,8 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (isRandomLess(coachCheckingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getChecking() + 1)) {
                 player.setChecking(player.getChecking() + 1);
+                headCoach.setCoachingEffectiveness(1);
+                trophySystemPublisher.notify("coachStatAbilityUpdate", headCoach, 1);
                 consoleOutput.printMsgToConsole("Checking strength of " + player.getName() + " was" + (player.getChecking() - 1) + " and increased to " + player.getChecking());
             }
 
@@ -98,6 +117,8 @@ public class TrainingState implements ISimulateState, ITrainingState {
         if (isRandomLess(coachSavingStrength)) {
             if (isStrengthInRangeAfterIncrease(player.getSaving() + 1)) {
                 player.setSaving(player.getSaving() + 1);
+                headCoach.setCoachingEffectiveness(1);
+                trophySystemPublisher.notify("coachStatAbilityUpdate", headCoach, 1);
                 consoleOutput.printMsgToConsole("Saving strength of " + player.getName() + " was" + (player.getSaving() - 1) + " and increased to " + player.getSaving());
             }
         } else {
@@ -107,28 +128,20 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     @Override
     public boolean isStrengthInRangeAfterIncrease(int strengthAfterIncrease) {
-        if (strengthAfterIncrease >= 1 && strengthAfterIncrease <= 20) {
-            return true;
-        } else {
-            return false;
-        }
+        return strengthAfterIncrease >= 1 && strengthAfterIncrease <= 20;
     }
 
     private boolean isRandomLess(double coachStrength) {
         Random rand = new Random();
         double randomNumber = rand.nextDouble();
-        if (randomNumber < coachStrength) {
-            return true;
-        } else {
-            return false;
-        }
+        return randomNumber < coachStrength;
     }
 
     public ISimulateState exit() {
-        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
+        INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
-        GameSchedule games = league.getGames();
-        List<Game> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
+        IGameSchedule games = league.getGames();
+        List<IGame> gamesOnCurrentDay = games.getUnPlayedGamesOnDate(league.getCurrentDate());
         if (gamesOnCurrentDay.size() == 0) {
             if (nhlEvents.checkTradeDeadlinePassed(league.getCurrentDate())) {
                 return new AgingState(hockeyContext);

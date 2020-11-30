@@ -1,41 +1,41 @@
 package simulation.mock;
 
-import db.data.IPlayerFactory;
-import db.data.ITeamFactory;
-import simulation.model.Coach;
-import simulation.model.Manager;
-import simulation.model.Player;
-import simulation.model.Team;
+import persistance.dao.IPlayerDao;
+import persistance.dao.ITeamDao;
+import simulation.model.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class TeamMock implements ITeamFactory {
+public class TeamMock implements ITeamDao {
 
     public List formPlayerList() throws Exception {
         List<Player> playerList = new ArrayList<>();
-        IPlayerFactory playerFactory = new PlayerMock();
+        IPlayerDao playerFactory = new PlayerMock();
         addPlayerInList(playerList, playerFactory);
         return playerList;
     }
 
-    private void addPlayerInList(List<Player> playerList, IPlayerFactory playerFactory) throws Exception {
+    private void addPlayerInList(List<Player> playerList, IPlayerDao playerFactory) throws Exception {
         Player player;
-        for (int i = 1; i < 21; i++) {
+        for (int i = 1; i < 31; i++) {
             player = new Player(i, playerFactory);
             playerList.add(player);
         }
     }
 
     @Override
-    public int addTeam(Team team) {
+    public int addTeam(ITeam team) {
         team = new Team(1);
         return team.getId();
     }
 
     @Override
-    public void loadTeamById(int id, Team team) throws Exception {
-
+    public void loadTeamById(int id, ITeam team) throws Exception {
+        List<String> draftPicks = new ArrayList<>(Arrays.asList(
+                null, null, null, null, null, null, null
+        ));
         switch (new Long(id).intValue()) {
             case 1:
                 team.setName("Team1");
@@ -55,7 +55,9 @@ public class TeamMock implements ITeamFactory {
                 team.setLossPoint(0);
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setTradeOfferCountOfSeason(0);
+                team.setPlayersTradedCount(0);
+                team.setActivePlayerList();
+                team.setDraftPicks(draftPicks);
                 break;
 
             case 2:
@@ -76,7 +78,8 @@ public class TeamMock implements ITeamFactory {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setTradeOfferCountOfSeason(2);
+                team.setPlayersTradedCount(2);
+                team.setDraftPicks(null);
                 break;
 
             case 3:
@@ -96,7 +99,9 @@ public class TeamMock implements ITeamFactory {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setTradeOfferCountOfSeason(0);
+                team.setPlayersTradedCount(0);
+                team.setActivePlayerList();
+                team.setDraftPicks(draftPicks);
                 break;
 
             case 4:
@@ -116,7 +121,9 @@ public class TeamMock implements ITeamFactory {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(false);
-                team.setTradeOfferCountOfSeason(1);
+                team.setPlayersTradedCount(1);
+                team.setActivePlayerList();
+                team.setDraftPicks(draftPicks);
                 break;
 
             case 5:
@@ -137,7 +144,8 @@ public class TeamMock implements ITeamFactory {
                 team.setPlayerList(formPlayerList());
                 team.setStrength();
                 team.setAiTeam(true);
-                team.setTradeOfferCountOfSeason(6);
+                team.setPlayersTradedCount(6);
+                team.setDraftPicks(draftPicks);
                 break;
         }
 
@@ -145,7 +153,7 @@ public class TeamMock implements ITeamFactory {
 
 
     @Override
-    public void loadTeamByName(String teamName, Team team) throws Exception {
+    public void loadTeamByName(String teamName, ITeam team) throws Exception {
         team = new Team();
         team.setName("Team1");
         team.setDivisionId(1);
@@ -161,16 +169,17 @@ public class TeamMock implements ITeamFactory {
         Coach1.setSaving(0.8);
         team.setCoach(Coach1);
         team.setPlayerList(formPlayerList());
+        team.setActivePlayerList();
     }
 
     @Override
-    public List<Team> loadTeamListByDivisionId(int divisionId) throws Exception {
+    public List<ITeam> loadTeamListByDivisionId(int divisionId) throws Exception {
         DivisionMock loadDivisionMock = new DivisionMock();
         return loadDivisionMock.formTeamList();
     }
 
     @Override
-    public void updateTeamById(Team team) throws Exception {
+    public void updateTeamById(ITeam team) throws Exception {
         team.setName("Team1");
         team.setDivisionId(1);
         team.setMascot("Tiger1");
@@ -188,7 +197,7 @@ public class TeamMock implements ITeamFactory {
         team.setLossPoint(0);
         team.setStrength();
         team.setAiTeam(true);
-        team.setTradeOfferCountOfSeason(0);
+        team.setPlayersTradedCount(0);
     }
 
 }

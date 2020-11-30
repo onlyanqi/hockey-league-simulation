@@ -1,21 +1,30 @@
 package simulation.mock;
 
-import db.data.IFreeAgentFactory;
-import db.data.IPlayerFactory;
-import simulation.model.FreeAgent;
-import simulation.model.Player;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IFreeAgentDao;
+import persistance.dao.IPlayerDao;
+import simulation.dao.DaoFactoryMock;
+import simulation.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreeAgentMock implements IFreeAgentFactory {
+public class FreeAgentMock implements IFreeAgentDao {
+
+    private final IDaoFactory daoFactory;
+    private final IModelFactory modelFactory;
+
+    public FreeAgentMock() {
+        daoFactory = DaoFactoryMock.getInstance();
+        modelFactory = ModelFactory.getInstance();
+    }
 
     public List formPlayerList() throws Exception {
-        List<Player> playerList = new ArrayList<>();
+        List<IPlayer> playerList = new ArrayList<>();
 
-        IPlayerFactory playerFactory = new PlayerMock();
-        for (int i = 1; i < 22; i++) {
-            Player player = new Player(i, playerFactory);
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
+        for (int i = 1; i < 32; i++) {
+            IPlayer player = modelFactory.createPlayerWithIdDao(i, playerFactory);
             playerList.add(player);
         }
 
@@ -23,27 +32,27 @@ public class FreeAgentMock implements IFreeAgentFactory {
     }
 
     public List formFreeAgentListForCreateTeam() throws Exception {
-        List<Player> playerList = new ArrayList<>();
-        IPlayerFactory playerFactory = new PlayerMock();
-        for (int i = 1; i < 22; i++) {
-            Player player = new Player(1, playerFactory);
+        List<IPlayer> playerList = new ArrayList<>();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
+        for (int i = 1; i < 32; i++) {
+            IPlayer player = modelFactory.createPlayerWithIdDao(1, playerFactory);
             playerList.add(player);
         }
-        playerList.get(1).setPosition(Player.Position.goalie);
+        playerList.get(1).setPosition(Position.GOALIE);
         playerList.get(1).setSaving(10);
-        playerList.get(2).setPosition(Player.Position.goalie);
+        playerList.get(2).setPosition(Position.GOALIE);
         playerList.get(2).setSaving(10);
         return playerList;
     }
 
     @Override
-    public int addFreeAgent(FreeAgent freeAgent) throws Exception {
-        freeAgent = new FreeAgent(1);
+    public int addFreeAgent(IFreeAgent freeAgent) throws Exception {
+        freeAgent = modelFactory.createFreeAgentWithId(1);
         return freeAgent.getId();
     }
 
     @Override
-    public void loadFreeAgentById(int id, FreeAgent freeAgent) throws Exception {
+    public void loadFreeAgentById(int id, IFreeAgent freeAgent) throws Exception {
 
         switch (new Long(id).intValue()) {
             case 1:
@@ -88,11 +97,11 @@ public class FreeAgentMock implements IFreeAgentFactory {
         }
     }
 
-    private List<Player> formInsufficientPlayerList() throws Exception {
-        List<Player> playerList = new ArrayList<>();
-        IPlayerFactory playerFactory = new PlayerMock();
+    private List<IPlayer> formInsufficientPlayerList() throws Exception {
+        List<IPlayer> playerList = new ArrayList<>();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         for (int i = 1; i < 5; i++) {
-            Player player = new Player(i, playerFactory);
+            IPlayer player = modelFactory.createPlayerWithIdDao(i, playerFactory);
             playerList.add(player);
         }
 
@@ -100,8 +109,8 @@ public class FreeAgentMock implements IFreeAgentFactory {
     }
 
     @Override
-    public FreeAgent loadFreeAgentByLeagueId(int id) throws Exception {
-        FreeAgent freeAgent = new FreeAgent();
+    public IFreeAgent loadFreeAgentByLeagueId(int id) throws Exception {
+        IFreeAgent freeAgent = modelFactory.createFreeAgent();
         freeAgent.setLeagueId(id);
         freeAgent.setName("FreeAgent1");
         freeAgent.setPlayerList(formPlayerList());
