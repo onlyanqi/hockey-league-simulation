@@ -42,11 +42,8 @@ public class PersistState implements ISimulateState {
     public Boolean stanleyCupWinnerDetermined() {
         IGameSchedule games = league.getGames();
         ITeamStanding teamStanding = league.getActiveTeamStanding();
-        if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate())
+        return nhlEvents.checkRegularSeasonPassed(league.getCurrentDate())
                 && games.doGamesDoesNotExistAfterDate(league.getCurrentDate())
-                && teamStanding.getTeamsScoreList().size() == 2) {
-            return true;
-        }
-        return false;
+                && teamStanding.getTeamsScoreList().size() == 2;
     }
 }

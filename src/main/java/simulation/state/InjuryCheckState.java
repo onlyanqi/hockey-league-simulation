@@ -9,9 +9,9 @@ import java.util.List;
 public class InjuryCheckState implements ISimulateState {
 
     public static final String INJURY_CHECK = "Injury Check!";
-    private Logger log = Logger.getLogger(InjuryCheckState.class);
-    private IHockeyContext hockeyContext;
-    private ILeague league;
+    private final Logger log = Logger.getLogger(InjuryCheckState.class);
+    private final IHockeyContext hockeyContext;
+    private final ILeague league;
 
     public InjuryCheckState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;

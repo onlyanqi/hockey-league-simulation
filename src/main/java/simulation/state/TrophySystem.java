@@ -1,14 +1,15 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
+import presentation.IConsoleOutput;
 import simulation.model.*;
 
 import java.util.List;
 
 public class TrophySystem implements ISimulateState {
-    private IHockeyContext hockeyContext;
-    private ILeague league;
-    private ConsoleOutput consoleOutput;
+    private final IHockeyContext hockeyContext;
+    private final ILeague league;
+    private final IConsoleOutput consoleOutput;
     private ITrophy trophy;
 
     TrophySystem(IHockeyContext hockeyContext) {

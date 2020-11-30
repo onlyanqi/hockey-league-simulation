@@ -31,7 +31,7 @@ public class Division extends SharedAttributes implements IDivision {
         IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
         IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         this.conferenceId = divisionFromDeserialization.conferenceId;
-        for (Team team : divisionFromDeserialization.teamList) {
+        for (persistance.serializers.ModelsForDeserialization.model.Team team : divisionFromDeserialization.teamList) {
             this.teamList.add(modelFactory.createTeamFromDeserialization(team));
         }
         this.setName(divisionFromDeserialization.name);

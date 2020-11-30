@@ -12,7 +12,6 @@ public class Shift implements IShift {
     IPlayer goalie;
     List<IPlayer> forward = new ArrayList<>();
     List<IPlayer> defense = new ArrayList<>();
-    ;
     HashMap<IPlayer, Integer> penalizedDefensePlayer = new HashMap<>();
 
     public Shift() {
@@ -183,11 +182,7 @@ public class Shift implements IShift {
 
     @Override
     public boolean didPlayerReachShiftCount(HashMap<Integer, Integer> playersCount, IPlayer player) {
-        if (playersCount.get(player.getId()) > 13) {
-            return true;
-        } else {
-            return false;
-        }
+        return playersCount.get(player.getId()) > 13;
     }
 
     @Override

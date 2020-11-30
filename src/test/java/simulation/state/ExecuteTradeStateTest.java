@@ -44,12 +44,12 @@ public class ExecuteTradeStateTest {
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
         daoFactory = hockeyContext.getDaoFactory();
-        leagueDao = daoFactory.newLeagueDao();
-        userDao = daoFactory.newUserDao();
-        teamDao = daoFactory.newTeamDao();
-        playerDao = daoFactory.newPlayerDao();
-        tradingDao = daoFactory.newTradingDao();
-        tradeOfferDao = daoFactory.newTradeOfferDao();
+        leagueDao = daoFactory.createLeagueDao();
+        userDao = daoFactory.createUserDao();
+        teamDao = daoFactory.createTeamDao();
+        playerDao = daoFactory.createPlayerDao();
+        tradingDao = daoFactory.createTradingDao();
+        tradeOfferDao = daoFactory.createTradeOfferDao();
     }
 
     private ExecuteTradeState newStateEmptyConstructor() throws Exception {

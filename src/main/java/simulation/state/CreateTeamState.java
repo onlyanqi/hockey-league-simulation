@@ -1,10 +1,7 @@
 package simulation.state;
 
 import config.AppConfig;
-import presentation.ConsoleOutput;
-import presentation.IConsoleOutputForTeamCreation;
-import presentation.IUserInputForTeamCreation;
-import presentation.ReadUserInput;
+import presentation.*;
 import simulation.model.*;
 
 import java.util.ArrayList;
@@ -35,8 +32,8 @@ public class CreateTeamState implements IHockeyState {
     private IFreeAgent freeAgent;
     private IUserInputForTeamCreation teamCreationInput;
     private IConsoleOutputForTeamCreation teamCreationOutput;
-    private ConsoleOutput consoleOutput = null;
-    private ReadUserInput readUserInput = null;
+    private IConsoleOutput consoleOutput = null;
+    private IReadUserInput readUserInput = null;
 
     public CreateTeamState(IHockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
                            IConsoleOutputForTeamCreation teamCreationOutput) {
@@ -92,22 +89,14 @@ public class CreateTeamState implements IHockeyState {
         if (managerList == null) {
             return false;
         }
-        if (managerList.size() >= 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return managerList.size() >= 1;
     }
 
     public boolean hasEnoughCoaches(List<ICoach> coachList) {
         if (coachList == null) {
             return false;
         }
-        if (coachList.size() >= 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return coachList.size() >= 1;
     }
 
     public boolean hasEnoughFreeAgent(IFreeAgent freeAgent) {
@@ -127,11 +116,7 @@ public class CreateTeamState implements IHockeyState {
                 countOfDefense++;
             }
         }
-        if (countOfGoalie >= 4 && countOfForward >= 16 && countOfDefense >= 10) {
-            return true;
-        } else {
-            return false;
-        }
+        return countOfGoalie >= 4 && countOfForward >= 16 && countOfDefense >= 10;
     }
 
     private void getTeamName(IDivision division) {

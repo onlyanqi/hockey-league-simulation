@@ -11,8 +11,8 @@ import java.util.Random;
 public class SimulateGameState implements ISimulateState {
 
     static Logger log = Logger.getLogger(SimulateGameState.class);
-    private IHockeyContext hockeyContext;
-    private ILeague league;
+    private final IHockeyContext hockeyContext;
+    private final ILeague league;
 
     public SimulateGameState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;

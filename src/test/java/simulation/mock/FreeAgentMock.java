@@ -11,8 +11,8 @@ import java.util.List;
 
 public class FreeAgentMock implements IFreeAgentDao {
 
-    private IDaoFactory daoFactory;
-    private IModelFactory modelFactory;
+    private final IDaoFactory daoFactory;
+    private final IModelFactory modelFactory;
 
     public FreeAgentMock() {
         daoFactory = DaoFactoryMock.getInstance();
@@ -22,7 +22,7 @@ public class FreeAgentMock implements IFreeAgentDao {
     public List formPlayerList() throws Exception {
         List<IPlayer> playerList = new ArrayList<>();
 
-        IPlayerDao playerFactory = daoFactory.newPlayerDao();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         for (int i = 1; i < 32; i++) {
             IPlayer player = modelFactory.createPlayerWithIdDao(i, playerFactory);
             playerList.add(player);
@@ -33,7 +33,7 @@ public class FreeAgentMock implements IFreeAgentDao {
 
     public List formFreeAgentListForCreateTeam() throws Exception {
         List<IPlayer> playerList = new ArrayList<>();
-        IPlayerDao playerFactory = daoFactory.newPlayerDao();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         for (int i = 1; i < 32; i++) {
             IPlayer player = modelFactory.createPlayerWithIdDao(1, playerFactory);
             playerList.add(player);
@@ -99,7 +99,7 @@ public class FreeAgentMock implements IFreeAgentDao {
 
     private List<IPlayer> formInsufficientPlayerList() throws Exception {
         List<IPlayer> playerList = new ArrayList<>();
-        IPlayerDao playerFactory = daoFactory.newPlayerDao();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         for (int i = 1; i < 5; i++) {
             IPlayer player = modelFactory.createPlayerWithIdDao(i, playerFactory);
             playerList.add(player);

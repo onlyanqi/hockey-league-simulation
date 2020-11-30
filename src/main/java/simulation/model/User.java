@@ -25,9 +25,6 @@ public class User extends SharedAttributes implements IUser {
     }
 
     public User(String name, IUserDao factory) throws Exception {
-        if (factory == null) {
-            return;
-        }
         factory.loadUserByName(name, this);
     }
 
@@ -36,9 +33,6 @@ public class User extends SharedAttributes implements IUser {
     }
 
     public void setLeagueList(List<ILeague> leagueList) {
-        if (leagueList == null) {
-            return;
-        }
         this.leagueList = leagueList;
     }
 
@@ -47,11 +41,7 @@ public class User extends SharedAttributes implements IUser {
     }
 
     public void setPassword(String password) {
-        if (password == null || password.isEmpty()) {
-            return;
-        } else {
-            this.password = password;
-        }
+        this.password = password;
     }
 
     public void addUser(IUserDao addUserFactory) throws Exception {

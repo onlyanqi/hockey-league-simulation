@@ -11,15 +11,15 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
-public class ConsoleOutput {
+public class ConsoleOutput implements IConsoleOutput {
 
     private static ConsoleOutput consoleOutput;
-    private static Logger log = Logger.getLogger(ExecuteTradeState.class);
+    private static final Logger log = Logger.getLogger(ExecuteTradeState.class);
 
     private ConsoleOutput() {
     }
 
-    public static ConsoleOutput getInstance() {
+    public static IConsoleOutput getInstance() {
         if (null == consoleOutput) {
             consoleOutput = new ConsoleOutput();
         }

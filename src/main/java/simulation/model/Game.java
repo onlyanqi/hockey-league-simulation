@@ -90,11 +90,7 @@ public class Game implements IGame {
     }
 
     public Boolean isGameUnPlayed() {
-        if (this.played) {
-            return false;
-        } else {
-            return true;
-        }
+        return !this.played;
     }
 
 }

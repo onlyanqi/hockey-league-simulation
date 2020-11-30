@@ -216,9 +216,6 @@ public class League extends SharedAttributes implements ILeague {
     }
 
     public void setConferenceList(List<IConference> conferenceList) {
-        if (conferenceList == null) {
-            return;
-        }
         this.conferenceList = conferenceList;
     }
 
@@ -341,9 +338,6 @@ public class League extends SharedAttributes implements ILeague {
     }
 
     public void setFreeAgent(IFreeAgent freeAgent) {
-        if (freeAgent == null) {
-            return;
-        }
         this.freeAgent = freeAgent;
     }
 

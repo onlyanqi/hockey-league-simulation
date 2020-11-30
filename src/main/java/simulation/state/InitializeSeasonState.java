@@ -12,11 +12,11 @@ import java.util.Random;
 
 public class InitializeSeasonState implements ISimulateState {
 
-    private static Logger log = Logger.getLogger(InitializeSeasonState.class);
+    private static final Logger log = Logger.getLogger(InitializeSeasonState.class);
     private final Integer TotalGamesPerTeam = 82;
     private final Integer minimumTeamCountForPlayOffs = 5;
     private ILeague league;
-    private IHockeyContext hockeyContext;
+    private final IHockeyContext hockeyContext;
 
     public InitializeSeasonState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -156,11 +156,7 @@ public class InitializeSeasonState implements ISimulateState {
                 teamCount++;
             }
         }
-        if (teamCount == TotalGamesPerTeam) {
-            return true;
-        } else {
-            return false;
-        }
+        return teamCount == TotalGamesPerTeam;
     }
 
     private boolean checkMaxGamesNotReachedForTeam(List<IGame> gameList, ITeam team) {
@@ -170,11 +166,7 @@ public class InitializeSeasonState implements ISimulateState {
                 teamCount++;
             }
         }
-        if (teamCount == TotalGamesPerTeam) {
-            return false;
-        } else {
-            return true;
-        }
+        return teamCount != TotalGamesPerTeam;
     }
 
 

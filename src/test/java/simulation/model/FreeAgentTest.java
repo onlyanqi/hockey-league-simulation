@@ -22,7 +22,7 @@ public class FreeAgentTest {
     @BeforeClass
     public static void setFactoryObj() {
         daoFactory = DaoFactoryMock.getInstance();
-        freeAgentDao = daoFactory.newFreeAgentDao();
+        freeAgentDao = daoFactory.createFreeAgentDao();
         modelFactory = ModelFactory.getInstance();
     }
 
@@ -88,7 +88,7 @@ public class FreeAgentTest {
 
     @Test
     public void setPlayerListTest() throws Exception {
-        IPlayerDao playerFactory = daoFactory.newPlayerDao();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         List<IPlayer> playerList = new ArrayList<>();
         IPlayer player = modelFactory.createPlayerWithIdDao(1, playerFactory);
         playerList.add(player);
@@ -117,7 +117,7 @@ public class FreeAgentTest {
     @Test
     public void loadPlayerListByFreeAgentIdTest() throws Exception {
         IFreeAgent freeAgent = modelFactory.createFreeAgentWithId(1);
-        IPlayerDao playerFactory = daoFactory.newPlayerDao();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         freeAgent.loadPlayerListByFreeAgentId(playerFactory);
 
         assertTrue(freeAgent.getPlayerList().get(0).getId() == 1);
@@ -130,7 +130,7 @@ public class FreeAgentTest {
     public void getGoodFreeAgentsListTest() throws Exception {
         IFreeAgent freeAgent = modelFactory.createFreeAgentWithIdDao(1, freeAgentDao);
         List<IPlayer> playerList = freeAgent.getPlayerList();
-        ITeamDao teamFactory = daoFactory.newTeamDao();
+        ITeamDao teamFactory = daoFactory.createTeamDao();
         ITeam team = modelFactory.createTeamWithIdDao(1, teamFactory);
         List<Double> strengthList = team.createStrengthList(playerList);
         assertTrue(freeAgent.getGoodFreeAgentsList(strengthList).size() <= playerList.size());

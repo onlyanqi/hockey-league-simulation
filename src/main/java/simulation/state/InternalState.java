@@ -4,7 +4,7 @@ import presentation.ConsoleOutput;
 
 public class InternalState implements IHockeyState {
 
-    private IHockeyContext hockeyContext;
+    private final IHockeyContext hockeyContext;
     private ISimulateState simulateState;
 
     public InternalState(IHockeyContext hockeyContext) {

@@ -2,23 +2,25 @@ package persistance.dao;
 
 public interface IDaoFactory {
 
-    IAgingDao newAgingDao();
+    IAgingDao createAgingDao();
 
-    IConferenceDao newConferenceDao();
+    IConferenceDao createConferenceDao();
 
-    IDivisionDao newDivisionDao();
+    IDivisionDao createDivisionDao();
 
-    ILeagueDao newLeagueDao();
+    ILeagueDao createLeagueDao();
 
-    IPlayerDao newPlayerDao();
+    IPlayerDao createPlayerDao();
 
-    ITeamDao newTeamDao();
+    ITeamDao createTeamDao();
 
-    ITradeOfferDao newTradeOfferDao();
+    ITradeOfferDao createTradeOfferDao();
 
-    ITradingDao newTradingDao();
+    ITradingDao createTradingDao();
 
-    IUserDao newUserDao();
+    IUserDao createUserDao();
 
-    IFreeAgentDao newFreeAgentDao();
+    IFreeAgentDao createFreeAgentDao();
+
+    ISeasonDao createSeasonDao();
 }

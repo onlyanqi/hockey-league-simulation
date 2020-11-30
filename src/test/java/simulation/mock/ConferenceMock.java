@@ -16,18 +16,18 @@ import java.util.List;
 
 public class ConferenceMock implements IConferenceDao {
 
-    private IModelFactory modelFactory;
-    private IDaoFactory daoFactory;
-    private IDivisionDao divisionDao;
-    private IHockeyContextFactory hockeyContextFactory;
-    private IHockeyContext hockeyContext;
+    private final IModelFactory modelFactory;
+    private final IDaoFactory daoFactory;
+    private final IDivisionDao divisionDao;
+    private final IHockeyContextFactory hockeyContextFactory;
+    private final IHockeyContext hockeyContext;
 
     public ConferenceMock() {
         hockeyContextFactory = HockeyContextConcreteMock.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
         daoFactory = hockeyContext.getDaoFactory();
-        divisionDao = daoFactory.newDivisionDao();
+        divisionDao = daoFactory.createDivisionDao();
     }
 
     public List formDivisionList() throws Exception {
@@ -102,7 +102,7 @@ public class ConferenceMock implements IConferenceDao {
 
     @Override
     public List<IConference> loadConferenceListByLeagueId(int leagueId) throws Exception {
-        ILeagueDao leagueDao = daoFactory.newLeagueDao();
+        ILeagueDao leagueDao = daoFactory.createLeagueDao();
         return leagueDao.formConferenceList();
     }
 }

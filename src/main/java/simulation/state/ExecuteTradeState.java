@@ -2,6 +2,8 @@ package simulation.state;
 
 import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
+import presentation.IConsoleOutput;
+import presentation.IReadUserInput;
 import presentation.ReadUserInput;
 import simulation.model.*;
 
@@ -30,8 +32,8 @@ public class ExecuteTradeState implements ISimulateState {
     private ITrading trading = null;
     private IHockeyContext hockeyContext;
     private ILeague league;
-    private ConsoleOutput consoleOutput;
-    private ReadUserInput readUserInput;
+    private IConsoleOutput consoleOutput;
+    private IReadUserInput readUserInput;
 
     public ExecuteTradeState() {
     }

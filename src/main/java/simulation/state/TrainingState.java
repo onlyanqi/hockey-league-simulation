@@ -1,6 +1,7 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
+import presentation.IConsoleOutput;
 import simulation.model.*;
 import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
 
@@ -12,9 +13,9 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     private static final String TRAININGINFORMATION = "Training Players and Team!";
     private static final String STATCHECKINFORMATION = "Performing stat increase check";
-    private IHockeyContext hockeyContext;
-    private ILeague league;
-    private ConsoleOutput consoleOutput;
+    private final IHockeyContext hockeyContext;
+    private final ILeague league;
+    private final IConsoleOutput consoleOutput;
 
     public TrainingState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -127,21 +128,13 @@ public class TrainingState implements ISimulateState, ITrainingState {
 
     @Override
     public boolean isStrengthInRangeAfterIncrease(int strengthAfterIncrease) {
-        if (strengthAfterIncrease >= 1 && strengthAfterIncrease <= 20) {
-            return true;
-        } else {
-            return false;
-        }
+        return strengthAfterIncrease >= 1 && strengthAfterIncrease <= 20;
     }
 
     private boolean isRandomLess(double coachStrength) {
         Random rand = new Random();
         double randomNumber = rand.nextDouble();
-        if (randomNumber < coachStrength) {
-            return true;
-        } else {
-            return false;
-        }
+        return randomNumber < coachStrength;
     }
 
     public ISimulateState exit() {

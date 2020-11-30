@@ -31,19 +31,11 @@ public class DefenseState extends GameState {
             log.error("Error while simulating game.Offensive or Defensive are not set.");
             throw new IllegalStateException("Offensive or Defensive are null.");
         }
-        if (offensive.getTeamShiftDefenseTotal() > defensive.getTeamShiftDefenseTotal()) {
-            defend = false;
-        } else {
-            defend = true;
-        }
+        defend = offensive.getTeamShiftDefenseTotal() <= defensive.getTeamShiftDefenseTotal();
         if (rand.nextDouble() < simulateConfig.getUpset()) {
             reverseDefending();
         }
-        if (defend && (rand.nextDouble() < simulateConfig.getDefendChance())) {
-            defend = true;
-        } else {
-            defend = false;
-        }
+        defend = defend && (rand.nextDouble() < simulateConfig.getDefendChance());
         return next();
     }
 

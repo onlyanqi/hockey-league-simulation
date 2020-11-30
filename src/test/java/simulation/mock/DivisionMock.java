@@ -16,18 +16,18 @@ import java.util.List;
 
 public class DivisionMock implements IDivisionDao {
 
-    private IHockeyContextFactory hockeyContextFactory;
-    private IHockeyContext hockeyContext;
-    private IModelFactory modelFactory;
-    private IDaoFactory daoFactory;
-    private ITeamDao teamDao;
+    private final IHockeyContextFactory hockeyContextFactory;
+    private final IHockeyContext hockeyContext;
+    private final IModelFactory modelFactory;
+    private final IDaoFactory daoFactory;
+    private final ITeamDao teamDao;
 
     public DivisionMock() {
         hockeyContextFactory = HockeyContextConcreteMock.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
         daoFactory = hockeyContext.getDaoFactory();
-        teamDao = daoFactory.newTeamDao();
+        teamDao = daoFactory.createTeamDao();
     }
 
     public List<ITeam> formTeamList() throws Exception {
@@ -95,7 +95,7 @@ public class DivisionMock implements IDivisionDao {
 
     @Override
     public List<IDivision> loadDivisionListByConferenceId(int conferenceId) throws Exception {
-        IConferenceDao conferenceDao = hockeyContext.getDaoFactory().newConferenceDao();
+        IConferenceDao conferenceDao = hockeyContext.getDaoFactory().createConferenceDao();
         return conferenceDao.formDivisionList();
     }
 

@@ -25,7 +25,7 @@ public class TradingTest {
     @BeforeClass
     public static void setFactoryObj() {
         daoFactory = DaoFactoryMock.getInstance();
-        tradingDao = daoFactory.newTradingDao();
+        tradingDao = daoFactory.createTradingDao();
         modelFactory = ModelFactory.getInstance();
     }
 
