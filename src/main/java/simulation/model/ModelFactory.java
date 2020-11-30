@@ -276,7 +276,7 @@ public class ModelFactory implements IModelFactory {
     }
 
     @Override
-    public ITradeOffer createTradeOfferFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
+        public ITradeOffer createTradeOfferFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
         return new TradeOffer(tradeOffer);
     }
 
