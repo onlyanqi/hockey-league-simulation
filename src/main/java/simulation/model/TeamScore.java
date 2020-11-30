@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.ITeamScoreDao;
+import persistance.dao.ITeamScoreDao;
 
 public class TeamScore extends SharedAttributes implements ITeamScore {
 
@@ -28,7 +28,7 @@ public class TeamScore extends SharedAttributes implements ITeamScore {
         iTeamScoreDao.loadTeamScoreById(id, this);
     }
 
-    public TeamScore(simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore) {
+    public TeamScore(persistance.serializers.ModelsForDeserialization.model.TeamScore teamScore) {
         this.teamName = teamScore.teamName;
         this.points = teamScore.points;
         this.numberOfLoss = teamScore.numberOfLoss;

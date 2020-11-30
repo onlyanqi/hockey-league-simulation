@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.ITradingDao;
+import persistance.dao.ITradingDao;
 
 import java.util.*;
 
@@ -32,7 +32,7 @@ public class Trading extends SharedAttributes implements ITrading {
         factory.loadTradingDetailsByTradingId(tradingId, this);
     }
 
-    public Trading(simulation.serializers.ModelsForDeserialization.model.Trading trading) {
+    public Trading(persistance.serializers.ModelsForDeserialization.model.Trading trading) {
         this.currentYearSeasonMonths = trading.currentYearSeasonMonths;
         this.nextYearSeasonMonths = trading.nextYearSeasonMonths;
         this.tradeStartDate = trading.tradeStartDate;

@@ -1,7 +1,7 @@
 package simulation.model;
 
 import org.jetbrains.annotations.NotNull;
-import simulation.dao.IPlayerDao;
+import persistance.dao.IPlayerDao;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -72,7 +72,7 @@ public class Player extends SharedAttributes implements IPlayer {
         this.setGoalScore(player.getGoalScore());
     }
 
-    public Player(simulation.serializers.ModelsForDeserialization.model.Player playerFromDeserialization) {
+    public Player(persistance.serializers.ModelsForDeserialization.model.Player playerFromDeserialization) {
         this.setId(playerFromDeserialization.id);
         this.setName(playerFromDeserialization.name);
         this.age = playerFromDeserialization.age;

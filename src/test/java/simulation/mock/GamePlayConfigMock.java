@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import simulation.dao.*;
+import persistance.dao.*;
 import simulation.model.*;
 
 public class GamePlayConfigMock implements IGamePlayConfigDao {

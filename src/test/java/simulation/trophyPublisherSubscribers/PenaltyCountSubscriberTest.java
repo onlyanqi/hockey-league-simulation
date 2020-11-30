@@ -1,7 +1,7 @@
 package simulation.trophyPublisherSubscribers;
 
 import org.junit.Test;
-import simulation.dao.IPlayerDao;
+import persistance.dao.IPlayerDao;
 import simulation.mock.PlayerMock;
 import simulation.model.IPlayer;
 import simulation.model.Player;

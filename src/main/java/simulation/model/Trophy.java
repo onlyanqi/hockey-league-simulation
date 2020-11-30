@@ -13,7 +13,7 @@ public class Trophy implements ITrophy {
     public Trophy() {
     }
 
-    Trophy(simulation.serializers.ModelsForDeserialization.model.Trophy trophy) {
+    Trophy(persistance.serializers.ModelsForDeserialization.model.Trophy trophy) {
         this.presidentsTrophy = trophy.presidentsTrophy;
         this.calderMemorialTrophy = trophy.calderMemorialTrophy;
         this.vezinaTrophy = trophy.vezinaTrophy;

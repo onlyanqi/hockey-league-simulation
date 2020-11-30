@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import simulation.dao.IManagerDao;
+import persistance.dao.IManagerDao;
 import simulation.model.IManager;
 import simulation.model.Manager;
 

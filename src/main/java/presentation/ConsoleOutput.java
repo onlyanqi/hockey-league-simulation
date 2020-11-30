@@ -100,11 +100,11 @@ public class ConsoleOutput {
         printMsgToConsole("---------------------------------------\n");
     }
 
-    public void printTeamGameScore(ITeamStanding teamStanding){
+    public void printTeamGameScore(ITeamStanding teamStanding) {
         printMsgToConsole("----------------------------------------------");
         printMsgToConsole("Team Game Stats for Regular Season");
-        for(ITeamScore teamScore : teamStanding.getTeamsScoreList()){
-            printMsgToConsole(teamScore.getTeam().getName() + " has won " + teamScore.getNumberOfWins() + " games and lost "+ teamScore.getNumberOfLoss() + " games" );
+        for (ITeamScore teamScore : teamStanding.getTeamsScoreList()) {
+            printMsgToConsole(teamScore.getTeam().getName() + " has won " + teamScore.getNumberOfWins() + " games and lost " + teamScore.getNumberOfLoss() + " games");
         }
         printMsgToConsole("----------------------------------------------");
     }

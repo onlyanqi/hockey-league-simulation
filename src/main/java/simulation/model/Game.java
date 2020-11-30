@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.IGameDao;
+import persistance.dao.IGameDao;
 
 import java.time.LocalDate;
 
@@ -23,7 +23,7 @@ public class Game implements IGame {
         factory.loadGameById(id, this);
     }
 
-    public Game(simulation.serializers.ModelsForDeserialization.model.Game game) {
+    public Game(persistance.serializers.ModelsForDeserialization.model.Game game) {
         this.id = game.id;
         this.date = game.date;
         this.played = game.played;

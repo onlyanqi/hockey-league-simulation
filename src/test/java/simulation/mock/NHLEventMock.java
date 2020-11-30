@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import simulation.dao.IEventDao;
+import persistance.dao.IEventDao;
 import simulation.model.INHLEvents;
 
 import java.time.LocalDate;

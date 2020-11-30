@@ -1,9 +1,9 @@
 package simulation.mock;
 
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IPlayerDao;
-import simulation.dao.ITradeOfferDao;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IPlayerDao;
+import persistance.dao.ITradeOfferDao;
 import simulation.model.IModelFactory;
 import simulation.model.ITradeOffer;
 import simulation.model.ModelFactory;
@@ -21,7 +21,7 @@ public class TradeOfferMock implements ITradeOfferDao {
 
     @Override
     public void addTradeOfferDetails(ITradeOffer tradeOffer) {
-        tradeOffer = modelFactory.newTradeOffer();
+        tradeOffer = modelFactory.createTradeOffer();
         tradeOffer.setId(1);
         tradeOffer.setSeasonId(1);
         tradeOffer.setTradingId(1);
@@ -51,15 +51,15 @@ public class TradeOfferMock implements ITradeOfferDao {
     @Override
     public List<ITradeOffer> loadTradeOfferDetailsByLeagueId(int leagueId) throws Exception {
         List<ITradeOffer> tradeOfferList = new ArrayList<>();
-        ITradeOffer tradeOffer = modelFactory.newTradeOffer();
+        ITradeOffer tradeOffer = modelFactory.createTradeOffer();
         getTradeOffer(tradeOffer, 1, 2);
         tradeOffer.setStatus("pending");
         tradeOfferList.add(tradeOffer);
-        tradeOffer = modelFactory.newTradeOffer();
+        tradeOffer = modelFactory.createTradeOffer();
         getTradeOffer(tradeOffer, 3, 4);
         tradeOffer.setStatus("accepted");
         tradeOfferList.add(tradeOffer);
-        tradeOffer = modelFactory.newTradeOffer();
+        tradeOffer = modelFactory.createTradeOffer();
         getTradeOffer(tradeOffer, 5, 6);
         tradeOffer.setStatus("rejected");
         tradeOfferList.add(tradeOffer);

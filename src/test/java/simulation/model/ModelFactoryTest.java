@@ -2,9 +2,9 @@ package simulation.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import simulation.dao.ILeagueDao;
-import simulation.dao.ITeamDao;
-import simulation.dao.IUserDao;
+import persistance.dao.ILeagueDao;
+import persistance.dao.ITeamDao;
+import persistance.dao.IUserDao;
 import simulation.mock.LeagueMock;
 import simulation.mock.TeamMock;
 import simulation.mock.UserMock;
@@ -22,22 +22,22 @@ public class ModelFactoryTest {
 
     @Test
     public void newDivisionTest() {
-        assertTrue(modelFactory.newDivision() instanceof Division);
+        assertTrue(modelFactory.createDivision() instanceof Division);
     }
 
     @Test
     public void newConferenceTest() {
-        assertTrue(modelFactory.newConference() instanceof Conference);
+        assertTrue(modelFactory.createConference() instanceof Conference);
     }
 
     @Test
     public void newFreeAgentTest() {
-        assertTrue(modelFactory.newFreeAgent() instanceof FreeAgent);
+        assertTrue(modelFactory.createFreeAgent() instanceof FreeAgent);
     }
 
     @Test
     public void newLeagueTest() {
-        assertTrue(modelFactory.newLeague() instanceof League);
+        assertTrue(modelFactory.createLeague() instanceof League);
     }
 
 
@@ -52,50 +52,50 @@ public class ModelFactoryTest {
 
     @Test
     public void newSeasonTest() {
-        assertTrue(modelFactory.newSeason() instanceof Season);
+        assertTrue(modelFactory.createSeason() instanceof Season);
     }
 
     @Test
     public void newTeamTest() {
-        assertTrue(modelFactory.newTeam() instanceof Team);
+        assertTrue(modelFactory.createTeam() instanceof Team);
     }
 
     @Test
     public void newTeamByNameTest() throws Exception {
         String name = "Name";
         ITeamDao loadTeamFactory = new TeamMock();
-        ITeam team = modelFactory.newTeamByName(name, loadTeamFactory);
+        ITeam team = modelFactory.createTeamByName(name, loadTeamFactory);
         assertTrue(team instanceof Team);
     }
 
     @Test
     public void newTradingTest() {
-        assertTrue(modelFactory.newTrading() instanceof Trading);
-        assertTrue(modelFactory.newTrading() instanceof SharedAttributes);
+        assertTrue(modelFactory.createTrading() instanceof Trading);
+        assertTrue(modelFactory.createTrading() instanceof SharedAttributes);
     }
 
     @Test
     public void newTradeOfferTest() {
-        assertTrue(modelFactory.newTradeOffer() instanceof TradeOffer);
-        assertTrue(modelFactory.newTradeOffer() instanceof SharedAttributes);
+        assertTrue(modelFactory.createTradeOffer() instanceof TradeOffer);
+        assertTrue(modelFactory.createTradeOffer() instanceof SharedAttributes);
     }
 
     @Test
     public void newPlayerTest() {
-        assertTrue(modelFactory.newPlayer() instanceof Player);
-        assertTrue(modelFactory.newPlayer() instanceof SharedAttributes);
+        assertTrue(modelFactory.createPlayer() instanceof Player);
+        assertTrue(modelFactory.createPlayer() instanceof SharedAttributes);
     }
 
     @Test
     public void newUserTest() {
-        assertTrue(modelFactory.newUser() instanceof User);
+        assertTrue(modelFactory.createUser() instanceof User);
     }
 
     @Test
     public void newUserByNameTest() throws Exception {
         String name = "name";
         IUserDao loadUserFactory = new UserMock();
-        IUser user = modelFactory.newUserByName(name, loadUserFactory);
+        IUser user = modelFactory.createUserByName(name, loadUserFactory);
         assertTrue(user instanceof IUser);
     }
 }

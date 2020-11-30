@@ -2,7 +2,7 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IInjuryDao;
+import persistance.dao.IInjuryDao;
 import simulation.mock.InjuryMock;
 
 import static org.junit.Assert.*;

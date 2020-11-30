@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import simulation.dao.ISeasonDao;
+import persistance.dao.ISeasonDao;
 import simulation.model.ISeason;
 import simulation.model.Season;
 

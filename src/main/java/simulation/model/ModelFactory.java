@@ -1,7 +1,7 @@
 package simulation.model;
 
-import simulation.dao.*;
-import simulation.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
+import persistance.dao.*;
+import persistance.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 
 public class ModelFactory implements IModelFactory {
 
@@ -18,74 +18,74 @@ public class ModelFactory implements IModelFactory {
     }
 
     @Override
-    public IGameSchedule newGameSchedule() {
+    public IGameSchedule createGameSchedule() {
         return new GameSchedule();
     }
 
-    public IAging newAging() {
+    public IAging createAging() {
         return new Aging();
     }
 
     @Override
-    public ICoach newCoach() {
+    public ICoach createCoach() {
         return new Coach();
     }
 
     @Override
-    public ICoach newCoachWithCoach(ICoach coach) {
+    public ICoach createCoachWithCoach(ICoach coach) {
         return new Coach(coach);
     }
 
-    public IConference newConference() {
+    public IConference createConference() {
         return new Conference();
     }
 
-    public IConference newConferenceWithId(int id) {
+    public IConference createConferenceWithId(int id) {
         return new Conference(id);
     }
 
-    public IConference newConferenceWithIdDao(int id, IConferenceDao conferenceDao) throws Exception {
+    public IConference createConferenceWithIdDao(int id, IConferenceDao conferenceDao) throws Exception {
         return new Conference(id, conferenceDao);
     }
 
-    public IDivision newDivision() {
+    public IDivision createDivision() {
         return new Division();
     }
 
-    public IDivision newDivisionWithIdDao(int id, IDivisionDao divisionDao) throws Exception {
+    public IDivision createDivisionWithIdDao(int id, IDivisionDao divisionDao) throws Exception {
         return new Division(id, divisionDao);
     }
 
-    public IDivision newDivisionWithId(int id) {
+    public IDivision createDivisionWithId(int id) {
         return new Division(id);
     }
 
-    public INHLEvents newEvents() {
+    public INHLEvents createEvents() {
         return new NHLEvents();
     }
 
-    public IFreeAgent newFreeAgent() {
+    public IFreeAgent createFreeAgent() {
         return new FreeAgent();
     }
 
     @Override
-    public IGame newGame() {
+    public IGame createGame() {
         return new Game();
     }
 
-    public IGamePlayConfig newGamePlayConfig() {
+    public IGamePlayConfig createGamePlayConfig() {
         return new GamePlayConfig();
     }
 
-    public IInjury newInjury() {
+    public IInjury createInjury() {
         return new Injury();
     }
 
-    public ISimulate newSimulate() {
+    public ISimulate createSimulate() {
         return new Simulate();
     }
 
-    public ILeague newLeague() {
+    public ILeague createLeague() {
         return new League();
     }
 
@@ -98,110 +98,202 @@ public class ModelFactory implements IModelFactory {
     }
 
     @Override
-    public ILeague newLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception {
+    public ILeague createLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception {
         return new League(id, leagueDao);
     }
 
-    public ISeason newSeason() {
+    public ISeason createSeason() {
         return new Season();
     }
 
-    public ITeamScore newTeamScore() {
+    public ITeamScore createTeamScore() {
         return new TeamScore();
     }
 
 
-    public IPlayer newPlayer() {
+    public IPlayer createPlayer() {
         return new Player();
     }
 
-    public IPlayer newPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception {
+    @Override
+    public IPlayer createPlayerFromSerialization(persistance.serializers.ModelsForDeserialization.model.Player player) {
+        return new Player(player);
+    }
+
+    public IPlayer createPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception {
         return new Player(id, playerDao);
     }
 
     @Override
-    public ITeamStanding newTeamStanding() {
+    public ITeamStanding createTeamStanding() {
         return new TeamStanding();
     }
 
     @Override
-    public INHLEvents newNHLEvents() {
+    public INHLEvents createNHLEvents() {
         return new NHLEvents();
     }
 
     @Override
-    public INHLEvents newNHLEventsByYear(int year) {
+    public INHLEvents createNHLEventsByYear(int year) {
         return new NHLEvents(year);
     }
 
-    public ITradeOffer newTradeOffer() {
+    public ITradeOffer createTradeOffer() {
         return new TradeOffer();
     }
 
-    public ITradeOffer newTradeOfferWithIdDao(int id, ITradeOfferDao tradeOfferDao) throws Exception {
+    public ITradeOffer createTradeOfferWithIdDao(int id, ITradeOfferDao tradeOfferDao) throws Exception {
         return new TradeOffer(id, tradeOfferDao);
     }
 
-    public ITeam newTeam() {
+    public ITeam createTeam() {
         return new Team();
     }
 
-    public ITeam newTeamByName(String name, ITeamDao loadTeamFactory) throws Exception {
+    public ITeam createTeamByName(String name, ITeamDao loadTeamFactory) throws Exception {
         return new Team(name, loadTeamFactory);
     }
 
-    public ITeam newTeamWithIdDao(int id, ITeamDao teamDao) throws Exception {
+    public ITeam createTeamWithIdDao(int id, ITeamDao teamDao) throws Exception {
         return new Team(id, teamDao);
     }
 
-    public ITrading newTrading() {
+    public ITrading createTrading() {
         return new Trading();
     }
 
-    public ITrading newTradingWithIdDao(int id, ITradingDao tradingDao) throws Exception {
+    public ITrading createTradingWithIdDao(int id, ITradingDao tradingDao) throws Exception {
         return new Trading(id, tradingDao);
     }
 
-    public IManager newManagerConcrete() {
+    public IManager createManagerConcrete() {
         return new Manager();
     }
 
-    public IUser newUser() {
+    public IUser createUser() {
         return new User();
     }
 
-    public IUser newUserByName(String name, IUserDao loadUserFactory) throws Exception {
+    public IUser createUserByName(String name, IUserDao loadUserFactory) throws Exception {
         return new User(name, loadUserFactory);
     }
 
-    public IUser newUserWithIdDao(int id, IUserDao userDao) throws Exception {
+    public IUser createUserWithIdDao(int id, IUserDao userDao) throws Exception {
         return new User(id, userDao);
     }
 
-    public ITraining newTraining() {
+    public ITraining createTraining() {
         return new Training();
     }
 
     @Override
-    public ITrophy newTrophy() {
+    public ITrophy createTrophy() {
         return new Trophy();
     }
 
-    public IFreeAgent newFreeAgentWithId(int id) {
+    public IFreeAgent createFreeAgentWithId(int id) {
         return new FreeAgent(id);
     }
 
-    public IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception {
+    public IFreeAgent createFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception {
         return new FreeAgent(id, freeAgentDao);
     }
 
-    public IShift newShift() {
+    public IShift createShift() {
         return new Shift();
     }
 
     @Override
-    public IGameSimulation newGameSimulationFromTeams(ITeam team1, ITeam team2) {
+    public IGameSimulation createGameSimulationFromTeams(ITeam team1, ITeam team2) {
         return new GameSimulation(team1, team2);
     }
+
+    @Override
+    public ICoach createCoachFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Coach coach) {
+        return new Coach(coach);
+    }
+
+
+    @Override
+    public IManager createManagerFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Manager manager) {
+        return new Manager(manager);
+    }
+
+    @Override
+    public ITeam createTeamFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Team team) {
+        return new Team(team);
+    }
+
+    @Override
+    public IDivision createDivisionFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Division division) {
+        return new Division(division);
+    }
+
+    @Override
+    public IGame createGameFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Game game) {
+        return new Game(game);
+    }
+
+    @Override
+    public ITeamScore createTeamScoreFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamScore teamScore) {
+        return new TeamScore(teamScore);
+    }
+
+    @Override
+    public ITeamStanding createTeamStandingFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamStanding teamStanding) {
+        return new TeamStanding(teamStanding);
+    }
+
+    @Override
+    public IConference creatConferenceFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Conference conference) {
+        return new Conference(conference);
+    }
+
+    @Override
+    public IFreeAgent creatFreeAgentFromDeserialization(persistance.serializers.ModelsForDeserialization.model.FreeAgent freeAgent) {
+        return new FreeAgent(freeAgent);
+    }
+
+    @Override
+    public IGamePlayConfig creatGamePlayConfigFromDeserialization(persistance.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig) {
+        return new GamePlayConfig(gamePlayConfig);
+    }
+
+    @Override
+    public IGameSchedule createGameScheduleFromDeserialization(persistance.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule) {
+        return new GameSchedule(gameSchedule);
+    }
+
+    @Override
+    public INHLEvents createNHLEventsFromDeserialization(persistance.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents) {
+        return new NHLEvents(nhlEvents);
+    }
+
+    @Override
+    public TeamStat createTeamStatFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamStat teamStat) {
+        return new TeamStat(teamStat);
+    }
+
+    @Override
+    public ITradeOffer createTradeOfferFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
+        return new TradeOffer(tradeOffer);
+    }
+
+    @Override
+    public ITrophy createTrophyFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Trophy trophy) {
+        return new Trophy(trophy);
+    }
+
+    @Override
+    public IManager createManagerFromManager(IManager manager) {
+        return new Manager(manager);
+    }
+
+    @Override
+    public IPlayer createPlayerFromPlayer(IPlayer player) {
+        return new Player(player);
+    }
+
 
 }
