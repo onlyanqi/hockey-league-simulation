@@ -64,8 +64,8 @@ public class ImportState implements IHockeyState {
     private final Set<String> appearedName = new HashSet<>();
     private final IHockeyContext hockeyContext;
     private final JSONObject jsonFromInput;
-    private ILeague league;
     private final int leagueId;
+    private ILeague league;
     private int teamId;
     private int conferenceId;
     private int divisionId;

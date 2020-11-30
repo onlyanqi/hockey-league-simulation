@@ -14,12 +14,11 @@ import static org.junit.Assert.*;
 
 public class CreateTeamStateTest {
 
-    static User user;
-    static League league;
-
-    private static ILeagueDao factory = new LeagueMock();
     private static final ITeamDao factoryTeam = new TeamMock();
     private static final IUserDao factoryUser = new UserMock();
+    static User user;
+    static League league;
+    private static ILeagueDao factory = new LeagueMock();
     private static IHockeyContext hockeyContext;
     private static IHockeyContextFactory hockeyContextFactory;
     private List<IManager> managerList = null;

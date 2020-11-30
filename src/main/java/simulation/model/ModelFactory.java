@@ -311,7 +311,7 @@ public class ModelFactory implements IModelFactory {
     }
 
     @Override
-        public ITradeOffer createTradeOfferFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
+    public ITradeOffer createTradeOfferFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
         return new TradeOffer(tradeOffer);
     }
 
@@ -334,7 +334,6 @@ public class ModelFactory implements IModelFactory {
     public IGame createGameFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Game game) {
         return new Game(game);
     }
-
 
 
 }

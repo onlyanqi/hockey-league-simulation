@@ -13,8 +13,8 @@ import java.util.Map;
 
 public class ConsoleOutput implements IConsoleOutput {
 
-    private static ConsoleOutput consoleOutput;
     private static final Logger log = Logger.getLogger(ExecuteTradeState.class);
+    private static ConsoleOutput consoleOutput;
 
     private ConsoleOutput() {
     }
