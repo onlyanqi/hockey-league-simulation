@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.ISeasonDao;
+import persistance.dao.ISeasonDao;
 
 public interface ISeason {
 

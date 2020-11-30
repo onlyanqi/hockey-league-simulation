@@ -1,7 +1,7 @@
 package simulation.mock;
 
-import simulation.dao.ITeamScoreDao;
-import simulation.dao.ITeamStandingDao;
+import persistance.dao.ITeamScoreDao;
+import persistance.dao.ITeamStandingDao;
 import simulation.model.ITeamScore;
 import simulation.model.ITeamStanding;
 import simulation.model.TeamScore;
@@ -36,7 +36,7 @@ public class TeamStandingMock implements ITeamStandingDao {
 
     @Override
     public ITeamStanding loadTeamStandingByLeagueId(int leagueId) throws Exception {
-        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         switch (leagueId) {
             case 1:
             case 6:

@@ -1,5 +1,6 @@
 package simulation.dao;
 
+import persistance.dao.*;
 import simulation.mock.*;
 
 public class DaoFactoryMock implements IDaoFactory {

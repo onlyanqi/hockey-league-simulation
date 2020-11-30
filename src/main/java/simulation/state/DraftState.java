@@ -140,7 +140,7 @@ public class DraftState implements ISimulateState {
         int addedPlayers = 0;
         while (addedPlayers < playersNum) {
             IModelFactory playerFactory = hockeyContext.getModelFactory();
-            IPlayer player = playerFactory.newPlayer();
+            IPlayer player = playerFactory.createPlayer();
             player.setName(getRandomName(firstNameList, lastNameList));
             player.setPosition(Position.generateRandomPosition());
             player.setBirthday(generateBirthday());

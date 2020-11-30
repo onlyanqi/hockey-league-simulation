@@ -36,7 +36,7 @@ public class App {
                 IHockeyContext context = hockeyContextFactory.newHockeyContext();
 
                 IModelFactory userConcrete = context.getModelFactory();
-                IUser user = userConcrete.newUser();
+                IUser user = userConcrete.createUser();
 
                 user.setName(userName);
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");

@@ -1,7 +1,7 @@
 package simulation.model;
 
-import simulation.dao.IPlayerDao;
-import simulation.dao.ITeamDao;
+import persistance.dao.IPlayerDao;
+import persistance.dao.ITeamDao;
 
 import java.util.List;
 

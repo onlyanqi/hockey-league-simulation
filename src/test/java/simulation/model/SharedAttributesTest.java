@@ -2,7 +2,7 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IPlayerDao;
+import persistance.dao.IPlayerDao;
 import simulation.mock.PlayerMock;
 
 import static org.junit.Assert.assertEquals;

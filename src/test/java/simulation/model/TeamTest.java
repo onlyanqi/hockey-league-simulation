@@ -3,9 +3,9 @@ package simulation.model;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IPlayerDao;
-import simulation.dao.ITeamDao;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IPlayerDao;
+import persistance.dao.ITeamDao;
 import simulation.mock.PlayerMock;
 
 import java.util.ArrayList;
@@ -218,10 +218,10 @@ public class TeamTest {
 
     @Test
     public void fixTeamPlayerNumTest() throws Exception {
-        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         List<IPlayer> playerList = team.getPlayerList();
         playerList.remove(0);
-        IFreeAgent freeAgent = modelFactory.newFreeAgentWithIdDao(1, daoFactory.newFreeAgentDao());
+        IFreeAgent freeAgent = modelFactory.createFreeAgentWithIdDao(1, daoFactory.newFreeAgentDao());
         team.fixTeamPlayerNum(freeAgent.getPlayerList());
         int teamSize = team.getPlayerList().size();
         assertEquals(teamSize, 30);
@@ -230,7 +230,7 @@ public class TeamTest {
 
     @Test
     public void getDraftPicksTest() throws Exception {
-        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         List<String> draftPicks = team.getDraftPicks();
         assertNotNull(draftPicks);
         int draftPickSize = draftPicks.size();
@@ -239,7 +239,7 @@ public class TeamTest {
 
     @Test
     public void setDraftPicksTest() throws Exception {
-        ITeam team = modelFactory.newTeam();
+        ITeam team = modelFactory.createTeam();
         List<String> draftPicks = new ArrayList<>(Arrays.asList(
                 null, null, null, null, null, null, null
         ));

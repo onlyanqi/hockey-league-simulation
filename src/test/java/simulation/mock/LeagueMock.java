@@ -1,7 +1,7 @@
 package simulation.mock;
 
 import org.json.simple.JSONObject;
-import simulation.dao.*;
+import persistance.dao.*;
 import simulation.model.*;
 import simulation.state.HockeyContext;
 
@@ -69,7 +69,7 @@ public class LeagueMock implements ILeagueDao {
     }
 
     public IGameSchedule formGames() throws Exception {
-        IGameSchedule games = HockeyContext.getInstance().getModelFactory().newGameSchedule();
+        IGameSchedule games = HockeyContext.getInstance().getModelFactory().createGameSchedule();
         List<IGame> gameList = new ArrayList<>();
 
         IGameDao gameFactory = new GameMock();
@@ -83,7 +83,7 @@ public class LeagueMock implements ILeagueDao {
     }
 
     public ITeamStanding formTeamStanding() throws Exception {
-        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         List<ITeamScore> teamScoreList = new ArrayList<>();
 
         ITeamScoreDao teamScoreFactory = new TeamScoreMock();

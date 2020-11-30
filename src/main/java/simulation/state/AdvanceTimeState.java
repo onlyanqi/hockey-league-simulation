@@ -42,7 +42,7 @@ public class AdvanceTimeState implements ISimulateState {
         }
         if (nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())
                 || nhlEvents.checkRegularSeasonPassed(league.getCurrentDate())) {
-            if(nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())){
+            if (nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())) {
                 displayTeamStats();
             }
             return new GeneratePlayoffScheduleState(hockeyContext);

@@ -2,7 +2,7 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IAgingDao;
+import persistance.dao.IAgingDao;
 import simulation.mock.AgingMock;
 
 import static org.junit.Assert.*;

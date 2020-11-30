@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import simulation.dao.ICoachDao;
+import persistance.dao.ICoachDao;
 import simulation.model.Coach;
 import simulation.model.ICoach;
 

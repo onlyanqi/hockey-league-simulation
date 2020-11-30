@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import simulation.dao.ITrainingDao;
+import persistance.dao.ITrainingDao;
 import simulation.model.ITraining;
 
 public class TrainingMock implements ITrainingDao {

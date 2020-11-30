@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.ITradeOfferDao;
+import persistance.dao.ITradeOfferDao;
 
 import java.util.List;
 

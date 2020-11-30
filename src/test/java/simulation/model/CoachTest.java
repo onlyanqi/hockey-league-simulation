@@ -2,7 +2,7 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.ICoachDao;
+import persistance.dao.ICoachDao;
 import simulation.mock.CoachMock;
 
 import static org.junit.Assert.*;

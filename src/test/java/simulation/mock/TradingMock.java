@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import simulation.dao.ITradingDao;
+import persistance.dao.ITradingDao;
 import simulation.model.IModelFactory;
 import simulation.model.ITrading;
 import simulation.model.ModelFactory;
@@ -46,7 +46,7 @@ public class TradingMock implements ITradingDao {
 
     @Override
     public ITrading loadTradingDetailsByLeagueId(int leagueId) {
-        ITrading trading = modelFactory.newTrading();
+        ITrading trading = modelFactory.createTrading();
         trading = getTrading(leagueId, 1, trading);
 
         switch (leagueId) {

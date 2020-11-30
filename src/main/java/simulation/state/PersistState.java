@@ -5,7 +5,7 @@ import simulation.model.IGameSchedule;
 import simulation.model.ILeague;
 import simulation.model.INHLEvents;
 import simulation.model.ITeamStanding;
-import simulation.serializers.LeagueDataSerializerDeSerializer;
+import persistance.serializers.LeagueDataSerializerDeSerializer;
 
 public class PersistState implements ISimulateState {
 

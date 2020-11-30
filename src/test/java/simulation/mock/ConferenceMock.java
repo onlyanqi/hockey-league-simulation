@@ -1,9 +1,9 @@
 package simulation.mock;
 
-import simulation.dao.IConferenceDao;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IDivisionDao;
-import simulation.dao.ILeagueDao;
+import persistance.dao.IConferenceDao;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IDivisionDao;
+import persistance.dao.ILeagueDao;
 import simulation.factory.HockeyContextConcreteMock;
 import simulation.factory.IHockeyContextFactory;
 import simulation.model.IConference;
@@ -33,10 +33,10 @@ public class ConferenceMock implements IConferenceDao {
     public List formDivisionList() throws Exception {
         List<IDivision> divisionList = new ArrayList<>();
 
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);
 
-        division = modelFactory.newDivisionWithIdDao(2, divisionDao);
+        division = modelFactory.createDivisionWithIdDao(2, divisionDao);
         divisionList.add(division);
 
         return divisionList;
@@ -45,10 +45,10 @@ public class ConferenceMock implements IConferenceDao {
     public List formCreateTeamDivisionList() throws Exception {
         List<IDivision> divisionList = new ArrayList<>();
 
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);
 
-        division = modelFactory.newDivisionWithIdDao(4, divisionDao);
+        division = modelFactory.createDivisionWithIdDao(4, divisionDao);
         divisionList.add(division);
 
         return divisionList;
@@ -56,7 +56,7 @@ public class ConferenceMock implements IConferenceDao {
 
     @Override
     public int addConference(IConference conference) throws Exception {
-        conference = modelFactory.newConferenceWithId(1);
+        conference = modelFactory.createConferenceWithId(1);
         return conference.getId();
     }
 
@@ -93,7 +93,7 @@ public class ConferenceMock implements IConferenceDao {
 
     @Override
     public IConference loadConferenceByName(String conferenceName) throws Exception {
-        IConference conference = modelFactory.newConference();
+        IConference conference = modelFactory.createConference();
         conference.setName("Conference1");
         conference.setLeagueId(1);
         conference.setDivisionList(formDivisionList());

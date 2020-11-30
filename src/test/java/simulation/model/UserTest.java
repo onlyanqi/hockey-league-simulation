@@ -2,8 +2,8 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.ILeagueDao;
-import simulation.dao.IUserDao;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IUserDao;
 import simulation.mock.LeagueMock;
 import simulation.mock.UserMock;
 

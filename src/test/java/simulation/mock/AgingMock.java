@@ -1,7 +1,7 @@
 package simulation.mock;
 
 import org.json.simple.JSONObject;
-import simulation.dao.IAgingDao;
+import persistance.dao.IAgingDao;
 import simulation.model.Aging;
 import simulation.model.IAging;
 

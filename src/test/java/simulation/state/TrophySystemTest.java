@@ -3,9 +3,9 @@ package simulation.state;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import presentation.ConsoleOutput;
-import simulation.dao.ICoachDao;
-import simulation.dao.ILeagueDao;
-import simulation.dao.IUserDao;
+import persistance.dao.ICoachDao;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.CoachMock;
@@ -45,37 +45,36 @@ public class TrophySystemTest {
     @Test
     public void calculateJackAdamsAwardTest() throws Exception {
         List<ICoach> coachList = new ArrayList<>();
-        for(int i=0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             ICoachDao coachDao = new CoachMock();
             ICoach coach = new Coach(0, coachDao);
             coach.setId(i);
-            if(i==9){
+            if (i == 9) {
                 coach.setName("Simran");
             }
             coach.setCoachingEffectiveness(i);
             coachList.add(coach);
         }
-        TrophySystem trophySystem = new TrophySystem(hockeyContext,trophy);
+        TrophySystem trophySystem = new TrophySystem(hockeyContext, trophy);
         String winner = trophySystem.calculateJackAdamsAward(coachList);
-        assertNotEquals(winner,null);
-        assertTrue(winner=="Simran");
+        assertNotEquals(winner, null);
+        assertTrue(winner == "Simran");
     }
 
 
     @Test
-    public void showHistoricalTrophyListTest(){
+    public void showHistoricalTrophyListTest() {
         List<ITrophy> trophyList = new ArrayList<>();
-        ITrophy trophy = new TrophyMock().loadTrophyById(0,new Trophy());
-        for(int i=0; i<3;i++){
+        ITrophy trophy = new TrophyMock().loadTrophyById(0, new Trophy());
+        for (int i = 0; i < 3; i++) {
             trophyList.add(trophy);
         }
-        TrophySystem trophySystem = new TrophySystem(hockeyContext,trophy);
+        TrophySystem trophySystem = new TrophySystem(hockeyContext, trophy);
         trophySystem.showHistoricalTrophyList(trophyList);
         System.out.println(trophySystem.getClass());
-        assertEquals(trophySystem.getClass().toString(),"class simulation.state.TrophySystem");
-        assertNotEquals(trophySystem.getClass(),null);
+        assertEquals(trophySystem.getClass().toString(), "class simulation.state.TrophySystem");
+        assertNotEquals(trophySystem.getClass(), null);
     }
-
 
 
 }
