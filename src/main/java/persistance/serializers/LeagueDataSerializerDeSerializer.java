@@ -77,7 +77,6 @@ public class LeagueDataSerializerDeSerializer {
         } catch (IOException e) {
             consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
         } catch (Exception e) {
-            e.printStackTrace();
             consoleOutput.printMsgToConsole(DESERIALIZATIONERROR);
         }
         return league;

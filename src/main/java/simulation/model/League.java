@@ -314,8 +314,7 @@ public class League extends SharedAttributes implements ILeague {
         return managerList;
     }
 
-    public List<ICoach> removeCoachFromCoachListById(List<ICoach> coachList,
-                                                     int indexOfCoachObject, IModelFactory coachFactory) {
+    public List<ICoach> removeCoachFromCoachListById(List<ICoach> coachList, int indexOfCoachObject, IModelFactory coachFactory) {
         if (null == coachList) {
             return null;
         }

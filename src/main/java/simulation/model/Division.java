@@ -2,7 +2,6 @@ package simulation.model;
 
 import persistance.dao.IDivisionDao;
 import persistance.dao.ITeamDao;
-import persistance.serializers.ModelsForDeserialization.model.Team;
 import simulation.state.HockeyContext;
 import simulation.state.IHockeyContext;
 
