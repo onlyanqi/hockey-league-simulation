@@ -45,7 +45,7 @@ public class TeamStandingTest {
 
     @Test
     public void defaultConstructorTest() {
-        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         assertNotNull(teamStanding.getTeamsScoreList());
     }
 
@@ -55,7 +55,7 @@ public class TeamStandingTest {
         TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertEquals(teamScore.getId(), 1);
 
-        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         List<ITeam> teamList = new ArrayList<>();
         Team team = new Team();
         teamList.add(team);
@@ -65,28 +65,28 @@ public class TeamStandingTest {
 
     @Test
     public void setTeamPointsTest() throws Exception {
-        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         teamStanding.setTeamPoints("Team0");
         assertNotNull(teamStanding.getTeamsScoreList());
     }
 
     @Test
     public void setTeamLossTest() throws Exception {
-        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         teamStanding.setTeamLoss("Team0");
         assertNotNull(teamStanding.getTeamsScoreList());
     }
 
     @Test
     public void setTeamWinsTest() throws Exception {
-        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         teamStanding.setTeamWins("Team0");
         assertNotNull(teamStanding.getTeamsScoreList());
     }
 
     @Test
     public void setTeamTiesTest() throws Exception {
-        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         teamStanding.setTeamTies("Team0");
         assertNotNull(teamStanding.getTeamsScoreList());
     }

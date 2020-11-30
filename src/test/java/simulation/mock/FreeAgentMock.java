@@ -22,9 +22,9 @@ public class FreeAgentMock implements IFreeAgentDao {
     public List formPlayerList() throws Exception {
         List<IPlayer> playerList = new ArrayList<>();
 
-        IPlayerDao playerFactory = daoFactory.newPlayerDao();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         for (int i = 1; i < 32; i++) {
-            IPlayer player = modelFactory.newPlayerWithIdDao(i, playerFactory);
+            IPlayer player = modelFactory.createPlayerWithIdDao(i, playerFactory);
             playerList.add(player);
         }
 
@@ -33,9 +33,9 @@ public class FreeAgentMock implements IFreeAgentDao {
 
     public List formFreeAgentListForCreateTeam() throws Exception {
         List<IPlayer> playerList = new ArrayList<>();
-        IPlayerDao playerFactory = daoFactory.newPlayerDao();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         for (int i = 1; i < 32; i++) {
-            IPlayer player = modelFactory.newPlayerWithIdDao(1, playerFactory);
+            IPlayer player = modelFactory.createPlayerWithIdDao(1, playerFactory);
             playerList.add(player);
         }
         playerList.get(1).setPosition(Position.GOALIE);
@@ -47,7 +47,7 @@ public class FreeAgentMock implements IFreeAgentDao {
 
     @Override
     public int addFreeAgent(IFreeAgent freeAgent) throws Exception {
-        freeAgent = modelFactory.newFreeAgentWithId(1);
+        freeAgent = modelFactory.createFreeAgentWithId(1);
         return freeAgent.getId();
     }
 
@@ -99,9 +99,9 @@ public class FreeAgentMock implements IFreeAgentDao {
 
     private List<IPlayer> formInsufficientPlayerList() throws Exception {
         List<IPlayer> playerList = new ArrayList<>();
-        IPlayerDao playerFactory = daoFactory.newPlayerDao();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         for (int i = 1; i < 5; i++) {
-            IPlayer player = modelFactory.newPlayerWithIdDao(i, playerFactory);
+            IPlayer player = modelFactory.createPlayerWithIdDao(i, playerFactory);
             playerList.add(player);
         }
 
@@ -110,7 +110,7 @@ public class FreeAgentMock implements IFreeAgentDao {
 
     @Override
     public IFreeAgent loadFreeAgentByLeagueId(int id) throws Exception {
-        IFreeAgent freeAgent = modelFactory.newFreeAgent();
+        IFreeAgent freeAgent = modelFactory.createFreeAgent();
         freeAgent.setLeagueId(id);
         freeAgent.setName("FreeAgent1");
         freeAgent.setPlayerList(formPlayerList());

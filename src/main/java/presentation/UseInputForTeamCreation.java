@@ -7,8 +7,8 @@ import java.util.List;
 
 public class UseInputForTeamCreation implements IUserInputForTeamCreation {
 
-    private ConsoleOutput consoleOutput;
-    private ReadUserInput readUserInput;
+    private IConsoleOutput consoleOutput;
+    private IReadUserInput readUserInput;
 
     public UseInputForTeamCreation() {
         consoleOutput = ConsoleOutput.getInstance();

@@ -1,5 +1,6 @@
 package simulation.state;
 
+import presentation.IReadUserInput;
 import presentation.ReadUserInput;
 import simulation.model.ILeague;
 import simulation.model.League;
@@ -11,7 +12,7 @@ public class LoadTeamState implements IHockeyState {
     private IHockeyContext hockeyContext;
     private String teamName;
     private ILeague league;
-    private ReadUserInput readUserInput;
+    private IReadUserInput readUserInput;
 
     public LoadTeamState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;

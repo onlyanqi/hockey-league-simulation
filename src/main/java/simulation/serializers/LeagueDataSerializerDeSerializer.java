@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import presentation.ConsoleOutput;
+import presentation.IConsoleOutput;
 import simulation.model.ILeague;
 import simulation.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 
@@ -16,7 +17,7 @@ public class LeagueDataSerializerDeSerializer {
     public static final String JSONCREATIONERROR = "Json could not be created";
     public static final String DESERIALIZATIONERROR = "Could not deserialize";
     public static String FILENAME = "JsonOutput.txt";
-    private ConsoleOutput consoleOutput = null;
+    private IConsoleOutput consoleOutput = null;
 
     public void serialize(ILeague league) {
         if (consoleOutput == null) {

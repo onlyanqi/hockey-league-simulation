@@ -46,7 +46,7 @@ public class TradingMock implements ITradingDao {
 
     @Override
     public ITrading loadTradingDetailsByLeagueId(int leagueId) {
-        ITrading trading = modelFactory.newTrading();
+        ITrading trading = modelFactory.createTrading();
         trading = getTrading(leagueId, 1, trading);
 
         switch (leagueId) {

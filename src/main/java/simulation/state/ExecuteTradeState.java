@@ -2,6 +2,8 @@ package simulation.state;
 
 import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
+import presentation.IConsoleOutput;
+import presentation.IReadUserInput;
 import presentation.ReadUserInput;
 import simulation.model.*;
 
@@ -30,8 +32,8 @@ public class ExecuteTradeState implements ISimulateState {
     private ITrading trading = null;
     private IHockeyContext hockeyContext;
     private ILeague league;
-    private ConsoleOutput consoleOutput;
-    private ReadUserInput readUserInput;
+    private IConsoleOutput consoleOutput;
+    private IReadUserInput readUserInput;
 
     public ExecuteTradeState() {
     }
@@ -505,7 +507,7 @@ public class ExecuteTradeState implements ISimulateState {
         ITeam fromTeam = (ITeam) swap.get(FROMTEAM);
         ITeam toTeam = (ITeam) swap.get(TOTEAM);
         IModelFactory tradeOfferConcrete = hockeyContext.getModelFactory();
-        ITradeOffer tradeOffer = tradeOfferConcrete.newTradeOffer();
+        ITradeOffer tradeOffer = tradeOfferConcrete.createTradeOffer();
         try {
             tradeOffer.setLeagueId(league.getId());
             tradeOffer.setTradingId(trading.getId());

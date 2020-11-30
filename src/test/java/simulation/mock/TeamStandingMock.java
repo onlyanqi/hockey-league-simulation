@@ -36,7 +36,7 @@ public class TeamStandingMock implements ITeamStandingDao {
 
     @Override
     public ITeamStanding loadTeamStandingByLeagueId(int leagueId) throws Exception {
-        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         switch (leagueId) {
             case 1:
                 List<ITeamScore> teamScoreList = new ArrayList<>();

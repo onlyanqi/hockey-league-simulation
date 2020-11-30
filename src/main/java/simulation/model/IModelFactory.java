@@ -4,89 +4,101 @@ import simulation.dao.*;
 
 public interface IModelFactory {
 
-    IAging newAging();
+    IAging createAging();
 
-    ICoach newCoach();
+    ICoach createCoach();
 
-    ICoach newCoachWithCoach(ICoach coach);
+    ICoach createCoachWithCoach(ICoach coach);
 
-    IConference newConference();
+    IConference createConference();
 
-    IConference newConferenceWithId(int id);
+    IConference createConferenceWithId(int id);
 
-    IConference newConferenceWithIdDao(int id, IConferenceDao conferenceDao) throws Exception;
+    IConference createConferenceWithIdDao(int id, IConferenceDao conferenceDao) throws Exception;
 
-    IDivision newDivision();
+    IDivision createDivision();
 
-    IDivision newDivisionWithIdDao(int id, IDivisionDao divisionDao) throws Exception;
+    IDivision createDivisionWithIdDao(int id, IDivisionDao divisionDao) throws Exception;
 
-    IDivision newDivisionWithId(int id);
+    IDivision createDivisionWithId(int id);
 
-    INHLEvents newEvents();
+    INHLEvents createEvents();
 
-    IFreeAgent newFreeAgent();
+    IFreeAgent createFreeAgent();
 
-    IGame newGame();
+    IGame createGame();
 
-    IGamePlayConfig newGamePlayConfig();
+    IGamePlayConfig createGamePlayConfig();
 
-    IGameSchedule newGameSchedule();
+    IGameSchedule createGameSchedule();
 
-    IInjury newInjury();
+    IInjury createInjury();
 
-    ILeague newLeague();
+    ILeague createLeague();
 
-    ISimulate newSimulate();
+    ISimulate createSimulate();
 
     ILeague createLeagueFromNameAndUserId(String leagueName, int userId, ILeagueDao leagueFactory) throws Exception;
 
-    ILeague newLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception;
+    ILeague createLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception;
+
+    ILeague createLeagueWithId(int id);
 
     IManager newManagerConcrete();
 
-    INHLEvents newNHLEvents();
+    INHLEvents createNHLEvents();
 
-    INHLEvents newNHLEventsByYear(int year);
+    INHLEvents createNHLEventsByYear(int year);
 
-    IPlayer newPlayer();
+    IPlayer createPlayer();
 
-    IPlayer newPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception;
+    IPlayer createPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception;
 
-    ISeason newSeason();
+    ISeason createSeason();
 
-    ITeam newTeam();
+    ITeam createTeam();
 
-    ITeam newTeamByName(String name, ITeamDao loadTeamFactory) throws Exception;
+    ITeam createTeamByName(String name, ITeamDao loadTeamFactory) throws Exception;
 
-    ITeam newTeamWithIdDao(int id, ITeamDao teamDao) throws Exception;
+    ITeam createTeamWithIdDao(int id, ITeamDao teamDao) throws Exception;
 
-    ITeamScore newTeamScore();
+    ITeamScore createTeamScore();
 
-    ITeamStanding newTeamStanding();
+    ITeamStanding createTeamStanding();
 
-    ITradeOffer newTradeOffer();
+    ITradeOffer createTradeOffer();
 
-    ITradeOffer newTradeOfferWithIdDao(int id, ITradeOfferDao tradeOfferDao) throws Exception;
+    ITradeOffer createTradeOfferWithIdDao(int id, ITradeOfferDao tradeOfferDao) throws Exception;
 
-    ITrading newTrading();
+    ITrading createTrading();
 
-    ITrading newTradingWithIdDao(int id, ITradingDao tradingDao) throws Exception;
+    ITrading createTradingWithIdDao(int id, ITradingDao tradingDao) throws Exception;
 
     ITraining newTraining();
 
-    IUser newUser();
+    IUser createUser();
 
-    IUser newUserByName(String name, IUserDao loadUserFactory) throws Exception;
+    IUser createUserByName(String name, IUserDao loadUserFactory) throws Exception;
 
-    IUser newUserWithIdDao(int id, IUserDao userDao) throws Exception;
+    IUser createUserWithIdDao(int id, IUserDao userDao) throws Exception;
 
-    IFreeAgent newFreeAgentWithId(int id);
+    IFreeAgent createFreeAgentWithId(int id);
 
     ITrophy newTrophy();
 
-    IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception;
+    IFreeAgent createFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception;
 
     IShift newShift();
 
     IGameSimulation newGameSimulationFromTeams(ITeam team1, ITeam team2);
+
+    IPlayer createPlayerWithId(int id);
+
+    ISeason createSeasonWithId(int id);
+
+    ISeason createSeasonWithIdDao(int id, ISeasonDao seasonDao) throws Exception;
+
+    ITeam createTeamWithId(int id);
+
+    IUser createUserWithId(int id);
 }

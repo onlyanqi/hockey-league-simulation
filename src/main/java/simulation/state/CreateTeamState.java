@@ -1,10 +1,7 @@
 package simulation.state;
 
 import config.AppConfig;
-import presentation.ConsoleOutput;
-import presentation.IConsoleOutputForTeamCreation;
-import presentation.IUserInputForTeamCreation;
-import presentation.ReadUserInput;
+import presentation.*;
 import simulation.model.*;
 
 import java.util.ArrayList;
@@ -35,8 +32,8 @@ public class CreateTeamState implements IHockeyState {
     private IFreeAgent freeAgent;
     private IUserInputForTeamCreation teamCreationInput;
     private IConsoleOutputForTeamCreation teamCreationOutput;
-    private ConsoleOutput consoleOutput = null;
-    private ReadUserInput readUserInput = null;
+    private IConsoleOutput consoleOutput = null;
+    private IReadUserInput readUserInput = null;
 
     public CreateTeamState(IHockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
                            IConsoleOutputForTeamCreation teamCreationOutput) {
@@ -142,7 +139,7 @@ public class CreateTeamState implements IHockeyState {
         List<String> teamNameList = division.getTeamNameList();
         String teamName = teamCreationInput.getTeamName(teamNameList);
         IModelFactory teamFactory = hockeyContext.getModelFactory();
-        team = teamFactory.newTeam();
+        team = teamFactory.createTeam();
         team.setName(teamName);
         team.setAiTeam(false);
     }
@@ -183,7 +180,7 @@ public class CreateTeamState implements IHockeyState {
         teamCreationOutput.showCoachListOnScreen(coachList);
         int headCoachId = teamCreationInput.getHeadCoachId(coachList);
         IModelFactory coachFactory = hockeyContext.getModelFactory();
-        ICoach headCoach = coachFactory.newCoachWithCoach(coachList.get(headCoachId));
+        ICoach headCoach = coachFactory.createCoachWithCoach(coachList.get(headCoachId));
         team.setCoach(headCoach);
         coachList = league.removeCoachFromCoachListById(coachList, headCoachId, coachFactory);
         teamCreationOutput.showSuccessfulCoachCreationMessage();

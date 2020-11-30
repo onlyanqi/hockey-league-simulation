@@ -1,6 +1,7 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
+import presentation.IConsoleOutput;
 import simulation.model.*;
 import simulation.trophyPublisherSubsribers.TrophySystemPublisher;
 
@@ -14,7 +15,7 @@ public class TrainingState implements ISimulateState, ITrainingState {
     private static final String STATCHECKINFORMATION = "Performing stat increase check";
     private IHockeyContext hockeyContext;
     private ILeague league;
-    private ConsoleOutput consoleOutput;
+    private IConsoleOutput consoleOutput;
 
     public TrainingState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;

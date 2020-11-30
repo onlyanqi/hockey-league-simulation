@@ -253,7 +253,6 @@ public class CreateTeamStateTest {
         createTeamState.setConferenceName(conferenceName);
         createTeamState.setDivisionName(divisionName);
         createTeamState.process();
-        assertFalse(null == league.getFreeAgent() || null == league.getManagerList() || null == league.getCoachList() || null == league.getConferenceList());
         assertTrue(league.getConferenceList().size() > 0);
     }
 

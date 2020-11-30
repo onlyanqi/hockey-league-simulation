@@ -28,34 +28,34 @@ public class DivisionTest {
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
         daoFactory = hockeyContext.getDaoFactory();
-        divisionDao = daoFactory.newDivisionDao();
+        divisionDao = daoFactory.createDivisionDao();
     }
 
     @Test
     public void defaultConstructorTest() {
-        IDivision division = modelFactory.newDivision();
+        IDivision division = modelFactory.createDivision();
         assertNotEquals(division.getId(), 0);
     }
 
     @Test
     public void divisionTest() {
-        IDivision division = modelFactory.newDivisionWithId(1);
+        IDivision division = modelFactory.createDivisionWithId(1);
         assertEquals(division.getId(), 1);
     }
 
     @Test
     public void divisionFactoryTest() throws Exception {
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         assertEquals(division.getId(), 1);
         assertEquals(division.getName(), "Division1");
 
-        division = modelFactory.newDivisionWithIdDao(2, divisionDao);
+        division = modelFactory.createDivisionWithIdDao(2, divisionDao);
         assertNull(division.getName());
     }
 
     @Test
     public void getTeamListTest() throws Exception {
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         List<ITeam> teamList = division.getTeamList();
         assertNotNull(teamList);
         assertEquals(teamList.get(0).getId(), (1));
@@ -65,14 +65,14 @@ public class DivisionTest {
 
     @Test
     public void setTeamListTest() throws Exception {
-        ITeamDao teamDao = daoFactory.newTeamDao();
+        ITeamDao teamDao = daoFactory.createTeamDao();
         List<ITeam> teamList = new ArrayList<>();
-        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         teamList.add(team);
-        team = modelFactory.newTeamWithIdDao(2, teamDao);
+        team = modelFactory.createTeamWithIdDao(2, teamDao);
         teamList.add(team);
 
-        IDivision division = modelFactory.newDivision();
+        IDivision division = modelFactory.createDivision();
         division.setTeamList(teamList);
 
         assertTrue(division.getTeamList().get(0).getId() == (1));
@@ -83,13 +83,13 @@ public class DivisionTest {
 
     @Test
     public void getConferenceIdTest() throws Exception {
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         assertTrue(division.getConferenceId() == (1));
     }
 
     @Test
     public void setConferenceIdTest() {
-        IDivision division = modelFactory.newDivision();
+        IDivision division = modelFactory.createDivision();
         int conferenceId = 1;
         division.setConferenceId(conferenceId);
         assertTrue(division.getConferenceId() == conferenceId);
@@ -97,7 +97,7 @@ public class DivisionTest {
 
     @Test
     public void addDivisionTest() throws Exception {
-        IDivision division = modelFactory.newDivision();
+        IDivision division = modelFactory.createDivision();
         division.setId(1);
         division.setName("Division1");
         division.addDivision(divisionDao);
@@ -107,8 +107,8 @@ public class DivisionTest {
 
     @Test
     public void loadTeamListByDivisionIdTest() throws Exception {
-        IDivision division = modelFactory.newDivisionWithId(1);
-        ITeamDao teamDao = daoFactory.newTeamDao();
+        IDivision division = modelFactory.createDivisionWithId(1);
+        ITeamDao teamDao = daoFactory.createTeamDao();
         division.loadTeamListByDivisionId(teamDao);
 
         assertTrue(division.getTeamList().get(0).getId() == (1));
@@ -118,13 +118,13 @@ public class DivisionTest {
 
     @Test
     public void getTeamNameListTest() throws Exception {
-        ITeamDao teamDao = daoFactory.newTeamDao();
+        ITeamDao teamDao = daoFactory.createTeamDao();
         List<ITeam> teamList = new ArrayList<>();
-        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         teamList.add(team);
-        team = modelFactory.newTeamWithIdDao(3, teamDao);
+        team = modelFactory.createTeamWithIdDao(3, teamDao);
         teamList.add(team);
-        IDivision division = modelFactory.newDivision();
+        IDivision division = modelFactory.createDivision();
         division.setTeamList(teamList);
         List<String> teamNameList = division.getTeamNameList();
         String indexZero = "team1";

@@ -23,19 +23,19 @@ public class PlayerTest {
     @BeforeClass
     public static void setFactoryObj() {
         daoFactory = DaoFactoryMock.getInstance();
-        playerDao = daoFactory.newPlayerDao();
+        playerDao = daoFactory.createPlayerDao();
         modelFactory = ModelFactory.getInstance();
     }
 
     @Test
     public void defaultConstructorTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         assertNotEquals(player.getId(), 0);
     }
 
     @Test
     public void playerTest() {
-        IPlayer player = new Player(1);
+        IPlayer player = modelFactory.createPlayerWithId(1);
         assertEquals(player.getId(), 1);
     }
 
@@ -47,11 +47,11 @@ public class PlayerTest {
 
     @Test
     public void playerFactoryTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertEquals(player.getId(), 1);
         assertEquals(player.getName(), "Player1");
 
-        player = new Player(33, playerDao);
+        player = modelFactory.createPlayerWithIdDao(33, playerDao);
         assertNull(player.getName());
     }
 
@@ -71,13 +71,13 @@ public class PlayerTest {
 
     @Test
     public void getPositionTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertEquals(player.getPosition(), Position.FORWARD);
     }
 
     @Test
     public void setPositionTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         Position position = Position.GOALIE;
         player.setPosition(position);
         assertEquals(player.getPosition(), position);
@@ -85,13 +85,13 @@ public class PlayerTest {
 
     @Test
     public void getTeamIdTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertEquals(player.getTeamId(), (1));
     }
 
     @Test
     public void setTeamIdTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         int teamId = 1;
         player.setTeamId(teamId);
         assertEquals(player.getTeamId(), teamId);
@@ -99,15 +99,15 @@ public class PlayerTest {
 
     @Test
     public void isCaptainTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertTrue(player.isCaptain());
     }
 
     @Test
     public void setCaptainTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         boolean isCaptain = true;
-        player.setCaptain(true);
+        player.setCaptain(isCaptain);
         assertTrue(player.isCaptain());
     }
 
@@ -123,13 +123,13 @@ public class PlayerTest {
 
     @Test
     public void getFreeAgentIdTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertEquals(player.getFreeAgentId(), (1));
     }
 
     @Test
     public void setFreeAgentIdTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         int freeAgentId = 1;
         player.setFreeAgentId(freeAgentId);
         assertEquals(player.getFreeAgentId(), freeAgentId);
@@ -303,13 +303,13 @@ public class PlayerTest {
 
     @Test
     public void getRelativeStrengthTest() throws Exception {
-        IPlayer player = modelFactory.newPlayerWithIdDao(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertTrue(player.getRelativeStrength() == (7.8));
     }
 
     @Test
     public void setRelativeStrengthTest() {
-        IPlayer player = modelFactory.newPlayer();
+        IPlayer player = modelFactory.createPlayer();
         player.setSkating(15);
         player.setShooting(18);
         player.setChecking(12);
@@ -317,6 +317,14 @@ public class PlayerTest {
         player.setStrength();
         player.setRelativeStrength();
         assertTrue(player.getRelativeStrength() == (7.8));
+    }
+
+    @Test
+    public void compareToTest() throws Exception {
+        IPlayer player1 = modelFactory.createPlayerWithIdDao(1, playerDao);
+        IPlayer player2 = modelFactory.createPlayerWithIdDao(3, playerDao);
+        int compare = player1.compareTo(player2);
+        assertTrue(compare < 0);
     }
 
 }

@@ -27,15 +27,15 @@ public class DivisionMock implements IDivisionDao {
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
         daoFactory = hockeyContext.getDaoFactory();
-        teamDao = daoFactory.newTeamDao();
+        teamDao = daoFactory.createTeamDao();
     }
 
     public List<ITeam> formTeamList() throws Exception {
         List<ITeam> teamList = new ArrayList<>();
-        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         teamList.add(team);
 
-        team = modelFactory.newTeamWithIdDao(3, teamDao);
+        team = modelFactory.createTeamWithIdDao(3, teamDao);
         teamList.add(team);
 
         return teamList;
@@ -43,7 +43,7 @@ public class DivisionMock implements IDivisionDao {
 
     public List<ITeam> formCreateTeamTeamList() throws Exception {
         List<ITeam> teamList = new ArrayList<>();
-        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         teamList.add(team);
         return teamList;
 
@@ -51,7 +51,7 @@ public class DivisionMock implements IDivisionDao {
 
     @Override
     public int addDivision(IDivision division) throws Exception {
-        division = modelFactory.newDivisionWithId(1);
+        division = modelFactory.createDivisionWithId(1);
         return division.getId();
     }
 
@@ -86,7 +86,7 @@ public class DivisionMock implements IDivisionDao {
 
     @Override
     public IDivision loadDivisionByName(String divisionName) throws Exception {
-        IDivision division = modelFactory.newDivision();
+        IDivision division = modelFactory.createDivision();
         division.setName("Division1");
         division.setConferenceId(1);
         division.setTeamList(formTeamList());
@@ -95,7 +95,7 @@ public class DivisionMock implements IDivisionDao {
 
     @Override
     public List<IDivision> loadDivisionListByConferenceId(int conferenceId) throws Exception {
-        IConferenceDao conferenceDao = hockeyContext.getDaoFactory().newConferenceDao();
+        IConferenceDao conferenceDao = hockeyContext.getDaoFactory().createConferenceDao();
         return conferenceDao.formDivisionList();
     }
 

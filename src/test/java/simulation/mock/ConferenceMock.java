@@ -27,16 +27,16 @@ public class ConferenceMock implements IConferenceDao {
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
         daoFactory = hockeyContext.getDaoFactory();
-        divisionDao = daoFactory.newDivisionDao();
+        divisionDao = daoFactory.createDivisionDao();
     }
 
     public List formDivisionList() throws Exception {
         List<IDivision> divisionList = new ArrayList<>();
 
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);
 
-        division = modelFactory.newDivisionWithIdDao(2, divisionDao);
+        division = modelFactory.createDivisionWithIdDao(2, divisionDao);
         divisionList.add(division);
 
         return divisionList;
@@ -45,10 +45,10 @@ public class ConferenceMock implements IConferenceDao {
     public List formCreateTeamDivisionList() throws Exception {
         List<IDivision> divisionList = new ArrayList<>();
 
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);
 
-        division = modelFactory.newDivisionWithIdDao(4, divisionDao);
+        division = modelFactory.createDivisionWithIdDao(4, divisionDao);
         divisionList.add(division);
 
         return divisionList;
@@ -56,7 +56,7 @@ public class ConferenceMock implements IConferenceDao {
 
     @Override
     public int addConference(IConference conference) throws Exception {
-        conference = modelFactory.newConferenceWithId(1);
+        conference = modelFactory.createConferenceWithId(1);
         return conference.getId();
     }
 
@@ -93,7 +93,7 @@ public class ConferenceMock implements IConferenceDao {
 
     @Override
     public IConference loadConferenceByName(String conferenceName) throws Exception {
-        IConference conference = modelFactory.newConference();
+        IConference conference = modelFactory.createConference();
         conference.setName("Conference1");
         conference.setLeagueId(1);
         conference.setDivisionList(formDivisionList());
@@ -102,7 +102,7 @@ public class ConferenceMock implements IConferenceDao {
 
     @Override
     public List<IConference> loadConferenceListByLeagueId(int leagueId) throws Exception {
-        ILeagueDao leagueDao = daoFactory.newLeagueDao();
+        ILeagueDao leagueDao = daoFactory.createLeagueDao();
         return leagueDao.formConferenceList();
     }
 }

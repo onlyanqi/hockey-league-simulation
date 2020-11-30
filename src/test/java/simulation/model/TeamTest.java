@@ -23,41 +23,41 @@ public class TeamTest {
     @BeforeClass
     public static void setFactoryObj() {
         daoFactory = DaoFactoryMock.getInstance();
-        teamDao = daoFactory.newTeamDao();
+        teamDao = daoFactory.createTeamDao();
         modelFactory = ModelFactory.getInstance();
     }
 
     @Test
     public void defaultConstructorTest() {
-        Team team = new Team();
+        ITeam team = modelFactory.createTeam();
         assertNotEquals(team.getId(), 0);
     }
 
     @Test
     public void teamTest() {
-        Team team = new Team(1);
+        ITeam team = modelFactory.createTeamWithId(1);
         assertEquals(team.getId(), 1);
     }
 
     @Test
     public void teamFactoryTest() throws Exception {
-        Team team = new Team(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         assertEquals(team.getId(), 1);
         assertEquals(team.getName(), "Team1");
 
-        team = new Team(2, teamDao);
+        team = modelFactory.createTeamWithIdDao(2, teamDao);
         assertNull(team.getName());
     }
 
     @Test
     public void getMascotTest() throws Exception {
-        Team team = new Team(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         assertEquals(team.getMascot(), ("Tiger1"));
     }
 
     @Test
     public void setMascotTest() {
-        Team team = new Team();
+        ITeam team = modelFactory.createTeam();
         String mascot = "Tiger";
         team.setMascot(mascot);
         assertEquals(team.getMascot(), (mascot));
@@ -99,21 +99,35 @@ public class TeamTest {
 
     @Test
     public void getDivisionIdTest() throws Exception {
-        Team team = new Team(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         assertEquals(team.getDivisionId(), (1));
     }
 
     @Test
     public void setDivisionIdTest() {
-        Team team = new Team();
+        ITeam team = modelFactory.createTeam();
         int divisionId = 1;
         team.setDivisionId(divisionId);
         assertEquals(team.getDivisionId(), divisionId);
     }
 
     @Test
+    public void isAiTeamTest() throws Exception {
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
+        assertTrue(team.isAiTeam());
+    }
+
+    @Test
+    public void setAiTeamTest() {
+        ITeam team = modelFactory.createTeam();
+        boolean aiTeam = true;
+        team.setAiTeam(aiTeam);
+        assertTrue(team.isAiTeam());
+    }
+
+    @Test
     public void getPlayerListTest() throws Exception {
-        ITeam team = new Team(2, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(2, teamDao);
         List<IPlayer> playerList = team.getPlayerList();
         assertNotNull(playerList);
         assertEquals(1, playerList.get(0).getId());
@@ -124,15 +138,15 @@ public class TeamTest {
 
     @Test
     public void setPlayerListTest() throws Exception {
-        IPlayerDao playerFactory = new PlayerMock();
+        IPlayerDao playerFactory = daoFactory.createPlayerDao();
         List<IPlayer> playerList = new ArrayList<>();
         IPlayer player;
         for (int i = 1; i < 31; i++) {
-            player = new Player(i, playerFactory);
+            player = modelFactory.createPlayerWithIdDao(i, playerFactory);
             playerList.add(player);
         }
 
-        Team team = new Team();
+        ITeam team = modelFactory.createTeam();
         team.setPlayerList(playerList);
 
         assertEquals(team.getPlayerList().get(0).getId(), (1));
@@ -180,17 +194,17 @@ public class TeamTest {
 
     @Test
     public void getPlayersTradedCountTest() throws Exception {
-        Team team = new Team(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         assertEquals(team.getPlayersTradedCount(), 0);
         assertNotEquals(team.getPlayersTradedCount(), 2);
-        team = new Team(2, teamDao);
+        team = modelFactory.createTeamWithIdDao(2, teamDao);
         assertEquals(team.getPlayersTradedCount(), 2);
         assertNotEquals(team.getPlayersTradedCount(), 1);
     }
 
     @Test
     public void setPlayersTradedCountTest() {
-        Team team = new Team();
+        ITeam team = modelFactory.createTeam();
         int tradeOfferCountOfSeason = 1;
         team.setPlayersTradedCount(tradeOfferCountOfSeason);
         assertEquals(team.getPlayersTradedCount(), tradeOfferCountOfSeason);
@@ -199,17 +213,17 @@ public class TeamTest {
 
     @Test
     public void getLossPointTest() throws Exception {
-        Team team = new Team(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         assertEquals(team.getLossPoint(), 0);
         assertNotEquals(team.getPlayersTradedCount(), 2);
-        team = new Team(2, teamDao);
+        team = modelFactory.createTeamWithIdDao(2, teamDao);
         assertEquals(team.getLossPoint(), 2);
         assertNotEquals(team.getLossPoint(), 1);
     }
 
     @Test
     public void setLossPointTest() {
-        Team team = new Team();
+        ITeam team = modelFactory.createTeam();
         int lossPoint = 1;
         team.setLossPoint(lossPoint);
         assertEquals(team.getLossPoint(), lossPoint);
@@ -218,10 +232,10 @@ public class TeamTest {
 
     @Test
     public void fixTeamPlayerNumTest() throws Exception {
-        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         List<IPlayer> playerList = team.getPlayerList();
         playerList.remove(0);
-        IFreeAgent freeAgent = modelFactory.newFreeAgentWithIdDao(1, daoFactory.newFreeAgentDao());
+        IFreeAgent freeAgent = modelFactory.createFreeAgentWithIdDao(1, daoFactory.createFreeAgentDao());
         team.fixTeamPlayerNum(freeAgent.getPlayerList());
         int teamSize = team.getPlayerList().size();
         assertEquals(teamSize, 30);
@@ -230,7 +244,7 @@ public class TeamTest {
 
     @Test
     public void getDraftPicksTest() throws Exception {
-        ITeam team = modelFactory.newTeamWithIdDao(1, teamDao);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         List<String> draftPicks = team.getDraftPicks();
         assertNotNull(draftPicks);
         int draftPickSize = draftPicks.size();
@@ -239,7 +253,7 @@ public class TeamTest {
 
     @Test
     public void setDraftPicksTest() throws Exception {
-        ITeam team = modelFactory.newTeam();
+        ITeam team = modelFactory.createTeam();
         List<String> draftPicks = new ArrayList<>(Arrays.asList(
                 null, null, null, null, null, null, null
         ));

@@ -11,7 +11,6 @@ public class Conference extends SharedAttributes implements IConference {
 
     private int leagueId;
     private List<IDivision> divisionList = new ArrayList<>();
-    ;
 
     public Conference() {
         setId(System.identityHashCode(this));

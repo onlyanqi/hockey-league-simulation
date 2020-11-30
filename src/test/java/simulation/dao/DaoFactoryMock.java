@@ -17,46 +17,50 @@ public class DaoFactoryMock implements IDaoFactory {
     }
 
     @Override
-    public IAgingDao newAgingDao() {
+    public IAgingDao createAgingDao() {
         return new AgingMock();
     }
 
     @Override
-    public IConferenceDao newConferenceDao() {
+    public IConferenceDao createConferenceDao() {
         return new ConferenceMock();
     }
 
     @Override
-    public IDivisionDao newDivisionDao() {
+    public IDivisionDao createDivisionDao() {
         return new DivisionMock();
     }
 
-    public ILeagueDao newLeagueDao() {
+    public ILeagueDao createLeagueDao() {
         return new LeagueMock();
     }
 
     @Override
-    public IPlayerDao newPlayerDao() {
+    public IPlayerDao createPlayerDao() {
         return new PlayerMock();
     }
 
-    public ITeamDao newTeamDao() {
+    public ITeamDao createTeamDao() {
         return new TeamMock();
     }
 
-    public ITradingDao newTradingDao() {
+    public ITradingDao createTradingDao() {
         return new TradingMock();
     }
 
-    public ITradeOfferDao newTradeOfferDao() {
+    public ITradeOfferDao createTradeOfferDao() {
         return new TradeOfferMock();
     }
 
-    public IUserDao newUserDao() {
+    public IUserDao createUserDao() {
         return new UserMock();
     }
 
-    public IFreeAgentDao newFreeAgentDao() {
+    public IFreeAgentDao createFreeAgentDao() {
         return new FreeAgentMock();
+    }
+
+    public ISeasonDao createSeasonDao(){
+        return new SeasonMock();
     }
 }

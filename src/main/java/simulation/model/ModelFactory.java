@@ -18,74 +18,74 @@ public class ModelFactory implements IModelFactory {
     }
 
     @Override
-    public IGameSchedule newGameSchedule() {
+    public IGameSchedule createGameSchedule() {
         return new GameSchedule();
     }
 
-    public IAging newAging() {
+    public IAging createAging() {
         return new Aging();
     }
 
     @Override
-    public ICoach newCoach() {
+    public ICoach createCoach() {
         return new Coach();
     }
 
     @Override
-    public ICoach newCoachWithCoach(ICoach coach) {
+    public ICoach createCoachWithCoach(ICoach coach) {
         return new Coach(coach);
     }
 
-    public IConference newConference() {
+    public IConference createConference() {
         return new Conference();
     }
 
-    public IConference newConferenceWithId(int id) {
+    public IConference createConferenceWithId(int id) {
         return new Conference(id);
     }
 
-    public IConference newConferenceWithIdDao(int id, IConferenceDao conferenceDao) throws Exception {
+    public IConference createConferenceWithIdDao(int id, IConferenceDao conferenceDao) throws Exception {
         return new Conference(id, conferenceDao);
     }
 
-    public IDivision newDivision() {
+    public IDivision createDivision() {
         return new Division();
     }
 
-    public IDivision newDivisionWithIdDao(int id, IDivisionDao divisionDao) throws Exception {
+    public IDivision createDivisionWithIdDao(int id, IDivisionDao divisionDao) throws Exception {
         return new Division(id, divisionDao);
     }
 
-    public IDivision newDivisionWithId(int id) {
+    public IDivision createDivisionWithId(int id) {
         return new Division(id);
     }
 
-    public INHLEvents newEvents() {
+    public INHLEvents createEvents() {
         return new NHLEvents();
     }
 
-    public IFreeAgent newFreeAgent() {
+    public IFreeAgent createFreeAgent() {
         return new FreeAgent();
     }
 
     @Override
-    public IGame newGame() {
+    public IGame createGame() {
         return new Game();
     }
 
-    public IGamePlayConfig newGamePlayConfig() {
+    public IGamePlayConfig createGamePlayConfig() {
         return new GamePlayConfig();
     }
 
-    public IInjury newInjury() {
+    public IInjury createInjury() {
         return new Injury();
     }
 
-    public ISimulate newSimulate() {
+    public ISimulate createSimulate() {
         return new Simulate();
     }
 
-    public ILeague newLeague() {
+    public ILeague createLeague() {
         return new League();
     }
 
@@ -93,72 +93,76 @@ public class ModelFactory implements IModelFactory {
         return new League(leagueName, userId, leagueFactory);
     }
 
-    public ILeague createLeagueFromDeserializationObject(LeagueDeserializationModel leagueDeserializationModel) {
-        return new League(leagueDeserializationModel);
-    }
-
     @Override
-    public ILeague newLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception {
+    public ILeague createLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception {
         return new League(id, leagueDao);
     }
 
-    public ISeason newSeason() {
+    public ILeague createLeagueWithId(int id){
+        return new League(id);
+    }
+
+    public ISeason createSeason() {
         return new Season();
     }
 
-    public ITeamScore newTeamScore() {
+    public ITeamScore createTeamScore() {
         return new TeamScore();
     }
 
 
-    public IPlayer newPlayer() {
+    public IPlayer createPlayer() {
         return new Player();
     }
 
-    public IPlayer newPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception {
+    public IPlayer createPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception {
         return new Player(id, playerDao);
     }
 
+    public IPlayer createPlayerWithId(int id){
+        return new Player(id);
+    }
+
     @Override
-    public ITeamStanding newTeamStanding() {
+    public ITeamStanding createTeamStanding() {
         return new TeamStanding();
     }
 
     @Override
-    public INHLEvents newNHLEvents() {
+    public INHLEvents createNHLEvents() {
         return new NHLEvents();
     }
 
     @Override
-    public INHLEvents newNHLEventsByYear(int year) {
+    public INHLEvents createNHLEventsByYear(int year) {
         return new NHLEvents(year);
     }
 
-    public ITradeOffer newTradeOffer() {
+    public ITradeOffer createTradeOffer() {
         return new TradeOffer();
     }
 
-    public ITradeOffer newTradeOfferWithIdDao(int id, ITradeOfferDao tradeOfferDao) throws Exception {
+    public ITradeOffer createTradeOfferWithIdDao(int id, ITradeOfferDao tradeOfferDao) throws Exception {
         return new TradeOffer(id, tradeOfferDao);
     }
 
-    public ITeam newTeam() {
+    public ITeam createTeam() {
         return new Team();
     }
 
-    public ITeam newTeamByName(String name, ITeamDao loadTeamFactory) throws Exception {
+    public ITeam createTeamByName(String name, ITeamDao loadTeamFactory) throws Exception {
         return new Team(name, loadTeamFactory);
     }
 
-    public ITeam newTeamWithIdDao(int id, ITeamDao teamDao) throws Exception {
+    public ITeam createTeamWithIdDao(int id, ITeamDao teamDao) throws Exception {
         return new Team(id, teamDao);
     }
 
-    public ITrading newTrading() {
+    public ITrading createTrading() {
         return new Trading();
     }
 
-    public ITrading newTradingWithIdDao(int id, ITradingDao tradingDao) throws Exception {
+    public ITrading createTradingWithIdDao(int id, ITradingDao tradingDao) throws Exception {
         return new Trading(id, tradingDao);
     }
 
@@ -166,15 +170,15 @@ public class ModelFactory implements IModelFactory {
         return new Manager();
     }
 
-    public IUser newUser() {
+    public IUser createUser() {
         return new User();
     }
 
-    public IUser newUserByName(String name, IUserDao loadUserFactory) throws Exception {
+    public IUser createUserByName(String name, IUserDao loadUserFactory) throws Exception {
         return new User(name, loadUserFactory);
     }
 
-    public IUser newUserWithIdDao(int id, IUserDao userDao) throws Exception {
+    public IUser createUserWithIdDao(int id, IUserDao userDao) throws Exception {
         return new User(id, userDao);
     }
 
@@ -187,11 +191,11 @@ public class ModelFactory implements IModelFactory {
         return new Trophy();
     }
 
-    public IFreeAgent newFreeAgentWithId(int id) {
+    public IFreeAgent createFreeAgentWithId(int id) {
         return new FreeAgent(id);
     }
 
-    public IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception {
+    public IFreeAgent createFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception {
         return new FreeAgent(id, freeAgentDao);
     }
 
@@ -204,4 +208,19 @@ public class ModelFactory implements IModelFactory {
         return new GameSimulation(team1, team2);
     }
 
+    public ISeason createSeasonWithId(int id){
+        return new Season(id);
+    }
+
+    public ISeason createSeasonWithIdDao(int id, ISeasonDao seasonDao) throws Exception {
+        return new Season(id, seasonDao);
+    }
+
+    public ITeam createTeamWithId(int id){
+        return new Team(id);
+    }
+
+    public IUser createUserWithId(int id){
+        return new User(id);
+    }
 }

@@ -3,6 +3,7 @@ package simulation;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
+import presentation.IReadUserInput;
 import presentation.ReadUserInput;
 import simulation.GameSubjectObservers.*;
 import simulation.factory.HockeyContextConcrete;
@@ -24,7 +25,7 @@ public class App {
         String filePath = "";
         JSONObject jsonFromInput = null;
 
-        ReadUserInput readUserInput = ReadUserInput.getInstance();
+        IReadUserInput readUserInput = ReadUserInput.getInstance();
 
         String userName = readUserInput.getInput("Please enter username");
         try {
@@ -36,7 +37,7 @@ public class App {
                 IHockeyContext context = hockeyContextFactory.newHockeyContext();
 
                 IModelFactory userConcrete = context.getModelFactory();
-                IUser user = userConcrete.newUser();
+                IUser user = userConcrete.createUser();
 
                 user.setName(userName);
                 filePath = readUserInput.getInput("Please provide location of JSON file. If not please press ENTER");

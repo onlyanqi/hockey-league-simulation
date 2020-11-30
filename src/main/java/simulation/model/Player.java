@@ -268,7 +268,6 @@ public class Player extends SharedAttributes implements IPlayer {
         this.injuryDatesRange = injuryDatesRange;
     }
 
-
     @Override
     public void addPlayer(IPlayerDao addPlayerFactory) throws Exception {
         if (addPlayerFactory == null) {

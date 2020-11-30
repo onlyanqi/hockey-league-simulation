@@ -212,9 +212,6 @@ public class League extends SharedAttributes implements ILeague {
     }
 
     public void setConferenceList(List<IConference> conferenceList) {
-        if (conferenceList == null) {
-            return;
-        }
         this.conferenceList = conferenceList;
     }
 
@@ -317,7 +314,7 @@ public class League extends SharedAttributes implements ILeague {
             return null;
         }
         int coachListSize = coachList.size();
-        ICoach coach = coachFactory.newCoachWithCoach(coachList.get(coachListSize - 1));
+        ICoach coach = coachFactory.createCoachWithCoach(coachList.get(coachListSize - 1));
         coachList.set(indexOfCoachObject, coach);
         coachList.remove(coachListSize - 1);
         return coachList;
@@ -336,9 +333,6 @@ public class League extends SharedAttributes implements ILeague {
     }
 
     public void setFreeAgent(IFreeAgent freeAgent) {
-        if (freeAgent == null) {
-            return;
-        }
         this.freeAgent = freeAgent;
     }
 

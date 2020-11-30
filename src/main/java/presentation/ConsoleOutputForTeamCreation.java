@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreation {
 
-    private ConsoleOutput consoleOutput;
+    private IConsoleOutput consoleOutput;
 
     public ConsoleOutputForTeamCreation() {
         consoleOutput = ConsoleOutput.getInstance();

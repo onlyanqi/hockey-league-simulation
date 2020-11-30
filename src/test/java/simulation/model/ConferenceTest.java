@@ -28,40 +28,40 @@ public class ConferenceTest {
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
         daoFactory = hockeyContext.getDaoFactory();
-        conferenceDao = daoFactory.newConferenceDao();
+        conferenceDao = daoFactory.createConferenceDao();
     }
 
     @Test
     public void ConferenceTest() {
-        IConference conference = modelFactory.newConference();
+        IConference conference = modelFactory.createConference();
         assertNotEquals(conference.getId(), 0);
     }
 
     @Test
     public void conferenceTest() {
-        IConference conference = modelFactory.newConferenceWithId(1);
+        IConference conference = modelFactory.createConferenceWithId(1);
         assertEquals(conference.getId(), 1);
     }
 
     @Test
     public void conferenceFactoryTest() throws Exception {
-        IConference conference = modelFactory.newConferenceWithIdDao(1, conferenceDao);
+        IConference conference = modelFactory.createConferenceWithIdDao(1, conferenceDao);
         assertEquals(conference.getId(), 1);
         assertEquals(conference.getName(), "Conference1");
 
-        conference = modelFactory.newConferenceWithIdDao(2, conferenceDao);
+        conference = modelFactory.createConferenceWithIdDao(2, conferenceDao);
         assertNull(conference.getName());
     }
 
     @Test
     public void getLeagueIdTest() throws Exception {
-        IConference conference = modelFactory.newConferenceWithIdDao(1, conferenceDao);
+        IConference conference = modelFactory.createConferenceWithIdDao(1, conferenceDao);
         assertTrue(conference.getLeagueId() == (1));
     }
 
     @Test
     public void setLeagueIdTest() {
-        IConference conference = modelFactory.newConference();
+        IConference conference = modelFactory.createConference();
         int leagueId = 1;
         conference.setLeagueId(leagueId);
         assertTrue(conference.getLeagueId() == leagueId);
@@ -69,7 +69,7 @@ public class ConferenceTest {
 
     @Test
     public void getDivisionListTest() throws Exception {
-        IConference conference = modelFactory.newConferenceWithIdDao(1, conferenceDao);
+        IConference conference = modelFactory.createConferenceWithIdDao(1, conferenceDao);
         List<IDivision> divisionList = conference.getDivisionList();
         assertNotNull(divisionList);
 
@@ -81,14 +81,14 @@ public class ConferenceTest {
 
     @Test
     public void setDivisionListTest() throws Exception {
-        IDivisionDao divisionDao = daoFactory.newDivisionDao();
+        IDivisionDao divisionDao = daoFactory.createDivisionDao();
         List<IDivision> divisionList = new ArrayList<>();
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);
-        division = modelFactory.newDivisionWithIdDao(2, divisionDao);
+        division = modelFactory.createDivisionWithIdDao(2, divisionDao);
         divisionList.add(division);
 
-        IConference conference = modelFactory.newConference();
+        IConference conference = modelFactory.createConference();
         conference.setDivisionList(divisionList);
 
         assertTrue(conference.getDivisionList().get(0).getId() == (1));
@@ -99,13 +99,13 @@ public class ConferenceTest {
 
     @Test
     public void getDivisionNameListTest() throws Exception {
-        IDivisionDao divisionDao = daoFactory.newDivisionDao();
+        IDivisionDao divisionDao = daoFactory.createDivisionDao();
         List<IDivision> divisionList = new ArrayList<>();
-        IDivision division = modelFactory.newDivisionWithIdDao(1, divisionDao);
+        IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);
-        division = modelFactory.newDivisionWithIdDao(3, divisionDao);
+        division = modelFactory.createDivisionWithIdDao(3, divisionDao);
         divisionList.add(division);
-        IConference conference = modelFactory.newConference();
+        IConference conference = modelFactory.createConference();
         conference.setDivisionList(divisionList);
         List<String> divisionNameList = conference.getDivisionNameList();
         String indexZero = "division1";
@@ -115,7 +115,7 @@ public class ConferenceTest {
 
     @Test
     public void getDivisionFromListByNameTest() throws Exception {
-        IConference conference = modelFactory.newConferenceWithIdDao(1, conferenceDao);
+        IConference conference = modelFactory.createConferenceWithIdDao(1, conferenceDao);
         String divisionName = "Division1";
         IDivision division = conference.getDivisionFromListByName(divisionName);
         assertEquals(division.getName(), divisionName);
@@ -125,7 +125,7 @@ public class ConferenceTest {
 
     @Test
     public void addConferenceTest() throws Exception {
-        IConference conference = modelFactory.newConference();
+        IConference conference = modelFactory.createConference();
         conference.setId(1);
         conference.setName("Conference1");
         conference.addConference(conferenceDao);
@@ -135,8 +135,8 @@ public class ConferenceTest {
 
     @Test
     public void loadDivisionListByConferenceIdTest() throws Exception {
-        IConference conference = modelFactory.newConferenceWithId(1);
-        IDivisionDao divisionDao = daoFactory.newDivisionDao();
+        IConference conference = modelFactory.createConferenceWithId(1);
+        IDivisionDao divisionDao = daoFactory.createDivisionDao();
         conference.loadDivisionListByConferenceId(divisionDao);
 
         assertTrue(conference.getDivisionList().get(0).getId() == (1));

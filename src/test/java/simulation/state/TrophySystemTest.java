@@ -3,6 +3,7 @@ package simulation.state;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import presentation.ConsoleOutput;
+import presentation.IConsoleOutput;
 import simulation.dao.ICoachDao;
 import simulation.dao.ILeagueDao;
 import simulation.dao.IUserDao;
@@ -23,7 +24,7 @@ import static org.junit.Assert.*;
 public class TrophySystemTest {
     static IHockeyContext hockeyContext;
     static private ILeague league;
-    static private ConsoleOutput consoleOutput;
+    static private IConsoleOutput consoleOutput;
     static private ITrophy trophy;
 
     @BeforeClass

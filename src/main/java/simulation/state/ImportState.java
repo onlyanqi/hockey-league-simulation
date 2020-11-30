@@ -75,7 +75,7 @@ public class ImportState implements IHockeyState {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
         if (league == null) {
-            league = hockeyContext.getModelFactory().newLeague();
+            league = hockeyContext.getModelFactory().createLeague();
         }
         leagueId = league.getId();
     }
@@ -122,7 +122,7 @@ public class ImportState implements IHockeyState {
             List<IConference> conferenceList = loadConferenceJSON(conferences);
 
             IModelFactory freeAgentConcrete = hockeyContext.getModelFactory();
-            IFreeAgent freeAgent = freeAgentConcrete.newFreeAgent();
+            IFreeAgent freeAgent = freeAgentConcrete.createFreeAgent();
             List<IPlayer> freeAgentList = loadFreeAgentJSON(freeAgents);
             freeAgent.setPlayerList(freeAgentList);
 
@@ -205,7 +205,7 @@ public class ImportState implements IHockeyState {
 
     private IGamePlayConfig loadGamePlayConfigJSON(JSONObject gameplayConfigJSONObject) throws IllegalArgumentException {
         IModelFactory gamePlayConfigConcrete = hockeyContext.getModelFactory();
-        IGamePlayConfig gamePlayConfig = gamePlayConfigConcrete.newGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = gamePlayConfigConcrete.createGamePlayConfig();
 
         if (validateKeyInObject(gameplayConfigJSONObject, AGING)) {
             throw new IllegalArgumentException("Please make sure aging is provided in JSON");
@@ -354,7 +354,7 @@ public class ImportState implements IHockeyState {
 
     private ICoach setCoachVariables(String coachName, Double skating, Double shooting, Double checking, Double saving) {
         IModelFactory coachConcrete = hockeyContext.getModelFactory();
-        ICoach coach = coachConcrete.newCoach();
+        ICoach coach = coachConcrete.createCoach();
         coach.setName(coachName);
         coach.setSkating(skating);
         coach.setShooting(shooting);
@@ -365,7 +365,7 @@ public class ImportState implements IHockeyState {
 
     private ITeam setTeamVariables(String teamName, IManager manager, ICoach coach, List<IPlayer> playerList) throws IllegalArgumentException {
         IModelFactory teamConcrete = hockeyContext.getModelFactory();
-        ITeam team = teamConcrete.newTeam();
+        ITeam team = teamConcrete.createTeam();
         team.setName(teamName);
         team.setManager(manager);
         team.setCoach(coach);
@@ -513,7 +513,7 @@ public class ImportState implements IHockeyState {
                                            boolean captain, LocalDate birthday,
                                            int skating, int shooting, int checking, int saving) {
         IModelFactory playerConcrete = hockeyContext.getModelFactory();
-        IPlayer player = playerConcrete.newPlayer();
+        IPlayer player = playerConcrete.createPlayer();
         player.setName(playerName);
         player.setPosition(position);
         player.setCaptain(captain);
@@ -587,7 +587,7 @@ public class ImportState implements IHockeyState {
             }
 
             IModelFactory conferenceConcrete = hockeyContext.getModelFactory();
-            IConference conference = conferenceConcrete.newConference();
+            IConference conference = conferenceConcrete.createConference();
             conference.setLeagueId(leagueId);
             conference.setName(conferenceName);
             conferenceId = conference.getId();
@@ -654,7 +654,7 @@ public class ImportState implements IHockeyState {
 
     private IPlayer setFreePlayerVariables(String playerName, Position position, LocalDate birthday, int skating, int shooting, int checking, int saving) {
         IModelFactory playerConcrete = hockeyContext.getModelFactory();
-        IPlayer player = playerConcrete.newPlayer();
+        IPlayer player = playerConcrete.createPlayer();
         player.setName(playerName);
         player.setPosition(position);
         player.setBirthday(birthday);
@@ -727,7 +727,7 @@ public class ImportState implements IHockeyState {
         Double statDecayChance = (Double) agingJSONObject.get(STAT_DECAY_CHANCE);
 
         IModelFactory agingFactory = hockeyContext.getModelFactory();
-        IAging aging = agingFactory.newAging();
+        IAging aging = agingFactory.createAging();
         aging.setAverageRetirementAge(averageRetirementAge);
         aging.setMaximumAge(maximumAge);
         aging.setStatDecayChance(statDecayChance);
@@ -751,7 +751,7 @@ public class ImportState implements IHockeyState {
         int injuryDaysHigh = (int) (long) injuriesJSONObject.get(INJURY_DAYS_HIGH);
 
         IModelFactory injuryConcrete = hockeyContext.getModelFactory();
-        IInjury injury = injuryConcrete.newInjury();
+        IInjury injury = injuryConcrete.createInjury();
         injury.setRandomInjuryChance(randomInjuryChance);
         injury.setInjuryDaysLow(injuryDaysLow);
         injury.setInjuryDaysHigh(injuryDaysHigh);
@@ -803,7 +803,7 @@ public class ImportState implements IHockeyState {
         }
 
         IModelFactory tradingConcrete = hockeyContext.getModelFactory();
-        ITrading trading = tradingConcrete.newTrading();
+        ITrading trading = tradingConcrete.createTrading();
         trading.setLossPoint(lossPoint);
         trading.setRandomTradeOfferChance(randomTradeOfferChance);
         trading.setMaxPlayersPerTrade(maxPlayersPerTrade);
@@ -834,7 +834,7 @@ public class ImportState implements IHockeyState {
         double goalChance = (Double) injuriesJSONObject.get(GOAL_CHANCE);
 
         IModelFactory simulateConcrete = hockeyContext.getModelFactory();
-        ISimulate simulate = simulateConcrete.newSimulate();
+        ISimulate simulate = simulateConcrete.createSimulate();
         simulate.setUpset(upset);
         simulate.setPenaltyChance(penaltyChance);
         simulate.setDefendChance(defendChance);

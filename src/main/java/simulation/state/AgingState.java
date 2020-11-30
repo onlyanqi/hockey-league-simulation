@@ -1,6 +1,7 @@
 package simulation.state;
 
 import presentation.ConsoleOutput;
+import presentation.IConsoleOutput;
 import simulation.model.*;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class AgingState implements ISimulateState {
     private IHockeyContext hockeyContext;
     private ILeague league;
     private IAging aging;
-    private ConsoleOutput consoleOutput;
+    private IConsoleOutput consoleOutput;
 
 
     public AgingState(IHockeyContext hockeyContext) {

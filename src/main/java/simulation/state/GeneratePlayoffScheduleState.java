@@ -118,7 +118,7 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
         LocalDate currentDate = startDate;
         for (Integer i = 0; i < numberOfGamesPerTeam; i++) {
             IModelFactory gameFactory = hockeyContext.getModelFactory();
-            IGame game = gameFactory.newGame();
+            IGame game = gameFactory.createGame();
             game.setTeam1(team1);
             game.setTeam2(team2);
             game.setDate(currentDate);
