@@ -2,7 +2,7 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.ISeasonDao;
+import persistance.dao.ISeasonDao;
 import simulation.mock.SeasonMock;
 
 import static org.junit.Assert.*;

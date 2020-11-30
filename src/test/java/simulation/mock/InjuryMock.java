@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import simulation.dao.IInjuryDao;
+import persistance.dao.IInjuryDao;
 import simulation.model.IInjury;
 import simulation.model.Injury;
 

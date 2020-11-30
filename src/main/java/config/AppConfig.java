@@ -6,7 +6,7 @@ import presentation.IUserInputForTeamCreation;
 import presentation.UseInputForTeamCreation;
 import simulation.model.IModelFactory;
 import simulation.model.ModelFactory;
-import simulation.serializers.LeagueDataSerializerDeSerializer;
+import persistance.serializers.LeagueDataSerializerDeSerializer;
 
 public class AppConfig {
 
@@ -24,10 +24,6 @@ public class AppConfig {
         dataSerializer = new LeagueDataSerializerDeSerializer();
     }
 
-    public LeagueDataSerializerDeSerializer getDataSerializerDeSerializer() {
-        return dataSerializer;
-    }
-
     public static AppConfig getInstance() {
         if (null == AppConfig.getUniqueInstance()) {
             appConfig = new AppConfig();
@@ -37,6 +33,10 @@ public class AppConfig {
 
     private static Object getUniqueInstance() {
         return appConfig;
+    }
+
+    public LeagueDataSerializerDeSerializer getDataSerializerDeSerializer() {
+        return dataSerializer;
     }
 
     public IUserInputForTeamCreation getInputForTeamCreation() {

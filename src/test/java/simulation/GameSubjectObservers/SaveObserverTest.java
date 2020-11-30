@@ -2,8 +2,8 @@ package simulation.GameSubjectObservers;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IGameDao;
-import simulation.dao.IUserDao;
+import persistance.dao.IGameDao;
+import persistance.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.GameMock;

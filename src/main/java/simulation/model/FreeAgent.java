@@ -1,8 +1,8 @@
 package simulation.model;
 
-import simulation.dao.IFreeAgentDao;
-import simulation.dao.IPlayerDao;
-import simulation.serializers.ModelsForDeserialization.model.Player;
+import persistance.dao.IFreeAgentDao;
+import persistance.dao.IPlayerDao;
+import persistance.serializers.ModelsForDeserialization.model.Player;
 import simulation.state.HockeyContext;
 import simulation.state.IHockeyContext;
 
@@ -27,12 +27,12 @@ public class FreeAgent extends SharedAttributes implements IFreeAgent {
         loadFreeAgentFactory.loadFreeAgentById(id, this);
     }
 
-    public FreeAgent(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent) {
+    public FreeAgent(persistance.serializers.ModelsForDeserialization.model.FreeAgent freeAgent) {
         IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
         IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         this.leagueId = freeAgent.leagueId;
         for (Player player : freeAgent.playerList) {
-            this.playerList.add(modelFactory.newPlayerFromSerialization(player));
+            this.playerList.add(modelFactory.createPlayerFromSerialization(player));
         }
         this.seasonId = freeAgent.seasonId;
         this.setName(freeAgent.name);

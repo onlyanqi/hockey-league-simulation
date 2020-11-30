@@ -2,7 +2,7 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.*;
+import persistance.dao.*;
 import simulation.mock.*;
 
 import java.util.ArrayList;

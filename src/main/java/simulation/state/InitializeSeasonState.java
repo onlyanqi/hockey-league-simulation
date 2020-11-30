@@ -43,12 +43,12 @@ public class InitializeSeasonState implements ISimulateState {
     public void InitializeRegularSeason() {
 
         IModelFactory modelFactory = hockeyContext.getModelFactory();
-        INHLEvents nhlEvents = modelFactory.newNHLEventsByYear(league.getCurrentDate().getYear());
+        INHLEvents nhlEvents = modelFactory.createNHLEventsByYear(league.getCurrentDate().getYear());
         LocalDate regularSeasonStartDate = nhlEvents.getRegularSeasonStartDate();
         LocalDate previousDateOfRegularSeasonStart = DateTime.minusDays(nhlEvents.getRegularSeasonStartDate(), 1);
         LocalDate endDate = nhlEvents.getEndOfRegularSeason();
-        IGameSchedule games = modelFactory.newGameSchedule();
-        ITeamStanding regularSeasonTeamStanding = modelFactory.newTeamStanding();
+        IGameSchedule games = modelFactory.createGameSchedule();
+        ITeamStanding regularSeasonTeamStanding = modelFactory.createTeamStanding();
         List<IGame> tempGameList = new ArrayList<>();
         int diffInDays = (int) DateTime.diffDays(previousDateOfRegularSeasonStart, endDate);
 
@@ -74,7 +74,7 @@ public class InitializeSeasonState implements ISimulateState {
         regularSeasonTeamStanding.initializeTeamStandingsRegularSeason(league);
 
         league.setRegularSeasonStanding(regularSeasonTeamStanding);
-        league.setPlayOffStanding(hockeyContext.getModelFactory().newTeamStanding());
+        league.setPlayOffStanding(hockeyContext.getModelFactory().createTeamStanding());
         league.setGames(games);
         league.setActiveTeamStanding(league.getRegularSeasonStanding());
         league.setStanleyCupFinalsTeamScores(new HashMap<>());
@@ -124,7 +124,7 @@ public class InitializeSeasonState implements ISimulateState {
                     continue;
                 }
                 IModelFactory gameFactory = hockeyContext.getModelFactory();
-                IGame game = gameFactory.newGame();
+                IGame game = gameFactory.createGame();
                 game.setTeam1(team.getName());
                 game.setTeam2(teamOutsideDivision.getName());
                 tempGameList.add(game);
@@ -142,7 +142,7 @@ public class InitializeSeasonState implements ISimulateState {
                 continue;
             }
             IModelFactory factory = hockeyContext.getModelFactory();
-            IGame game = factory.newGame();
+            IGame game = factory.createGame();
             game.setTeam1(team.getName());
             game.setTeam2(teamInsideDivision.getName());
             tempGameList.add(game);

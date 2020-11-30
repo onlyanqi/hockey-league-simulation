@@ -3,9 +3,9 @@ package simulation.model;
 import config.AppConfig;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
-import simulation.dao.IPlayerDao;
-import simulation.dao.ITeamDao;
-import simulation.serializers.ModelsForDeserialization.model.Player;
+import persistance.dao.IPlayerDao;
+import persistance.dao.ITeamDao;
+import persistance.serializers.ModelsForDeserialization.model.Player;
 import simulation.state.HockeyContext;
 import simulation.state.IHockeyContext;
 
@@ -46,26 +46,26 @@ public class Team extends SharedAttributes implements ITeam {
         factory.loadTeamByName(name, this);
     }
 
-    public Team(simulation.serializers.ModelsForDeserialization.model.Team team) {
+    public Team(persistance.serializers.ModelsForDeserialization.model.Team team) {
         IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
         IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
 
         for (Player player : team.activePlayerList) {
-            IPlayer playerInstance = modelFactory.newPlayerFromSerialization(player);
+            IPlayer playerInstance = modelFactory.createPlayerFromSerialization(player);
             this.activePlayerList.add(playerInstance);
         }
         this.aiTeam = team.aiTeam;
-        this.coach = modelFactory.newCoachFromDeserialization(team.coach);
+        this.coach = modelFactory.createCoachFromDeserialization(team.coach);
         this.divisionId = team.divisionId;
         this.draftPicks = team.draftPicks;
         for (Player player : team.inactivePlayerList) {
-            this.inactivePlayerList.add(modelFactory.newPlayerFromSerialization(player));
+            this.inactivePlayerList.add(modelFactory.createPlayerFromSerialization(player));
         }
         this.lossPoint = team.lossPoint;
-        this.manager = modelFactory.newManagerFromDeserialization(team.manager);
+        this.manager = modelFactory.createManagerFromDeserialization(team.manager);
         this.mascot = team.mascot;
         for (Player player : team.playerList) {
-            this.playerList.add(modelFactory.newPlayerFromSerialization(player));
+            this.playerList.add(modelFactory.createPlayerFromSerialization(player));
         }
         this.playersTradedCount = team.playersTradedCount;
         this.strength = team.strength;

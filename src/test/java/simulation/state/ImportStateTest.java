@@ -3,7 +3,7 @@ package simulation.state;
 import org.json.simple.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.ILeagueDao;
+import persistance.dao.ILeagueDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.JSONControllerMock;
@@ -51,7 +51,6 @@ public class ImportStateTest {
         assertNotNull(hockeyContext.getUser().getLeague());
         assertEquals(hockeyContext.getUser().getLeague().getName(), "Dalhousie Hockey League");
         assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getAging().getMaximumAge(), 50);
-        //assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getGameResolver().getRandomWinChance(), (Double) 0.1);
         assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getInjury().getInjuryDaysLow(), 1);
         assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck(), 100);
         assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getTrading().getMaxPlayersPerTrade(), 2);

@@ -4,7 +4,7 @@ import config.AppConfig;
 import org.json.simple.JSONObject;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
-import simulation.dao.IDaoFactory;
+import persistance.dao.IDaoFactory;
 import simulation.model.IModelFactory;
 import simulation.model.IUser;
 

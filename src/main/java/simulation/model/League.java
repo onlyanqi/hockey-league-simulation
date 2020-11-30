@@ -1,21 +1,23 @@
 package simulation.model;
 
-import simulation.dao.IConferenceDao;
-import simulation.dao.IFreeAgentDao;
-import simulation.dao.ILeagueDao;
-import simulation.dao.ITradeOfferDao;
-import simulation.serializers.ModelsForDeserialization.model.Coach;
-import simulation.serializers.ModelsForDeserialization.model.Conference;
-import simulation.serializers.ModelsForDeserialization.model.Player;
-import simulation.serializers.ModelsForDeserialization.model.TradeOffer;
-import simulation.serializers.ModelsForDeserialization.model.*;
+import persistance.serializers.ModelsForDeserialization.model.*;
+import persistance.dao.IConferenceDao;
+import persistance.dao.IFreeAgentDao;
+import persistance.dao.ILeagueDao;
+import persistance.dao.ITradeOfferDao;
+import persistance.serializers.ModelsForDeserialization.model.Coach;
+import persistance.serializers.ModelsForDeserialization.model.Conference;
+import persistance.serializers.ModelsForDeserialization.model.Manager;
+import persistance.serializers.ModelsForDeserialization.model.Player;
+import persistance.serializers.ModelsForDeserialization.model.Team;
+import persistance.serializers.ModelsForDeserialization.model.TeamScore;
+import persistance.serializers.ModelsForDeserialization.model.TradeOffer;
+import persistance.serializers.ModelsForDeserialization.model.Trophy;
 import simulation.state.HockeyContext;
 import simulation.state.IHockeyContext;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class League extends SharedAttributes implements ILeague {
 
@@ -34,7 +36,9 @@ public class League extends SharedAttributes implements ILeague {
     private ITeamStanding regularSeasonStanding;
     private ITeamStanding playOffStanding;
     private ITeamStanding activeTeamStanding;
-    private HashMap<ITeam, Integer> stanleyCupFinalsTeamScores = new HashMap<>();
+
+
+    private transient HashMap<ITeam, Integer> stanleyCupFinalsTeamScores = new HashMap<>();
     private ArrayList<TeamStat> teamStats = new ArrayList<>();
     private INHLEvents nhlEvents;
     private List<ITradeOffer> tradeOfferList = new ArrayList<>();
@@ -66,7 +70,7 @@ public class League extends SharedAttributes implements ILeague {
         IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         this.activeTeamStanding = modelFactory.createTeamStandingFromDeserialization(leagueDeserializationModel.activeTeamStanding);
         for (Coach coach : leagueDeserializationModel.coachList) {
-            this.coachList.add(modelFactory.newCoachFromDeserialization(coach));
+            this.coachList.add(modelFactory.createCoachFromDeserialization(coach));
         }
         for (Conference conference : leagueDeserializationModel.conferenceList) {
             this.conferenceList.add(modelFactory.creatConferenceFromDeserialization(conference));
@@ -76,28 +80,23 @@ public class League extends SharedAttributes implements ILeague {
         this.freeAgent = modelFactory.creatFreeAgentFromDeserialization(leagueDeserializationModel.freeAgent);
         this.gamePlayConfig = modelFactory.creatGamePlayConfigFromDeserialization(leagueDeserializationModel.gamePlayConfig);
         this.games = modelFactory.createGameScheduleFromDeserialization(leagueDeserializationModel.games);
-        for (simulation.serializers.ModelsForDeserialization.model.Manager manager : leagueDeserializationModel.managerList) {
-            this.managerList.add(modelFactory.newManagerFromDeserialization(manager));
+        for (Manager manager : leagueDeserializationModel.managerList) {
+            this.managerList.add(modelFactory.createManagerFromDeserialization(manager));
         }
         this.nhlEvents = modelFactory.createNHLEventsFromDeserialization(leagueDeserializationModel.nhlEvents);
         this.playOffStanding = modelFactory.createTeamStandingFromDeserialization(leagueDeserializationModel.playOffStanding);
         this.regularSeasonStanding = modelFactory.createTeamStandingFromDeserialization(leagueDeserializationModel.regularSeasonStanding);
         for (Player player : leagueDeserializationModel.retiredPlayerList) {
-            this.retiredPlayerList.add(modelFactory.newPlayerFromSerialization(player));
+            this.retiredPlayerList.add(modelFactory.createPlayerFromSerialization(player));
         }
         for (Player player : leagueDeserializationModel.draftedPlayerList) {
-            this.draftedPlayerList.add(modelFactory.newPlayerFromSerialization(player));
-        }
-        if (leagueDeserializationModel.stanleyCupFinalsTeamScores == null) {
-            this.stanleyCupFinalsTeamScores = new HashMap<>();
-        } else {
-            this.stanleyCupFinalsTeamScores = leagueDeserializationModel.stanleyCupFinalsTeamScores;
+            this.draftedPlayerList.add(modelFactory.createPlayerFromSerialization(player));
         }
 
         if (leagueDeserializationModel.teamStats == null) {
             this.teamStats = new ArrayList<>();
         } else {
-            for (simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat : leagueDeserializationModel.teamStats) {
+            for (persistance.serializers.ModelsForDeserialization.model.TeamStat teamStat : leagueDeserializationModel.teamStats) {
                 this.teamStats.add(modelFactory.createTeamStatFromDeserialization(teamStat));
             }
         }
@@ -107,12 +106,12 @@ public class League extends SharedAttributes implements ILeague {
             this.tradeOfferList.add(modelFactory.createTradeOfferFromDeserialization(tradeOffer));
         }
 
-        for (simulation.serializers.ModelsForDeserialization.model.Trophy trophy : leagueDeserializationModel.historicalTrophyList) {
+        for (Trophy trophy : leagueDeserializationModel.historicalTrophyList) {
             this.historicalTrophyList.add(modelFactory.createTrophyFromDeserialization(trophy));
         }
 
         if (leagueDeserializationModel.trophy == null) {
-            this.trophy = modelFactory.newTrophy();
+            this.trophy = modelFactory.createTrophy();
         } else {
             this.trophy = modelFactory.createTrophyFromDeserialization(leagueDeserializationModel.trophy);
         }
@@ -324,7 +323,7 @@ public class League extends SharedAttributes implements ILeague {
             return null;
         }
         int coachListSize = coachList.size();
-        ICoach coach = coachFactory.newCoachWithCoach(coachList.get(coachListSize - 1));
+        ICoach coach = coachFactory.createCoachWithCoach(coachList.get(coachListSize - 1));
         coachList.set(indexOfCoachObject, coach);
         coachList.remove(coachListSize - 1);
         return coachList;

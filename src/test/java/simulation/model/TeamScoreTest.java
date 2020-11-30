@@ -2,7 +2,7 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.ITeamScoreDao;
+import persistance.dao.ITeamScoreDao;
 import simulation.mock.TeamScoreMock;
 
 import static org.junit.Assert.*;

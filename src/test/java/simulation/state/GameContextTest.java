@@ -3,8 +3,8 @@ package simulation.state;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IGameDao;
-import simulation.dao.IUserDao;
+import persistance.dao.IGameDao;
+import persistance.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.GameMock;
@@ -35,7 +35,7 @@ public class GameContextTest {
         hockeyContext.setUser(user);
         team11 = hockeyContext.getUser().getLeague().getTeamByTeamName("Team11");
         team12 = hockeyContext.getUser().getLeague().getTeamByTeamName("Team12");
-        gameSimulation = hockeyContext.getModelFactory().newGameSimulationFromTeams(team11, team12);
+        gameSimulation = hockeyContext.getModelFactory().createGameSimulationFromTeams(team11, team12);
         gameSimulation.setTeam1Shift(gameSimulation.getTeam1Shift().getShift(team11, gameSimulation.getTeamPlayersCount()));
         gameSimulation.setTeam2Shift(gameSimulation.getTeam2Shift().getShift(team12, gameSimulation.getTeamPlayersCount()));
     }

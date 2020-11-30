@@ -1,7 +1,7 @@
 package simulation.mock;
 
-import simulation.dao.ILeagueDao;
-import simulation.dao.IPlayerDao;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IPlayerDao;
 import simulation.model.*;
 
 import java.time.LocalDate;

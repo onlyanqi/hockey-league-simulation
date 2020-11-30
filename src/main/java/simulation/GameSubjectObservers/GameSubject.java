@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 public abstract class GameSubject {
+//Source: https://refactoring.guru/design-patterns/observer
 
     private static Logger log = Logger.getLogger(GameSubject.class);
     private final List<IGameObserver> observers;

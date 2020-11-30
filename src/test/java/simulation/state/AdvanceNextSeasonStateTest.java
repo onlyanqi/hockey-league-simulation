@@ -1,8 +1,8 @@
 package simulation.state;
 
 import org.junit.BeforeClass;
-import simulation.dao.IPlayerDao;
-import simulation.dao.IUserDao;
+import persistance.dao.IPlayerDao;
+import persistance.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.PlayerMock;

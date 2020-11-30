@@ -505,7 +505,7 @@ public class ExecuteTradeState implements ISimulateState {
         ITeam fromTeam = (ITeam) swap.get(FROMTEAM);
         ITeam toTeam = (ITeam) swap.get(TOTEAM);
         IModelFactory tradeOfferConcrete = hockeyContext.getModelFactory();
-        ITradeOffer tradeOffer = tradeOfferConcrete.newTradeOffer();
+        ITradeOffer tradeOffer = tradeOfferConcrete.createTradeOffer();
         try {
             tradeOffer.setLeagueId(league.getId());
             tradeOffer.setTradingId(trading.getId());

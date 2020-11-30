@@ -1,7 +1,7 @@
 package simulation.model;
 
 import org.apache.log4j.Logger;
-import simulation.serializers.ModelsForDeserialization.model.Game;
+import persistance.serializers.ModelsForDeserialization.model.Game;
 import simulation.state.HockeyContext;
 import simulation.state.IHockeyContext;
 
@@ -19,7 +19,7 @@ public class GameSchedule implements IGameSchedule {
         setId(System.identityHashCode(this));
     }
 
-    public GameSchedule(simulation.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule) {
+    public GameSchedule(persistance.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule) {
         IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
         IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         this.id = gameSchedule.id;

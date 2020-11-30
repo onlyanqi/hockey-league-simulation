@@ -141,7 +141,7 @@ public class CreateTeamState implements IHockeyState {
         List<String> teamNameList = division.getTeamNameList();
         String teamName = teamCreationInput.getTeamName(teamNameList);
         IModelFactory teamFactory = hockeyContext.getModelFactory();
-        team = teamFactory.newTeam();
+        team = teamFactory.createTeam();
         team.setName(teamName);
         team.setAiTeam(false);
     }
@@ -182,7 +182,7 @@ public class CreateTeamState implements IHockeyState {
         teamCreationOutput.showCoachListOnScreen(coachList);
         int headCoachId = teamCreationInput.getHeadCoachId(coachList);
         IModelFactory coachFactory = hockeyContext.getModelFactory();
-        ICoach headCoach = coachFactory.newCoachWithCoach(coachList.get(headCoachId));
+        ICoach headCoach = coachFactory.createCoachWithCoach(coachList.get(headCoachId));
         team.setCoach(headCoach);
         coachList = league.removeCoachFromCoachListById(coachList, headCoachId, coachFactory);
         teamCreationOutput.showSuccessfulCoachCreationMessage();

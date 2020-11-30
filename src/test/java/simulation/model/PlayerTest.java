@@ -3,9 +3,9 @@ package simulation.model;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.ILeagueDao;
-import simulation.dao.IPlayerDao;
+import persistance.dao.IDaoFactory;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IPlayerDao;
 import simulation.mock.LeagueMock;
 
 import java.time.LocalDate;
@@ -303,13 +303,13 @@ public class PlayerTest {
 
     @Test
     public void getRelativeStrengthTest() throws Exception {
-        IPlayer player = modelFactory.newPlayerWithIdDao(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertTrue(player.getRelativeStrength() == (7.8));
     }
 
     @Test
     public void setRelativeStrengthTest() {
-        IPlayer player = modelFactory.newPlayer();
+        IPlayer player = modelFactory.createPlayer();
         player.setSkating(15);
         player.setShooting(18);
         player.setChecking(12);

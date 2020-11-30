@@ -18,11 +18,11 @@ public class TeamStanding implements ITeamStanding {
         setId(System.identityHashCode(this));
     }
 
-    public TeamStanding(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding) {
+    public TeamStanding(persistance.serializers.ModelsForDeserialization.model.TeamStanding teamStanding) {
         IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
         IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         this.id = teamStanding.id;
-        for (simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore : teamStanding.teamsScoreList) {
+        for (persistance.serializers.ModelsForDeserialization.model.TeamScore teamScore : teamStanding.teamsScoreList) {
             this.teamsScoreList.add(modelFactory.createTeamScoreFromDeserialization(teamScore));
         }
     }

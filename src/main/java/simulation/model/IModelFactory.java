@@ -1,126 +1,141 @@
 package simulation.model;
 
-import simulation.dao.*;
+import persistance.dao.*;
+import persistance.serializers.ModelsForDeserialization.model.Coach;
+import persistance.serializers.ModelsForDeserialization.model.Conference;
+import persistance.serializers.ModelsForDeserialization.model.Division;
+import persistance.serializers.ModelsForDeserialization.model.FreeAgent;
+import persistance.serializers.ModelsForDeserialization.model.Game;
+import persistance.serializers.ModelsForDeserialization.model.GamePlayConfig;
+import persistance.serializers.ModelsForDeserialization.model.GameSchedule;
+import persistance.serializers.ModelsForDeserialization.model.Manager;
+import persistance.serializers.ModelsForDeserialization.model.NHLEvents;
+import persistance.serializers.ModelsForDeserialization.model.Player;
+import persistance.serializers.ModelsForDeserialization.model.Team;
+import persistance.serializers.ModelsForDeserialization.model.TeamScore;
+import persistance.serializers.ModelsForDeserialization.model.TeamStanding;
+import persistance.serializers.ModelsForDeserialization.model.TradeOffer;
+import persistance.serializers.ModelsForDeserialization.model.Trophy;
 
 public interface IModelFactory {
 
-    IAging newAging();
+    IAging createAging();
 
-    ICoach newCoach();
+    ICoach createCoach();
 
-    ICoach newCoachWithCoach(ICoach coach);
+    ICoach createCoachWithCoach(ICoach coach);
 
-    IConference newConference();
+    IConference createConference();
 
-    IConference newConferenceWithId(int id);
+    IConference createConferenceWithId(int id);
 
-    IConference newConferenceWithIdDao(int id, IConferenceDao conferenceDao) throws Exception;
+    IConference createConferenceWithIdDao(int id, IConferenceDao conferenceDao) throws Exception;
 
-    IDivision newDivision();
+    IDivision createDivision();
 
-    IDivision newDivisionWithIdDao(int id, IDivisionDao divisionDao) throws Exception;
+    IDivision createDivisionWithIdDao(int id, IDivisionDao divisionDao) throws Exception;
 
-    IDivision newDivisionWithId(int id);
+    IDivision createDivisionWithId(int id);
 
-    INHLEvents newEvents();
+    INHLEvents createEvents();
 
-    IFreeAgent newFreeAgent();
+    IFreeAgent createFreeAgent();
 
-    IGame newGame();
+    IGame createGame();
 
-    IGamePlayConfig newGamePlayConfig();
+    IGamePlayConfig createGamePlayConfig();
 
-    IGameSchedule newGameSchedule();
+    IGameSchedule createGameSchedule();
 
-    IInjury newInjury();
+    IInjury createInjury();
 
-    ILeague newLeague();
+    ILeague createLeague();
 
-    ISimulate newSimulate();
+    ISimulate createSimulate();
 
     ILeague createLeagueFromNameAndUserId(String leagueName, int userId, ILeagueDao leagueFactory) throws Exception;
 
-    ILeague newLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception;
+    ILeague createLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception;
 
-    IManager newManagerConcrete();
+    IManager createManagerConcrete();
 
-    INHLEvents newNHLEvents();
+    INHLEvents createNHLEvents();
 
-    INHLEvents newNHLEventsByYear(int year);
+    INHLEvents createNHLEventsByYear(int year);
 
-    IPlayer newPlayer();
+    IPlayer createPlayer();
 
-    IPlayer newPlayerFromSerialization(simulation.serializers.ModelsForDeserialization.model.Player player);
+    IPlayer createPlayerFromSerialization(Player player);
 
-    IPlayer newPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception;
+    IPlayer createPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception;
 
-    ISeason newSeason();
+    ISeason createSeason();
 
-    ITeam newTeam();
+    ITeam createTeam();
 
-    ITeam newTeamByName(String name, ITeamDao loadTeamFactory) throws Exception;
+    ITeam createTeamByName(String name, ITeamDao loadTeamFactory) throws Exception;
 
-    ITeam newTeamWithIdDao(int id, ITeamDao teamDao) throws Exception;
+    ITeam createTeamWithIdDao(int id, ITeamDao teamDao) throws Exception;
 
-    ITeamScore newTeamScore();
+    ITeamScore createTeamScore();
 
-    ITeamStanding newTeamStanding();
+    ITeamStanding createTeamStanding();
 
-    ITradeOffer newTradeOffer();
+    ITradeOffer createTradeOffer();
 
-    ITradeOffer newTradeOfferWithIdDao(int id, ITradeOfferDao tradeOfferDao) throws Exception;
+    ITradeOffer createTradeOfferWithIdDao(int id, ITradeOfferDao tradeOfferDao) throws Exception;
 
-    ITrading newTrading();
+    ITrading createTrading();
 
-    ITrading newTradingWithIdDao(int id, ITradingDao tradingDao) throws Exception;
+    ITrading createTradingWithIdDao(int id, ITradingDao tradingDao) throws Exception;
 
-    ITraining newTraining();
+    ITraining createTraining();
 
-    IUser newUser();
+    IUser createUser();
 
-    IUser newUserByName(String name, IUserDao loadUserFactory) throws Exception;
+    IUser createUserByName(String name, IUserDao loadUserFactory) throws Exception;
 
-    IUser newUserWithIdDao(int id, IUserDao userDao) throws Exception;
+    IUser createUserWithIdDao(int id, IUserDao userDao) throws Exception;
 
-    IFreeAgent newFreeAgentWithId(int id);
+    IFreeAgent createFreeAgentWithId(int id);
 
-    ITrophy newTrophy();
+    ITrophy createTrophy();
 
-    IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception;
+    IFreeAgent createFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception;
 
-    IShift newShift();
+    IShift createShift();
 
-    IGameSimulation newGameSimulationFromTeams(ITeam team1, ITeam team2);
+    IGameSimulation createGameSimulationFromTeams(ITeam team1, ITeam team2);
 
-    ICoach newCoachFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Coach coach);
+    ICoach createCoachFromDeserialization(Coach coach);
 
-    IManager newManagerFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Manager manager);
+    IManager createManagerFromDeserialization(Manager manager);
 
-    ITeam newTeamFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Team team);
+    ITeam createTeamFromDeserialization(Team team);
 
-    IDivision newDivisionFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Division division);
+    IDivision createDivisionFromDeserialization(Division division);
 
-    IGame createGameFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Game game);
+    IGame createGameFromDeserialization(Game game);
 
-    ITeamScore createTeamScoreFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore);
+    ITeamScore createTeamScoreFromDeserialization(TeamScore teamScore);
 
-    ITeamStanding createTeamStandingFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding);
+    ITeamStanding createTeamStandingFromDeserialization(TeamStanding teamStanding);
 
-    IConference creatConferenceFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Conference conference);
+    IConference creatConferenceFromDeserialization(Conference conference);
 
-    IFreeAgent creatFreeAgentFromDeserialization(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent);
+    IFreeAgent creatFreeAgentFromDeserialization(FreeAgent freeAgent);
 
-    IGamePlayConfig creatGamePlayConfigFromDeserialization(simulation.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig);
+    IGamePlayConfig creatGamePlayConfigFromDeserialization(GamePlayConfig gamePlayConfig);
 
-    IGameSchedule createGameScheduleFromDeserialization(simulation.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule);
+    IGameSchedule createGameScheduleFromDeserialization(GameSchedule gameSchedule);
 
-    INHLEvents createNHLEventsFromDeserialization(simulation.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents);
+    INHLEvents createNHLEventsFromDeserialization(NHLEvents nhlEvents);
 
-    TeamStat createTeamStatFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat);
+    TeamStat createTeamStatFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamStat teamStat);
 
-    ITradeOffer createTradeOfferFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer);
+    ITradeOffer createTradeOfferFromDeserialization(TradeOffer tradeOffer);
 
-    ITrophy createTrophyFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Trophy trophy);
+    ITrophy createTrophyFromDeserialization(Trophy trophy);
 
 
     IManager createManagerFromManager(IManager manager);

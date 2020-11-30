@@ -73,7 +73,7 @@ public class AgingState implements ISimulateState {
         consoleOutput.printGameStatsToUser(goalAvg, penaltyAvg, shotAvg, saveAvg);
     }
 
-    private void displayWinsLoss(){
+    private void displayWinsLoss() {
         ITeamStanding teamStanding = league.getRegularSeasonStanding();
         consoleOutput.printTeamGameScore(teamStanding);
     }
