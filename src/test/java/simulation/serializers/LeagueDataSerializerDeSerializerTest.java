@@ -31,8 +31,8 @@ public class LeagueDataSerializerDeSerializerTest {
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting().create();
-        String oldLeagueJSONString = new String();
-        String newLeagueJSONString = new String();
+        String oldLeagueJSONString = "";
+        String newLeagueJSONString = "";
 
         oldLeagueJSONString = gson.toJson(oldLeague);
         newLeagueJSONString = gson.toJson(newLeagueTest);

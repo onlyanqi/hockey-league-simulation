@@ -17,27 +17,25 @@ import static org.junit.Assert.*;
 public class PlayerTest {
 
     private static IPlayerDao playerDao;
-    private static ILeagueDao leagueDao;
     private static IModelFactory modelFactory;
     private static IDaoFactory daoFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
         daoFactory = DaoFactoryMock.getInstance();
-        playerDao = daoFactory.newPlayerDao();
-        leagueDao = daoFactory.newLeagueDao();
+        playerDao = daoFactory.createPlayerDao();
         modelFactory = ModelFactory.getInstance();
     }
 
     @Test
     public void defaultConstructorTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         assertNotEquals(player.getId(), 0);
     }
 
     @Test
     public void playerTest() {
-        IPlayer player = new Player(1);
+        IPlayer player = modelFactory.createPlayerWithId(1);
         assertEquals(player.getId(), 1);
     }
 
@@ -49,12 +47,9 @@ public class PlayerTest {
 
     @Test
     public void playerFactoryTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertEquals(player.getId(), 1);
         assertEquals(player.getName(), "Player1");
-
-        player = new Player(34, playerDao);
-        assertNull(player.getName());
     }
 
     @Test
@@ -73,13 +68,13 @@ public class PlayerTest {
 
     @Test
     public void getPositionTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertEquals(player.getPosition(), Position.FORWARD);
     }
 
     @Test
     public void setPositionTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         Position position = Position.GOALIE;
         player.setPosition(position);
         assertEquals(player.getPosition(), position);
@@ -87,13 +82,13 @@ public class PlayerTest {
 
     @Test
     public void getTeamIdTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertEquals(player.getTeamId(), (1));
     }
 
     @Test
     public void setTeamIdTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         int teamId = 1;
         player.setTeamId(teamId);
         assertEquals(player.getTeamId(), teamId);
@@ -101,15 +96,15 @@ public class PlayerTest {
 
     @Test
     public void isCaptainTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertTrue(player.isCaptain());
     }
 
     @Test
     public void setCaptainTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         boolean isCaptain = true;
-        player.setCaptain(true);
+        player.setCaptain(isCaptain);
         assertTrue(player.isCaptain());
     }
 
@@ -125,13 +120,13 @@ public class PlayerTest {
 
     @Test
     public void getFreeAgentIdTest() throws Exception {
-        IPlayer player = new Player(1, playerDao);
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertEquals(player.getFreeAgentId(), (1));
     }
 
     @Test
     public void setFreeAgentIdTest() {
-        IPlayer player = new Player();
+        IPlayer player = modelFactory.createPlayer();
         int freeAgentId = 1;
         player.setFreeAgentId(freeAgentId);
         assertEquals(player.getFreeAgentId(), freeAgentId);
@@ -322,18 +317,11 @@ public class PlayerTest {
     }
 
     @Test
-    public void statDecayCheckTest() throws Exception {
-        IPlayer player = modelFactory.createPlayerWithIdDao(33, playerDao);
-        assertEquals(player.getSkating(), 15);
-        assertEquals(player.getShooting(), 18);
-        assertEquals(player.getChecking(), 12);
-        assertEquals(player.getSaving(), 1);
-        ILeague league = modelFactory.createLeagueWithIdDao(1, leagueDao);
-        player.statDecayCheck(league);
-        assertEquals(player.getSkating(), 15 - 1);
-        assertEquals(player.getShooting(), 18 - 1);
-        assertEquals(player.getChecking(), 12 - 1);
-        assertEquals(player.getSaving(), 1);
+    public void compareToTest() throws Exception {
+        IPlayer player1 = modelFactory.createPlayerWithIdDao(1, playerDao);
+        IPlayer player2 = modelFactory.createPlayerWithIdDao(3, playerDao);
+        int compare = player1.compareTo(player2);
+        assertTrue(compare < 0);
     }
 
 }

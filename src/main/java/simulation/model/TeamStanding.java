@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TeamStanding implements ITeamStanding {
 
-    private static Logger log = Logger.getLogger(TeamStanding.class);
+    private static final Logger log = Logger.getLogger(TeamStanding.class);
     private int id;
     private List<ITeamScore> teamsScoreList = new ArrayList<>();
 

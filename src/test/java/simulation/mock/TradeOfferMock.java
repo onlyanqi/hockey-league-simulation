@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TradeOfferMock implements ITradeOfferDao {
 
-    private IModelFactory modelFactory;
+    private final IModelFactory modelFactory;
 
     public TradeOfferMock() {
         modelFactory = ModelFactory.getInstance();
@@ -29,7 +29,7 @@ public class TradeOfferMock implements ITradeOfferDao {
 
     public void getTradeOffer(ITradeOffer tradeOffer, int from, int to) throws Exception {
         IDaoFactory daoFactory = DaoFactoryMock.getInstance();
-        IPlayerDao playerDao = daoFactory.newPlayerDao();
+        IPlayerDao playerDao = daoFactory.createPlayerDao();
 
         tradeOffer.setId(from);
         tradeOffer.setLeagueId(from);

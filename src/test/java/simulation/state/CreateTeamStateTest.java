@@ -18,8 +18,8 @@ public class CreateTeamStateTest {
     static League league;
 
     private static ILeagueDao factory = new LeagueMock();
-    private static ITeamDao factoryTeam = new TeamMock();
-    private static IUserDao factoryUser = new UserMock();
+    private static final ITeamDao factoryTeam = new TeamMock();
+    private static final IUserDao factoryUser = new UserMock();
     private static IHockeyContext hockeyContext;
     private static IHockeyContextFactory hockeyContextFactory;
     private List<IManager> managerList = null;
@@ -180,7 +180,6 @@ public class CreateTeamStateTest {
         createTeamState.setConferenceName(conferenceName);
         createTeamState.setDivisionName(divisionName);
         createTeamState.process();
-        assertFalse(null == league.getFreeAgent() || null == league.getManagerList() || null == league.getCoachList() || null == league.getConferenceList());
         assertTrue(league.getConferenceList().size() > 0);
     }
 

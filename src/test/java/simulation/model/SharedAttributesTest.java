@@ -2,19 +2,24 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IDaoFactory;
 import persistance.dao.IPlayerDao;
-import simulation.mock.PlayerMock;
+import simulation.dao.DaoFactoryMock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class SharedAttributesTest {
 
-    private static IPlayerDao playerFactory;
+    private static IDaoFactory daoFactory;
+    private static IPlayerDao playerDao;
+    private static IModelFactory modelFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
-        playerFactory = new PlayerMock();
+        daoFactory = DaoFactoryMock.getInstance();
+        playerDao = daoFactory.createPlayerDao();
+        modelFactory = ModelFactory.getInstance();
     }
 
     @Test
@@ -33,7 +38,7 @@ public class SharedAttributesTest {
 
     @Test
     public void getNameTest() throws Exception {
-        SharedAttributes sharedAttributes = new Player(1, playerFactory);
+        SharedAttributes sharedAttributes = new Player(1, playerDao);
         assertTrue(sharedAttributes.getName().equals("Player1"));
     }
 

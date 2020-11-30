@@ -1,7 +1,6 @@
 package simulation.model;
 
 import persistance.dao.*;
-import persistance.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 
 public class ModelFactory implements IModelFactory {
 
@@ -93,13 +92,13 @@ public class ModelFactory implements IModelFactory {
         return new League(leagueName, userId, leagueFactory);
     }
 
-    public ILeague createLeagueFromDeserializationObject(LeagueDeserializationModel leagueDeserializationModel) {
-        return new League(leagueDeserializationModel);
-    }
-
     @Override
     public ILeague createLeagueWithIdDao(int id, ILeagueDao leagueDao) throws Exception {
         return new League(id, leagueDao);
+    }
+
+    public ILeague createLeagueWithId(int id) {
+        return new League(id);
     }
 
     public ISeason createSeason() {
@@ -115,13 +114,12 @@ public class ModelFactory implements IModelFactory {
         return new Player();
     }
 
-    @Override
-    public IPlayer createPlayerFromSerialization(persistance.serializers.ModelsForDeserialization.model.Player player) {
-        return new Player(player);
-    }
-
     public IPlayer createPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception {
         return new Player(id, playerDao);
+    }
+
+    public IPlayer createPlayerWithId(int id) {
+        return new Player(id);
     }
 
     @Override
@@ -167,7 +165,7 @@ public class ModelFactory implements IModelFactory {
         return new Trading(id, tradingDao);
     }
 
-    public IManager createManagerConcrete() {
+    public IManager newManagerConcrete() {
         return new Manager();
     }
 
@@ -183,12 +181,12 @@ public class ModelFactory implements IModelFactory {
         return new User(id, userDao);
     }
 
-    public ITraining createTraining() {
+    public ITraining newTraining() {
         return new Training();
     }
 
     @Override
-    public ITrophy createTrophy() {
+    public ITrophy newTrophy() {
         return new Trophy();
     }
 
@@ -200,24 +198,41 @@ public class ModelFactory implements IModelFactory {
         return new FreeAgent(id, freeAgentDao);
     }
 
-    public IShift createShift() {
+    public IShift newShift() {
         return new Shift();
     }
 
     @Override
-    public IGameSimulation createGameSimulationFromTeams(ITeam team1, ITeam team2) {
+    public IGameSimulation newGameSimulationFromTeams(ITeam team1, ITeam team2) {
         return new GameSimulation(team1, team2);
     }
 
-    @Override
-    public ICoach createCoachFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Coach coach) {
-        return new Coach(coach);
+    public ISeason createSeasonWithId(int id) {
+        return new Season(id);
     }
 
+    public ISeason createSeasonWithIdDao(int id, ISeasonDao seasonDao) throws Exception {
+        return new Season(id, seasonDao);
+    }
 
-    @Override
-    public IManager createManagerFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Manager manager) {
-        return new Manager(manager);
+    public ITeam createTeamWithId(int id) {
+        return new Team(id);
+    }
+
+    public IUser createUserWithId(int id) {
+        return new User(id);
+    }
+
+    public IShift createShift() {
+        return new Shift();
+    }
+
+    public IManager createManagerConcrete() {
+        return new Manager();
+    }
+
+    public ITraining createTraining() {
+        return new Training();
     }
 
     @Override
@@ -226,18 +241,38 @@ public class ModelFactory implements IModelFactory {
     }
 
     @Override
+    public IPlayer createPlayerFromSerialization(persistance.serializers.ModelsForDeserialization.model.Player player) {
+        return new Player(player);
+    }
+
+    @Override
+    public ICoach createCoachFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Coach coach) {
+        return new Coach(coach);
+    }
+
+    @Override
+    public IManager createManagerFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Manager manager) {
+        return new Manager(manager);
+    }
+
+    @Override
+    public ITrophy createTrophyFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Trophy trophy) {
+        return new Trophy(trophy);
+    }
+
+    @Override
+    public ITrophy createTrophy() {
+        return new Trophy();
+    }
+
+    @Override
     public IDivision createDivisionFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Division division) {
         return new Division(division);
     }
 
     @Override
-    public IGame createGameFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Game game) {
-        return new Game(game);
-    }
-
-    @Override
-    public ITeamScore createTeamScoreFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamScore teamScore) {
-        return new TeamScore(teamScore);
+    public IGameSimulation createGameSimulationFromTeams(ITeam team1, ITeam team2) {
+        return new GameSimulation(team1, team2);
     }
 
     @Override
@@ -281,11 +316,6 @@ public class ModelFactory implements IModelFactory {
     }
 
     @Override
-    public ITrophy createTrophyFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Trophy trophy) {
-        return new Trophy(trophy);
-    }
-
-    @Override
     public IManager createManagerFromManager(IManager manager) {
         return new Manager(manager);
     }
@@ -294,6 +324,17 @@ public class ModelFactory implements IModelFactory {
     public IPlayer createPlayerFromPlayer(IPlayer player) {
         return new Player(player);
     }
+
+    @Override
+    public ITeamScore createTeamScoreFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamScore teamScore) {
+        return new TeamScore(teamScore);
+    }
+
+    @Override
+    public IGame createGameFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Game game) {
+        return new Game(game);
+    }
+
 
 
 }

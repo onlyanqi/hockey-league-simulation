@@ -273,7 +273,6 @@ public class Player extends SharedAttributes implements IPlayer {
         this.injuryDatesRange = injuryDatesRange;
     }
 
-
     @Override
     public void addPlayer(IPlayerDao addPlayerFactory) throws Exception {
         if (addPlayerFactory == null) {
@@ -328,11 +327,7 @@ public class Player extends SharedAttributes implements IPlayer {
         int birthDayOfMonth = birthday.getDayOfMonth();
         int birthMonth = birthday.getMonthValue();
 
-        if (currentDayOfMonth == birthDayOfMonth && currentMonth == birthMonth) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentDayOfMonth == birthDayOfMonth && currentMonth == birthMonth;
     }
 
     @Override

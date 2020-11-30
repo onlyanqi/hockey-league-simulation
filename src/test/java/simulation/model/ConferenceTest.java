@@ -28,7 +28,7 @@ public class ConferenceTest {
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
         daoFactory = hockeyContext.getDaoFactory();
-        conferenceDao = daoFactory.newConferenceDao();
+        conferenceDao = daoFactory.createConferenceDao();
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ConferenceTest {
 
     @Test
     public void setDivisionListTest() throws Exception {
-        IDivisionDao divisionDao = daoFactory.newDivisionDao();
+        IDivisionDao divisionDao = daoFactory.createDivisionDao();
         List<IDivision> divisionList = new ArrayList<>();
         IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);
@@ -99,7 +99,7 @@ public class ConferenceTest {
 
     @Test
     public void getDivisionNameListTest() throws Exception {
-        IDivisionDao divisionDao = daoFactory.newDivisionDao();
+        IDivisionDao divisionDao = daoFactory.createDivisionDao();
         List<IDivision> divisionList = new ArrayList<>();
         IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);
@@ -136,7 +136,7 @@ public class ConferenceTest {
     @Test
     public void loadDivisionListByConferenceIdTest() throws Exception {
         IConference conference = modelFactory.createConferenceWithId(1);
-        IDivisionDao divisionDao = daoFactory.newDivisionDao();
+        IDivisionDao divisionDao = daoFactory.createDivisionDao();
         conference.loadDivisionListByConferenceId(divisionDao);
 
         assertTrue(conference.getDivisionList().get(0).getId() == (1));

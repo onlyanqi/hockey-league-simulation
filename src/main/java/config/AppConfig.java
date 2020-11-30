@@ -12,10 +12,10 @@ public class AppConfig {
 
     private static AppConfig appConfig = null;
 
-    private IUserInputForTeamCreation inputForTeamCreation;
-    private IConsoleOutputForTeamCreation outputForTeamCreation;
-    private LeagueDataSerializerDeSerializer dataSerializer;
-    private IModelFactory modelFactory;
+    private final IUserInputForTeamCreation inputForTeamCreation;
+    private final IConsoleOutputForTeamCreation outputForTeamCreation;
+    private final LeagueDataSerializerDeSerializer dataSerializer;
+    private final IModelFactory modelFactory;
 
     private AppConfig() {
         inputForTeamCreation = new UseInputForTeamCreation();

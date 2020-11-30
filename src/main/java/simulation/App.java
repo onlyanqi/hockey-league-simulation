@@ -3,6 +3,7 @@ package simulation;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import presentation.ConsoleOutput;
+import presentation.IReadUserInput;
 import presentation.ReadUserInput;
 import simulation.GameSubjectObservers.*;
 import simulation.factory.HockeyContextConcrete;
@@ -17,14 +18,14 @@ import java.io.FileNotFoundException;
 
 public class App {
 
-    private static Logger log = Logger.getLogger(App.class);
+    private static final Logger log = Logger.getLogger(App.class);
 
     public static void main(String[] args) {
 
         String filePath = "";
         JSONObject jsonFromInput = null;
 
-        ReadUserInput readUserInput = ReadUserInput.getInstance();
+        IReadUserInput readUserInput = ReadUserInput.getInstance();
 
         String userName = readUserInput.getInput("Please enter username");
         try {

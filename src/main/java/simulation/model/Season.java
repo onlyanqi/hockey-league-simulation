@@ -13,9 +13,6 @@ public class Season extends SharedAttributes implements ISeason {
     }
 
     public Season(int id, ISeasonDao factory) throws Exception {
-        if (factory == null) {
-            return;
-        }
         setId(id);
         factory.loadSeasonById(id, this);
     }

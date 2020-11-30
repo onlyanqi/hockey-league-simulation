@@ -14,10 +14,10 @@ public class PlayerChoiceState implements IHockeyState {
     private static final String TWO = "2";
     private static final String IMPORTSTATE = "importState";
     private static final String CREATEORLOADTEAM = "createOrLoadTeam";
-    private static Logger log = Logger.getLogger(Player.class);
-    private String input;
-    private String stateName;
-    private IHockeyContext hockeyContext;
+    private static final Logger log = Logger.getLogger(Player.class);
+    private final String input;
+    private final String stateName;
+    private final IHockeyContext hockeyContext;
     private String userInput;
 
     public PlayerChoiceState(IHockeyContext hockeyContext, String input, String stateName) {

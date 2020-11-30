@@ -5,7 +5,7 @@ import java.util.HashMap;
 //Source: https://refactoring.guru/design-patterns/observer
 
 public class TrophySystemPublisher {
-    private static String[] eventTypes = {"coachStatAbilityUpdate", "goalScoreUpdate", "penaltyCountUpdate", "savesUpdate"};
+    private static final String[] eventTypes = {"coachStatAbilityUpdate", "goalScoreUpdate", "penaltyCountUpdate", "savesUpdate"};
     private static TrophySystemPublisher instance;
     HashMap<String, ITrophyEventListeners> listeners = new HashMap<String, ITrophyEventListeners>();
 

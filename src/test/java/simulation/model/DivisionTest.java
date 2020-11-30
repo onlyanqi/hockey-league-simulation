@@ -28,7 +28,7 @@ public class DivisionTest {
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
         daoFactory = hockeyContext.getDaoFactory();
-        divisionDao = daoFactory.newDivisionDao();
+        divisionDao = daoFactory.createDivisionDao();
     }
 
     @Test
@@ -65,7 +65,7 @@ public class DivisionTest {
 
     @Test
     public void setTeamListTest() throws Exception {
-        ITeamDao teamDao = daoFactory.newTeamDao();
+        ITeamDao teamDao = daoFactory.createTeamDao();
         List<ITeam> teamList = new ArrayList<>();
         ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         teamList.add(team);
@@ -108,7 +108,7 @@ public class DivisionTest {
     @Test
     public void loadTeamListByDivisionIdTest() throws Exception {
         IDivision division = modelFactory.createDivisionWithId(1);
-        ITeamDao teamDao = daoFactory.newTeamDao();
+        ITeamDao teamDao = daoFactory.createTeamDao();
         division.loadTeamListByDivisionId(teamDao);
 
         assertTrue(division.getTeamList().get(0).getId() == (1));
@@ -118,7 +118,7 @@ public class DivisionTest {
 
     @Test
     public void getTeamNameListTest() throws Exception {
-        ITeamDao teamDao = daoFactory.newTeamDao();
+        ITeamDao teamDao = daoFactory.createTeamDao();
         List<ITeam> teamList = new ArrayList<>();
         ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
         teamList.add(team);

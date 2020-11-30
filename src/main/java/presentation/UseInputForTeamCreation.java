@@ -7,8 +7,8 @@ import java.util.List;
 
 public class UseInputForTeamCreation implements IUserInputForTeamCreation {
 
-    private ConsoleOutput consoleOutput;
-    private ReadUserInput readUserInput;
+    private final IConsoleOutput consoleOutput;
+    private final IReadUserInput readUserInput;
 
     public UseInputForTeamCreation() {
         consoleOutput = ConsoleOutput.getInstance();
@@ -70,11 +70,7 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
     }
 
     public boolean isDigit(String str) {
-        if (str.matches("[0-9]+") && str.length() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return str.matches("[0-9]+") && str.length() > 0;
     }
 
     @Override

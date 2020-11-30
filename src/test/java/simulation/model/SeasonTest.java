@@ -2,39 +2,43 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IDaoFactory;
 import persistance.dao.ISeasonDao;
-import simulation.mock.SeasonMock;
-
+import simulation.dao.DaoFactoryMock;
 import static org.junit.Assert.*;
 
 public class SeasonTest {
 
-    private static ISeasonDao loadSeasonFactory;
+    private static IDaoFactory daoFactory;
+    private static ISeasonDao seasonDao;
+    private static IModelFactory modelFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
-        loadSeasonFactory = new SeasonMock();
+        daoFactory = DaoFactoryMock.getInstance();
+        seasonDao = daoFactory.createSeasonDao();
+        modelFactory = ModelFactory.getInstance();
     }
 
     @Test
     public void defaultConstructorTest() {
-        Season season = new Season();
+        ISeason season = modelFactory.createSeason();
         assertNotEquals(season.getId(), 0);
     }
 
     @Test
     public void seasonTest() {
-        Season season = new Season(1);
+        ISeason season = modelFactory.createSeasonWithId(1);
         assertEquals(season.getId(), 1);
     }
 
     @Test
     public void seasonFactoryTest() throws Exception {
-        Season season = new Season(1, loadSeasonFactory);
+        ISeason season = modelFactory.createSeasonWithIdDao(1, seasonDao);
         assertEquals(season.getId(), 1);
         assertEquals(season.getName(), "Season1");
 
-        season = new Season(2, loadSeasonFactory);
+        season = modelFactory.createSeasonWithIdDao(2, seasonDao);
         assertNull(season.getName());
     }
 
@@ -43,7 +47,7 @@ public class SeasonTest {
         Season season = new Season();
         season.setId(1);
         season.setName("Season1");
-        season.addSeason(loadSeasonFactory);
+        season.addSeason(seasonDao);
         assertTrue(1 == season.getId());
         assertTrue("Season1".equals(season.getName()));
     }
