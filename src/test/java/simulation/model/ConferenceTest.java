@@ -81,7 +81,7 @@ public class ConferenceTest {
 
     @Test
     public void setDivisionListTest() throws Exception {
-        IDivisionDao divisionDao = daoFactory.newDivisionDao();
+        IDivisionDao divisionDao = daoFactory.createDivisionDao();
         List<IDivision> divisionList = new ArrayList<>();
         IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);

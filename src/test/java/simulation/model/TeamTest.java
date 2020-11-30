@@ -2,12 +2,11 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IPlayerDao;
+import persistance.dao.ITeamDao;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IPlayerDao;
-import simulation.dao.ITeamDao;
 import simulation.mock.PlayerMock;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

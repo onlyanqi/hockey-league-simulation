@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.*;
+import persistance.dao.*;
 
 public class ModelFactory implements IModelFactory {
 
@@ -222,4 +222,119 @@ public class ModelFactory implements IModelFactory {
     public IUser createUserWithId(int id) {
         return new User(id);
     }
+
+    public IShift createShift() {
+        return new Shift();
+    }
+
+    public IManager createManagerConcrete() {
+        return new Manager();
+    }
+
+    public ITraining createTraining() {
+        return new Training();
+    }
+
+    @Override
+    public ITeam createTeamFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Team team) {
+        return new Team(team);
+    }
+
+    @Override
+    public IPlayer createPlayerFromSerialization(persistance.serializers.ModelsForDeserialization.model.Player player) {
+        return new Player(player);
+    }
+
+    @Override
+    public ICoach createCoachFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Coach coach) {
+        return new Coach(coach);
+    }
+
+    @Override
+    public IManager createManagerFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Manager manager) {
+        return new Manager(manager);
+    }
+
+    @Override
+    public ITrophy createTrophyFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Trophy trophy) {
+        return new Trophy(trophy);
+    }
+
+    @Override
+    public ITrophy createTrophy() {
+        return new Trophy();
+    }
+
+    @Override
+    public IDivision createDivisionFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Division division) {
+        return new Division(division);
+    }
+
+    @Override
+    public IGameSimulation createGameSimulationFromTeams(ITeam team1, ITeam team2) {
+        return new GameSimulation(team1, team2);
+    }
+
+    @Override
+    public ITeamStanding createTeamStandingFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamStanding teamStanding) {
+        return new TeamStanding(teamStanding);
+    }
+
+    @Override
+    public IConference creatConferenceFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Conference conference) {
+        return new Conference(conference);
+    }
+
+    @Override
+    public IFreeAgent creatFreeAgentFromDeserialization(persistance.serializers.ModelsForDeserialization.model.FreeAgent freeAgent) {
+        return new FreeAgent(freeAgent);
+    }
+
+    @Override
+    public IGamePlayConfig creatGamePlayConfigFromDeserialization(persistance.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig) {
+        return new GamePlayConfig(gamePlayConfig);
+    }
+
+    @Override
+    public IGameSchedule createGameScheduleFromDeserialization(persistance.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule) {
+        return new GameSchedule(gameSchedule);
+    }
+
+    @Override
+    public INHLEvents createNHLEventsFromDeserialization(persistance.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents) {
+        return new NHLEvents(nhlEvents);
+    }
+
+    @Override
+    public TeamStat createTeamStatFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamStat teamStat) {
+        return new TeamStat(teamStat);
+    }
+
+    @Override
+    public ITradeOffer createTradeOfferFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
+        return new TradeOffer(tradeOffer);
+    }
+
+    @Override
+    public IManager createManagerFromManager(IManager manager) {
+        return new Manager(manager);
+    }
+
+    @Override
+    public IPlayer createPlayerFromPlayer(IPlayer player) {
+        return new Player(player);
+    }
+
+    @Override
+    public ITeamScore createTeamScoreFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamScore teamScore) {
+        return new TeamScore(teamScore);
+    }
+
+    @Override
+    public IGame createGameFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Game game) {
+        return new Game(game);
+    }
+
+
+
 }

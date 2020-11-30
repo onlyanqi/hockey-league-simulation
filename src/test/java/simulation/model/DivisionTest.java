@@ -2,9 +2,9 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IDivisionDao;
-import simulation.dao.ITeamDao;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IDivisionDao;
+import persistance.dao.ITeamDao;
 import simulation.factory.HockeyContextConcreteMock;
 import simulation.factory.IHockeyContextFactory;
 import simulation.state.IHockeyContext;

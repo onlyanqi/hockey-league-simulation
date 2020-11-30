@@ -2,9 +2,9 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IPlayerDao;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IPlayerDao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

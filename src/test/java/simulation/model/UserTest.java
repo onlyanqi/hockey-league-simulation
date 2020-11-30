@@ -2,11 +2,10 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IDaoFactory;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IUserDao;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.ILeagueDao;
-import simulation.dao.IUserDao;
-
 import static org.junit.Assert.*;
 
 public class UserTest {

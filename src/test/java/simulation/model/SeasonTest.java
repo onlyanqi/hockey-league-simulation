@@ -2,10 +2,9 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IDaoFactory;
+import persistance.dao.ISeasonDao;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.ISeasonDao;
-
 import static org.junit.Assert.*;
 
 public class SeasonTest {

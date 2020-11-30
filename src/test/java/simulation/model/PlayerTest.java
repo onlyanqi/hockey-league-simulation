@@ -2,10 +2,10 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IDaoFactory;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IPlayerDao;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.ILeagueDao;
-import simulation.dao.IPlayerDao;
 import simulation.mock.LeagueMock;
 
 import java.time.LocalDate;
@@ -50,9 +50,6 @@ public class PlayerTest {
         IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         assertEquals(player.getId(), 1);
         assertEquals(player.getName(), "Player1");
-
-        player = modelFactory.createPlayerWithIdDao(33, playerDao);
-        assertNull(player.getName());
     }
 
     @Test

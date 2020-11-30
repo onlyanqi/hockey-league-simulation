@@ -2,7 +2,8 @@ package simulation.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import simulation.dao.*;
+import persistance.dao.*;
+import simulation.dao.DaoFactoryMock;
 
 import static org.junit.Assert.assertTrue;
 

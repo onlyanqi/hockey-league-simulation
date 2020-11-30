@@ -2,7 +2,8 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.*;
+import persistance.dao.*;
+import simulation.dao.DaoFactoryMock;
 import simulation.mock.ConferenceMock;
 import simulation.mock.FreeAgentMock;
 

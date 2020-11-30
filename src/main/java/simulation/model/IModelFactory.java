@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.*;
+import persistance.dao.*;
 
 public interface IModelFactory {
 
@@ -101,4 +101,50 @@ public interface IModelFactory {
     ITeam createTeamWithId(int id);
 
     IUser createUserWithId(int id);
+
+    IShift createShift();
+
+    IManager createManagerConcrete();
+
+    ITraining createTraining();
+
+    ITeam createTeamFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Team team);
+
+    IPlayer createPlayerFromSerialization(persistance.serializers.ModelsForDeserialization.model.Player player);
+
+    ICoach createCoachFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Coach coach);
+
+    IManager createManagerFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Manager manager);
+
+    ITrophy createTrophyFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Trophy trophy);
+
+    ITrophy createTrophy();
+
+    IDivision createDivisionFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Division division);
+
+    IGameSimulation createGameSimulationFromTeams(ITeam team1, ITeam team2);
+
+    ITeamStanding createTeamStandingFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamStanding teamStanding);
+
+    IConference creatConferenceFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Conference conference);
+
+    IFreeAgent creatFreeAgentFromDeserialization(persistance.serializers.ModelsForDeserialization.model.FreeAgent freeAgent);
+
+    IGamePlayConfig creatGamePlayConfigFromDeserialization(persistance.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig);
+
+    IGameSchedule createGameScheduleFromDeserialization(persistance.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule);
+
+    INHLEvents createNHLEventsFromDeserialization(persistance.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents);
+
+    TeamStat createTeamStatFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamStat teamStat);
+
+    ITradeOffer createTradeOfferFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer);
+
+    IManager createManagerFromManager(IManager manager);
+
+    IPlayer createPlayerFromPlayer(IPlayer player);
+
+    ITeamScore createTeamScoreFromDeserialization(persistance.serializers.ModelsForDeserialization.model.TeamScore teamScore);
+
+    IGame createGameFromDeserialization(persistance.serializers.ModelsForDeserialization.model.Game game);
 }
