@@ -1,142 +1,165 @@
 package simulation.model;
 
+import org.apache.log4j.Logger;
+import simulation.state.HockeyContext;
+
 import java.util.*;
 
-public class Shift{
+public class Shift implements IShift {
 
+    static Logger log = Logger.getLogger(Shift.class);
     String teamName;
     IPlayer goalie;
     List<IPlayer> forward = new ArrayList<>();
     List<IPlayer> defense = new ArrayList<>();
-    HashMap<IPlayer,Integer> penalizedDefensePlayer =  new HashMap<>();;
+    ;
+    HashMap<IPlayer, Integer> penalizedDefensePlayer = new HashMap<>();
 
-
-    public Shift(){
+    public Shift() {
         penalizedDefensePlayer = new HashMap<>();
     }
 
-    public Shift(simulation.serializers.ModelsForDeserialization.model.Shift shift){
+    public Shift(simulation.serializers.ModelsForDeserialization.model.Shift shift) {
         this.teamName = shift.teamName;
         this.goalie = new Player(shift.goalie);
-        for(simulation.serializers.ModelsForDeserialization.model.Player player : shift.forward){
+        for (simulation.serializers.ModelsForDeserialization.model.Player player : shift.forward) {
             this.forward.add(new Player(player));
         }
-        for(simulation.serializers.ModelsForDeserialization.model.Player player : shift.defense){
+        for (simulation.serializers.ModelsForDeserialization.model.Player player : shift.defense) {
             this.defense.add(new Player(player));
         }
 
         Iterator iterator = shift.penalizedDefensePlayer.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry mapEntry = (Map.Entry) iterator.next();
-            this.penalizedDefensePlayer.put(new Player((simulation.serializers.ModelsForDeserialization.model.Player)mapEntry.getKey()),(Integer)mapEntry.getValue());
+            this.penalizedDefensePlayer.put(new Player((simulation.serializers.ModelsForDeserialization.model.Player) mapEntry.getKey()), (Integer) mapEntry.getValue());
         }
     }
 
+    @Override
     public IPlayer getGoalie() {
         return goalie;
     }
 
+    @Override
     public void setGoalie(IPlayer goalie) {
         this.goalie = goalie;
     }
 
+    @Override
     public List<IPlayer> getForward() {
         return forward;
     }
 
+    @Override
     public void setForward(List<IPlayer> forward) {
         this.forward = forward;
     }
 
+    @Override
     public List<IPlayer> getDefense() {
         return defense;
     }
 
+    @Override
     public void setDefense(List<IPlayer> defense) {
         this.defense = defense;
     }
 
+    @Override
     public HashMap<IPlayer, Integer> getPenalizedDefensePlayer() {
         return penalizedDefensePlayer;
     }
 
+    @Override
     public void setPenalizedDefensePlayer(HashMap<IPlayer, Integer> penalizedDefensePlayer) {
         this.penalizedDefensePlayer = penalizedDefensePlayer;
     }
 
+    @Override
     public String getTeamName() {
         return teamName;
     }
 
+    @Override
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
 
-    public Integer getTeamShiftShootingTotal(){
+    @Override
+    public Integer getTeamShiftShootingTotal() {
         Integer teamShootingTotal = 0;
-        teamShootingTotal += goalie.getShooting();
-        for(IPlayer player: forward){
+        for (IPlayer player : forward) {
             teamShootingTotal += player.getShooting();
         }
-        for(IPlayer player: defense){
-            teamShootingTotal += player.getShooting();
+        if (teamShootingTotal < 0) {
+            log.error("Team Shift Shooting total is negative.");
+            throw new IllegalArgumentException("Team Shift Shooting total is negative.");
         }
-        return  teamShootingTotal;
+        return teamShootingTotal;
     }
 
-    public Integer getTeamShiftDefenseTotal(){
+    @Override
+    public Integer getTeamShiftDefenseTotal() {
         Integer teamDefenseTotal = 0;
-        teamDefenseTotal += goalie.getChecking();
-        for(IPlayer player: forward){
+        for (IPlayer player : defense) {
             teamDefenseTotal += player.getChecking();
         }
-        for(IPlayer player: defense){
-            teamDefenseTotal += player.getChecking();
-        }
-        return teamDefenseTotal;
-    }
-    public Integer getTeamSkatingTotal(){
-        Integer teamDefenseTotal = 0;
-        teamDefenseTotal += goalie.getSkating();
-        for(IPlayer player: forward){
-            teamDefenseTotal += player.getSkating();
-        }
-        for(IPlayer player: defense){
-            teamDefenseTotal += player.getSkating();
+        if (teamDefenseTotal < 0) {
+            log.error("Team Shift Defense Total is negative.");
+            throw new IllegalArgumentException("Team Shift Defense is negative.");
         }
         return teamDefenseTotal;
     }
 
-    public Shift getShift(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
-        Shift shift = new Shift();
-        HashMap<Integer,Integer> playersCount  = teamPlayersCount.get(team.getName());
+    @Override
+    public Integer getTeamSkatingTotal() {
+        Integer teamSkatingTotal = 0;
+        teamSkatingTotal += goalie.getSkating();
+        for (IPlayer player : forward) {
+            teamSkatingTotal += player.getSkating();
+        }
+        for (IPlayer player : defense) {
+            teamSkatingTotal += player.getSkating();
+        }
+        if (teamSkatingTotal < 0) {
+            log.error("Team Shift Skating total is negative.");
+            throw new IllegalArgumentException("Team Shift Skating total is negative.");
+        }
+        return teamSkatingTotal;
+    }
 
-        if(goalie==null){
-            IPlayer goalie = getRandomPlayerByPosition(team,"GOALIE");
-            while(didPlayerReachShiftCount(playersCount,goalie)){
-                goalie = getRandomPlayerByPosition(team,"GOALIE");
+    @Override
+    public IShift getShift(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
+        IShift shift = HockeyContext.getInstance().getModelFactory().newShift();
+        HashMap<Integer, Integer> playersCount = teamPlayersCount.get(team.getName());
+
+        if (goalie == null) {
+            IPlayer goalie = getRandomPlayerByPosition(team, "GOALIE");
+            while (didPlayerReachShiftCount(playersCount, goalie)) {
+                goalie = getRandomPlayerByPosition(team, "GOALIE");
             }
             shift.setGoalie(goalie);
-        }else{
+        } else {
             shift.setGoalie(goalie);
         }
 
         List<IPlayer> forwardList = new ArrayList<>();
-        for(int forwards =0; forwards<3;forwards++){
-            IPlayer forward = getRandomPlayerByPosition(team,"FORWARD");
-            while(didPlayerReachShiftCount(playersCount,forward)){
-                forward = getRandomPlayerByPosition(team,"FORWARD");
+        for (int forwards = 0; forwards < 3; forwards++) {
+            IPlayer forward = getRandomPlayerByPosition(team, "FORWARD");
+            while (didPlayerReachShiftCount(playersCount, forward)) {
+                forward = getRandomPlayerByPosition(team, "FORWARD");
             }
             forwardList.add(forward);
         }
         shift.setForward(forwardList);
 
         List<IPlayer> defenseList = new ArrayList<>();
-        for(int defenses =0; defenses<2;defenses++){
+        for (int defenses = 0; defenses < 2; defenses++) {
 
-            IPlayer defense = getRandomPlayerByPosition(team,"DEFENSE");
-            while(didPlayerReachShiftCount(playersCount,defense)){
-                defense = getRandomPlayerByPosition(team,"DEFENSE");
+            IPlayer defense = getRandomPlayerByPosition(team, "DEFENSE");
+            while (didPlayerReachShiftCount(playersCount, defense)) {
+                defense = getRandomPlayerByPosition(team, "DEFENSE");
             }
             defenseList.add(defense);
         }
@@ -145,41 +168,44 @@ public class Shift{
         return shift;
     }
 
-    public void updateGoalie(ITeam team){
-        for(IPlayer player: team.getActivePlayerList()){
-            if(player.getPosition().name().equals("GOALIE")){
-                if(goalie.getId() == player.getId()){
+    @Override
+    public void updateGoalie(ITeam team) {
+        for (IPlayer player : team.getActivePlayerList()) {
+            if (player.getPosition().name().equals("GOALIE")) {
+                if (goalie.getId() == player.getId()) {
                     break;
-                }else{
+                } else {
                     this.goalie = player;
                 }
             }
         }
     }
 
-    public boolean didPlayerReachShiftCount(HashMap<Integer,Integer> playersCount,IPlayer player){
-        if(playersCount.get(player.getId())>13){
+    @Override
+    public boolean didPlayerReachShiftCount(HashMap<Integer, Integer> playersCount, IPlayer player) {
+        if (playersCount.get(player.getId()) > 13) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public Shift getShiftForPenalizedTeam(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
-        Shift shift = new Shift();
-        HashMap<Integer,Integer> playersCount  = teamPlayersCount.get(team.getName());
-        IPlayer goalie = getRandomPlayerByPosition(team,"GOALIE");
-        while(didPlayerReachShiftCount(playersCount,goalie)){
-            goalie = getRandomPlayerByPosition(team,"GOALIE");
+    @Override
+    public IShift getShiftForPenalizedTeam(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
+        IShift shift = HockeyContext.getInstance().getModelFactory().newShift();
+        HashMap<Integer, Integer> playersCount = teamPlayersCount.get(team.getName());
+        IPlayer goalie = getRandomPlayerByPosition(team, "GOALIE");
+        while (didPlayerReachShiftCount(playersCount, goalie)) {
+            goalie = getRandomPlayerByPosition(team, "GOALIE");
         }
         //set Goalie to shift
         shift.setGoalie(goalie);
 
         List<IPlayer> forwardList = new ArrayList<>();
-        for(int forwards =0; forwards<3;forwards++){
-            IPlayer forward = getRandomPlayerByPosition(team,"FORWARD");
-            while(didPlayerReachShiftCount(playersCount,forward)){
-                forward = getRandomPlayerByPosition(team,"FORWARD");
+        for (int forwards = 0; forwards < 3; forwards++) {
+            IPlayer forward = getRandomPlayerByPosition(team, "FORWARD");
+            while (didPlayerReachShiftCount(playersCount, forward)) {
+                forward = getRandomPlayerByPosition(team, "FORWARD");
             }
             forwardList.add(forward);
         }
@@ -187,22 +213,22 @@ public class Shift{
         shift.setForward(forwardList);
 
         //getPenalizedPlayers
-        HashMap<IPlayer,Integer> penalPlayers = this.getPenalizedDefensePlayer();
+        HashMap<IPlayer, Integer> penalPlayers = this.getPenalizedDefensePlayer();
         int penalBoxSize = penalPlayers.size();
 
         //add other players except penalized ones
         List<IPlayer> defenseList = new ArrayList<>();
-        for(int defenses =0; defenses<2-penalBoxSize;defenses++){
+        for (int defenses = 0; defenses < 2 - penalBoxSize; defenses++) {
 
-            IPlayer defense = getRandomPlayerByPosition(team,"DEFENSE");
-            while(didPlayerReachShiftCount(playersCount,defense)){
-                defense = getRandomPlayerByPosition(team,"DEFENSE");
+            IPlayer defense = getRandomPlayerByPosition(team, "DEFENSE");
+            while (didPlayerReachShiftCount(playersCount, defense)) {
+                defense = getRandomPlayerByPosition(team, "DEFENSE");
             }
             defenseList.add(defense);
         }
 
         //add penalized players to the defense list
-        for(IPlayer penalPlayer: penalPlayers.keySet()){
+        for (IPlayer penalPlayer : penalPlayers.keySet()) {
             defenseList.add(penalPlayer);
         }
 
@@ -211,11 +237,11 @@ public class Shift{
         return shift;
     }
 
-    private IPlayer getRandomPlayerByPosition(ITeam team, String position){
+    private IPlayer getRandomPlayerByPosition(ITeam team, String position) {
         Random random = new Random();
         List<IPlayer> positionPlayers = new ArrayList<>();
-        for(IPlayer player: team.getActivePlayerList()){
-            if(player.getPosition().name().equals(position)){
+        for (IPlayer player : team.getActivePlayerList()) {
+            if (player.getPosition().name().equals(position)) {
                 positionPlayers.add(player);
             }
         }

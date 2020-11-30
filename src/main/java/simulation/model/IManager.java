@@ -16,10 +16,10 @@ public interface IManager {
 
     int getId();
 
+    void setId(int id);
+
     String getName();
 
     void setName(String name);
-
-    void setId(int id);
 
 }

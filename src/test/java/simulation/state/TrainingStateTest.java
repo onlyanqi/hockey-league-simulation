@@ -1,14 +1,17 @@
 package simulation.state;
 
-import simulation.dao.ILeagueDao;
-import simulation.dao.IUserDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.ILeagueDao;
+import simulation.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.mock.UserMock;
-import simulation.model.*;
+import simulation.model.ICoach;
+import simulation.model.IPlayer;
+import simulation.model.League;
+import simulation.model.User;
 
 import static org.junit.Assert.*;
 

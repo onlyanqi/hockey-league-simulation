@@ -85,4 +85,8 @@ public interface IModelFactory {
     ITrophy newTrophy();
 
     IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception;
+
+    IShift newShift();
+
+    IGameSimulation newGameSimulationFromTeams(ITeam team1, ITeam team2);
 }

@@ -23,6 +23,15 @@ public class Game implements IGame {
         factory.loadGameById(id, this);
     }
 
+    public Game(simulation.serializers.ModelsForDeserialization.model.Game game) {
+        this.id = game.id;
+        this.date = game.date;
+        this.played = game.played;
+        this.team1 = game.team1;
+        this.team2 = game.team2;
+        this.winner = game.winner;
+    }
+
     public static Result fromString(String text) {
         for (Result b : Result.values()) {
             if (b.name().equalsIgnoreCase(text)) {
@@ -30,15 +39,6 @@ public class Game implements IGame {
             }
         }
         return null;
-    }
-
-    public Game(simulation.serializers.ModelsForDeserialization.model.Game game){
-        this.id = game.id;
-        this.date = game.date;
-        this.played = game.played;
-        this.team1 = game.team1;
-        this.team2 = game.team2;
-        this.winner = game.winner;
     }
 
     public int getId() {

@@ -1,22 +1,13 @@
 package simulation.state;
 
-import simulation.dao.ILeagueDao;
+import org.junit.BeforeClass;
 import simulation.dao.IPlayerDao;
 import simulation.dao.IUserDao;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
-import simulation.mock.LeagueMock;
 import simulation.mock.PlayerMock;
 import simulation.mock.UserMock;
-import simulation.model.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import simulation.model.User;
 
 public class AdvanceNextSeasonStateTest {
 

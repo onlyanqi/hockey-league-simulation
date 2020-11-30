@@ -2,7 +2,7 @@ package simulation.model;
 
 import simulation.dao.IInjuryDao;
 
-public class Injury extends SharedAttributes implements IInjury{
+public class Injury extends SharedAttributes implements IInjury {
 
     private Double randomInjuryChance;
 
@@ -25,7 +25,7 @@ public class Injury extends SharedAttributes implements IInjury{
         loadInjuryFactory.loadInjuryById(id, this);
     }
 
-    public Injury(simulation.serializers.ModelsForDeserialization.model.Injury injury){
+    public Injury(simulation.serializers.ModelsForDeserialization.model.Injury injury) {
         this.injuryDaysHigh = injury.injuryDaysHigh;
         this.injuryDaysLow = injury.injuryDaysLow;
         this.randomInjuryChance = injury.randomInjuryChance;

@@ -31,13 +31,13 @@ public class AdvanceNextSeasonState implements ISimulateState {
         league.setCurrentDate(nhlEvents.getNextSeasonDate());
         ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + nhlEvents.getNextSeasonDate());
         cleanDraftPicks();
-        aging.agingPlayerPeriod(league,beforeDate);
+        aging.agingPlayerPeriod(league, beforeDate);
         ConsoleOutput.getInstance().printMsgToConsole(AGING_TO_NEXT_SEASON);
         return exit();
     }
 
 
-    private void cleanDraftPicks(){
+    private void cleanDraftPicks() {
         for (IConference conference : league.getConferenceList()) {
             for (IDivision division : conference.getDivisionList()) {
                 for (ITeam team : division.getTeamList()) {

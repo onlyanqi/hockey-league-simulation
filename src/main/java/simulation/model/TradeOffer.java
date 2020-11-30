@@ -5,7 +5,7 @@ import simulation.dao.ITradeOfferDao;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TradeOffer extends SharedAttributes implements ITradeOffer{
+public class TradeOffer extends SharedAttributes implements ITradeOffer {
 
     private int leagueId;
     private int tradingId;
@@ -28,7 +28,7 @@ public class TradeOffer extends SharedAttributes implements ITradeOffer{
         factory.loadTradeOfferDetailsById(tradingOfferId, this);
     }
 
-    public TradeOffer(simulation.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer){
+    public TradeOffer(simulation.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
         this.leagueId = tradeOffer.leagueId;
         this.tradingId = tradeOffer.tradingId;
         this.fromPlayerId = tradeOffer.fromPlayerId;

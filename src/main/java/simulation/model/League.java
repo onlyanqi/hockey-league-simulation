@@ -6,9 +6,9 @@ import simulation.dao.ILeagueDao;
 import simulation.dao.ITradeOfferDao;
 import simulation.serializers.ModelsForDeserialization.model.Coach;
 import simulation.serializers.ModelsForDeserialization.model.Conference;
-import simulation.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 import simulation.serializers.ModelsForDeserialization.model.Player;
 import simulation.serializers.ModelsForDeserialization.model.TradeOffer;
+import simulation.serializers.ModelsForDeserialization.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class League extends SharedAttributes implements ILeague {
     private ITeamStanding regularSeasonStanding;
     private ITeamStanding playOffStanding;
     private ITeamStanding activeTeamStanding;
-    private HashMap<ITeam,Integer> stanleyCupFinalsTeamScores = new HashMap<>();
+    private HashMap<ITeam, Integer> stanleyCupFinalsTeamScores = new HashMap<>();
     private ArrayList<TeamStat> teamStats = new ArrayList<>();
     private INHLEvents nhlEvents;
     private List<ITradeOffer> tradeOfferList = new ArrayList<>();
@@ -59,12 +59,12 @@ public class League extends SharedAttributes implements ILeague {
         loadLeagueFactory.loadLeagueByName(leagueName, userId, this);
     }
 
-    public League(LeagueDeserializationModel leagueDeserializationModel){
+    public League(LeagueDeserializationModel leagueDeserializationModel) {
         this.activeTeamStanding = new TeamStanding(leagueDeserializationModel.activeTeamStanding);
-        for(Coach coach : leagueDeserializationModel.coachList){
+        for (Coach coach : leagueDeserializationModel.coachList) {
             this.coachList.add(new simulation.model.Coach(coach));
         }
-        for(Conference conference : leagueDeserializationModel.conferenceList){
+        for (Conference conference : leagueDeserializationModel.conferenceList) {
             this.conferenceList.add(new simulation.model.Conference(conference));
         }
         this.createdBy = leagueDeserializationModel.createdBy;
@@ -72,43 +72,43 @@ public class League extends SharedAttributes implements ILeague {
         this.freeAgent = new FreeAgent(leagueDeserializationModel.freeAgent);
         this.gamePlayConfig = new GamePlayConfig(leagueDeserializationModel.gamePlayConfig);
         this.games = new GameSchedule(leagueDeserializationModel.games);
-        for(simulation.serializers.ModelsForDeserialization.model.Manager manager : leagueDeserializationModel.managerList){
+        for (simulation.serializers.ModelsForDeserialization.model.Manager manager : leagueDeserializationModel.managerList) {
             this.managerList.add(new Manager(manager));
         }
         this.nhlEvents = new NHLEvents(leagueDeserializationModel.nhlEvents);
         this.playOffStanding = new TeamStanding(leagueDeserializationModel.playOffStanding);
         this.regularSeasonStanding = new TeamStanding(leagueDeserializationModel.regularSeasonStanding);
-        for(Player player : leagueDeserializationModel.retiredPlayerList){
+        for (Player player : leagueDeserializationModel.retiredPlayerList) {
             this.retiredPlayerList.add(new simulation.model.Player(player));
         }
-        for(Player player : leagueDeserializationModel.draftedPlayerList){
+        for (Player player : leagueDeserializationModel.draftedPlayerList) {
             this.draftedPlayerList.add(new simulation.model.Player(player));
         }
-        if(leagueDeserializationModel.stanleyCupFinalsTeamScores == null){
+        if (leagueDeserializationModel.stanleyCupFinalsTeamScores == null) {
             this.stanleyCupFinalsTeamScores = new HashMap<>();
-        }else{
+        } else {
             this.stanleyCupFinalsTeamScores = leagueDeserializationModel.stanleyCupFinalsTeamScores;
         }
 
-        if(leagueDeserializationModel.teamStats == null){
+        if (leagueDeserializationModel.teamStats == null) {
             this.teamStats = new ArrayList<>();
-        }else{
-            for(simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat : leagueDeserializationModel.teamStats){
+        } else {
+            for (simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat : leagueDeserializationModel.teamStats) {
                 this.teamStats.add(new TeamStat(teamStat));
             }
         }
 
         this.nhlEvents = new NHLEvents(leagueDeserializationModel.nhlEvents);
-        for(TradeOffer tradeOffer : leagueDeserializationModel.tradeOfferList){
+        for (TradeOffer tradeOffer : leagueDeserializationModel.tradeOfferList) {
             this.tradeOfferList.add(new simulation.model.TradeOffer(tradeOffer));
         }
-        for(simulation.serializers.ModelsForDeserialization.model.Trophy trophy : leagueDeserializationModel.historicalTrophyList){
+        for (simulation.serializers.ModelsForDeserialization.model.Trophy trophy : leagueDeserializationModel.historicalTrophyList) {
             this.historicalTrophyList.add(new Trophy(trophy));
         }
 
-        if(leagueDeserializationModel.trophy == null){
+        if (leagueDeserializationModel.trophy == null) {
             this.trophy = new Trophy();
-        }else{
+        } else {
             this.trophy = new Trophy(leagueDeserializationModel.trophy);
         }
         this.user = leagueDeserializationModel.user;
@@ -312,7 +312,7 @@ public class League extends SharedAttributes implements ILeague {
     }
 
     public List<ICoach> removeCoachFromCoachListById(List<ICoach> coachList,
-                                                    int indexOfCoachObject, IModelFactory coachFactory) {
+                                                     int indexOfCoachObject, IModelFactory coachFactory) {
         if (null == coachList) {
             return null;
         }
@@ -394,8 +394,8 @@ public class League extends SharedAttributes implements ILeague {
 
     @Override
     public TeamStat getTeamStatByTeamName(String teamName) {
-        for(TeamStat teamStat: teamStats){
-            if(teamStat.getTeamName().equals(teamName)){
+        for (TeamStat teamStat : teamStats) {
+            if (teamStat.getTeamName().equals(teamName)) {
                 return teamStat;
             }
         }
@@ -425,8 +425,8 @@ public class League extends SharedAttributes implements ILeague {
 
 
     @Override
-    public List<ITeam> createTeamList(){
-        List<ITeam> teamList=new ArrayList<>();
+    public List<ITeam> createTeamList() {
+        List<ITeam> teamList = new ArrayList<>();
         for (IConference conference : getConferenceList()) {
             for (IDivision division : conference.getDivisionList()) {
                 for (ITeam team : division.getTeamList()) {
@@ -438,8 +438,8 @@ public class League extends SharedAttributes implements ILeague {
     }
 
     @Override
-    public List<IPlayer> createPlayerList(){
-        List<IPlayer> playerList=new ArrayList<>();
+    public List<IPlayer> createPlayerList() {
+        List<IPlayer> playerList = new ArrayList<>();
         for (IConference conference : getConferenceList()) {
             for (IDivision division : conference.getDivisionList()) {
                 for (ITeam team : division.getTeamList()) {
@@ -451,8 +451,8 @@ public class League extends SharedAttributes implements ILeague {
     }
 
     @Override
-    public List<ICoach> createCoachList(){
-        List<ICoach> coachList=new ArrayList<>();
+    public List<ICoach> createCoachList() {
+        List<ICoach> coachList = new ArrayList<>();
         for (IConference conference : getConferenceList()) {
             for (IDivision division : conference.getDivisionList()) {
                 for (ITeam team : division.getTeamList()) {
@@ -462,4 +462,19 @@ public class League extends SharedAttributes implements ILeague {
         }
         return coachList;
     }
+
+    public void initializeTeamStats() {
+        ArrayList<TeamStat> teamStats = new ArrayList<>();
+        for (IConference conference : getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    TeamStat teamStat = new TeamStat();
+                    teamStat.setTeamName(team.getName());
+                    teamStats.add(teamStat);
+                }
+            }
+        }
+        setTeamStats(teamStats);
+    }
+
 }

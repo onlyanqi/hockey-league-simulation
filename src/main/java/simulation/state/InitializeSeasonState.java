@@ -1,5 +1,6 @@
 package simulation.state;
 
+import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
 import simulation.model.*;
 
@@ -11,6 +12,7 @@ import java.util.Random;
 
 public class InitializeSeasonState implements ISimulateState {
 
+    private static Logger log = Logger.getLogger(InitializeSeasonState.class);
     private final Integer TotalGamesPerTeam = 82;
     private final Integer minimumTeamCountForPlayOffs = 5;
     private ILeague league;
@@ -25,8 +27,10 @@ public class InitializeSeasonState implements ISimulateState {
     public ISimulateState action() {
         if (isMinimumTeamCountSatisfiedForPlayoffs(league)) {
             InitializeRegularSeason();
+            log.info("Initialized regular season for  " + league.getCurrentDate().getYear());
         } else {
-            ConsoleOutput.getInstance().printMsgToConsole("Please make sure minimum number of teams(5) for each division are provided to the league");
+            log.error("Please make sure minimum number of teams(" + minimumTeamCountForPlayOffs + ") for each division are provided to the league");
+            ConsoleOutput.getInstance().printMsgToConsole("Please make sure minimum number of teams(" + minimumTeamCountForPlayOffs + ") for each division are provided to the league");
             return null;
         }
         return exit();
@@ -70,26 +74,12 @@ public class InitializeSeasonState implements ISimulateState {
         regularSeasonTeamStanding.initializeTeamStandingsRegularSeason(league);
 
         league.setRegularSeasonStanding(regularSeasonTeamStanding);
-        league.setPlayOffStanding(new TeamStanding());
+        league.setPlayOffStanding(hockeyContext.getModelFactory().newTeamStanding());
         league.setGames(games);
         league.setActiveTeamStanding(league.getRegularSeasonStanding());
         league.setStanleyCupFinalsTeamScores(new HashMap<>());
         league.setNhlRegularSeasonEvents(nhlEvents);
-        setTeamStats(league);
-    }
-
-    private void setTeamStats(ILeague league) {
-        ArrayList<TeamStat> teamStats = new ArrayList<>() ;//league.getTeamStats();
-        for(IConference conference : league.getConferenceList()){
-            for(IDivision division : conference.getDivisionList()){
-                for(ITeam team : division.getTeamList()){
-                    TeamStat teamStat = new TeamStat();
-                    teamStat.setTeamName(team.getName());
-                    teamStats.add(teamStat);
-                }
-            }
-        }
-        league.setTeamStats(teamStats);
+        league.initializeTeamStats();
     }
 
     private Boolean isMinimumTeamCountSatisfiedForPlayoffs(ILeague league) {
@@ -196,7 +186,7 @@ public class InitializeSeasonState implements ISimulateState {
             for (int j = 0; j < totalGamesAdded / diffInDays; j++) {
                 int randomNumber = rand.nextInt(tempGameList.size());
                 IGame game = tempGameList.get(randomNumber);
-                while (teamExistsOnDay(gameListOnDay, game, currentDate)) {
+                while (teamExistsOnDay(gameListOnDay, game)) {
                     randomNumber = rand.nextInt(tempGameList.size());
                     game = tempGameList.get(randomNumber);
                 }
@@ -212,7 +202,7 @@ public class InitializeSeasonState implements ISimulateState {
         for (int j = 0; j < totalGamesAdded % diffInDays; j++) {
             int randomNumber = rand.nextInt(tempGameList.size());
             IGame game = tempGameList.get(randomNumber);
-            while (teamExistsOnDay(gameListOnDay, game, currentDate)) {
+            while (teamExistsOnDay(gameListOnDay, game)) {
                 randomNumber = rand.nextInt(tempGameList.size());
                 game = tempGameList.get(randomNumber);
             }
@@ -222,7 +212,7 @@ public class InitializeSeasonState implements ISimulateState {
         }
     }
 
-    private boolean teamExistsOnDay(List<IGame> gameList, IGame game, LocalDate currentDate) {
+    private boolean teamExistsOnDay(List<IGame> gameList, IGame game) {
         for (IGame gameFromList : gameList) {
             if (gameFromList.getTeam1().equals(game.getTeam1()) || gameFromList.getTeam1().equals(game.getTeam2()) || gameFromList.getTeam2().equals(game.getTeam1()) || gameFromList.getTeam2().equals(game.getTeam2())) {
                 return true;

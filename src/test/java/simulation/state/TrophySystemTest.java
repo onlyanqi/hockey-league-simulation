@@ -3,14 +3,20 @@ package simulation.state;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import presentation.ConsoleOutput;
+import simulation.dao.ICoachDao;
 import simulation.dao.ILeagueDao;
 import simulation.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
+import simulation.mock.CoachMock;
 import simulation.mock.LeagueMock;
 import simulation.mock.TrophyMock;
 import simulation.mock.UserMock;
 import simulation.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 
@@ -30,30 +36,46 @@ public class TrophySystemTest {
         IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         hockeyContext.setUser(user);
-        trophy = new TrophyMock().loadTrophyById(0,new Trophy());
+        trophy = new TrophyMock().loadTrophyById(0, new Trophy());
         league.setTrophy(trophy);
         consoleOutput = ConsoleOutput.getInstance();
     }
 
-//    @Test
-//    public void processTest() throws Exception {
-//        TrophySystem trophySystem = new TrophySystem(hockeyContext,trophy);
-//        Trophy oldTrophy = new Trophy();
-//        trophySystem.process();
-//        assertTrue(oldTrophy.getClass() == trophy.getClass());
-//    }
 
     @Test
-    public void entryTest() throws Exception {
-        IUserDao userFactory = new UserMock();;
-        User user = new User(4, userFactory);
-        hockeyContext.setUser(user);
-        league = hockeyContext.getUser().getLeague();
+    public void calculateJackAdamsAwardTest() throws Exception {
+        List<ICoach> coachList = new ArrayList<>();
+        for(int i=0;i<10;i++){
+            ICoachDao coachDao = new CoachMock();
+            ICoach coach = new Coach(0, coachDao);
+            coach.setId(i);
+            if(i==9){
+                coach.setName("Simran");
+            }
+            coach.setCoachingEffectiveness(i);
+            coachList.add(coach);
+        }
         TrophySystem trophySystem = new TrophySystem(hockeyContext,trophy);
-        Trophy oldTrophy = new Trophy();
-//        trophySystem.entry();
-//        assertTrue(oldTrophy.getClass() == trophy.getClass());
+        String winner = trophySystem.calculateJackAdamsAward(coachList);
+        assertNotEquals(winner,null);
+        assertTrue(winner=="Simran");
     }
+
+
+    @Test
+    public void showHistoricalTrophyListTest(){
+        List<ITrophy> trophyList = new ArrayList<>();
+        ITrophy trophy = new TrophyMock().loadTrophyById(0,new Trophy());
+        for(int i=0; i<3;i++){
+            trophyList.add(trophy);
+        }
+        TrophySystem trophySystem = new TrophySystem(hockeyContext,trophy);
+        trophySystem.showHistoricalTrophyList(trophyList);
+        System.out.println(trophySystem.getClass());
+        assertEquals(trophySystem.getClass().toString(),"class simulation.state.TrophySystem");
+        assertNotEquals(trophySystem.getClass(),null);
+    }
+
 
 
 }

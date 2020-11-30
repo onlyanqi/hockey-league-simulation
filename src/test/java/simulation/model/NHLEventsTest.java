@@ -1,8 +1,8 @@
 package simulation.model;
 
-import simulation.dao.IEventDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.IEventDao;
 import simulation.mock.NHLEventMock;
 
 import java.time.LocalDate;

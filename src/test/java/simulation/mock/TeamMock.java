@@ -5,6 +5,7 @@ import simulation.dao.ITeamDao;
 import simulation.model.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TeamMock implements ITeamDao {
@@ -32,7 +33,9 @@ public class TeamMock implements ITeamDao {
 
     @Override
     public void loadTeamById(int id, ITeam team) throws Exception {
-
+        List<String> draftPicks = new ArrayList<>(Arrays.asList(
+                null, null, null, null, null, null, null
+        ));
         switch (new Long(id).intValue()) {
             case 1:
                 team.setName("Team1");
@@ -54,6 +57,7 @@ public class TeamMock implements ITeamDao {
                 team.setAiTeam(true);
                 team.setPlayersTradedCount(0);
                 team.setActivePlayerList();
+                team.setDraftPicks(draftPicks);
                 break;
 
             case 2:
@@ -75,6 +79,7 @@ public class TeamMock implements ITeamDao {
                 team.setStrength();
                 team.setAiTeam(true);
                 team.setPlayersTradedCount(2);
+                team.setDraftPicks(null);
                 break;
 
             case 3:
@@ -96,6 +101,7 @@ public class TeamMock implements ITeamDao {
                 team.setAiTeam(true);
                 team.setPlayersTradedCount(0);
                 team.setActivePlayerList();
+                team.setDraftPicks(draftPicks);
                 break;
 
             case 4:
@@ -117,6 +123,7 @@ public class TeamMock implements ITeamDao {
                 team.setAiTeam(false);
                 team.setPlayersTradedCount(1);
                 team.setActivePlayerList();
+                team.setDraftPicks(draftPicks);
                 break;
 
             case 5:
@@ -138,6 +145,7 @@ public class TeamMock implements ITeamDao {
                 team.setStrength();
                 team.setAiTeam(true);
                 team.setPlayersTradedCount(6);
+                team.setDraftPicks(draftPicks);
                 break;
         }
 

@@ -14,11 +14,11 @@ public class SavesSubscriberTest {
     @Test
     public void updateTest() throws Exception {
         IPlayerDao playerDao = new PlayerMock();
-        IPlayer player = new Player(1,playerDao);
+        IPlayer player = new Player(1, playerDao);
         int oldSaves = player.getSaves();
         SavesSubscriber savesSubscriber = new SavesSubscriber();
         savesSubscriber.update(player, 1);
         int newSaves = player.getSaves();
-        assertEquals(oldSaves+1,newSaves);
+        assertEquals(oldSaves + 1, newSaves);
     }
 }

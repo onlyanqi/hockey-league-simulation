@@ -13,11 +13,11 @@ public class PenaltyCountSubscriberTest {
     @Test
     public void updateTest() throws Exception {
         IPlayerDao playerDao = new PlayerMock();
-        IPlayer player = new Player(1,playerDao);
+        IPlayer player = new Player(1, playerDao);
         int oldPenalty = player.getPenaltyCount();
         PenaltyCountSubscriber penaltyCountSubscriber = new PenaltyCountSubscriber();
         penaltyCountSubscriber.update(player, 1);
         int newPenalty = player.getPenaltyCount();
-        assertEquals(oldPenalty+1,newPenalty);
+        assertEquals(oldPenalty + 1, newPenalty);
     }
 }

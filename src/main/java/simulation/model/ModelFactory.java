@@ -3,14 +3,15 @@ package simulation.model;
 import simulation.dao.*;
 import simulation.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 
-public class ModelFactory implements IModelFactory{
+public class ModelFactory implements IModelFactory {
 
     private static IModelFactory modelFactory;
 
-    private ModelFactory(){}
+    private ModelFactory() {
+    }
 
-    public static IModelFactory getInstance(){
-        if(null == modelFactory){
+    public static IModelFactory getInstance() {
+        if (null == modelFactory) {
             modelFactory = new ModelFactory();
         }
         return modelFactory;
@@ -39,7 +40,7 @@ public class ModelFactory implements IModelFactory{
         return new Conference();
     }
 
-    public IConference newConferenceWithId(int id){
+    public IConference newConferenceWithId(int id) {
         return new Conference(id);
     }
 
@@ -55,7 +56,7 @@ public class ModelFactory implements IModelFactory{
         return new Division(id, divisionDao);
     }
 
-    public IDivision newDivisionWithId(int id){
+    public IDivision newDivisionWithId(int id) {
         return new Division(id);
     }
 
@@ -92,7 +93,7 @@ public class ModelFactory implements IModelFactory{
         return new League(leagueName, userId, leagueFactory);
     }
 
-    public ILeague createLeagueFromDeserializationObject(LeagueDeserializationModel leagueDeserializationModel){
+    public ILeague createLeagueFromDeserializationObject(LeagueDeserializationModel leagueDeserializationModel) {
         return new League(leagueDeserializationModel);
     }
 
@@ -182,13 +183,25 @@ public class ModelFactory implements IModelFactory{
     }
 
     @Override
-    public ITrophy newTrophy() {return new Trophy();}
+    public ITrophy newTrophy() {
+        return new Trophy();
+    }
 
-    public IFreeAgent newFreeAgentWithId(int id){
+    public IFreeAgent newFreeAgentWithId(int id) {
         return new FreeAgent(id);
     }
 
     public IFreeAgent newFreeAgentWithIdDao(int id, IFreeAgentDao freeAgentDao) throws Exception {
         return new FreeAgent(id, freeAgentDao);
     }
+
+    public IShift newShift() {
+        return new Shift();
+    }
+
+    @Override
+    public IGameSimulation newGameSimulationFromTeams(ITeam team1, ITeam team2) {
+        return new GameSimulation(team1, team2);
+    }
+
 }

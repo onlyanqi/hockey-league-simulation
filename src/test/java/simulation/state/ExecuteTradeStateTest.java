@@ -1,9 +1,11 @@
 package simulation.state;
 
-import simulation.dao.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.factory.*;
+import simulation.dao.*;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.HockeyContextConcreteMock;
+import simulation.factory.IHockeyContextFactory;
 import simulation.model.*;
 
 import java.io.ByteArrayInputStream;
@@ -17,14 +19,11 @@ public class ExecuteTradeStateTest {
     private static final String FROMPLAYER = "fromPlayer";
     private static final String FROMTEAM = "fromTeam";
     private static final String TRADEOFFER = "tradeOffer";
-    private static final String TOPLAYER = "toPlayer";
     private static final String TOTEAM = "toTeam";
     private static final String TRADING = "trading";
     private static final String ACCEPTED = "accepted";
     private static final String REJECTED = "rejected";
-    private static final String FROMPLAYERLISTBEFORETRADE = "fromPlayerListBeforeTrade";
     private static final String FROMPLAYERLISTAFTERTRADE = "fromPlayerListAfterTrade";
-    private final String TOPLAYERLIST = "toPlayerList";
     private static ILeagueDao leagueDao;
     private static ITeamDao teamDao;
     private static IPlayerDao playerDao;
@@ -37,9 +36,10 @@ public class ExecuteTradeStateTest {
     private static IHockeyContextFactory hockeyContextFactory;
     private static ILeague league;
     private static IUser user;
+    private final String TOPLAYERLIST = "toPlayerList";
 
     @BeforeClass
-    public static void init() throws Exception {
+    public static void init() {
         hockeyContextFactory = HockeyContextConcreteMock.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();
@@ -64,14 +64,14 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void defaultConstructorTest() throws Exception {
+    public void executeTradeStateTest() throws Exception {
         ExecuteTradeState state = newStateEmptyConstructor();
         assertTrue(state instanceof ExecuteTradeState);
         assertTrue(state instanceof ISimulateState);
     }
 
     @Test
-    public void initConstructorTest() throws Exception {
+    public void executeTradeStateWithParameterTest() throws Exception {
         league = modelFactory.newLeagueWithIdDao(1, leagueDao);
         user = modelFactory.newUserWithIdDao(1, userDao);
         user.setLeague(league);
@@ -132,7 +132,7 @@ public class ExecuteTradeStateTest {
             state.tradingLogic(team, league);
             if (league.getTradeOfferList() == null || league.getTradeOfferList().isEmpty()) {
                 continue;
-            } else{
+            } else {
                 assertNotNull(league.getTradeOfferList().get(0).getStatus());
             }
         }

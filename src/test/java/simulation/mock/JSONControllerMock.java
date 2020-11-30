@@ -1,6 +1,5 @@
 package simulation.mock;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -60,7 +59,7 @@ public class JSONControllerMock {
         gameplayConfig.put("aging", aging);
         //gameplayConfig.put("gameResolver", gameResolver);
         gameplayConfig.put("injuries", injuries);
-        gameplayConfig.put("simulate",simulate);
+        gameplayConfig.put("simulate", simulate);
         gameplayConfig.put("training", training);
         gameplayConfig.put("trading", trading);
 

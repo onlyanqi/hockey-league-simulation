@@ -6,7 +6,8 @@ public abstract class SharedAttributes {
     private int id;
     private String name;
 
-    public SharedAttributes(){}
+    public SharedAttributes() {
+    }
 
     public int getId() {
         return id;

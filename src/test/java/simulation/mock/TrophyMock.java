@@ -4,8 +4,8 @@ import simulation.model.ITrophy;
 
 
 public class TrophyMock {
-    public ITrophy loadTrophyById(int id, ITrophy trophy){
-        switch (id){
+    public ITrophy loadTrophyById(int id, ITrophy trophy) {
+        switch (id) {
             case 0:
                 trophy.setParticipationAward("Simran");
                 trophy.setPresidentsTrophy("Mani");

@@ -1,8 +1,9 @@
 package simulation.mock;
 
-import simulation.dao.*;
 import org.json.simple.JSONObject;
+import simulation.dao.*;
 import simulation.model.*;
+import simulation.state.HockeyContext;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class LeagueMock implements ILeagueDao {
     }
 
     public IGameSchedule formGames() throws Exception {
-        IGameSchedule games = new GameSchedule();
+        IGameSchedule games = HockeyContext.getInstance().getModelFactory().newGameSchedule();
         List<IGame> gameList = new ArrayList<>();
 
         IGameDao gameFactory = new GameMock();
@@ -81,7 +82,7 @@ public class LeagueMock implements ILeagueDao {
     }
 
     public ITeamStanding formTeamStanding() throws Exception {
-        ITeamStanding teamStanding = new TeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
         List<ITeamScore> teamScoreList = new ArrayList<>();
 
         ITeamScoreDao teamScoreFactory = new TeamScoreMock();
@@ -242,7 +243,7 @@ public class LeagueMock implements ILeagueDao {
                 league.setStanleyCupFinalsTeamScores(new HashMap<>());
                 league.setGames(formGames());
                 league.setGamePlayConfig(formGamePlayConfig());
-                league.setCurrentDate(LocalDate.of(2021,05,06));
+                league.setCurrentDate(LocalDate.of(2021, 05, 06));
                 break;
         }
 

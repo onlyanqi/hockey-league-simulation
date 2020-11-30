@@ -11,6 +11,7 @@ import java.util.*;
 
 public class ExecuteTradeState implements ISimulateState {
 
+    private static final Logger log = Logger.getLogger(ExecuteTradeState.class);
     private final String FROMPLAYERLISTBEFORETRADE = "fromPlayerListBeforeTrade";
     private final String FROMPLAYERLISTAFTERTRADE = "fromPlayerListAfterTrade";
     private final String FROMTEAM = "fromTeam";
@@ -31,10 +32,10 @@ public class ExecuteTradeState implements ISimulateState {
     private ILeague league;
     private ConsoleOutput consoleOutput;
     private ReadUserInput readUserInput;
-    private static final Logger log = Logger.getLogger(ExecuteTradeState.class);
 
     public ExecuteTradeState() {
     }
+
     public ExecuteTradeState(IHockeyContext hockeyContext) {
         log.info("Trading check starts.");
         this.hockeyContext = hockeyContext;
@@ -74,8 +75,8 @@ public class ExecuteTradeState implements ISimulateState {
                     }
                 }
             }
-        } catch (Exception e){
-            log.error("ExecuteTradeState: loopAllTeamsForTradeInitiation: Exception: "+e);
+        } catch (Exception e) {
+            log.error("ExecuteTradeState: loopAllTeamsForTradeInitiation: Exception: " + e);
             throw e;
         }
         return isValidLeague;
@@ -98,7 +99,7 @@ public class ExecuteTradeState implements ISimulateState {
                                 findBestSwapPlayer(team, league, weakestPlayer, swap);
                                 draftPickTradeDecider(swap);
                                 ITeam toTeam = (ITeam) swap.get(TOTEAM);
-                                if(toTeam == null){
+                                if (toTeam == null) {
                                     continue;
                                 }
                                 performTrade(swap);
@@ -107,64 +108,61 @@ public class ExecuteTradeState implements ISimulateState {
                     }
                 }
             }
-        } catch (ConcurrentModificationException e){
-            e.printStackTrace();
-            log.error("ExecuteTradeState: tradingLogic: ConcurrentModificationException: "+e);
+        } catch (ConcurrentModificationException e) {
+            log.error("ExecuteTradeState: tradingLogic: ConcurrentModificationException: " + e);
             throw e;
-        }catch (NullPointerException e){
-            e.printStackTrace();
-            log.error("ExecuteTradeState: tradingLogic: NullPointerException: "+e);
+        } catch (NullPointerException e) {
+            log.error("ExecuteTradeState: tradingLogic: NullPointerException: " + e);
             throw e;
-        } catch (Exception e){
-            e.printStackTrace();
-            log.error("ExecuteTradeState: tradingLogic: Exception: "+e);
+        } catch (Exception e) {
+            log.error("ExecuteTradeState: tradingLogic: Exception: " + e);
             throw e;
         }
     }
 
-    private void draftPickTradeDecider(Map<String, Object> tradeDetails){
+    private void draftPickTradeDecider(Map<String, Object> tradeDetails) {
         Object type = tradeDetails.get(TYPE);
         Object swappedDraftPick = tradeDetails.get(TRADED_ROUND_NUMBER);
         int TWO = 2;
 
-        if(type == null || swappedDraftPick == null){
+        if (type == null || swappedDraftPick == null) {
             return;
-        } else if(fiftyFiftyDecider() && STRONG.equalsIgnoreCase((String) type)
-            && (ONE == (int) swappedDraftPick || TWO == (int) swappedDraftPick)){
+        } else if (fiftyFiftyDecider() && STRONG.equalsIgnoreCase((String) type)
+                && (ONE == (int) swappedDraftPick || TWO == (int) swappedDraftPick)) {
 
             tradeDetails.put(FROMPLAYERLISTAFTERTRADE, new ArrayList<>());
-        } else if(fiftyFiftyDecider() && WEAK.equalsIgnoreCase((String) type)
-            && (ONE == (int) swappedDraftPick || TWO == (int) swappedDraftPick)){
+        } else if (fiftyFiftyDecider() && WEAK.equalsIgnoreCase((String) type)
+                && (ONE == (int) swappedDraftPick || TWO == (int) swappedDraftPick)) {
 
             tradeDetails.put(TOPLAYERLIST, new ArrayList<>());
-        } else if(tradeAssumptionFlag()){
+        } else if (tradeAssumptionFlag()) {
             tradeDetails.put(TRADED_ROUND_NUMBER, null);
         }
     }
 
-    private boolean fiftyFiftyDecider(){
+    private boolean fiftyFiftyDecider() {
         double half = 0.5;
         double strongWeakPlayerDecider = getRandomDouble();
         boolean getStrongPlayerFlag = false;
 
-        if(half < strongWeakPlayerDecider){
+        if (half < strongWeakPlayerDecider) {
             getStrongPlayerFlag = true;
         }
         return getStrongPlayerFlag;
     }
 
-    private boolean tradeAssumptionFlag(){
+    private boolean tradeAssumptionFlag() {
         double tradeAssumptionValue = 0.1;
         boolean flag = false;
         double randomValue = getRandomDouble();
-        if(randomValue < tradeAssumptionValue){
+        if (randomValue < tradeAssumptionValue) {
             flag = true;
         }
         return flag;
     }
 
     private void findBestSwapPlayer(ITeam team, ILeague league,
-                                   IPlayer weakestPlayer, Map<String, Object> swap) {
+                                    IPlayer weakestPlayer, Map<String, Object> swap) {
         IPlayer swapPlayer = null;
         List<IConference> conferenceList = league.getConferenceList();
         double tradeDecider = getRandomDouble();
@@ -174,7 +172,7 @@ public class ExecuteTradeState implements ISimulateState {
         double weakOneToManyTradeDecider = 0.8;
 
         for (IConference conference : conferenceList) {
-            if(tradeAssumptionFlag()){
+            if (tradeAssumptionFlag()) {
                 break;
             }
             List<IDivision> divisionList = conference.getDivisionList();
@@ -187,16 +185,16 @@ public class ExecuteTradeState implements ISimulateState {
                         if (checkCurrentTradeOffer(otherTeam)) {
                             if (tradeDecider < strongOneToOneTradeDecider) {
                                 swapPlayer = findOneToOneStrongPlayer(otherTeam,
-                                            weakestPlayer, swapPlayer, swap);
-                            } else if(tradeDecider < strongOneToManyTradeDecider) {
+                                        weakestPlayer, swapPlayer, swap);
+                            } else if (tradeDecider < strongOneToManyTradeDecider) {
                                 swapPlayer = findOneToManyStrongPlayer(otherTeam,
-                                            swapPlayer, swap);
-                            } else if(tradeDecider < weakOneToOneTradeDecider){
+                                        swapPlayer, swap);
+                            } else if (tradeDecider < weakOneToOneTradeDecider) {
                                 swapPlayer = findOneToOneWeakPlayer(otherTeam,
-                                            weakestPlayer, swapPlayer, swap);
-                            } else if(tradeDecider < weakOneToManyTradeDecider) {
+                                        weakestPlayer, swapPlayer, swap);
+                            } else if (tradeDecider < weakOneToManyTradeDecider) {
                                 findOneToManyWeakPlayer(otherTeam, swap);
-                            } else{
+                            } else {
                                 manyToManyTrade(otherTeam, swap);
                             }
                         }
@@ -206,65 +204,65 @@ public class ExecuteTradeState implements ISimulateState {
         }
     }
 
-    private void manyToManyTrade(ITeam otherTeam, Map<String, Object> swap){
+    private void manyToManyTrade(ITeam otherTeam, Map<String, Object> swap) {
         List<IPlayer> fromPlayerListBeforeTrade = (List<IPlayer>) swap.get(FROMPLAYERLISTBEFORETRADE);
         boolean draftPick = fiftyFiftyDecider();
         List<IPlayer> toPlayerList = new ArrayList<>();
 
-        for(IPlayer weakPlayer : fromPlayerListBeforeTrade) {
+        for (IPlayer weakPlayer : fromPlayerListBeforeTrade) {
             IPlayer swapPlayer = null;
             if (draftPick) {
                 swapPlayer = findOneToOneWeakPlayer(otherTeam, weakPlayer, swapPlayer, swap);
-                if(swapPlayer == null){
+                if (swapPlayer == null) {
                     continue;
-                } else{
+                } else {
                     boolean alreadyTaken = false;
-                    for(IPlayer player : toPlayerList){
-                        if(player.getId() == swapPlayer.getId()){
+                    for (IPlayer player : toPlayerList) {
+                        if (player.getId() == swapPlayer.getId()) {
                             alreadyTaken = true;
                             swapPlayer = null;
                         }
                     }
-                    if(alreadyTaken){
+                    if (alreadyTaken) {
                         continue;
-                    } else{
+                    } else {
                         toPlayerList.add(swapPlayer);
                     }
                 }
-            } else{
+            } else {
                 swapPlayer = findOneToOneStrongPlayer(otherTeam, weakPlayer, swapPlayer, swap);
-                if(swapPlayer == null){
+                if (swapPlayer == null) {
                     continue;
-                } else{
+                } else {
                     boolean alreadyTaken = false;
-                    for(IPlayer player : toPlayerList){
-                        if(player.getId() == swapPlayer.getId()){
+                    for (IPlayer player : toPlayerList) {
+                        if (player.getId() == swapPlayer.getId()) {
                             alreadyTaken = true;
                             swapPlayer = null;
                         }
                     }
-                    if(alreadyTaken){
+                    if (alreadyTaken) {
                         continue;
-                    } else{
+                    } else {
                         toPlayerList.add(swapPlayer);
                     }
                 }
             }
         }
-        if(toPlayerList == null || toPlayerList.isEmpty()){
+        if (toPlayerList == null || toPlayerList.isEmpty()) {
             return;
-        } else{
+        } else {
             swap.put(TOPLAYERLIST, toPlayerList);
             swap.put(FROMPLAYERLISTAFTERTRADE, swap.get(FROMPLAYERLISTBEFORETRADE));
         }
     }
 
-    private void findOneToManyWeakPlayer(ITeam otherTeam, Map<String, Object> swap){
+    private void findOneToManyWeakPlayer(ITeam otherTeam, Map<String, Object> swap) {
         List<IPlayer> fromPlayerListBeforeTrade = (List<IPlayer>) swap.get(FROMPLAYERLISTBEFORETRADE);
         List<IPlayer> toPlayerList = new ArrayList<>();
         double newStrength = 0;
 
-        for(IPlayer weakPlayer : fromPlayerListBeforeTrade) {
+        for (IPlayer weakPlayer : fromPlayerListBeforeTrade) {
             IPlayer swapPlayer = null;
             swapPlayer = findOneToOneWeakPlayer(otherTeam, weakPlayer, swapPlayer, swap);
             if (swapPlayer == null) {
@@ -286,36 +284,36 @@ public class ExecuteTradeState implements ISimulateState {
             }
         }
 
-        if(toPlayerList == null || toPlayerList.isEmpty()){
+        if (toPlayerList == null || toPlayerList.isEmpty()) {
             return;
-        } else{
+        } else {
             swap.put(TOPLAYERLIST, toPlayerList);
         }
     }
 
     private IPlayer findOneToManyStrongPlayer(ITeam otherTeam,
-                                              IPlayer swapPlayer, Map<String, Object> swap){
+                                              IPlayer swapPlayer, Map<String, Object> swap) {
         List<IPlayer> fromPlayerListBeforeTrade = (List<IPlayer>) swap.get(FROMPLAYERLISTBEFORETRADE);
         List<IPlayer> playerList = otherTeam.getPlayerList();
         double weakPlayersStrengthTotal = ZERO;
         ITeam fromTeam = (ITeam) swap.get(FROMTEAM);
         List<String> draftPicks = fromTeam.getDraftPicks();
         int weakAge = 0;
-        for(IPlayer weakPlayer : fromPlayerListBeforeTrade){
+        for (IPlayer weakPlayer : fromPlayerListBeforeTrade) {
             weakPlayersStrengthTotal = weakPlayersStrengthTotal + weakPlayer.getRelativeStrength();
             weakAge = weakAge + weakPlayer.getAge();
         }
 
         for (IPlayer player : playerList) {
-            boolean ageFactor = getAgeFactor(weakAge / fromPlayerListBeforeTrade.size(), player.getAge() );
+            boolean ageFactor = getAgeFactor(weakAge / fromPlayerListBeforeTrade.size(), player.getAge());
             List<String> positions = new ArrayList<>();
             positions.add(player.getPosition().toString());
             if ((swapPlayer == null) || (swapPlayer.getRelativeStrength() < player.getRelativeStrength())
-                && (ageFactor)) {
+                    && (ageFactor)) {
                 boolean conditionSatisfied = findPlayerAlgorithm(weakPlayersStrengthTotal,
                         player.getRelativeStrength(), swap, positions,
                         draftPicks);
-                if(conditionSatisfied) {
+                if (conditionSatisfied) {
                     swapPlayer = player;
                     List<IPlayer> toPlayerList = new ArrayList<>();
                     toPlayerList.add(player);
@@ -324,7 +322,7 @@ public class ExecuteTradeState implements ISimulateState {
                     swap.put(TYPE, STRONG);
                     swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListBeforeTrade);
                 }
-                if(tradeAssumptionFlag()){
+                if (tradeAssumptionFlag()) {
                     break;
                 }
             }
@@ -332,16 +330,16 @@ public class ExecuteTradeState implements ISimulateState {
         return swapPlayer;
     }
 
-    private boolean getAgeFactor(int weakAge, int swapAge){
+    private boolean getAgeFactor(int weakAge, int swapAge) {
         int twentyThree = 23;
         int thirtyThree = 33;
         boolean ageFactor = false;
-        if(weakAge <= twentyThree){
-            if(swapAge >= thirtyThree){
+        if (weakAge <= twentyThree) {
+            if (swapAge >= thirtyThree) {
                 ageFactor = true;
             }
-        }else if(weakAge < thirtyThree){
-            if(swapAge < thirtyThree){
+        } else if (weakAge < thirtyThree) {
+            if (swapAge < thirtyThree) {
                 ageFactor = true;
             }
         }
@@ -349,7 +347,7 @@ public class ExecuteTradeState implements ISimulateState {
     }
 
     private IPlayer findOneToOneStrongPlayer(ITeam otherTeam, IPlayer weakestPlayer,
-                                            IPlayer swapPlayer, Map<String, Object> swap) {
+                                             IPlayer swapPlayer, Map<String, Object> swap) {
         List<IPlayer> playerList = otherTeam.getPlayerList();
         List<IPlayer> weakPlayerList = new ArrayList<>();
         weakPlayerList.add(weakestPlayer);
@@ -361,10 +359,10 @@ public class ExecuteTradeState implements ISimulateState {
             List<String> positions = new ArrayList<>();
             positions.add(player.getPosition().toString());
             if ((swapPlayer == null) || (swapPlayer.getRelativeStrength() < player.getRelativeStrength())
-                && (ageFactorOnetoOne)) {
+                    && (ageFactorOnetoOne)) {
                 boolean conditionSatisfied = findPlayerAlgorithm(weakestPlayer.getRelativeStrength(),
                         player.getRelativeStrength(), swap, positions, draftPicks);
-                if(conditionSatisfied) {
+                if (conditionSatisfied) {
                     swapPlayer = player;
                     List<IPlayer> toPlayerList = new ArrayList<>();
                     toPlayerList.add(player);
@@ -373,7 +371,7 @@ public class ExecuteTradeState implements ISimulateState {
                     swap.put(FROMPLAYERLISTAFTERTRADE, weakPlayerList);
                     swap.put(TYPE, STRONG);
                 }
-                if(tradeAssumptionFlag()){
+                if (tradeAssumptionFlag()) {
                     break;
                 }
             }
@@ -382,7 +380,7 @@ public class ExecuteTradeState implements ISimulateState {
     }
 
     private IPlayer findOneToOneWeakPlayer(ITeam otherTeam, IPlayer fromPlayer,
-                                             IPlayer swapPlayer, Map<String, Object> swap) {
+                                           IPlayer swapPlayer, Map<String, Object> swap) {
         List<IPlayer> playerList = otherTeam.getPlayerList();
         List<IPlayer> fromPlayerList = new ArrayList<>(Arrays.asList(fromPlayer));
         List<String> draftPicks = otherTeam.getDraftPicks();
@@ -392,10 +390,10 @@ public class ExecuteTradeState implements ISimulateState {
         for (IPlayer player : playerList) {
             boolean ageFactorOnetoOne = getAgeFactor(player.getAge(), fromPlayer.getAge());
             if ((swapPlayer == null) || (player.getRelativeStrength() < swapPlayer.getRelativeStrength())
-                && (ageFactorOnetoOne)) {
+                    && (ageFactorOnetoOne)) {
                 boolean conditionSatisfied = findPlayerAlgorithm(player.getRelativeStrength(),
                         fromPlayer.getRelativeStrength(), swap, positions, draftPicks);
-                if(conditionSatisfied) {
+                if (conditionSatisfied) {
                     swapPlayer = player;
                     List<IPlayer> toPlayerList = new ArrayList<>();
                     toPlayerList.add(player);
@@ -411,7 +409,7 @@ public class ExecuteTradeState implements ISimulateState {
 
     private boolean findPlayerAlgorithm(double weakStrength, double swapStrength,
                                         Map<String, Object> swap, List<String> positions,
-                                        List<String> draftPicks){
+                                        List<String> draftPicks) {
         double thirtyFive = 0.35;
         double fortyFive = 0.45;
         double fiftyFive = 0.55;
@@ -429,81 +427,73 @@ public class ExecuteTradeState implements ISimulateState {
         int FIVE = 5;
         int SIX = 6;
 
-        if(weakStrength < (swapStrength * thirtyFive)){
+        if (weakStrength < (swapStrength * thirtyFive)) {
             return conditionSatisfied;
-        }
-        else if(((weakStrength >= (swapStrength * thirtyFive))
+        } else if (((weakStrength >= (swapStrength * thirtyFive))
                 && (weakStrength < (swapStrength * fortyFive)))
                 && (positions.contains(DEFENSE))) {
 
-            if(tradeAssumptionFlag() && draftPicks.get(ZERO) == null) {
+            if (tradeAssumptionFlag() && draftPicks.get(ZERO) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[ZERO]);
-            } else if(draftPicks.get(ONE) == null){
+            } else if (draftPicks.get(ONE) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[ONE]);
-            } else{
+            } else {
                 return conditionSatisfied;
             }
             conditionSatisfied = true;
-        }
-        else if(((weakStrength >= (swapStrength * fortyFive))
+        } else if (((weakStrength >= (swapStrength * fortyFive))
                 && (weakStrength < (swapStrength * fiftyFive)))
                 && (positions.contains(FORWARD) || positions.contains(DEFENSE))) {
 
-            if(tradeAssumptionFlag() && draftPicks.get(ONE) == null) {
+            if (tradeAssumptionFlag() && draftPicks.get(ONE) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[ONE]);
-            } else if(draftPicks.get(TWO) == null){
+            } else if (draftPicks.get(TWO) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[TWO]);
             } else {
                 return conditionSatisfied;
             }
             conditionSatisfied = true;
-        }
-        else if((weakStrength >= (swapStrength * fiftyFive))
+        } else if ((weakStrength >= (swapStrength * fiftyFive))
                 && (weakStrength < (swapStrength * sixty))) {
-            
-            if(tradeAssumptionFlag() && draftPicks.get(TWO) == null) {
+
+            if (tradeAssumptionFlag() && draftPicks.get(TWO) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[TWO]);
-            } else if(draftPicks.get(THREE) == null){
+            } else if (draftPicks.get(THREE) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[THREE]);
-            } else{
+            } else {
                 return conditionSatisfied;
             }
             conditionSatisfied = true;
-        }
-        else if((weakStrength >= (swapStrength * sixty))
+        } else if ((weakStrength >= (swapStrength * sixty))
                 && (weakStrength < (swapStrength * seventy))) {
 
             conditionSatisfied = true;
-            if(tradeAssumptionFlag() && draftPicks.get(THREE) == null) {
+            if (tradeAssumptionFlag() && draftPicks.get(THREE) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[THREE]);
             }
-        }
-        else if((weakStrength >= (swapStrength * seventy))
+        } else if ((weakStrength >= (swapStrength * seventy))
                 && (weakStrength < (swapStrength * seventyFive))) {
 
             conditionSatisfied = true;
-            if(tradeAssumptionFlag() && draftPicks.get(FOUR) == null) {
+            if (tradeAssumptionFlag() && draftPicks.get(FOUR) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[FOUR]);
             }
-        }
-        else if((weakStrength >= (swapStrength * seventyFive))
+        } else if ((weakStrength >= (swapStrength * seventyFive))
                 && (weakStrength < (swapStrength * eighty))) {
 
             conditionSatisfied = true;
-            if(tradeAssumptionFlag() && draftPicks.get(FIVE) == null) {
+            if (tradeAssumptionFlag() && draftPicks.get(FIVE) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[FIVE]);
             }
-        }
-        else if((weakStrength >= (swapStrength * eighty))
+        } else if ((weakStrength >= (swapStrength * eighty))
                 && (weakStrength < (swapStrength * ninety))) {
 
             conditionSatisfied = true;
-            if(tradeAssumptionFlag() && draftPicks.get(SIX) == null) {
+            if (tradeAssumptionFlag() && draftPicks.get(SIX) == null) {
                 swap.put(TRADED_ROUND_NUMBER, tradedDraftRound[SIX]);
             }
-        }
-        else if((weakStrength >= (swapStrength * ninety))
-                && (weakStrength < swapStrength)){
+        } else if ((weakStrength >= (swapStrength * ninety))
+                && (weakStrength < swapStrength)) {
 
             conditionSatisfied = true;
         }
@@ -529,16 +519,16 @@ public class ExecuteTradeState implements ISimulateState {
                 league.setTradeOfferList(new ArrayList<>());
             }
             league.getTradeOfferList().add(tradeOffer);
-        } catch (NullPointerException e){
-            log.error("ExecuteTradeState: createTradeOffer: NullPointerException: "+e);
+        } catch (NullPointerException e) {
+            log.error("ExecuteTradeState: createTradeOffer: NullPointerException: " + e);
             throw e;
-        } catch (Exception e){
-            log.error("ExecuteTradeState: createTradeOffer: Exception: "+e);
+        } catch (Exception e) {
+            log.error("ExecuteTradeState: createTradeOffer: Exception: " + e);
             throw e;
         }
     }
 
-    private void createSwap(Map<String, Object> swap){
+    private void createSwap(Map<String, Object> swap) {
         List<IPlayer> fromPlayerListBeforeTrade = (List<IPlayer>) swap.get(FROMPLAYERLISTAFTERTRADE);
         List<IPlayer> toPlayerList = (List<IPlayer>) swap.get(TOPLAYERLIST);
         ITradeOffer tradeOffer = (ITradeOffer) swap.get(TRADEOFFER);
@@ -546,7 +536,7 @@ public class ExecuteTradeState implements ISimulateState {
         List<Integer> toPlayerIdList = new ArrayList<>();
 
         try {
-            for(IPlayer toPlayer : toPlayerList){
+            for (IPlayer toPlayer : toPlayerList) {
                 toPlayerIdList.add(toPlayer.getId());
             }
             tradeOffer.setToPlayerIdList(toPlayerIdList);
@@ -555,11 +545,11 @@ public class ExecuteTradeState implements ISimulateState {
             }
             tradeOffer.setFromPlayerIdList(fromPlayerIdList);
             tradeOffer.setToPlayerIdList(toPlayerIdList);
-        } catch (NullPointerException e){
-            log.error("ExecuteTradeState: createSwap: NullPointerException: "+e);
+        } catch (NullPointerException e) {
+            log.error("ExecuteTradeState: createSwap: NullPointerException: " + e);
             throw e;
-        } catch (Exception e){
-            log.error("ExecuteTradeState: createSwap: Exception: "+e);
+        } catch (Exception e) {
+            log.error("ExecuteTradeState: createSwap: Exception: " + e);
             throw e;
         }
     }
@@ -588,6 +578,7 @@ public class ExecuteTradeState implements ISimulateState {
         consoleOutput.printMsgToConsole("Below Trade offer is received.");
         consoleOutput.printTradeDetailsToUser(swap);
         String userResponse = readUserInput.getUserTradeResponse();
+        log.info("User response for the trade: " + userResponse);
         String a = "A";
         if (userResponse.equalsIgnoreCase(a.trim())) {
             updateTradingDetails(swap);
@@ -606,8 +597,8 @@ public class ExecuteTradeState implements ISimulateState {
         double characterValue = 0.0;
         double tradeAcceptChance = getRandomDouble();
 
-        for(String key : trading.getGmTable().keySet()){
-            if(key.equalsIgnoreCase(fromTeam.getManager().getPersonality())) {
+        for (String key : trading.getGmTable().keySet()) {
+            if (key.equalsIgnoreCase(fromTeam.getManager().getPersonality())) {
                 characterValue = trading.getGmTable().get(key);
                 break;
             }
@@ -618,7 +609,7 @@ public class ExecuteTradeState implements ISimulateState {
         return isTraded;
     }
 
-    private void updateTradingDetailsInTeams(Map<String, Object> tradeDetails){
+    private void updateTradingDetailsInTeams(Map<String, Object> tradeDetails) {
         ITeam fromTeam = (ITeam) tradeDetails.get(FROMTEAM);
         List<IPlayer> toPlayerList = (List<IPlayer>) tradeDetails.get(TOPLAYERLIST);
         List<IPlayer> fromPlayerList = (List<IPlayer>) tradeDetails.get(FROMPLAYERLISTAFTERTRADE);
@@ -627,22 +618,22 @@ public class ExecuteTradeState implements ISimulateState {
         Object tradedDraftPick = tradeDetails.get(TRADED_ROUND_NUMBER);
         int tradeDraftRoundNumber;
         String typeStr;
-        if(type == null){
+        if (type == null) {
             typeStr = null;
         } else {
             typeStr = (String) type;
-            if(tradedDraftPick == null){
+            if (tradedDraftPick == null) {
                 tradeDraftRoundNumber = 0;
-            } else{
+            } else {
                 tradeDraftRoundNumber = (int) tradedDraftPick;
-                if(typeStr.equalsIgnoreCase(STRONG)){
+                if (typeStr.equalsIgnoreCase(STRONG)) {
                     List<String> draftPicks = fromTeam.getDraftPicks();
                     draftPicks.add(tradeDraftRoundNumber, toTeam.getName());
-                    fixDraftPicks(draftPicks);
-                } else if(typeStr.equalsIgnoreCase(WEAK)){
+                    fixDraftPicks(fromTeam);
+                } else if (typeStr.equalsIgnoreCase(WEAK)) {
                     List<String> draftPicks = toTeam.getDraftPicks();
                     draftPicks.add(tradeDraftRoundNumber, fromTeam.getName());
-                    fixDraftPicks(draftPicks);
+                    fixDraftPicks(toTeam);
                 }
             }
         }
@@ -651,7 +642,7 @@ public class ExecuteTradeState implements ISimulateState {
         List<IPlayer> fromTeamPlayerList = fromTeam.getPlayerList();
         fromTeam.setPlayersTradedCount(fromPlayerList.size());
         try {
-            for(IPlayer toPlayer : toPlayerList){
+            for (IPlayer toPlayer : toPlayerList) {
                 fromTeamPlayerList.add(toPlayer);
                 toPlayer.setTeamId(fromTeam.getId());
                 removeObjectFromList(toTeamPlayerList, toPlayer);
@@ -672,22 +663,22 @@ public class ExecuteTradeState implements ISimulateState {
                     fromTeamPlayerList.get(ZERO).setCaptain(true);
                 }
             }
-        } catch (NullPointerException e){
-            log.error("ExecuteTradeState: updateTradingDetailsInTeams: NullPointerException: "+e);
-            e.printStackTrace();
+        } catch (NullPointerException e) {
+            log.error("ExecuteTradeState: updateTradingDetailsInTeams: NullPointerException: " + e);
             throw e;
-        } catch (Exception e){
-            log.error("ExecuteTradeState: updateTradingDetailsInTeams: Exception: "+e);
+        } catch (Exception e) {
+            log.error("ExecuteTradeState: updateTradingDetailsInTeams: Exception: " + e);
             throw e;
         }
     }
 
-    private void fixDraftPicks(List<String> draftPicks){
-        if(draftPicks == null || draftPicks.isEmpty()){
+    private void fixDraftPicks(ITeam team) {
+        List<String> draftPicks = team.getDraftPicks();
+        if (draftPicks == null || draftPicks.isEmpty()) {
             return;
-        } else{
+        } else {
             int draftPickSize = draftPicks.size();
-            if(draftPickSize > 7){
+            if (draftPickSize > 7) {
                 Iterator<String> itr = draftPicks.iterator();
                 while (itr.hasNext() && draftPicks.size() > 7) {
                     String teamName = itr.next();
@@ -697,7 +688,7 @@ public class ExecuteTradeState implements ISimulateState {
                 }
             }
             draftPickSize = draftPicks.size();
-            if(draftPickSize > 7){
+            if (draftPickSize > 7) {
                 Iterator<String> itr = draftPicks.iterator();
                 while (itr.hasNext() && draftPicks.size() > 7) {
                     itr.remove();

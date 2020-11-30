@@ -4,12 +4,13 @@ import simulation.dao.IConferenceDao;
 import simulation.dao.IFreeAgentDao;
 import simulation.dao.ILeagueDao;
 import simulation.dao.ITradeOfferDao;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public interface ILeague{
+public interface ILeague {
 
     INHLEvents getNHLRegularSeasonEvents();
 
@@ -59,7 +60,7 @@ public interface ILeague{
 
     void setActiveTeamStanding(ITeamStanding activeTeamStanding);
 
-    HashMap<ITeam,Integer> getStanleyCupFinalsTeamScores();
+    HashMap<ITeam, Integer> getStanleyCupFinalsTeamScores();
 
     void setStanleyCupFinalsTeamScores(HashMap<ITeam, Integer> stanleyCupFinalsTeamScores);
 
@@ -70,7 +71,7 @@ public interface ILeague{
     List<IManager> removeManagerFromManagerListById(List<IManager> managerList, int indexOfManagerObject);
 
     List<ICoach> removeCoachFromCoachListById(List<ICoach> coachList,
-                                                    int indexOfCoachObject, IModelFactory coachFactory);
+                                              int indexOfCoachObject, IModelFactory coachFactory);
 
     int getCreatedBy();
 
@@ -106,6 +107,8 @@ public interface ILeague{
 
     int getId();
 
+    void setId(int id);
+
     String getName();
 
     void setName(String name);
@@ -122,11 +125,11 @@ public interface ILeague{
 
     void setUser(String user);
 
-    void setId(int id);
-
     List<ITeam> createTeamList();
 
     List<IPlayer> createPlayerList();
 
     List<ICoach> createCoachList();
+
+    void initializeTeamStats();
 }

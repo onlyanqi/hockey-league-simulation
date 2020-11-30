@@ -1,10 +1,10 @@
 package simulation.state;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
 import simulation.dao.ILeagueDao;
 import simulation.dao.ITradingDao;
 import simulation.dao.IUserDao;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
@@ -14,7 +14,6 @@ import simulation.model.League;
 import simulation.model.User;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class LoadTeamStateTest {
 

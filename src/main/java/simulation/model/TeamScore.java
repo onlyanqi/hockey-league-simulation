@@ -2,7 +2,7 @@ package simulation.model;
 
 import simulation.dao.ITeamScoreDao;
 
-public class TeamScore extends SharedAttributes implements ITeamScore{
+public class TeamScore extends SharedAttributes implements ITeamScore {
 
     ITeam team;
     String teamName;
@@ -28,7 +28,7 @@ public class TeamScore extends SharedAttributes implements ITeamScore{
         iTeamScoreDao.loadTeamScoreById(id, this);
     }
 
-    public TeamScore(simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore){
+    public TeamScore(simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore) {
         this.teamName = teamScore.teamName;
         this.points = teamScore.points;
         this.numberOfLoss = teamScore.numberOfLoss;
@@ -76,5 +76,10 @@ public class TeamScore extends SharedAttributes implements ITeamScore{
 
     public void setNumberOfTies(Integer numberOfTies) {
         this.numberOfTies = numberOfTies;
+    }
+
+    @Override
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }

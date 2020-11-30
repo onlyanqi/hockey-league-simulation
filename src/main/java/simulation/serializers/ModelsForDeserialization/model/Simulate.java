@@ -1,6 +1,6 @@
 package simulation.serializers.ModelsForDeserialization.model;
 
-public class Simulate extends SharedAttributes{
+public class Simulate extends SharedAttributes {
 
     public Double upset;
     public Double defendChance;

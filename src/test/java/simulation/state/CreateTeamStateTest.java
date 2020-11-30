@@ -1,8 +1,8 @@
 package simulation.state;
 
-import simulation.dao.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.*;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.*;

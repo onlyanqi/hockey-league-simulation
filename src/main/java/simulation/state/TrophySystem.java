@@ -3,22 +3,21 @@ package simulation.state;
 import presentation.ConsoleOutput;
 import simulation.model.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TrophySystem implements ISimulateState{
+public class TrophySystem implements ISimulateState {
     private IHockeyContext hockeyContext;
     private ILeague league;
     private ConsoleOutput consoleOutput;
     private ITrophy trophy;
 
-    TrophySystem(IHockeyContext hockeyContext){
+    TrophySystem(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
         consoleOutput = ConsoleOutput.getInstance();
     }
 
-    TrophySystem(IHockeyContext hockeyContext,ITrophy trophy){
+    TrophySystem(IHockeyContext hockeyContext, ITrophy trophy) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
         consoleOutput = ConsoleOutput.getInstance();
@@ -26,44 +25,44 @@ public class TrophySystem implements ISimulateState{
     }
 
 
-    private List<ITeamScore> getSortedTeamScores(){
+    private List<ITeamScore> getSortedTeamScores() {
         List<ITeam> teamList = league.createTeamList();
-        ITeamStanding teamStanding= league.getRegularSeasonStanding();
+        ITeamStanding teamStanding = league.getRegularSeasonStanding();
         List<ITeamScore> teamScores = teamStanding.getTeamsRankAcrossLeague(league);
         return teamScores;
     }
 
-    private String calculateJackAdamsAward(List<ICoach> coachList){
+    public String calculateJackAdamsAward(List<ICoach> coachList) {
         ICoach winnerCoach = coachList.get(0);
         for (ICoach coach : coachList) {
-            if(coach.getCoachingEffectiveness()>winnerCoach.getCoachingEffectiveness()){
-                winnerCoach=coach;
+            if (coach.getCoachingEffectiveness() > winnerCoach.getCoachingEffectiveness()) {
+                winnerCoach = coach;
             }
         }
         return winnerCoach.getName();
     }
 
-    private void showHistoricalTrophyList(List<ITrophy> trophyList){
+    public void showHistoricalTrophyList(List<ITrophy> trophyList) {
         consoleOutput.printMsgToConsole("Historical Awards List (Most recent to oldest)");
         consoleOutput.printMsgToConsole("------------------------------------------------");
         consoleOutput.printMsgToConsole("------------------------------------------------\n");
 
-        for(int i=trophyList.size()-1 ; i>=0 ; i--){
+        for (int i = trophyList.size() - 1; i >= 0; i--) {
             consoleOutput.printMsgToConsole("Awards");
             consoleOutput.printMsgToConsole("----------------------");
-            consoleOutput.printMsgToConsole("Presidents Trophy: "+trophyList.get(i).getPresidentsTrophy());
-            consoleOutput.printMsgToConsole("Calder Memorial Trophy: "+trophyList.get(i).getCalderMemorialTrophy());
-            consoleOutput.printMsgToConsole("Vezina Trophy: "+trophyList.get(i).getVezinaTrophy());
-            consoleOutput.printMsgToConsole("Jack Adams Award: "+trophyList.get(i).getJackAdamsAward());
-            consoleOutput.printMsgToConsole("Maurice Richard Trophy: "+trophyList.get(i).getMauriceRichardTrophy());
-            consoleOutput.printMsgToConsole("Rob Hawkey Memorial Cup: "+trophyList.get(i).getRobHawkeyMemorialCup());
-            consoleOutput.printMsgToConsole("Participation Award: "+trophyList.get(i).getParticipationAward());
+            consoleOutput.printMsgToConsole("Presidents Trophy: " + trophyList.get(i).getPresidentsTrophy());
+            consoleOutput.printMsgToConsole("Calder Memorial Trophy: " + trophyList.get(i).getCalderMemorialTrophy());
+            consoleOutput.printMsgToConsole("Vezina Trophy: " + trophyList.get(i).getVezinaTrophy());
+            consoleOutput.printMsgToConsole("Jack Adams Award: " + trophyList.get(i).getJackAdamsAward());
+            consoleOutput.printMsgToConsole("Maurice Richard Trophy: " + trophyList.get(i).getMauriceRichardTrophy());
+            consoleOutput.printMsgToConsole("Rob Hawkey Memorial Cup: " + trophyList.get(i).getRobHawkeyMemorialCup());
+            consoleOutput.printMsgToConsole("Participation Award: " + trophyList.get(i).getParticipationAward());
             consoleOutput.printMsgToConsole("\n----------------------");
         }
     }
 
     private ISimulateState exit() {
-        return new DraftState(hockeyContext,league.getCurrentDate());
+        return new DraftState(hockeyContext, league.getCurrentDate());
     }
 
     @Override
@@ -72,7 +71,7 @@ public class TrophySystem implements ISimulateState{
 
         calculateAndSetAwardOfPlayers();
 
-        if(league.getHistoricalTrophyList().size()>0){
+        if (league.getHistoricalTrophyList().size() > 0) {
             setCalderMemorialTrophy();
         }
 
@@ -90,9 +89,9 @@ public class TrophySystem implements ISimulateState{
     private void setCalderMemorialTrophy() {
         List<IPlayer> draftedPlayers = league.getDraftedPlayerList();
         IPlayer calderMemorialTrophyWinnerPlayer = draftedPlayers.get(0);
-        for(IPlayer player : draftedPlayers){
-            if(player.getRelativeStrength()>calderMemorialTrophyWinnerPlayer.getRelativeStrength()){
-                calderMemorialTrophyWinnerPlayer=player;
+        for (IPlayer player : draftedPlayers) {
+            if (player.getRelativeStrength() > calderMemorialTrophyWinnerPlayer.getRelativeStrength()) {
+                calderMemorialTrophyWinnerPlayer = player;
             }
         }
         trophy.setCalderMemorialTrophy(calderMemorialTrophyWinnerPlayer.getName());
@@ -103,14 +102,14 @@ public class TrophySystem implements ISimulateState{
         IPlayer mauriceRichardTrophyWinnerPlayer = playerList.get(0);
         IPlayer robHawkeyMemoriaCupWinnerPlayer = playerList.get(0);
         IPlayer vezinaTrophyWinnerPlayer = playerList.get(0);
-        for(IPlayer player : playerList){
-            if(player.getSaves()>vezinaTrophyWinnerPlayer.getSaves()){
+        for (IPlayer player : playerList) {
+            if (player.getSaves() > vezinaTrophyWinnerPlayer.getSaves()) {
                 vezinaTrophyWinnerPlayer = player;
             }
-            if(player.getGoalScore()>mauriceRichardTrophyWinnerPlayer.getGoalScore()){
+            if (player.getGoalScore() > mauriceRichardTrophyWinnerPlayer.getGoalScore()) {
                 mauriceRichardTrophyWinnerPlayer = player;
             }
-            if(player.getPenaltyCount()>mauriceRichardTrophyWinnerPlayer.getPenaltyCount()){
+            if (player.getPenaltyCount() > mauriceRichardTrophyWinnerPlayer.getPenaltyCount()) {
                 robHawkeyMemoriaCupWinnerPlayer = player;
             }
         }
@@ -120,9 +119,9 @@ public class TrophySystem implements ISimulateState{
     }
 
     private void setPresidentsAndParticipationAwards() {
-        List<ITeamScore> teamScores= getSortedTeamScores();
+        List<ITeamScore> teamScores = getSortedTeamScores();
         trophy = hockeyContext.getModelFactory().newTrophy();
-        trophy.setPresidentsTrophy(teamScores.get(teamScores.size()-1).getTeam().getName());
+        trophy.setPresidentsTrophy(teamScores.get(teamScores.size() - 1).getTeam().getName());
         trophy.setParticipationAward(teamScores.get(0).getTeam().getName());
     }
 }

@@ -20,7 +20,7 @@ public class Training implements ITraining {
         trainingFactory.loadTrainingByLeagueId(id, this);
     }
 
-    public Training(simulation.serializers.ModelsForDeserialization.model.Training training){
+    public Training(simulation.serializers.ModelsForDeserialization.model.Training training) {
         this.id = training.id;
         this.daysUntilStatIncreaseCheck = training.daysUntilStatIncreaseCheck;
         this.leagueId = training.leagueId;

@@ -10,7 +10,8 @@ import java.util.List;
 public class Conference extends SharedAttributes implements IConference {
 
     private int leagueId;
-    private List<IDivision> divisionList = new ArrayList<>();;
+    private List<IDivision> divisionList = new ArrayList<>();
+    ;
 
     public Conference() {
         setId(System.identityHashCode(this));
@@ -21,16 +22,13 @@ public class Conference extends SharedAttributes implements IConference {
     }
 
     public Conference(int id, IConferenceDao factory) throws Exception {
-        if (factory == null) {
-            return;
-        }
         setId(id);
         factory.loadConferenceById(id, this);
     }
 
-    public Conference(simulation.serializers.ModelsForDeserialization.model.Conference conferenceFromDeserialization){
+    public Conference(simulation.serializers.ModelsForDeserialization.model.Conference conferenceFromDeserialization) {
         leagueId = conferenceFromDeserialization.leagueId;
-        for(Division division : conferenceFromDeserialization.divisionList){
+        for (Division division : conferenceFromDeserialization.divisionList) {
             this.divisionList.add(new simulation.model.Division(division));
         }
         this.setName(conferenceFromDeserialization.name);
@@ -50,9 +48,6 @@ public class Conference extends SharedAttributes implements IConference {
     }
 
     public void setDivisionList(List<IDivision> divisionList) {
-        if (divisionList == null) {
-            return;
-        }
         this.divisionList = divisionList;
     }
 
@@ -76,16 +71,10 @@ public class Conference extends SharedAttributes implements IConference {
     }
 
     public void addConference(IConferenceDao addConferenceFactory) throws Exception {
-        if (addConferenceFactory == null) {
-            return;
-        }
         addConferenceFactory.addConference(this);
     }
 
     public void loadDivisionListByConferenceId(IDivisionDao divisionDao) throws Exception {
-        if (divisionDao == null) {
-            return;
-        }
         this.divisionList = divisionDao.loadDivisionListByConferenceId(getId());
     }
 

@@ -1,12 +1,13 @@
 package simulation.state;
 
-import simulation.dao.IUserDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.UserMock;
 import simulation.model.User;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

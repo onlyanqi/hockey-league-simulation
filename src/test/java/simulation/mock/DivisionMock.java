@@ -22,7 +22,7 @@ public class DivisionMock implements IDivisionDao {
     private IDaoFactory daoFactory;
     private ITeamDao teamDao;
 
-    public DivisionMock(){
+    public DivisionMock() {
         hockeyContextFactory = HockeyContextConcreteMock.getInstance();
         hockeyContext = hockeyContextFactory.newHockeyContext();
         modelFactory = hockeyContext.getModelFactory();

@@ -22,9 +22,11 @@ public interface ITeamScore {
 
     void setNumberOfTies(Integer numberOfTies);
 
-    void setId(int id);
-
     int getId();
 
+    void setId(int id);
+
     String getName();
+
+    void setTeamName(String teamName);
 }

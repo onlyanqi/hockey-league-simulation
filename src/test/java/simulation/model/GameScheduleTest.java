@@ -1,9 +1,10 @@
 package simulation.model;
 
-import simulation.dao.IGameDao;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simulation.dao.IGameDao;
 import simulation.mock.GameMock;
+import simulation.state.HockeyContext;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -28,7 +29,7 @@ public class GameScheduleTest {
 
     @Test
     public void getIdTest() throws Exception {
-        GameSchedule gameSchedule = new GameSchedule();
+        IGameSchedule gameSchedule = HockeyContext.getInstance().getModelFactory().newGameSchedule();
         gameSchedule.setId(1);
         assertTrue(gameSchedule.getId() == 1);
 
@@ -36,7 +37,7 @@ public class GameScheduleTest {
 
     @Test
     public void setIdTest() throws Exception {
-        GameSchedule gameSchedule = new GameSchedule();
+        IGameSchedule gameSchedule = HockeyContext.getInstance().getModelFactory().newGameSchedule();
         gameSchedule.setId(2);
         assertTrue(gameSchedule.getId() == 2);
     }
@@ -50,7 +51,7 @@ public class GameScheduleTest {
         gameList.add(game);
         gameList.add(game2);
 
-        GameSchedule gameSchedule = new GameSchedule();
+        IGameSchedule gameSchedule = HockeyContext.getInstance().getModelFactory().newGameSchedule();
         gameSchedule.setId(3);
         gameSchedule.setGameList(gameList);
         assertNotEquals(gameSchedule.getGamesOnDate(game.getDate()).size(), 0);
@@ -64,7 +65,7 @@ public class GameScheduleTest {
         gameList.add(game);
         gameList.add(game2);
 
-        GameSchedule gameSchedule = new GameSchedule();
+        IGameSchedule gameSchedule = HockeyContext.getInstance().getModelFactory().newGameSchedule();
         gameSchedule.setId(3);
         gameSchedule.setGameList(gameList);
         assertFalse(gameSchedule.doGamesDoesNotExistAfterDate(LocalDate.of(2020, Month.OCTOBER, 29)));

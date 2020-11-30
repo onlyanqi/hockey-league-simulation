@@ -8,8 +8,8 @@ import java.util.List;
 
 public class InjuryCheckState implements ISimulateState {
 
-    private Logger log = Logger.getLogger(InjuryCheckState.class);
     public static final String INJURY_CHECK = "Injury Check!";
+    private Logger log = Logger.getLogger(InjuryCheckState.class);
     private IHockeyContext hockeyContext;
     private ILeague league;
 

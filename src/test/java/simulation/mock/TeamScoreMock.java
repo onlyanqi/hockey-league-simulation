@@ -11,7 +11,6 @@ import java.util.List;
 public class TeamScoreMock implements ITeamScoreDao {
 
 
-
     @Override
     public long addTeamScore(int leagueId, int regularSeason, ITeamScore teamScore) throws Exception {
         ITeamDao teamFactory = new TeamMock();
@@ -32,6 +31,7 @@ public class TeamScoreMock implements ITeamScoreDao {
                 Team team0 = new Team();
                 team0.setName("Team0");
                 teamScore.setId(id);
+                teamScore.setTeamName(team0.getName());
                 teamScore.setTeam(team0);
                 teamScore.setNumberOfTies(1);
                 teamScore.setNumberOfLoss(5);
@@ -42,6 +42,7 @@ public class TeamScoreMock implements ITeamScoreDao {
                 Team team1 = new Team();
                 team1.setName("Team1");
                 teamScore.setId(id);
+                teamScore.setTeamName(team1.getName());
                 teamScore.setTeam(team1);
                 teamScore.setNumberOfTies(0);
                 teamScore.setNumberOfLoss(5);
@@ -52,6 +53,7 @@ public class TeamScoreMock implements ITeamScoreDao {
                 Team team2 = new Team();
                 team2.setName("Team2");
                 teamScore.setId(id);
+                teamScore.setTeamName(team2.getName());
                 teamScore.setTeam(team2);
                 teamScore.setNumberOfTies(0);
                 teamScore.setNumberOfLoss(0);
