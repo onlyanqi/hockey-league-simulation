@@ -37,11 +37,7 @@ public class GoalState extends GameState {
             log.error("Error while simulating game.Offensive or Defensive are not set.");
             throw new IllegalStateException("Offensive or Defensive are null.");
         }
-        if (offensive.getGoalie().getSaving() > defensive.getGoalie().getSaving()) {
-            goal = true;
-        } else {
-            goal = false;
-        }
+        goal = offensive.getGoalie().getSaving() > defensive.getGoalie().getSaving();
         if (rand.nextDouble() < simulateConfig.getUpset()) {
             reverseGoal();
         }

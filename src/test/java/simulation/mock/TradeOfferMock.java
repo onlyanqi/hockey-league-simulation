@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TradeOfferMock implements ITradeOfferDao {
 
-    private IModelFactory modelFactory;
+    private final IModelFactory modelFactory;
 
     public TradeOfferMock() {
         modelFactory = ModelFactory.getInstance();

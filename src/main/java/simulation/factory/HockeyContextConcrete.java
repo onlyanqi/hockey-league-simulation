@@ -1,6 +1,5 @@
 package simulation.factory;
 
-import simulation.dao.IDaoFactory;
 import simulation.model.IModelFactory;
 import simulation.model.ModelFactory;
 import simulation.state.HockeyContext;

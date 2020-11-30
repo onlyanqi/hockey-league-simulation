@@ -55,7 +55,7 @@ public class GamePlayConfig implements IGamePlayConfig {
         if (aging == null) {
             return;
         }
-        this.aging = (Aging) aging;
+        this.aging = aging;
     }
 
     public IInjury getInjury() {

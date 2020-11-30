@@ -7,6 +7,7 @@ import simulation.factory.HockeyContextConcreteMock;
 import simulation.factory.IHockeyContextFactory;
 import simulation.model.*;
 import simulation.state.IHockeyContext;
+
 import java.util.*;
 
 import static org.junit.Assert.assertNotNull;
@@ -46,7 +47,7 @@ public class ConsoleOutputTest {
     }
 
     @Test
-    public void getInstanceTest(){
+    public void getInstanceTest() {
         IConsoleOutput consoleOutput = ConsoleOutput.getInstance();
         assertTrue(consoleOutput instanceof IConsoleOutput);
     }

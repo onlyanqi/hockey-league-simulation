@@ -60,7 +60,7 @@ public class DaoFactoryMock implements IDaoFactory {
         return new FreeAgentMock();
     }
 
-    public ISeasonDao createSeasonDao(){
+    public ISeasonDao createSeasonDao() {
         return new SeasonMock();
     }
 }

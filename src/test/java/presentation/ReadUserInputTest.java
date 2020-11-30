@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 public class ReadUserInputTest {
 
     @Test
-    public void getInstanceTest(){
+    public void getInstanceTest() {
         IReadUserInput readUserInput = ReadUserInput.getInstance();
         assertTrue(readUserInput instanceof IReadUserInput);
     }

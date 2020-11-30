@@ -3,7 +3,8 @@ package simulation.model;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import simulation.dao.*;
-import simulation.mock.*;
+import simulation.mock.ConferenceMock;
+import simulation.mock.FreeAgentMock;
 
 import java.util.ArrayList;
 import java.util.List;

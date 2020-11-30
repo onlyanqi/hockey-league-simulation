@@ -12,10 +12,10 @@ public class AdvanceNextSeasonState implements ISimulateState {
 
     public static final String SEASON_CURRENT_DATE = "Advanced to next season! Current date is ";
     public static final String AGING_TO_NEXT_SEASON = "Aging all players to the start of next season!";
-    private ILeague league;
-    private IHockeyContext hockeyContext;
-    private IAging aging;
-    private LocalDate beforeDate;
+    private final ILeague league;
+    private final IHockeyContext hockeyContext;
+    private final IAging aging;
+    private final LocalDate beforeDate;
 
     public AdvanceNextSeasonState(IHockeyContext hockeyContext, LocalDate before) {
         this.hockeyContext = hockeyContext;

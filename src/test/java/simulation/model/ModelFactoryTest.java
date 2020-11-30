@@ -3,9 +3,6 @@ package simulation.model;
 import org.junit.Before;
 import org.junit.Test;
 import simulation.dao.*;
-import simulation.mock.LeagueMock;
-import simulation.mock.TeamMock;
-import simulation.mock.UserMock;
 
 import static org.junit.Assert.assertTrue;
 
@@ -21,9 +18,9 @@ public class ModelFactoryTest {
     }
 
     @Test
-    public void getInstanceTest(){
+    public void getInstanceTest() {
         IModelFactory modelFactory = ModelFactory.getInstance();
-        assertTrue(modelFactory instanceof  IModelFactory);
+        assertTrue(modelFactory instanceof IModelFactory);
     }
 
     @Test

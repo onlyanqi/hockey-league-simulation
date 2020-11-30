@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class TradingMock implements ITradingDao {
 
-    private IModelFactory modelFactory;
+    private final IModelFactory modelFactory;
 
     public TradingMock() {
         modelFactory = ModelFactory.getInstance();

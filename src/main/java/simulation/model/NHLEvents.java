@@ -124,27 +124,15 @@ public class NHLEvents implements INHLEvents {
     }
 
     public boolean checkTradeDeadlinePassed(LocalDate currentDate) {
-        if (currentDate.compareTo(tradeDeadlineDate) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentDate.compareTo(tradeDeadlineDate) > 0;
     }
 
     public boolean checkEndOfRegularSeason(LocalDate currentDate) {
-        if (currentDate.equals(endOfRegularSeason)) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentDate.equals(endOfRegularSeason);
     }
 
     public boolean checkRegularSeasonPassed(LocalDate currentDate) {
-        if (currentDate.compareTo(endOfRegularSeason) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentDate.compareTo(endOfRegularSeason) > 0;
     }
 
     public void initializeRegularSeasonStartDate() {

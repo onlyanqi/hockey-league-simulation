@@ -28,11 +28,7 @@ public abstract class SharedAttributes {
     public boolean validName() {
         boolean isValid = false;
 
-        if (name == null || name.isEmpty()) {
-            isValid = false;
-        } else {
-            isValid = true;
-        }
+        isValid = name != null && !name.isEmpty();
 
         return isValid;
     }

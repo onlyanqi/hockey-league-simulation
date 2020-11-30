@@ -60,12 +60,12 @@ public class ImportState implements IHockeyState {
     private static final String GM_TABLE = "gmTable";
     private static final String PERSONALITY = "personality";
     private static final String GOAL_CHANCE = "goalChance";
-    private static Logger log = Logger.getLogger(ImportState.class);
+    private static final Logger log = Logger.getLogger(ImportState.class);
     private final Set<String> appearedName = new HashSet<>();
-    private IHockeyContext hockeyContext;
-    private JSONObject jsonFromInput;
+    private final IHockeyContext hockeyContext;
+    private final JSONObject jsonFromInput;
     private ILeague league;
-    private int leagueId;
+    private final int leagueId;
     private int teamId;
     private int conferenceId;
     private int divisionId;
@@ -847,27 +847,15 @@ public class ImportState implements IHockeyState {
     }
 
     private boolean validateString(String name) {
-        if (name == null || name.length() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return name == null || name.length() == 0;
     }
 
     private boolean validateArray(JSONArray array) {
-        if (array == null || array.size() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return array == null || array.size() == 0;
     }
 
     private boolean validateKeyInObject(JSONObject object, String key) {
-        if (object.containsKey(key)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !object.containsKey(key);
     }
 
     private boolean isDivisionExists(List<IDivision> list, String name) {
@@ -901,11 +889,7 @@ public class ImportState implements IHockeyState {
     }
 
     private boolean isTeamExistsInLeague(String teamName) {
-        if (appearedName.add(teamName)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !appearedName.add(teamName);
     }
 }
 

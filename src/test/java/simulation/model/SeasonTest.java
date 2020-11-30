@@ -5,7 +5,6 @@ import org.junit.Test;
 import simulation.dao.DaoFactoryMock;
 import simulation.dao.IDaoFactory;
 import simulation.dao.ISeasonDao;
-import simulation.mock.SeasonMock;
 
 import static org.junit.Assert.*;
 

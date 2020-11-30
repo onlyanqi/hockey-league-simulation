@@ -1,7 +1,6 @@
 package simulation.model;
 
 import simulation.dao.*;
-import simulation.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 
 public class ModelFactory implements IModelFactory {
 
@@ -98,7 +97,7 @@ public class ModelFactory implements IModelFactory {
         return new League(id, leagueDao);
     }
 
-    public ILeague createLeagueWithId(int id){
+    public ILeague createLeagueWithId(int id) {
         return new League(id);
     }
 
@@ -119,7 +118,7 @@ public class ModelFactory implements IModelFactory {
         return new Player(id, playerDao);
     }
 
-    public IPlayer createPlayerWithId(int id){
+    public IPlayer createPlayerWithId(int id) {
         return new Player(id);
     }
 
@@ -208,7 +207,7 @@ public class ModelFactory implements IModelFactory {
         return new GameSimulation(team1, team2);
     }
 
-    public ISeason createSeasonWithId(int id){
+    public ISeason createSeasonWithId(int id) {
         return new Season(id);
     }
 
@@ -216,11 +215,11 @@ public class ModelFactory implements IModelFactory {
         return new Season(id, seasonDao);
     }
 
-    public ITeam createTeamWithId(int id){
+    public ITeam createTeamWithId(int id) {
         return new Team(id);
     }
 
-    public IUser createUserWithId(int id){
+    public IUser createUserWithId(int id) {
         return new User(id);
     }
 }

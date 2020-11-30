@@ -11,10 +11,10 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
-public class ConsoleOutput implements IConsoleOutput{
+public class ConsoleOutput implements IConsoleOutput {
 
     private static ConsoleOutput consoleOutput;
-    private static Logger log = Logger.getLogger(ExecuteTradeState.class);
+    private static final Logger log = Logger.getLogger(ExecuteTradeState.class);
 
     private ConsoleOutput() {
     }
@@ -100,11 +100,11 @@ public class ConsoleOutput implements IConsoleOutput{
         printMsgToConsole("---------------------------------------\n");
     }
 
-    public void printTeamGameScore(ITeamStanding teamStanding){
+    public void printTeamGameScore(ITeamStanding teamStanding) {
         printMsgToConsole("----------------------------------------------");
         printMsgToConsole("Team Game Stats for Regular Season");
-        for(ITeamScore teamScore : teamStanding.getTeamsScoreList()){
-            printMsgToConsole(teamScore.getTeam().getName() + " has won " + teamScore.getNumberOfWins() + " games and lost "+ teamScore.getNumberOfLoss() + " games" );
+        for (ITeamScore teamScore : teamStanding.getTeamsScoreList()) {
+            printMsgToConsole(teamScore.getTeam().getName() + " has won " + teamScore.getNumberOfWins() + " games and lost " + teamScore.getNumberOfLoss() + " games");
         }
         printMsgToConsole("----------------------------------------------");
     }

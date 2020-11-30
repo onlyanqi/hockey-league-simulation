@@ -117,7 +117,7 @@ public interface ILeague {
 
     void setTrophy(ITrophy trophy);
 
-    abstract String getUserCreatedTeamName();
+    String getUserCreatedTeamName();
 
     void setUserCreatedTeamName(String userCreatedTeamName);
 

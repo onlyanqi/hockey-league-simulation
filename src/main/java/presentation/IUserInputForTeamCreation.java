@@ -6,7 +6,7 @@ import simulation.model.IManager;
 import java.util.List;
 
 public interface IUserInputForTeamCreation {
-    public String getConferenceName(List<String> conferenceNameList);
+    String getConferenceName(List<String> conferenceNameList);
 
     String getDivisionName(List<String> divisionNameList);
 

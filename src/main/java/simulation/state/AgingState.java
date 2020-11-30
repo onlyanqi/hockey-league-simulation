@@ -11,10 +11,10 @@ import java.util.List;
 public class AgingState implements ISimulateState {
 
     public static final String AGING_DAY = "Aging all players by one day!";
-    private IHockeyContext hockeyContext;
-    private ILeague league;
-    private IAging aging;
-    private IConsoleOutput consoleOutput;
+    private final IHockeyContext hockeyContext;
+    private final ILeague league;
+    private final IAging aging;
+    private final IConsoleOutput consoleOutput;
 
 
     public AgingState(IHockeyContext hockeyContext) {
@@ -74,7 +74,7 @@ public class AgingState implements ISimulateState {
         consoleOutput.printGameStatsToUser(goalAvg, penaltyAvg, shotAvg, saveAvg);
     }
 
-    private void displayWinsLoss(){
+    private void displayWinsLoss() {
         ITeamStanding teamStanding = league.getRegularSeasonStanding();
         consoleOutput.printTeamGameScore(teamStanding);
     }
@@ -91,10 +91,7 @@ public class AgingState implements ISimulateState {
         INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
         IGameSchedule games = league.getGames();
         ITeamStanding teamStanding = league.getActiveTeamStanding();
-        if (nhlEvents.checkRegularSeasonPassed(league.getCurrentDate())
-                && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2) {
-            return true;
-        }
-        return false;
+        return nhlEvents.checkRegularSeasonPassed(league.getCurrentDate())
+                && games.doGamesDoesNotExistAfterDate(league.getCurrentDate()) && teamStanding.getTeamsScoreList().size() == 2;
     }
 }

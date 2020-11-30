@@ -11,8 +11,8 @@ import java.util.List;
 
 public class FreeAgentMock implements IFreeAgentDao {
 
-    private IDaoFactory daoFactory;
-    private IModelFactory modelFactory;
+    private final IDaoFactory daoFactory;
+    private final IModelFactory modelFactory;
 
     public FreeAgentMock() {
         daoFactory = DaoFactoryMock.getInstance();

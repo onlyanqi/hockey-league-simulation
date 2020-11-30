@@ -9,7 +9,7 @@ import java.util.ListIterator;
 
 public abstract class GameSubject {
 
-    private static Logger log = Logger.getLogger(GameSubject.class);
+    private static final Logger log = Logger.getLogger(GameSubject.class);
     private final List<IGameObserver> observers;
 
     public GameSubject() {

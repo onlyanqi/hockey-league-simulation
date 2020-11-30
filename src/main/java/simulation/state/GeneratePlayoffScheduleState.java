@@ -8,15 +8,15 @@ import java.util.*;
 
 public class GeneratePlayoffScheduleState implements ISimulateState {
 
-    private static Logger log = Logger.getLogger(GeneratePlayoffScheduleState.class);
+    private static final Logger log = Logger.getLogger(GeneratePlayoffScheduleState.class);
     private final Integer numberOfGamesPerTeam = 7;
     private final Integer numberOfTeamStandingBeforeStanleyCup = 4;
-    private IHockeyContext hockeyContext;
-    private ILeague league;
-    private INHLEvents nhlEvents;
-    private IGameSchedule games;
-    private ITeamStanding teamStanding;
-    private HashMap<ITeam, Integer> stanleyCupTeamStanding;
+    private final IHockeyContext hockeyContext;
+    private final ILeague league;
+    private final INHLEvents nhlEvents;
+    private final IGameSchedule games;
+    private final ITeamStanding teamStanding;
+    private final HashMap<ITeam, Integer> stanleyCupTeamStanding;
 
     public GeneratePlayoffScheduleState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -155,11 +155,7 @@ public class GeneratePlayoffScheduleState implements ISimulateState {
     }
 
     private Boolean declareTeam1Winner(ITeamScore teamScore1, ITeamScore teamScore2) {
-        if (teamScore1.getPoints() > teamScore2.getPoints()) {
-            return true;
-        } else {
-            return false;
-        }
+        return teamScore1.getPoints() > teamScore2.getPoints();
     }
 
     private void generateStanleyCupSchedule() {

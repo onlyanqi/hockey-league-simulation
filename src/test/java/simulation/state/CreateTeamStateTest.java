@@ -19,8 +19,8 @@ public class CreateTeamStateTest {
     static League league;
 
     private static ILeagueDao factory = new LeagueMock();
-    private static ITeamDao factoryTeam = new TeamMock();
-    private static IUserDao factoryUser = new UserMock();
+    private static final ITeamDao factoryTeam = new TeamMock();
+    private static final IUserDao factoryUser = new UserMock();
     private static IHockeyContext hockeyContext;
     private static IHockeyContextFactory hockeyContextFactory;
     private List<IManager> managerList = null;

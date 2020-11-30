@@ -320,11 +320,7 @@ public class Player extends SharedAttributes implements IPlayer {
         int birthDayOfMonth = birthday.getDayOfMonth();
         int birthMonth = birthday.getMonthValue();
 
-        if (currentDayOfMonth == birthDayOfMonth && currentMonth == birthMonth) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentDayOfMonth == birthDayOfMonth && currentMonth == birthMonth;
     }
 
     @Override

@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class AdvanceTimeState implements ISimulateState {
 
-    private static Logger log = Logger.getLogger(AdvanceTimeState.class);
-    private ILeague league;
-    private IHockeyContext hockeyContext;
+    private static final Logger log = Logger.getLogger(AdvanceTimeState.class);
+    private final ILeague league;
+    private final IHockeyContext hockeyContext;
 
     public AdvanceTimeState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
@@ -42,7 +42,7 @@ public class AdvanceTimeState implements ISimulateState {
         }
         if (nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())
                 || nhlEvents.checkRegularSeasonPassed(league.getCurrentDate())) {
-            if(nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())){
+            if (nhlEvents.checkEndOfRegularSeason(league.getCurrentDate())) {
                 displayTeamStats();
             }
             return new GeneratePlayoffScheduleState(hockeyContext);

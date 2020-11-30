@@ -2,7 +2,7 @@ package presentation;
 
 import java.util.Scanner;
 
-public class ReadUserInput implements IReadUserInput{
+public class ReadUserInput implements IReadUserInput {
 
     private static IReadUserInput readUserInput;
     private static IConsoleOutput consoleOutput;

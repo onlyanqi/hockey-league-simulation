@@ -6,8 +6,6 @@ import simulation.dao.DaoFactoryMock;
 import simulation.dao.IDaoFactory;
 import simulation.dao.ILeagueDao;
 import simulation.dao.IUserDao;
-import simulation.mock.LeagueMock;
-import simulation.mock.UserMock;
 
 import static org.junit.Assert.*;
 

@@ -9,10 +9,10 @@ import simulation.serializers.LeagueDataSerializerDeSerializer;
 
 public class LoadTeamState implements IHockeyState {
 
-    private IHockeyContext hockeyContext;
+    private final IHockeyContext hockeyContext;
     private String teamName;
     private ILeague league;
-    private IReadUserInput readUserInput;
+    private final IReadUserInput readUserInput;
 
     public LoadTeamState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;

@@ -18,7 +18,7 @@ import java.io.FileNotFoundException;
 
 public class App {
 
-    private static Logger log = Logger.getLogger(App.class);
+    private static final Logger log = Logger.getLogger(App.class);
 
     public static void main(String[] args) {
 

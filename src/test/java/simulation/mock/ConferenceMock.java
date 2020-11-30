@@ -16,11 +16,11 @@ import java.util.List;
 
 public class ConferenceMock implements IConferenceDao {
 
-    private IModelFactory modelFactory;
-    private IDaoFactory daoFactory;
-    private IDivisionDao divisionDao;
-    private IHockeyContextFactory hockeyContextFactory;
-    private IHockeyContext hockeyContext;
+    private final IModelFactory modelFactory;
+    private final IDaoFactory daoFactory;
+    private final IDivisionDao divisionDao;
+    private final IHockeyContextFactory hockeyContextFactory;
+    private final IHockeyContext hockeyContext;
 
     public ConferenceMock() {
         hockeyContextFactory = HockeyContextConcreteMock.getInstance();

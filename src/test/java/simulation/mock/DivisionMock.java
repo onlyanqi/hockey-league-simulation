@@ -16,11 +16,11 @@ import java.util.List;
 
 public class DivisionMock implements IDivisionDao {
 
-    private IHockeyContextFactory hockeyContextFactory;
-    private IHockeyContext hockeyContext;
-    private IModelFactory modelFactory;
-    private IDaoFactory daoFactory;
-    private ITeamDao teamDao;
+    private final IHockeyContextFactory hockeyContextFactory;
+    private final IHockeyContext hockeyContext;
+    private final IModelFactory modelFactory;
+    private final IDaoFactory daoFactory;
+    private final ITeamDao teamDao;
 
     public DivisionMock() {
         hockeyContextFactory = HockeyContextConcreteMock.getInstance();
