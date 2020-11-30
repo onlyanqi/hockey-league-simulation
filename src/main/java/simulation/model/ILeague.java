@@ -1,9 +1,9 @@
 package simulation.model;
 
-import simulation.dao.IConferenceDao;
-import simulation.dao.IFreeAgentDao;
-import simulation.dao.ILeagueDao;
-import simulation.dao.ITradeOfferDao;
+import persistance.dao.IConferenceDao;
+import persistance.dao.IFreeAgentDao;
+import persistance.dao.ILeagueDao;
+import persistance.dao.ITradeOfferDao;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

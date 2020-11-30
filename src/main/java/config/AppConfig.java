@@ -1,12 +1,12 @@
 package config;
 
+import persistance.serializers.LeagueDataSerializerDeSerializer;
 import presentation.ConsoleOutputForTeamCreation;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import presentation.UseInputForTeamCreation;
 import simulation.model.IModelFactory;
 import simulation.model.ModelFactory;
-import simulation.serializers.LeagueDataSerializerDeSerializer;
 
 public class AppConfig {
 
@@ -33,6 +33,10 @@ public class AppConfig {
 
     private static Object getUniqueInstance() {
         return appConfig;
+    }
+
+    public LeagueDataSerializerDeSerializer getDataSerializerDeSerializer() {
+        return dataSerializer;
     }
 
     public IUserInputForTeamCreation getInputForTeamCreation() {

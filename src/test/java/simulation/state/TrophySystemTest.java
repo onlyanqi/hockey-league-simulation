@@ -2,11 +2,10 @@ package simulation.state;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.ICoachDao;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IUserDao;
 import presentation.ConsoleOutput;
-import presentation.IConsoleOutput;
-import simulation.dao.ICoachDao;
-import simulation.dao.ILeagueDao;
-import simulation.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.CoachMock;
@@ -24,7 +23,7 @@ import static org.junit.Assert.*;
 public class TrophySystemTest {
     static IHockeyContext hockeyContext;
     static private ILeague league;
-    static private IConsoleOutput consoleOutput;
+    static private ConsoleOutput consoleOutput;
     static private ITrophy trophy;
 
     @BeforeClass

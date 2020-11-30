@@ -42,7 +42,7 @@ public class SimulateGameState implements ISimulateState {
         log.debug("Started game between " + team1.getName() + " and " + team2.getName());
         Random rand = new Random();
 
-        IGameSimulation gameSimulation = hockeyContext.getModelFactory().newGameSimulationFromTeams(team1, team2);
+        IGameSimulation gameSimulation = hockeyContext.getModelFactory().createGameSimulationFromTeams(team1, team2);
         gameSimulation.play();
 
         HashMap<String, Integer> goals = gameSimulation.getGoals();

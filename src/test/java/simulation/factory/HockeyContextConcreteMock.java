@@ -1,7 +1,7 @@
 package simulation.factory;
 
+import persistance.dao.IDaoFactory;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
 import simulation.model.IModelFactory;
 import simulation.model.ModelFactory;
 import simulation.state.HockeyContext;

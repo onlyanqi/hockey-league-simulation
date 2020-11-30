@@ -57,7 +57,6 @@ public class JSONControllerMock {
         trading.put("gmTable", gmTable);
 
         gameplayConfig.put("aging", aging);
-        //gameplayConfig.put("gameResolver", gameResolver);
         gameplayConfig.put("injuries", injuries);
         gameplayConfig.put("simulate", simulate);
         gameplayConfig.put("training", training);

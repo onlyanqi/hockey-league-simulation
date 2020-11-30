@@ -2,9 +2,9 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IDaoFactory;
+import persistance.dao.ITradingDao;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.ITradingDao;
 
 import java.util.*;
 

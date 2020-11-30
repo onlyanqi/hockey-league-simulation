@@ -13,7 +13,7 @@
       "goalChance": 0.21
     },
     "injuries": {
-      "randomInjuryChance": 0.31,
+      "randomInjuryChance": 0.11,
       "injuryDaysLow": 2,
       "injuryDaysHigh": 228
     },

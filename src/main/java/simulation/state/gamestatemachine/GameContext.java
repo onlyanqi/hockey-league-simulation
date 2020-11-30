@@ -13,8 +13,8 @@ public class GameContext {
 
 
     public GameContext(IGameSimulation gameSimulation) {
-        this.offensive = HockeyContext.getInstance().getModelFactory().newShift();
-        this.defensive = HockeyContext.getInstance().getModelFactory().newShift();
+        this.offensive = HockeyContext.getInstance().getModelFactory().createShift();
+        this.defensive = HockeyContext.getInstance().getModelFactory().createShift();
         this.gameSimulation = gameSimulation;
     }
 

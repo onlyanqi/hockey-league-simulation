@@ -1,11 +1,11 @@
 package simulation.state;
 
+import persistance.serializers.LeagueDataSerializerDeSerializer;
 import presentation.ConsoleOutput;
 import simulation.model.IGameSchedule;
 import simulation.model.ILeague;
 import simulation.model.INHLEvents;
 import simulation.model.ITeamStanding;
-import simulation.serializers.LeagueDataSerializerDeSerializer;
 
 public class PersistState implements ISimulateState {
 

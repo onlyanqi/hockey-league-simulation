@@ -1,7 +1,7 @@
 package simulation.mock;
 
-import simulation.dao.ITeamDao;
-import simulation.dao.ITeamScoreDao;
+import persistance.dao.ITeamDao;
+import persistance.dao.ITeamScoreDao;
 import simulation.model.ITeamScore;
 import simulation.model.Team;
 import simulation.model.TeamScore;
@@ -62,8 +62,8 @@ public class TeamScoreMock implements ITeamScoreDao {
                 break;
             case 3:
                 teamScore.setId(id);
-                Team team = new Team();
-                teamScore.setTeam(team);
+                Team team3 = new Team();
+                teamScore.setTeam(team3);
                 teamScore.setNumberOfTies(0);
                 teamScore.setNumberOfLoss(0);
                 teamScore.setNumberOfWins(0);

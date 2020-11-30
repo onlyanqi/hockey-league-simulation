@@ -2,7 +2,7 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IEventDao;
+import persistance.dao.IEventDao;
 import simulation.mock.NHLEventMock;
 
 import java.time.LocalDate;
@@ -69,6 +69,22 @@ public class NHLEventsTest {
         LocalDate endOfRegularSeason = LocalDate.of(2021, Month.APRIL, 01);
         nhlEvents.setNextSeasonDate(endOfRegularSeason);
         assertTrue(nhlEvents.getNextSeasonDate().equals(LocalDate.of(2021, Month.APRIL, 01)));
+    }
+
+    @Test
+    public void getPlayerDraftDateTest() throws Exception {
+        NHLEvents nhlEvents = new NHLEvents();
+        iEventDao.loadEventById(3, nhlEvents);
+        assertEquals(nhlEvents.getId(), 3);
+        assertEquals(LocalDate.of(2021, Month.JULY, 15), nhlEvents.getPlayerDraftDate());
+    }
+
+    @Test
+    public void setPlayerDraftDateTest() {
+        NHLEvents nhlEvents = new NHLEvents();
+        LocalDate playerDraftDate = LocalDate.of(2021, Month.JULY, 15);
+        nhlEvents.setPlayerDraftDate(playerDraftDate);
+        assertTrue(nhlEvents.getPlayerDraftDate().equals(LocalDate.of(2021, Month.JULY, 15)));
     }
 
     @Test

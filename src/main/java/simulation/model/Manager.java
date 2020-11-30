@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.IManagerDao;
+import persistance.dao.IManagerDao;
 
 public class Manager extends SharedAttributes implements IManager {
     private int leagueId;
@@ -25,7 +25,7 @@ public class Manager extends SharedAttributes implements IManager {
         this.setTeamId(manager.getTeamId());
     }
 
-    public Manager(simulation.serializers.ModelsForDeserialization.model.Manager manager) {
+    public Manager(persistance.serializers.ModelsForDeserialization.model.Manager manager) {
         this.leagueId = manager.leagueId;
         this.personality = manager.personality;
         this.teamId = manager.teamId;

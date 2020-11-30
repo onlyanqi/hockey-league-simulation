@@ -2,7 +2,7 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IGameDao;
+import persistance.dao.IGameDao;
 import simulation.mock.GameMock;
 
 import java.time.LocalDate;

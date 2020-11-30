@@ -1,7 +1,7 @@
 package simulation.trophyPublisherSubscribers;
 
 import org.junit.Test;
-import simulation.dao.ICoachDao;
+import persistance.dao.ICoachDao;
 import simulation.mock.CoachMock;
 import simulation.model.Coach;
 import simulation.model.ICoach;

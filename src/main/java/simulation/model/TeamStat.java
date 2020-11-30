@@ -12,7 +12,7 @@ public class TeamStat {
     public TeamStat() {
     }
 
-    public TeamStat(simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat) {
+    public TeamStat(persistance.serializers.ModelsForDeserialization.model.TeamStat teamStat) {
         this.teamName = teamStat.teamName;
         this.goals = teamStat.goals;
         this.saves = teamStat.saves;

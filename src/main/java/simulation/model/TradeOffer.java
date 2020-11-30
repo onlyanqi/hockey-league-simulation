@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.ITradeOfferDao;
+import persistance.dao.ITradeOfferDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class TradeOffer extends SharedAttributes implements ITradeOffer {
         factory.loadTradeOfferDetailsById(tradingOfferId, this);
     }
 
-    public TradeOffer(simulation.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
+    public TradeOffer(persistance.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
         this.leagueId = tradeOffer.leagueId;
         this.tradingId = tradeOffer.tradingId;
         this.fromPlayerId = tradeOffer.fromPlayerId;

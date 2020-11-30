@@ -1,9 +1,9 @@
 package simulation.mock;
 
-import simulation.dao.IConferenceDao;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IDivisionDao;
-import simulation.dao.ILeagueDao;
+import persistance.dao.IConferenceDao;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IDivisionDao;
+import persistance.dao.ILeagueDao;
 import simulation.factory.HockeyContextConcreteMock;
 import simulation.factory.IHockeyContextFactory;
 import simulation.model.IConference;

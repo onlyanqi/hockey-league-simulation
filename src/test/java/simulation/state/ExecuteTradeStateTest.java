@@ -2,7 +2,7 @@ package simulation.state;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.*;
+import persistance.dao.*;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.HockeyContextConcreteMock;
 import simulation.factory.IHockeyContextFactory;

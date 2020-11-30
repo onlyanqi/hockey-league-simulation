@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.ITradingDao;
+import persistance.dao.ITradingDao;
 
 public interface IGamePlayConfig {
 

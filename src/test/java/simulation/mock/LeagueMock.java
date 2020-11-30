@@ -1,12 +1,13 @@
 package simulation.mock;
 
 import org.json.simple.JSONObject;
-import simulation.dao.*;
+import persistance.dao.*;
 import simulation.model.*;
 import simulation.state.HockeyContext;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -245,6 +246,39 @@ public class LeagueMock implements ILeagueDao {
                 league.setGamePlayConfig(formGamePlayConfig());
                 league.setCurrentDate(LocalDate.of(2021, 05, 06));
                 break;
+            case 6:
+                league.setName("League6");
+                List<IConference> conferenceList = new ArrayList<>();
+                List<IDivision> divisionList = new ArrayList<>();
+                IConference conference1 = new Conference();
+                conference1.setId(1);
+                conference1.setName("Eastern Conference");
+                conference1.setId(league.getId());
+                Division div1 = new Division();
+                div1.setId(1);
+                div1.setName("division1");
+                div1.setConferenceId(1);
+                div1.setTeamList(formTeamListDivision());
+                divisionList.add(div1);
+                conference1.setDivisionList(divisionList);
+                conferenceList.add(conference1);
+                league.setConferenceList(conferenceList);
+                league.setFreeAgent(formFreeAgent());
+                league.setCoachList(formCoachList());
+                league.setManagerList(formManagerList());
+                league.setTradeOfferList(getTradeOfferList(1));
+                NHLEvents nhlEvents = new NHLEvents();
+                IEventDao iEventDao = new NHLEventMock();
+                iEventDao.loadEventById(3, nhlEvents);
+                league.setNhlRegularSeasonEvents(nhlEvents);
+                league.setActiveTeamStanding(formTeamStanding());
+                league.setStanleyCupFinalsTeamScores(new HashMap<>());
+                league.setGames(formGames());
+                league.setGamePlayConfig(formGamePlayConfig());
+                league.setCurrentDate(LocalDate.of(2021, 6, 15));
+                league.setRegularSeasonStanding(formTeamStanding());
+                league.setPlayOffStanding(formTeamStanding());
+                break;
         }
 
     }
@@ -287,7 +321,6 @@ public class LeagueMock implements ILeagueDao {
         List<IConference> conferenceList = new ArrayList<>();
         List<IDivision> divisionList1 = new ArrayList<>();
         List<IDivision> divisionList2 = new ArrayList<>();
-        List<ITeam> teamList = new ArrayList<>();
 
         IConference conference1 = new Conference();
         conference1.setId(1);
@@ -298,7 +331,6 @@ public class LeagueMock implements ILeagueDao {
         conference2.setId(2);
         conference2.setName("Western Conference");
         conference2.setId(league.getId());
-
 
         Division div1 = new Division();
         div1.setId(1);
@@ -328,7 +360,6 @@ public class LeagueMock implements ILeagueDao {
 
         conference1.setDivisionList(divisionList1);
         conference2.setDivisionList(divisionList2);
-
 
         conferenceList.add(conference1);
         conferenceList.add(conference2);
@@ -497,6 +528,31 @@ public class LeagueMock implements ILeagueDao {
         teamList.add(team43);
         teamList.add(team44);
         teamList.add(team45);
+        return teamList;
+    }
+
+    public List<ITeam> formTeamListDivision() throws Exception {
+        String tradeToTeam = "team3";
+        List<String> draftPicks = new ArrayList<>(Arrays.asList(
+                tradeToTeam, null, null, null, null, null, null
+        ));
+        List<ITeam> teamList = new ArrayList<>();
+        ITeam team1 = new Team();
+        team1.setId(1);
+        team1.setName("Team1");
+        team1.setPlayerList(addPlayerInList());
+        team1.setActivePlayerList();
+        team1.setDraftPicks(draftPicks);
+
+        Team team2 = new Team();
+        team2.setId(2);
+        team2.setName("Team2");
+        team2.setPlayerList(addPlayerInList());
+        team2.setActivePlayerList();
+        team2.setDraftPicks(draftPicks);
+
+        teamList.add(team1);
+        teamList.add(team2);
         return teamList;
     }
 

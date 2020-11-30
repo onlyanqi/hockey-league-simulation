@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.ICoachDao;
+import persistance.dao.ICoachDao;
 
 public class Coach extends SharedAttributes implements ICoach {
     private int teamId;
@@ -35,7 +35,7 @@ public class Coach extends SharedAttributes implements ICoach {
         this.setCoachingEffectiveness(coach.getCoachingEffectiveness());
     }
 
-    public Coach(simulation.serializers.ModelsForDeserialization.model.Coach coachFromDeserialization) {
+    public Coach(persistance.serializers.ModelsForDeserialization.model.Coach coachFromDeserialization) {
         this.teamId = coachFromDeserialization.teamId;
         this.leagueId = coachFromDeserialization.leagueId;
         this.skating = coachFromDeserialization.skating;

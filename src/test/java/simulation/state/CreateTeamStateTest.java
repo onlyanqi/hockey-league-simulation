@@ -2,13 +2,12 @@ package simulation.state;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.*;
+import persistance.dao.*;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.*;
 import simulation.model.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -41,14 +40,6 @@ public class CreateTeamStateTest {
         hockeyContext.setUser(user);
     }
 
-    @Test
-    public void entryTest() throws Exception {
-        chooseConferenceTest();
-        chooseCoachTest();
-        chooseDivisionTest();
-        chooseManagerTest();
-        choosePlayersTest();
-    }
 
     @Test
     public void hasEnoughManagersTest() throws Exception {
@@ -130,25 +121,6 @@ public class CreateTeamStateTest {
         assertFalse(conferenceName, conferenceNameList.contains(conferenceName.toLowerCase()));
     }
 
-    @Test
-    public void choosePlayersTest() throws Exception {
-        ILeagueDao leagueFactory = new LeagueMock();
-        League league = new League(4, leagueFactory);
-        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
-        int oldSizeOfFreeAgentList = freeAgentList.size();
-        List<Integer> chosenPlayersIdList = new ArrayList<>();
-        for (int i = 1; i < 21; i++) {
-            chosenPlayersIdList.add(i);
-        }
-        CreateTeamState createTeamState = new CreateTeamState();
-        List<IPlayer> teamPlayers = createTeamState.createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
-        int teamPlayersListLength = teamPlayers.size();
-        freeAgentList = createTeamState.removeChosenPlayersFromFreeAgentList(chosenPlayersIdList, freeAgentList);
-        int newSizeOfFreeAgentList = freeAgentList.size();
-        assertTrue(newSizeOfFreeAgentList == oldSizeOfFreeAgentList - teamPlayersListLength);
-        newSizeOfFreeAgentList++;
-        assertFalse(newSizeOfFreeAgentList == oldSizeOfFreeAgentList - teamPlayersListLength);
-    }
 
     @Test
     public void chooseCoachTest() throws Exception {
@@ -177,51 +149,6 @@ public class CreateTeamStateTest {
         assertFalse(oldManagerListLength == newManagerListLength + 1);
     }
 
-    @Test
-    public void createPlayerListByChosenPlayerIdTest() throws Exception {
-        CreateTeamState createTeamState = new CreateTeamState();
-        List<Integer> chosenPlayersIdList = new ArrayList<>();
-        ILeagueDao leagueFactory = new LeagueMock();
-        League league = new League(4, leagueFactory);
-        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
-        int freeAgentListSize = freeAgentList.size();
-        for (int i = 1; i < 21; i++) {
-            chosenPlayersIdList.add(i);
-        }
-        List<IPlayer> teamPlayers = createTeamState.createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
-
-        assertEquals(teamPlayers.size(), 20);
-        assertNotEquals(teamPlayers.size(), 15);
-        assertNotEquals(teamPlayers.size(), 0);
-        assertNotEquals(teamPlayers.size(), 22);
-
-        teamPlayers = createTeamState.createPlayerListByChosenPlayerId(null, null);
-        assertEquals(teamPlayers, null);
-
-
-    }
-
-    @Test
-    public void removeChosenPlayersFromFreeAgentListTest() throws Exception {
-        CreateTeamState createTeamState = new CreateTeamState();
-        List<Integer> chosenPlayersIdList = new ArrayList<>();
-        ILeagueDao leagueFactory = new LeagueMock();
-        League league = new League(4, leagueFactory);
-        List<IPlayer> freeAgentList = league.getFreeAgent().getPlayerList();
-        int freeAgentListSize = freeAgentList.size();
-        for (int i = 1; i < 21; i++) {
-            chosenPlayersIdList.add(i);
-        }
-        freeAgentList = createTeamState.removeChosenPlayersFromFreeAgentList(chosenPlayersIdList, freeAgentList);
-
-        assertEquals(freeAgentList.size(), freeAgentListSize - 20);
-        assertNotEquals(freeAgentList.size(), -1);
-        assertNotEquals(freeAgentList.size(), freeAgentListSize + 1);
-
-        freeAgentList = createTeamState.removeChosenPlayersFromFreeAgentList(null, null);
-        assertEquals(freeAgentList, null);
-
-    }
 
     @Test
     public void isLeaguePresentTest() throws Exception {

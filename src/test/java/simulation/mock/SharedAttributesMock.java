@@ -1,7 +1,7 @@
 package simulation.mock;
 
 
-import simulation.dao.ISharedAttributesDao;
+import persistance.dao.ISharedAttributesDao;
 import simulation.model.SharedAttributes;
 
 public class SharedAttributesMock implements ISharedAttributesDao {

@@ -1,9 +1,9 @@
 package simulation.mock;
 
+import persistance.dao.IDaoFactory;
+import persistance.dao.IPlayerDao;
+import persistance.dao.ITradeOfferDao;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IPlayerDao;
-import simulation.dao.ITradeOfferDao;
 import simulation.model.IModelFactory;
 import simulation.model.ITradeOffer;
 import simulation.model.ModelFactory;

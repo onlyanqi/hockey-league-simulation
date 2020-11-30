@@ -1,7 +1,10 @@
 package simulation.model;
 
-import simulation.dao.IDivisionDao;
-import simulation.dao.ITeamDao;
+import persistance.dao.IDivisionDao;
+import persistance.dao.ITeamDao;
+import persistance.serializers.ModelsForDeserialization.model.Team;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +27,12 @@ public class Division extends SharedAttributes implements IDivision {
         factory.loadDivisionById(id, this);
     }
 
-    public Division(simulation.serializers.ModelsForDeserialization.model.Division divisionFromDeserialization) {
+    public Division(persistance.serializers.ModelsForDeserialization.model.Division divisionFromDeserialization) {
+        IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
+        IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         this.conferenceId = divisionFromDeserialization.conferenceId;
-        for (simulation.serializers.ModelsForDeserialization.model.Team team : divisionFromDeserialization.teamList) {
-            this.teamList.add(new Team(team));
+        for (Team team : divisionFromDeserialization.teamList) {
+            this.teamList.add(modelFactory.createTeamFromDeserialization(team));
         }
         this.setName(divisionFromDeserialization.name);
         this.setId(divisionFromDeserialization.id);

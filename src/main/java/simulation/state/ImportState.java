@@ -346,7 +346,7 @@ public class ImportState implements IHockeyState {
         }
 
         IModelFactory managerConcrete = hockeyContext.getModelFactory();
-        IManager manager = managerConcrete.newManagerConcrete();
+        IManager manager = managerConcrete.createManagerConcrete();
         manager.setName(name);
         manager.setPersonality(personality);
         return manager;
@@ -687,7 +687,7 @@ public class ImportState implements IHockeyState {
             }
 
             IModelFactory managerConcrete = hockeyContext.getModelFactory();
-            IManager manager = managerConcrete.newManagerConcrete();
+            IManager manager = managerConcrete.createManagerConcrete();
             manager.setName(name);
             manager.setPersonality(personality);
             managerList.add(manager);
@@ -764,7 +764,7 @@ public class ImportState implements IHockeyState {
         }
         int daysUntil = (int) (long) trainingJSONObject.get(DAYS_UNTIL_STAT_INCREASE_CHECK);
         IModelFactory trainingConcrete = hockeyContext.getModelFactory();
-        ITraining training = trainingConcrete.newTraining();
+        ITraining training = trainingConcrete.createTraining();
         training.setDaysUntilStatIncreaseCheck(daysUntil);
         return training;
     }

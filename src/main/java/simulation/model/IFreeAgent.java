@@ -1,7 +1,7 @@
 package simulation.model;
 
-import simulation.dao.IFreeAgentDao;
-import simulation.dao.IPlayerDao;
+import persistance.dao.IFreeAgentDao;
+import persistance.dao.IPlayerDao;
 
 import java.util.List;
 

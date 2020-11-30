@@ -1,7 +1,7 @@
 package simulation.model;
 
-import simulation.dao.IGamePlayConfigDao;
-import simulation.dao.ITradingDao;
+import persistance.dao.IGamePlayConfigDao;
+import persistance.dao.ITradingDao;
 
 public class GamePlayConfig implements IGamePlayConfig {
 
@@ -21,7 +21,7 @@ public class GamePlayConfig implements IGamePlayConfig {
         gamePlayConfigFactory.loadGamePlayConfigByLeagueId(leagueId, this);
     }
 
-    public GamePlayConfig(simulation.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig) {
+    public GamePlayConfig(persistance.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig) {
         this.id = gamePlayConfig.id;
         this.aging = new Aging(gamePlayConfig.aging);
         this.leagueId = gamePlayConfig.leagueId;

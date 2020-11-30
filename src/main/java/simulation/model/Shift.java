@@ -18,20 +18,20 @@ public class Shift implements IShift {
         penalizedDefensePlayer = new HashMap<>();
     }
 
-    public Shift(simulation.serializers.ModelsForDeserialization.model.Shift shift) {
+    public Shift(persistance.serializers.ModelsForDeserialization.model.Shift shift) {
         this.teamName = shift.teamName;
         this.goalie = new Player(shift.goalie);
-        for (simulation.serializers.ModelsForDeserialization.model.Player player : shift.forward) {
+        for (persistance.serializers.ModelsForDeserialization.model.Player player : shift.forward) {
             this.forward.add(new Player(player));
         }
-        for (simulation.serializers.ModelsForDeserialization.model.Player player : shift.defense) {
+        for (persistance.serializers.ModelsForDeserialization.model.Player player : shift.defense) {
             this.defense.add(new Player(player));
         }
 
         Iterator iterator = shift.penalizedDefensePlayer.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry mapEntry = (Map.Entry) iterator.next();
-            this.penalizedDefensePlayer.put(new Player((simulation.serializers.ModelsForDeserialization.model.Player) mapEntry.getKey()), (Integer) mapEntry.getValue());
+            this.penalizedDefensePlayer.put(new Player((persistance.serializers.ModelsForDeserialization.model.Player) mapEntry.getKey()), (Integer) mapEntry.getValue());
         }
     }
 
@@ -130,7 +130,7 @@ public class Shift implements IShift {
 
     @Override
     public IShift getShift(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
-        IShift shift = HockeyContext.getInstance().getModelFactory().newShift();
+        IShift shift = HockeyContext.getInstance().getModelFactory().createShift();
         HashMap<Integer, Integer> playersCount = teamPlayersCount.get(team.getName());
 
         if (goalie == null) {
@@ -187,13 +187,13 @@ public class Shift implements IShift {
 
     @Override
     public IShift getShiftForPenalizedTeam(ITeam team, HashMap<String, HashMap<Integer, Integer>> teamPlayersCount) {
-        IShift shift = HockeyContext.getInstance().getModelFactory().newShift();
+        IShift shift = HockeyContext.getInstance().getModelFactory().createShift();
         HashMap<Integer, Integer> playersCount = teamPlayersCount.get(team.getName());
         IPlayer goalie = getRandomPlayerByPosition(team, "GOALIE");
         while (didPlayerReachShiftCount(playersCount, goalie)) {
             goalie = getRandomPlayerByPosition(team, "GOALIE");
         }
-        //set Goalie to shift
+
         shift.setGoalie(goalie);
 
         List<IPlayer> forwardList = new ArrayList<>();
@@ -204,14 +204,11 @@ public class Shift implements IShift {
             }
             forwardList.add(forward);
         }
-        //set forwards list to shift
         shift.setForward(forwardList);
 
-        //getPenalizedPlayers
         HashMap<IPlayer, Integer> penalPlayers = this.getPenalizedDefensePlayer();
         int penalBoxSize = penalPlayers.size();
 
-        //add other players except penalized ones
         List<IPlayer> defenseList = new ArrayList<>();
         for (int defenses = 0; defenses < 2 - penalBoxSize; defenses++) {
 
@@ -222,7 +219,6 @@ public class Shift implements IShift {
             defenseList.add(defense);
         }
 
-        //add penalized players to the defense list
         for (IPlayer penalPlayer : penalPlayers.keySet()) {
             defenseList.add(penalPlayer);
         }

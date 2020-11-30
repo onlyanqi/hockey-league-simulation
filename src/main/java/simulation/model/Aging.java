@@ -1,11 +1,15 @@
 package simulation.model;
 
-import simulation.dao.IAgingDao;
+import org.apache.log4j.Logger;
+import persistance.dao.IAgingDao;
+import presentation.ConsoleOutput;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class Aging extends SharedAttributes implements IAging {
+
+    private static Logger log = Logger.getLogger(Aging.class);
 
     private int averageRetirementAge;
 
@@ -28,7 +32,7 @@ public class Aging extends SharedAttributes implements IAging {
         loadAgingFactory.loadAgingById(id, this);
     }
 
-    public Aging(simulation.serializers.ModelsForDeserialization.model.Aging agingFromDeserialization) {
+    public Aging(persistance.serializers.ModelsForDeserialization.model.Aging agingFromDeserialization) {
         this.averageRetirementAge = agingFromDeserialization.averageRetirementAge;
         this.maximumAge = agingFromDeserialization.maximumAge;
         this.leagueId = agingFromDeserialization.leagueId;
@@ -55,6 +59,7 @@ public class Aging extends SharedAttributes implements IAging {
     @Override
     public void setAverageRetirementAge(int averageRetirementAge) throws IllegalArgumentException {
         if (averageRetirementAge < 0) {
+            log.error("averageRetirementAge is less than 0");
             throw new IllegalArgumentException("averageRetirementAge must be greater than 0!");
         }
         this.averageRetirementAge = averageRetirementAge;
@@ -68,9 +73,11 @@ public class Aging extends SharedAttributes implements IAging {
     @Override
     public void setMaximumAge(int maximumAge) throws IllegalArgumentException {
         if (maximumAge < 0) {
+            log.error("maximumAge is less than 0");
             throw new IllegalArgumentException("maximumAge must be greater than 0!");
         }
         if (this.getAverageRetirementAge() >= maximumAge) {
+            log.error("Maximum retirement age is less than average retirement age");
             throw new IllegalArgumentException("Maximum retirement age must be greater than average retirement age!");
         }
         this.maximumAge = maximumAge;
@@ -139,6 +146,8 @@ public class Aging extends SharedAttributes implements IAging {
                         teamPlayer.calculateAge(league);
                         if (teamPlayer.isBirthday(league)) {
                             if (teamPlayer.retirementCheck(league)) {
+                                log.debug(teamPlayer.getName() + " from team " + team.getName() + " is retired on his birthday " + league.getCurrentDate());
+                                ConsoleOutput.getInstance().printMsgToConsole(teamPlayer.getName() + " from team " + team.getName() + " is retired on on his birthday " + league.getCurrentDate());
                                 retiredPlayerList.add(teamPlayer);
                                 playerList.remove(teamPlayer);
                                 teamPlayer.findBestReplacement(playerList, freeAgentList);
@@ -154,6 +163,8 @@ public class Aging extends SharedAttributes implements IAging {
             freeAgentPlayer.calculateAge(league);
             if (freeAgentPlayer.isBirthday(league)) {
                 if (freeAgentPlayer.retirementCheck(league)) {
+                    log.debug(freeAgentPlayer.getName() + " from freeAgent is retired on his birthday " + league.getCurrentDate());
+                    ConsoleOutput.getInstance().printMsgToConsole(freeAgentPlayer.getName() + " from freeAgent is retired on his birthday " + league.getCurrentDate());
                     retiredPlayerList.add(freeAgentPlayer);
                     freeAgentList.remove(i);
                 }

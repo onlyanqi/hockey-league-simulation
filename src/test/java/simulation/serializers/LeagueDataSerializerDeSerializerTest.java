@@ -3,13 +3,14 @@ package simulation.serializers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.Test;
-import simulation.dao.ILeagueDao;
+import persistance.dao.ILeagueDao;
+import persistance.serializers.LeagueDataSerializerDeSerializer;
+import persistance.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.model.ILeague;
 import simulation.model.League;
-import simulation.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 import simulation.state.IHockeyContext;
 
 import static org.junit.Assert.assertEquals;

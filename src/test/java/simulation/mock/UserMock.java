@@ -1,7 +1,7 @@
 package simulation.mock;
 
-import simulation.dao.ILeagueDao;
-import simulation.dao.IUserDao;
+import persistance.dao.ILeagueDao;
+import persistance.dao.IUserDao;
 import simulation.model.IUser;
 import simulation.model.League;
 import simulation.model.User;
@@ -66,6 +66,16 @@ public class UserMock implements IUserDao {
                 user.setPassword("Pass");
                 user.setLeague(formLeagueForGames());
                 user.setLeagueList(formLeagueList());
+                break;
+
+            case 5:
+                user.setId(5);
+                user.setName("User5");
+                user.setPassword("Pass");
+                ILeagueDao leagueFactory = new LeagueMock();
+                League league = new League();
+                leagueFactory.loadLeagueById(6, league);
+                user.setLeague(league);
                 break;
         }
 

@@ -1,6 +1,6 @@
 package simulation.mock;
 
-import simulation.dao.ITradingDao;
+import persistance.dao.ITradingDao;
 import simulation.model.IModelFactory;
 import simulation.model.ITrading;
 import simulation.model.ModelFactory;

@@ -26,7 +26,7 @@ public class GameSimulation implements IGameSimulation {
         initializeGameSimulation();
     }
 
-    public GameSimulation(simulation.serializers.ModelsForDeserialization.model.GameSimulation gameSimulation) {
+    public GameSimulation(persistance.serializers.ModelsForDeserialization.model.GameSimulation gameSimulation) {
         this.team1Shift = new Shift(gameSimulation.team1Shift);
         this.team2Shift = new Shift(gameSimulation.team2Shift);
         this.team1 = new Team(gameSimulation.team1);
@@ -44,8 +44,8 @@ public class GameSimulation implements IGameSimulation {
         penalties = new HashMap<>();
         saves = new HashMap<>();
         shots = new HashMap<>();
-        team1Shift = HockeyContext.getInstance().getModelFactory().newShift();
-        team2Shift = HockeyContext.getInstance().getModelFactory().newShift();
+        team1Shift = HockeyContext.getInstance().getModelFactory().createShift();
+        team2Shift = HockeyContext.getInstance().getModelFactory().createShift();
         teamPlayersCount = new HashMap<>();
         initializeGameStats();
         initializeTeamPlayerShiftCount(team1);

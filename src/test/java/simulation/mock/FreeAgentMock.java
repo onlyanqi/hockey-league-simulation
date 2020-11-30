@@ -1,9 +1,9 @@
 package simulation.mock;
 
+import persistance.dao.IDaoFactory;
+import persistance.dao.IFreeAgentDao;
+import persistance.dao.IPlayerDao;
 import simulation.dao.DaoFactoryMock;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IFreeAgentDao;
-import simulation.dao.IPlayerDao;
 import simulation.model.*;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package simulation.model;
 
-import simulation.dao.IEventDao;
+import persistance.dao.IEventDao;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -48,7 +48,7 @@ public class NHLEvents implements INHLEvents {
         iEventDao.loadEventByLeagueId(leagueId, this);
     }
 
-    public NHLEvents(simulation.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents) {
+    public NHLEvents(persistance.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents) {
         this.id = nhlEvents.id;
         this.regularSeasonStartDate = nhlEvents.regularSeasonStartDate;
         this.tradeDeadlineDate = nhlEvents.tradeDeadlineDate;
@@ -56,6 +56,7 @@ public class NHLEvents implements INHLEvents {
         this.playOffStartDate = nhlEvents.playOffStartDate;
         this.lastDayStanleyCupFinals = nhlEvents.lastDayStanleyCupFinals;
         this.nextSeasonDate = nhlEvents.nextSeasonDate;
+        this.playerDraftDate = nhlEvents.playerDraftDate;
         this.currentYear = nhlEvents.currentYear;
     }
 

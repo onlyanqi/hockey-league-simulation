@@ -27,7 +27,6 @@ public class TrophySystem implements ISimulateState {
 
 
     private List<ITeamScore> getSortedTeamScores() {
-        List<ITeam> teamList = league.createTeamList();
         ITeamStanding teamStanding = league.getRegularSeasonStanding();
         List<ITeamScore> teamScores = teamStanding.getTeamsRankAcrossLeague(league);
         return teamScores;
@@ -121,7 +120,7 @@ public class TrophySystem implements ISimulateState {
 
     private void setPresidentsAndParticipationAwards() {
         List<ITeamScore> teamScores = getSortedTeamScores();
-        trophy = hockeyContext.getModelFactory().newTrophy();
+        trophy = hockeyContext.getModelFactory().createTrophy();
         trophy.setPresidentsTrophy(teamScores.get(teamScores.size() - 1).getTeam().getName());
         trophy.setParticipationAward(teamScores.get(0).getTeam().getName());
     }

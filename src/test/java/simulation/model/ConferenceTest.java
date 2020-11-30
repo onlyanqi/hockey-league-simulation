@@ -2,9 +2,9 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.IConferenceDao;
-import simulation.dao.IDaoFactory;
-import simulation.dao.IDivisionDao;
+import persistance.dao.IConferenceDao;
+import persistance.dao.IDaoFactory;
+import persistance.dao.IDivisionDao;
 import simulation.factory.HockeyContextConcreteMock;
 import simulation.factory.IHockeyContextFactory;
 import simulation.state.IHockeyContext;
@@ -81,7 +81,7 @@ public class ConferenceTest {
 
     @Test
     public void setDivisionListTest() throws Exception {
-        IDivisionDao divisionDao = daoFactory.createDivisionDao();
+        IDivisionDao divisionDao = daoFactory.newDivisionDao();
         List<IDivision> divisionList = new ArrayList<>();
         IDivision division = modelFactory.createDivisionWithIdDao(1, divisionDao);
         divisionList.add(division);
