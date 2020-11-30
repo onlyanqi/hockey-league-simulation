@@ -2,6 +2,8 @@ package simulation.model;
 
 import org.apache.log4j.Logger;
 import simulation.serializers.ModelsForDeserialization.model.Game;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,9 +20,11 @@ public class GameSchedule implements IGameSchedule {
     }
 
     public GameSchedule(simulation.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule) {
+        IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
+        IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         this.id = gameSchedule.id;
         for (Game game : gameSchedule.gameList) {
-            this.gameList.add(new simulation.model.Game(game));
+            this.gameList.add(modelFactory.createGameFromDeserialization(game));
         }
     }
 

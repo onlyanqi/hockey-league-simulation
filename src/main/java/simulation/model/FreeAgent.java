@@ -3,6 +3,8 @@ package simulation.model;
 import simulation.dao.IFreeAgentDao;
 import simulation.dao.IPlayerDao;
 import simulation.serializers.ModelsForDeserialization.model.Player;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,11 @@ public class FreeAgent extends SharedAttributes implements IFreeAgent {
     }
 
     public FreeAgent(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent) {
+        IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
+        IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         this.leagueId = freeAgent.leagueId;
         for (Player player : freeAgent.playerList) {
-            this.playerList.add(new simulation.model.Player(player));
+            this.playerList.add(modelFactory.newPlayerFromSerialization(player));
         }
         this.seasonId = freeAgent.seasonId;
         this.setName(freeAgent.name);

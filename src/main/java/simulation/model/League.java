@@ -9,6 +9,8 @@ import simulation.serializers.ModelsForDeserialization.model.Conference;
 import simulation.serializers.ModelsForDeserialization.model.Player;
 import simulation.serializers.ModelsForDeserialization.model.TradeOffer;
 import simulation.serializers.ModelsForDeserialization.model.*;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -60,29 +62,31 @@ public class League extends SharedAttributes implements ILeague {
     }
 
     public League(LeagueDeserializationModel leagueDeserializationModel) {
-        this.activeTeamStanding = new TeamStanding(leagueDeserializationModel.activeTeamStanding);
+        IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
+        IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
+        this.activeTeamStanding = modelFactory.createTeamStandingFromDeserialization(leagueDeserializationModel.activeTeamStanding);
         for (Coach coach : leagueDeserializationModel.coachList) {
-            this.coachList.add(new simulation.model.Coach(coach));
+            this.coachList.add(modelFactory.newCoachFromDeserialization(coach));
         }
         for (Conference conference : leagueDeserializationModel.conferenceList) {
-            this.conferenceList.add(new simulation.model.Conference(conference));
+            this.conferenceList.add(modelFactory.creatConferenceFromDeserialization(conference));
         }
         this.createdBy = leagueDeserializationModel.createdBy;
         this.currentDate = leagueDeserializationModel.currentDate;
-        this.freeAgent = new FreeAgent(leagueDeserializationModel.freeAgent);
-        this.gamePlayConfig = new GamePlayConfig(leagueDeserializationModel.gamePlayConfig);
-        this.games = new GameSchedule(leagueDeserializationModel.games);
+        this.freeAgent = modelFactory.creatFreeAgentFromDeserialization(leagueDeserializationModel.freeAgent);
+        this.gamePlayConfig = modelFactory.creatGamePlayConfigFromDeserialization(leagueDeserializationModel.gamePlayConfig);
+        this.games = modelFactory.createGameScheduleFromDeserialization(leagueDeserializationModel.games);
         for (simulation.serializers.ModelsForDeserialization.model.Manager manager : leagueDeserializationModel.managerList) {
-            this.managerList.add(new Manager(manager));
+            this.managerList.add(modelFactory.newManagerFromDeserialization(manager));
         }
-        this.nhlEvents = new NHLEvents(leagueDeserializationModel.nhlEvents);
-        this.playOffStanding = new TeamStanding(leagueDeserializationModel.playOffStanding);
-        this.regularSeasonStanding = new TeamStanding(leagueDeserializationModel.regularSeasonStanding);
+        this.nhlEvents = modelFactory.createNHLEventsFromDeserialization(leagueDeserializationModel.nhlEvents);
+        this.playOffStanding = modelFactory.createTeamStandingFromDeserialization(leagueDeserializationModel.playOffStanding);
+        this.regularSeasonStanding = modelFactory.createTeamStandingFromDeserialization(leagueDeserializationModel.regularSeasonStanding);
         for (Player player : leagueDeserializationModel.retiredPlayerList) {
-            this.retiredPlayerList.add(new simulation.model.Player(player));
+            this.retiredPlayerList.add(modelFactory.newPlayerFromSerialization(player));
         }
         for (Player player : leagueDeserializationModel.draftedPlayerList) {
-            this.draftedPlayerList.add(new simulation.model.Player(player));
+            this.draftedPlayerList.add(modelFactory.newPlayerFromSerialization(player));
         }
         if (leagueDeserializationModel.stanleyCupFinalsTeamScores == null) {
             this.stanleyCupFinalsTeamScores = new HashMap<>();
@@ -94,22 +98,23 @@ public class League extends SharedAttributes implements ILeague {
             this.teamStats = new ArrayList<>();
         } else {
             for (simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat : leagueDeserializationModel.teamStats) {
-                this.teamStats.add(new TeamStat(teamStat));
+                this.teamStats.add(modelFactory.createTeamStatFromDeserialization(teamStat));
             }
         }
 
-        this.nhlEvents = new NHLEvents(leagueDeserializationModel.nhlEvents);
+        this.nhlEvents = modelFactory.createNHLEventsFromDeserialization(leagueDeserializationModel.nhlEvents);
         for (TradeOffer tradeOffer : leagueDeserializationModel.tradeOfferList) {
-            this.tradeOfferList.add(new simulation.model.TradeOffer(tradeOffer));
+            this.tradeOfferList.add(modelFactory.createTradeOfferFromDeserialization(tradeOffer));
         }
+
         for (simulation.serializers.ModelsForDeserialization.model.Trophy trophy : leagueDeserializationModel.historicalTrophyList) {
-            this.historicalTrophyList.add(new Trophy(trophy));
+            this.historicalTrophyList.add(modelFactory.createTrophyFromDeserialization(trophy));
         }
 
         if (leagueDeserializationModel.trophy == null) {
-            this.trophy = new Trophy();
+            this.trophy = modelFactory.newTrophy();
         } else {
-            this.trophy = new Trophy(leagueDeserializationModel.trophy);
+            this.trophy = modelFactory.createTrophyFromDeserialization(leagueDeserializationModel.trophy);
         }
         this.user = leagueDeserializationModel.user;
         this.userCreatedTeamName = leagueDeserializationModel.userCreatedTeamName;
@@ -305,7 +310,9 @@ public class League extends SharedAttributes implements ILeague {
             return null;
         }
         int managerListSize = managerList.size();
-        IManager manager = new Manager(managerList.get(managerListSize - 1));
+        IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
+        IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
+        IManager manager = modelFactory.createManagerFromManager(managerList.get(managerListSize - 1));
         managerList.set(indexOfManagerObject, manager);
         managerList.remove(managerListSize - 1);
         return managerList;

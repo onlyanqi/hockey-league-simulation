@@ -26,7 +26,6 @@ public class TrophySystem implements ISimulateState {
 
 
     private List<ITeamScore> getSortedTeamScores() {
-        List<ITeam> teamList = league.createTeamList();
         ITeamStanding teamStanding = league.getRegularSeasonStanding();
         List<ITeamScore> teamScores = teamStanding.getTeamsRankAcrossLeague(league);
         return teamScores;

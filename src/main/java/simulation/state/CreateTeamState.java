@@ -72,7 +72,6 @@ public class CreateTeamState implements IHockeyState {
     public void entry() {
         if (isLeaguePresent(league.getName())) {
             teamCreationOutput.showLeagueAlreadyExistsError();
-            System.out.println();
             System.exit(1);
         }
         if (hasEnoughCoaches(league.getCoachList()) && hasEnoughFreeAgent(league.getFreeAgent()) && hasEnoughManagers(league.getManagerList())) {
@@ -194,7 +193,8 @@ public class CreateTeamState implements IHockeyState {
         teamCreationOutput.showManagerListOnScreen(managerList);
         int generalManagerId = teamCreationInput.getGeneralManagerId(managerList);
 
-        Manager generalManager = new Manager(managerList.get(generalManagerId));
+        IModelFactory modelFactory = hockeyContext.getModelFactory();
+        IManager generalManager = modelFactory.createManagerFromManager(managerList.get(generalManagerId));
         team.setManager(generalManager);
         managerList = league.removeManagerFromManagerListById(managerList, generalManagerId);
         teamCreationOutput.showSuccessfulManagerCreationMessage();
@@ -206,7 +206,7 @@ public class CreateTeamState implements IHockeyState {
         }
         List<IPlayer> teamPlayers = new ArrayList<>();
         for (int freeAgentIndex : chosenPlayersIdList) {
-            Player chosenPlayer = new Player(freeAgentList.get(freeAgentIndex));
+            Player chosenPlayer = new Player(hockeyContext.getModelFactory().createPlayerFromPlayer(freeAgentList.get(freeAgentIndex)));
             chosenPlayer.setIsFreeAgent(false);
             teamPlayers.add(chosenPlayer);
         }

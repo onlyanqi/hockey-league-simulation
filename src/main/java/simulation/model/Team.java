@@ -6,6 +6,8 @@ import presentation.IUserInputForTeamCreation;
 import simulation.dao.IPlayerDao;
 import simulation.dao.ITeamDao;
 import simulation.serializers.ModelsForDeserialization.model.Player;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,21 +47,25 @@ public class Team extends SharedAttributes implements ITeam {
     }
 
     public Team(simulation.serializers.ModelsForDeserialization.model.Team team) {
+        IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
+        IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
+
         for (Player player : team.activePlayerList) {
-            this.activePlayerList.add(new simulation.model.Player(player));
+            IPlayer playerInstance = modelFactory.newPlayerFromSerialization(player);
+            this.activePlayerList.add(playerInstance);
         }
         this.aiTeam = team.aiTeam;
-        this.coach = new Coach(team.coach);
+        this.coach = modelFactory.newCoachFromDeserialization(team.coach);
         this.divisionId = team.divisionId;
         this.draftPicks = team.draftPicks;
         for (Player player : team.inactivePlayerList) {
-            this.inactivePlayerList.add(new simulation.model.Player(player));
+            this.inactivePlayerList.add(modelFactory.newPlayerFromSerialization(player));
         }
         this.lossPoint = team.lossPoint;
-        this.manager = new Manager(team.manager);
+        this.manager = modelFactory.newManagerFromDeserialization(team.manager);
         this.mascot = team.mascot;
         for (Player player : team.playerList) {
-            this.playerList.add(new simulation.model.Player(player));
+            this.playerList.add(modelFactory.newPlayerFromSerialization(player));
         }
         this.playersTradedCount = team.playersTradedCount;
         this.strength = team.strength;

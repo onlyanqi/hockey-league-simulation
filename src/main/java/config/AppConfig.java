@@ -24,6 +24,10 @@ public class AppConfig {
         dataSerializer = new LeagueDataSerializerDeSerializer();
     }
 
+    public LeagueDataSerializerDeSerializer getDataSerializerDeSerializer() {
+        return dataSerializer;
+    }
+
     public static AppConfig getInstance() {
         if (null == AppConfig.getUniqueInstance()) {
             appConfig = new AppConfig();

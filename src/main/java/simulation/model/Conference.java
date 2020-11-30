@@ -3,6 +3,8 @@ package simulation.model;
 import simulation.dao.IConferenceDao;
 import simulation.dao.IDivisionDao;
 import simulation.serializers.ModelsForDeserialization.model.Division;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +29,11 @@ public class Conference extends SharedAttributes implements IConference {
     }
 
     public Conference(simulation.serializers.ModelsForDeserialization.model.Conference conferenceFromDeserialization) {
+        IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
+        IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         leagueId = conferenceFromDeserialization.leagueId;
         for (Division division : conferenceFromDeserialization.divisionList) {
-            this.divisionList.add(new simulation.model.Division(division));
+            this.divisionList.add(modelFactory.newDivisionFromDeserialization(division));
         }
         this.setName(conferenceFromDeserialization.name);
         this.setId(conferenceFromDeserialization.id);

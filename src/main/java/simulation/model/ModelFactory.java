@@ -115,6 +115,11 @@ public class ModelFactory implements IModelFactory {
         return new Player();
     }
 
+    @Override
+    public IPlayer newPlayerFromSerialization(simulation.serializers.ModelsForDeserialization.model.Player player) {
+        return new Player(player);
+    }
+
     public IPlayer newPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception {
         return new Player(id, playerDao);
     }
@@ -203,5 +208,92 @@ public class ModelFactory implements IModelFactory {
     public IGameSimulation newGameSimulationFromTeams(ITeam team1, ITeam team2) {
         return new GameSimulation(team1, team2);
     }
+
+    @Override
+    public ICoach newCoachFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Coach coach) {
+        return new Coach(coach);
+    }
+
+
+    @Override
+    public IManager newManagerFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Manager manager) {
+        return new Manager(manager);
+    }
+
+    @Override
+    public ITeam newTeamFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Team team) {
+        return new Team(team);
+    }
+
+    @Override
+    public IDivision newDivisionFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Division division) {
+        return new Division(division);
+    }
+
+    @Override
+    public IGame createGameFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Game game) {
+        return new Game(game);
+    }
+
+    @Override
+    public ITeamScore createTeamScoreFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore) {
+        return new TeamScore(teamScore);
+    }
+
+    @Override
+    public ITeamStanding createTeamStandingFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding) {
+        return new TeamStanding(teamStanding);
+    }
+
+    @Override
+    public IConference creatConferenceFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Conference conference) {
+        return new Conference(conference);
+    }
+
+    @Override
+    public IFreeAgent creatFreeAgentFromDeserialization(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent) {
+        return new FreeAgent(freeAgent);
+    }
+
+    @Override
+    public IGamePlayConfig creatGamePlayConfigFromDeserialization(simulation.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig) {
+        return new GamePlayConfig(gamePlayConfig);
+    }
+
+    @Override
+    public IGameSchedule createGameScheduleFromDeserialization(simulation.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule) {
+        return new GameSchedule(gameSchedule);
+    }
+
+    @Override
+    public INHLEvents createNHLEventsFromDeserialization(simulation.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents) {
+        return new NHLEvents(nhlEvents);
+    }
+
+    @Override
+    public TeamStat createTeamStatFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat) {
+        return new TeamStat(teamStat);
+    }
+
+    @Override
+    public ITradeOffer createTradeOfferFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
+        return new TradeOffer(tradeOffer);
+    }
+
+    @Override
+    public ITrophy createTrophyFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Trophy trophy) {
+        return new Trophy(trophy);
+    }
+
+    @Override
+    public IManager createManagerFromManager(IManager manager) {
+        return new Manager(manager);
+    }
+
+    @Override
+    public IPlayer createPlayerFromPlayer(IPlayer player) {
+        return new Player(player);
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package simulation.model;
 
 import org.apache.log4j.Logger;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,11 @@ public class TeamStanding implements ITeamStanding {
     }
 
     public TeamStanding(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding) {
+        IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
+        IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
         this.id = teamStanding.id;
         for (simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore : teamStanding.teamsScoreList) {
-            this.teamsScoreList.add(new TeamScore(teamScore));
+            this.teamsScoreList.add(modelFactory.createTeamScoreFromDeserialization(teamScore));
         }
     }
 

@@ -50,6 +50,8 @@ public interface IModelFactory {
 
     IPlayer newPlayer();
 
+    IPlayer newPlayerFromSerialization(simulation.serializers.ModelsForDeserialization.model.Player player);
+
     IPlayer newPlayerWithIdDao(int id, IPlayerDao playerDao) throws Exception;
 
     ISeason newSeason();
@@ -89,4 +91,39 @@ public interface IModelFactory {
     IShift newShift();
 
     IGameSimulation newGameSimulationFromTeams(ITeam team1, ITeam team2);
+
+    ICoach newCoachFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Coach coach);
+
+    IManager newManagerFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Manager manager);
+
+    ITeam newTeamFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Team team);
+
+    IDivision newDivisionFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Division division);
+
+    IGame createGameFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Game game);
+
+    ITeamScore createTeamScoreFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TeamScore teamScore);
+
+    ITeamStanding createTeamStandingFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TeamStanding teamStanding);
+
+    IConference creatConferenceFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Conference conference);
+
+    IFreeAgent creatFreeAgentFromDeserialization(simulation.serializers.ModelsForDeserialization.model.FreeAgent freeAgent);
+
+    IGamePlayConfig creatGamePlayConfigFromDeserialization(simulation.serializers.ModelsForDeserialization.model.GamePlayConfig gamePlayConfig);
+
+    IGameSchedule createGameScheduleFromDeserialization(simulation.serializers.ModelsForDeserialization.model.GameSchedule gameSchedule);
+
+    INHLEvents createNHLEventsFromDeserialization(simulation.serializers.ModelsForDeserialization.model.NHLEvents nhlEvents);
+
+    TeamStat createTeamStatFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TeamStat teamStat);
+
+    ITradeOffer createTradeOfferFromDeserialization(simulation.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer);
+
+    ITrophy createTrophyFromDeserialization(simulation.serializers.ModelsForDeserialization.model.Trophy trophy);
+
+
+    IManager createManagerFromManager(IManager manager);
+
+    IPlayer createPlayerFromPlayer(IPlayer player);
 }
