@@ -693,6 +693,7 @@ public class ExecuteTradeState implements ISimulateState {
             if (draftPickSize > 7) {
                 Iterator<String> itr = draftPicks.iterator();
                 while (itr.hasNext() && draftPicks.size() > 7) {
+                    itr.next();
                     itr.remove();
                 }
             }
