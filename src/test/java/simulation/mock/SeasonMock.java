@@ -1,18 +1,19 @@
 package simulation.mock;
 
-import db.data.ISeasonFactory;
+import persistance.dao.ISeasonDao;
+import simulation.model.ISeason;
 import simulation.model.Season;
 
-public class SeasonMock implements ISeasonFactory {
+public class SeasonMock implements ISeasonDao {
 
     @Override
-    public int addSeason(Season season) throws Exception {
+    public int addSeason(ISeason season) throws Exception {
         season = new Season(1);
         return season.getId();
     }
 
     @Override
-    public void loadSeasonById(int id, Season season) {
+    public void loadSeasonById(int id, ISeason season) {
 
         switch (new Long(id).intValue()) {
             case 1:

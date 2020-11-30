@@ -1,12 +1,12 @@
 package presentation;
 
-import simulation.model.Coach;
-import simulation.model.Manager;
+import simulation.model.ICoach;
+import simulation.model.IManager;
 
 import java.util.List;
 
 public interface IUserInputForTeamCreation {
-    public String getConferenceName(List<String> conferenceNameList);
+    String getConferenceName(List<String> conferenceNameList);
 
     String getDivisionName(List<String> divisionNameList);
 
@@ -16,7 +16,7 @@ public interface IUserInputForTeamCreation {
 
     int getPlayerId(int upperBound);
 
-    int getGeneralManagerId(List<Manager> managerList);
+    int getGeneralManagerId(List<IManager> managerList);
 
-    int getHeadCoachId(List<Coach> coachList);
+    int getHeadCoachId(List<ICoach> coachList);
 }

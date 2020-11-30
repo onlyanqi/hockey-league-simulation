@@ -1,15 +1,14 @@
 package simulation.model;
 
-import db.data.IAgingFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IAgingDao;
 import simulation.mock.AgingMock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class AgingTest {
-    private static IAgingFactory loadAgingFactory;
+    private static IAgingDao loadAgingFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
@@ -19,7 +18,7 @@ public class AgingTest {
     @Test
     public void defaultConstructorTest() {
         Aging aging = new Aging();
-        assertEquals(aging.getId(), 0);
+        assertNotEquals(aging.getId(), 0);
     }
 
     @Test
@@ -100,6 +99,20 @@ public class AgingTest {
         Aging aging = new Aging();
         aging.setLeagueId(2);
         assertEquals(aging.getLeagueId(), 2);
+    }
+
+    @Test
+    public void setStatDecayChanceTest() {
+        Aging aging = new Aging();
+        Double statDecayChance = 0.01;
+        aging.setStatDecayChance(statDecayChance);
+        assertEquals(aging.getStatDecayChance(), (Double) 0.01);
+    }
+
+    @Test
+    public void getStatDecayChanceTest() throws Exception {
+        Aging aging = new Aging(1, loadAgingFactory);
+        assertEquals(aging.getStatDecayChance(), (Double) 1.0);
     }
 
 

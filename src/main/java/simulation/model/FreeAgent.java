@@ -1,29 +1,42 @@
 package simulation.model;
 
-import db.data.IFreeAgentFactory;
-import db.data.IPlayerFactory;
+import persistance.dao.IFreeAgentDao;
+import persistance.dao.IPlayerDao;
+import persistance.serializers.ModelsForDeserialization.model.Player;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreeAgent extends SharedAttributes {
+public class FreeAgent extends SharedAttributes implements IFreeAgent {
 
     private int seasonId;
     private int leagueId;
-    private List<Player> playerList;
+    private List<IPlayer> playerList = new ArrayList<>();
 
     public FreeAgent() {
+        setId(System.identityHashCode(this));
     }
 
     public FreeAgent(int id) {
         setId(id);
     }
 
-    public FreeAgent(int id, IFreeAgentFactory loadFreeAgentFactory) throws Exception {
-        if (loadFreeAgentFactory == null) {
-            return;
-        }
+    public FreeAgent(int id, IFreeAgentDao loadFreeAgentFactory) throws Exception {
         loadFreeAgentFactory.loadFreeAgentById(id, this);
+    }
+
+    public FreeAgent(persistance.serializers.ModelsForDeserialization.model.FreeAgent freeAgent) {
+        IHockeyContext hockeyContextFactory = HockeyContext.getInstance();
+        IModelFactory modelFactory = hockeyContextFactory.getModelFactory();
+        this.leagueId = freeAgent.leagueId;
+        for (Player player : freeAgent.playerList) {
+            this.playerList.add(modelFactory.createPlayerFromSerialization(player));
+        }
+        this.seasonId = freeAgent.seasonId;
+        this.setName(freeAgent.name);
+        this.setId(freeAgent.id);
     }
 
     public int getSeasonId() {
@@ -42,35 +55,23 @@ public class FreeAgent extends SharedAttributes {
         this.leagueId = leagueId;
     }
 
-    public List<Player> getPlayerList() {
+    public List<IPlayer> getPlayerList() {
         return playerList;
     }
 
-    public void setPlayerList(List<Player> playerList) {
-        if (playerList == null) {
-            return;
-        }
+    public void setPlayerList(List<IPlayer> playerList) {
         this.playerList = playerList;
     }
 
-    public void addFreeAgent(IFreeAgentFactory addFreeAgentFactory) throws Exception {
-        if (addFreeAgentFactory == null) {
-            return;
-        }
+    public void addFreeAgent(IFreeAgentDao addFreeAgentFactory) throws Exception {
         addFreeAgentFactory.addFreeAgent(this);
     }
 
-    public void loadPlayerListByFreeAgentId(IPlayerFactory loadPlayerFactory) throws Exception {
-        if (loadPlayerFactory == null) {
-            return;
-        }
+    public void loadPlayerListByFreeAgentId(IPlayerDao loadPlayerFactory) throws Exception {
         this.playerList = loadPlayerFactory.loadPlayerListByFreeAgentId(getId());
     }
 
     public List<Integer> getGoodFreeAgentsList(List<Double> strengthList) {
-        if (strengthList == null) {
-            return null;
-        }
         Double thresholdPointForGoodPlayer = calculateStrengthAverage(strengthList);
         List<Integer> goodFreeAgentsIdList = new ArrayList<>();
         for (int i = 0; i < strengthList.size(); i++) {
@@ -82,9 +83,6 @@ public class FreeAgent extends SharedAttributes {
     }
 
     public Double calculateStrengthAverage(List<Double> strengthList) {
-        if (strengthList == null) {
-            return null;
-        }
         Double average = 0.0;
         for (int i = 0; i < strengthList.size(); i++) {
             average = average + strengthList.get(i);

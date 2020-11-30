@@ -1,14 +1,14 @@
 package presentation;
 
-import simulation.model.Coach;
-import simulation.model.Manager;
+import simulation.model.ICoach;
+import simulation.model.IManager;
 
 import java.util.List;
 
 public class UseInputForTeamCreation implements IUserInputForTeamCreation {
 
-    private ConsoleOutput consoleOutput;
-    private ReadUserInput readUserInput;
+    private final IConsoleOutput consoleOutput;
+    private final IReadUserInput readUserInput;
 
     public UseInputForTeamCreation() {
         consoleOutput = ConsoleOutput.getInstance();
@@ -70,15 +70,11 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
     }
 
     public boolean isDigit(String str) {
-        if (str.matches("[0-9]+") && str.length() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return str.matches("[0-9]+") && str.length() > 0;
     }
 
     @Override
-    public int getGeneralManagerId(List<Manager> managerList) {
+    public int getGeneralManagerId(List<IManager> managerList) {
         String generalManagerIdStr = readUserInput.getInput("Please enter id of general manager");
         int generalManagerId = -1;
 
@@ -99,7 +95,7 @@ public class UseInputForTeamCreation implements IUserInputForTeamCreation {
     }
 
     @Override
-    public int getHeadCoachId(List<Coach> coachList) {
+    public int getHeadCoachId(List<ICoach> coachList) {
         String headCoachIdStr = readUserInput.getInput("Please enter the id of head coach");
         int headCoachId = -1;
 

@@ -1,13 +1,7 @@
 package simulation.state;
 
 import config.AppConfig;
-import db.data.ILeagueFactory;
-import presentation.ConsoleOutput;
-import presentation.IConsoleOutputForTeamCreation;
-import presentation.IUserInputForTeamCreation;
-import presentation.ReadUserInput;
-import simulation.factory.LeagueConcrete;
-import simulation.factory.ValidationConcrete;
+import presentation.*;
 import simulation.model.*;
 
 import java.util.ArrayList;
@@ -28,20 +22,20 @@ public class CreateTeamState implements IHockeyState {
     private static final String HOWMANYSEASONS = "How many seasons do you want to simulate";
     private static final String RIGHTCHOICEREQUEST = "Please enter the right choice. Yes/Y or No/N";
     private static final String GOALIE = "goalie";
-    private HockeyContext hockeyContext;
-    private League league;
+    private IHockeyContext hockeyContext;
+    private ILeague league;
     private String conferenceName;
     private String divisionName;
-    private Team team;
-    private List<Manager> managerList;
-    private List<Coach> coachList;
-    private FreeAgent freeAgent;
+    private ITeam team;
+    private List<IManager> managerList;
+    private List<ICoach> coachList;
+    private IFreeAgent freeAgent;
     private IUserInputForTeamCreation teamCreationInput;
     private IConsoleOutputForTeamCreation teamCreationOutput;
-    private ConsoleOutput consoleOutput = null;
-    private ReadUserInput readUserInput = null;
+    private IConsoleOutput consoleOutput = null;
+    private IReadUserInput readUserInput = null;
 
-    public CreateTeamState(HockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
+    public CreateTeamState(IHockeyContext hockeyContext, IUserInputForTeamCreation teamCreationInput,
                            IConsoleOutputForTeamCreation teamCreationOutput) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
@@ -75,12 +69,11 @@ public class CreateTeamState implements IHockeyState {
     public void entry() {
         if (isLeaguePresent(league.getName())) {
             teamCreationOutput.showLeagueAlreadyExistsError();
-            System.out.println();
             System.exit(1);
         }
         if (hasEnoughCoaches(league.getCoachList()) && hasEnoughFreeAgent(league.getFreeAgent()) && hasEnoughManagers(league.getManagerList())) {
-            Conference conference = chooseConference();
-            Division division = chooseDivision(conference);
+            IConference conference = chooseConference();
+            IDivision division = chooseDivision(conference);
             getTeamName(division);
 
             chooseManager();
@@ -92,61 +85,53 @@ public class CreateTeamState implements IHockeyState {
         }
     }
 
-    public boolean hasEnoughManagers(List<Manager> managerList) {
+    public boolean hasEnoughManagers(List<IManager> managerList) {
         if (managerList == null) {
             return false;
         }
-        if (managerList.size() >= 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return managerList.size() >= 1;
     }
 
-    public boolean hasEnoughCoaches(List<Coach> coachList) {
+    public boolean hasEnoughCoaches(List<ICoach> coachList) {
         if (coachList == null) {
             return false;
         }
-        if (coachList.size() >= 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return coachList.size() >= 1;
     }
 
-    public boolean hasEnoughFreeAgent(FreeAgent freeAgent) {
+    public boolean hasEnoughFreeAgent(IFreeAgent freeAgent) {
         if (freeAgent == null) {
             return false;
         }
-        List<Player> freeAgentList = freeAgent.getPlayerList();
+        List<IPlayer> freeAgentList = freeAgent.getPlayerList();
         int countOfGoalie = 0;
-        int countOfSkaters = 0;
-        for (int i = 0; i < freeAgentList.size(); i++) {
-            if (freeAgentList.get(i).getPosition().toString().equals(GOALIE)) {
+        int countOfForward = 0;
+        int countOfDefense = 0;
+        for (IPlayer player : freeAgentList) {
+            if (player.getPosition() == Position.GOALIE) {
                 countOfGoalie++;
+            } else if (player.getPosition() == Position.FORWARD) {
+                countOfForward++;
             } else {
-                countOfSkaters++;
+                countOfDefense++;
             }
         }
-        if (countOfGoalie >= 2 && countOfSkaters >= 18) {
-            return true;
-        } else {
-            return false;
-        }
+        return countOfGoalie >= 4 && countOfForward >= 16 && countOfDefense >= 10;
     }
 
-    private void getTeamName(Division division) {
+    private void getTeamName(IDivision division) {
         if (division == null) {
             return;
         }
         List<String> teamNameList = division.getTeamNameList();
         String teamName = teamCreationInput.getTeamName(teamNameList);
-        team = new Team();
+        IModelFactory teamFactory = hockeyContext.getModelFactory();
+        team = teamFactory.createTeam();
         team.setName(teamName);
         team.setAiTeam(false);
     }
 
-    private Division chooseDivision(Conference conference) {
+    private IDivision chooseDivision(IConference conference) {
         if (conference == null) {
             return null;
         }
@@ -155,31 +140,36 @@ public class CreateTeamState implements IHockeyState {
         return conference.getDivisionFromListByName(divisionName);
     }
 
-    private Conference chooseConference() {
+    private IConference chooseConference() {
         List<String> conferenceNameList = league.createConferenceNameList();
         conferenceName = teamCreationInput.getConferenceName(conferenceNameList);
         return league.getConferenceFromListByName(conferenceName);
     }
 
-    private void choosePlayers() {
+    private void choosePlayers() throws IllegalArgumentException {
         freeAgent = league.getFreeAgent();
-        List<Player> freeAgentList = freeAgent.getPlayerList();
+        List<IPlayer> freeAgentList = freeAgent.getPlayerList();
         List<Integer> chosenPlayersIdList = team.createChosenPlayerIdList(freeAgent);
         teamCreationOutput.showTeamCreationWaitMessage();
-        List<Player> teamPlayers = createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
+        List<IPlayer> teamPlayers = createPlayerListByChosenPlayerId(chosenPlayersIdList, freeAgentList);
         freeAgentList = removeChosenPlayersFromFreeAgentList(chosenPlayersIdList, freeAgentList);
         freeAgent.setPlayerList(freeAgentList);
+        for (IPlayer player : teamPlayers) {
+            player.setTeamId(team.getId());
+        }
         team.setPlayerList(teamPlayers);
         team.setStrength();
+        team.setActivePlayerList();
     }
 
     private void chooseCoach() {
         coachList = league.getCoachList();
         teamCreationOutput.showCoachListOnScreen(coachList);
         int headCoachId = teamCreationInput.getHeadCoachId(coachList);
-        Coach headCoach = new Coach(coachList.get(headCoachId));
+        IModelFactory coachFactory = hockeyContext.getModelFactory();
+        ICoach headCoach = coachFactory.createCoachWithCoach(coachList.get(headCoachId));
         team.setCoach(headCoach);
-        coachList = league.removeCoachFromCoachListById(coachList, headCoachId);
+        coachList = league.removeCoachFromCoachListById(coachList, headCoachId, coachFactory);
         teamCreationOutput.showSuccessfulCoachCreationMessage();
     }
 
@@ -187,32 +177,36 @@ public class CreateTeamState implements IHockeyState {
         managerList = league.getManagerList();
         teamCreationOutput.showManagerListOnScreen(managerList);
         int generalManagerId = teamCreationInput.getGeneralManagerId(managerList);
-        Manager generalManager = new Manager(managerList.get(generalManagerId));
+
+        IModelFactory modelFactory = hockeyContext.getModelFactory();
+        IManager generalManager = modelFactory.createManagerFromManager(managerList.get(generalManagerId));
         team.setManager(generalManager);
         managerList = league.removeManagerFromManagerListById(managerList, generalManagerId);
         teamCreationOutput.showSuccessfulManagerCreationMessage();
     }
 
-    public List<Player> createPlayerListByChosenPlayerId(List<Integer> chosenPlayersIdList, List<Player> freeAgentList) {
+    public List<IPlayer> createPlayerListByChosenPlayerId(List<Integer> chosenPlayersIdList, List<IPlayer> freeAgentList) {
         if (chosenPlayersIdList == null || freeAgentList == null) {
             return null;
         }
-        List<Player> teamPlayers = new ArrayList<>();
+        List<IPlayer> teamPlayers = new ArrayList<>();
         for (int freeAgentIndex : chosenPlayersIdList) {
-            teamPlayers.add(new Player(freeAgentList.get(freeAgentIndex)));
+            Player chosenPlayer = new Player(hockeyContext.getModelFactory().createPlayerFromPlayer(freeAgentList.get(freeAgentIndex)));
+            chosenPlayer.setIsFreeAgent(false);
+            teamPlayers.add(chosenPlayer);
         }
         return teamPlayers;
     }
 
-    public List<Player> removeChosenPlayersFromFreeAgentList(List<Integer> chosenPlayersIdList, List<Player> freeAgentList) {
+    public List<IPlayer> removeChosenPlayersFromFreeAgentList(List<Integer> chosenPlayersIdList, List<IPlayer> freeAgentList) {
         if (chosenPlayersIdList == null || freeAgentList == null) {
             return null;
         }
-        List<Player> newFreeAgentList = new ArrayList<>();
+        List<IPlayer> newFreeAgentList = new ArrayList<>();
         for (int i = 0; i < freeAgentList.size(); i++) {
             boolean notChosen = (!chosenPlayersIdList.contains(i));
             if (notChosen) {
-                Player newFreeAgent = new Player(freeAgentList.get(i));
+                IPlayer newFreeAgent = new Player(freeAgentList.get(i));
                 newFreeAgent.setIsFreeAgent(true);
                 newFreeAgentList.add(newFreeAgent);
             }
@@ -221,8 +215,7 @@ public class CreateTeamState implements IHockeyState {
     }
 
     private boolean isLeaguePresent(String leagueName) {
-        ValidationConcrete validation = new ValidationConcrete();
-        LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
+        /*LeagueConcrete leagueConcrete = AppConfig.getInstance().getLeagueConcrete();
         ILeagueFactory loadLeagueFactory = leagueConcrete.newLoadLeagueFactory();
         League league = null;
         try {
@@ -231,22 +224,30 @@ public class CreateTeamState implements IHockeyState {
         } catch (Exception e) {
             consoleOutput.printMsgToConsole(UNABLETOLOADLEAGUE);
             System.exit(1);
-            e.printStackTrace();
         }
-        return validation.newValidation().isNotNull(league) && league.getId() > 0;
+
+        boolean isPresent = false;
+
+        if(league == null){
+            isPresent = false;
+        } else if (league.getId() > 0){
+            isPresent = true;
+        }*/
+        return false;
     }
 
     @Override
     public void process() {
         league.setCreatedBy(hockeyContext.getUser().getId());
+        league.setUser(hockeyContext.getUser().getName());
         league.setManagerList(managerList);
         league.setCoachList(coachList);
         league.setFreeAgent(freeAgent);
-        List<Conference> conferenceList = league.getConferenceList();
-        for (Conference conference : conferenceList) {
+        List<IConference> conferenceList = league.getConferenceList();
+        for (IConference conference : conferenceList) {
             if (conference.getName().toLowerCase().equals(conferenceName.toLowerCase())) {
-                List<Division> divisionList = conference.getDivisionList();
-                for (Division division : divisionList) {
+                List<IDivision> divisionList = conference.getDivisionList();
+                for (IDivision division : divisionList) {
                     if (division.getName().toLowerCase().equals(divisionName.toLowerCase())) {
                         division.getTeamList().add(team);
                     }
@@ -255,6 +256,10 @@ public class CreateTeamState implements IHockeyState {
             }
         }
         league.setConferenceList(conferenceList);
+        if (team == null) {
+            return;
+        }
+        league.setUserCreatedTeamName(team.getName());
         consoleOutput.printMsgToConsole(WAITMESSAGE);
     }
 

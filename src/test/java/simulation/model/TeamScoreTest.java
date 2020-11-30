@@ -1,77 +1,79 @@
 package simulation.model;
 
-import db.data.ITeamScoreFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.ITeamScoreDao;
 import simulation.mock.TeamScoreMock;
 
 import static org.junit.Assert.*;
 
 public class TeamScoreTest {
-    private static ITeamScoreFactory iTeamScoreFactory;
+    private static ITeamScoreDao iTeamScoreDao;
 
     @BeforeClass
     public static void setFactoryObj() {
-        iTeamScoreFactory = new TeamScoreMock();
+        iTeamScoreDao = new TeamScoreMock();
     }
 
     @Test
     public void defaultConstructorTest() {
         TeamScore teamScore = new TeamScore();
-        assertEquals(teamScore.getId(), 0);
+        assertNotEquals(teamScore.getId(), 0);
     }
 
     @Test
     public void teamScoreFactory() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertEquals(teamScore.getId(), 1);
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertEquals(teamScore2.getId(), 3);
-        assertNull(teamScore2.getTeamName());
+        assertNull(teamScore2.getTeam().getName());
     }
 
     @Test
-    public void getTeamNameTest() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
-        assertEquals(teamScore.getTeamName(), "Team1");
+    public void getTeamTest() throws Exception {
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
+        assertEquals(teamScore.getTeam().getName(), "Team1");
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
-        assertNull(teamScore2.getTeamName());
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
+        assertNull(teamScore2.getTeam().getName());
     }
 
     @Test
     public void getPointsTest() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertTrue(teamScore.getPoints() == 12);
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertFalse(teamScore2.getPoints() > 0);
     }
 
     @Test
     public void getNumberOfWinsTest() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertTrue(teamScore.getNumberOfWins() == 6);
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertFalse(teamScore2.getNumberOfWins() > 0);
     }
 
     @Test
     public void getNumberOfLossTest() throws Exception {
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertTrue(teamScore.getNumberOfLoss() == 5);
 
-        TeamScore teamScore2 = new TeamScore(3, iTeamScoreFactory);
+        TeamScore teamScore2 = new TeamScore(3, iTeamScoreDao);
         assertFalse(teamScore2.getNumberOfLoss() > 0);
     }
 
     @Test
-    public void setTeamNameTest() {
+    public void setTeamTest() {
         TeamScore teamScore = new TeamScore();
-        teamScore.setTeamName("Temp Team Name");
-        assertTrue(teamScore.getTeamName().equals("Temp Team Name"));
+        Team team = new Team();
+        team.setName("Temp Team Name");
+        teamScore.setTeam(team);
+        assertTrue(teamScore.getTeam().getName().equals("Temp Team Name"));
     }
 
     @Test

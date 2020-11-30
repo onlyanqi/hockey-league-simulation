@@ -1,8 +1,11 @@
 package simulation.model;
 
-import db.data.ITradeOfferFactory;
+import persistance.dao.ITradeOfferDao;
 
-public class TradeOffer extends SharedAttributes {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TradeOffer extends SharedAttributes implements ITradeOffer {
 
     private int leagueId;
     private int tradingId;
@@ -10,15 +13,34 @@ public class TradeOffer extends SharedAttributes {
     private int toTeamId;
     private int fromPlayerId;
     private int toPlayerId;
+    private List<Integer> fromPlayerIdList = new ArrayList<>();
+    private List<Integer> toPlayerIdList = new ArrayList<>();
+
     private int seasonId;
     private String status;
 
     public TradeOffer() {
+        setId(System.identityHashCode(this));
     }
 
-    public TradeOffer(int tradingOfferId, ITradeOfferFactory factory) throws Exception {
+    public TradeOffer(int tradingOfferId, ITradeOfferDao factory) throws Exception {
         setId(tradingOfferId);
         factory.loadTradeOfferDetailsById(tradingOfferId, this);
+    }
+
+    public TradeOffer(persistance.serializers.ModelsForDeserialization.model.TradeOffer tradeOffer) {
+        this.leagueId = tradeOffer.leagueId;
+        this.tradingId = tradeOffer.tradingId;
+        this.fromPlayerId = tradeOffer.fromPlayerId;
+        this.toTeamId = tradeOffer.toTeamId;
+        this.fromPlayerId = tradeOffer.fromPlayerId;
+        this.toPlayerId = tradeOffer.toPlayerId;
+        this.fromPlayerIdList = tradeOffer.fromPlayerIdList;
+        this.toPlayerIdList = tradeOffer.toPlayerIdList;
+        this.seasonId = tradeOffer.seasonId;
+        this.status = tradeOffer.status;
+        this.setName(tradeOffer.name);
+        this.setId(tradeOffer.id);
     }
 
     public int getLeagueId() {
@@ -85,9 +107,23 @@ public class TradeOffer extends SharedAttributes {
         this.status = status;
     }
 
-    public void addTradeOffer(ITradeOfferFactory tradeOfferFactory) throws Exception {
+    public void addTradeOffer(ITradeOfferDao tradeOfferFactory) throws Exception {
         tradeOfferFactory.addTradeOfferDetails(this);
     }
 
+    public List<Integer> getFromPlayerIdList() {
+        return fromPlayerIdList;
+    }
 
+    public void setFromPlayerIdList(List<Integer> fromPlayerIdList) {
+        this.fromPlayerIdList = fromPlayerIdList;
+    }
+
+    public List<Integer> getToPlayerIdList() {
+        return toPlayerIdList;
+    }
+
+    public void setToPlayerIdList(List<Integer> toPlayerIdList) {
+        this.toPlayerIdList = toPlayerIdList;
+    }
 }

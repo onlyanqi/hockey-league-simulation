@@ -1,11 +1,12 @@
 package simulation.state;
 
-import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.mock.*;
+import persistance.dao.*;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.HockeyContextConcreteMock;
+import simulation.factory.IHockeyContextFactory;
 import simulation.model.*;
-import validator.Validation;
 
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
@@ -18,44 +19,64 @@ public class ExecuteTradeStateTest {
     private static final String FROMPLAYER = "fromPlayer";
     private static final String FROMTEAM = "fromTeam";
     private static final String TRADEOFFER = "tradeOffer";
-    private static final String TOPLAYER = "toPlayer";
     private static final String TOTEAM = "toTeam";
     private static final String TRADING = "trading";
     private static final String ACCEPTED = "accepted";
     private static final String REJECTED = "rejected";
-    private static ILeagueFactory leagueFactory;
-    private static ITeamFactory teamFactory;
-    private static IPlayerFactory playerFactory;
-    private static ITradeOfferFactory tradeOfferFactory;
-    private static ITradingFactory tradingFactory;
-    private static IUserFactory userFactory;
-    private static Validation validation;
-    private static HockeyContext hockeyContext;
+    private static final String FROMPLAYERLISTAFTERTRADE = "fromPlayerListAfterTrade";
+    private static ILeagueDao leagueDao;
+    private static ITeamDao teamDao;
+    private static IPlayerDao playerDao;
+    private static ITradeOfferDao tradeOfferDao;
+    private static ITradingDao tradingDao;
+    private static IUserDao userDao;
+    private static IModelFactory modelFactory;
+    private static IDaoFactory daoFactory;
+    private static IHockeyContext hockeyContext;
+    private static IHockeyContextFactory hockeyContextFactory;
+    private static ILeague league;
+    private static IUser user;
+    private final String TOPLAYERLIST = "toPlayerList";
 
     @BeforeClass
-    public static void init() throws Exception {
-        leagueFactory = new LeagueMock();
-        teamFactory = new TeamMock();
-        playerFactory = new PlayerMock();
-        tradeOfferFactory = new TradeOfferMock();
-        tradingFactory = new TradingMock();
-        userFactory = new UserMock();
-        validation = new Validation();
-        hockeyContext = new HockeyContext();
-        User user = new User(1, userFactory);
-        hockeyContext.setUser(user);
+    public static void init() {
+        hockeyContextFactory = HockeyContextConcreteMock.getInstance();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
+        modelFactory = hockeyContext.getModelFactory();
+        daoFactory = hockeyContext.getDaoFactory();
+        leagueDao = daoFactory.createLeagueDao();
+        userDao = daoFactory.createUserDao();
+        teamDao = daoFactory.createTeamDao();
+        playerDao = daoFactory.createPlayerDao();
+        tradingDao = daoFactory.createTradingDao();
+        tradeOfferDao = daoFactory.createTradeOfferDao();
+    }
+
+    private ExecuteTradeState newStateEmptyConstructor() throws Exception {
+        league = modelFactory.createLeagueWithIdDao(1, leagueDao);
+        ExecuteTradeState executeTradeState = new ExecuteTradeState();
+        executeTradeState.setLeague(league);
+        return executeTradeState;
+    }
+
+    private ExecuteTradeState newStateWithHockeyContext(IHockeyContext hockeyContext) throws Exception {
+        return new ExecuteTradeState(hockeyContext);
     }
 
     @Test
-    public void defaultConstructorTest() {
-        ExecuteTradeState state = new ExecuteTradeState();
+    public void executeTradeStateTest() throws Exception {
+        ExecuteTradeState state = newStateEmptyConstructor();
         assertTrue(state instanceof ExecuteTradeState);
         assertTrue(state instanceof ISimulateState);
     }
 
     @Test
-    public void initConstructorTest() {
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+    public void executeTradeStateWithParameterTest() throws Exception {
+        league = modelFactory.createLeagueWithIdDao(1, leagueDao);
+        user = modelFactory.createUserWithIdDao(1, userDao);
+        user.setLeague(league);
+        hockeyContext.setUser(user);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
         assertNotNull(state.getLeague());
         assertEquals(state.getLeague().getId(), 1);
         assertNotEquals(state.getLeague().getId(), 5);
@@ -63,20 +84,19 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void getLeagueTest() throws Exception {
-        ExecuteTradeState state = new ExecuteTradeState();
-        League league = new League(1, leagueFactory);
+        ExecuteTradeState state = newStateEmptyConstructor();
         state.setLeague(league);
         assertEquals(1, state.getLeague().getId());
         assertEquals(1, state.getLeague().getCreatedBy());
     }
 
     @Test
-    public void setLeagueTest() {
-        League league = new League();
+    public void setLeagueTest() throws Exception {
+        ILeague league = modelFactory.createLeague();
         league.setId(1);
         league.setCreatedBy(1);
 
-        ExecuteTradeState state = new ExecuteTradeState();
+        ExecuteTradeState state = newStateEmptyConstructor();
         state.setLeague(league);
 
         assertEquals(1, state.getLeague().getId());
@@ -84,31 +104,35 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void actionTest() {
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+    public void actionTest() throws Exception {
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
         assertTrue(state.action() instanceof ISimulateState);
         assertFalse(state.action() instanceof ExecuteTradeState);
     }
 
     @Test
     public void loopAllTeamsForTradeInitiationTest() throws Exception {
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        League league = new League(1, leagueFactory);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
+        ILeague league = modelFactory.createLeagueWithIdDao(1, leagueDao);
         assertTrue(state.loopAllTeamsForTradeInitiation(league));
-        league = new League();
+        league = modelFactory.createLeague();
+        List<IConference> conferences = new ArrayList<>();
+        league.setConferenceList(conferences);
         assertFalse(state.loopAllTeamsForTradeInitiation(league));
     }
 
     @Test
     public void tradingLogicTest() throws Exception {
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
 
-        Team team = new Team(5, teamFactory);
-        League league = new League(1, leagueFactory);
+        ITeam team = modelFactory.createTeamWithIdDao(5, teamDao);
+        ILeague league = modelFactory.createLeagueWithIdDao(1, leagueDao);
 
         for (int i = 0; i < 50; i++) {
             state.tradingLogic(team, league);
-            if (validation.isNotNull(league.getTradeOfferList()) && league.getTradeOfferList().size() > 0) {
+            if (league.getTradeOfferList() == null || league.getTradeOfferList().isEmpty()) {
+                continue;
+            } else {
                 assertNotNull(league.getTradeOfferList().get(0).getStatus());
             }
         }
@@ -117,49 +141,59 @@ public class ExecuteTradeStateTest {
     @Test
     public void createTradeOfferTest() throws Exception {
         Map<String, Object> swap = new HashMap<>();
+        ILeague league = modelFactory.createLeagueWithIdDao(1, leagueDao);
+        IUser user = modelFactory.createUserWithIdDao(1, userDao);
+        user.setLeague(league);
+        hockeyContext.setUser(user);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
+        ITeam fromTeam = modelFactory.createTeamWithIdDao(1, teamDao);
+        ITeam toTeam = modelFactory.createTeamWithIdDao(2, teamDao);
+        IPlayer fromPlayer = fromTeam.getPlayerList().get(22);
+        IPlayer toPlayer = toTeam.getPlayerList().get(19);
+        List<IPlayer> fromPlayerList = new ArrayList<>(Arrays.asList(fromPlayer));
+        List<IPlayer> toPlayerList = new ArrayList<>(Arrays.asList(toPlayer));
+        swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerList);
+        swap.put(TOPLAYERLIST, toPlayerList);
+        swap.put(FROMTEAM, fromTeam);
+        swap.put(TOTEAM, toTeam);
 
-        League league = new League(1, leagueFactory);
-        Player player1 = new Player(1, playerFactory);
-        Player player2 = new Player(3, playerFactory);
-
-        swap.put(FROMPLAYER, player1);
-        swap.put(TOPLAYER, player2);
-
-        ExecuteTradeState state = new ExecuteTradeState();
         state.setLeague(league);
 
         state.createTradeOffer(swap);
 
-        TradeOffer tradeOffer = (TradeOffer) swap.get(TRADEOFFER);
+        ITradeOffer tradeOffer = (ITradeOffer) swap.get(TRADEOFFER);
 
         assertNotNull(tradeOffer);
 
-        assertEquals(tradeOffer.getFromPlayerId(), player1.getId());
-        assertEquals(tradeOffer.getToPlayerId(), player2.getId());
+        assertEquals(tradeOffer.getFromTeamId(), fromTeam.getId());
+        assertEquals(tradeOffer.getToTeamId(), toTeam.getId());
     }
 
     @Test
     public void performTradeTest() throws Exception {
         Map<String, Object> swap = new HashMap<>();
 
-        Player player1 = new Player(3, playerFactory);
-        Player player2 = new Player(1, playerFactory);
-        Team team1 = new Team(1, teamFactory);
-        Team team2 = new Team(3, teamFactory);
-        Trading trading = new Trading(1, tradingFactory);
+        IPlayer player1 = modelFactory.createPlayerWithIdDao(3, playerDao);
+        IPlayer player2 = modelFactory.createPlayerWithIdDao(1, playerDao);
+        ITeam team1 = modelFactory.createTeamWithIdDao(1, teamDao);
+        ITeam team2 = modelFactory.createTeamWithIdDao(3, teamDao);
+        ITrading trading = modelFactory.createTradingWithIdDao(3, tradingDao);
+        league = modelFactory.createLeagueWithIdDao(1, leagueDao);
+        league.getGamePlayConfig().setTrading(trading);
+        user = modelFactory.createUserWithIdDao(1, userDao);
+        user.setLeague(league);
+        hockeyContext.setUser(user);
+        List<IPlayer> fromPlayerListAfterTrade = new ArrayList<>(Arrays.asList(player1));
+        List<IPlayer> toPlayerList = new ArrayList<>(Arrays.asList(player2));
 
-        swap.put(FROMPLAYER, player1);
-        swap.put(TOPLAYER, player2);
+        swap.put(TOPLAYERLIST, toPlayerList);
         swap.put(FROMTEAM, team1);
         swap.put(TOTEAM, team2);
-        swap.put(TRADING, trading);
-
-        User user = new User(1, userFactory);
-        hockeyContext.setUser(user);
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+        swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
         state.performTrade(swap);
 
-        List<TradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradeOfferList();
+        List<ITradeOffer> tradeOfferList = hockeyContext.getUser().getLeague().getTradeOfferList();
 
         assertEquals(tradeOfferList.get(3).getStatus(), ACCEPTED);
     }
@@ -174,27 +208,30 @@ public class ExecuteTradeStateTest {
         for (String userInput : userInputs) {
             swap = new HashMap<>();
 
-            Player player1 = new Player(1, playerFactory);
-            Player player2 = new Player(3, playerFactory);
-            Team team1 = new Team(1, teamFactory);
-            Team team2 = new Team(3, teamFactory);
-            TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
-            Trading trading = new Trading(1, tradingFactory);
+            IPlayer player1 = modelFactory.createPlayerWithIdDao(1, playerDao);
+            IPlayer player2 = modelFactory.createPlayerWithIdDao(3, playerDao);
+            ITeam team1 = modelFactory.createTeamWithIdDao(1, teamDao);
+            ITeam team2 = modelFactory.createTeamWithIdDao(3, teamDao);
+            ITradeOffer tradeOffer = modelFactory.createTradeOfferWithIdDao(1, tradeOfferDao);
+            ITrading trading = modelFactory.createTradingWithIdDao(1, tradingDao);
+            List<IPlayer> fromPlayerListAfterTrade = new ArrayList<>(Arrays.asList(player1));
+            List<IPlayer> toPlayerList = new ArrayList<>(Arrays.asList(player2));
 
             swap.put(FROMPLAYER, player1);
-            swap.put(TOPLAYER, player2);
+            swap.put(TOPLAYERLIST, toPlayerList);
             swap.put(FROMTEAM, team1);
             swap.put(TOTEAM, team2);
             swap.put(TRADEOFFER, tradeOffer);
             swap.put(TRADING, trading);
+            swap.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
 
-            ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+            ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
 
             byteArrayInputStream = new ByteArrayInputStream(userInput.getBytes());
             System.setIn(byteArrayInputStream);
             state.performUserTrade(swap);
 
-            TradeOffer tradeOffer1 = (TradeOffer) swap.get(TRADEOFFER);
+            ITradeOffer tradeOffer1 = (ITradeOffer) swap.get(TRADEOFFER);
 
             if (userInput.toLowerCase().contains("a")) {
                 assertEquals(tradeOffer1.getStatus(), (ACCEPTED));
@@ -206,21 +243,17 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void acceptRejectTradeOfferTest() throws Exception {
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+        ITrading trading = modelFactory.createTradingWithIdDao(3, tradingDao);
+        ILeague league = modelFactory.createLeagueWithIdDao(1, leagueDao);
+        IUser user = modelFactory.createUserWithIdDao(1, userDao);
+        league.getGamePlayConfig().setTrading(trading);
+        user.setLeague(league);
+        hockeyContext.setUser(user);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
         Map<String, Object> swap = new HashMap<>();
+        ITeam fromTeam = modelFactory.createTeamWithIdDao(1, teamDao);
 
-        Trading trading = new Trading(1, tradingFactory);
-        Team fromTeam = new Team(1, teamFactory);
-        Team toTeam = new Team(2, teamFactory);
-
-        Player fromPlayer = new Player(1, playerFactory);
-        Player toPlayer = new Player(5, playerFactory);
-
-        swap.put(TRADING, trading);
         swap.put(FROMTEAM, fromTeam);
-        swap.put(TOTEAM, toTeam);
-        swap.put(FROMPLAYER, fromPlayer);
-        swap.put(TOPLAYER, toPlayer);
 
         assertTrue(state.acceptRejectTradeOffer(swap));
     }
@@ -228,32 +261,41 @@ public class ExecuteTradeStateTest {
     @Test
     public void updateTradingDetailsTest() throws Exception {
         Map<String, Object> tradeDetails = new HashMap<>();
+        IHockeyContextFactory hockeyContextFactory = HockeyContextConcrete.getInstance();
+        IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
+        IUser user = modelFactory.createUserWithIdDao(1, userDao);
+        ILeague league = modelFactory.createLeagueWithIdDao(1, leagueDao);
+        user.setLeague(league);
+        hockeyContext.setUser(user);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
 
-        Team fromTeam = new Team(1, teamFactory);
-        Team toTeam = new Team(2, teamFactory);
-        Player fromPlayer = new Player(30, playerFactory);
-        fromPlayer.setPosition(Player.Position.valueOf("goalie"));
-        Player toPlayer = new Player(31, playerFactory);
-        toPlayer.setPosition(Player.Position.valueOf("goalie"));
-        TradeOffer tradeOffer = new TradeOffer(1, tradeOfferFactory);
+        ITeam fromTeam = modelFactory.createTeamWithIdDao(1, teamDao);
+        ITeam toTeam = modelFactory.createTeamWithIdDao(2, teamDao);
+        IPlayer fromPlayer = modelFactory.createPlayerWithIdDao(27, playerDao);
+        state.removeObjectFromList(fromTeam.getPlayerList(), fromPlayer);
+        IPlayer toPlayer = modelFactory.createPlayerWithIdDao(28, playerDao);
+        state.removeObjectFromList(toTeam.getPlayerList(), toPlayer);
+        ITradeOffer tradeOffer = modelFactory.createTradeOfferWithIdDao(1, tradeOfferDao);
 
         fromTeam.getPlayerList().add(fromPlayer);
         toTeam.getPlayerList().add(toPlayer);
 
-        tradeDetails.put(FROMPLAYER, fromPlayer);
-        tradeDetails.put(TOPLAYER, toPlayer);
+        List<IPlayer> fromPlayerListAfterTrade = new ArrayList<>(Arrays.asList(fromPlayer));
+        List<IPlayer> toPlayerList = new ArrayList<>(Arrays.asList(toPlayer));
+
+        tradeDetails.put(TOPLAYERLIST, toPlayerList);
         tradeDetails.put(FROMTEAM, fromTeam);
         tradeDetails.put(TOTEAM, toTeam);
         tradeDetails.put(TRADEOFFER, tradeOffer);
+        tradeDetails.put(FROMPLAYERLISTAFTERTRADE, fromPlayerListAfterTrade);
 
-        ExecuteTradeState state = new ExecuteTradeState();
         state.updateTradingDetails(tradeDetails);
 
         assertEquals(tradeOffer.getStatus(), ACCEPTED);
 
         boolean isPlayerSwapped = false;
         boolean isPlayerNotSwapped = false;
-        for (Player soldPlayer : toTeam.getPlayerList()) {
+        for (IPlayer soldPlayer : toTeam.getPlayerList()) {
             if (fromPlayer.getId() == soldPlayer.getId()) {
                 isPlayerSwapped = true;
             }
@@ -267,7 +309,7 @@ public class ExecuteTradeStateTest {
 
         isPlayerSwapped = false;
 
-        for (Player boughtPlayer : fromTeam.getPlayerList()) {
+        for (IPlayer boughtPlayer : fromTeam.getPlayerList()) {
             if (toPlayer.getId() == boughtPlayer.getId()) {
                 isPlayerSwapped = true;
             }
@@ -282,17 +324,20 @@ public class ExecuteTradeStateTest {
         tradeDetails = new HashMap<>();
         toPlayer.setCaptain(true);
         fromPlayer.setCaptain(true);
-        tradeDetails.put(FROMPLAYER, toPlayer);
-        tradeDetails.put(TOPLAYER, fromPlayer);
+        toPlayerList = new ArrayList<>(Arrays.asList(toPlayer));
+        fromPlayerListAfterTrade = new ArrayList<>(Arrays.asList(fromPlayer));
+
+        tradeDetails.put(TOPLAYERLIST, fromPlayerListAfterTrade);
         tradeDetails.put(FROMTEAM, fromTeam);
         tradeDetails.put(TOTEAM, toTeam);
         tradeDetails.put(TRADEOFFER, tradeOffer);
+        tradeDetails.put(FROMPLAYERLISTAFTERTRADE, toPlayerList);
 
         state.updateTradingDetails(tradeDetails);
 
         boolean isCaptainCreated = false;
 
-        for (Player soldPlayer : fromTeam.getPlayerList()) {
+        for (IPlayer soldPlayer : fromTeam.getPlayerList()) {
             if (soldPlayer.isCaptain()) {
                 isCaptainCreated = true;
                 break;
@@ -303,7 +348,7 @@ public class ExecuteTradeStateTest {
 
         isCaptainCreated = false;
 
-        for (Player boughtPlayer : toTeam.getPlayerList()) {
+        for (IPlayer boughtPlayer : toTeam.getPlayerList()) {
             if (boughtPlayer.isCaptain()) {
                 isCaptainCreated = true;
                 break;
@@ -314,102 +359,12 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void checkTeamStrengthTest() throws Exception {
-        Team team = new Team(1, teamFactory);
-        Player existingPlayer = team.getPlayerList().get(0);
-        Player newPlayer = new Player(5, playerFactory);
-
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        assertTrue(state.checkTeamStrength(team, newPlayer, existingPlayer));
-
-        existingPlayer = new Player(7, playerFactory);
-        team.getPlayerList().add(existingPlayer);
-        team.setStrength();
-        assertFalse(state.checkTeamStrength(team, newPlayer, existingPlayer));
-    }
-
-    @Test
-    public void checkDayOneTest() {
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        assertTrue(state.checkDayOne());
-        League league = hockeyContext.getUser().getLeague();
-        league.setCurrentDate(LocalDate.of(LocalDate.now().getYear(), 10, 1));
-        assertFalse(state.checkDayOne());
-    }
-
-    @Test
-    public void findBestSwapPlayerTest() throws Exception {
-        Team team = new Team(1, teamFactory);
-        League league = new League(1, leagueFactory);
-        Player player = new Player(5, playerFactory);
-
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        Map<String, Object> players = new HashMap<>();
-        state.findBestSwapPlayer(team, league, player, players);
-
-        assertNotNull(players.get(FROMPLAYER));
-        assertNotNull(players.get(TOPLAYER));
-        assertNotNull(players.get(TOTEAM));
-
-        Player fromPlayer = (Player) players.get(FROMPLAYER);
-        Player toPlayer = (Player) players.get(TOPLAYER);
-
-        assertTrue(fromPlayer.getStrength() <= toPlayer.getStrength());
-        assertNotEquals(toPlayer.getId(), player.getId());
-
-        player = new Player(4, playerFactory);
-        state.findBestSwapPlayer(team, league, player, players);
-
-        assertNotNull(players);
-        assertNotNull(players.get(FROMPLAYER));
-        assertNotNull(players.get(TOPLAYER));
-        assertNotNull(players.get(TOTEAM));
-
-        toPlayer = (Player) players.get(TOPLAYER);
-
-        assertEquals(toPlayer.getId(), player.getId());
-    }
-
-    @Test
-    public void algorithmToFindSwapPlayerTest() throws Exception {
-        Map<String, Object> swap = new HashMap<>();
-        Team team = new Team(5, teamFactory);
-        Player weakestPlayer = new Player(5, playerFactory);
-        Player swapPlayer = new Player(5, playerFactory);
-        TradeOffer tradeOffer = new TradeOffer(10, tradeOfferFactory);
-
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        Player newPlayer = state.algorithmToFindSwapPlayer(team, weakestPlayer, swapPlayer, swap);
-
-        assertTrue(newPlayer.getStrength() >= swapPlayer.getStrength());
-
-        swapPlayer = null;
-        weakestPlayer = new Player(4, playerFactory);
-        tradeOffer.setFromPlayerId(12);
-        newPlayer = state.algorithmToFindSwapPlayer(team, weakestPlayer, swapPlayer, swap);
-
-        assertEquals(weakestPlayer.getId(), newPlayer.getId());
-    }
-
-    @Test
     public void getWeakestPlayerListTest() throws Exception {
-        Team team = new Team();
-        League league = new League(1, leagueFactory);
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
+        ILeague league = modelFactory.createLeagueWithIdDao(1, leagueDao);
 
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
-        List<Player> weakPlayerList = state.getWeakestPlayerList(team, league);
-
-        assertNull(weakPlayerList);
-
-        Player strongPlayer1 = new Player(10, playerFactory);
-        Player strongPlayer2 = new Player(11, playerFactory);
-
-        List<Player> playerList = new ArrayList<>();
-        playerList.add(strongPlayer1);
-        playerList.add(strongPlayer2);
-        team.setPlayerList(playerList);
-
-        weakPlayerList = state.getWeakestPlayerList(team, league);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
+        List<IPlayer> weakPlayerList = state.getWeakestPlayerList(team, league);
 
         assertNotNull(weakPlayerList);
         assertTrue(weakPlayerList.size() > 0);
@@ -417,42 +372,40 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void checkCurrentTradeOfferTest() throws Exception {
-        Team team = new Team(5, teamFactory);
-        League league = new League(1, leagueFactory);
+        ITeam team = modelFactory.createTeamWithIdDao(5, teamDao);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
 
-        ExecuteTradeState state = new ExecuteTradeState();
+        assertFalse(state.checkCurrentTradeOffer(team));
 
-        assertFalse(state.checkCurrentTradeOffer(team, league));
-
-        team = new Team(10, teamFactory);
-        assertTrue(state.checkCurrentTradeOffer(team, league));
+        team = modelFactory.createTeamWithIdDao(10, teamDao);
+        assertTrue(state.checkCurrentTradeOffer(team));
     }
 
     @Test
     public void checkTradingPeriodTest() throws Exception {
         LocalDate currentDate = LocalDate.now();
-        Trading trading = new Trading(1, tradingFactory);
+        ITrading trading = modelFactory.createTradingWithIdDao(1, tradingDao);
 
-        ExecuteTradeState state = new ExecuteTradeState();
+        ExecuteTradeState state = newStateEmptyConstructor();
         assertTrue(state.checkTradingPeriod(trading, currentDate));
     }
 
     @Test
     public void checkLossPointTest() throws Exception {
-        Team team = new Team(1, teamFactory);
-        Trading trading = new Trading(1, tradingFactory);
-        ExecuteTradeState state = new ExecuteTradeState();
+        ITeam team = modelFactory.createTeamWithIdDao(1, teamDao);
+        ITrading trading = modelFactory.createTradingWithIdDao(1, tradingDao);
+        ExecuteTradeState state = newStateEmptyConstructor();
 
         assertFalse(state.checkLossPoint(team, trading));
 
-        team = new Team(5, teamFactory);
+        team = modelFactory.createTeamWithIdDao(5, teamDao);
 
         assertTrue(state.checkLossPoint(team, trading));
     }
 
     @Test
-    public void getRandomDoubleTest() {
-        ExecuteTradeState state = new ExecuteTradeState();
+    public void getRandomDoubleTest() throws Exception {
+        ExecuteTradeState state = newStateEmptyConstructor();
         double randomDouble = state.getRandomDouble();
         assertTrue(0 < randomDouble);
         assertTrue(1 > randomDouble);
@@ -462,13 +415,13 @@ public class ExecuteTradeStateTest {
 
     @Test
     public void removeObjectFromListTest() throws Exception {
-        List<Player> list = new ArrayList<>();
-        Player player = new Player(1, playerFactory);
+        List<IPlayer> list = new ArrayList<>();
+        IPlayer player = modelFactory.createPlayerWithIdDao(1, playerDao);
         list.add(player);
-        player = new Player(5, playerFactory);
+        player = modelFactory.createPlayerWithIdDao(5, playerDao);
         list.add(player);
         boolean isPlayerExist = false;
-        for (Player player1 : list) {
+        for (IPlayer player1 : list) {
             if (player1.getId() == 5) {
                 isPlayerExist = true;
                 break;
@@ -476,12 +429,12 @@ public class ExecuteTradeStateTest {
         }
         assertTrue(isPlayerExist);
 
-        ExecuteTradeState state = new ExecuteTradeState();
+        ExecuteTradeState state = newStateEmptyConstructor();
         state.removeObjectFromList(list, player);
 
         isPlayerExist = false;
 
-        for (Player player1 : list) {
+        for (IPlayer player1 : list) {
             if (player1.getId() == 5) {
                 isPlayerExist = true;
                 break;
@@ -491,8 +444,12 @@ public class ExecuteTradeStateTest {
     }
 
     @Test
-    public void exitTest() {
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+    public void exitTest() throws Exception {
+        league = modelFactory.createLeagueWithIdDao(1, leagueDao);
+        user = modelFactory.createUserWithIdDao(1, userDao);
+        user.setLeague(league);
+        hockeyContext.setUser(user);
+        ExecuteTradeState state = newStateWithHockeyContext(hockeyContext);
         assertTrue(state.exit() instanceof AgingState);
         assertNotNull(state.exit());
     }

@@ -1,31 +1,32 @@
 package simulation.state;
 
-import db.data.ILeagueFactory;
-import db.data.ITradingFactory;
-import db.data.IUserFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.ILeagueDao;
+import persistance.dao.ITradingDao;
+import persistance.dao.IUserDao;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.mock.TradingMock;
 import simulation.mock.UserMock;
-import simulation.model.GamePlayConfig;
 import simulation.model.League;
-import simulation.model.Trading;
 import simulation.model.User;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class LoadTeamStateTest {
 
-    private static HockeyContext hockeyContext;
-    private static IUserFactory userFactory;
-    private static ITradingFactory tradingFactory;
-    private static ILeagueFactory leagueFactory;
+    private static IHockeyContext hockeyContext;
+    private static IUserDao userFactory;
+    private static ITradingDao tradingFactory;
+    private static ILeagueDao leagueFactory;
+    private static IHockeyContextFactory hockeyContextFactory;
 
     @BeforeClass
     public static void init() throws Exception {
-        hockeyContext = new HockeyContext();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
         userFactory = new UserMock();
         User user = new User(1, userFactory);
         hockeyContext.setUser(user);
@@ -53,20 +54,6 @@ public class LoadTeamStateTest {
 
         assertEquals(1, state.getLeague().getId());
         assertEquals(1, state.getLeague().getCreatedBy());
-    }
-
-    @Test
-    public void updateTradingDetailsToLeagueTest() throws Exception {
-        GamePlayConfig gamePlayConfig = new GamePlayConfig();
-        League league = new League();
-        league.setGamePlayConfig(gamePlayConfig);
-        LoadTeamState loadTeamState = new LoadTeamState(hockeyContext);
-        loadTeamState.setLeague(league);
-        loadTeamState.updateTradingDetailsToLeague(tradingFactory);
-        Trading trading = loadTeamState.getLeague().getGamePlayConfig().getTrading();
-        assertNotNull(trading);
-        assertEquals(trading.getId(), 1);
-        assertEquals(trading.getMaxPlayersPerTrade(), 3);
     }
 
 }

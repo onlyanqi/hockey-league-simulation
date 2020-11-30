@@ -1,35 +1,34 @@
 package simulation.state;
 
-import simulation.factory.ValidationConcrete;
-import simulation.model.Game;
-import simulation.model.League;
-import simulation.model.Team;
-import simulation.model.TeamStanding;
-import validator.IValidation;
+import org.apache.log4j.Logger;
+import simulation.GameSubjectObservers.*;
+import simulation.model.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class SimulateGameState implements ISimulateState {
 
-    private HockeyContext hockeyContext;
-    private League league;
-    private IValidation validation;
+    static Logger log = Logger.getLogger(SimulateGameState.class);
+    private final IHockeyContext hockeyContext;
+    private final ILeague league;
 
-    public SimulateGameState(HockeyContext hockeyContext) {
+    public SimulateGameState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
         league = hockeyContext.getUser().getLeague();
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        validation = validationConcrete.newValidation();
     }
 
     @Override
     public ISimulateState action() {
-        List<Game> gamesOnCurrentDay = league.getGames().getUnPlayedGamesOnDate(league.getCurrentDate());
-        Game game = gamesOnCurrentDay.get(0);
-
-        simulateGame(game);
-        updateTeamStandings(game);
-
+        List<IGame> gamesOnCurrentDay = league.getGames().getUnPlayedGamesOnDate(league.getCurrentDate());
+        IGame game = gamesOnCurrentDay.get(0);
+        try {
+            simulateGame(game);
+            updateTeamStandings(game);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         return exit();
     }
 
@@ -37,40 +36,81 @@ public class SimulateGameState implements ISimulateState {
         return new InjuryCheckState(hockeyContext);
     }
 
-    public void simulateGame(Game game) {
-        double upset = league.getGamePlayConfig().getGameResolver().getRandomWinChance();
-        Team team1 = league.getTeamByTeamName(game.getTeam1());
-        Team team2 = league.getTeamByTeamName(game.getTeam2());
+    public void simulateGame(IGame game) throws Exception {
+        ITeam team1 = league.getTeamByTeamName(game.getTeam1());
+        ITeam team2 = league.getTeamByTeamName(game.getTeam2());
+        log.debug("Started game between " + team1.getName() + " and " + team2.getName());
+        Random rand = new Random();
 
-        if (validation.isNotNull(team1) && validation.isNotNull(team2)) {
-            if (team1.getStrength() > team2.getStrength()) {
-                game.setWinner(Game.Result.TEAM1);
+        IGameSimulation gameSimulation = hockeyContext.getModelFactory().createGameSimulationFromTeams(team1, team2);
+        gameSimulation.play();
+
+        HashMap<String, Integer> goals = gameSimulation.getGoals();
+        HashMap<String, Integer> shots = gameSimulation.getShots();
+        HashMap<String, Integer> saves = gameSimulation.getSaves();
+        HashMap<String, Integer> penalties = gameSimulation.getPenalties();
+
+        notifyStats(team1, team2, goals, shots, saves, penalties);
+        setWinner(game, team1, team2, rand, goals);
+
+        game.setPlayed(true);
+    }
+
+    private void setWinner(IGame game, ITeam team1, ITeam team2, Random rand, HashMap<String, Integer> goals) {
+        if (game == null) {
+            log.error("game is null, unable to set winner");
+            throw new IllegalArgumentException("game is null, unable to set winner");
+        }
+        if (team1 == null || team2 == null) {
+            log.error("One of the teams are null, unable to set winner");
+            throw new IllegalArgumentException("One of the teams are null, unable to set winner");
+        }
+        if (goals.get(team1.getName()) > goals.get(team2.getName())) {
+            game.setWinner(Result.TEAM1);
+            log.debug(team1.getName() + "won the game");
+            team2.setLossPoint(team2.getLossPoint() + 1);
+        } else if (goals.get(team1.getName()) < goals.get(team2.getName())) {
+            log.debug(team2.getName() + "won the game");
+            game.setWinner(Result.TEAM2);
+            team1.setLossPoint(team1.getLossPoint() + 1);
+        } else if (goals.get(team1.getName()) == goals.get(team2.getName())) {
+            if (rand.nextDouble() > 0.5) {
+                log.debug(team1.getName() + "won the game");
+                game.setWinner(Result.TEAM1);
                 team2.setLossPoint(team2.getLossPoint() + 1);
             } else {
-                game.setWinner(Game.Result.TEAM2);
+                log.debug(team2.getName() + "won the game");
+                game.setWinner(Result.TEAM2);
                 team1.setLossPoint(team1.getLossPoint() + 1);
             }
-            if (Math.random() <= upset) {
-                if (game.getWinner().equals(Game.Result.TEAM1)) {
-                    game.setWinner(Game.Result.TEAM2);
-                    team1.setLossPoint(team1.getLossPoint() + 1);
-                } else {
-                    game.setWinner(Game.Result.TEAM1);
-                    team2.setLossPoint(team2.getLossPoint() + 1);
-                }
-            }
-            game.setPlayed(true);
         }
     }
 
-    public void updateTeamStandings(Game game) {
-        TeamStanding teamStanding = league.getActiveTeamStanding();
+    private void notifyStats(ITeam team1, ITeam team2, HashMap<String, Integer> goals, HashMap<String, Integer> shots, HashMap<String, Integer> saves, HashMap<String, Integer> penalties) {
+        GoalSubject.getInstance().notifyObservers(league, team1.getName(), goals.get(team1.getName()));
+        GoalSubject.getInstance().notifyObservers(league, team2.getName(), goals.get(team2.getName()));
 
-        if (game.getWinner().equals(Game.Result.TEAM1)) {
+        PenaltySubject.getInstance().notifyObservers(league, team1.getName(), penalties.get(team1.getName()));
+        PenaltySubject.getInstance().notifyObservers(league, team2.getName(), penalties.get(team2.getName()));
+
+        ShotSubject.getInstance().notifyObservers(league, team1.getName(), shots.get(team1.getName()));
+        ShotSubject.getInstance().notifyObservers(league, team2.getName(), shots.get(team2.getName()));
+
+        SaveSubject.getInstance().notifyObservers(league, team1.getName(), saves.get(team1.getName()));
+        SaveSubject.getInstance().notifyObservers(league, team2.getName(), saves.get(team2.getName()));
+
+        TotalGamesSubject.getInstance().notifyObservers(league, team1.getName(), 0);
+        TotalGamesSubject.getInstance().notifyObservers(league, team2.getName(), 0);
+    }
+
+    private void updateTeamStandings(IGame game) {
+        ITeamStanding teamStanding = league.getActiveTeamStanding();
+
+        if (game.getWinner().equals(Result.TEAM1)) {
             teamStanding.setTeamPoints(game.getTeam1());
             teamStanding.setTeamWins(game.getTeam1());
             teamStanding.setTeamLoss(game.getTeam2());
-        } else if (game.getWinner().equals(Game.Result.TEAM2)) {
+        } else if (game.getWinner().equals(Result.TEAM2)) {
             teamStanding.setTeamPoints(game.getTeam2());
             teamStanding.setTeamWins(game.getTeam2());
             teamStanding.setTeamLoss(game.getTeam1());
@@ -79,4 +119,5 @@ public class SimulateGameState implements ISimulateState {
             teamStanding.setTeamTies(game.getTeam1());
         }
     }
+
 }

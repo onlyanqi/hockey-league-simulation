@@ -1,14 +1,14 @@
 package presentation;
 
-import simulation.model.Coach;
-import simulation.model.Manager;
-import simulation.model.Player;
+import simulation.model.ICoach;
+import simulation.model.IManager;
+import simulation.model.IPlayer;
 
 import java.util.List;
 
 public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreation {
 
-    private ConsoleOutput consoleOutput;
+    private final IConsoleOutput consoleOutput;
 
     public ConsoleOutputForTeamCreation() {
         consoleOutput = ConsoleOutput.getInstance();
@@ -25,7 +25,7 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
     }
 
     @Override
-    public void showManagerListOnScreen(List<Manager> managerList) {
+    public void showManagerListOnScreen(List<IManager> managerList) {
         consoleOutput.printMsgToConsole("-------------------------------------");
         consoleOutput.printMsgToConsole("Manager List");
         consoleOutput.printMsgToConsole("-------------------------------------");
@@ -54,21 +54,21 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
     }
 
     @Override
-    public void showCoachListOnScreen(List<Coach> coachList) {
+    public void showCoachListOnScreen(List<ICoach> coachList) {
         consoleOutput.printMsgToConsole("----------------------------------------------------------------------");
         consoleOutput.printMsgToConsole("Coach List");
         consoleOutput.printMsgToConsole("----------------------------------------------------------------------");
 
         System.out.printf("%5s %20s %10s %10s %10s %10s", "ID", "Name", "Skating", "Shooting", "Checking", "Saving");
         for (int i = 0; i < coachList.size(); i++) {
-            Coach currentCoach = coachList.get(i);
+            ICoach currentCoach = coachList.get(i);
             printCoach(i, currentCoach);
         }
         consoleOutput.printMsgToConsole("\n");
     }
 
     @Override
-    public void printCoach(int i, Coach currentCoach) {
+    public void printCoach(int i, ICoach currentCoach) {
         consoleOutput.printMsgToConsole("\n");
         System.out.format("%5s %20s %10s %10s %10s %10s",
                 i, currentCoach.getName(),
@@ -89,13 +89,13 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
     }
 
     @Override
-    public void showGoodFreeAgentList(List<Player> freeAgentList, List<Integer> goodFreeAgentsIdList) {
+    public void showGoodFreeAgentList(List<IPlayer> freeAgentList, List<Integer> goodFreeAgentsIdList) {
 
         consoleOutput.printMsgToConsole("Good free agent list :) \n ________________________ ");
         System.out.printf("%5s %20s %10s %10s %10s %10s %10s %10s %10s", "ID", "Name", "Position", "Strength", "Age", "Skating", "Shooting", "Checking", "Saving");
         consoleOutput.printMsgToConsole("\n");
         for (int i = 0; i < freeAgentList.size(); i++) {
-            Player player = freeAgentList.get(i);
+            IPlayer player = freeAgentList.get(i);
             if (goodFreeAgentsIdList.contains(i)) {
                 printPlayer(i, player);
             }
@@ -109,8 +109,8 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
     }
 
     @Override
-    public void showCountOfNeededPlayers(int numberOfGoalies, int numberOfSkaters) {
-        consoleOutput.printMsgToConsole("Team needs more " + numberOfGoalies + " goalies and " + numberOfSkaters + " skaters");
+    public void showCountOfNeededPlayers(int numberOfGoalie, int numberOfForward, int numberOfDefense) {
+        consoleOutput.printMsgToConsole("Team needs " + numberOfGoalie + " more goalies, " + numberOfForward + " more forwards and " + numberOfDefense + " more defenses.");
     }
 
     @Override
@@ -119,13 +119,13 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
     }
 
     @Override
-    public void showBelowAverageFreeAgentList(List<Player> freeAgentList, List<Integer> goodFreeAgentsIdList) {
+    public void showBelowAverageFreeAgentList(List<IPlayer> freeAgentList, List<Integer> goodFreeAgentsIdList) {
         consoleOutput.printMsgToConsole("Below-average free agent list :| \n __________________ ");
         consoleOutput.printMsgToConsole("\n");
         System.out.printf("%5s %20s %10s %10s %10s %10s %10s %10s %10s", "ID", "Name", "Position", "Strength", "Age", "Skating", "Shooting", "Checking", "Saving");
         consoleOutput.printMsgToConsole("\n");
         for (int i = 0; i < freeAgentList.size(); i++) {
-            Player player = freeAgentList.get(i);
+            IPlayer player = freeAgentList.get(i);
             if (goodFreeAgentsIdList.contains(i)) {
                 continue;
             } else {
@@ -135,8 +135,8 @@ public class ConsoleOutputForTeamCreation implements IConsoleOutputForTeamCreati
     }
 
     @Override
-    public void printPlayer(int i, Player player) {
-        System.out.format("%5s %20s %10s %10s %10s %10s %10s %10s %10s", i, player.getName(), player.getPosition(), player.getStrength(), player.getAge(), player.getSkating(), player.getShooting(), player.getChecking(), player.getSaving());
+    public void printPlayer(int i, IPlayer player) {
+        System.out.format("%5s %20s %10s %10s %10s %10s %10s %10s %10s", i, player.getName(), player.getPosition(), player.getStrength(), player.getBirthday(), player.getSkating(), player.getShooting(), player.getChecking(), player.getSaving());
         consoleOutput.printMsgToConsole("\n");
     }
 }

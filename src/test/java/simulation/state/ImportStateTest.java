@@ -1,11 +1,15 @@
 package simulation.state;
 
-import db.data.ILeagueFactory;
 import org.json.simple.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.ILeagueDao;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.JSONControllerMock;
 import simulation.mock.LeagueMock;
+import simulation.model.IModelFactory;
+import simulation.model.ModelFactory;
 import simulation.model.User;
 
 import static org.junit.Assert.assertEquals;
@@ -14,9 +18,10 @@ import static org.junit.Assert.assertNotNull;
 
 public class ImportStateTest {
 
-    static User user;
-    private static ILeagueFactory factory;
-    IHockeyState state;
+    private static User user;
+    private static ILeagueDao factory;
+    private static IHockeyContextFactory hockeyContextFactory;
+    private IHockeyState state;
 
     @BeforeClass
     public static void setAll() {
@@ -24,15 +29,16 @@ public class ImportStateTest {
         user = new User();
         user.setName("user1");
         user.setId(1);
-
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
     }
 
 
     @Test
     public void processTest() throws Exception {
-        HockeyContext hockeyContext = new HockeyContext();
+        IHockeyContext hockeyContext = hockeyContextFactory.newHockeyContext();
         hockeyContext.setUser(user);
-
+        IModelFactory agingFactory = ModelFactory.getInstance();
+        hockeyContext.setModelFactory(agingFactory);
         assertEquals(hockeyContext.getUser().getId(), user.getId());
         assertEquals(hockeyContext.getUser().getName(), user.getName());
 
@@ -45,7 +51,6 @@ public class ImportStateTest {
         assertNotNull(hockeyContext.getUser().getLeague());
         assertEquals(hockeyContext.getUser().getLeague().getName(), "Dalhousie Hockey League");
         assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getAging().getMaximumAge(), 50);
-        assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getGameResolver().getRandomWinChance(), (Double) 0.1);
         assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getInjury().getInjuryDaysLow(), 1);
         assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getTraining().getDaysUntilStatIncreaseCheck(), 100);
         assertEquals(hockeyContext.getUser().getLeague().getGamePlayConfig().getTrading().getMaxPlayersPerTrade(), 2);
@@ -53,13 +58,14 @@ public class ImportStateTest {
         assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getName(), "Atlantic");
         assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getName(), "Boston");
         assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getCoach().getShooting(), (Double) 0.8);
-        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getPlayerList().get(0).getName(), "Player One");
-        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getPlayerList().get(0).getChecking(), 12);
-        assertEquals(hockeyContext.getUser().getLeague().getFreeAgent().getPlayerList().get(2).getName(), "Agent Three");
-        assertEquals(hockeyContext.getUser().getLeague().getFreeAgent().getPlayerList().get(1).getChecking(), 10);
+        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getPlayerList().size(), 30);
+        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getActivePlayerList().size(), 20);
+        assertEquals(hockeyContext.getUser().getLeague().getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getInactivePlayerList().size(), 10);
+        assertEquals(hockeyContext.getUser().getLeague().getFreeAgent().getPlayerList().get(2).getName(), "Agent 2");
+        assertEquals(hockeyContext.getUser().getLeague().getFreeAgent().getPlayerList().get(1).getChecking(), 11);
         assertEquals(hockeyContext.getUser().getLeague().getCoachList().get(1).getName(), "Frank Smith");
         assertEquals(hockeyContext.getUser().getLeague().getCoachList().get(2).getSkating(), (Double) 1.0);
-        assertEquals(hockeyContext.getUser().getLeague().getManagerList().get(0).getName(), "Karen Potam");
+        assertEquals(hockeyContext.getUser().getLeague().getManagerList().get(0).getName(), "M");
 
 
     }

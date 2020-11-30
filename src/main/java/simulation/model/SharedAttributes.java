@@ -1,24 +1,12 @@
 package simulation.model;
 
-import db.data.ISharedAttributesFactory;
-import org.apache.commons.lang3.StringUtils;
 
-
-public class SharedAttributes {
+public abstract class SharedAttributes {
 
     private int id;
     private String name;
 
     public SharedAttributes() {
-    }
-
-    public SharedAttributes(int id) {
-        setId(id);
-    }
-
-    public SharedAttributes(int id, ISharedAttributesFactory parentObjFactory) throws Exception {
-        setId(id);
-        parentObjFactory.loadParentObj(id, this);
     }
 
     public int getId() {
@@ -37,32 +25,10 @@ public class SharedAttributes {
         this.name = name;
     }
 
-    public boolean isNull(String input) {
-        boolean isNull = false;
-        if (input == null) {
-            isNull = true;
-        }
-        return isNull;
-    }
-
-    public boolean isNotNull(String input) {
-        boolean isNotNull = true;
-        if (input == null) {
-            isNotNull = false;
-        }
-        return isNotNull;
-    }
-
-    public boolean isNotEmpty(String input) {
-        return StringUtils.isNotEmpty(input);
-    }
-
     public boolean validName() {
         boolean isValid = false;
 
-        if (isNotNull(getName()) && isNotEmpty(getName())) {
-            isValid = true;
-        }
+        isValid = name != null && !name.isEmpty();
 
         return isValid;
     }

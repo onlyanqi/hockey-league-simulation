@@ -1,12 +1,10 @@
 package simulation.model;
 
-import db.data.ITradingFactory;
-import simulation.factory.ValidationConcrete;
-import validator.IValidation;
+import persistance.dao.ITradingDao;
 
 import java.util.*;
 
-public class Trading extends SharedAttributes {
+public class Trading extends SharedAttributes implements ITrading {
 
     private List<Integer> currentYearSeasonMonths = new ArrayList<>
             (Arrays.asList(9, 10, 11));
@@ -23,13 +21,31 @@ public class Trading extends SharedAttributes {
     private int maxPlayersPerTrade;
     private double randomAcceptanceChance;
     private boolean isTradingPeriod;
+    private Map<String, Double> gmTable = new HashMap<>();
 
     public Trading() {
+        setId(System.identityHashCode(this));
     }
 
-    public Trading(int tradingId, ITradingFactory factory) throws Exception {
+    public Trading(int tradingId, ITradingDao factory) throws Exception {
         setId(tradingId);
         factory.loadTradingDetailsByTradingId(tradingId, this);
+    }
+
+    public Trading(persistance.serializers.ModelsForDeserialization.model.Trading trading) {
+        this.currentYearSeasonMonths = trading.currentYearSeasonMonths;
+        this.nextYearSeasonMonths = trading.nextYearSeasonMonths;
+        this.tradeStartDate = trading.tradeStartDate;
+        this.tradeEndDate = trading.tradeEndDate;
+        this.leagueId = trading.leagueId;
+        this.lossPoint = trading.lossPoint;
+        this.randomTradeOfferChance = trading.randomTradeOfferChance;
+        this.maxPlayersPerTrade = trading.maxPlayersPerTrade;
+        this.randomAcceptanceChance = trading.randomAcceptanceChance;
+        this.isTradingPeriod = trading.isTradingPeriod;
+        this.gmTable = trading.gmTable;
+        this.setId(trading.id);
+        this.setName(trading.name);
     }
 
     public List<Integer> getCurrentYearSeasonMonths() {
@@ -49,9 +65,9 @@ public class Trading extends SharedAttributes {
     }
 
     public void isLeagueInTradingPeriod(Date leagueDate) {
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        IValidation validation = validationConcrete.newValidation();
-        if (validation.isNotNull(leagueDate)) {
+        if (leagueDate == null) {
+            this.isTradingPeriod = false;
+        } else {
             calTradeEndDateFromLeagueDate(leagueDate);
             int compare = leagueDate.compareTo(tradeEndDate);
             if (compare <= 0) {
@@ -80,12 +96,19 @@ public class Trading extends SharedAttributes {
 
     public void calTradeEndDateFromLeagueDate(Date leagueDate) {
 
-        int currentLeagueYear = leagueDate.getYear() + 1900;
+        int zero = 0;
+        int yearInit = 1900;
+        int twentyThree = 23;
+        int fiftyNine = 59;
+        int one = 1;
+        int negativeOne = -1;
+
+        int currentLeagueYear = leagueDate.getYear() + yearInit;
         int currentLeagueMonth = leagueDate.getMonth();
-        int tradingEndYear = 0;
+        int tradingEndYear = zero;
 
         if (currentYearSeasonMonths.contains(currentLeagueMonth)) {
-            tradingEndYear = currentLeagueYear + 1;
+            tradingEndYear = currentLeagueYear + one;
         } else if (nextYearSeasonMonths.contains(currentLeagueMonth)) {
             tradingEndYear = currentLeagueYear;
         }
@@ -95,38 +118,41 @@ public class Trading extends SharedAttributes {
         endDateCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         endDateCalendar.set(GregorianCalendar.MONTH, Calendar.FEBRUARY);
         endDateCalendar.set(GregorianCalendar.DAY_OF_WEEK, Calendar.MONDAY);
-        endDateCalendar.set(GregorianCalendar.DAY_OF_WEEK_IN_MONTH, -1);
-        endDateCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        endDateCalendar.set(Calendar.MINUTE, 0);
-        endDateCalendar.set(Calendar.SECOND, 0);
-        endDateCalendar.set(Calendar.MILLISECOND, 0);
+        endDateCalendar.set(GregorianCalendar.DAY_OF_WEEK_IN_MONTH, negativeOne);
+        endDateCalendar.set(Calendar.HOUR_OF_DAY, zero);
+        endDateCalendar.set(Calendar.MINUTE, zero);
+        endDateCalendar.set(Calendar.SECOND, zero);
+        endDateCalendar.set(Calendar.MILLISECOND, zero);
 
         this.tradeEndDate = endDateCalendar.getTime();
-        this.tradeEndDate.setHours(23);
-        this.tradeEndDate.setMinutes(59);
-        this.tradeEndDate.setSeconds(59);
+        this.tradeEndDate.setHours(twentyThree);
+        this.tradeEndDate.setMinutes(fiftyNine);
+        this.tradeEndDate.setSeconds(fiftyNine);
     }
 
     public void calTradeStartDateFromLeagueDate(Date leagueDate) {
 
-        int currentLeagueYear = leagueDate.getYear() + 1900;
+        int zero = 0;
+        int yearInit = 1900;
+        int one = 1;
+        int currentLeagueYear = leagueDate.getYear() + yearInit;
         int currentLeagueMonth = leagueDate.getMonth();
-        int tradingStartYear = 0;
+        int tradingStartYear = zero;
 
         if (currentYearSeasonMonths.contains(currentLeagueMonth)) {
             tradingStartYear = currentLeagueYear;
         } else if (nextYearSeasonMonths.contains(currentLeagueMonth)) {
-            tradingStartYear = currentLeagueYear - 1;
+            tradingStartYear = currentLeagueYear - one;
         }
 
         Calendar startDateCalendar = Calendar.getInstance();
         startDateCalendar.set(GregorianCalendar.YEAR, tradingStartYear);
-        startDateCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        startDateCalendar.set(Calendar.DAY_OF_MONTH, one);
         startDateCalendar.set(GregorianCalendar.MONTH, Calendar.OCTOBER);
-        startDateCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        startDateCalendar.set(Calendar.MINUTE, 0);
-        startDateCalendar.set(Calendar.SECOND, 0);
-        startDateCalendar.set(Calendar.MILLISECOND, 0);
+        startDateCalendar.set(Calendar.HOUR_OF_DAY, zero);
+        startDateCalendar.set(Calendar.MINUTE, zero);
+        startDateCalendar.set(Calendar.SECOND, zero);
+        startDateCalendar.set(Calendar.MILLISECOND, zero);
 
         this.tradeStartDate = startDateCalendar.getTime();
     }
@@ -179,7 +205,15 @@ public class Trading extends SharedAttributes {
         isTradingPeriod = tradingPeriod;
     }
 
-    public void addTrading(ITradingFactory tradingFactory) throws Exception {
+    public void addTrading(ITradingDao tradingFactory) throws Exception {
         tradingFactory.addTradingDetails(this);
+    }
+
+    public Map<String, Double> getGmTable() {
+        return gmTable;
+    }
+
+    public void setGmTable(Map<String, Double> gmTable) {
+        this.gmTable = gmTable;
     }
 }

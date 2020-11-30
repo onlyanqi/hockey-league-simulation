@@ -1,13 +1,13 @@
 package simulation.state;
 
-import simulation.model.Coach;
-import simulation.model.League;
-import simulation.model.Player;
+import simulation.model.ICoach;
+import simulation.model.ILeague;
+import simulation.model.IPlayer;
 
 public interface ITrainingState {
-    void statIncreaseCheck(League league);
+    void statIncreaseCheck(ILeague league);
 
-    void statIncreaseCheckForPlayer(Player player, Coach headCoach);
+    void statIncreaseCheckForPlayer(IPlayer player, ICoach headCoach);
 
     boolean isStrengthInRangeAfterIncrease(int strengthAfterIncrease);
 }

@@ -1,8 +1,8 @@
 package simulation.model;
 
-import db.data.IInjuryFactory;
+import persistance.dao.IInjuryDao;
 
-public class Injury extends SharedAttributes {
+public class Injury extends SharedAttributes implements IInjury {
 
     private Double randomInjuryChance;
 
@@ -13,15 +13,25 @@ public class Injury extends SharedAttributes {
     private int leagueId;
 
     public Injury() {
+        setId(System.identityHashCode(this));
     }
 
     public Injury(int id) {
         setId(id);
     }
 
-    public Injury(int id, IInjuryFactory loadInjuryFactory) throws Exception {
+    public Injury(int id, IInjuryDao loadInjuryFactory) throws Exception {
         setId(id);
         loadInjuryFactory.loadInjuryById(id, this);
+    }
+
+    public Injury(persistance.serializers.ModelsForDeserialization.model.Injury injury) {
+        this.injuryDaysHigh = injury.injuryDaysHigh;
+        this.injuryDaysLow = injury.injuryDaysLow;
+        this.randomInjuryChance = injury.randomInjuryChance;
+        this.leagueId = injury.leagueId;
+        this.setName(injury.name);
+        this.setId(injury.id);
     }
 
     public Double getRandomInjuryChance() {

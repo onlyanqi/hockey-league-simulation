@@ -1,15 +1,14 @@
 package simulation.model;
 
-import db.data.IInjuryFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IInjuryDao;
 import simulation.mock.InjuryMock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class InjuryTest {
-    private static IInjuryFactory loadInjuryFactory;
+    private static IInjuryDao loadInjuryFactory;
 
     @BeforeClass
     public static void setFactoryObj() {
@@ -19,7 +18,7 @@ public class InjuryTest {
     @Test
     public void defaultConstructorTest() {
         Injury injury = new Injury();
-        assertEquals(injury.getId(), 0);
+        assertNotEquals(injury.getId(), 0);
     }
 
     @Test
