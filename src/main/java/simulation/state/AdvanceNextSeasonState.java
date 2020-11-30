@@ -16,11 +16,11 @@ public class AdvanceNextSeasonState implements ISimulateState {
     public static final String CLEAN_DRAFT_PICKS = "Cleaned draft picks in all teams.";
     public static final String AGING_ALL_PLAYERS_FROM = "Aging all players from ";
     public static final String TO_NEXT_SEASON = " to next season";
+    private static Logger log = Logger.getLogger(AdvanceNextSeasonState.class);
     private ILeague league;
     private IHockeyContext hockeyContext;
     private IAging aging;
     private LocalDate beforeDate;
-    private static Logger log = Logger.getLogger(AdvanceNextSeasonState.class);
 
     public AdvanceNextSeasonState(IHockeyContext hockeyContext, LocalDate before) {
         this.hockeyContext = hockeyContext;

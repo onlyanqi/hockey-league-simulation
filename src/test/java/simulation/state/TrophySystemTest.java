@@ -2,10 +2,10 @@ package simulation.state;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import presentation.ConsoleOutput;
 import persistance.dao.ICoachDao;
 import persistance.dao.ILeagueDao;
 import persistance.dao.IUserDao;
+import presentation.ConsoleOutput;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.CoachMock;

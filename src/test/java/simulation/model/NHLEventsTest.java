@@ -76,13 +76,13 @@ public class NHLEventsTest {
         NHLEvents nhlEvents = new NHLEvents();
         iEventDao.loadEventById(3, nhlEvents);
         assertEquals(nhlEvents.getId(), 3);
-        assertEquals(LocalDate.of(2021,Month.JULY,15), nhlEvents.getPlayerDraftDate());
+        assertEquals(LocalDate.of(2021, Month.JULY, 15), nhlEvents.getPlayerDraftDate());
     }
 
     @Test
     public void setPlayerDraftDateTest() {
         NHLEvents nhlEvents = new NHLEvents();
-        LocalDate playerDraftDate = LocalDate.of(2021,Month.JULY,15);
+        LocalDate playerDraftDate = LocalDate.of(2021, Month.JULY, 15);
         nhlEvents.setPlayerDraftDate(playerDraftDate);
         assertTrue(nhlEvents.getPlayerDraftDate().equals(LocalDate.of(2021, Month.JULY, 15)));
     }

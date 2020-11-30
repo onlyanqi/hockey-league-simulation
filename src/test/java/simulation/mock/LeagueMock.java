@@ -491,7 +491,7 @@ public class LeagueMock implements ILeagueDao {
         return teamList;
     }
 
-        public List<ITeam> formTeamListDivision4ForGames() throws Exception {
+    public List<ITeam> formTeamListDivision4ForGames() throws Exception {
         List<ITeam> teamList = new ArrayList<>();
         ITeam team41 = new Team();
         team41.setId(41);

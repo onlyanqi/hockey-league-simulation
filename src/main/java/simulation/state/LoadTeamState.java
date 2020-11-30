@@ -1,10 +1,10 @@
 package simulation.state;
 
 import config.AppConfig;
+import persistance.serializers.LeagueDataSerializerDeSerializer;
 import presentation.ReadUserInput;
 import simulation.model.ILeague;
 import simulation.model.League;
-import persistance.serializers.LeagueDataSerializerDeSerializer;
 
 
 public class LoadTeamState implements IHockeyState {

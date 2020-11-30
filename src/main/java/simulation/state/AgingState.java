@@ -12,11 +12,11 @@ public class AgingState implements ISimulateState {
 
     public static final String AGING_DAY = "Aging all players by one day!";
     public static final String UNABLE_TO_PROCEED_TO_FURTHER_STATES = "Current date is not set to league. Unable to proceed to further states.";
+    private static Logger log = Logger.getLogger(AgingState.class);
     private IHockeyContext hockeyContext;
     private ILeague league;
     private IAging aging;
     private ConsoleOutput consoleOutput;
-    private static Logger log = Logger.getLogger(AgingState.class);
 
 
     public AgingState(IHockeyContext hockeyContext) {

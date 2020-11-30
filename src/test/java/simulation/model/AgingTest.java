@@ -106,13 +106,13 @@ public class AgingTest {
         Aging aging = new Aging();
         Double statDecayChance = 0.01;
         aging.setStatDecayChance(statDecayChance);
-        assertEquals(aging.getStatDecayChance(), (Double)0.01);
+        assertEquals(aging.getStatDecayChance(), (Double) 0.01);
     }
 
     @Test
     public void getStatDecayChanceTest() throws Exception {
         Aging aging = new Aging(1, loadAgingFactory);
-        assertEquals(aging.getStatDecayChance(), (Double)1.0);
+        assertEquals(aging.getStatDecayChance(), (Double) 1.0);
     }
 
 

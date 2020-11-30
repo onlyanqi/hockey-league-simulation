@@ -2,9 +2,9 @@ package simulation.state;
 
 import config.AppConfig;
 import org.json.simple.JSONObject;
+import persistance.dao.IDaoFactory;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
-import persistance.dao.IDaoFactory;
 import simulation.model.IModelFactory;
 import simulation.model.IUser;
 

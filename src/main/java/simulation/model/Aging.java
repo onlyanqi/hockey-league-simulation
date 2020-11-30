@@ -1,8 +1,8 @@
 package simulation.model;
 
 import org.apache.log4j.Logger;
-import presentation.ConsoleOutput;
 import persistance.dao.IAgingDao;
+import presentation.ConsoleOutput;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,6 +1,5 @@
 package simulation.model;
 
-import persistance.serializers.ModelsForDeserialization.model.*;
 import persistance.dao.IConferenceDao;
 import persistance.dao.IFreeAgentDao;
 import persistance.dao.ILeagueDao;
@@ -9,15 +8,16 @@ import persistance.serializers.ModelsForDeserialization.model.Coach;
 import persistance.serializers.ModelsForDeserialization.model.Conference;
 import persistance.serializers.ModelsForDeserialization.model.Manager;
 import persistance.serializers.ModelsForDeserialization.model.Player;
-import persistance.serializers.ModelsForDeserialization.model.Team;
-import persistance.serializers.ModelsForDeserialization.model.TeamScore;
 import persistance.serializers.ModelsForDeserialization.model.TradeOffer;
 import persistance.serializers.ModelsForDeserialization.model.Trophy;
+import persistance.serializers.ModelsForDeserialization.model.*;
 import simulation.state.HockeyContext;
 import simulation.state.IHockeyContext;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class League extends SharedAttributes implements ILeague {
 

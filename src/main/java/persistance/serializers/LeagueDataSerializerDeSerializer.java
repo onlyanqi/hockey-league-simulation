@@ -5,9 +5,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import persistance.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 import presentation.ConsoleOutput;
 import simulation.model.ILeague;
-import persistance.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 
 import java.io.*;
 
