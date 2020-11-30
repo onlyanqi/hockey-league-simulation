@@ -67,6 +67,16 @@ public class UserMock implements IUserDao {
                 user.setLeague(formLeagueForGames());
                 user.setLeagueList(formLeagueList());
                 break;
+
+            case 5:
+                user.setId(5);
+                user.setName("User5");
+                user.setPassword("Pass");
+                ILeagueDao leagueFactory = new LeagueMock();
+                League league = new League();
+                leagueFactory.loadLeagueById(6, league);
+                user.setLeague(league);
+                break;
         }
 
     }

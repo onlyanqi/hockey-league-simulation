@@ -1,6 +1,8 @@
 package simulation.model;
 
+import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import presentation.ConsoleOutput;
 import persistance.dao.IPlayerDao;
 
 import java.time.LocalDate;
@@ -11,6 +13,7 @@ import java.util.Random;
 
 public class Player extends SharedAttributes implements IPlayer {
 
+    private static Logger log = Logger.getLogger(Player.class);
     private int age;
     private LocalDate birthday;
     private Position position;
@@ -29,7 +32,6 @@ public class Player extends SharedAttributes implements IPlayer {
     private double relativeStrength;
     private int penaltyCount;
     private int goalScore;
-
     private int saves;
 
     public Player() {
@@ -133,6 +135,7 @@ public class Player extends SharedAttributes implements IPlayer {
 
     public void setAge(int age) throws IllegalArgumentException {
         if (age < 0) {
+            log.error("Player age less than 0");
             throw new IllegalArgumentException("Player age must greater than 0!");
         }
         this.age = age;
@@ -199,6 +202,7 @@ public class Player extends SharedAttributes implements IPlayer {
 
     public void setChecking(int checking) throws IllegalArgumentException {
         if (checking < 1 || checking > 20) {
+            log.error("Player checking is out of range (1-20)");
             throw new IllegalArgumentException("Player checking is out of range (1-20)");
         }
         this.checking = checking;
@@ -210,6 +214,7 @@ public class Player extends SharedAttributes implements IPlayer {
 
     public void setSaving(int saving) throws IllegalArgumentException {
         if (saving < 1 || saving > 20) {
+            log.error("Player saving is out of range (1-20)");
             throw new IllegalArgumentException("Player saving is out of range (1-20)");
         } else if (this.position == Position.GOALIE) {
             this.saving = saving;
@@ -280,6 +285,7 @@ public class Player extends SharedAttributes implements IPlayer {
     @Override
     public boolean retirementCheck(ILeague league) {
         if (league == null) {
+            log.debug("Unable to do retirement check, league is null");
             return false;
         }
         IAging aging = league.getGamePlayConfig().getAging();
@@ -307,6 +313,7 @@ public class Player extends SharedAttributes implements IPlayer {
         LocalDate birthday = this.getBirthday();
         LocalDate currentDate = league.getCurrentDate();
         if (birthday == null || currentDate == null) {
+            log.debug("Unable to calculate age, player's birthday is null or current date is null");
             return;
         }
         int age = Period.between(birthday, currentDate).getYears();
@@ -347,11 +354,13 @@ public class Player extends SharedAttributes implements IPlayer {
     @Override
     public void injuryCheck(ILeague league) {
         if (league == null) {
+            log.debug("Unable to do injury check, league is null");
             return;
         }
         Random randomInjuryChance = new Random();
         double chanceOfInjury = randomInjuryChance.nextDouble();
         if (this.getInjured()) {
+            log.debug("No need for injury check, this player is already injured");
             return;
         }
         if (chanceOfInjury < league.getGamePlayConfig().getInjury().getRandomInjuryChance()) {
@@ -360,17 +369,25 @@ public class Player extends SharedAttributes implements IPlayer {
             int injuryDaysHigh = league.getGamePlayConfig().getInjury().getInjuryDaysHigh();
             int injuryDaysLow = league.getGamePlayConfig().getInjury().getInjuryDaysLow();
             int range = injuryDaysHigh - injuryDaysLow + 1;
-            this.setInjuryDatesRange(randomInjuryDays.nextInt(range) + injuryDaysLow);
+            int injuryDatesRange = randomInjuryDays.nextInt(range) + injuryDaysLow;
+            this.setInjuryDatesRange(injuryDatesRange);
             this.setInjured(true);
+            log.debug("Play get injured on " + league.getCurrentDate() + " for " + injuryDatesRange + " days.");
+            ConsoleOutput.getInstance().printMsgToConsole("Play get injured on " + league.getCurrentDate() + " for " + injuryDatesRange + " days.");
         }
     }
 
     @Override
     public void agingInjuryRecovery(ILeague league) {
         if (league == null) {
+            log.debug("Unable to aging injury recovery, league is null");
             return;
         }
-        if (this.getInjured() && DateTime.diffDays(this.getInjuryStartDate(), league.getCurrentDate()) >= this.getInjuryDatesRange()) {
+        LocalDate injuryDate = this.getInjuryStartDate();
+        LocalDate currentDate = league.getCurrentDate();
+        if (this.getInjured() && DateTime.diffDays(injuryDate, currentDate) >= this.getInjuryDatesRange()) {
+            log.debug("Play recovered on " + currentDate + ", got injured on " + injuryDate);
+            ConsoleOutput.getInstance().printMsgToConsole("Play finally recovered on " + currentDate + " after " + this.getInjuryDatesRange() + " days of injury");
             this.setInjured(false);
             this.setInjuryStartDate(null);
             this.setInjuryDatesRange(0);

@@ -62,8 +62,8 @@ public class TeamScoreMock implements ITeamScoreDao {
                 break;
             case 3:
                 teamScore.setId(id);
-                Team team = new Team();
-                teamScore.setTeam(team);
+                Team team3 = new Team();
+                teamScore.setTeam(team3);
                 teamScore.setNumberOfTies(0);
                 teamScore.setNumberOfLoss(0);
                 teamScore.setNumberOfWins(0);

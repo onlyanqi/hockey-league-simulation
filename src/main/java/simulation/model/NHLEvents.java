@@ -56,6 +56,7 @@ public class NHLEvents implements INHLEvents {
         this.playOffStartDate = nhlEvents.playOffStartDate;
         this.lastDayStanleyCupFinals = nhlEvents.lastDayStanleyCupFinals;
         this.nextSeasonDate = nhlEvents.nextSeasonDate;
+        this.playerDraftDate = nhlEvents.playerDraftDate;
         this.currentYear = nhlEvents.currentYear;
     }
 
