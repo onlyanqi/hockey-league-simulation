@@ -2,10 +2,10 @@ package simulation.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.dao.DaoFactoryMock;
 import persistance.dao.IDaoFactory;
 import persistance.dao.ILeagueDao;
 import persistance.dao.IPlayerDao;
+import simulation.dao.DaoFactoryMock;
 import simulation.mock.LeagueMock;
 
 import java.time.LocalDate;
@@ -328,11 +328,11 @@ public class PlayerTest {
         assertEquals(player.getShooting(), 18);
         assertEquals(player.getChecking(), 12);
         assertEquals(player.getSaving(), 1);
-        ILeague league = modelFactory.createLeagueWithIdDao(1,leagueDao);
+        ILeague league = modelFactory.createLeagueWithIdDao(1, leagueDao);
         player.statDecayCheck(league);
-        assertEquals(player.getSkating(), 15-1);
-        assertEquals(player.getShooting(), 18-1);
-        assertEquals(player.getChecking(), 12-1);
+        assertEquals(player.getSkating(), 15 - 1);
+        assertEquals(player.getShooting(), 18 - 1);
+        assertEquals(player.getChecking(), 12 - 1);
         assertEquals(player.getSaving(), 1);
     }
 

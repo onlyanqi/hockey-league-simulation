@@ -2,8 +2,8 @@ package simulation.model;
 
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-import presentation.ConsoleOutput;
 import persistance.dao.IPlayerDao;
+import presentation.ConsoleOutput;
 
 import java.time.LocalDate;
 import java.time.Period;

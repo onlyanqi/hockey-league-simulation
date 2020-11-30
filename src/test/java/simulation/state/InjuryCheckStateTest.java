@@ -38,7 +38,6 @@ public class InjuryCheckStateTest {
     }
 
 
-
     @Test
     public void exitTest() {
         InjuryCheckState state = newStateWithHockeyContext(hockeyContext);

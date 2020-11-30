@@ -1,10 +1,7 @@
 package persistance.serializers.ModelsForDeserialization.model;
 
-import simulation.model.ITeam;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class LeagueDeserializationModel extends SharedAttributes {

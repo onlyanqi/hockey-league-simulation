@@ -5,12 +5,12 @@ import com.google.gson.GsonBuilder;
 import org.junit.Test;
 import persistance.dao.ILeagueDao;
 import persistance.serializers.LeagueDataSerializerDeSerializer;
+import persistance.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.model.ILeague;
 import simulation.model.League;
-import persistance.serializers.ModelsForDeserialization.model.LeagueDeserializationModel;
 import simulation.state.IHockeyContext;
 
 import static org.junit.Assert.assertEquals;

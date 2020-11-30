@@ -48,7 +48,7 @@ public class AdvanceNextSeasonStateTest {
         assertEquals(league.getCurrentDate(), LocalDate.of(2021, 6, 15));
         AdvanceNextSeasonState state = newStateWithHockeyContext(hockeyContext, beforeDate);
         List<String> draftPicks = league.getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getDraftPicks();
-        assertEquals(draftPicks.get(0),"team3");
+        assertEquals(draftPicks.get(0), "team3");
         state.action();
         draftPicks = league.getConferenceList().get(0).getDivisionList().get(0).getTeamList().get(0).getDraftPicks();
         assertNull(draftPicks.get(0));

@@ -51,7 +51,7 @@ public class NHLEventMock implements IEventDao {
                 event.setLastDayStanleyCupFinals(LocalDate.of(2021, Month.JUNE, 01));
                 event.setPlayOffStartDate(LocalDate.of(2021, Month.APRIL, 05));
                 event.setEndOfRegularSeason(null);
-                event.setPlayerDraftDate(LocalDate.of(2021,Month.JULY,15));
+                event.setPlayerDraftDate(LocalDate.of(2021, Month.JULY, 15));
                 break;
 
         }
@@ -68,7 +68,7 @@ public class NHLEventMock implements IEventDao {
                 event.setLastDayStanleyCupFinals(LocalDate.of(2021, Month.JUNE, 01));
                 event.setPlayOffStartDate(LocalDate.of(2021, Month.APRIL, 05));
                 event.setEndOfRegularSeason(LocalDate.of(2021, Month.APRIL, 06));
-                event.setPlayerDraftDate(LocalDate.of(2021,Month.JULY,15));
+                event.setPlayerDraftDate(LocalDate.of(2021, Month.JULY, 15));
                 break;
             case 1:
                 event.setId(4);
@@ -77,7 +77,7 @@ public class NHLEventMock implements IEventDao {
                 event.setNextSeasonDate(LocalDate.of(2021, Month.OCTOBER, 01));
                 event.setLastDayStanleyCupFinals(LocalDate.of(2020, Month.JUNE, 01));
                 event.setPlayOffStartDate(LocalDate.of(2021, Month.APRIL, 05));
-                event.setPlayerDraftDate(LocalDate.of(2021,Month.JULY,15));
+                event.setPlayerDraftDate(LocalDate.of(2021, Month.JULY, 15));
                 break;
             case 2:
                 event.setId(5);
@@ -86,7 +86,7 @@ public class NHLEventMock implements IEventDao {
                 event.setNextSeasonDate(LocalDate.of(2021, Month.OCTOBER, 01));
                 event.setLastDayStanleyCupFinals(LocalDate.of(2021, Month.JUNE, 01));
                 event.setPlayOffStartDate(LocalDate.of(2021, Month.APRIL, 05));
-                event.setPlayerDraftDate(LocalDate.of(2021,Month.JULY,15));
+                event.setPlayerDraftDate(LocalDate.of(2021, Month.JULY, 15));
                 event.setEndOfRegularSeason(null);
                 break;
         }

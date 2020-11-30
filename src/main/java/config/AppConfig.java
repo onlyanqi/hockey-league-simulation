@@ -1,12 +1,12 @@
 package config;
 
+import persistance.serializers.LeagueDataSerializerDeSerializer;
 import presentation.ConsoleOutputForTeamCreation;
 import presentation.IConsoleOutputForTeamCreation;
 import presentation.IUserInputForTeamCreation;
 import presentation.UseInputForTeamCreation;
 import simulation.model.IModelFactory;
 import simulation.model.ModelFactory;
-import persistance.serializers.LeagueDataSerializerDeSerializer;
 
 public class AppConfig {
 
