@@ -72,6 +72,22 @@ public class NHLEventsTest {
     }
 
     @Test
+    public void getPlayerDraftDateTest() throws Exception {
+        NHLEvents nhlEvents = new NHLEvents();
+        iEventDao.loadEventById(3, nhlEvents);
+        assertEquals(nhlEvents.getId(), 3);
+        assertEquals(LocalDate.of(2021,Month.JULY,15), nhlEvents.getPlayerDraftDate());
+    }
+
+    @Test
+    public void setPlayerDraftDateTest() {
+        NHLEvents nhlEvents = new NHLEvents();
+        LocalDate playerDraftDate = LocalDate.of(2021,Month.JULY,15);
+        nhlEvents.setPlayerDraftDate(playerDraftDate);
+        assertTrue(nhlEvents.getPlayerDraftDate().equals(LocalDate.of(2021, Month.JULY, 15)));
+    }
+
+    @Test
     public void getPlayOffStartDateTest() throws Exception {
         NHLEvents nhlEvents2 = new NHLEvents(1, iEventDao);
         assertEquals(nhlEvents2.getId(), 4);

@@ -1,5 +1,6 @@
 package simulation.state;
 
+import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
 import simulation.model.*;
 
@@ -10,10 +11,12 @@ import java.util.List;
 public class AgingState implements ISimulateState {
 
     public static final String AGING_DAY = "Aging all players by one day!";
+    public static final String UNABLE_TO_PROCEED_TO_FURTHER_STATES = "Current date is not set to league. Unable to proceed to further states.";
     private IHockeyContext hockeyContext;
     private ILeague league;
     private IAging aging;
     private ConsoleOutput consoleOutput;
+    private static Logger log = Logger.getLogger(AgingState.class);
 
 
     public AgingState(IHockeyContext hockeyContext) {
@@ -25,6 +28,10 @@ public class AgingState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
+        if (league.getCurrentDate() == null) {
+            log.error(UNABLE_TO_PROCEED_TO_FURTHER_STATES);
+            throw new IllegalStateException(UNABLE_TO_PROCEED_TO_FURTHER_STATES);
+        }
         ConsoleOutput.getInstance().printMsgToConsole(AGING_DAY);
         aging.agingPlayerDay(league);
         aging.agingPlayerRetirement(league);
@@ -73,7 +80,7 @@ public class AgingState implements ISimulateState {
         consoleOutput.printGameStatsToUser(goalAvg, penaltyAvg, shotAvg, saveAvg);
     }
 
-    private void displayWinsLoss(){
+    private void displayWinsLoss() {
         ITeamStanding teamStanding = league.getRegularSeasonStanding();
         consoleOutput.printTeamGameScore(teamStanding);
     }

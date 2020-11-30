@@ -12,6 +12,6 @@ public class NHLEvents {
     public LocalDate playOffStartDate;
     public LocalDate lastDayStanleyCupFinals;
     public LocalDate nextSeasonDate;
+    public LocalDate playerDraftDate;
     public int currentYear;
-
 }

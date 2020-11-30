@@ -550,6 +550,28 @@ public class PlayerMock implements IPlayerDao {
                 player.setInjured(false);
                 player.setRelativeStrength();
                 break;
+
+            case 33:
+                player.setName("Player33");
+                player.setPosition(Position.FORWARD);
+                player.setCaptain(true);
+                player.setTeamId(1);
+                player.setFreeAgentId(1);
+                player.setAge(27);
+                player.setBirthday(LocalDate.of(1993, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()));
+                player.setSkating(15);
+                player.setShooting(18);
+                player.setChecking(12);
+                player.setSaving(1);
+                player.setStrength();
+                player.setInjured(true);
+                player.setInjuryStartDate(LocalDate.now());
+                player.setInjuryDatesRange(80);
+                player.setRelativeStrength();
+                player.setPenaltyCount(10);
+                player.setGoalScore(8);
+                player.setSaves(15);
+                break;
         }
 
     }

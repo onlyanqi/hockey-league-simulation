@@ -39,15 +39,18 @@ public class TeamStandingMock implements ITeamStandingDao {
         ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().newTeamStanding();
         switch (leagueId) {
             case 1:
+            case 6:
                 List<ITeamScore> teamScoreList = new ArrayList<>();
 
                 ITeamScoreDao teamScoreFactory = new TeamScoreMock();
 
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 3; i++) {
                     ITeamScore teamScore = new TeamScore(i, teamScoreFactory);
                     teamScoreList.add(teamScore);
                 }
                 teamStanding.setTeamsScoreList(teamScoreList);
+                break;
+
         }
         return teamStanding;
     }

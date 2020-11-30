@@ -6,7 +6,7 @@ import simulation.dao.IUserDao;
 import simulation.factory.HockeyContextConcrete;
 import simulation.factory.IHockeyContextFactory;
 import simulation.mock.UserMock;
-import simulation.model.Training;
+import simulation.model.ILeague;
 import simulation.model.User;
 
 import static org.junit.Assert.assertFalse;
@@ -16,6 +16,7 @@ public class InjuryCheckStateTest {
     private static IUserDao userFactory;
     private static IHockeyContext hockeyContext;
     private static IHockeyContextFactory hockeyContextFactory;
+    private static ILeague league;
 
     @BeforeClass
     public static void init() throws Exception {
@@ -24,16 +25,26 @@ public class InjuryCheckStateTest {
         hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(4, userFactory);
         hockeyContext.setUser(user);
+        league = hockeyContext.getUser().getLeague();
     }
+
+    public InjuryCheckState newStateWithHockeyContext(IHockeyContext hockeyContext) {
+        return new InjuryCheckState(hockeyContext);
+    }
+
+    @Test
+    public void actionTest() {
+        InjuryCheckState state = newStateWithHockeyContext(hockeyContext);
+    }
+
 
 
     @Test
     public void exitTest() {
-        ExecuteTradeState state = new ExecuteTradeState(hockeyContext);
+        InjuryCheckState state = newStateWithHockeyContext(hockeyContext);
         assertTrue(state.exit() instanceof ISimulateState);
-        assertFalse(state.exit() instanceof Training);
-        assertFalse(state.exit() instanceof AdvanceTimeState);
-        assertFalse(state.exit() instanceof AdvanceNextSeasonState);
-        assertFalse(state.exit() instanceof PersistState);
+        assertTrue(state.exit() instanceof AgingState);
+        assertFalse(state.exit() instanceof SimulateGameState);
+        assertFalse(state.exit() instanceof ExecuteTradeState);
     }
 }

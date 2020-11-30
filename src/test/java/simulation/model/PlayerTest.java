@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 public class PlayerTest {
 
     private static IPlayerDao playerDao;
+    private static ILeagueDao leagueDao;
     private static IModelFactory modelFactory;
     private static IDaoFactory daoFactory;
 
@@ -24,6 +25,7 @@ public class PlayerTest {
     public static void setFactoryObj() {
         daoFactory = DaoFactoryMock.getInstance();
         playerDao = daoFactory.newPlayerDao();
+        leagueDao = daoFactory.newLeagueDao();
         modelFactory = ModelFactory.getInstance();
     }
 
@@ -51,7 +53,7 @@ public class PlayerTest {
         assertEquals(player.getId(), 1);
         assertEquals(player.getName(), "Player1");
 
-        player = new Player(33, playerDao);
+        player = new Player(34, playerDao);
         assertNull(player.getName());
     }
 
@@ -317,6 +319,21 @@ public class PlayerTest {
         player.setStrength();
         player.setRelativeStrength();
         assertTrue(player.getRelativeStrength() == (7.8));
+    }
+
+    @Test
+    public void statDecayCheckTest() throws Exception {
+        IPlayer player = modelFactory.newPlayerWithIdDao(33, playerDao);
+        assertEquals(player.getSkating(), 15);
+        assertEquals(player.getShooting(), 18);
+        assertEquals(player.getChecking(), 12);
+        assertEquals(player.getSaving(), 1);
+        ILeague league = modelFactory.newLeagueWithIdDao(1,leagueDao);
+        player.statDecayCheck(league);
+        assertEquals(player.getSkating(), 15-1);
+        assertEquals(player.getShooting(), 18-1);
+        assertEquals(player.getChecking(), 12-1);
+        assertEquals(player.getSaving(), 1);
     }
 
 }

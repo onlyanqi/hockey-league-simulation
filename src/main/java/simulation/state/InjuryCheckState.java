@@ -54,7 +54,7 @@ public class InjuryCheckState implements ISimulateState {
         }
     }
 
-    private ISimulateState exit() {
+    public ISimulateState exit() {
         INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
 
         IGameSchedule games = league.getGames();

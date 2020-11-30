@@ -1,5 +1,6 @@
 package simulation.state;
 
+import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
 import simulation.model.*;
 
@@ -11,11 +12,15 @@ import java.util.List;
 public class AdvanceNextSeasonState implements ISimulateState {
 
     public static final String SEASON_CURRENT_DATE = "Advanced to next season! Current date is ";
-    public static final String AGING_TO_NEXT_SEASON = "Aging all players to the start of next season!";
+    public static final String UNABLE_TO_PROCEED_TO_FURTHER_STATES = "Current date is not set to league. Unable to proceed to further states.";
+    public static final String CLEAN_DRAFT_PICKS = "Cleaned draft picks in all teams.";
+    public static final String AGING_ALL_PLAYERS_FROM = "Aging all players from ";
+    public static final String TO_NEXT_SEASON = " to next season";
     private ILeague league;
     private IHockeyContext hockeyContext;
     private IAging aging;
     private LocalDate beforeDate;
+    private static Logger log = Logger.getLogger(AdvanceNextSeasonState.class);
 
     public AdvanceNextSeasonState(IHockeyContext hockeyContext, LocalDate before) {
         this.hockeyContext = hockeyContext;
@@ -26,13 +31,20 @@ public class AdvanceNextSeasonState implements ISimulateState {
 
     @Override
     public ISimulateState action() {
-
+        if (league.getCurrentDate() == null) {
+            log.error(UNABLE_TO_PROCEED_TO_FURTHER_STATES);
+            throw new IllegalStateException(UNABLE_TO_PROCEED_TO_FURTHER_STATES);
+        }
         INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
-        league.setCurrentDate(nhlEvents.getNextSeasonDate());
-        ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + nhlEvents.getNextSeasonDate());
+        LocalDate currentDate = nhlEvents.getNextSeasonDate();
+        league.setCurrentDate(currentDate);
+        ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + currentDate);
+        log.debug(SEASON_CURRENT_DATE + currentDate);
         cleanDraftPicks();
+        log.debug(CLEAN_DRAFT_PICKS);
         aging.agingPlayerPeriod(league, beforeDate);
-        ConsoleOutput.getInstance().printMsgToConsole(AGING_TO_NEXT_SEASON);
+        log.debug(AGING_ALL_PLAYERS_FROM + beforeDate + TO_NEXT_SEASON + currentDate);
+        ConsoleOutput.getInstance().printMsgToConsole(AGING_ALL_PLAYERS_FROM + beforeDate + TO_NEXT_SEASON + currentDate);
         return exit();
     }
 
@@ -48,7 +60,7 @@ public class AdvanceNextSeasonState implements ISimulateState {
         }
     }
 
-    private ISimulateState exit() {
+    public ISimulateState exit() {
         return new PersistState(hockeyContext);
     }
 }
