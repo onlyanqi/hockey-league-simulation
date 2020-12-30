@@ -1,10 +1,10 @@
 package simulation.model;
 
-import db.data.IGameFactory;
+import persistance.dao.IGameDao;
 
 import java.time.LocalDate;
 
-public class Game {
+public class Game implements IGame {
 
     private int id;
     private String team1;
@@ -15,11 +15,21 @@ public class Game {
 
     public Game() {
         this.played = false;
+        setId(System.identityHashCode(this));
     }
 
-    public Game(int id, IGameFactory factory) throws Exception {
+    public Game(int id, IGameDao factory) throws Exception {
         setId(id);
         factory.loadGameById(id, this);
+    }
+
+    public Game(persistance.serializers.ModelsForDeserialization.model.Game game) {
+        this.id = game.id;
+        this.date = game.date;
+        this.played = game.played;
+        this.team1 = game.team1;
+        this.team2 = game.team2;
+        this.winner = game.winner;
     }
 
     public static Result fromString(String text) {
@@ -80,16 +90,7 @@ public class Game {
     }
 
     public Boolean isGameUnPlayed() {
-        if (this.played) {
-            return false;
-        } else {
-            return true;
-        }
+        return !this.played;
     }
 
-    public enum Result {
-        TEAM1,
-        TEAM2,
-        TIE
-    }
 }

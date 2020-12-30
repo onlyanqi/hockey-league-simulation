@@ -1,94 +1,66 @@
 package simulation.state;
 
+import org.apache.log4j.Logger;
 import presentation.ConsoleOutput;
-import simulation.model.NHLEvents;
 import simulation.model.*;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AdvanceNextSeasonState implements ISimulateState {
 
     public static final String SEASON_CURRENT_DATE = "Advanced to next season! Current date is ";
-    public static final String AGING_TO_NEXT_SEASON = "Aging all players to the start of next season!";
-    private League league;
-    private HockeyContext hockeyContext;
+    public static final String UNABLE_TO_PROCEED_TO_FURTHER_STATES = "Current date is not set to league. Unable to proceed to further states.";
+    public static final String CLEAN_DRAFT_PICKS = "Cleaned draft picks in all teams.";
+    public static final String AGING_ALL_PLAYERS_FROM = "Aging all players from ";
+    public static final String TO_NEXT_SEASON = " to next season";
+    private static Logger log = Logger.getLogger(AdvanceNextSeasonState.class);
+    private ILeague league;
+    private IHockeyContext hockeyContext;
+    private IAging aging;
+    private LocalDate beforeDate;
 
-    public AdvanceNextSeasonState(HockeyContext hockeyContext) {
+    public AdvanceNextSeasonState(IHockeyContext hockeyContext, LocalDate before) {
         this.hockeyContext = hockeyContext;
         this.league = hockeyContext.getUser().getLeague();
+        this.aging = league.getGamePlayConfig().getAging();
+        this.beforeDate = before;
     }
 
     @Override
     public ISimulateState action() {
-
-        NHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
-        league.setCurrentDate(nhlEvents.getNextSeasonDate());
-        ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + nhlEvents.getNextSeasonDate());
-
-        agingPlayerSeason(league);
-        ConsoleOutput.getInstance().printMsgToConsole(AGING_TO_NEXT_SEASON);
-
+        if (league.getCurrentDate() == null) {
+            log.error(UNABLE_TO_PROCEED_TO_FURTHER_STATES);
+            throw new IllegalStateException(UNABLE_TO_PROCEED_TO_FURTHER_STATES);
+        }
+        INHLEvents nhlEvents = league.getNHLRegularSeasonEvents();
+        LocalDate currentDate = nhlEvents.getNextSeasonDate();
+        league.setCurrentDate(currentDate);
+        ConsoleOutput.getInstance().printMsgToConsole(SEASON_CURRENT_DATE + currentDate);
+        log.debug(SEASON_CURRENT_DATE + currentDate);
+        cleanDraftPicks();
+        log.debug(CLEAN_DRAFT_PICKS);
+        aging.agingPlayerPeriod(league, beforeDate);
+        log.debug(AGING_ALL_PLAYERS_FROM + beforeDate + TO_NEXT_SEASON + currentDate);
+        ConsoleOutput.getInstance().printMsgToConsole(AGING_ALL_PLAYERS_FROM + beforeDate + TO_NEXT_SEASON + currentDate);
         return exit();
     }
 
-    private void agingPlayerSeason(League league) {
-        List<Conference> conferenceList = league.getConferenceList();
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
-        List<Player> retiredPlayerList = league.getRetiredPlayerList();
-        Aging aging = league.getGamePlayConfig().getAging();
 
-        for (Conference conference : conferenceList) {
-            List<Division> divisionList = conference.getDivisionList();
-            for (Division division : divisionList) {
-                List<Team> teamList = division.getTeamList();
-                for (Team team : teamList) {
-                    List<Player> playerList = team.getPlayerList();
-                    int size = playerList.size();
-                    for (int i = size - 1; i >= 0; i--) {
-                        Player teamPlayer = playerList.get(i);
-                        teamPlayer.getOlder();
-                        if (teamPlayer.retirementCheck(aging)) {
-                            teamPlayer.setRetired(true);
-                            retiredPlayerList.add(teamPlayer);
-                            Player.Position position = teamPlayer.getPosition();
-                            this.findReplacement(playerList, position, i);
-                            playerList.remove(i);
-                        }
-                        teamPlayer.agingInjuryRecovery(league);
-                    }
+    private void cleanDraftPicks() {
+        for (IConference conference : league.getConferenceList()) {
+            for (IDivision division : conference.getDivisionList()) {
+                for (ITeam team : division.getTeamList()) {
+                    List<String> draftPicks = new ArrayList<>(Arrays.asList(null, null, null, null, null, null, null));
+                    team.setDraftPicks(draftPicks);
                 }
             }
         }
-        int size = freeAgentList.size();
-        for (int i = size - 1; i >= 0; i--) {
-            Player freeAgentPlayer = freeAgentList.get(i);
-            freeAgentPlayer.getOlder();
-            if (freeAgentPlayer.retirementCheck(aging)) {
-                freeAgentPlayer.setRetired(true);
-                freeAgentList.remove(i);
-            }
-            freeAgentPlayer.agingInjuryRecovery(league);
-        }
     }
 
-
-    public void findReplacement(List<Player> playerList, Player.Position position, int index) {
-        List<Player> freeAgentList = league.getFreeAgent().getPlayerList();
-        Collections.sort(freeAgentList, Collections.reverseOrder());
-        Player replacePlayer = new Player();
-        int size = freeAgentList.size();
-        for (int i = 0; i < size; i++) {
-            if (freeAgentList.get(i).getPosition().equals(position)) {
-                freeAgentList.get(i).setTeamId(playerList.get(index).getTeamId());
-                replacePlayer = new Player(freeAgentList.get(i));
-                freeAgentList.remove(i);
-                break;
-            }
-        }
-        playerList.add(replacePlayer);
-    }
-
-    private ISimulateState exit() {
+    public ISimulateState exit() {
         return new PersistState(hockeyContext);
     }
 }

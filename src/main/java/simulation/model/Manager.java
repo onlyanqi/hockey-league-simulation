@@ -1,31 +1,39 @@
 package simulation.model;
 
-import db.data.IManagerFactory;
+import persistance.dao.IManagerDao;
 
-public class Manager extends SharedAttributes {
+public class Manager extends SharedAttributes implements IManager {
     private int leagueId;
     private int teamId;
+    private String personality;
 
     public Manager() {
+        setId(System.identityHashCode(this));
     }
 
     public Manager(int id) {
         setId(id);
     }
 
-    public Manager(Manager manager) {
+    public Manager(IManager manager) {
         if (manager == null) {
             return;
         }
         this.setId(manager.getId());
         this.setLeagueId(manager.getLeagueId());
-        if (isNotNull(manager.getName())) {
-            this.setName(manager.getName());
-        }
-        this.setTeamId(manager.teamId);
+        this.setName(manager.getName());
+        this.setTeamId(manager.getTeamId());
     }
 
-    public Manager(int id, IManagerFactory managerFactory) throws Exception {
+    public Manager(persistance.serializers.ModelsForDeserialization.model.Manager manager) {
+        this.leagueId = manager.leagueId;
+        this.personality = manager.personality;
+        this.teamId = manager.teamId;
+        this.setId(manager.id);
+        this.setName(manager.name);
+    }
+
+    public Manager(int id, IManagerDao managerFactory) throws Exception {
         if (managerFactory == null) {
             return;
         }
@@ -47,6 +55,14 @@ public class Manager extends SharedAttributes {
 
     public void setTeamId(int teamId) {
         this.teamId = teamId;
+    }
+
+    public String getPersonality() {
+        return personality;
+    }
+
+    public void setPersonality(String personality) {
+        this.personality = personality;
     }
 
 }

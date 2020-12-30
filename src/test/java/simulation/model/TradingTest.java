@@ -1,49 +1,57 @@
 package simulation.model;
 
-import db.data.ITradingFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import simulation.mock.TradingMock;
+import persistance.dao.IDaoFactory;
+import persistance.dao.ITradingDao;
+import simulation.dao.DaoFactoryMock;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
 public class TradingTest {
 
-    private static ITradingFactory tradingFactory;
+    private static ITradingDao tradingDao;
+    private static IModelFactory modelFactory;
+    private static IDaoFactory daoFactory;
+    int zero = 0;
+    int one = 1;
+    int nextYear = 2021;
+    int yearInit = 1900;
+    double decimalFive = 0.05f;
+    double oneFive = 1.05f;
 
     @BeforeClass
     public static void setFactoryObj() {
-        tradingFactory = new TradingMock();
+        daoFactory = DaoFactoryMock.getInstance();
+        tradingDao = daoFactory.createTradingDao();
+        modelFactory = ModelFactory.getInstance();
     }
 
     @Test
-    public void defaultConstructorTest() {
-        Trading trading = new Trading();
-        assertEquals(trading.getId(), 0);
+    public void tradingTest() {
+        ITrading trading = modelFactory.createTrading();
+        assertNotEquals(trading.getId(), zero);
     }
 
     @Test
     public void tradingFactoryTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
         assertEquals(trading.getId(), 1);
         assertEquals(trading.getLeagueId(), 1);
     }
 
     @Test
     public void getCurrentYearSeasonMonthsTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
         assertTrue(trading.getCurrentYearSeasonMonths().contains(9));
         assertFalse(trading.getCurrentYearSeasonMonths().contains(5));
     }
 
     @Test
     public void setCurrentYearSeasonMonthsTest() {
-        Trading trading = new Trading();
+        ITrading trading = modelFactory.createTrading();
         List<Integer> currentYearSeasonMonths = new ArrayList<>(Arrays.asList(9, 10, 11));
         trading.setCurrentYearSeasonMonths(currentYearSeasonMonths);
         assertTrue(trading.getCurrentYearSeasonMonths().contains(9));
@@ -52,138 +60,138 @@ public class TradingTest {
 
     @Test
     public void getNextYearSeasonMonthsTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
-        assertTrue(trading.getNextYearSeasonMonths().contains(0));
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
+        assertTrue(trading.getNextYearSeasonMonths().contains(zero));
         assertFalse(trading.getNextYearSeasonMonths().contains(6));
     }
 
     @Test
     public void setNextYearSeasonMonthsTest() {
-        Trading trading = new Trading();
-        List<Integer> nextYearSeasonMonths = new ArrayList<>(Arrays.asList(0, 1));
+        ITrading trading = modelFactory.createTrading();
+        List<Integer> nextYearSeasonMonths = new ArrayList<>(Arrays.asList(zero, one));
         trading.setNextYearSeasonMonths(nextYearSeasonMonths);
-        assertTrue(trading.getNextYearSeasonMonths().contains(0));
+        assertTrue(trading.getNextYearSeasonMonths().contains(zero));
         assertFalse(trading.getNextYearSeasonMonths().contains(7));
     }
 
     @Test
     public void isLeagueInTradingPeriodTest() {
-        Trading trading = new Trading();
+        ITrading trading = modelFactory.createTrading();
         trading.isLeagueInTradingPeriod(new Date());
         assertTrue(trading.isTradingPeriod());
     }
 
     @Test
     public void getTradeStartDateTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
-        Date tradeStartDate = new Date((2020 - 1900), 9, 1);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
+        Date tradeStartDate = new Date((2020 - yearInit), 9, one);
         int compare = tradeStartDate.compareTo(trading.getTradeStartDate());
-        assertEquals(compare, 0);
-        assertNotEquals(compare, 1);
+        assertEquals(compare, zero);
+        assertNotEquals(compare, one);
     }
 
     @Test
     public void setTradeStartDateTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
-        Date startDate = new Date((2020 - 1900), 9, 1);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
+        Date startDate = new Date((2020 - yearInit), 9, one);
         int compare = trading.getTradeStartDate().compareTo(startDate);
-        assertEquals(compare, 0);
-        assertNotEquals(compare, 1);
+        assertEquals(compare, zero);
+        assertNotEquals(compare, one);
     }
 
     @Test
     public void getTradeEndDateTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
-        Date endDate = new Date((2021 - 1900), 1, 22);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
+        Date endDate = new Date((nextYear - yearInit), one, 22);
         int compare = trading.getTradeEndDate().compareTo(endDate);
-        assertEquals(compare, 0);
-        assertNotEquals(compare, 1);
+        assertEquals(compare, zero);
+        assertNotEquals(compare, one);
     }
 
     @Test
     public void setTradeEndDateTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
-        Date endDate = new Date((2021 - 1900), 1, 22);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
+        Date endDate = new Date((nextYear - yearInit), one, 22);
         int compare = trading.getTradeEndDate().compareTo(endDate);
-        assertEquals(compare, 0);
-        assertNotEquals(compare, 1);
+        assertEquals(compare, zero);
+        assertNotEquals(compare, one);
     }
 
     @Test
     public void calTradeEndDateFromLeagueDateTest() {
-        Trading trading = new Trading();
+        ITrading trading = modelFactory.createTrading();
         trading.calTradeEndDateFromLeagueDate(new Date(System.currentTimeMillis()));
-        Date endDate = new Date((2021 - 1900), 1, 22, 23, 59, 59);
+        Date endDate = new Date((nextYear - yearInit), one, 22, 23, 59, 59);
         int compare = trading.getTradeEndDate().compareTo(endDate);
-        assertEquals(compare, 0);
-        assertNotEquals(compare, 1);
+        assertEquals(compare, zero);
+        assertNotEquals(compare, one);
     }
 
     @Test
     public void calTradeStartDateFromLeagueDateTest() {
-        Trading trading = new Trading();
+        ITrading trading = modelFactory.createTrading();
         trading.calTradeStartDateFromLeagueDate(new Date(System.currentTimeMillis()));
-        Date tradeStartDate = new Date((2020 - 1900), 9, 1);
+        Date tradeStartDate = new Date((2020 - yearInit), 9, one);
         int compare = trading.getTradeStartDate().compareTo(tradeStartDate);
-        assertEquals(compare, 0);
-        assertNotEquals(compare, 1);
+        assertEquals(compare, zero);
+        assertNotEquals(compare, one);
     }
 
     @Test
     public void getLeagueIdTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
-        assertEquals(trading.getLeagueId(), 1);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
+        assertEquals(trading.getLeagueId(), one);
         assertNotEquals(trading.getLeagueId(), 2);
     }
 
     @Test
     public void setLeagueIdTest() {
-        Trading trading = new Trading();
+        ITrading trading = modelFactory.createTrading();
         trading.setLeagueId(1);
-        assertEquals(trading.getLeagueId(), 1);
+        assertEquals(trading.getLeagueId(), one);
         assertNotEquals(trading.getLeagueId(), 2);
     }
 
     @Test
     public void getLossPointTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
         assertEquals(trading.getLossPoint(), 2);
         assertNotEquals(trading.getLossPoint(), 3);
     }
 
     @Test
     public void setLossPointTest() {
-        Trading trading = new Trading();
-        trading.setLossPoint(1);
-        assertEquals(trading.getLossPoint(), 1);
+        ITrading trading = modelFactory.createTrading();
+        trading.setLossPoint(one);
+        assertEquals(trading.getLossPoint(), one);
         assertNotEquals(trading.getLossPoint(), 2);
     }
 
     @Test
     public void getRandomTradeOfferChanceTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
-        assertTrue(trading.getRandomTradeOfferChance() == 0.05f);
-        assertFalse(trading.getRandomTradeOfferChance() == 1.05f);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
+        assertTrue(trading.getRandomTradeOfferChance() == decimalFive);
+        assertFalse(trading.getRandomTradeOfferChance() == oneFive);
     }
 
     @Test
     public void setRandomTradeOfferChanceTest() {
-        Trading trading = new Trading();
-        trading.setRandomTradeOfferChance(0.05f);
-        assertTrue(trading.getRandomTradeOfferChance() == 0.05f);
-        assertFalse(trading.getRandomTradeOfferChance() == 1.05f);
+        ITrading trading = modelFactory.createTrading();
+        trading.setRandomTradeOfferChance(decimalFive);
+        assertTrue(trading.getRandomTradeOfferChance() == decimalFive);
+        assertFalse(trading.getRandomTradeOfferChance() == oneFive);
     }
 
     @Test
     public void getMaxPlayersPerTradeTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
         assertEquals(trading.getMaxPlayersPerTrade(), 3);
         assertNotEquals(trading.getMaxPlayersPerTrade(), 5);
     }
 
     @Test
     public void setMaxPlayersPerTradeTest() {
-        Trading trading = new Trading();
+        ITrading trading = modelFactory.createTrading();
         trading.setMaxPlayersPerTrade(3);
         assertEquals(trading.getMaxPlayersPerTrade(), 3);
         assertNotEquals(trading.getMaxPlayersPerTrade(), 5);
@@ -191,28 +199,51 @@ public class TradingTest {
 
     @Test
     public void getRandomAcceptanceChanceTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
-        assertTrue(trading.getRandomAcceptanceChance() == 0.05f);
-        assertFalse(trading.getRandomAcceptanceChance() == 1.05f);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
+        assertTrue(trading.getRandomAcceptanceChance() == decimalFive);
+        assertFalse(trading.getRandomAcceptanceChance() == oneFive);
     }
 
     @Test
     public void setRandomAcceptanceChanceTest() {
-        Trading trading = new Trading();
-        trading.setRandomAcceptanceChance(0.05f);
-        assertTrue(trading.getRandomAcceptanceChance() == 0.05f);
-        assertFalse(trading.getRandomAcceptanceChance() == 1.05f);
+        ITrading trading = modelFactory.createTrading();
+        trading.setRandomAcceptanceChance(decimalFive);
+        assertTrue(trading.getRandomAcceptanceChance() == decimalFive);
+        assertFalse(trading.getRandomAcceptanceChance() == oneFive);
+    }
+
+    @Test
+    public void getGmTableTest() throws Exception {
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
+        assertTrue(trading.getGmTable().get("shrewd") == -0.1);
+        assertFalse(trading.getGmTable().get("shrewd") == 0.1);
+        assertTrue(trading.getGmTable().get("gambler") == 0.1);
+        assertFalse(trading.getGmTable().get("gambler") == -0.1);
+    }
+
+    @Test
+    public void setGmTableTest() {
+        ITrading trading = modelFactory.createTrading();
+        Map<String, Double> gmTable = new HashMap<>();
+        gmTable.put("shrewd", -0.1);
+        gmTable.put("gambler", 0.1);
+        gmTable.put("normal", 0.0);
+        trading.setGmTable(gmTable);
+        assertTrue(trading.getGmTable().get("shrewd") == -0.1);
+        assertFalse(trading.getGmTable().get("shrewd") == 0.1);
+        assertTrue(trading.getGmTable().get("gambler") == 0.1);
+        assertFalse(trading.getGmTable().get("gambler") == -0.1);
     }
 
     @Test
     public void isTradingPeriodTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
+        ITrading trading = modelFactory.createTradingWithIdDao(one, tradingDao);
         assertTrue(trading.isTradingPeriod());
     }
 
     @Test
     public void setTradingPeriodTest() {
-        Trading trading = new Trading();
+        ITrading trading = modelFactory.createTrading();
         assertFalse(trading.isTradingPeriod());
         trading.setTradingPeriod(true);
         assertTrue(trading.isTradingPeriod());
@@ -220,10 +251,11 @@ public class TradingTest {
 
     @Test
     public void addTradingTest() throws Exception {
-        Trading trading = new Trading(1, tradingFactory);
-        trading.addTrading(tradingFactory);
-        assertEquals(1, trading.getId());
+        ITrading trading = modelFactory.createTradingWithIdDao(1, tradingDao);
+        trading.addTrading(tradingDao);
+        assertEquals(one, trading.getId());
         assertEquals(3, trading.getMaxPlayersPerTrade());
     }
+
 
 }

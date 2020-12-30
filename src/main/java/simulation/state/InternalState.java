@@ -1,36 +1,32 @@
 package simulation.state;
 
-import simulation.factory.ValidationConcrete;
-import validator.IValidation;
+import presentation.ConsoleOutput;
 
 public class InternalState implements IHockeyState {
 
-    private HockeyContext hockeyContext;
+    private final IHockeyContext hockeyContext;
     private ISimulateState simulateState;
-    private IValidation iValidation;
 
-    public InternalState(HockeyContext hockeyContext) {
+    public InternalState(IHockeyContext hockeyContext) {
         this.hockeyContext = hockeyContext;
-        ValidationConcrete validationConcrete = new ValidationConcrete();
-        iValidation = validationConcrete.newValidation();
     }
 
     @Override
-    public void entry() {
+    public void entry() throws Exception {
         simulateState = new InitializeSeasonState(hockeyContext);
         simulateState.action();
     }
 
     @Override
-    public void process() {
+    public void process() throws Exception {
         do {
             simulateState = simulateState.action();
-        } while (iValidation.isNotNull(simulateState));
+        } while (simulateState instanceof ISimulateState);
     }
 
     @Override
     public IHockeyState exit() {
-        System.out.println("Exiting App!");
+        ConsoleOutput.getInstance().printMsgToConsole("Exiting App!!!");
         return null;
     }
 }

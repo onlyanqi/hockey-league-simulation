@@ -1,34 +1,33 @@
 package simulation.mock;
 
-import db.data.IGameFactory;
-import db.data.ITeamScoreFactory;
-import db.data.ITeamStandingFactory;
-import simulation.model.Game;
-import simulation.model.GameSchedule;
+import persistance.dao.ITeamScoreDao;
+import persistance.dao.ITeamStandingDao;
+import simulation.model.ITeamScore;
+import simulation.model.ITeamStanding;
 import simulation.model.TeamScore;
-import simulation.model.TeamStanding;
+import simulation.state.HockeyContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamStandingMock implements ITeamStandingFactory {
+public class TeamStandingMock implements ITeamStandingDao {
     @Override
-    public long addTeamStanding(int leagueId, TeamStanding teamStanding) throws Exception {
-        loadTeamStandingById(1,teamStanding);
+    public long addTeamStanding(int leagueId, ITeamStanding teamStanding) throws Exception {
+        loadTeamStandingById(1, teamStanding);
         teamStanding.setId(1);
         return teamStanding.getId();
     }
 
     @Override
-    public void loadTeamStandingById(int id, TeamStanding teamStanding) throws Exception {
-        switch (id){
+    public void loadTeamStandingById(int id, ITeamStanding teamStanding) throws Exception {
+        switch (id) {
             case 1:
-                List<TeamScore> teamScoreList = new ArrayList<>();
+                List<ITeamScore> teamScoreList = new ArrayList<>();
 
-                ITeamScoreFactory teamScoreFactory = new TeamScoreMock();
+                ITeamScoreDao teamScoreFactory = new TeamScoreMock();
 
                 for (int i = 0; i < 4; i++) {
-                    TeamScore teamScore = new TeamScore(i, teamScoreFactory);
+                    ITeamScore teamScore = new TeamScore(i, teamScoreFactory);
                     teamScoreList.add(teamScore);
                 }
                 teamStanding.setTeamsScoreList(teamScoreList);
@@ -36,19 +35,22 @@ public class TeamStandingMock implements ITeamStandingFactory {
     }
 
     @Override
-    public TeamStanding loadTeamStandingByLeagueId(int leagueId) throws Exception {
-        TeamStanding teamStanding = new TeamStanding();
-        switch (leagueId){
+    public ITeamStanding loadTeamStandingByLeagueId(int leagueId) throws Exception {
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
+        switch (leagueId) {
             case 1:
-                List<TeamScore> teamScoreList = new ArrayList<>();
+            case 6:
+                List<ITeamScore> teamScoreList = new ArrayList<>();
 
-                ITeamScoreFactory teamScoreFactory = new TeamScoreMock();
+                ITeamScoreDao teamScoreFactory = new TeamScoreMock();
 
-                for (int i = 0; i < 4; i++) {
-                    TeamScore teamScore = new TeamScore(i, teamScoreFactory);
+                for (int i = 0; i < 3; i++) {
+                    ITeamScore teamScore = new TeamScore(i, teamScoreFactory);
                     teamScoreList.add(teamScore);
                 }
                 teamStanding.setTeamsScoreList(teamScoreList);
+                break;
+
         }
         return teamStanding;
     }

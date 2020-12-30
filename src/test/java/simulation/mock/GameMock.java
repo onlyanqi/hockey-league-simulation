@@ -1,25 +1,27 @@
 package simulation.mock;
 
-import db.data.IGameFactory;
+import persistance.dao.IGameDao;
 import simulation.model.Game;
+import simulation.model.IGame;
+import simulation.model.Result;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
-public class GameMock implements IGameFactory {
+public class GameMock implements IGameDao {
     @Override
-    public long addGame(int leagueId, Game game) {
+    public long addGame(int leagueId, IGame game) {
         game.setId(1);
         return game.getId();
     }
 
     @Override
-    public void loadGameById(int id, Game game) {
+    public void loadGameById(int id, IGame game) {
         switch (id) {
             case 0:
                 game.setId(id);
-                game.setWinner(Game.Result.TEAM1);
+                game.setWinner(Result.TEAM1);
                 game.setPlayed(true);
                 game.setTeam1("Ottawa High Rollers");
                 game.setTeam2("Atlanta Milk Cartons");
@@ -27,7 +29,7 @@ public class GameMock implements IGameFactory {
                 break;
             case 1:
                 game.setId(id);
-                game.setWinner(Game.Result.TEAM2);
+                game.setWinner(Result.TEAM2);
                 game.setPlayed(true);
                 game.setTeam1("Gander Milk Cartons");
                 game.setTeam2("Shanghai Mutineers");
@@ -57,12 +59,20 @@ public class GameMock implements IGameFactory {
                 game.setTeam2("Team12");
                 game.setDate(LocalDate.of(2020, Month.NOVEMBER, 03));
                 break;
+            case 5:
+                game.setId(id);
+                game.setWinner(null);
+                game.setPlayed(false);
+                game.setTeam1("Team21");
+                game.setTeam2("Team22");
+                game.setDate(LocalDate.of(2021, Month.MAY, 10));
+                break;
         }
     }
 
     @Override
-    public List<Game> loadGamesByLeagueId(int leagueId) {
-        List<Game> gameList = null;
+    public List<IGame> loadGamesByLeagueId(int leagueId) {
+        List<IGame> gameList = null;
         switch (leagueId) {
             case 0:
                 Game game1 = new Game();
@@ -75,7 +85,7 @@ public class GameMock implements IGameFactory {
 
                 Game game2 = new Game();
                 game1.setId(5);
-                game1.setWinner(Game.Result.TEAM2);
+                game1.setWinner(Result.TEAM2);
                 game1.setPlayed(true);
                 game1.setTeam1("Ottawa High Rollers");
                 game1.setTeam2("Atlanta Milk Cartons");
@@ -95,7 +105,7 @@ public class GameMock implements IGameFactory {
 
                 Game game4 = new Game();
                 game4.setId(8);
-                game4.setWinner(Game.Result.TEAM1);
+                game4.setWinner(Result.TEAM1);
                 game4.setPlayed(true);
                 game4.setTeam1("Atlanta Wild Cats");
                 game4.setTeam2("Moscow Lazy Dogs");
@@ -109,7 +119,7 @@ public class GameMock implements IGameFactory {
     }
 
     @Override
-    public void updateGameById(Game game) {
+    public void updateGameById(IGame game) {
         game.setId(game.getId());
         game.setTeam1(game.getTeam1());
         game.setTeam2(game.getTeam2());

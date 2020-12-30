@@ -1,8 +1,8 @@
 package simulation.model;
 
-import db.data.IGameFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IGameDao;
 import simulation.mock.GameMock;
 
 import java.time.LocalDate;
@@ -11,35 +11,35 @@ import java.time.Month;
 import static org.junit.Assert.*;
 
 public class GameTest {
-    private static IGameFactory iGameFactory;
+    private static IGameDao iGameDao;
 
     @BeforeClass
     public static void setFactoryObj() {
-        iGameFactory = new GameMock();
+        iGameDao = new GameMock();
     }
 
     @Test
     public void defaultConstructorTest() {
         Game game = new Game();
-        assertEquals(game.getId(), 0);
+        assertNotEquals(game.getId(), 0);
     }
 
     @Test
     public void teamScoreFactory() throws Exception {
-        Game game = new Game(1, iGameFactory);
+        Game game = new Game(1, iGameDao);
         assertEquals(game.getId(), 1);
 
-        Game game1 = new Game(3, iGameFactory);
+        Game game1 = new Game(3, iGameDao);
         assertEquals(game1.getId(), 3);
         assertNull(game1.getWinner());
     }
 
     @Test
     public void getIdTest() throws Exception {
-        Game game = new Game(1, iGameFactory);
+        Game game = new Game(1, iGameDao);
         assertTrue(game.getId() == 1);
 
-        Game game2 = new Game(3, iGameFactory);
+        Game game2 = new Game(3, iGameDao);
         assertTrue(game2.getId() == 3);
     }
 
@@ -50,12 +50,12 @@ public class GameTest {
         assertTrue(game.getId() == 1);
 
         Game game2 = new Game();
-        assertTrue(game2.getId() == 0);
+        assertFalse(game2.getId() == 0);
     }
 
     @Test
     public void getTeam1Test() throws Exception {
-        Game game = new Game(1, iGameFactory);
+        Game game = new Game(1, iGameDao);
         assertTrue(game.getTeam1().equals("Gander Milk Cartons"));
     }
 
@@ -72,42 +72,42 @@ public class GameTest {
 
     @Test
     public void getDateTest() throws Exception {
-        Game game = new Game(1, iGameFactory);
+        Game game = new Game(1, iGameDao);
         assertTrue(game.getDate().equals(LocalDate.of(2020, Month.OCTOBER, 30)));
 
-        Game game2 = new Game(3, iGameFactory);
+        Game game2 = new Game(3, iGameDao);
         assertTrue(game2.getDate().equals(LocalDate.of(2020, Month.NOVEMBER, 03)));
     }
 
     @Test
     public void getPlayedTest() throws Exception {
-        Game game = new Game(1, iGameFactory);
+        Game game = new Game(1, iGameDao);
         assertTrue(game.getDate().equals(LocalDate.of(2020, Month.OCTOBER, 30)));
 
-        Game game2 = new Game(3, iGameFactory);
+        Game game2 = new Game(3, iGameDao);
         assertTrue(game2.getDate().equals(LocalDate.of(2020, Month.NOVEMBER, 03)));
     }
 
     @Test
     public void getWinnerTest() throws Exception {
-        Game game2 = new Game(3, iGameFactory);
+        Game game2 = new Game(3, iGameDao);
         assertNull(game2.getWinner());
 
     }
 
     @Test
     public void isGameUnPlayedTest() throws Exception {
-        Game game = new Game(3, iGameFactory);
+        Game game = new Game(3, iGameDao);
         assertTrue(game.isGameUnPlayed());
 
-        Game game2 = new Game(1, iGameFactory);
+        Game game2 = new Game(1, iGameDao);
         assertFalse(game2.isGameUnPlayed());
     }
 
     @Test
     public void fromStringTest() {
-        assertTrue(Game.fromString("TEAM1").equals(Game.Result.TEAM1));
-        assertFalse(Game.fromString("TEAM1").equals(Game.Result.TEAM2));
+        assertTrue(Game.fromString("TEAM1").equals(Result.TEAM1));
+        assertFalse(Game.fromString("TEAM1").equals(Result.TEAM2));
     }
 
 }

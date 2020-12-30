@@ -1,23 +1,29 @@
 package simulation.model;
 
-import db.data.ITrainingFactory;
+import persistance.dao.ITrainingDao;
 
-public class Training {
-
+public class Training implements ITraining {
 
     private int id;
     private int daysUntilStatIncreaseCheck;
     private int leagueId;
 
     public Training() {
+        setId(System.identityHashCode(this));
     }
 
-    public Training(int LeagueId, ITrainingFactory trainingFactory) throws Exception {
+    public Training(int LeagueId, ITrainingDao trainingFactory) throws Exception {
         if (trainingFactory == null) {
             return;
         }
         setId(id);
         trainingFactory.loadTrainingByLeagueId(id, this);
+    }
+
+    public Training(persistance.serializers.ModelsForDeserialization.model.Training training) {
+        this.id = training.id;
+        this.daysUntilStatIncreaseCheck = training.daysUntilStatIncreaseCheck;
+        this.leagueId = training.leagueId;
     }
 
     public int getDaysUntilStatIncreaseCheck() {

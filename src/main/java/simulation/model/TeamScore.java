@@ -1,9 +1,10 @@
 package simulation.model;
 
-import db.data.ITeamScoreFactory;
+import persistance.dao.ITeamScoreDao;
 
-public class TeamScore extends SharedAttributes {
+public class TeamScore extends SharedAttributes implements ITeamScore {
 
+    ITeam team;
     String teamName;
     Integer points;
     Integer numberOfWins;
@@ -11,26 +12,38 @@ public class TeamScore extends SharedAttributes {
     Integer numberOfTies;
 
     public TeamScore() {
+        setId(System.identityHashCode(this));
     }
 
-    public TeamScore(String teamName) {
-        this.teamName = teamName;
+    public TeamScore(ITeam team) {
+        this.team = team;
+        this.teamName = team.getName();
         this.numberOfLoss = 0;
         this.numberOfWins = 0;
         this.numberOfTies = 0;
         this.points = 0;
     }
 
-    public TeamScore(int id, ITeamScoreFactory iTeamScoreFactory) throws Exception {
-        iTeamScoreFactory.loadTeamScoreById(id, this);
+    public TeamScore(int id, ITeamScoreDao iTeamScoreDao) throws Exception {
+        iTeamScoreDao.loadTeamScoreById(id, this);
     }
 
-    public String getTeamName() {
-        return teamName;
+    public TeamScore(persistance.serializers.ModelsForDeserialization.model.TeamScore teamScore) {
+        this.teamName = teamScore.teamName;
+        this.points = teamScore.points;
+        this.numberOfLoss = teamScore.numberOfLoss;
+        this.numberOfTies = teamScore.numberOfTies;
+        this.numberOfWins = teamScore.numberOfWins;
+        this.setId(teamScore.id);
+        this.setName(teamScore.name);
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public ITeam getTeam() {
+        return team;
+    }
+
+    public void setTeam(ITeam team) {
+        this.team = team;
     }
 
     public Integer getPoints() {
@@ -63,5 +76,10 @@ public class TeamScore extends SharedAttributes {
 
     public void setNumberOfTies(Integer numberOfTies) {
         this.numberOfTies = numberOfTies;
+    }
+
+    @Override
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }

@@ -1,12 +1,18 @@
 package simulation.model;
 
 
-import db.data.ILeagueFactory;
-import db.data.ITeamScoreFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.ILeagueDao;
+import persistance.dao.ITeamScoreDao;
+import persistance.dao.IUserDao;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.LeagueMock;
 import simulation.mock.TeamScoreMock;
+import simulation.mock.UserMock;
+import simulation.state.HockeyContext;
+import simulation.state.IHockeyContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,32 +21,74 @@ import static org.junit.Assert.*;
 
 public class TeamStandingTest {
 
-    private static ITeamScoreFactory iTeamScoreFactory;
-    private static ILeagueFactory iLeagueFactory;
+    private static ITeamScoreDao iTeamScoreDao;
+    private static ILeagueDao iLeagueDao;
+
+    private static IHockeyContext hockeyContext;
+    private static IUserDao userFactory;
+    private static IHockeyContextFactory hockeyContextFactory;
+
+    @BeforeClass
+    public static void init() throws Exception {
+        userFactory = new UserMock();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
+        User user = new User(4, userFactory);
+        hockeyContext.setUser(user);
+    }
 
     @BeforeClass
     public static void setFactoryObj() {
-        iTeamScoreFactory = new TeamScoreMock();
-        iLeagueFactory = new LeagueMock();
+        iTeamScoreDao = new TeamScoreMock();
+        iLeagueDao = new LeagueMock();
     }
 
     @Test
     public void defaultConstructorTest() {
-        TeamStanding teamStanding = new TeamStanding();
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
         assertNotNull(teamStanding.getTeamsScoreList());
     }
 
     @Test
     public void initializeTeamStandingsTest() throws Exception {
 
-        TeamScore teamScore = new TeamScore(1, iTeamScoreFactory);
+        TeamScore teamScore = new TeamScore(1, iTeamScoreDao);
         assertEquals(teamScore.getId(), 1);
 
-        TeamStanding teamStanding = new TeamStanding();
-        List<String> teamList = new ArrayList<>();
-        teamList.add("Team1");
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
+        List<ITeam> teamList = new ArrayList<>();
+        Team team = new Team();
+        teamList.add(team);
         teamStanding.initializeTeamStandings(teamList);
         assertTrue(teamStanding.getTeamsScoreList().size() != 0);
+    }
+
+    @Test
+    public void setTeamPointsTest() throws Exception {
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
+        teamStanding.setTeamPoints("Team0");
+        assertNotNull(teamStanding.getTeamsScoreList());
+    }
+
+    @Test
+    public void setTeamLossTest() throws Exception {
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
+        teamStanding.setTeamLoss("Team0");
+        assertNotNull(teamStanding.getTeamsScoreList());
+    }
+
+    @Test
+    public void setTeamWinsTest() throws Exception {
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
+        teamStanding.setTeamWins("Team0");
+        assertNotNull(teamStanding.getTeamsScoreList());
+    }
+
+    @Test
+    public void setTeamTiesTest() throws Exception {
+        ITeamStanding teamStanding = HockeyContext.getInstance().getModelFactory().createTeamStanding();
+        teamStanding.setTeamTies("Team0");
+        assertNotNull(teamStanding.getTeamsScoreList());
     }
 
 }

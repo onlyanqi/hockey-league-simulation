@@ -2,6 +2,6 @@ package simulation.state;
 
 public interface ISimulateState {
 
-    ISimulateState action();
+    ISimulateState action() throws Exception;
 
 }

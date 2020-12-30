@@ -1,30 +1,27 @@
 package simulation.state;
 
-import db.data.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import persistance.dao.IUserDao;
+import simulation.factory.HockeyContextConcrete;
+import simulation.factory.IHockeyContextFactory;
 import simulation.mock.UserMock;
 import simulation.model.User;
-import validator.Validation;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class GeneratePlayoffScheduleDateTest {
-    private static ILeagueFactory leagueFactory;
-    private static ITeamFactory teamFactory;
-    private static IPlayerFactory playerFactory;
-    private static ITradeOfferFactory tradeOfferFactory;
-    private static ITradingFactory tradingFactory;
-    private static IUserFactory userFactory;
-    private static Validation validation;
-    private static HockeyContext hockeyContext;
 
+    private static IUserDao userFactory;
+    private static IHockeyContext hockeyContext;
+    private static IHockeyContextFactory hockeyContextFactory;
 
     @BeforeClass
     public static void init() throws Exception {
         userFactory = new UserMock();
-        hockeyContext = new HockeyContext();
+        hockeyContextFactory = HockeyContextConcrete.getInstance();
+        hockeyContext = hockeyContextFactory.newHockeyContext();
         User user = new User(4, userFactory);
         hockeyContext.setUser(user);
     }
